@@ -1,0 +1,25 @@
+#lang rzk-1
+
+#def prod : (A : U) -> (B : U) -> U
+  := \(A : U) -> \(B : U) -> ∑ (x : A), B
+
+-- defined to illustrate the syntax for terms in sigma types
+#def diagonal : (A : U) -> (_ : A) -> prod A A
+  := \A -> \a -> (a , a)
+
+#def composition : (A : U) -> (B : U) -> (C : U) -> (g : (b : B) -> C) -> (f : (a : A) -> B) -> (z : A) -> C
+  := \A -> \B -> \C -> \g -> \f -> \z -> g (f z)
+
+#def triple-composition 
+  : (A : U) -> (B : U) -> (C : U) -> (D : U) -> (h : (c : C) -> D) -> (g : (b : B) -> C) -> (f : (a : A) -> B)
+    -> (z : A) -> D  
+  := \A -> \B -> \C -> \D -> \h -> \g -> \f -> \z -> h (g (f z))
+
+#def identity : (A : U) -> (a : A) -> A
+  := \A -> \a -> a  
+
+#def constant : (X : U) -> (A : U) -> (a : A) -> (_ : X) -> A
+  := \X -> \A -> \a -> \x -> a
+  
+#def reindex : (A : U) -> (B : U) -> (f : (b : B) -> A) -> (C : (a : A) -> U) -> ((b : B) -> U)
+  := \A -> \B -> \f -> \C -> (\b -> C (f b))

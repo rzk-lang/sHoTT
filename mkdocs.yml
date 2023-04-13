@@ -1,0 +1,35 @@
+site_name: "sHoTT"
+docs_dir: src
+nav:
+  - General:
+    - About: index.md
+
+  - HoTT:
+      - Common: hott/0-common.rzk
+      - Paths: hott/1-paths.rzk
+      - Contractible: hott/2-contractible.rzk
+      - Homotopies: hott/3-homotopies.rzk
+      - Equivalences: hott/4-equivalences.rzk
+      - Total Spaces: hott/5-total-space.rzk
+
+  - Simplicial HoTT:
+      - Simplicial Type Theory: simplicial-hott/03-simplicial-type-theory.md
+      - Extension Types: simplicial-hott/04-extension-types.md
+      - Segal Types: simplicial-hott/05-segal-types.md
+      - 2-Category of Segal Types: simplicial-hott/06-2cat-of-segal-types.md
+      - Discrete Types: simplicial-hott/07-discrete.md
+      - Covariantly Functorial Type Families: simplicial-hott/08-covariant.md
+      - The Yoneda Lemma: simplicial-hott/09-yoneda.md
+      - Rezk Types: simplicial-hott/10-rezk-types.md
+      - Adjunctions: simplicial-hott/11-adjunctions.md
+
+markdown_extensions:
+  - mdx_math
+
+theme:
+  name: readthedocs
+  highlightjs: false  # we override default hightlightjs in custom_theme/
+  custom_dir: custom_theme/
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css
+

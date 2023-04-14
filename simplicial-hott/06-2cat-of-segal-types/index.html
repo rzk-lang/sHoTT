@@ -133,28 +133,34 @@
 <h2 id="prerequisites">Prerequisites</h2>
 <p>TODO</p>
 <pre><code class="language-rzk">-- [RS17, Section 6.1]
--- Action of maps on homs
-#def ap : (A : U) -&gt; (B : U) -&gt; (F : (x : A) -&gt; B) -&gt; (x : A) -&gt; (y : A) -&gt; (f : hom A x y) -&gt; hom B (F x) (F y)
-  := \A -&gt; \B -&gt; \F -&gt; \x -&gt; \y -&gt; \f -&gt; (\t -&gt; (F (f t)))
+-- Action of maps on homs. Called &quot;ap-arr&quot; to avoid conflicting with &quot;ap&quot;.
+#def ap-arr 
+    (A B : U)
+    (F : A -&gt; B)
+    (x y : A)
+    (f : hom A x y)
+    : hom B (F x) (F y)
+  := \t -&gt; F (f t)
 </code></pre>
 <pre><code class="language-rzk">-- [RS17, Proposition 6.1]
--- Preservation of identities
-#def functors-pres-id : (_ : ExtExt) -&gt; (A : U) -&gt; (AisSegal : isSegal A) -&gt; (B : U) -&gt; (BisSegal : isSegal B) -&gt; (F : (x : A) -&gt; B) -&gt; (
-    (x : A) -&gt; 
-    (ap A B F x x (id-arr A x)) =_{hom B (F x) (F x)} 
-    (id-arr B (F x))
-    )
-    := \extext -&gt; \A -&gt; \AisSegal -&gt; \B -&gt; \BisSegal -&gt; \F -&gt; (\x -&gt;
-    extext 
+-- Preservation of identities follows from extension extensionality because these arrows are pointwise equal.
+#def functors-pres-id
+    (extext : ExtExt)
+    (A B : U)
+    (F : A -&gt; B)
+    (x : A) 
+    : (ap-arr A B F x x (id-arr A x)) = (id-arr B (F x))
+    := extext 
         2
         Δ¹
         ∂Δ¹
         (\{t : 2 | Δ¹ t} -&gt; B)
-        (\t -&gt; recOR(t === 0_2, t === 1_2, F x, F x))
-        (ap A B F x x (id-arr A x))
+        (\t -&gt; recOR(
+            t === 0_2 |-&gt; F x,
+            t === 1_2 |-&gt; F x))
+        (ap-arr A B F x x (id-arr A x))
         (id-arr B (F x))
-        (\{t : 2 | Δ¹ t} -&gt; refl_{F x})
-    )
+        (\t -&gt; refl)
 </code></pre>
               
             </div>

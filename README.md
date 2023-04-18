@@ -27,13 +27,13 @@ pip install python-markdown-math
 Now, you can build and serve the documentation locally by running
 
 ```sh
-mkdocs serve --config-file mkdocs.yml
+mkdocs serve --config-file docs/mkdocs.yml
 ```
 
 The (locally built) documentation should be available at http://127.0.0.1:8000
 
-The pages of the documentation are the `*.md` files in [src/](src/) directory and its subdirectories.
-To add a new page, you can create a new `*.md` file and add it to the navigation by modifying [mkdocs.yml](mkdocs.yml).
+The pages of the documentation are the `*.md` files in [docs/docs](docs/docs) directory and its subdirectories.
+To add a new page, you can create a new `*.md` file and add it to the navigation by modifying [docs/mkdocs.yml](docs/mkdocs.yml).
 
 # References
 

@@ -92,6 +92,16 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">The Yoneda Lemma</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#natural-transformations-between-representable-functors">Natural transformations between representable functors</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-yoneda-maps">The Yoneda maps</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-yoneda-composites">The Yoneda composites</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-yoneda-lemma_1">The Yoneda lemma</a>
+    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../10-rezk-types/">Rezk Types</a>
@@ -124,49 +134,259 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="the-yoneda-lemma">The Yoneda lemma</h1>
-<p>These formalisations correspond to Section 5 of RS17 paper.</p>
+<p>These formalisations correspond to Section 9 of RS17 paper.</p>
 <p>This is a literate <code>rzk</code> file:</p>
 <pre><code class="language-rzk">#lang rzk-1
 </code></pre>
-<p>-- [RS17, Section 9]
--- Definition of evid and the Yoneda map as its claimed inverse
--- Auxiliary definition of the type of "generalized elements" of C at a:A</p>
-<pre><code class="language-rzk">#def
-    genElts
-        (A : U)
-        (C : A -&gt; U)
-        (a : A)
-        : U
-        := ( (x : A) -&gt; hom A a x -&gt; C x)
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li><code>hott/*</code> - we require various prerequisites from homotopy type theory, for instance the axiom of function extensionality</li>
+<li><code>3-simplicial-type-theory.md</code> — we rely on definitions of simplicies and their subshapes</li>
+<li><code>4-extension-types.md</code> — we use the fubini theorem and extension extensionality</li>
+<li><code>5-segal-types.md</code> - we make heavy use of the notion of Segal types</li>
+</ul>
+<h2 id="natural-transformations-between-representable-functors">Natural transformations between representable functors</h2>
+<p>In what follows, we'll consider a Segal type A with two fixed terms a and b. </p>
+<p>We show that a fiberwise map phi : (z : A) -&gt; hom A a z -&gt; hom A b z
+automatically defines a natural transformation, despite appearing only to define the components of such.</p>
+<pre><code class="language-rzk">-- This unfolds a composition triangle to a square with an identity component
+#def id-domain-square
+    (A : U)                     -- The ambient type.
+    (AisSegal : isSegal A)      -- A proof that A is Segal.
+    (a x y : A)                 -- Three objects
+    (g : hom A a x)
+    (k : hom A x y)
+    : (s : Δ¹) -&gt; hom A a (k s)
+    := \s t -&gt; 
+        recOR(t &lt;= s |-&gt; (id-comp-witness A a y (Segal-comp A AisSegal a x y g k)) (s , t), 
+        s &lt;= t |-&gt; (Segal-comp-witness A AisSegal a x y g k) (t , s))
+
+-- We apply the transformation phi to the square just constructed.
+#def id-domain-square-transformation
+    (A : U)                                         -- The ambient type.
+    (AisSegal : isSegal A)                          -- A proof that A is Segal.
+    (a b x y : A)                                   -- Four objects
+    (g : hom A a x)                                 -- An arrow from a to x.
+    (k : hom A x y)                                 -- An arrow from b to y.
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)       -- A fiberwise map.
+    : (s : Δ¹) -&gt; hom A b (k s)
+    := \s -&gt; phi (k s) (\t -&gt; (id-domain-square A AisSegal a x y g k s t))
+
+-- This extracts the diagonal composite of the square.
+#def id-domain-square-transformation-diagonal
+    (A : U)                                         -- The ambient type.
+    (AisSegal : isSegal A)                          -- A proof that A is Segal.
+    (a b x y : A)                                   -- Four objects
+    (g : hom A a x)                                 -- An arrow from a to x.
+    (k : hom A x y)                                 -- An arrow from b to y.
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)       -- A fiberwise map.
+    : hom A b y
+    := \t -&gt; id-domain-square-transformation A AisSegal a b x y g k phi t t
+
+-- One half of the id-domain-square-transformation.
+#def composite-of-transformation    
+    (A : U)                                         -- The ambient type.
+    (AisSegal : isSegal A)                          -- A proof that A is Segal.
+    (a b x y : A)                                   -- Four objects
+    (g : hom A a x)                                 -- An arrow from a to x.
+    (k : hom A x y)                                 -- An arrow from b to y.
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)       -- A fiberwise map.
+    : hom2 A b x y
+        (phi x g)
+        k
+        (id-domain-square-transformation-diagonal A AisSegal a b x y g k phi)
+    := \(t, s) -&gt; (id-domain-square-transformation A AisSegal a b x y g k phi s t)
+
+#def composite-of-transformation-coherence    
+    (A : U)                                         -- The ambient type.
+    (AisSegal : isSegal A)                          -- A proof that A is Segal.
+    (a b x y : A)                                   -- Four objects
+    (g : hom A a x)                                 -- An arrow from a to x.
+    (k : hom A x y)                                 -- An arrow from b to y.
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)       -- A fiberwise map.
+    : (Segal-comp A AisSegal b x y (phi x g) k) = 
+        (id-domain-square-transformation-diagonal A AisSegal a b x y g k phi)
+    := Segal-comp-uniqueness A AisSegal b x y 
+            (phi x g)
+            k
+            (id-domain-square-transformation-diagonal A AisSegal a b x y g k phi)
+            (composite-of-transformation A AisSegal a b x y g k phi)
+
+-- The other half of the id-domain-square-transformation.
+#def transformation-of-composite
+    (A : U)                                         -- The ambient type.
+    (AisSegal : isSegal A)                          -- A proof that A is Segal.
+    (a b x y : A)                                   -- Four objects
+    (g : hom A a x)                                 -- An arrow from a to x.
+    (k : hom A x y)                                 -- An arrow from b to y.
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)       -- A fiberwise map.
+    : hom2 A b b y 
+        (id-arr A b) 
+        (phi y (Segal-comp A AisSegal a x y g k))
+        (id-domain-square-transformation-diagonal A AisSegal a b x y g k phi)
+    := \(s, t) -&gt; (id-domain-square-transformation A AisSegal a b x y g k phi s t)    
+
+#def transformation-of-composite-coherence    
+    (A : U)                                         -- The ambient type.
+    (AisSegal : isSegal A)                          -- A proof that A is Segal.
+    (a b x y : A)                                   -- Four objects
+    (g : hom A a x)                                 -- An arrow from a to x.
+    (k : hom A x y)                                 -- An arrow from b to y.
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)       -- A fiberwise map.
+    : (Segal-comp A AisSegal b b y (id-arr A b) (phi y (Segal-comp A AisSegal a x y g k))) = 
+        (id-domain-square-transformation-diagonal A AisSegal a b x y g k phi)
+    := Segal-comp-uniqueness A AisSegal b b y 
+            (id-arr A b) 
+            (phi y (Segal-comp A AisSegal a x y g k))
+            (id-domain-square-transformation-diagonal A AisSegal a b x y g k phi)
+            (transformation-of-composite A AisSegal a b x y g k phi)
+
+#def transformation-of-composite-coherence-simplified    
+    (A : U)                                         -- The ambient type.
+    (AisSegal : isSegal A)                          -- A proof that A is Segal.
+    (a b x y : A)                                   -- Four objects
+    (g : hom A a x)                                 -- An arrow from a to x.
+    (k : hom A x y)                                 -- An arrow from b to y.
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)       -- A fiberwise map.
+    : (phi y (Segal-comp A AisSegal a x y g k)) = 
+        (id-domain-square-transformation-diagonal A AisSegal a b x y g k phi)
+    := zag-zig-concat (hom A b y)
+        (phi y (Segal-comp A AisSegal a x y g k)) 
+        (Segal-comp A AisSegal b b y (id-arr A b) (phi y (Segal-comp A AisSegal a x y g k))) 
+        (id-domain-square-transformation-diagonal A AisSegal a b x y g k phi)
+        (Segal-id-comp A AisSegal b y (phi y (Segal-comp A AisSegal a x y g k)))
+        (transformation-of-composite-coherence A AisSegal a b x y g k phi)
+
+#def fiberwise-is-natural
+    (A : U)                                     -- The ambient type.
+    (AisSegal : isSegal A)                      -- A proof that A is Segal.
+    (a b x y : A)                               -- Four objects.
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)   -- A natural transformation
+    (g : hom A a x)                             -- An arrow from a to x.
+    (k : hom A x y)                             -- An arrow from b to y.
+    :  Segal-comp A AisSegal b x y (phi x g) k = phi y (Segal-comp A AisSegal a x y g k) 
+    := zig-zag-concat (hom A b y) 
+        (Segal-comp A AisSegal b x y (phi x g) k)
+        (id-domain-square-transformation-diagonal A AisSegal a b x y g k phi)
+        (phi y (Segal-comp A AisSegal a x y g k))
+        (composite-of-transformation-coherence A AisSegal a b x y g k phi)
+        (transformation-of-composite-coherence-simplified A AisSegal a b x y g k phi)
 </code></pre>
-<pre><code class="language-rzk">#def
-    evid : (A : U) -&gt; (C : A -&gt; U) -&gt; (a : A)
-        -&gt; (genElts A C a)  -&gt; C a
-    := \A -&gt; \C -&gt; \a -&gt; \f -&gt; (f a (id-arr A a))
+<h2 id="the-yoneda-maps">The Yoneda maps</h2>
+<p>The Yoneda lemma provides an equivalence between the type (z : A) -&gt; hom A a z -&gt; hom A b z of natural transformations between representable functors and the type hom A b a of arrows between the representing objects.</p>
+<pre><code class="language-rzk">-- The map evid evaluates a natural transformation between representable functors at the identity arrow.
+#def evid 
+    (A : U)         -- The ambient type.
+    (a b : A)       -- The representing objects
+    : ((z : A) -&gt; hom A a z -&gt; hom A b z) -&gt; hom A b a
+    := \phi -&gt; phi a (id-arr A a)
 
-#def
-    yon
-        (A : U)
-        (C : A -&gt; U)
-        (CisCov : isCovFam A C)
-        (a : A)
-        : (C a) -&gt;  (genElts A C a) 
-        := \u -&gt; \x -&gt; \f -&gt; covTrans A C CisCov a x f u
--- #def
---     yon.evid-is-id
---         (A : U)
---         (AisSegal : isSegal A)
---         (C : A -&gt; U)
---         (CisCov : isCovFam C)
---         (a : A)
---         :  (genElts A C a) 
---         -&gt; (homotopy (genElts A C a)
---                      (genElts A C a) 
---                      (id-arr genElts A C a)
---                      (comp (genElts A C a) (C a) (evid A C a) (yon A C CisCov a))
---                     )
---         := TODO
+-- The inverse map only exists for Segal types.
+#def yon
+    (A : U)                 -- The ambient type.
+    (AisSegal : isSegal A)  -- A proof that A is Segal.
+    (a b : A)               -- The representing objects
+    : hom A b a -&gt; ((z : A) -&gt; hom A a z -&gt; hom A b z)
+    := \f z g -&gt; Segal-comp A AisSegal b a z f g
+</code></pre>
+<h2 id="the-yoneda-composites">The Yoneda composites</h2>
+<p>It remains to show that the Yoneda maps are inverses.</p>
+<pre><code class="language-rzk">-- One retraction is straightforward:
+#def evid-yon
+    (A : U)                 -- The ambient type.
+    (AisSegal : isSegal A)  -- A proof that A is Segal.
+    (a b : A)               -- The representing objects
+    (f : hom A b a)
+    : (evid A a b) ((yon A AisSegal a b) f) = f
+    := Segal-comp-id A AisSegal b a f
 
+-- The other composite carries phi to an a priori distinct natural transformation.
+-- We first show that these are pointwise equal at all x : A and g : hom A a x in two steps.
+-- The first step:
+#def yon-evid-partial
+    (A : U)                 -- The ambient type.
+    (AisSegal : isSegal A)  -- A proof that A is Segal.
+    (a b : A)               -- The representing objects
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)
+    (x : A)
+    (g : hom A a x)
+    : ((yon A AisSegal a b)((evid A a b) phi)) x g = phi x (Segal-comp A AisSegal a a x (id-arr A a) g)  -- phi x g 
+    := fiberwise-is-natural A AisSegal a b a x phi (id-arr A a) g
+
+-- The second step:
+#def yon-evid-ap
+    (A : U)                 -- The ambient type.
+    (AisSegal : isSegal A)  -- A proof that A is Segal.
+    (a b : A)               -- The representing objects
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)
+    (x : A)
+    (g : hom A a x)
+    : phi x (Segal-comp A AisSegal a a x (id-arr A a) g) = phi x g
+    := ap (hom A a x) (hom A b x)
+        (Segal-comp A AisSegal a a x (id-arr A a) g)
+        g
+        (phi x)
+        (Segal-id-comp A AisSegal a x g)
+
+-- The composite yon-evid of phi equals phi at all x : A and g : hom A a x.
+#def yon-evid-twice-pointwise
+    (A : U)                 -- The ambient type.
+    (AisSegal : isSegal A)  -- A proof that A is Segal.
+    (a b : A)               -- The representing objects
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)
+    (x : A)
+    (g : hom A a x)     
+    : ((yon A AisSegal a b)((evid A a b) phi)) x g = phi x g
+    := concat (hom A b x)
+        (((yon A AisSegal a b)((evid A a b) phi)) x g)
+        (phi x (Segal-comp A AisSegal a a x (id-arr A a) g))
+        (phi x g)
+        (yon-evid-partial A AisSegal a b phi x g)
+        (yon-evid-ap A AisSegal a b phi x g)
+
+-- By funext, these are equals as functions of g pointwise in x.
+#def yon-evid-once-pointwise        
+    (funext : FunExt)
+    (A : U)                 -- The ambient type.
+    (AisSegal : isSegal A)  -- A proof that A is Segal.
+    (a b : A)               -- The representing objects
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)
+    (x : A)
+    : ((yon A AisSegal a b)((evid A a b) phi)) x = phi x
+    := funext
+        (hom A a x)
+        (\g -&gt; hom A b x)
+        (\g -&gt; (((yon A AisSegal a b)((evid A a b) phi)) x g))
+        (\g -&gt; (phi x g))
+        (\g -&gt; yon-evid-twice-pointwise A AisSegal a b phi x g)
+
+-- By funext again, these are equal as functions of x and g.
+#def yon-evid        
+    (funext : FunExt)
+    (A : U)                 -- The ambient type.
+    (AisSegal : isSegal A)  -- A proof that A is Segal.
+    (a b : A)               -- The representing objects
+    (phi : (z : A) -&gt; hom A a z -&gt; hom A b z)
+    : ((yon A AisSegal a b)((evid A a b) phi)) = phi
+    := funext
+        A
+        (\x -&gt; (hom A a x -&gt; hom A b x))
+        (\x -&gt; (((yon A AisSegal a b)((evid A a b) phi)) x))
+        (\x -&gt; (phi x))
+        (\x -&gt; yon-evid-once-pointwise funext A AisSegal a b phi x)
+</code></pre>
+<h2 id="the-yoneda-lemma_1">The Yoneda lemma</h2>
+<p>The Yoneda lemma says that evaluation at the identity defines an equivalence.</p>
+<pre><code class="language-rzk">#def Yoneda-lemma
+    (funext : FunExt)
+    (A : U)                 -- The ambient type.
+    (AisSegal : isSegal A)  -- A proof that A is Segal.
+    (a b : A)               -- The representing objects
+    : isEquiv ((z : A) -&gt; hom A a z -&gt; hom A b z) (hom A b a) (evid A a b)
+    := ((yon A AisSegal a b,
+            yon-evid funext A AisSegal a b),
+        (yon A AisSegal a b,
+            evid-yon A AisSegal a b))
 </code></pre>
               
             </div>

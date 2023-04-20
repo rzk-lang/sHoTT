@@ -1,6 +1,7 @@
 # sHoTT
 
 [![MkDocs](https://shields.io/badge/MkDocs-documentation-informational)](https://fizruk.github.io/rzk/split.html)
+[![.github/workflows/rzk.yml](https://github.com/fizruk/sHoTT/actions/workflows/rzk.yml/badge.svg)](https://github.com/fizruk/sHoTT/actions/workflows/rzk.yml)
 
 This is a formalisation library for simplicial Homotopy Type Theory (sHoTT).
 

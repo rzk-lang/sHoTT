@@ -10,4 +10,4 @@ jobs:
       - name: Check all files
         uses: fizruk/rzk-action@v1
         with:
-          files: hott/* simplicial-hott/*
+          files: src/hott/* src/simplicial-hott/*

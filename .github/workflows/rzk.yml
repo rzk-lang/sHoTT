@@ -1,0 +1,13 @@
+on: [push]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Check formalisations with rzk proof assistant
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check all files
+        uses: fizruk/rzk-action@v1
+        with:
+          files: hott/* simplicial-hott/*

@@ -63,17 +63,21 @@
               </ul>
               <p class="caption"><span class="caption-text">HoTT</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/0-common.rzk">Common</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/0-common/">Common</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/1-paths.rzk">Paths</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/1-paths/">Paths</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/2-contractible.rzk">Contractible</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/2-homotopies/">Homotopies</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/3-homotopies.rzk">Homotopies</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/3-contractible/">Contractible</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/4-equivalences.rzk">Equivalences</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/4-equivalences/">Equivalences</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/5-total-space.rzk">Total Spaces</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/5-sigma/">Sigma types</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/6-trivial-fibrations/">Trivial fibrations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/7-fibers/">Fibers</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Simplicial HoTT</span></p>
@@ -81,8 +85,6 @@
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Simplicial Type Theory</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#simplicies-and-their-subshapes">Simplicies and their subshapes</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#joins-of-simplices">Joins of simplices</a>
     </li>
     </ul>
                   </li>
@@ -135,59 +137,58 @@
 <h2 id="simplicies-and-their-subshapes">Simplicies and their subshapes</h2>
 <p>Simplicies:</p>
 <pre><code class="language-rzk">-- 1-simplex
-#def Δ¹ : (t : 2) -&gt; TOPE
-  := \(t : 2) -&gt; TOP
+#def Δ¹ : 2 -&gt; TOPE
+  := \t -&gt; TOP
 
 -- 2-simplex
-#def Δ² : (t : 2 * 2) -&gt; TOPE
+#def Δ² : (2 * 2) -&gt; TOPE
   := \(t, s) -&gt; s &lt;= t
 
 -- 3-simplex
-#def Δ³ : (t : 2 * 2 * 2) -&gt; TOPE
+#def Δ³ : (2 * 2 * 2) -&gt; TOPE
   := \((t1, t2), t3) -&gt; t3 &lt;= t2 /\ t2 &lt;= t1
 </code></pre>
 <p>Boundaries of simplices:</p>
 <pre><code class="language-rzk">-- boundary of a 1-simplex
-#def ∂Δ¹ : (t : 2) -&gt; TOPE
-  := \(t : 2) -&gt; (t === 0_2 \/ t === 1_2)
+#def ∂Δ¹ : Δ¹ -&gt; TOPE
+  := \t -&gt; (t === 0_2 \/ t === 1_2)
 
 -- boundary of a 2-simplex
-#def ∂Δ² : {(ts : 2 * 2) | Δ² ts} -&gt; TOPE
-  := \{ts : 2 * 2 | Δ² ts} -&gt; ((second ts) === 0_2 \/ (first ts) === 1_2 \/ (second ts) === (first ts))
+#def ∂Δ² : Δ² -&gt; TOPE
+  := \ts -&gt; 
+        ((second ts) === 0_2 \/ (first ts) === 1_2 \/ (second ts) === (first ts))
 </code></pre>
 <p>Horns:</p>
 <pre><code class="language-rzk">-- the (2,1)-horn
-#def Λ : (t : 2 * 2) -&gt; TOPE
+#def Λ : (2 * 2) -&gt; TOPE
   := \(t, s) -&gt; (s === 0_2 \/ t === 1_2)
 </code></pre>
 <p>Products:</p>
 <pre><code class="language-rzk">-- the product of topes defines the product of shapes
-#def shapeProd : (I : CUBE) -&gt; (J : CUBE) -&gt;
-                 (psi : (t : I) -&gt; TOPE) -&gt;
-                 (chi : (s : J) -&gt; TOPE) -&gt;
-                 (ts : I * J) -&gt; TOPE
-  := \I -&gt; \J -&gt; \psi -&gt; \chi -&gt; \(t, s) -&gt; psi t /\ chi s
+#def shapeProd
+  (I J : CUBE)
+  (psi : I -&gt; TOPE)
+  (chi : J -&gt; TOPE)
+  : (I * J) -&gt; TOPE
+  := \(t, s) -&gt; psi t /\ chi s
 
 -- the square as a product
-#def Δ¹×Δ¹ : (t : 2 * 2) -&gt; TOPE
+#def Δ¹×Δ¹ : (2 * 2) -&gt; TOPE
   := shapeProd 2 2 Δ¹ Δ¹
 
 -- the vertical boundary of the square 
-#def ∂Δ¹×Δ¹ : (t : 2 * 2) -&gt; TOPE
+#def ∂Δ¹×Δ¹ : (2 * 2) -&gt; TOPE
   := shapeProd 2 2 ∂Δ¹ Δ¹
 
 -- the prism from a 2-simplex in an arrow type
-#def Δ²×Δ¹ : (t : (2 * 2) * 2) -&gt; TOPE
+#def Δ²×Δ¹ : (2 * 2 * 2) -&gt; TOPE
   := shapeProd (2 * 2) 2 Δ² Δ¹  
 </code></pre>
-<p>More to be done.</p>
-<h2 id="joins-of-simplices">Joins of simplices</h2>
-<p>To be done.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../hott/5-total-space.rzk" class="btn btn-neutral float-left" title="Total Spaces"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../hott/7-fibers/" class="btn btn-neutral float-left" title="Fibers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../04-extension-types/" class="btn btn-neutral float-right" title="Extension Types">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -211,7 +212,7 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../hott/5-total-space.rzk" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../hott/7-fibers/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../04-extension-types/" style="color: #fcfcfc">Next &raquo;</a></span>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Adjunctions - sHoTT</title>
+    <title>Common - sHoTT</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css" rel="stylesheet" />
@@ -29,8 +29,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Adjunctions";
-        var mkdocs_page_input_path = "simplicial-hott/11-adjunctions.md";
+        var mkdocs_page_name = "Common";
+        var mkdocs_page_input_path = "hott/0-common.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -62,45 +62,53 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">HoTT</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/0-common/">Common</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Common</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#products-of-types">Products of types</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-type-of-logical-equivalences-between-types">The type of logical equivalences between types</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-function-definitions">Basic function definitions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#substitution">Substitution</a>
+    </li>
+    </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/1-paths/">Paths</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../1-paths/">Paths</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/2-homotopies/">Homotopies</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../2-homotopies/">Homotopies</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/3-contractible/">Contractible</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../3-contractible/">Contractible</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/4-equivalences/">Equivalences</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../4-equivalences/">Equivalences</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/5-sigma/">Sigma types</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../5-sigma/">Sigma types</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/6-trivial-fibrations/">Trivial fibrations</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../6-trivial-fibrations/">Trivial fibrations</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/7-fibers/">Fibers</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../7-fibers/">Fibers</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Simplicial HoTT</span></p>
-              <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../03-simplicial-type-theory/">Simplicial Type Theory</a>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../simplicial-hott/03-simplicial-type-theory/">Simplicial Type Theory</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../04-extension-types/">Extension Types</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../simplicial-hott/04-extension-types/">Extension Types</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../05-segal-types/">Segal Types</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../simplicial-hott/05-segal-types/">Segal Types</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../06-2cat-of-segal-types/">2-Category of Segal Types</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../simplicial-hott/06-2cat-of-segal-types/">2-Category of Segal Types</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../07-discrete/">Discrete Types</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../simplicial-hott/07-discrete/">Discrete Types</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../08-covariant/">Covariantly Functorial Type Families</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../simplicial-hott/08-covariant/">Covariantly Functorial Type Families</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../09-yoneda/">The Yoneda Lemma</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../simplicial-hott/09-yoneda/">The Yoneda Lemma</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../10-rezk-types/">Rezk Types</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../simplicial-hott/10-rezk-types/">Rezk Types</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Adjunctions</a>
-    <ul class="current">
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../simplicial-hott/11-adjunctions/">Adjunctions</a>
                   </li>
               </ul>
       </div>
@@ -117,8 +125,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Simplicial HoTT &raquo;</li>
-      <li>Adjunctions</li>
+          <li>HoTT &raquo;</li>
+      <li>Common</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -127,16 +135,62 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="11-adjunctions">11. Adjunctions</h1>
-<p>These formalisations correspond to Section 11 of RS17 paper.</p>
+                <h1 id="0-common">0. Common</h1>
 <p>This is a literate <code>rzk</code> file:</p>
 <pre><code class="language-rzk">#lang rzk-1
+</code></pre>
+<h2 id="products-of-types">Products of types</h2>
+<pre><code class="language-rzk">#def prod (A B : U) : U
+  := ∑ (x : A), B
+
+-- defined to illustrate the syntax for terms in sigma types
+#def diagonal (A : U) (a : A) : prod A A
+  := (a , a)
+</code></pre>
+<h2 id="the-type-of-logical-equivalences-between-types">The type of logical equivalences between types</h2>
+<pre><code class="language-rzk">#def iff (A B : U) : U
+  := prod (A -&gt; B) (B -&gt; A)
+</code></pre>
+<h2 id="basic-function-definitions">Basic function definitions</h2>
+<pre><code class="language-rzk">#def composition 
+  (A B C : U)     -- Three types.
+  (g : B -&gt; C)    -- The second function.
+  (f : A -&gt; B)    -- The first function.
+  : A -&gt; C        -- The composite function.
+  := \z -&gt; g (f z)
+
+#def triple-composition 
+  (A B C D : U)
+  (h : C -&gt; D) 
+  (g : B -&gt; C) 
+  (f : A -&gt; B)
+  : A -&gt; D  
+  := \z -&gt; h (g (f z))
+
+#def identity (A : U) (a : A) : A
+  := a  
+
+#def constant 
+  (X A : U)       -- The source and target types.
+  (a : A)         -- The constant output value.
+  : X -&gt; A
+  := \x -&gt; a
+</code></pre>
+<h2 id="substitution">Substitution</h2>
+<pre><code class="language-rzk">-- Reindexing a type family along a function into the base type.  
+#def reindex 
+  (A B : U) 
+  (f : B -&gt; A) 
+  (C : A -&gt; U) 
+  : (B -&gt; U)
+  := \b -&gt; C (f b)
 </code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../10-rezk-types/" class="btn btn-neutral float-left" title="Rezk Types"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../.." class="btn btn-neutral float-left" title="About"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../1-paths/" class="btn btn-neutral float-right" title="Paths">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -159,8 +213,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../10-rezk-types/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
     
+    
+      <span><a href="../1-paths/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

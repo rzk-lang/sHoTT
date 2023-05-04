@@ -63,17 +63,21 @@
               </ul>
               <p class="caption"><span class="caption-text">HoTT</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/0-common.rzk">Common</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/0-common/">Common</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/1-paths.rzk">Paths</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/1-paths/">Paths</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/2-contractible.rzk">Contractible</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/2-homotopies/">Homotopies</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/3-homotopies.rzk">Homotopies</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/3-contractible/">Contractible</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/4-equivalences.rzk">Equivalences</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/4-equivalences/">Equivalences</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hott/5-total-space.rzk">Total Spaces</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/5-sigma/">Sigma types</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/6-trivial-fibrations/">Trivial fibrations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hott/7-fibers/">Fibers</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Simplicial HoTT</span></p>
@@ -151,7 +155,7 @@
    (phi : psi -&gt; TOPE)
    (X : U)
    (Y : psi -&gt; X -&gt; U)
-   (f : &lt;{t : I | phi t } -&gt; (x : X) -&gt; Y t x &gt;)
+   (f : (t : phi) -&gt; (x : X) -&gt; Y t x)
    : Eq (&lt;{t : I | psi t} -&gt; ((x : X) -&gt; Y t x) [ phi t |-&gt; f t ]&gt;)
        ((x : X) -&gt; &lt;{t : I | psi t} -&gt; Y t x [ phi t |-&gt; f t x]&gt;)
    := (\g x t -&gt; g t x, -- the one-way map
@@ -166,7 +170,7 @@
    (phi : psi -&gt; TOPE)
    (X : U)
    (Y : psi -&gt; X -&gt; U)
-   (f : &lt;{t : I | phi t } -&gt; (x : X) -&gt; Y t x &gt;)
+   (f : (t : phi) -&gt; (x : X) -&gt; Y t x)
    : Eq ((x : X) -&gt; &lt;{t : I | psi t} -&gt; Y t x [ phi t |-&gt; f t x]&gt;)
       (&lt;{t : I | psi t} -&gt; ((x : X) -&gt; Y t x) [ phi t |-&gt; f t ]&gt;)
    := (\h t x -&gt; (h x) t, -- the one-way map
@@ -232,9 +236,9 @@
    (psi : I -&gt; TOPE) 
    (phi : psi -&gt; TOPE)
    (X : psi -&gt; U) 
-   (Y : &lt;{t : I | psi t} -&gt; (x : X t) -&gt; U &gt;)
-   (a : &lt;{t : I | phi t} -&gt; X t &gt;)
-   (b : &lt;{t : I | phi t} -&gt; Y t (a t) &gt;)
+   (Y : (t : psi) -&gt; (x : X t) -&gt; U)
+   (a : (t : phi) -&gt; X t)
+   (b : (t : phi) -&gt; Y t (a t))
    : Eq (&lt;{t : I | psi t} -&gt; (∑ (x : X t), Y t x) [ phi t |-&gt; (a t , b t) ]&gt;) 
      (∑ (f : (&lt;{t : I | psi t} -&gt; X t [phi t |-&gt; a t ]&gt;)), (&lt;{t : I | psi t} -&gt; Y t (f t) [ phi t |-&gt; b t ]&gt;)) 
      := (\g -&gt; (\t -&gt; (first (g t)), \t -&gt; second (g t))  , -- the one way map
@@ -265,7 +269,7 @@
    (I : CUBE)
    (phi psi : I -&gt; TOPE)
    (X : &lt;{t : I | phi t \/ psi t} -&gt; U &gt;)
-   (a : &lt;{t : I | psi t} -&gt; X t &gt;)
+   (a : (t : psi) -&gt; X t)
    : Eq &lt;{t : I | phi t \/ psi t} -&gt; X t [ psi t |-&gt; a t ]&gt;
        &lt;{t : I | phi t} -&gt; X t [ phi t /\ psi t |-&gt; a t ]&gt;
   := (\h -&gt; \t -&gt; h t,
@@ -273,7 +277,8 @@
        (\g -&gt; \t -&gt; recOR(phi t |-&gt; g t, psi t |-&gt; a t), \h -&gt; refl)))
 </code></pre>
 <h2 id="relative-function-extensionality">Relative function extensionality</h2>
-<p>A more complete treatment still needs to be done.</p>
+<p>There are various equivalent forms of the relative function extensionality axiom. 
+Here we state the one that will be most useful and derive an application.</p>
 <pre><code class="language-rzk">-- [RS17, Proposition 4.8(ii)]
 -- as suggested by footnote 8, we assert this as an &quot;extension extensionality&quot; axiom
 #def ExtExt : U
@@ -281,7 +286,7 @@
       (psi : I -&gt; TOPE) -&gt;
       (phi : psi -&gt; TOPE) -&gt;
       (A : psi -&gt; U) -&gt;
-      (a : &lt;{t : I | phi t } -&gt; A t &gt;) -&gt;
+      (a : (t : phi) -&gt; A t) -&gt;
       (f : &lt;{t : I | psi t} -&gt; A t [ phi t |-&gt; a t ]&gt;) -&gt;
       (g : &lt;{t : I | psi t} -&gt; A t [ phi t |-&gt; a t ]&gt;) -&gt;
       (_ : &lt;{t : I | psi t} -&gt; (f t = g t) [ phi t |-&gt; refl ]&gt;) -&gt;
@@ -293,29 +298,29 @@
    (I : CUBE)
    (psi : I -&gt; TOPE)
    (A B : psi -&gt; U)
-   (fibequiv : &lt;{t : I | psi t } -&gt; (Eq (A t) (B t)) &gt;)
+   (fibequiv : (t : psi) -&gt; (Eq (A t) (B t)) )
    : Eq (&lt;{t : I | psi t } -&gt; A t &gt;) (&lt;{t : I | psi t } -&gt; B t &gt;)
-    := ((\a t -&gt; (first (fibequiv t)) (a t)),
-            (((\b t -&gt; (first (first (second (fibequiv t)))) (b t)),
-                \a -&gt; extext
-                        I
-                        psi
-                        (\t -&gt; BOT)
-                        A
-                        (\u -&gt; recBOT)
-                        (\t -&gt; (first (first (second (fibequiv t)))) ((first (fibequiv t)) (a t))) 
-                        a 
-                        (\t -&gt; (second (first (second (fibequiv t)))) (a t))), 
-           ((\b t -&gt; (first (second (second (fibequiv t)))) (b t)),
-               (\b -&gt; extext 
-                        I
-                        psi
-                        (\t -&gt; BOT)
-                        B 
-                        (\u -&gt; recBOT)
-                        (\t -&gt; (first (fibequiv t)) ((first (second (second (fibequiv t)))) (b t))) 
-                        b 
-                        (\t -&gt; (second (second (second (fibequiv t)))) (b t))))))              
+   := ((\a t -&gt; (first (fibequiv t)) (a t)),
+         (((\b t -&gt; (first (first (second (fibequiv t)))) (b t)),
+            \a -&gt; extext
+                     I
+                     psi
+                     (\t -&gt; BOT)
+                     A
+                     (\u -&gt; recBOT)
+                     (\t -&gt; (first (first (second (fibequiv t)))) ((first (fibequiv t)) (a t))) 
+                     a 
+                     (\t -&gt; (second (first (second (fibequiv t)))) (a t))), 
+         ((\b t -&gt; (first (second (second (fibequiv t)))) (b t)),
+            (\b -&gt; extext 
+                     I
+                     psi
+                     (\t -&gt; BOT)
+                     B 
+                     (\u -&gt; recBOT)
+                     (\t -&gt; (first (fibequiv t)) ((first (second (second (fibequiv t)))) (b t))) 
+                     b 
+                     (\t -&gt; (second (second (second (fibequiv t)))) (b t))))))              
 </code></pre>
               
             </div>

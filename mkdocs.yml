@@ -1,7 +1,7 @@
-site_name: 'yoneda'
-repo_url: https://github.com/emilyriehl/yoneda
-repo_name: emilyriehl/yoneda
-edit_uri: edit/master/src
+site_name: 'Simplicial HoTT'
+repo_url: https://github.com/rzk-lang/sHoTT
+repo_name: rzk-lang/sHoTT
+edit_uri: edit/main/src
 
 docs_dir: src
 nav:

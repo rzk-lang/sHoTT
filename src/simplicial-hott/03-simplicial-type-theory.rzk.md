@@ -108,3 +108,16 @@ The union of shapes is defined by disjunction on topes.
   : I → TOPE
   := \ t → ψ t ∨ χ t
 ```
+
+Maps out of $Δ²$ are a retract of maps out of $Δ¹×Δ¹$.
+
+```rzk title="RS17, Proposition 3.6"
+#def Δ²-is-retract-Δ¹×Δ¹
+  (A : U)
+  : is-retract-of (Δ² → A) (Δ¹×Δ¹ → A)
+  :=
+    ( ( \ f → \ (t , s) →
+        recOR ( t <= s |-> f (t , t) ,
+                  s <= t |-> f (t , s))) ,
+      ( ( \ f → \ ts → f ts ) , \ _ → refl))
+```

@@ -108,3 +108,14 @@ The union of shapes is defined by disjunction on topes.
   : I → TOPE
   := \ t → ψ t ∨ χ t
 ```
+
+### Connection Square
+
+
+```rzk title="Proposition 3.5" 
+#define arrow-to-squares
+    (A : U)
+    (f : 2 -> A)
+    : (2 * 2) -> A
+    := \ (t, s) -> recOR ( t <= s |-> f s , s <= t |-> f t )
+```

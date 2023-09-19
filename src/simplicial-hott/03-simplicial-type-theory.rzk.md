@@ -121,3 +121,29 @@ Maps out of $Δ²$ are a retract of maps out of $Δ¹×Δ¹$.
                   s <= t |-> f (t , s))) ,
       ( ( \ f → \ ts → f ts ) , \ _ → refl))
 ```
+
+Maps out of $Δ³$ are a retract of maps out of $Δ²×Δ¹$.
+
+```rzk title="RS17, Proposition 3.7"
+
+#def Δ³-is-retract-Δ²×Δ¹-retraction
+  (A : U)
+  : (Δ²×Δ¹ → A) → (Δ³ → A)
+  := \ f → \ ((t1 , t2) , t3) → f ((t1 , t3) , t2)
+
+#def Δ³-is-retract-Δ²×Δ¹-section
+  (A : U)
+  : (Δ³ → A) → (Δ²×Δ¹ → A)
+  :=
+    \ f → \ ((t1 , t2) , t3) →
+    recOR ( t3 <= t2 |-> f ((t1 , t2) , t2) ,
+            t2 <= t3 |-> recOR (t3 <= t1 |-> f ((t1 , t3) , t2) ,
+                                t1 <= t3 |-> f ((t1 , t1) , t2)))
+
+#def Δ³-is-retract-Δ²×Δ¹
+  (A : U)
+  : is-retract-of (Δ³ → A) (Δ²×Δ¹ → A)
+  :=
+    ( Δ³-is-retract-Δ²×Δ¹-section A ,
+      ( Δ³-is-retract-Δ²×Δ¹-retraction A , \ _ → refl))
+```

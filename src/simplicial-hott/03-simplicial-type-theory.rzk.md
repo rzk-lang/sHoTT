@@ -117,8 +117,9 @@ Maps out of $Δ²$ are a retract of maps out of $Δ¹×Δ¹$.
   : is-retract-of (Δ² → A) (Δ¹×Δ¹ → A)
   :=
     ( ( \ f → \ (t , s) →
-        recOR ( t <= s |-> f (t , t) ,
-                  s <= t |-> f (t , s))) ,
+        recOR
+          ( t <= s |-> f (t , t) ,
+            s <= t |-> f (t , s))) ,
       ( ( \ f → \ ts → f ts ) , \ _ → refl))
 ```
 
@@ -136,9 +137,12 @@ Maps out of $Δ³$ are a retract of maps out of $Δ²×Δ¹$.
   : (Δ³ → A) → (Δ²×Δ¹ → A)
   :=
     \ f → \ ((t1 , t2) , t3) →
-    recOR ( t3 <= t2 |-> f ((t1 , t2) , t2) ,
-            t2 <= t3 |-> recOR (t3 <= t1 |-> f ((t1 , t3) , t2) ,
-                                t1 <= t3 |-> f ((t1 , t1) , t2)))
+    recOR
+      ( t3 <= t2 |-> f ((t1 , t2) , t2) ,
+        t2 <= t3 |->
+          recOR
+            ( t3 <= t1 |-> f ((t1 , t3) , t2) ,
+              t1 <= t3 |-> f ((t1 , t1) , t2)))
 
 #def Δ³-is-retract-Δ²×Δ¹
   (A : U)

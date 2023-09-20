@@ -1634,3 +1634,27 @@ commuting with the contravariant lifts.
     ( contravariant-fiberwise-transformation-application
         A x y f C D is-contravariant-C ϕ v)
 ```
+
+## Two sided discrete fibrations
+
+```rzk title="RS17, Definition 8.28"
+#def is-two-sided-discrete
+  ( A B : U)
+  ( C : A → B → U)
+  : U
+  :=
+    product
+      ( (a : A) → is-covariant B (\b → C a b))
+      ( (b : B) → is-contravariant A (\ a → C a b))
+```
+
+```rzk title="RS17, Proposition 8.29"
+#def is-two-sided-discrete-hom-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  : is-two-sided-discrete A A (hom A)
+  :=
+    ( is-covariant-representable-is-segal A is-segal-A ,
+      is-contravariant-representable-is-segal A is-segal-A)
+
+```

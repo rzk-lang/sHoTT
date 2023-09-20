@@ -1650,12 +1650,11 @@ commuting with the contravariant lifts.
 
 ```rzk title="RS17, Proposition 8.29"
 #def is-two-sided-discrete-representable-is-segal
-  (A : U)
-  (is-segal-A : is-segal A)
+  ( A : U)
+  ( is-segal-A : is-segal A)
   : is-two-sided-discrete A A (hom A)
   :=
-    ( is-covariant-representable-is-segal A is-segal-A
-    , is-contravariant-representable-is-segal A is-segal-A
-    )
+    ( is-covariant-representable-is-segal A is-segal-A ,
+      is-contravariant-representable-is-segal A is-segal-A)
 
 ```

@@ -1639,13 +1639,13 @@ commuting with the contravariant lifts.
 
 ```rzk title="RS17, Definition 8.28"
 #def is-two-sided-discrete
-  (A B : U)
-  (C : A → B → U)
+  ( A B : U)
+  ( C : A → B → U)
   : U
   :=
     product
-      ((a : A) → is-covariant B (\b → C a b))
-      ((b : B) → is-contravariant A (\ a → C a b))
+      ( (a : A) → is-covariant B (\b → C a b))
+      ( (b : B) → is-contravariant A (\ a → C a b))
 ```
 
 ```rzk title="RS17, Proposition 8.29"

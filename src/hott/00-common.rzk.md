@@ -39,7 +39,7 @@ The following demonstrates the syntax for constructing terms in Sigma types:
 ```rzk
 #section basic-functions
 
-#variables A B C D : U
+#variables A B C D E : U
 
 #def comp
   ( g : B → C)
@@ -53,6 +53,14 @@ The following demonstrates the syntax for constructing terms in Sigma types:
   ( f : A → B)
   : A → D
   := \ z → h (g (f z))
+
+#def quadruple-comp
+  ( k : D → E)
+  ( h : C → D)
+  ( g : B → C)
+  ( f : A → B)
+  : A → E
+  := \ z → k (h (g (f z)))
 
 #def identity
   : A → A

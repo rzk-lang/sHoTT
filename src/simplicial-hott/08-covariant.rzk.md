@@ -768,17 +768,21 @@ along an arrow f : hom A x y to give a term in C y.
     first (center-contraction (dhom-from A x y f C u) (is-covariant-C x y f u))
 ```
 
-Example: If A is a Segal type and a : A, the family C x := hom A a x is covariant.
-Transport an e : C x, along an arrow f : hom A x y just yields composition of f with e.
+Example:
+If `A` is a Segal type and `a : A`, the family `C x := hom A a x` is covariant.
+Transport of an `e : C x` along an arrow `f : hom A x y`
+just yields composition of `f` with `e`.
 
-```rzk title="Example 8.14"
+```rzk title="RS17, Example 8.14"
 #def covariant-transport-of-hom-family-is-composition
   (A : U)
   (is-segal-A : is-segal A)
   (a x y : A)
   (e : hom A a x)
   (f : hom A x y)
-  : covariant-transport A x y f (hom A a) (is-covariant-representable-is-segal A is-segal-A a) e = comp-is-segal A is-segal-A a x y e f
+  : covariant-transport A x y f
+  (hom A a) (is-covariant-representable-is-segal A is-segal-A a) e
+    = comp-is-segal A is-segal-A a x y e f
   :=
     refl
 ```

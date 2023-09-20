@@ -774,7 +774,7 @@ Transport of an `e : C x` along an arrow `f : hom A x y`
 just yields composition of `f` with `e`.
 
 ```rzk title="RS17, Example 8.14"
-#def covariant-transport-of-hom-family-is-composition
+#def compute-covariant-transport-of-hom-family-is-segal
   (A : U)
   (is-segal-A : is-segal A)
   (a x y : A)

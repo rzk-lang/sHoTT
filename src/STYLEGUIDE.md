@@ -1,6 +1,6 @@
 # Style guide and design principles
 
-This guide provides a set of design principles and guidelines for the `yoneda`
+This guide provides a set of design principles and guidelines for the `sHoTT`
 project. Our style and design principles borrows heavily from
 [`agda-unimath`](https://github.com/UniMath/agda-unimath).
 

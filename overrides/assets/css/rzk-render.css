@@ -1,0 +1,8 @@
+.rzk-render {
+  float: right;
+  clear: both;
+  position: relative;
+  z-index: 1;
+}
+.rzk-render { transition: transform .2s; /* Animation */ }
+.rzk-render:hover { transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */ }

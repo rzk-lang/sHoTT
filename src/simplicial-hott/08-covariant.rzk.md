@@ -835,7 +835,6 @@ This follows from the fact that the total spaces (summed over `v : C y`)
 of both sides are contractible.
 
 ```rzk title="RS17, Lemma 8.15"
-
 #def is-equiv-total-map-covariant-uniqueness-curried
   ( A : U)
   ( x y : A)
@@ -884,12 +883,7 @@ of both sides are contractible.
       (covariant-uniqueness-curried A x y f C is-covariant-C u)
       (is-equiv-total-map-covariant-uniqueness-curried A x y f C is-covariant-C u)
       v
-
 ```
-
-
-
-
 
 ## Covariant functoriality
 

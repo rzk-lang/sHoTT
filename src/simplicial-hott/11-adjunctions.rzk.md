@@ -28,17 +28,17 @@ appropriate hom types.
 
 A functor `#!rzk f : A → B` is a transposing left adjoint if it has a
 transposing right adjoint. Later we will show that the type
-`#!rzk is-transposing-ladj A B f` is a proposition when `#!rzk A` is Rezk and
-`#!rzk B` is Segal.
+`#!rzk is-transposing-left-adj A B f` is a proposition when `#!rzk A` is Rezk
+and `#!rzk B` is Segal.
 
 ```rzk
-#def is-transposing-ladj
+#def is-transposing-left-adj
   ( A B : U)
   ( f : A → B)
   : U
   := Σ (u : B → A), is-transposing-adj A B f u
 
-#def is-transposing-radj
+#def is-transposing-right-adj
   ( A B : U)
   ( u : B → A)
   : U
@@ -81,13 +81,13 @@ or right adjoint part of a quasi-diagrammatic adjunction is not a proposition.
 Thus, we assign slightly different names to the following types.
 
 ```rzk
-#def has-quasi-diagrammatic-radj
+#def has-quasi-diagrammatic-right-adj
   ( A B : U)
   ( f : A → B)
   : U
   := Σ (u : B → A), has-quasi-diagrammatic-adj A B f u
 
-#def has-quasi-diagrammatic-ladj
+#def has-quasi-diagrammatic-left-adj
   ( A B : U)
   ( u : B → A)
   : U
@@ -114,29 +114,33 @@ adjunction.
   : nat-trans B (\ _ → B) (comp B A B f u) (identity B)
   := first (second (has-quasi-diagrammatic-adj-fu))
 
-#def radj-triangle-has-quasi-diagrammatic-adj
+#def right-adj-triangle-has-quasi-diagrammatic-adj
   ( A B : U)
   ( f : A → B)
   ( u : B → A)
   ( has-quasi-diagrammatic-adj-fu : has-quasi-diagrammatic-adj A B f u)
   : hom2 (B → A) u (triple-comp B A B A u f u) u
     ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f)
-      ( unit-has-quasi-diagrammatic-adj A B f u has-quasi-diagrammatic-adj-fu))
+      ( unit-has-quasi-diagrammatic-adj A B f u
+        ( has-quasi-diagrammatic-adj-fu)))
     ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u
-      ( counit-has-quasi-diagrammatic-adj A B f u has-quasi-diagrammatic-adj-fu))
+      ( counit-has-quasi-diagrammatic-adj A B f u
+        ( has-quasi-diagrammatic-adj-fu)))
     ( id-hom (B → A) u)
   := first (second (second (has-quasi-diagrammatic-adj-fu)))
 
-#def ladj-triangle-has-quasi-diagrammatic-adj
+#def left-adj-triangle-has-quasi-diagrammatic-adj
   ( A B : U)
   ( f : A → B)
   ( u : B → A)
   ( has-quasi-diagrammatic-adj-fu : has-quasi-diagrammatic-adj A B f u)
   : hom2 (A → B) f (triple-comp A B A B f u f) f
     ( postwhisker-nat-trans A A B (identity A) (comp A B A u f) f
-      ( unit-has-quasi-diagrammatic-adj A B f u has-quasi-diagrammatic-adj-fu))
+      ( unit-has-quasi-diagrammatic-adj A B f u
+        ( has-quasi-diagrammatic-adj-fu)))
     ( prewhisker-nat-trans A B B f (comp B A B f u) (identity B)
-      ( counit-has-quasi-diagrammatic-adj A B f u has-quasi-diagrammatic-adj-fu))
+      ( counit-has-quasi-diagrammatic-adj A B f u
+        ( has-quasi-diagrammatic-adj-fu)))
     ( id-hom (A → B) f)
   := second (second (second (has-quasi-diagrammatic-adj-fu)))
 ```
@@ -276,13 +280,13 @@ triangle identities, one involving each counit.
   : U
   := Σ (f : A → B), Σ (u : B → A), is-bi-diagrammatic-adj A B f u
 
-#def is-bi-diagrammatic-ladj
+#def is-bi-diagrammatic-left-adj
   ( A B : U)
   ( f : A → B)
   : U
   := Σ (u : B → A), is-bi-diagrammatic-adj A B f u
 
-#def is-bi-diagrammatic-radj
+#def is-bi-diagrammatic-right-adj
   ( A B : U)
   ( u : B → A)
   : U
@@ -310,13 +314,13 @@ where "quasi-equivalence" is another name for "invertible map."
   : U
   := Σ (f : A → B), Σ (u : B → A), has-quasi-transposing-adj A B f u
 
-#def has-quasi-transposing-radj
+#def has-quasi-transposing-right-adj
   ( A B : U)
   ( f : A → B)
   : U
   := Σ (u : B → A), has-quasi-transposing-adj A B f u
 
-#def has-quasi-transposing-ladj
+#def has-quasi-transposing-left-adj
   ( A B : U)
   ( u : B → A)
   : U

@@ -814,6 +814,75 @@ is covariant as shown above. Transport of an `e : C x` along an arrow
     ( center-contraction (dhom-from A x y f C u) (is-covariant-C x y f u))
     ( lift)
     ( homotopy-contraction (dhom-from A x y f C u) (is-covariant-C x y f u) lift)
+
+#def covariant-uniqueness-curried
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  : ( v : C y)
+  → ( dhom A x y f C u v)
+  → ( covariant-transport A x y f C is-covariant-C u) = v
+  :=
+    \ v g → covariant-uniqueness A x y f C is-covariant-C u (v, g)
+
+```
+
+We show that for each `v : C y`, the  map `covariant-uniqueness` is an equivalence.
+This follows from the fact that the total spaces (summed over `v : C y`)
+of both sides are contractible.
+
+```rzk title="RS17, Lemma 8.15"
+#def is-equiv-total-map-covariant-uniqueness-curried
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  : is-equiv
+      (Σ (v : C y), dhom A x y f C u v)
+      (Σ (v : C y), covariant-transport A x y f C is-covariant-C u = v)
+      ( total-map (C y)
+        (dhom A x y f C u)
+        (\ v → covariant-transport A x y f C is-covariant-C u = v)
+        (covariant-uniqueness-curried A x y f C is-covariant-C u)
+      )
+  :=
+    is-equiv-are-contr
+      (Σ (v : C y), dhom A x y f C u v)
+      (Σ (v : C y), covariant-transport A x y f C is-covariant-C u = v)
+      (is-covariant-C x y f u)
+      (is-contr-based-paths (C y) (covariant-transport A x y f C is-covariant-C u))
+      ( total-map (C y)
+        (dhom A x y f C u)
+        (\ v → covariant-transport A x y f C is-covariant-C u = v)
+        (covariant-uniqueness-curried A x y f C is-covariant-C u)
+      )
+
+#def is-equiv-covariant-uniqueness-curried
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  ( v : C y)
+  : is-equiv
+      (dhom A x y f C u v)
+      (covariant-transport A x y f C is-covariant-C u = v)
+      (covariant-uniqueness-curried A x y f C is-covariant-C u v)
+  :=
+
+    total-equiv-family-of-equiv
+      (C y)
+      (dhom A x y f C u)
+      (\ v' → covariant-transport A x y f C is-covariant-C u = v')
+      (covariant-uniqueness-curried A x y f C is-covariant-C u)
+      (is-equiv-total-map-covariant-uniqueness-curried A x y f C is-covariant-C u)
+      v
 ```
 
 ## Covariant functoriality

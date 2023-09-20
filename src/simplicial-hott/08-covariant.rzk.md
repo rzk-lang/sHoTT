@@ -1649,7 +1649,7 @@ commuting with the contravariant lifts.
 ```
 
 ```rzk title="RS17, Proposition 8.29"
-#def is-two-sided-discrete-representable-is-segal
+#def is-two-sided-discrete-hom-is-segal
   ( A : U)
   ( is-segal-A : is-segal A)
   : is-two-sided-discrete A A (hom A)

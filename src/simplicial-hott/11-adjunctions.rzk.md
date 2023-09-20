@@ -52,7 +52,7 @@ Quasi-diagrammatic adjunctions are defined by opposing functors
 transformations, and a pair of witnesses to the triangle identities.
 
 ```rzk title="RS17, Definition 11.2"
-#def is-quasi-diagrammatic-adj
+#def has-quasi-diagrammatic-adj
   ( A B : U)
   ( f : A → B)
   ( u : B → A)
@@ -73,7 +73,7 @@ transformations, and a pair of witnesses to the triangle identities.
 #def quasi-diagrammatic-adj
   ( A B : U)
   : U
-  := Σ (f : A → B), Σ (u : B → A), is-quasi-diagrammatic-adj A B f u
+  := Σ (f : A → B), Σ (u : B → A), has-quasi-diagrammatic-adj A B f u
 ```
 
 Quasi-diagrammatic adjunctions have left and right adjoints, but being the left
@@ -85,60 +85,60 @@ Thus, we assign slightly different names to the following types.
   ( A B : U)
   ( f : A → B)
   : U
-  := Σ (u : B → A), is-quasi-diagrammatic-adj A B f u
+  := Σ (u : B → A), has-quasi-diagrammatic-adj A B f u
 
 #def has-quasi-diagrammatic-ladj
   ( A B : U)
   ( u : B → A)
   : U
-  := Σ (f : A → B), is-quasi-diagrammatic-adj A B f u
+  := Σ (f : A → B), has-quasi-diagrammatic-adj A B f u
 ```
 
 The following projection functions extract the core data of a quasi-diagrammatic
 adjunction.
 
 ```rzk
-#def unit-is-quasi-diagrammatic-adj
+#def unit-has-quasi-diagrammatic-adj
   ( A B : U)
   ( f : A → B)
   ( u : B → A)
-  ( is-quasi-diagrammatic-adj-fu : is-quasi-diagrammatic-adj A B f u)
+  ( has-quasi-diagrammatic-adj-fu : has-quasi-diagrammatic-adj A B f u)
   : nat-trans A (\ _ → A) (identity A) (comp A B A u f)
-  := first (is-quasi-diagrammatic-adj-fu)
+  := first (has-quasi-diagrammatic-adj-fu)
 
-#def counit-is-quasi-diagrammatic-adj
+#def counit-has-quasi-diagrammatic-adj
   ( A B : U)
   ( f : A → B)
   ( u : B → A)
-  ( is-quasi-diagrammatic-adj-fu : is-quasi-diagrammatic-adj A B f u)
+  ( has-quasi-diagrammatic-adj-fu : has-quasi-diagrammatic-adj A B f u)
   : nat-trans B (\ _ → B) (comp B A B f u) (identity B)
-  := first (second (is-quasi-diagrammatic-adj-fu))
+  := first (second (has-quasi-diagrammatic-adj-fu))
 
-#def radj-triangle-is-quasi-diagrammatic-adj
+#def radj-triangle-has-quasi-diagrammatic-adj
   ( A B : U)
   ( f : A → B)
   ( u : B → A)
-  ( is-quasi-diagrammatic-adj-fu : is-quasi-diagrammatic-adj A B f u)
+  ( has-quasi-diagrammatic-adj-fu : has-quasi-diagrammatic-adj A B f u)
   : hom2 (B → A) u (triple-comp B A B A u f u) u
     ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f)
-      ( unit-is-quasi-diagrammatic-adj A B f u is-quasi-diagrammatic-adj-fu))
+      ( unit-has-quasi-diagrammatic-adj A B f u has-quasi-diagrammatic-adj-fu))
     ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u
-      ( counit-is-quasi-diagrammatic-adj A B f u is-quasi-diagrammatic-adj-fu))
+      ( counit-has-quasi-diagrammatic-adj A B f u has-quasi-diagrammatic-adj-fu))
     ( id-hom (B → A) u)
-  := first (second (second (is-quasi-diagrammatic-adj-fu)))
+  := first (second (second (has-quasi-diagrammatic-adj-fu)))
 
-#def ladj-triangle-is-quasi-diagrammatic-adj
+#def ladj-triangle-has-quasi-diagrammatic-adj
   ( A B : U)
   ( f : A → B)
   ( u : B → A)
-  ( is-quasi-diagrammatic-adj-fu : is-quasi-diagrammatic-adj A B f u)
+  ( has-quasi-diagrammatic-adj-fu : has-quasi-diagrammatic-adj A B f u)
   : hom2 (A → B) f (triple-comp A B A B f u f) f
     ( postwhisker-nat-trans A A B (identity A) (comp A B A u f) f
-      ( unit-is-quasi-diagrammatic-adj A B f u is-quasi-diagrammatic-adj-fu))
+      ( unit-has-quasi-diagrammatic-adj A B f u has-quasi-diagrammatic-adj-fu))
     ( prewhisker-nat-trans A B B f (comp B A B f u) (identity B)
-      ( counit-is-quasi-diagrammatic-adj A B f u is-quasi-diagrammatic-adj-fu))
+      ( counit-has-quasi-diagrammatic-adj A B f u has-quasi-diagrammatic-adj-fu))
     ( id-hom (A → B) f)
-  := second (second (second (is-quasi-diagrammatic-adj-fu)))
+  := second (second (second (has-quasi-diagrammatic-adj-fu)))
 ```
 
 ## Half-adjoint diagrammatic adjunctions
@@ -181,7 +181,7 @@ boundary data of a 3-simplex in lexicographic order.
   ( u : B → A)
   : U
   :=
-    Σ ( (η , (ϵ , (α , β))) : is-quasi-diagrammatic-adj A B f u),
+    Σ ( (η , (ϵ , (α , β))) : has-quasi-diagrammatic-adj A B f u),
     Σ ( μ : hom2
             ( B → B)
             ( comp B A B f u)
@@ -287,4 +287,38 @@ triangle identities, one involving each counit.
   ( u : B → A)
   : U
   := Σ (f : A → B), is-bi-diagrammatic-adj A B f u
+```
+
+## Quasi-transposing adjunction
+
+Quasi-transposing adjunctions are defined by opposing functors `#!rzk f : A → B`
+and `#!rzk u : B → A` together with a family of "transposing quasi-equivalences"
+where "quasi-equivalence" is another name for "invertible map."
+
+```rzk title="RS17, Definition 11.7"
+#def has-quasi-transposing-adj
+  ( A B : U)
+  ( f : A → B)
+  ( u : B → A)
+  : U
+  := (a : A) → (b : B) →
+    Σ (ϕ : (hom B (f a) b) → (hom A a (u b))),
+      has-inverse (hom B (f a) b) (hom A a (u b)) ϕ
+
+#def quasi-transposing-adj
+  ( A B : U)
+  : U
+  := Σ (f : A → B), Σ (u : B → A), has-quasi-transposing-adj A B f u
+
+#def has-quasi-transposing-radj
+  ( A B : U)
+  ( f : A → B)
+  : U
+  := Σ (u : B → A), has-quasi-transposing-adj A B f u
+
+#def has-quasi-transposing-ladj
+  ( A B : U)
+  ( u : B → A)
+  : U
+  := Σ (f : A → B), has-quasi-transposing-adj A B f u
 ```

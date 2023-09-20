@@ -863,7 +863,7 @@ of both sides are contractible.
         (covariant-uniqueness-curried A x y f C is-covariant-C u)
       )
 
-#def covariant-uniqueness-curried-is-equiv
+#def is-equiv-covariant-uniqueness-curried
   ( A : U)
   ( x y : A)
   ( f : hom A x y)

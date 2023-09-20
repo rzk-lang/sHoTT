@@ -136,7 +136,7 @@ The union of shapes is defined by disjunction on topes.
 </svg>
 
 ```rzk title="RS17 Proposition 3.5(a)"
-#define arrow-to-squares-or
+#define join-square-arrow
   (A : U)
   (f : 2 → A)
   : (2 × 2) → A
@@ -168,7 +168,7 @@ The union of shapes is defined by disjunction on topes.
 </svg>
 
 ```rzk title="RS17 Proposition 3.5(b)"
-#define arrow-to-squares-and
+#define meet-square-arrow
   (A : U)
   (f : 2 → A)
   : (2 × 2) → A

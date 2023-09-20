@@ -872,6 +872,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#two-sided-discrete-fibrations" class="md-nav__link">
+    Two sided discrete fibrations
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1061,6 +1068,13 @@
         <li class="md-nav__item">
   <a href="#contravariant-natural-transformations" class="md-nav__link">
     Contravariant natural transformations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-sided-discrete-fibrations" class="md-nav__link">
+    Two sided discrete fibrations
   </a>
   
 </li>
@@ -2586,6 +2600,24 @@ commuting with the contravariant lifts.</p>
 </span><span id="__span-42-26"><a id="__codelineno-42-26" name="__codelineno-42-26" href="#__codelineno-42-26"></a><span class="err">    contravariant-uniqueness A x y f D is-contravariant-D (ϕ y v)</span>
 </span><span id="__span-42-27"><a id="__codelineno-42-27" name="__codelineno-42-27" href="#__codelineno-42-27"></a><span class="err">    ( contravariant-fiberwise-transformation-application</span>
 </span><span id="__span-42-28"><a id="__codelineno-42-28" name="__codelineno-42-28" href="#__codelineno-42-28"></a><span class="err">        A x y f C D is-contravariant-C ϕ v)</span>
+</span></code></pre></div>
+<h2 id="two-sided-discrete-fibrations">Two sided discrete fibrations<a class="headerlink" href="#two-sided-discrete-fibrations" title="Permanent link">&para;</a></h2>
+<div class="language-rzk highlight"><span class="filename">RS17, Definition 8.28</span><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-two-sided-discrete" id="define:is-two-sided-discrete" style="visibility: visible; position: relative; color: inherit">is-two-sided-discrete</a></span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → B → U)</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="err">  : U</span>
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a><span class="err">  :=</span>
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a><span class="err">    product</span>
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a><span class="err">      </span><span class="p">( </span>(a <span class="p">:</span><span class="err"> A) → is-covariant B (</span><span class="p">\</span>b <span class="err">→ C a b))</span>
+</span><span id="__span-43-8"><a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a><span class="err">      </span><span class="p">( </span>(b <span class="p">:</span><span class="err"> B) → is-contravariant A (</span><span class="p">\ </span>a <span class="err">→ C a b))</span>
+</span></code></pre></div>
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.29</span><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-two-sided-discrete-hom-is-segal" id="define:is-two-sided-discrete-hom-is-segal" style="visibility: visible; position: relative; color: inherit">is-two-sided-discrete-hom-is-segal</a></span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="err">  </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="err">  : is-two-sided-discrete A A (hom A)</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="err">  :=</span>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a><span class="err">    ( is-covariant-representable-is-segal A is-segal-A ,</span>
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a><span class="err">      is-contravariant-representable-is-segal A is-segal-A)</span>
 </span></code></pre></div>
 
 

@@ -836,7 +836,7 @@ of both sides are contractible.
 
 ```rzk title="RS17, Lemma 8.15"
 
-#def total-map-covariant-uniqueness-curried-is-equiv
+#def is-equiv-total-map-covariant-uniqueness-curried
   ( A : U)
   ( x y : A)
   ( f : hom A x y)

@@ -823,10 +823,10 @@ is covariant as shown above. Transport of an `e : C x` along an arrow
   ( is-covariant-C : is-covariant A C)
   ( u : C x)
   : ( v : C y)
-  -> ( dhom A x y f C u v)
-  -> ( covariant-transport A x y f C is-covariant-C u) = v
+  → ( dhom A x y f C u v)
+  → ( covariant-transport A x y f C is-covariant-C u) = v
   :=
-    \ v g -> covariant-uniqueness A x y f C is-covariant-C u (v, g)
+    \ v g → covariant-uniqueness A x y f C is-covariant-C u (v, g)
 
 ```
 
@@ -840,26 +840,26 @@ of both sides are contractible.
   ( A : U)
   ( x y : A)
   ( f : hom A x y)
-  ( C : A -> U)
+  ( C : A → U)
   ( is-covariant-C : is-covariant A C)
   ( u : C x)
   : is-equiv
-      (Sigma (v : C y), dhom A x y f C u v)
-      (Sigma (v : C y), covariant-transport A x y f C is-covariant-C u = v)
+      (Σ (v : C y), dhom A x y f C u v)
+      (Σ (v : C y), covariant-transport A x y f C is-covariant-C u = v)
       ( total-map (C y)
         (dhom A x y f C u)
-        (\ v -> covariant-transport A x y f C is-covariant-C u = v)
+        (\ v → covariant-transport A x y f C is-covariant-C u = v)
         (covariant-uniqueness-curried A x y f C is-covariant-C u)
       )
   :=
     is-equiv-are-contr
-      (Sigma (v : C y), dhom A x y f C u v)
-      (Sigma (v : C y), covariant-transport A x y f C is-covariant-C u = v)
+      (Σ (v : C y), dhom A x y f C u v)
+      (Σ (v : C y), covariant-transport A x y f C is-covariant-C u = v)
       (is-covariant-C x y f u)
       (is-contr-based-paths (C y) (covariant-transport A x y f C is-covariant-C u))
       ( total-map (C y)
         (dhom A x y f C u)
-        (\ v -> covariant-transport A x y f C is-covariant-C u = v)
+        (\ v → covariant-transport A x y f C is-covariant-C u = v)
         (covariant-uniqueness-curried A x y f C is-covariant-C u)
       )
 
@@ -867,7 +867,7 @@ of both sides are contractible.
   ( A : U)
   ( x y : A)
   ( f : hom A x y)
-  ( C : A -> U)
+  ( C : A → U)
   ( is-covariant-C : is-covariant A C)
   ( u : C x)
   ( v : C y)
@@ -876,12 +876,13 @@ of both sides are contractible.
       (covariant-transport A x y f C is-covariant-C u = v)
       (covariant-uniqueness-curried A x y f C is-covariant-C u v)
   :=
+
     total-equiv-family-of-equiv
       (C y)
       (dhom A x y f C u)
-      (\ v' -> covariant-transport A x y f C is-covariant-C u = v')
+      (\ v' → covariant-transport A x y f C is-covariant-C u = v')
       (covariant-uniqueness-curried A x y f C is-covariant-C u)
-      (total-map-covariant-uniqueness-curried-is-equiv A x y f C is-covariant-C u)
+      (is-equiv-total-map-covariant-uniqueness-curried A x y f C is-covariant-C u)
       v
 
 ```

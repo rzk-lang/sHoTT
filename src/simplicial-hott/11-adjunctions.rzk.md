@@ -531,5 +531,35 @@ transformation.
           ( is-contravariant-representable-is-segal B is-segal-B b)
           ( f))
 
+#def is-equiv-counit-transposition uses (is-segal-A is-segal-B funext)
+  : is-equiv
+    ( nat-trans B (\ _ → B) (comp B A B f u) (identity B))
+    ( (b : B) → (a : A) → (hom A a (u b)) → (hom B (f a) b))
+    ( \ ϵ b a k →
+      comp-is-segal B is-segal-B (f a) (f (u b)) b
+      ( ap-hom A B f a (u b) k)
+      ( \ t -> ϵ t b))
+  :=
+    is-equiv-comp
+    ( nat-trans B (\ _ → B) (comp B A B f u) (identity B))
+    ( (b : B) → hom B (f (u b)) b)
+    ( (b : B) → (a : A) → (hom A a (u b)) → (hom B (f a) b))
+    ( ev-components-nat-trans B (\ _ → B) (comp B A B f u) (identity B))
+    ( is-equiv-ev-components-nat-trans B (\ _ → B)(comp B A B f u) (identity B))
+    ( \ ϵ b a k →
+      comp-is-segal B is-segal-B (f a) (f (u b)) b
+      ( ap-hom A B f a (u b) k)
+      ( \ t -> ϵ b t))
+    ( is-equiv-function-is-equiv-family
+      ( funext)
+      ( B)
+      ( \ b → hom B (f (u b)) b)
+      ( \ b → (a : A) → (hom A a (u b)) → (hom B (f a) b))
+      ( \ b ϵb a k →
+        comp-is-segal B is-segal-B (f a) (f (u b)) b
+        ( ap-hom A B f a (u b) k)
+        ( ϵb))
+      ( is-equiv-counit-component-transposition))
+
 #end unit-counit-transposition
 ```

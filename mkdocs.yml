@@ -31,6 +31,7 @@ nav:
       - Covariantly Functorial Type Families: simplicial-hott/08-covariant.rzk.md
       - The Yoneda Lemma: simplicial-hott/09-yoneda.rzk.md
       - Rezk Types: simplicial-hott/10-rezk-types.rzk.md
+      - Adjunctions: simplicial-hott/11-adjunctions.rzk.md
       - Cocartesian Families: simplicial-hott/12-cocartesian.rzk.md
 
 markdown_extensions:

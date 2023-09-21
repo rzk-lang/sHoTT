@@ -209,6 +209,25 @@ This is proven combining the previous steps.
         ( evid-yon A is-segal-A a C is-covariant-C)))
 ```
 
+For later use, we observe that the same proof shows that the inverse map is an
+equivalence.
+
+```rzk
+#def inv-yoneda-lemma uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a : A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  : is-equiv (C a) ((z : A) → hom A a z → C z)
+      ( yon A is-segal-A a C is-covariant-C)
+  :=
+    ( ( ( evid A a C) ,
+        ( evid-yon A is-segal-A a C is-covariant-C)) ,
+      ( ( evid A a C) ,
+        ( yon-evid A is-segal-A a C is-covariant-C)))
+```
+
 ## Naturality
 
 The equivalence of the Yoneda lemma is natural in both $a : A$ and $C : A → U$.
@@ -557,6 +576,25 @@ equivalence.
         ( contra-evid-yon A is-segal-A a C is-contravariant-C)))
 ```
 
+For later use, we observe that the same proof shows that the inverse map is an
+equivalence.
+
+```rzk
+#def inv-contra-yoneda-lemma uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a : A)
+  ( C : A → U)
+  ( is-contravariant-C : is-contravariant A C)
+  : is-equiv (C a) ((z : A) → hom A z a → C z)
+      ( contra-yon A is-segal-A a C is-contravariant-C)
+  :=
+    ( ( ( contra-evid A a C) ,
+        ( contra-evid-yon A is-segal-A a C is-contravariant-C)) ,
+      ( ( contra-evid A a C) ,
+        ( contra-yon-evid A is-segal-A a C is-contravariant-C)))
+```
+
 ## Contravariant Naturality
 
 The equivalence of the Yoneda lemma is natural in both $a : A$ and $C : A → U$.
@@ -775,15 +813,8 @@ family defines an inverse equivalence to evaluation at the element.
 
 ## Initial objects in slice categories
 
-The type `#!rzk coslice A a` is the type of arrows in $A$ with domain $a$.
-
-```rzk
-#def coslice
-  ( A : U)
-  ( a : A)
-  : U
-  := Σ ( z : A) , (hom A a z)
-```
+Recall that the type `#!rzk coslice A a`
+is the type of arrows in $A$ with domain $a$.
 
 We now show that the coslice under $a$ in a Segal type $A$ has an initial object
 given by the identity arrow at $a$. This makes use of the following equivalence.
@@ -1004,15 +1035,8 @@ family defines an inverse equivalence to evaluation at the element.
 
 ## Final objects in slice categories
 
-The type `#!rzk slice A a` is the type of arrows in $A$ with codomain $a$.
-
-```rzk
-#def slice
-  ( A : U)
-  ( a : A)
-  : U
-  := Σ (z : A) , (hom A z a)
-```
+Recall that the type `#!rzk slice A a`
+is the type of arrows in $A$ with codomain $a$.
 
 We now show that the slice over $a$ in a Segal type $A$ has a final object given
 by the identity arrow at $a$. This makes use of the following equivalence.

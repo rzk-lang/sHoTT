@@ -227,17 +227,11 @@ There is another form, which corresponds to the standard weak function extension
 ```rzk title"RS17, Axiom 4.6, Extension extensionality"
 #define WeakExtExt
   : U
-    := 
-        ( I : CUBE) → 
-        ( ψ : I → TOPE) → 
-        ( ϕ : ψ → TOPE) → 
-        ( A : ψ → U) → 
-        (is-locally-contr-A : (t : ψ) → is-contr (A t)) → 
-        (a : (t : ϕ) → A t )
-        → is-contr
-            ((t : ψ) → A t [ϕ t ↦ a t])
+  := ( I : CUBE) → (ψ : I → TOPE) → (ϕ : ψ → TOPE) → (A : ψ → U) → 
+     ( is-locally-contr-A : (t : ψ) → is-contr (A t)) → 
+     ( a : (t : ϕ) → A t) → is-contr ((t : ψ) → A t [ϕ t ↦ a t])
 
-#assume weak-ext-ext : WeakExtExt
+--#assume weak-ext-ext : WeakExtExt
 ```
 
 The type that encodes the extension extensionality axiom. As suggested by
@@ -274,11 +268,12 @@ footnote 8, we assert this as an "extension extensionality" axiom
   : Equiv (f = g) ((t : ψ) → (f t = g t) [ϕ t ↦ refl])
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
 ```
-Weak extension extensionality implies extension extensionality; this is the context of RS17 Proposition 4.8 (i). We prove this in a series of lemmas. 
+Weak extension extensionality implies extension extensionality; this is the context of RS17 Proposition 4.8 (i). We prove this in a series of lemmas. The `ext-projection-temp` function is a (hopefully temporary) helper that explicitly cases an extension type to a function type. 
 
 ```rzk 
 #section rs-4-8
 
+#variable  weak-ext-ext : WeakExtExt
 #variable  I : CUBE  
 #variable  ψ : I → TOPE 
 #variable  ϕ : ψ → TOPE 
@@ -287,40 +282,39 @@ Weak extension extensionality implies extension extensionality; this is the cont
 #variable  f : (t : ψ ) → A t [ϕ t ↦ a t] 
 
 #define ext-projection-temp uses (I ψ ϕ A a f)
-    : ((t : ψ ) → A t)
-    := f
+  : ((t : ψ ) → A t)
+  := f
 
 #define is-contr-ext-based-paths uses (weak-ext-ext f) 
-    : is-contr 
-        ((t : ψ ) → (Σ (y : A t) ,
-                    ((ext-projection-temp) t = y))[ϕ t ↦ (a t , refl)])
-    := weak-ext-ext 
-        ( I )
-        ( ψ )
-        ( ϕ )
-        ( \t → (Σ (y : A t) , ((ext-projection-temp) t = y)))
-        (\ t → 
+  : is-contr ((t : ψ ) → (Σ (y : A t) ,
+              ((ext-projection-temp) t = y))[ϕ t ↦ (a t , refl)])
+  := weak-ext-ext 
+      ( I )
+      ( ψ )
+      ( ϕ )
+      ( \ t → (Σ (y : A t) , ((ext-projection-temp) t = y)))
+      ( \ t → 
             is-contr-based-paths (A t ) ((ext-projection-temp) t))
-        (\ t → (a t , refl) ) 
+      ( \ t → (a t , refl) ) 
 
 #define is-contr-based-paths-ext uses (weak-ext-ext)
-    : is-contr (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
-                (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
-    :=
-        is-contr-equiv-is-contr
-        ((t : ψ ) → (Σ (y : A t),
+  : is-contr (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
+              (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
+  :=
+    is-contr-equiv-is-contr
+    ( (t : ψ ) → (Σ (y : A t),
                      ((ext-projection-temp ) t = y)) [ϕ t ↦ (a t , refl)] )
-        (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
+    ( Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
                 (t : ψ ) → (f t = g t) [ϕ t ↦ refl] )
-        (axiom-choice
-            ( I )
-            ( ψ ) 
-            ( ϕ ) 
-            ( A ) 
-            ( \ t y → (ext-projection-temp) t = y)
-            ( a ) -- a
-            ( \t → refl )) 
-        (is-contr-ext-based-paths) 
+    ( axiom-choice
+      ( I )
+      ( ψ ) 
+      ( ϕ ) 
+      ( A ) 
+      ( \ t y → (ext-projection-temp) t = y)
+      ( a ) -- a
+      ( \t → refl )) 
+    ( is-contr-ext-based-paths) 
 
 #end rs-4-8
 ```
@@ -328,65 +322,79 @@ Weak extension extensionality implies extension extensionality; this is the cont
 The map that defines extension extensionality
 ```rzk title="RS17 4.7"
 #define ext-ext-weak-ext-ext-map
-    ( I : CUBE)  
-    ( ψ : I → TOPE) 
-    ( ϕ : ψ → TOPE) 
-    ( A : ψ → U) 
-    ( a : (t : ϕ ) → A t) 
-    ( f : (t : ψ ) → A t [ϕ t ↦ a t]) 
-    : ((Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g)) →
-        Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
+  ( I : CUBE)  
+  ( ψ : I → TOPE) 
+  ( ϕ : ψ → TOPE) 
+  ( A : ψ → U) 
+  ( a : (t : ϕ ) → A t) 
+  ( f : (t : ψ ) → A t [ϕ t ↦ a t]) 
+  : ((Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g)) →
+      Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
         ((t : ψ ) → (f t = g t) [ϕ t ↦ refl]))
-    := total-map
-        ((t : ψ ) → A t [ϕ t ↦ a t])
-        (\ g → (f = g))
-        (\ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
-        (ext-htpy-eq I ψ ϕ A a f)
+  := 
+    total-map
+      ( (t : ψ ) → A t [ϕ t ↦ a t])
+      ( \ g → (f = g))
+      ( \ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
+      ( ext-htpy-eq I ψ ϕ A a f)
 ```
 
 The total bundle version of extension extensionality
 ```rzk
-#define ext-ext-weak-ext-ext-bundle-version uses (weak-ext-ext)  
-    ( I : CUBE)  
-    ( ψ : I → TOPE) 
-    ( ϕ : ψ → TOPE) 
-    ( A : ψ → U) 
-    ( a : (t : ϕ ) → A t) 
-    ( f : (t : ψ ) → A t [ϕ t ↦ a t]) 
-    : is-equiv ((Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g)))
+#define ext-ext-weak-ext-ext-bundle-version
+  ( weak-ext-ext : WeakExtExt)  
+  ( I : CUBE)  
+  ( ψ : I → TOPE) 
+  ( ϕ : ψ → TOPE) 
+  ( A : ψ → U) 
+  ( a : (t : ϕ ) → A t) 
+  ( f : (t : ψ ) → A t [ϕ t ↦ a t]) 
+  : is-equiv ((Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g)))
                (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
                   ((t : ψ ) → (f t = g t) [ϕ t ↦ refl]))
                (ext-ext-weak-ext-ext-map I ψ ϕ A a f)
-    := is-equiv-are-contr 
-        ((Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g))  ) 
-        ( Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
-        ((t : ψ ) → (f t = g t) [ϕ t ↦ refl])) 
-        ( is-contr-based-paths
-            ( (t : ψ ) → A t [ϕ t ↦ a t])
-            ( f )) 
-        ( is-contr-based-paths-ext I ψ ϕ A a f) 
-        ( ext-ext-weak-ext-ext-map I ψ ϕ A a f)  
+  := 
+    is-equiv-are-contr 
+      ((Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g))  ) 
+      ( Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
+      ((t : ψ ) → (f t = g t) [ϕ t ↦ refl])) 
+      ( is-contr-based-paths
+        ( (t : ψ ) → A t [ϕ t ↦ a t])
+        ( f )) 
+      ( is-contr-based-paths-ext weak-ext-ext I ψ ϕ A a f) 
+      ( ext-ext-weak-ext-ext-map I ψ ϕ A a f)  
 ```
-Finally, using equivalences between families of equivalences and bundles of equivalences we have that weak extension extensionality implies extension extensionality
+Finally, using equivalences between families of equivalences and bundles of equivalences we have that weak extension extensionality implies extension extensionality. The following is statement the as proved in RS17. 
+
+```rzk title=RS17 Prop 4.8(i) as proved
+#define ext-ext-weak-ext-ext'
+  ( weak-ext-ext : WeakExtExt)
+  ( I : CUBE)  
+  ( ψ : I → TOPE) 
+  ( ϕ : ψ → TOPE) 
+  ( A : ψ → U) 
+  ( a : (t : ϕ ) → A t) 
+  ( f : (t : ψ ) → A t [ϕ t ↦ a t]) 
+  : (g : (t : ψ ) → A t [ϕ t ↦ a t]) 
+     → is-equiv 
+        ( f = g) 
+        ( (t : ψ ) → (f t = g t) [ϕ t ↦ refl]) 
+        ( ext-htpy-eq I ψ ϕ A a f g)
+  := total-equiv-family-of-equiv 
+      ( (t : ψ ) → A t [ϕ t ↦ a t] ) 
+      ( \ g → (f = g) ) 
+      ( \ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl]) 
+      ( ext-htpy-eq I ψ ϕ A a f) 
+      ( ext-ext-weak-ext-ext-bundle-version weak-ext-ext I ψ ϕ A a f) 
+```
+The following is the literal statement of weak extension extensionality implying extension extensionality that we get by extraccting the fiberwise equivalence. 
 
 ```rzk title="RS17 Proposition 4.8(i)
-#define ext-ext-weak-ext-ext uses (weak-ext-ext)
-    ( I : CUBE)  
-    ( ψ : I → TOPE) 
-    ( ϕ : ψ → TOPE) 
-    ( A : ψ → U) 
-    ( a : (t : ϕ ) → A t) 
-    ( f : (t : ψ ) → A t [ϕ t ↦ a t]) 
-    : (g : (t : ψ ) → A t [ϕ t ↦ a t]) 
-        → is-equiv (f = g) 
-                   ((t : ψ ) → (f t = g t) [ϕ t ↦ refl]) 
-                   (ext-htpy-eq I ψ ϕ A a f g)
-    := total-equiv-family-of-equiv 
-        ((t : ψ ) → A t [ϕ t ↦ a t] ) 
-        (\ g → (f = g) ) 
-        (\ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl]) 
-        (ext-htpy-eq I ψ ϕ A a f) 
-        (ext-ext-weak-ext-ext-bundle-version I ψ ϕ A a f) 
+#define ext-ext-weak-ext-ext 
+  (weak-ext-ext : WeakExtExt)
+   :  ExtExt
+  := \ I ψ ϕ A a f g → 
+      ext-ext-weak-ext-ext' weak-ext-ext I ψ ϕ A a f g
 ```
 
 In particular, extension extensionality implies that homotopies give rise to

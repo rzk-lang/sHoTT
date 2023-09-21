@@ -198,14 +198,14 @@ A reformulated version via tope disjunction instead of inclusion (see
         ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl)))
 ```
 
-## Relative extension extensionality
+## Extension extensionality
 
 There are various equivalent forms of the relative function extensionality axiom
 for extension types. One form corresponds to the standard weak function
 extensionality. As suggested by footnote 8, we refer to this as a "weak
 extension extensionality" axiom.
 
-```rzk title"RS17, Axiom 4.6, Weak extension extensionality"
+```rzk title="RS17, Axiom 4.6, Weak extension extensionality"
 #define WeakExtExt
   : U
   := ( I : CUBE) → (ψ : I → TOPE) → (ϕ : ψ → TOPE) → (A : ψ → U) →
@@ -404,7 +404,7 @@ extension extensionality that we get by extraccting the fiberwise equivalence.
       ext-ext-weak-ext-ext' weak-ext-ext I ψ ϕ A a f g
 ```
 
-## Applications of extension extensionality.
+## Applications of extension extensionality
 
 We now assume extension extensionality and derive a few consequences.
 

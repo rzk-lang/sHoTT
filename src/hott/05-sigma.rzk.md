@@ -6,6 +6,18 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
+It is convenient to have a shorthand for `Σ (x : A), C x`
+which avoids explicit naming the variable `x : A`.
+
+```rzk
+#def total-type
+  ( A : U)
+  ( C : A → U)
+  : U
+  :=
+    Σ (x : A), C x
+```
+
 ## Paths involving products
 
 ```rzk

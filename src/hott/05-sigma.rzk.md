@@ -10,7 +10,7 @@ It is convenient to have a shorthand for `Σ (x : A), C x`
 which avoids explicit naming the variable `x : A`.
 
 ```rzk
-#def total-space
+#def total-type
   ( A : U)
   ( C : A → U)
   : U

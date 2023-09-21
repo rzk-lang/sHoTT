@@ -51,6 +51,27 @@ Extension types are used to define the type of arrows between fixed terms:
 
 ```
 
+For each `a : A`, the total types of the representables
+`\ z → hom A a z`
+and
+`\ z → hom A z a`
+are called the coslice and slice, respectively.
+
+
+```rzk
+#def coslice
+  ( A : U)
+  ( a : A)
+  : U
+  := Σ ( z : A) , (hom A a z)
+
+#def slice
+  ( A : U)
+  ( a : A)
+  : U
+  := Σ (z : A) , (hom A z a)
+```
+
 Extension types are also used to define the type of commutative triangles:
 
 <svg style="float: right" viewBox="0 0 200 200" width="150" height="200">

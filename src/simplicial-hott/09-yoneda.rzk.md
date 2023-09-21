@@ -813,15 +813,8 @@ family defines an inverse equivalence to evaluation at the element.
 
 ## Initial objects in slice categories
 
-The type `#!rzk coslice A a` is the type of arrows in $A$ with domain $a$.
-
-```rzk
-#def coslice
-  ( A : U)
-  ( a : A)
-  : U
-  := Σ ( z : A) , (hom A a z)
-```
+Recall that the type `#!rzk coslice A a`
+is the type of arrows in $A$ with domain $a$.
 
 We now show that the coslice under $a$ in a Segal type $A$ has an initial object
 given by the identity arrow at $a$. This makes use of the following equivalence.
@@ -1042,15 +1035,8 @@ family defines an inverse equivalence to evaluation at the element.
 
 ## Final objects in slice categories
 
-The type `#!rzk slice A a` is the type of arrows in $A$ with codomain $a$.
-
-```rzk
-#def slice
-  ( A : U)
-  ( a : A)
-  : U
-  := Σ (z : A) , (hom A z a)
-```
+Recall that the type `#!rzk slice A a`
+is the type of arrows in $A$ with codomain $a$.
 
 We now show that the slice over $a$ in a Segal type $A$ has a final object given
 by the identity arrow at $a$. This makes use of the following equivalence.

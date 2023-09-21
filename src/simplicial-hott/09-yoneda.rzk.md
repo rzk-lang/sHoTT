@@ -209,6 +209,25 @@ This is proven combining the previous steps.
         ( evid-yon A is-segal-A a C is-covariant-C)))
 ```
 
+For later use, we observe that the same proof shows that the inverse map is an
+equivalence.
+
+```rzk
+#def inv-yoneda-lemma uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a : A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  : is-equiv (C a) ((z : A) → hom A a z → C z)
+      ( yon A is-segal-A a C is-covariant-C)
+  :=
+    ( ( ( evid A a C) ,
+        ( evid-yon A is-segal-A a C is-covariant-C)) ,
+      ( ( evid A a C) ,
+        ( yon-evid A is-segal-A a C is-covariant-C)))
+```
+
 ## Naturality
 
 The equivalence of the Yoneda lemma is natural in both $a : A$ and $C : A → U$.
@@ -555,6 +574,25 @@ equivalence.
         ( contra-yon-evid A is-segal-A a C is-contravariant-C)) ,
       ( ( contra-yon A is-segal-A a C is-contravariant-C) ,
         ( contra-evid-yon A is-segal-A a C is-contravariant-C)))
+```
+
+For later use, we observe that the same proof shows that the inverse map is an
+equivalence.
+
+```rzk
+#def inv-contra-yoneda-lemma uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a : A)
+  ( C : A → U)
+  ( is-contravariant-C : is-contravariant A C)
+  : is-equiv (C a) ((z : A) → hom A z a → C z)
+      ( contra-yon A is-segal-A a C is-contravariant-C)
+  :=
+    ( ( ( contra-evid A a C) ,
+        ( contra-evid-yon A is-segal-A a C is-contravariant-C)) ,
+      ( ( contra-evid A a C) ,
+        ( contra-yon-evid A is-segal-A a C is-contravariant-C)))
 ```
 
 ## Contravariant Naturality

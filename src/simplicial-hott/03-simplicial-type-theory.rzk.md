@@ -152,6 +152,7 @@ The union of shapes is defined by disjunction on topes.
   := \ t → ψ t ∨ χ t
 ```
 
+
 ### Connection Squares
 
 <!-- This is manually adjusted diagram (hopefully fully supported in the future by rzk) -->
@@ -236,3 +237,4 @@ The union of shapes is defined by disjunction on topes.
     }
   </style>
 </svg>
+

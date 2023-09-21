@@ -241,3 +241,80 @@ The identity natural transformation is identity arrows on components
   : ( \ t → id-hom ((x : A) → B x) f t a) =_{Δ¹ → B a} id-hom (B a) (f a)
   := refl
 ```
+
+### Whiskering
+
+Whiskering is a special case of horizontal composition when one of the natural
+transformations is the identity.
+
+```rzk
+#def postwhisker-nat-trans
+  ( B C D : U)
+  ( f g : B → C)
+  ( h : C → D)
+  ( η : nat-trans B (\ _ → C) f g)
+  : nat-trans B (\ _ → D) (comp B C D h f) (comp B C D h g)
+  := horizontal-comp-nat-trans B C D f g h h η (id-hom (C → D) h)
+
+#def prewhisker-nat-trans
+  ( A B C : U)
+  ( k : A → B)
+  ( f g : B → C)
+  ( η : nat-trans B (\ _ → C) f g)
+  : nat-trans A (\ _ → C) (comp A B C f k) (comp A B C g k)
+  := horizontal-comp-nat-trans A B C k k f g (id-hom (A → B) k) η
+
+#def whisker-nat-trans
+  ( A B C D : U)
+  ( k : A → B)
+  ( f g : B → C)
+  ( h : C → D)
+  ( η : nat-trans B (\ _ → C) f g)
+  : nat-trans A (\ _ → D)
+    ( triple-comp A B C D h f k)
+    ( triple-comp A B C D h g k)
+  :=
+    postwhisker-nat-trans A C D (comp A B C f k) (comp A B C g k) h
+    ( prewhisker-nat-trans A B C k f g η)
+
+```
+
+## Gray interchanger
+
+The horizontal composition operation also defines coherence data in the form of
+the "Gray interchanger" built from two commutative triangles.
+
+```rzk
+#def gray-interchanger-horizontal-comp-nat-trans
+  ( A B C : U)
+  ( f g : A → B)
+  ( f' g' : B → C)
+  ( η : nat-trans A (\ _ → B) f g)
+  ( η' : nat-trans B (\ _ → C) f' g')
+  : Δ¹×Δ¹ → (A → C)
+  := \ (t, s) a → η' s (η t a)
+
+#def left-gray-interchanger-horizontal-comp-nat-trans
+  ( A B C : U)
+  ( f g : A → B)
+  ( f' g' : B → C)
+  ( η : nat-trans A (\ _ → B) f g)
+  ( η' : nat-trans B (\ _ → C) f' g')
+  : hom2 (A → C) (comp A B C f' f) (comp A B C f' g) (comp A B C g' g)
+    ( postwhisker-nat-trans A B C f g f' η)
+    ( prewhisker-nat-trans A B C g f' g' η')
+    ( horizontal-comp-nat-trans A B C f g f' g' η η')
+  := \ (t, s) a → η' s (η t a)
+
+#def right-gray-interchanger-horizontal-comp-nat-trans
+  ( A B C : U)
+  ( f g : A → B)
+  ( f' g' : B → C)
+  ( η : nat-trans A (\ _ → B) f g)
+  ( η' : nat-trans B (\ _ → C) f' g')
+  : hom2 (A → C) (comp A B C f' f) (comp A B C g' f) (comp A B C g' g)
+    ( prewhisker-nat-trans A B C f f' g' η')
+    ( postwhisker-nat-trans A B C f g g' η)
+    ( horizontal-comp-nat-trans A B C f g f' g' η η')
+  := \ (t, s) a → η' t (η s a)
+```

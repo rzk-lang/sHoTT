@@ -768,6 +768,24 @@ along an arrow f : hom A x y to give a term in C y.
     first (center-contraction (dhom-from A x y f C u) (is-covariant-C x y f u))
 ```
 
+For example, if `A` is a Segal type and `a : A`, the family `C x := hom A a x`
+is covariant as shown above. Transport of an `e : C x` along an arrow
+`f : hom A x y` just yields composition of `f` with `e`.
+
+```rzk title="RS17, Example 8.14"
+#def compute-covariant-transport-of-hom-family-is-segal
+  (A : U)
+  (is-segal-A : is-segal A)
+  (a x y : A)
+  (e : hom A a x)
+  (f : hom A x y)
+  : covariant-transport A x y f
+      (hom A a) (is-covariant-representable-is-segal A is-segal-A a) e
+    = comp-is-segal A is-segal-A a x y e f
+  :=
+    refl
+```
+
 ```rzk title="RS17, covariant lift from beginning of Section 8.2"
 #def covariant-lift
   ( A : U)
@@ -796,6 +814,75 @@ along an arrow f : hom A x y to give a term in C y.
     ( center-contraction (dhom-from A x y f C u) (is-covariant-C x y f u))
     ( lift)
     ( homotopy-contraction (dhom-from A x y f C u) (is-covariant-C x y f u) lift)
+
+#def covariant-uniqueness-curried
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  : ( v : C y)
+  → ( dhom A x y f C u v)
+  → ( covariant-transport A x y f C is-covariant-C u) = v
+  :=
+    \ v g → covariant-uniqueness A x y f C is-covariant-C u (v, g)
+
+```
+
+We show that for each `v : C y`, the  map `covariant-uniqueness` is an equivalence.
+This follows from the fact that the total spaces (summed over `v : C y`)
+of both sides are contractible.
+
+```rzk title="RS17, Lemma 8.15"
+#def is-equiv-total-map-covariant-uniqueness-curried
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  : is-equiv
+      (Σ (v : C y), dhom A x y f C u v)
+      (Σ (v : C y), covariant-transport A x y f C is-covariant-C u = v)
+      ( total-map (C y)
+        (dhom A x y f C u)
+        (\ v → covariant-transport A x y f C is-covariant-C u = v)
+        (covariant-uniqueness-curried A x y f C is-covariant-C u)
+      )
+  :=
+    is-equiv-are-contr
+      (Σ (v : C y), dhom A x y f C u v)
+      (Σ (v : C y), covariant-transport A x y f C is-covariant-C u = v)
+      (is-covariant-C x y f u)
+      (is-contr-based-paths (C y) (covariant-transport A x y f C is-covariant-C u))
+      ( total-map (C y)
+        (dhom A x y f C u)
+        (\ v → covariant-transport A x y f C is-covariant-C u = v)
+        (covariant-uniqueness-curried A x y f C is-covariant-C u)
+      )
+
+#def is-equiv-covariant-uniqueness-curried
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  ( v : C y)
+  : is-equiv
+      (dhom A x y f C u v)
+      (covariant-transport A x y f C is-covariant-C u = v)
+      (covariant-uniqueness-curried A x y f C is-covariant-C u v)
+  :=
+
+    total-equiv-family-of-equiv
+      (C y)
+      (dhom A x y f C u)
+      (\ v' → covariant-transport A x y f C is-covariant-C u = v')
+      (covariant-uniqueness-curried A x y f C is-covariant-C u)
+      (is-equiv-total-map-covariant-uniqueness-curried A x y f C is-covariant-C u)
+      v
 ```
 
 ## Covariant functoriality
@@ -1546,4 +1633,28 @@ commuting with the contravariant lifts.
     contravariant-uniqueness A x y f D is-contravariant-D (ϕ y v)
     ( contravariant-fiberwise-transformation-application
         A x y f C D is-contravariant-C ϕ v)
+```
+
+## Two sided discrete fibrations
+
+```rzk title="RS17, Definition 8.28"
+#def is-two-sided-discrete
+  ( A B : U)
+  ( C : A → B → U)
+  : U
+  :=
+    product
+      ( (a : A) → is-covariant B (\b → C a b))
+      ( (b : B) → is-contravariant A (\ a → C a b))
+```
+
+```rzk title="RS17, Proposition 8.29"
+#def is-two-sided-discrete-hom-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  : is-two-sided-discrete A A (hom A)
+  :=
+    ( is-covariant-representable-is-segal A is-segal-A ,
+      is-contravariant-representable-is-segal A is-segal-A)
+
 ```

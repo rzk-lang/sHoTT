@@ -6,6 +6,12 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
+Some of the definitions in this file rely on function extensionality:
+
+```rzk
+#assume funext : FunExt
+```
+
 ## Transposing adjunctions
 
 Transposing adjunctions are defined by opposing functors `#!rzk f : A → B` and
@@ -325,4 +331,205 @@ where "quasi-equivalence" is another name for "invertible map."
   ( u : B → A)
   : U
   := Σ (f : A → B), has-quasi-transposing-adj A B f u
+```
+
+## Equivalence of quasi-transposing and quasi-diagrammatic adjunctions
+
+When `#!rzk A` and `#!rzk B` are Segal types, `#!rzk quasi-transposing-adj A B`
+and `#!rzk quasi-diagrammatic-adj A B` are equivalent.
+
+We first connect the components of the unit and counit to the transposition maps
+in the usual way, as an application of the Yoneda lemma.
+
+```rzk
+#section unit-counit-transposition
+
+#variables A B : U
+#variable is-segal-A : is-segal A
+#variable is-segal-B : is-segal B
+#variable f : A → B
+#variable u : B → A
+
+#def equiv-transposition-unit-component uses (funext)
+  (a : A)
+  : Equiv ((b : B) → (hom B (f a) b) → (hom A a (u b))) (hom A a (u (f a)))
+  :=
+    ( evid B (f a) (\ b → hom A a (u b)) ,
+      yoneda-lemma
+        ( funext)
+        ( B)
+        ( is-segal-B)
+        ( f a)
+        ( \ b → hom A a (u b))
+        ( is-covariant-substitution-is-covariant
+          ( A)
+          ( B)
+          ( hom A a)
+          ( is-covariant-representable-is-segal A is-segal-A a)
+          ( u)))
+
+#def equiv-unit-components
+  : Equiv
+    ( (a : A) → hom A a (u (f a)))
+    ( nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+  :=
+    inv-equiv
+    ( nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+    ( (a : A) → hom A a (u (f a)))
+    ( equiv-components-nat-trans
+      ( A)
+      ( \ _ → A)
+      ( identity A)
+      ( comp A B A u f))
+
+#def equiv-transposition-unit uses (is-segal-A is-segal-B funext)
+  : Equiv
+    ( (a : A) → (b : B) → (hom B (f a) b) → (hom A a (u b)))
+    ( nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+  :=
+    equiv-comp
+    ( (a : A) → (b : B) → (hom B (f a) b) → (hom A a (u b)))
+    ( (a : A) → hom A a (u (f a)))
+    ( nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+    ( equiv-function-equiv-family
+      ( funext)
+      ( A)
+      ( \ a → (b : B) → (hom B (f a) b) → (hom A a (u b)))
+      ( \ a → hom A a (u (f a)))
+      ( equiv-transposition-unit-component))
+    ( equiv-unit-components)
+```
+
+We now reverse direction of the equivalence and extract the explicit map
+defining the transposition function associated to a unit natural transformation.
+
+```rzk
+#def is-equiv-unit-component-transposition uses (funext)
+  (a : A)
+  : is-equiv (hom A a (u (f a))) ((b : B) → (hom B (f a) b) → (hom A a (u b)))
+    ( \ ηa b k →
+      comp-is-segal A is-segal-A a (u (f a)) (u b) ηa (ap-hom B A u (f a) b k))
+  :=
+    inv-yoneda-lemma
+        ( funext)
+        ( B)
+        ( is-segal-B)
+        ( f a)
+        ( \ b → hom A a (u b))
+        ( is-covariant-substitution-is-covariant
+          ( A)
+          ( B)
+          ( hom A a)
+          ( is-covariant-representable-is-segal A is-segal-A a)
+          ( u))
+
+#def is-equiv-unit-transposition uses (is-segal-A is-segal-B funext)
+  : is-equiv
+    ( nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+    ( (a : A) → (b : B) → (hom B (f a) b) → (hom A a (u b)))
+    ( \ η a b k →
+      comp-is-segal A is-segal-A a (u (f a)) (u b)
+      ( \ t -> η t a)
+      ( ap-hom B A u (f a) b k))
+  :=
+    is-equiv-comp
+    ( nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+    ( (a : A) → hom A a (u (f a)))
+    ( (a : A) → (b : B) → (hom B (f a) b) → (hom A a (u b)))
+    ( ev-components-nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+    ( is-equiv-ev-components-nat-trans A (\ _ → A)(identity A)(comp A B A u f))
+    ( \ η a b k →
+      comp-is-segal A is-segal-A a (u (f a)) (u b)
+      ( \ t -> η a t)
+      ( ap-hom B A u (f a) b k))
+    ( is-equiv-function-is-equiv-family
+      ( funext)
+      ( A)
+      ( \ a → hom A a (u (f a)))
+      ( \ a → (b : B) → (hom B (f a) b) → (hom A a (u b)))
+      ( \ a ηa b k →
+        comp-is-segal A is-segal-A a (u (f a)) (u b)
+        ( ηa)
+        ( ap-hom B A u (f a) b k))
+      ( is-equiv-unit-component-transposition))
+```
+
+The results for counits are dual.
+
+```rzk
+#def equiv-transposition-counit-component uses (funext)
+  (b : B)
+  : Equiv ((a : A) → (hom A a (u b)) → (hom B (f a) b)) (hom B (f (u b)) b)
+  :=
+    ( contra-evid A (u b) (\ a → hom B (f a) b) ,
+      contra-yoneda-lemma
+        ( funext)
+        ( A)
+        ( is-segal-A)
+        ( u b)
+        ( \ a → hom B (f a) b)
+        ( is-contravariant-substitution-is-contravariant
+          ( B)
+          ( A)
+          ( \ x -> hom B x b)
+          ( is-contravariant-representable-is-segal B is-segal-B b)
+          ( f)))
+
+#def equiv-counit-components
+  : Equiv
+    ( (b : B) → hom B (f (u b)) b)
+    ( nat-trans B (\ _ → B) (comp B A B f u) (identity B))
+  :=
+    inv-equiv
+    ( nat-trans B (\ _ → B) (comp B A B f u) (identity B))
+    ( (b : B) → hom B (f (u b)) b)
+    ( equiv-components-nat-trans
+      ( B)
+      ( \ _ → B)
+      ( comp B A B f u)
+      ( identity B))
+
+#def equiv-transposition-counit uses (is-segal-A is-segal-B funext)
+  : Equiv
+    ( (b : B) → (a : A) → (hom A a (u b)) → (hom B (f a) b))
+    ( nat-trans B (\ _ → B) (comp B A B f u) (identity B))
+  :=
+    equiv-comp
+    ( (b : B) → (a : A) → (hom A a (u b)) → (hom B (f a) b))
+    ( (b : B) → hom B (f (u b)) b)
+    ( nat-trans B (\ _ → B) (comp B A B f u) (identity B))
+    ( equiv-function-equiv-family
+      ( funext)
+      ( B)
+      ( \ b → (a : A) → (hom A a (u b)) → (hom B (f a) b))
+      ( \ b → hom B (f (u b)) b)
+      ( equiv-transposition-counit-component))
+    ( equiv-counit-components)
+```
+
+We again reverse direction of the equivalence and extract the explicit map
+defining the transposition function associated to a counit natural
+transformation.
+
+```rzk
+#def is-equiv-counit-component-transposition uses (funext)
+  (b : B)
+  : is-equiv (hom B (f (u b)) b) ((a : A) → (hom A a (u b)) → (hom B (f a) b))
+    ( \ ϵb a k →
+      comp-is-segal B is-segal-B (f a) (f (u b)) b (ap-hom A B f a (u b) k) ϵb)
+  :=
+    inv-contra-yoneda-lemma
+        ( funext)
+        ( A)
+        ( is-segal-A)
+        ( u b)
+        ( \ a → hom B (f a) b)
+        ( is-contravariant-substitution-is-contravariant
+          ( B)
+          ( A)
+          ( \ z → hom B z b)
+          ( is-contravariant-representable-is-segal B is-segal-B b)
+          ( f))
+
+#end unit-counit-transposition
 ```

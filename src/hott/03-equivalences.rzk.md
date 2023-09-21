@@ -449,31 +449,47 @@ Using function extensionality, a fiberwise equivalence defines an equivalence of
 dependent function types.
 
 ```rzk
+#def is-equiv-function-is-equiv-family uses (funext)
+  ( X : U)
+  ( A B : X → U)
+  ( f : (x : X) → (A x) → (B x))
+  ( famisequiv : (x : X) → is-equiv (A x) (B x) (f x))
+  : is-equiv ((x : X) → A x) ((x : X) → B x) ( \ a x → f x (a x))
+  :=
+    ( ( ( \ b x → first (first (famisequiv x)) (b x)) ,
+        ( \ a →
+           eq-htpy
+            X A
+           ( \ x →
+              first
+                ( first (famisequiv x))
+                ( f x (a x)))
+            ( a)
+            ( \ x → second (first (famisequiv x)) (a x)))) ,
+      ( ( \ b x → first (second (famisequiv x)) (b x)) ,
+        ( \ b →
+            eq-htpy
+            X B
+            ( \ x →
+               f x (first (second (famisequiv x)) (b x)))
+            ( b)
+            ( \ x → second (second (famisequiv x)) (b x)))))
+```
+
+```rzk
 #def equiv-function-equiv-family uses (funext)
   ( X : U)
   ( A B : X → U)
   ( famequiv : (x : X) → Equiv (A x) (B x))
   : Equiv ((x : X) → A x) ((x : X) → B x)
   :=
-    ( ( \ a x → first (famequiv x) (a x)) ,
-      ( ( ( \ b x → first (first (second (famequiv x))) (b x)) ,
-          ( \ a →
-            eq-htpy
-              X A
-              ( \ x →
-                first
-                  ( first (second (famequiv x)))
-                  ( first (famequiv x) (a x)))
-              ( a)
-              ( \ x → second (first (second (famequiv x))) (a x)))) ,
-        ( ( \ b x → first (second (second (famequiv x))) (b x)) ,
-          ( \ b →
-            eq-htpy
-              X B
-              ( \ x →
-                first (famequiv x) (first (second (second (famequiv x))) (b x)))
-              ( b)
-              ( \ x → second (second (second (famequiv x))) (b x))))))
+    ( ( \ a x → (first (famequiv x)) (a x)) ,
+      ( is-equiv-function-is-equiv-family
+        ( X)
+        ( A)
+        ( B)
+        ( \ x ax → first (famequiv x) (ax))
+        ( \ x → second (famequiv x))))
 ```
 
 ## Embeddings

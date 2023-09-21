@@ -297,6 +297,19 @@ Weak extension extensionality implies extension extensionality; this is the cont
             is-contr-based-paths (A t ) ((ext-projection-temp) t))
       ( \ t → (a t , refl) ) 
 
+#define is-contr-ext-codomain-based-paths uses (weak-ext-ext f) 
+    : is-contr 
+        ((t : ψ ) → (Σ (y : A t) ,
+                    (y = (ext-projection-temp) t))[ϕ t ↦ (a t , refl)])
+    := weak-ext-ext 
+        ( I )
+        ( ψ )
+        ( ϕ )
+        ( \t → (Σ (y : A t) , (y = (ext-projection-temp) t)))
+        (\ t → 
+            is-contr-codomain-based-paths (A t ) ((ext-projection-temp) t))
+        (\ t → (a t , refl) )  
+
 #define is-contr-based-paths-ext uses (weak-ext-ext)
   : is-contr (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) , 
               (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
@@ -449,4 +462,38 @@ equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
                 first (famequiv t) (first (second (second (famequiv t))) (b t)))
               ( b)
               ( \ t → second (second (second (famequiv t))) (b t))))))
+```
+We have a homotopy extension property
+
+```rzk
+#define htpy-ext-property
+    ( weak-ext-ext : WeakExtExt)
+    ( I : CUBE)
+    ( ψ : I → TOPE)
+    ( ϕ : ψ → TOPE)
+    ( A : ψ → U)
+    ( b : (t : ψ ) → A t)
+    ( a : (t : ϕ ) → A t) 
+    ( e : (t : ϕ ) → a t = b t) 
+    : Σ (a' : (t : ψ ) → A t [ϕ t ↦ a t]) , 
+        ((t : ψ ) → (a' t = b t) [ϕ t ↦ e t])
+    := 
+      first (
+       axiom-choice
+        ( I )
+        ( ψ ) 
+        ( ϕ ) 
+        ( A ) 
+        ( \ t y → y = (ext-projection-temp) t)
+        ( a ) 
+        ( e ))  (first ( weak-ext-ext 
+          ( I )
+          ( ψ )
+          ( ϕ )
+          ( \t → (Σ (y : A t) , (y = (ext-projection-temp) t)))
+          (\ t → is-contr-codomain-based-paths 
+                  (A t )
+                  ((ext-projection-temp) t))
+          (\ t → (a t , e t) )))
+
 ```

@@ -867,5 +867,21 @@ types over a product type.
       (F' a'') (ihc' a'')
       (F (f' a'')) (ihc (f' a''))
 
+#def is-homotopy-cartesian-cancellation
+  : is-homotopy-cartesian A' C' A C f F
+  → is-homotopy-cartesian A'' C'' A C
+      (comp A'' A' A f f')
+      (\ a'' →
+        comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+          (F (f' a'')) (F' a'')
+      )
+  → is-homotopy-cartesian A'' C'' A' C' f' F'
+  :=
+    \ ihc ihc'' a'' →
+    is-equiv-right-cancel (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+      (F' a'') (F (f' a''))
+      (ihc (f' a''))
+      (ihc'' a'')
+
 #end homotopy-cartesian-pasting
 ```

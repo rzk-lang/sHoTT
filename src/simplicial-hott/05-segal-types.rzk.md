@@ -79,14 +79,16 @@ are functorial in `A` in the following sense:
 #def coslice-fun
   (A B : U)
   (f : A → B)
-  : (a : A) → coslice A a → coslice B (f a)
+  (a : A)
+  : coslice A a → coslice B (f a)
   :=
     \ (a', g) → (f a', \ t → f (g t))
 
 #def slice-fun
   (A B : U)
   (f : A → B)
-  : (a : A) → slice A a → slice B (f a)
+  (a : A)
+  : slice A a → slice B (f a)
   :=
     \ (a', g) → (f a', \ t → f (g t))
 ```

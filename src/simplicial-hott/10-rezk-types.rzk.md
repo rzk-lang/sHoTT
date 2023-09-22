@@ -443,6 +443,47 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
         is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y)
 ```
 
+The following results show how `#!rzk idtoiso` mediates between the
+type-theoretic operations on paths and the category-theoretic operations on
+arrows.
+
+```rzk title="RS17, Lemma 10.7"
+#def TODO10-7
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y : A)
+  ( e : x = y)
+  ( u : C x)
+  : covariant-transport
+      ( A)
+      ( x)
+      ( y)
+      ( first (iso-eq A is-segal-A x y e))
+      ( C)
+      ( is-covariant-C)
+      ( u)
+    = transport A C x y e u
+  :=
+    ind-path
+      ( A)
+      ( x)
+      ( \ y' e' →
+        covariant-transport
+          ( A)
+          ( x)
+          ( y')
+          ( first (iso-eq A is-segal-A x y' e'))
+          ( C)
+          ( is-covariant-C)
+          ( u)
+        = transport A C x y' e' u)
+      ( id-arr-covariant-transport A x C is-covariant-C u)
+      ( y)
+      ( e)
+```
+
 ## Uniqueness of initial and final objects
 
 In a Segal type, initial objects are isomorphic.

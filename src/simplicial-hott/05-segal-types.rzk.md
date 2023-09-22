@@ -75,7 +75,7 @@ are called the coslice and slice, respectively.
 The types `coslice A a` and `slice A a`
 are functorial in `A` in the following sense:
 
-```rzk"
+```rzk
 #def coslice-fun
   (A B : U)
   (f : A → B)

@@ -435,7 +435,7 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
 
 ```rzk title="RS17, Definition 10.6"
 #def is-rezk
-  (A : U)
+  ( A : U)
   : U
   :=
     Σ ( is-segal-A : is-segal A) ,

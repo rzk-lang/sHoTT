@@ -812,3 +812,60 @@ types over a product type.
 
 #end fibered-map-over-product
 ```
+
+## Homotopy cartesian squares
+
+
+```rzk
+#def is-homotopy-cartesian
+  ( A' : U)
+  ( C' : A' → U)
+  ( A : U)
+  ( C : A → U)
+  ( f : A' → A)
+  ( F : (a' : A') → C' a' → C (f a'))
+  : U
+  :=
+    (a' : A') → is-equiv (C' a') (C (f a')) (F a')
+
+#def homotopy-cartesian-square
+  ( A' : U)
+  ( C' : A' → U)
+  ( A : U)
+  ( C : A → U)
+  : U
+  := Σ (f : A' → A), Σ (F : (a' : A') → C' a' → C (f a')),
+    is-homotopy-cartesian A' C' A C f F
+
+
+#section homotopy-cartesian-pasting
+
+#variable A'' : U
+#variable C'' : A'' → U
+#variable A' : U
+#variable C' : A' → U
+#variable A : U
+#variable C : A → U
+#variable f' : A'' → A'
+#variable F' : (a'' : A'') → C'' a'' → C' (f' a'')
+#variable f : A' → A
+#variable F : (a' : A') → C' a' → C (f a')
+
+#def is-homotopy-cartesian-composition
+  : is-homotopy-cartesian A'' C'' A' C' f' F' →
+    is-homotopy-cartesian A' C' A C f F →
+    is-homotopy-cartesian A'' C'' A C
+      (comp A'' A' A
+        f f')
+      (\ a'' →
+        comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+          (F (f' a'')) (F' a'')
+      )
+  :=
+    \ ihc' ihc a'' →
+    is-equiv-comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+      (F' a'') (ihc' a'')
+      (F (f' a'')) (ihc (f' a''))
+
+#end homotopy-cartesian-pasting
+```

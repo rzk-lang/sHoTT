@@ -801,6 +801,19 @@
     Gray interchanger
   </a>
   
+    <nav class="md-nav" aria-label="Gray interchanger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naturality-square" class="md-nav__link">
+    Naturality square
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1024,6 +1037,19 @@
   <a href="#gray-interchanger" class="md-nav__link">
     Gray interchanger
   </a>
+  
+    <nav class="md-nav" aria-label="Gray interchanger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naturality-square" class="md-nav__link">
+    Naturality square
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1320,6 +1346,61 @@ the "Gray interchanger" built from two commutative triangles.</p>
 </span><span id="__span-13-30"><a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a><span class="err">    ( postwhisker-nat-trans A B C f g g&#39; η)</span>
 </span><span id="__span-13-31"><a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a><span class="err">    ( horizontal-comp-nat-trans A B C f g f&#39; g&#39; η η&#39;)</span>
 </span><span id="__span-13-32"><a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a><span class="err">  := \ (t, s) a → η&#39; t (η s a)</span>
+</span></code></pre></div>
+<h3 id="naturality-square">Naturality square<a class="headerlink" href="#naturality-square" title="Permanent link">&para;</a></h3>
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 6.6</span><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nd">#section</span><span class="n"> comp-eq-square-is-segal</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="kr">#variable</span><span class="p"> </span>is-segal-A<span class="err"> : is-segal A</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="kr">#variable</span><span class="p"> </span>α<span class="err"> : (Δ¹×Δ¹) → A</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:α00" id="define:α00" style="visibility: visible; position: relative; color: inherit">α00</a></span><span class="err"> : A := α (</span><span class="m">0₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:α01" id="define:α01" style="visibility: visible; position: relative; color: inherit">α01</a></span><span class="err"> : A := α (</span><span class="m">0₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">)</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:α10" id="define:α10" style="visibility: visible; position: relative; color: inherit">α10</a></span><span class="err"> : A := α (</span><span class="m">1₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:α11" id="define:α11" style="visibility: visible; position: relative; color: inherit">α11</a></span><span class="err"> : A := α (</span><span class="m">1₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">)</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:α0*" id="define:α0*" style="visibility: visible; position: relative; color: inherit">α0*</a></span><span class="err"> : Δ¹ → A := </span><span class="p">\ </span>t <span class="err">→ α (</span><span class="m">0₂</span><span class="err">,t)</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:α1*" id="define:α1*" style="visibility: visible; position: relative; color: inherit">α1*</a></span><span class="err"> : Δ¹ → A := </span><span class="p">\ </span>t <span class="err">→ α (</span><span class="m">1₂</span><span class="err">,t)</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:α*0" id="define:α*0" style="visibility: visible; position: relative; color: inherit">α*0</a></span><span class="err"> : Δ¹ → A := </span><span class="p">\ </span>s <span class="err">→ α (s,</span><span class="m">0₂</span><span class="err">)</span>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:α*1" id="define:α*1" style="visibility: visible; position: relative; color: inherit">α*1</a></span><span class="err"> : Δ¹ → A := </span><span class="p">\ </span>s <span class="err">→ α (s,</span><span class="m">1₂</span><span class="err">)</span>
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:α-diag" id="define:α-diag" style="visibility: visible; position: relative; color: inherit">α-diag</a></span><span class="err"> : Δ¹ → A := </span><span class="p">\ </span>s <span class="err">→ α (s,s)</span>
+</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
+</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:lhs" id="define:lhs" style="visibility: visible; position: relative; color: inherit">lhs</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>α<span class="p">)</span><span class="err"> : Δ¹ → A := comp-is-segal A is-segal-A α00 α01 α11 α0* α*1</span>
+</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:rhs" id="define:rhs" style="visibility: visible; position: relative; color: inherit">rhs</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>α<span class="p">)</span><span class="err"> : Δ¹ → A := comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*</span>
+</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>
+</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:lower-triangle-square" id="define:lower-triangle-square" style="visibility: visible; position: relative; color: inherit">lower-triangle-square</a></span><span class="err"> : hom2 A α00 α01 α11 α0* α*1 α-diag</span>
+</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="err">  := \ (s, t) → α (t,s)</span>
+</span><span id="__span-14-23"><a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>
+</span><span id="__span-14-24"><a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:upper-triangle-square" id="define:upper-triangle-square" style="visibility: visible; position: relative; color: inherit">upper-triangle-square</a></span><span class="err"> : hom2 A α00 α10 α11 α*0 α1* α-diag</span>
+</span><span id="__span-14-25"><a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="err">  := \ (s,t) → α (s,t)</span>
+</span><span id="__span-14-26"><a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>
+</span><span id="__span-14-27"><a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:comp-eq-square-is-segal" id="define:comp-eq-square-is-segal" style="visibility: visible; position: relative; color: inherit">comp-eq-square-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>α<span class="p">)</span>
+</span><span id="__span-14-28"><a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="err">  : comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 =</span>
+</span><span id="__span-14-29"><a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="err">    comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*</span>
+</span><span id="__span-14-30"><a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a><span class="err">  :=</span>
+</span><span id="__span-14-31"><a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="err">    zig-zag-concat (hom A α00 α11) lhs α-diag rhs</span>
+</span><span id="__span-14-32"><a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="err">    ( uniqueness-comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 α-diag</span>
+</span><span id="__span-14-33"><a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="err">      ( lower-triangle-square))</span>
+</span><span id="__span-14-34"><a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="err">    ( uniqueness-comp-is-segal A is-segal-A α00 α10 α11 α*0 α1* α-diag</span>
+</span><span id="__span-14-35"><a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a><span class="err">      ( upper-triangle-square))</span>
+</span><span id="__span-14-36"><a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>
+</span><span id="__span-14-37"><a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>
+</span><span id="__span-14-38"><a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a><span class="nd">#end</span><span class="n"> comp-eq-square-is-segal</span>
+</span><span id="__span-14-39"><a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a>
+</span><span id="__span-14-40"><a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:naturality-nat-trans-is-segal" id="define:naturality-nat-trans-is-segal" style="visibility: visible; position: relative; color: inherit">naturality-nat-trans-is-segal</a></span>
+</span><span id="__span-14-41"><a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a><span class="err">  </span><span class="p">(</span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-14-42"><a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a><span class="err">  </span><span class="p">(</span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
+</span><span id="__span-14-43"><a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a><span class="err">  </span><span class="p">(</span>f g <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-14-44"><a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a><span class="err">  </span><span class="p">(</span>α <span class="p">:</span><span class="err"> hom (A → B) f g)</span>
+</span><span id="__span-14-45"><a id="__codelineno-14-45" name="__codelineno-14-45" href="#__codelineno-14-45"></a><span class="err">  </span><span class="p">(</span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-14-46"><a id="__codelineno-14-46" name="__codelineno-14-46" href="#__codelineno-14-46"></a><span class="err">  </span><span class="p">(</span>k <span class="p">:</span><span class="err"> hom A x y)</span>
+</span><span id="__span-14-47"><a id="__codelineno-14-47" name="__codelineno-14-47" href="#__codelineno-14-47"></a><span class="err">  : comp-is-segal B is-segal-B (f x) (f y) (g y)</span>
+</span><span id="__span-14-48"><a id="__codelineno-14-48" name="__codelineno-14-48" href="#__codelineno-14-48"></a><span class="err">    ( ap-hom A B f x y k)</span>
+</span><span id="__span-14-49"><a id="__codelineno-14-49" name="__codelineno-14-49" href="#__codelineno-14-49"></a><span class="err">    ( </span><span class="p">\ </span>s <span class="err">→ α s y) =</span>
+</span><span id="__span-14-50"><a id="__codelineno-14-50" name="__codelineno-14-50" href="#__codelineno-14-50"></a><span class="err">    comp-is-segal B is-segal-B (f x) (g x) (g y)</span>
+</span><span id="__span-14-51"><a id="__codelineno-14-51" name="__codelineno-14-51" href="#__codelineno-14-51"></a><span class="err">    ( </span><span class="p">\ </span>s <span class="err">→ α s x)</span>
+</span><span id="__span-14-52"><a id="__codelineno-14-52" name="__codelineno-14-52" href="#__codelineno-14-52"></a><span class="err">    ( ap-hom A B g x y k)</span>
+</span><span id="__span-14-53"><a id="__codelineno-14-53" name="__codelineno-14-53" href="#__codelineno-14-53"></a><span class="err">  := comp-eq-square-is-segal B is-segal-B (\ (s,t) → α s (k t))</span>
 </span></code></pre></div>
 
 

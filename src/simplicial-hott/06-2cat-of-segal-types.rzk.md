@@ -322,7 +322,7 @@ the "Gray interchanger" built from two commutative triangles.
 ### Naturality square
 
 ```rzk title="RS17, Proposition 6.6"
-#section eq-from-square
+#section comp-eq-square-is-segal
 
 #variable A : U
 #variable is-segal-A : is-segal A
@@ -342,32 +342,37 @@ the "Gray interchanger" built from two commutative triangles.
 #def lhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α01 α11 α0* α*1
 #def rhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
 
-#def lower-triangle : hom2 A α00 α01 α11 α0* α*1 α-diag
+#def lower-triangle-square : hom2 A α00 α01 α11 α0* α*1 α-diag
   := \ (s, t) → α (t,s)
 
-#def upper-triangle : hom2 A α00 α10 α11 α*0 α1* α-diag
+#def upper-triangle-square : hom2 A α00 α10 α11 α*0 α1* α-diag
   := \ (s,t) → α (s,t)
 
-#def eq-from-square uses (α)
-  : comp-is-segal A is-segal-A α00 α01 α11 α0* α*1
-    = comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
+#def comp-eq-square-is-segal uses (α)
+  : comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 =
+    comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
   :=
     zig-zag-concat (hom A α00 α11) lhs α-diag rhs
-      (uniqueness-comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 α-diag lower-triangle)
-      (uniqueness-comp-is-segal A is-segal-A α00 α10 α11 α*0 α1* α-diag upper-triangle)
+    ( uniqueness-comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 α-diag
+      ( lower-triangle-square))
+    ( uniqueness-comp-is-segal A is-segal-A α00 α10 α11 α*0 α1* α-diag
+      ( upper-triangle-square))
 
 
-#end eq-from-square
+#end comp-eq-square-is-segal
 
-#def naturality-eq
+#def naturality-nat-trans-is-segal
   (A B : U)
   (is-segal-B : is-segal B)
   (f g : A → B)
   (α : hom (A → B) f g)
   (x y : A)
   (k : hom A x y)
-  : comp-is-segal B is-segal-B (f x) (f y) (g y) (ap-hom A B f x y k) (\ s → α s y)
-    = comp-is-segal B is-segal-B (f x) (g x) (g y) (\ s → α s x) (ap-hom A B g x y k)
-  := eq-from-square B is-segal-B (\ (s,t) → α s (k t))
-
+  : comp-is-segal B is-segal-B (f x) (f y) (g y)
+    ( ap-hom A B f x y k)
+    ( \ s → α s y) =
+    comp-is-segal B is-segal-B (f x) (g x) (g y)
+    ( \ s → α s x)
+    ( ap-hom A B g x y k)
+  := comp-eq-square-is-segal B is-segal-B (\ (s,t) → α s (k t))
 ```

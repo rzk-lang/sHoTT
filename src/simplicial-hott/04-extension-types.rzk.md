@@ -268,7 +268,7 @@ We refer to another form as an "extension extensionality" axiom.
 Weak extension extensionality implies extension extensionality; this is the
 context of RS17 Proposition 4.8 (i). We prove this in a series of lemmas. The
 `ext-projection-temp` function is a (hopefully temporary) helper that explicitly
-cases an extension type to a function type.
+cases an extension type to a function type. 
 
 ```rzk
 #section rs-4-8
@@ -478,37 +478,59 @@ equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
               ( b)
               ( \ t → second (second (second (famequiv t))) (b t))))))
 ```
-We have a homotopy extension property
+We have a homotopy extension property. 
+
+The following code is another instantiation of casting, necessary for some arguments below. 
 
 ```rzk
-#define htpy-ext-property
-    ( weak-ext-ext : WeakExtExt)
+#define restrict
     ( I : CUBE)
     ( ψ : I → TOPE)
     ( ϕ : ψ → TOPE)
-    ( A : ψ → U)
-    ( b : (t : ψ ) → A t)
-    ( a : (t : ϕ ) → A t) 
-    ( e : (t : ϕ ) → a t = b t) 
-    : Σ (a' : (t : ψ ) → A t [ϕ t ↦ a t]) , 
-        ((t : ψ ) → (a' t = b t) [ϕ t ↦ e t])
-    := 
-      first (
-       axiom-choice
-        ( I )
-        ( ψ ) 
-        ( ϕ ) 
-        ( A ) 
-        ( \ t y → y = (ext-projection-temp) t)
-        ( a ) 
-        ( e ))  (first ( weak-ext-ext 
-          ( I )
-          ( ψ )
-          ( ϕ )
-          ( \t → (Σ (y : A t) , (y = (ext-projection-temp) t)))
-          (\ t → is-contr-codomain-based-paths 
-                  (A t )
-                  ((ext-projection-temp) t))
-          (\ t → (a t , e t) )))
+    ( A : ψ → U) 
+    ( a : (t : ϕ) → A t) 
+    ( f : (t : ψ) → A t [ϕ t ↦ a t]) 
+    : (t : ψ ) → A t
+    := f
 
 ```
+
+The homotopy extension property follows from a straightforward application of the axiom of choice
+to the point of contraction for weak extension extensionality. 
+
+```rzk title="RS17 Proposition 4.10"
+#define htpy-ext-property
+  ( weak-ext-ext : WeakExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( b : (t : ψ ) → A t)
+  ( a : (t : ϕ ) → A t) 
+  ( e : (t : ϕ ) → a t = b t) 
+  : Σ (a' : (t : ψ ) → A t [ϕ t ↦ a t]) , 
+      ((t : ψ ) → (restrict I ψ ϕ A a a' t = b t) [ϕ t ↦ e t])
+  := 
+    first 
+    ( axiom-choice --- apply the forward equivalence of AoC
+      ( I )
+      ( ψ ) 
+      ( ϕ ) 
+      ( A ) 
+      ( \ t y → y = b t)
+      ( a ) 
+      ( e ))  
+    ( first --- to the center of a contractible extension type
+             --- obtained from weak-ext-ext
+      ( weak-ext-ext 
+        ( I )
+        ( ψ )
+        ( ϕ )
+        ( \t → (Σ (y : A t) , (y = b t)))
+        ( \ t → is-contr-codomain-based-paths 
+                ( A t )
+                ( (b t)))
+        ( \ t → ( a t , e t) )))
+
+```
+

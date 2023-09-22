@@ -563,3 +563,215 @@ transformation.
 
 #end unit-counit-transposition
 ```
+
+We next connect the triangle identity witnesses to the usual triangle identities
+as an application of the dependent Yoneda lemma.
+
+```rzk
+#section triangle-identities
+
+#variables A B : U
+#variable is-segal-A : is-segal A
+#variable is-segal-B : is-segal B
+#variable f : A → B
+#variable u : B → A
+#variable η : nat-trans A (\ _ → A) (identity A) (comp A B A u f)
+#variable ϵ : nat-trans B (\ _ → B) (comp B A B f u) (identity B)
+
+#def equiv-radj-triangle uses (funext)
+  : Equiv
+    ( hom2 (B → A) u (triple-comp B A B A u f u) u
+      ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+      ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )
+      ( id-hom (B → A) u))
+    ( ( comp-is-segal
+        ( B → A)
+        ( is-segal-function-type
+          ( funext)
+          ( B)
+          ( \ _ → A)
+          ( \ b → is-segal-A ))
+        ( u)
+        (triple-comp B A B A u f u)
+        ( u)
+        ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+        ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )) =
+      ( id-hom (B → A) u))
+  :=
+    inv-equiv
+    ( ( comp-is-segal
+        ( B → A)
+        ( is-segal-function-type
+          ( funext)
+          ( B)
+          ( \ _ → A)
+          ( \ b → is-segal-A ))
+        ( u)
+        (triple-comp B A B A u f u)
+        ( u)
+        ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+        ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )) =
+      ( id-hom (B → A) u))
+    ( hom2 (B → A) u (triple-comp B A B A u f u) u
+      ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+      ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )
+      ( id-hom (B → A) u))
+    ( equiv-hom2-eq-comp-is-segal
+      ( B → A)
+      ( is-segal-function-type
+        ( funext)
+        ( B)
+        ( \ _ → A)
+        ( \ b → is-segal-A ))
+      ( u)
+      (triple-comp B A B A u f u)
+      ( u)
+      ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+      ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )
+      ( id-hom (B → A) u))
+
+#def first-arrow-test
+  : (b : B) → hom A (u b) (u (f (u b)))
+  := \ b t → η t (u b)
+
+#def first-arrow-component-test
+  : nat-trans-components B (\ _ → A) u (triple-comp B A B A u f u)
+  := \ b t → η t (u b)
+
+#def second-arrow-test
+  : (b : B) → hom A (u (f (u b))) (u b)
+  := \ b → ap-hom B A u (f (u b)) b (\ t → ϵ t b)
+
+#def second-components-test
+  : nat-trans-components B (\ _ → A) (triple-comp B A B A u f u) u
+  := \ b → ap-hom B A u (f (u b)) b (\ t → ϵ t b)
+
+#def comp-test
+  : (b : B) → hom A (u b) (u b)
+  :=
+    \ b →
+      ( comp-is-segal
+        ( A)
+        ( is-segal-A)
+        ( u b)
+        ( u (f (u b)))
+        ( u b)
+        ( \ t → η t (u b) )
+        ( ap-hom B A u (f (u b)) b (\ t → ϵ t b)))
+
+#def comp-components-test
+  : nat-trans-components B (\ _ → A) u u
+  :=
+    \ b →
+      ( comp-is-segal
+        ( A)
+        ( is-segal-A)
+        ( u b)
+        ( u (f (u b)))
+        ( u b)
+        ( \ t → η t (u b) )
+        ( ap-hom B A u (f (u b)) b (\ t → ϵ t b)))
+
+#def components-test
+  : Equiv
+    ( ( comp-is-segal
+        ( B → A)
+        ( is-segal-function-type
+          ( funext)
+          ( B)
+          ( \ _ → A)
+          ( \ b → is-segal-A ))
+        ( u)
+        (triple-comp B A B A u f u)
+        ( u)
+        ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+        ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )) =
+      ( id-hom (B → A) u))
+    ( ( ev-components-nat-trans B (\ _ → A) u u
+        ( comp-is-segal
+          ( B → A)
+          ( is-segal-function-type
+            ( funext)
+            ( B)
+            ( \ _ → A)
+            ( \ b → is-segal-A ))
+          ( u)
+          (triple-comp B A B A u f u)
+          ( u)
+          ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+          ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ ))) =
+      ( \ b → id-hom A ( u b)))
+  :=
+    equiv-ap-is-equiv
+    ( nat-trans B (\ _ → A) u u)
+    ( nat-trans-components B (\ _ → A) u u)
+    ( ev-components-nat-trans B (\ _ → A) u u)
+    ( is-equiv-ev-components-nat-trans B (\ _ → A) u u)
+    ( comp-is-segal
+        ( B → A)
+        ( is-segal-function-type
+          ( funext)
+          ( B)
+          ( \ _ → A)
+          ( \ b → is-segal-A ))
+        ( u)
+        (triple-comp B A B A u f u)
+        ( u)
+        ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+        ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ ))
+    ( id-hom (B → A) u)
+
+#def equiv-ladj-triangle uses (funext)
+  : Equiv
+    ( hom2 (A → B) f (triple-comp A B A B f u f) f
+        ( postwhisker-nat-trans A A B (identity A) (comp A B A u f) f η )
+        ( prewhisker-nat-trans A B B f (comp B A B f u) (identity B) ϵ )
+        ( id-hom (A → B) f))
+    ( ( comp-is-segal
+        ( A → B)
+        ( is-segal-function-type
+          ( funext)
+          ( A)
+          ( \ _ → B)
+          ( \ a → is-segal-B ))
+        ( f)
+        (triple-comp A B A B f u f)
+        ( f)
+        ( postwhisker-nat-trans A A B (identity A) (comp A B A u f) f η )
+        ( prewhisker-nat-trans A B B f (comp B A B f u) (identity B) ϵ )) =
+      ( id-hom (A → B) f))
+  :=
+    inv-equiv
+    ( ( comp-is-segal
+        ( A → B)
+        ( is-segal-function-type
+          ( funext)
+          ( A)
+          ( \ _ → B)
+          ( \ a → is-segal-B ))
+        ( f)
+        (triple-comp A B A B f u f)
+        ( f)
+        ( postwhisker-nat-trans A A B (identity A) (comp A B A u f) f η )
+        ( prewhisker-nat-trans A B B f (comp B A B f u) (identity B) ϵ )) =
+      ( id-hom (A → B) f))
+    ( hom2 (A → B) f (triple-comp A B A B f u f) f
+        ( postwhisker-nat-trans A A B (identity A) (comp A B A u f) f η )
+        ( prewhisker-nat-trans A B B f (comp B A B f u) (identity B) ϵ )
+        ( id-hom (A → B) f))
+    ( equiv-hom2-eq-comp-is-segal
+      ( A → B)
+      ( is-segal-function-type
+        ( funext)
+        ( A)
+        ( \ _ → B)
+        ( \ a → is-segal-B ))
+      ( f)
+      (triple-comp A B A B f u f)
+      ( f)
+      ( postwhisker-nat-trans A A B (identity A) (comp A B A u f) f η )
+      ( prewhisker-nat-trans A B B f (comp B A B f u) (identity B) ϵ )
+      ( id-hom (A → B) f))
+
+#end triangle-identities
+```

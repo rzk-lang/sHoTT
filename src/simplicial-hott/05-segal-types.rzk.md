@@ -51,12 +51,8 @@ Extension types are used to define the type of arrows between fixed terms:
 
 ```
 
-For each `a : A`, the total types of the representables
-`\ z → hom A a z`
-and
-`\ z → hom A z a`
-are called the coslice and slice, respectively.
-
+For each `a : A`, the total types of the representables `\ z → hom A a z` and
+`\ z → hom A z a` are called the coslice and slice, respectively.
 
 ```rzk
 #def coslice
@@ -399,7 +395,7 @@ instance if $X$ is a type and $A : X → U$ is such that $A x$ is a Segal type f
 all $x$ then $(x : X) → A x$ is a Segal type.
 
 ```rzk title="RS17, Corollary 5.6(i)"
-#def is-segal-function-type uses (funext)
+#def is-segal-function-type' uses (funext)
   ( X : U)
   ( A : X → U)
   ( fiberwise-is-segal-A : (x : X) → is-local-horn-inclusion (A x))
@@ -433,6 +429,18 @@ all $x$ then $(x : X) → A x$ is a Segal type.
         ( X)
         ( \ t → A)
         ( \ t → recBOT)))
+
+#def is-segal-function-type uses (funext)
+  ( X : U)
+  ( A : X → U)
+  ( fiberwise-is-segal-A : (x : X) → is-segal (A x))
+  : is-segal ((x : X) → A x)
+  :=
+    is-segal-is-local-horn-inclusion
+      ( (x : X) → A x)
+      ( is-segal-function-type'
+        ( X) (A)
+        ( \ x → is-local-horn-inclusion-is-segal (A x)(fiberwise-is-segal-A x)))
 ```
 
 If $X$ is a shape and $A : X → U$ is such that $A x$ is a Segal type for all $x$

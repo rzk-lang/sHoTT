@@ -171,32 +171,6 @@ Equivalently , natural transformations can be determined by their **components**
       is-equiv-ev-components-nat-trans A B f g)
 ```
 
-### Horizontal composition
-
-Horizontal composition of natural transformations makes sense over any type. In
-particular , contrary to what is written in [RS17] we do not need `#!rzk C` to
-be Segal.
-
-```rzk
-#def horizontal-comp-nat-trans
-  ( A B C : U)
-  ( f g : A → B)
-  ( f' g' : B → C)
-  ( η : nat-trans A (\ _ → B) f g)
-  ( η' : nat-trans B (\ _ → C) f' g')
-  : nat-trans A (\ _ → C) (\ x → f' (f x)) (\ x → g' (g x))
-  := \ t x → η' t (η t x)
-
-#def horizontal-comp-nat-trans-components
-  ( A B C : U)
-  ( f g : A → B)
-  ( f' g' : B → C)
-  ( η : nat-trans-components A (\ _ → B) f g)
-  ( η' : nat-trans-components B (\ _ → C) f' g')
-  : nat-trans-components A (\ _ → C) (\ x → f' (f x)) (\ x → g' (g x))
-  := \ x t → η' (η x t) t
-```
-
 ### Vertical composition
 
 We can define vertical composition for natural transformations in families of
@@ -230,7 +204,9 @@ Segal types.
       ( t)
 ```
 
-The identity natural transformation is identity arrows on components
+### Functoriality of evaluation at components
+
+The components of the identity natural transformation are identity arrows.
 
 ```rzk title="RS17, Proposition 6.5(ii)"
 #def id-arr-components-id-nat-trans
@@ -238,8 +214,39 @@ The identity natural transformation is identity arrows on components
   ( B : A → U)
   ( f : (x : A) → (B x))
   ( a : A)
-  : ( \ t → id-hom ((x : A) → B x) f t a) =_{Δ¹ → B a} id-hom (B a) (f a)
+  : ( ev-components-nat-trans A B f f (id-hom ((x : A) → B x) f) a) =
+    id-hom (B a) (f a)
   := refl
+```
+
+When the fibers of a family of types `#!rzk B : A → U` are Segal types, the
+components of the natural transformation defined by composing in the Segal type
+`#!rzk (x : A) → B x` agree with the components defined by vertical composition.
+
+### Horizontal composition
+
+Horizontal composition of natural transformations makes sense over any type. In
+particular , contrary to what is written in [RS17] we do not need `#!rzk C` to
+be Segal.
+
+```rzk
+#def horizontal-comp-nat-trans
+  ( A B C : U)
+  ( f g : A → B)
+  ( f' g' : B → C)
+  ( η : nat-trans A (\ _ → B) f g)
+  ( η' : nat-trans B (\ _ → C) f' g')
+  : nat-trans A (\ _ → C) (\ x → f' (f x)) (\ x → g' (g x))
+  := \ t x → η' t (η t x)
+
+#def horizontal-comp-nat-trans-components
+  ( A B C : U)
+  ( f g : A → B)
+  ( f' g' : B → C)
+  ( η : nat-trans-components A (\ _ → B) f g)
+  ( η' : nat-trans-components B (\ _ → C) f' g')
+  : nat-trans-components A (\ _ → C) (\ x → f' (f x)) (\ x → g' (g x))
+  := \ x t → η' (η x t) t
 ```
 
 ### Whiskering

@@ -14,6 +14,7 @@ This is a literate `rzk` file:
   instance the notion of contractible types.
 - `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
   subshapes.
+- `4-extension-types.md` — We use Theorem 4.1, an equivalence between lifts.  
 - `5-segal-types.md` - We make use of the notion of Segal types and their
   structures.
 
@@ -101,18 +102,6 @@ unique lift with specified domain.
   := ( Σ (C : (A → U)) , is-covariant A C)
 ```
 
-The notion of a covariant family is stable under substitution into the base.
-
-```rzk title="RS17, Remark 8.3"
-#def is-covariant-substitution-is-covariant
-  ( A B : U)
-  ( C : A → U)
-  ( is-covariant-C : is-covariant A C)
-  ( g : B → A)
-  : is-covariant B (\ b → C (g b))
-  := \ x y f u → is-covariant-C (g x) (g y) (ap-hom B A g x y f) u
-```
-
 The notion of having a unique lift with a fixed domain may also be expressed by
 contractibility of the type of extensions along the domain inclusion into the
 1-simplex.
@@ -152,7 +141,7 @@ By the equivalence-invariance of contractibility, this proves the desired
 logical equivalence
 
 ```rzk title="RS17, Proposition 8.4"
-#def has-unique-fixed-domain-lifts-iff-is-covariant
+#def has-unique-fixed-domain-lifts-iff-is-covariant 
   ( A : U)
   ( C : A → U)
   : iff
@@ -508,7 +497,7 @@ Finally, we see that covariant hom families in a Segal type are covariant.
   (A : U)
   (is-segal-A : is-segal A)
   (a : A)
-  : is-covariant A (hom A a)
+  : is-covariant A (\ x → hom A a x)
   := is-segal-representable-dhom-from-contractible A is-segal-A a
 ```
 
@@ -842,9 +831,9 @@ is covariant as shown above. Transport of an `e : C x` along an arrow
 
 ```
 
-We show that for each `v : C y`, the map `covariant-uniqueness` is an
-equivalence. This follows from the fact that the total spaces (summed over
-`v : C y`) of both sides are contractible.
+We show that for each `v : C y`, the  map `covariant-uniqueness` is an equivalence.
+This follows from the fact that the total spaces (summed over `v : C y`)
+of both sides are contractible.
 
 ```rzk title="RS17, Lemma 8.15"
 #def is-equiv-total-map-covariant-uniqueness-curried
@@ -1135,18 +1124,6 @@ has a unique lift with specified codomain.
 ```rzk title="The type of contravariant families over a fixed type"
 #def contravariant-family (A : U) : U
   := ( Σ (C : A → U) , is-contravariant A C)
-```
-
-The notion of a contravariant family is stable under substitution into the base.
-
-```rzk title="RS17, Remark 8.3, dual form"
-#def is-contravariant-substitution-is-contravariant
-  ( A B : U)
-  ( C : A → U)
-  ( is-contravariant-C : is-contravariant A C)
-  ( g : B → A)
-  : is-contravariant B (\ b → C (g b))
-  := \ x y f v → is-contravariant-C (g x) (g y) (ap-hom B A g x y f) v
 ```
 
 The notion of having a unique lift with a fixed codomain may also be expressed
@@ -1680,5 +1657,33 @@ commuting with the contravariant lifts.
   :=
     ( is-covariant-representable-is-segal A is-segal-A ,
       is-contravariant-representable-is-segal A is-segal-A)
+```
+ 
+## Closure properties of covariance
 
+```rzk title="RS17, Theorem 8.30"
+#def weak-extensionality 
+  ( A : U )
+  : U :=
+   (C : A → U) →  (f : (a : A) → is-contr (C a) ) → (is-contr ( (a : A) → C a )) 
+
+#def locally-covariant-implies-covariant-dependent-types
+   (A B : U)
+   (C : A → B → U)
+   (is-locally-covariant : (b : B) → is-covariant A ( \ a → C a b ) )
+  (we : weak-extensionality B)
+  : is-covariant A ( \ a → (( b : B ) → (C a b)) ) 
+  := 
+    ( first ( has-unique-fixed-domain-lifts-iff-is-covariant A ( \ a → ( b : B ) → (C a b) )) ) 
+        ( \ x y f g →  
+           equiv-with-contractible-codomain-implies-contractible-domain
+           ( (t : Δ¹) → ((b : B) → C (f t) b) [  t ≡ 0₂ ↦ g ])   
+           ( (b : B) → (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b]) 
+           ( flip-ext-fun 2 Δ¹ (\ t → t ≡ 0₂) B ( \ t →  C (f t)) ( \ t → g)) 
+          (we 
+            ( \ b → ( (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b] ) ) 
+            ( \ b → ( (( second ( has-unique-fixed-domain-lifts-iff-is-covariant A ( \ a  → (C a b) )) ) (is-locally-covariant b)) x y f (g b) ) )
+            )
+        ) 
+      
 ```

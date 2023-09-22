@@ -484,6 +484,28 @@ arrows.
       ( e)
 ```
 
+```rzk title="RS17, Lemma 10.8"
+#def ap-hom-of-idtoiso-is-idtoiso-of-ap
+  ( A B : U)
+  ( is-segal-A : is-segal A)
+  ( is-segal-B : is-segal B)
+  ( f : A → B)
+  ( x y : A)
+  ( e : x = y)
+  : ( ap-hom A B f x y (first (iso-eq A is-segal-A x y e))) =
+    ( first ( iso-eq B is-segal-B (f x) (f y) (ap A B x y f e)))
+  :=
+    ind-path
+      ( A)
+      ( x)
+      ( \ y' e' →
+        ( ap-hom A B f x y' (first (iso-eq A is-segal-A x y' e'))) =
+        ( first (iso-eq B is-segal-B (f x) (f y') (ap A B x y' f e'))))
+      ( refl)
+      ( y)
+      ( e)
+```
+
 ## Uniqueness of initial and final objects
 
 In a Segal type, initial objects are isomorphic.

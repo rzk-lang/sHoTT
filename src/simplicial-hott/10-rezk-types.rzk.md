@@ -448,7 +448,7 @@ type-theoretic operations on paths and the category-theoretic operations on
 arrows.
 
 ```rzk title="RS17, Lemma 10.7"
-#def TODO10-7
+#def covariant-transport-of-idtoiso-is-transport
   ( A : U)
   ( is-segal-A : is-segal A)
   ( C : A → U)

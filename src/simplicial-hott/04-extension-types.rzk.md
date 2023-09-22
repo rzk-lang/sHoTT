@@ -512,7 +512,7 @@ to the point of contraction for weak extension extensionality.
       ((t : ψ ) → (restrict I ψ ϕ A a a' t = b t) [ϕ t ↦ e t])
   := 
     first 
-    ( axiom-choice --- apply the forward equivalence of AoC
+    ( axiom-choice 
       ( I )
       ( ψ ) 
       ( ϕ ) 
@@ -520,8 +520,7 @@ to the point of contraction for weak extension extensionality.
       ( \ t y → y = b t)
       ( a ) 
       ( e ))  
-    ( first --- to the center of a contractible extension type
-             --- obtained from weak-ext-ext
+    ( first 
       ( weak-ext-ext 
         ( I )
         ( ψ )

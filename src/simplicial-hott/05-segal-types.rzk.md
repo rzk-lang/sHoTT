@@ -68,6 +68,27 @@ For each `a : A`, the total types of the representables `\ z → hom A a z` and
   := Σ (z : A) , (hom A z a)
 ```
 
+The types `coslice A a` and `slice A a`
+are functorial in `A` in the following sense:
+
+```rzk
+#def coslice-fun
+  (A B : U)
+  (f : A → B)
+  (a : A)
+  : coslice A a → coslice B (f a)
+  :=
+    \ (a', g) → (f a', \ t → f (g t))
+
+#def slice-fun
+  (A B : U)
+  (f : A → B)
+  (a : A)
+  : slice A a → slice B (f a)
+  :=
+    \ (a', g) → (f a', \ t → f (g t))
+```
+
 Extension types are also used to define the type of commutative triangles:
 
 <svg style="float: right" viewBox="0 0 200 200" width="150" height="200">

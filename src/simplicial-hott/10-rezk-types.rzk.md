@@ -435,12 +435,75 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
 
 ```rzk title="RS17, Definition 10.6"
 #def is-rezk
-  (A : U)
+  ( A : U)
   : U
   :=
     Σ ( is-segal-A : is-segal A) ,
       (x : A) → (y : A) →
         is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y)
+```
+
+The following results show how `#!rzk iso-eq` mediates between the
+type-theoretic operations on paths and the category-theoretic operations on
+arrows.
+
+```rzk title="RS17, Lemma 10.7"
+#def compute-covariant-transport-of-hom-family-iso-eq-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y : A)
+  ( e : x = y)
+  ( u : C x)
+  : covariant-transport
+      ( A)
+      ( x)
+      ( y)
+      ( first (iso-eq A is-segal-A x y e))
+      ( C)
+      ( is-covariant-C)
+      ( u)
+    = transport A C x y e u
+  :=
+    ind-path
+      ( A)
+      ( x)
+      ( \ y' e' →
+        covariant-transport
+          ( A)
+          ( x)
+          ( y')
+          ( first (iso-eq A is-segal-A x y' e'))
+          ( C)
+          ( is-covariant-C)
+          ( u)
+        = transport A C x y' e' u)
+      ( id-arr-covariant-transport A x C is-covariant-C u)
+      ( y)
+      ( e)
+```
+
+```rzk title="RS17, Lemma 10.8"
+#def compute-ap-hom-of-iso-eq
+  ( A B : U)
+  ( is-segal-A : is-segal A)
+  ( is-segal-B : is-segal B)
+  ( f : A → B)
+  ( x y : A)
+  ( e : x = y)
+  : ( ap-hom A B f x y (first (iso-eq A is-segal-A x y e))) =
+    ( first ( iso-eq B is-segal-B (f x) (f y) (ap A B x y f e)))
+  :=
+    ind-path
+      ( A)
+      ( x)
+      ( \ y' e' →
+        ( ap-hom A B f x y' (first (iso-eq A is-segal-A x y' e'))) =
+        ( first (iso-eq B is-segal-B (f x) (f y') (ap A B x y' f e'))))
+      ( refl)
+      ( y)
+      ( e)
 ```
 
 ## Uniqueness of initial and final objects

@@ -299,8 +299,9 @@ cases an extension type to a function type.
 
 #define is-contr-ext-codomain-based-paths uses (weak-ext-ext f) 
     : is-contr 
-        ((t : ψ ) → (Σ (y : A t) ,
-                    (y = (ext-projection-temp) t))[ϕ t ↦ (a t , refl)])
+        ( ( t : ψ) →
+          ( Σ (y : A t) , (y = ext-projection-temp t))
+          [ ϕ t ↦ (a t , refl)])
     := weak-ext-ext 
         ( I )
         ( ψ )

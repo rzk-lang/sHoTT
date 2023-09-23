@@ -486,3 +486,68 @@ A type is contractible if and only if it has singleton induction.
   : ( is-contr A)
   := ( a , (first (f ( \ x → a = x))) (refl_{a}))
 ```
+
+## Identity types of contractible types
+
+We show that in a contractible type any two paths between two 
+
+The following path is surprisingly useful. Given a contraction $(c, C) : \sum_{c : A} \prod_{x: A} c = x$ we can follow the path that goes from a term $x$ to the center $c$ and then back to $y$. 
+```rzk
+
+#define path-through-center-is-contr
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( x y : A)
+  : (x = y)
+  :=
+  concat 
+    ( A)
+    ( x)
+    ( center-contraction A is-contr-A)
+    ( y) 
+    ( rev A (center-contraction A is-contr-A) x (homotopy-contraction A is-contr-A x ))
+    ( homotopy-contraction A is-contr-A y) 
+
+```
+
+In a contractible type any path $p : x = y$ is equal to this out and back path. 
+```rzk
+#define path-eq-path-through-center-is-contr
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( x y : A)
+  ( p : x = y)
+  : ((path-through-center-is-contr A is-contr-A x y) = p)
+  := 
+    ind-path
+    ( A)
+    ( x)
+    ( \ y' p' → (path-through-center-is-contr A is-contr-A x y') = p') 
+    ( left-inverse-concat A (center-contraction A is-contr-A) x (homotopy-contraction A is-contr-A x)) 
+    ( y) 
+    ( p) 
+
+```
+
+Finally, in a contractible type any two paths between the same end points are equal. There are many possible proofs of this (e.g. identifying contractible types with the unit type where it is more transparent), but we proceed by gluing together the two identifications to the out and back path.
+
+```rzk
+#define paths-eq-is-contr 
+ ( A : U)
+ ( is-contr-A : is-contr A)
+ ( x y : A)
+ ( p q : x = y) 
+ : (p = q)
+ := 
+  concat
+    ( x = y)
+    ( p)
+    ( path-through-center-is-contr A is-contr-A x y)
+    ( q)
+    ( rev
+      (x = y) 
+      ( path-through-center-is-contr A is-contr-A x y)
+      ( p) 
+      ( path-eq-path-through-center-is-contr A is-contr-A x y p))
+    ( path-eq-path-through-center-is-contr A is-contr-A x y q)
+```

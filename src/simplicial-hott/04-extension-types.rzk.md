@@ -566,30 +566,3 @@ In an extension type of a dependent type that is pointwise contractible, then we
             ( second (is-contr-fiberwise-A t) (a t))
 
 ```
-
-```rzk 
-
-#define first-4-11
-  (weak-ext-ext : WeakExtExt)
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
-  ( A : ψ → U)
-  ( a : (t : ϕ ) → A t)
-  (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
-  : Σ (a' : (t : ψ ) → A t [ϕ t ↦ a t]),
-           ((t : ψ ) → 
-            (restrict I ψ ϕ A a a' t = 
-              first (is-contr-fiberwise-A t)) [ϕ t ↦ codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A t] )
-  := 
-    htpy-ext-property
-    ( weak-ext-ext)
-    ( I )
-    ( ψ )
-    ( ϕ )
-    ( A )
-    (\ t →  first (is-contr-fiberwise-A t))
-    ( a )
-    ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A )
-```
-

@@ -173,6 +173,111 @@ logical equivalence
           ( C-is-covariant x y f u)))
 ```
 
+## Naive left fibrations
+
+For any functor `p : Ĉ → A`,
+we can make a naive definition of what it means to be a left fibration.
+
+```rzk
+#def is-naive-left-fibration
+  ( A Ĉ : U)
+  ( p : Ĉ → A)
+  : U
+  :=
+    is-homotopy-cartesian
+      Ĉ (coslice Ĉ)
+      A (coslice A)
+      p (coslice-fun Ĉ A p)
+```
+
+As a sanity check we unpack the definition of `is-naive-left-fibration`.
+
+```rzk
+#def is-naive-left-fibration-unpacked
+  ( A Ĉ : U)
+  ( p : Ĉ → A)
+  : is-naive-left-fibration A Ĉ p =
+      ((c : Ĉ) → is-equiv (coslice Ĉ c) (coslice A (p c)) (coslice-fun Ĉ A p c))
+  := refl
+```
+
+For every covariant type `#!rzk C : A → U`,
+the projection `#!rzk p : total-type A C → A` is a naive left fibration in this sense:
+
+```rzk title="The statement of RS17, Theorem 8.5"
+#def is-naive-left-fibration-is-covariant-thm
+  (A : U)
+  (C : A → U)
+  : U
+  := iff
+    (is-covariant A C)
+    (is-naive-left-fibration A (total-type A C) (\ (a, c) → a))
+```
+
+```rzk
+#section is-naive-left-fibration-is-covariant-proof
+#variable A : U
+#variable C : A → U
+#variable a : A
+#variable a' : A
+#variable f : hom A a a'
+#variable c : C a
+
+#def temp-forward
+  : dhom-from A a a' f C c
+  → fib (coslice (total-type A C) (a, c)) (coslice A a)
+        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c))
+        (a', f)
+  :=
+    \ (c', f̂) → (((a', c'), \ t → (f t, f̂ t)) , refl)
+
+#def temp-backward-1
+  : fib (coslice (total-type A C) (a, c)) (coslice A a)
+        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c))
+        (a', f)
+  → Σ (c' : C a'), hom (total-type A C) (a, c) (a', c')
+  :=
+    \ (((a'', c''), ĝ), γ) →
+    (transport A
+      (\ z → (Σ (d : C z), hom (total-type A C) (a, c) (z,d)))
+      a'' a'
+      (first-path-Σ A (\ x → hom A a x)
+        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c) ((a'',c''), ĝ))
+        (a', f)
+        γ
+      )
+      (c'', ĝ)
+    )
+
+#def temp-backward-1
+  : fib (coslice (total-type A C) (a, c)) (coslice A a)
+        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c))
+        (a', f)
+  → Σ ((c', h) : product (C a') (hom A a a')), dhom A a a' h C c c'
+  :=
+    \ (((a'', c''), ĝ), γ) →      -- ĝ : hom (total-type A C) (a, c) (a'', c'')
+    (transport A
+      (\ z → (Σ ((d, h) : product (C z) (hom A a z)), dhom A a z h C c d))
+      a'' a'
+      (first-path-Σ A (\ x → hom A a x)
+        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c) ((a'',c''), ĝ))
+        (a', f)
+        γ
+      )
+      ((c'',
+        transport A (\ z → hom A a z)
+        (first-path-Σ A (\ x → hom A a x)
+          (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c) ((a'',c''), ĝ))
+          (a', f)
+          γ
+        )
+        f
+      ), U)
+    )
+
+#end is-naive-left-fibration-is-covariant-proof
+```
+
 ## Representable covariant families
 
 If A is a Segal type and a : A is any term, then hom A a defines a covariant

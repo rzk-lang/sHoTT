@@ -560,8 +560,8 @@ In an extension type of a dependent type that is pointwise contractible, then we
   : (t : ϕ ) → (a t = first (is-contr-fiberwise-A t))
   :=  \ t → 
           rev
-            ( A t ) -- type
-            ( first (is-contr-fiberwise-A t) ) -- two endpoints
+            ( A t )
+            ( first (is-contr-fiberwise-A t) )
             ( a t) -- 
             ( second (is-contr-fiberwise-A t) (a t))
 

@@ -268,7 +268,7 @@ We refer to another form as an "extension extensionality" axiom.
 Weak extension extensionality implies extension extensionality; this is the
 context of RS17 Proposition 4.8 (i). We prove this in a series of lemmas. The
 `ext-projection-temp` function is a (hopefully temporary) helper that explicitly
-cases an extension type to a function type. 
+cases an extension type to a function type.
 
 ```rzk
 #section rs-4-8
@@ -288,27 +288,28 @@ cases an extension type to a function type.
 #define is-contr-ext-based-paths uses (weak-ext-ext f)
   : is-contr ((t : ψ ) → (Σ (y : A t) ,
               ((ext-projection-temp) t = y))[ϕ t ↦ (a t , refl)])
-  := weak-ext-ext
-      ( I )
-      ( ψ )
-      ( ϕ )
-      ( \ t → (Σ (y : A t) , ((ext-projection-temp) t = y)))
-      ( \ t →
-            is-contr-based-paths (A t ) ((ext-projection-temp) t))
-      ( \ t → (a t , refl) )
+  :=
+    weak-ext-ext
+    ( I )
+    ( ψ )
+    ( ϕ )
+    ( \ t → (Σ (y : A t) , ((ext-projection-temp) t = y)))
+    ( \ t →
+      is-contr-based-paths (A t ) ((ext-projection-temp) t))
+    ( \ t → (a t , refl) )
 
-#define is-contr-ext-codomain-based-paths uses (weak-ext-ext f) 
-    : is-contr 
-        ( ( t : ψ) →
-          ( Σ (y : A t) , (y = ext-projection-temp t))
-          [ ϕ t ↦ (a t , refl)])
-    := weak-ext-ext 
-        ( I)
-        ( ψ)
-        ( ϕ)
-        ( \ t → (Σ (y : A t) , y = ext-projection-temp t))
-        ( \ t → is-contr-codomain-based-paths (A t) (ext-projection-temp t))
-        ( \ t → (a t , refl))
+#define is-contr-ext-codomain-based-paths uses (weak-ext-ext f)
+  : is-contr
+    ( ( t : ψ) →
+      ( Σ (y : A t) , (y = ext-projection-temp t)) [ ϕ t ↦ (a t , refl)])
+  :=
+    weak-ext-ext
+    ( I)
+    ( ψ)
+    ( ϕ)
+    ( \ t → (Σ (y : A t) , y = ext-projection-temp t))
+    ( \ t → is-contr-codomain-based-paths (A t) (ext-projection-temp t))
+    ( \ t → (a t , refl))
 
 #define is-contr-based-paths-ext uses (weak-ext-ext)
   : is-contr (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) ,
@@ -347,10 +348,10 @@ The map that defines extension extensionality
         ((t : ψ ) → (f t = g t) [ϕ t ↦ refl]))
   :=
     total-map
-      ( (t : ψ ) → A t [ϕ t ↦ a t])
-      ( \ g → (f = g))
-      ( \ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
-      ( ext-htpy-eq I ψ ϕ A a f)
+    ( (t : ψ ) → A t [ϕ t ↦ a t])
+    ( \ g → (f = g))
+    ( \ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
+    ( ext-htpy-eq I ψ ϕ A a f)
 ```
 
 The total bundle version of extension extensionality
@@ -370,14 +371,14 @@ The total bundle version of extension extensionality
                (ext-ext-weak-ext-ext-map I ψ ϕ A a f)
   :=
     is-equiv-are-contr
-      ((Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g))  )
-      ( Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) ,
+    ( Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g)  )
+    ( Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) ,
       ((t : ψ ) → (f t = g t) [ϕ t ↦ refl]))
-      ( is-contr-based-paths
-        ( (t : ψ ) → A t [ϕ t ↦ a t])
-        ( f ))
-      ( is-contr-based-paths-ext weak-ext-ext I ψ ϕ A a f)
-      ( ext-ext-weak-ext-ext-map I ψ ϕ A a f)
+    ( is-contr-based-paths
+      ( (t : ψ ) → A t [ϕ t ↦ a t])
+      ( f ))
+    ( is-contr-based-paths-ext weak-ext-ext I ψ ϕ A a f)
+    ( ext-ext-weak-ext-ext-map I ψ ϕ A a f)
 ```
 
 Finally, using equivalences between families of equivalences and bundles of
@@ -412,7 +413,7 @@ extension extensionality that we get by extraccting the fiberwise equivalence.
 ```rzk title="RS17 Proposition 4.8(i)"
 #define ext-ext-weak-ext-ext
   (weak-ext-ext : WeakExtExt)
-   :  ExtExt
+  :  ExtExt
   := \ I ψ ϕ A a f g →
       ext-ext-weak-ext-ext' weak-ext-ext I ψ ϕ A a f g
 ```
@@ -478,25 +479,28 @@ equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
               ( b)
               ( \ t → second (second (second (famequiv t))) (b t))))))
 ```
-We have a homotopy extension property. 
 
-The following code is another instantiation of casting, necessary for some arguments below. 
+We have a homotopy extension property.
+
+The following code is another instantiation of casting, necessary for some
+arguments below.
 
 ```rzk
 #define restrict
-    ( I : CUBE)
-    ( ψ : I → TOPE)
-    ( ϕ : ψ → TOPE)
-    ( A : ψ → U) 
-    ( a : (t : ϕ) → A t) 
-    ( f : (t : ψ) → A t [ϕ t ↦ a t]) 
-    : (t : ψ ) → A t
-    := f
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ) → A t [ϕ t ↦ a t])
+  : (t : ψ ) → A t
+  := f
 
 ```
 
-The homotopy extension property follows from a straightforward application of the axiom of choice
-to the point of contraction for weak extension extensionality. 
+The homotopy extension property follows from a straightforward application of
+the axiom of choice to the point of contraction for weak extension
+extensionality.
 
 ```rzk title="RS17 Proposition 4.10"
 #define htpy-ext-property
@@ -506,29 +510,28 @@ to the point of contraction for weak extension extensionality.
   ( ϕ : ψ → TOPE)
   ( A : ψ → U)
   ( b : (t : ψ) → A t)
-  ( a : (t : ϕ) → A t) 
-  ( e : (t : ϕ) → a t = b t) 
-  : Σ (a' : (t : ψ) → A t [ϕ t ↦ a t]) , 
+  ( a : (t : ϕ) → A t)
+  ( e : (t : ϕ) → a t = b t)
+  : Σ (a' : (t : ψ) → A t [ϕ t ↦ a t]) ,
       ((t : ψ) → (restrict I ψ ϕ A a a' t = b t) [ϕ t ↦ e t])
-  := 
-    first 
-    ( axiom-choice 
+  :=
+    first
+    ( axiom-choice
       ( I)
-      ( ψ) 
-      ( ϕ) 
-      ( A) 
+      ( ψ)
+      ( ϕ)
+      ( A)
       ( \ t y → y = b t)
-      ( a) 
-      ( e))  
-    ( first 
-      ( weak-ext-ext 
+      ( a)
+      ( e))
+    ( first
+      ( weak-ext-ext
         ( I)
         ( ψ)
         ( ϕ)
         ( \ t → (Σ (y : A t) , y = b t))
-        ( \ t → is-contr-codomain-based-paths 
+        ( \ t → is-contr-codomain-based-paths
                 ( A t)
                 ( b t))
         ( \ t → ( a t , e t) )))
 ```
-

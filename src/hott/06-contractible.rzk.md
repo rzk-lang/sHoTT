@@ -551,3 +551,5 @@ Finally, in a contractible type any two paths between the same end points are eq
       ( path-eq-path-through-center-is-contr A is-contr-A x y p))
     ( path-eq-path-through-center-is-contr A is-contr-A x y q)
 ```
+
+

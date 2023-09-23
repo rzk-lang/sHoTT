@@ -235,7 +235,7 @@ and of the fiber at `(a', f)` of the map
   :=
     fib (coslice (total-type A C) (a, c))
         (coslice A a)
-        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c))
+        (coslice-fun (total-type A C) A (\ (a, _) → a) (a, c))
         (a', f)
 ```
 
@@ -283,13 +283,13 @@ Constructing the backward map requires some rectification.
     \ (((a'', c''), ĝ), γ) →
     temp-Z7hl-backward' a''
       (first-path-Σ A (hom A a)
-        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c) ((a'',c''), ĝ))
+        (coslice-fun (total-type A C) A (\ (a, _) → a) (a, c) ((a'',c''), ĝ))
         (a', f)
         γ
       )
       c'' ĝ
       (second-path-Σ A (hom A a)
-        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c) ((a'',c''), ĝ))
+        (coslice-fun (total-type A C) A (\ (a, _) → a) (a, c) ((a'',c''), ĝ))
         (a', f)
         γ
       )
@@ -301,7 +301,7 @@ One composite is definitionally equal to the identity.
 #def temp-Z7hl-forward-retract
   : is-retract-of (dhom-from A a a' f C c) (temp-Z7hl-fib)
   :=
-  (temp-Z7hl-forward, (temp-Z7hl-backward, \ g → refl))
+  (temp-Z7hl-forward, (temp-Z7hl-backward, \ _ → refl))
 
 #end is-naive-left-fibration-is-covariant-key-proofs
 ```
@@ -314,7 +314,7 @@ then `C : A → U` is a covariant family.
 #def is-naive-left-fibration-is-covariant-thm
   ( A : U)
   ( C : A → U)
-  ( inlf-A-C : is-naive-left-fibration A (total-type A C) (\ (a, c) → a))
+  ( inlf-A-C : is-naive-left-fibration A (total-type A C) (\ (a, _) → a))
   : is-covariant A C
   :=
     \ a a' f c →
@@ -325,7 +325,7 @@ then `C : A → U` is a covariant family.
       (is-contr-map-is-equiv
         (coslice (total-type A C) (a, c))
         (coslice A a)
-        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c))
+        (coslice-fun (total-type A C) A (\ (a, _) → a) (a, c))
         (inlf-A-C (a, c))
         (a', f)
       )

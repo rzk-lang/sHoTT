@@ -201,81 +201,134 @@ As a sanity check we unpack the definition of `is-naive-left-fibration`.
   := refl
 ```
 
-For every covariant type `#!rzk C : A → U`,
-the projection `#!rzk p : total-type A C → A` is a naive left fibration in this sense:
+### Naive left fibrations vs. covariant families
 
-```rzk title="The statement of RS17, Theorem 8.5"
-#def is-naive-left-fibration-is-covariant-thm
-  (A : U)
-  (C : A → U)
-  : U
-  := iff
-    (is-covariant A C)
-    (is-naive-left-fibration A (total-type A C) (\ (a, c) → a))
-```
+We aim to prove that a type family  `#!rzk C : A → U`,
+is covariant if and only if
+the projection `#!rzk p : total-type A C → A` is a naive left fibration.
+
+We fix the following variables.
 
 ```rzk
-#section is-naive-left-fibration-is-covariant-proof
+#section is-naive-left-fibration-is-covariant-key-proofs
 #variable A : U
-#variable C : A → U
 #variable a : A
 #variable a' : A
 #variable f : hom A a a'
+#variable C : A → U
 #variable c : C a
+```
+The two sides of the equivalence assert, respectively, the contractibility
+of `dhom-from A a a' f C c`
+and of the fiber at `(a', f)` of the map
+`coslice (total-type C) (a, c) → coslice A a`.
 
-#def temp-forward
-  : dhom-from A a a' f C c
-  → fib (coslice (total-type A C) (a, c)) (coslice A a)
+```rzk
+-- We prepend all local variables in this section
+-- with the randomly string "temp-Z7hl"
+-- to avoid clashes in the global name-space.
+-- Once the language supports local scoping,
+-- these variables should be renamed.
+
+#def temp-Z7hl-fib
+  : U
+  :=
+    fib (coslice (total-type A C) (a, c))
+        (coslice A a)
         (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c))
         (a', f)
+```
+
+We prove the theorem by showing that these two types are equivalent.
+Since the left side is stricter than the right,
+the forward map is straightforward.
+
+```rzk
+#def temp-Z7hl-forward
+  : dhom-from A a a' f C c → temp-Z7hl-fib
   :=
     \ (c', f̂) → (((a', c'), \ t → (f t, f̂ t)) , refl)
+```
 
-#def temp-backward-1
-  : fib (coslice (total-type A C) (a, c)) (coslice A a)
-        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c))
-        (a', f)
-  → Σ (c' : C a'), hom (total-type A C) (a, c) (a', c')
+Constructing the backward map requires some rectification.
+
+```rzk
+#def temp-Z7hl-family
+  ( a'' : A)
+  ( p : a'' = a')
+  : U
+  :=
+    ( c'' : C a'') →
+    ( ĝ : hom (total-type A C) (a, c) (a'', c'')) →
+    ( q : transport A (hom A a) a'' a'
+            p (\ t → first (ĝ t))
+          = f
+    ) →
+    dhom-from A a a' f C c
+
+#def temp-Z7hl-backward'
+  : ( a'' : A) → ( p : a'' = a') → temp-Z7hl-family a'' p
+  :=
+    ind-path-l A a' (temp-Z7hl-family)
+    (\ c'' ĝ q →
+      transport (hom A a a')
+        (\ g → dhom-from A a a' g C c) (\ t → first (ĝ t)) f
+        q
+        (c'', \ t → second (ĝ t))
+    )
+
+#def temp-Z7hl-backward
+  : temp-Z7hl-fib → dhom-from A a a' f C c
   :=
     \ (((a'', c''), ĝ), γ) →
-    (transport A
-      (\ z → (Σ (d : C z), hom (total-type A C) (a, c) (z,d)))
-      a'' a'
-      (first-path-Σ A (\ x → hom A a x)
+    temp-Z7hl-backward' a''
+      (first-path-Σ A (hom A a)
         (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c) ((a'',c''), ĝ))
         (a', f)
         γ
       )
-      (c'', ĝ)
-    )
-
-#def temp-backward-1
-  : fib (coslice (total-type A C) (a, c)) (coslice A a)
-        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c))
+      c'' ĝ
+      (second-path-Σ A (hom A a)
+        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c) ((a'',c''), ĝ))
         (a', f)
-  → Σ ((c', h) : product (C a') (hom A a a')), dhom A a a' h C c c'
+        γ
+      )
+```
+
+One composite is definitionally equal to the identity.
+
+```rzk
+#def temp-Z7hl-forward-retract
+  : is-retract-of (dhom-from A a a' f C c) (temp-Z7hl-fib)
   :=
-    \ (((a'', c''), ĝ), γ) →      -- ĝ : hom (total-type A C) (a, c) (a'', c'')
-    (transport A
-      (\ z → (Σ ((d, h) : product (C z) (hom A a z)), dhom A a z h C c d))
-      a'' a'
-      (first-path-Σ A (\ x → hom A a x)
-        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c) ((a'',c''), ĝ))
-        (a', f)
-        γ
-      )
-      ((c'',
-        transport A (\ z → hom A a z)
-        (first-path-Σ A (\ x → hom A a x)
-          (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c) ((a'',c''), ĝ))
-          (a', f)
-          γ
-        )
-        f
-      ), U)
-    )
+  (temp-Z7hl-forward, (temp-Z7hl-backward, \ g → refl))
 
-#end is-naive-left-fibration-is-covariant-proof
+#end is-naive-left-fibration-is-covariant-key-proofs
+```
+
+We deduce that if the projection `total-type A C → A`
+is a naive left fibration,
+then `C : A → U` is a covariant family.
+
+```rzk title="Theorem 8.5 (←)"
+#def is-naive-left-fibration-is-covariant-thm
+  ( A : U)
+  ( C : A → U)
+  ( inlf-A-C : is-naive-left-fibration A (total-type A C) (\ (a, c) → a))
+  : is-covariant A C
+  :=
+    \ a a' f c →
+    is-contr-is-retract-of-is-contr
+      (dhom-from A a a' f C c)
+      (temp-Z7hl-fib A a a' f C c)
+      (temp-Z7hl-forward-retract A a a' f C c)
+      (is-contr-map-is-equiv
+        (coslice (total-type A C) (a, c))
+        (coslice A a)
+        (coslice-fun (total-type A C) A (\ (a, c) → a) (a, c))
+        (inlf-A-C (a, c))
+        (a', f)
+      )
 ```
 
 ## Representable covariant families

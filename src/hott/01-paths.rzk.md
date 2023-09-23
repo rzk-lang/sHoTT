@@ -623,6 +623,23 @@ Application of a function to homotopic paths yields homotopic paths.
 #end transport
 ```
 
+### Path induction for left paths
+
+```rzk
+#def ind-path-l
+  ( A : U)
+  ( a : A)
+  ( C : (x : A) → (x = a) -> U)
+  ( d : C a refl)
+  ( x : A)
+  ( p : x = a)
+  : C x p
+  :=
+    transport (x = a) (\ q → C x q) (rev A a x (rev A x a p)) p
+      (rev-rev A x a p)
+      (ind-path A a (\ y q → C y (rev A a y q)) d x (rev A x a p))
+```
+
 ## Dependent application
 
 ```rzk

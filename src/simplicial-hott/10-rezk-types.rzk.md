@@ -443,12 +443,12 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
         is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y)
 ```
 
-The following results show how `#!rzk idtoiso` mediates between the
+The following results show how `#!rzk iso-eq` mediates between the
 type-theoretic operations on paths and the category-theoretic operations on
 arrows.
 
 ```rzk title="RS17, Lemma 10.7"
-#def covariant-transport-of-idtoiso-is-transport
+#def compute-covariant-transport-of-hom-family-iso-eq-is-segal
   ( A : U)
   ( is-segal-A : is-segal A)
   ( C : A → U)
@@ -485,7 +485,7 @@ arrows.
 ```
 
 ```rzk title="RS17, Lemma 10.8"
-#def ap-hom-of-idtoiso-is-idtoiso-of-ap
+#def compute-ap-hom-of-iso-eq
   ( A B : U)
   ( is-segal-A : is-segal A)
   ( is-segal-B : is-segal B)

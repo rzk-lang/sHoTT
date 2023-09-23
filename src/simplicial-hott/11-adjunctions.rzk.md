@@ -721,6 +721,89 @@ as an application of the dependent Yoneda lemma.
         ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ ))
     ( id-hom (B → A) u)
 
+#def equiv-components-funext uses (funext)
+  : Equiv
+    ( ( ev-components-nat-trans B (\ _ → A) u u
+        ( comp-is-segal
+          ( B → A)
+          ( is-segal-function-type
+            ( funext)
+            ( B)
+            ( \ _ → A)
+            ( \ b → is-segal-A ))
+          ( u)
+          (triple-comp B A B A u f u)
+          ( u)
+          ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+          ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ ))) =
+      ( \ b → id-hom A ( u b)))
+    ( ( b : B) →
+      ( ( ev-components-nat-trans B (\ _ → A) u u
+          ( comp-is-segal
+            ( B → A)
+            ( is-segal-function-type
+              ( funext)
+              ( B)
+              ( \ _ → A)
+              ( \ b → is-segal-A ))
+            ( u)
+            (triple-comp B A B A u f u)
+            ( u)
+            ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+            ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ ))
+          ( b)) =
+        ( id-hom A ( u b))))
+  :=
+    equiv-FunExt
+    ( funext)
+    ( B)
+    ( \ b → (hom A (u b) (u b)))
+    ( ev-components-nat-trans B (\ _ → A) u u
+      ( comp-is-segal
+        ( B → A)
+        ( is-segal-function-type
+          ( funext)
+          ( B)
+          ( \ _ → A)
+          ( \ b → is-segal-A ))
+        ( u)
+        (triple-comp B A B A u f u)
+        ( u)
+        ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+        ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )))
+    ( \ b → id-hom A (u b))
+
+#def application-comp-components-comp-nat-trans-is-segal uses (funext)
+  (b : B)
+  : ( comp-is-segal A is-segal-A (u b) (u (f (u b))) (u b)
+      ( \ t → η t (u b) )
+      ( ap-hom B A u (f (u b)) b (\ t → ϵ t b))) =
+    ( ev-components-nat-trans B (\ _ → A) u u
+      ( comp-is-segal
+        ( B → A)
+        ( is-segal-function-type (funext) (B) (\ _ → A) (\ b → is-segal-A))
+        ( u)
+        (triple-comp B A B A u f u)
+        ( u)
+        ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+        ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ ))
+      ( b))
+  :=
+    comp-components-comp-nat-trans-is-segal
+    ( funext)
+    ( B)
+    ( \ _ → A)
+    ( \ _ → is-segal-A)
+    ( u)
+    (triple-comp B A B A u f u)
+    ( u)
+    ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
+    ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )
+    ( b)
+
+
+
+
 #def equiv-ladj-triangle uses (funext)
   : Equiv
     ( hom2 (A → B) f (triple-comp A B A B f u f) f

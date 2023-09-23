@@ -303,13 +303,12 @@ cases an extension type to a function type.
           ( Σ (y : A t) , (y = ext-projection-temp t))
           [ ϕ t ↦ (a t , refl)])
     := weak-ext-ext 
-        ( I )
-        ( ψ )
-        ( ϕ )
-        ( \t → (Σ (y : A t) , (y = (ext-projection-temp) t)))
-        (\ t → 
-            is-contr-codomain-based-paths (A t ) ((ext-projection-temp) t))
-        (\ t → (a t , refl) )  
+        ( I)
+        ( ψ)
+        ( ϕ)
+        ( \ t → (Σ (y : A t) , y = ext-projection-temp t))
+        ( \ t → is-contr-codomain-based-paths (A t) (ext-projection-temp t))
+        ( \ t → (a t , refl))
 
 #define is-contr-based-paths-ext uses (weak-ext-ext)
   : is-contr (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) ,

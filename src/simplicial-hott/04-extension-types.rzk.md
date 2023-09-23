@@ -505,31 +505,30 @@ to the point of contraction for weak extension extensionality.
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
   ( A : ψ → U)
-  ( b : (t : ψ ) → A t)
-  ( a : (t : ϕ ) → A t) 
-  ( e : (t : ϕ ) → a t = b t) 
-  : Σ (a' : (t : ψ ) → A t [ϕ t ↦ a t]) , 
-      ((t : ψ ) → (restrict I ψ ϕ A a a' t = b t) [ϕ t ↦ e t])
+  ( b : (t : ψ) → A t)
+  ( a : (t : ϕ) → A t) 
+  ( e : (t : ϕ) → a t = b t) 
+  : Σ (a' : (t : ψ) → A t [ϕ t ↦ a t]) , 
+      ((t : ψ) → (restrict I ψ ϕ A a a' t = b t) [ϕ t ↦ e t])
   := 
     first 
     ( axiom-choice 
-      ( I )
-      ( ψ ) 
-      ( ϕ ) 
-      ( A ) 
+      ( I)
+      ( ψ) 
+      ( ϕ) 
+      ( A) 
       ( \ t y → y = b t)
-      ( a ) 
-      ( e ))  
+      ( a) 
+      ( e))  
     ( first 
       ( weak-ext-ext 
-        ( I )
-        ( ψ )
-        ( ϕ )
-        ( \t → (Σ (y : A t) , (y = b t)))
+        ( I)
+        ( ψ)
+        ( ϕ)
+        ( \ t → (Σ (y : A t) , y = b t))
         ( \ t → is-contr-codomain-based-paths 
-                ( A t )
-                ( (b t)))
+                ( A t)
+                ( b t))
         ( \ t → ( a t , e t) )))
-
 ```
 

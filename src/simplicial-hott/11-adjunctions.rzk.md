@@ -630,49 +630,7 @@ as an application of the dependent Yoneda lemma.
       ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )
       ( id-hom (B → A) u))
 
-#def first-arrow-test
-  : (b : B) → hom A (u b) (u (f (u b)))
-  := \ b t → η t (u b)
-
-#def first-arrow-component-test
-  : nat-trans-components B (\ _ → A) u (triple-comp B A B A u f u)
-  := \ b t → η t (u b)
-
-#def second-arrow-test
-  : (b : B) → hom A (u (f (u b))) (u b)
-  := \ b → ap-hom B A u (f (u b)) b (\ t → ϵ t b)
-
-#def second-components-test
-  : nat-trans-components B (\ _ → A) (triple-comp B A B A u f u) u
-  := \ b → ap-hom B A u (f (u b)) b (\ t → ϵ t b)
-
-#def comp-test
-  : (b : B) → hom A (u b) (u b)
-  :=
-    \ b →
-      ( comp-is-segal
-        ( A)
-        ( is-segal-A)
-        ( u b)
-        ( u (f (u b)))
-        ( u b)
-        ( \ t → η t (u b) )
-        ( ap-hom B A u (f (u b)) b (\ t → ϵ t b)))
-
-#def comp-components-test
-  : nat-trans-components B (\ _ → A) u u
-  :=
-    \ b →
-      ( comp-is-segal
-        ( A)
-        ( is-segal-A)
-        ( u b)
-        ( u (f (u b)))
-        ( u b)
-        ( \ t → η t (u b) )
-        ( ap-hom B A u (f (u b)) b (\ t → ϵ t b)))
-
-#def components-test
+#def equiv-ev-components-radj-triangle
   : Equiv
     ( ( comp-is-segal
         ( B → A)
@@ -721,7 +679,7 @@ as an application of the dependent Yoneda lemma.
         ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ ))
     ( id-hom (B → A) u)
 
-#def equiv-components-funext uses (funext)
+#def equiv-components-radj-triangle-funext uses (funext)
   : Equiv
     ( ( ev-components-nat-trans B (\ _ → A) u u
         ( comp-is-segal
@@ -802,8 +760,6 @@ as an application of the dependent Yoneda lemma.
     ( b)
 
 
-
-
 #def equiv-ladj-triangle uses (funext)
   : Equiv
     ( hom2 (A → B) f (triple-comp A B A B f u f) f
@@ -855,6 +811,49 @@ as an application of the dependent Yoneda lemma.
       ( postwhisker-nat-trans A A B (identity A) (comp A B A u f) f η )
       ( prewhisker-nat-trans A B B f (comp B A B f u) (identity B) ϵ )
       ( id-hom (A → B) f))
+
+
+#def first-arrow-test
+  : (b : B) → hom A (u b) (u (f (u b)))
+  := \ b t → η t (u b)
+
+#def first-arrow-component-test
+  : nat-trans-components B (\ _ → A) u (triple-comp B A B A u f u)
+  := \ b t → η t (u b)
+
+#def second-arrow-test
+  : (b : B) → hom A (u (f (u b))) (u b)
+  := \ b → ap-hom B A u (f (u b)) b (\ t → ϵ t b)
+
+#def second-components-test
+  : nat-trans-components B (\ _ → A) (triple-comp B A B A u f u) u
+  := \ b → ap-hom B A u (f (u b)) b (\ t → ϵ t b)
+
+#def comp-test
+  : (b : B) → hom A (u b) (u b)
+  :=
+    \ b →
+      ( comp-is-segal
+        ( A)
+        ( is-segal-A)
+        ( u b)
+        ( u (f (u b)))
+        ( u b)
+        ( \ t → η t (u b) )
+        ( ap-hom B A u (f (u b)) b (\ t → ϵ t b)))
+
+#def comp-components-test
+  : nat-trans-components B (\ _ → A) u u
+  :=
+    \ b →
+      ( comp-is-segal
+        ( A)
+        ( is-segal-A)
+        ( u b)
+        ( u (f (u b)))
+        ( u b)
+        ( \ t → η t (u b) )
+        ( ap-hom B A u (f (u b)) b (\ t → ϵ t b)))
 
 #end triangle-identities
 ```

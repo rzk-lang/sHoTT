@@ -891,7 +891,3 @@ The following is the same as above but with alternating arguments.
       ( r)
       ( H)
 ```
-
-```
-
-```

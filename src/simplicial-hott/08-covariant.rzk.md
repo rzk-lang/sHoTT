@@ -227,17 +227,14 @@ is covariant if and only if
 the projection `#!rzk p : total-type A C → A` is a naive left fibration.
 
 The theorem asserts the logical equivalence of two contractibility statements,
-one for `dhom-from A a a' f C c`
-and one for the fiber of the canonical map
+one for the types `dhom-from A a a' f C c`
+and one for the fibers of the canonical map
 `coslice (total-type A C) (a, c) → coslice A a`;
 Thus it suffices to show that for each
-`a a' : A`, `f : hom A a a'`, `c : C a`, `c' : C a'`.
+`a a' : A`, `f : hom A a a'`, `c : C a`.
 these two types are equivalent.
 
 We fix the following variables.
-Note that we do not fix `a' : A` and `f : hom A a a'`.
-Letting these vary lets us give an easy proof
-by invoking the induction principle for fibers.
 
 ```rzk
 #section is-naive-left-fibration-is-covariant-proof
@@ -246,6 +243,11 @@ by invoking the induction principle for fibers.
 #variable C : A → U
 #variable c : C a
 ```
+
+Note that we do not fix `a' : A` and `f : hom A a a'`.
+Letting these vary lets us give an easy proof
+by invoking the induction principle for fibers.
+
 
 We make some abbreviations to make the proof more readable:
 
@@ -306,8 +308,8 @@ We do this by the following fiber induction.
       (\ ((a', c'), ĝ) → ((c', \ t → second (ĝ t)) , refl))
 ```
 
-We have constructed a section; but it is automatically also a retraction,
-yielding the desired equivalence.
+We have constructed a section.
+It is also definitionally a retraction, yielding the desired equivalence.
 
 ```rzk
 #def temp-b9wX-has-inverse-forward

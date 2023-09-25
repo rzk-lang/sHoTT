@@ -226,164 +226,115 @@ We aim to prove that a type family  `#!rzk C : A → U`,
 is covariant if and only if
 the projection `#!rzk p : total-type A C → A` is a naive left fibration.
 
+The theorem asserts the logical equivalence of two contractibility statements,
+one for `dhom-from A a a' f C c`
+and one for the fiber of the canonical map
+`coslice (total-type A C) (a, c) → coslice A a`;
+Thus it suffices to show that for each
+`a a' : A`, `f : hom A a a'`, `c : C a`, `c' : C a'`.
+these two types are equivalent.
+
 We fix the following variables.
+Note that we do not fix `a' : A` and `f : hom A a a'`.
+Letting these vary lets us give an easy proof
+by invoking the induction principle for fibers.
 
 ```rzk
-#section is-naive-left-fibration-is-covariant-key-proofs
+#section is-naive-left-fibration-is-covariant-proof
 #variable A : U
 #variable a : A
-#variable a' : A
-#variable f : hom A a a'
 #variable C : A → U
 #variable c : C a
-
--- We prepend all local variables in this section
--- with the random identifier "temp-Z7hl"
--- to avoid clashes in the global name-space.
--- Once the language supports local scoping,
--- these variables should be renamed.
+       --  temp-b9wX
 ```
-The two sides of the equivalence assert, respectively, the contractibility
-of `dhom-from A a a' f C c`
-and of the fiber at `(a', f)` of the map
-`coslice (total-type C) (a, c) → coslice A a`.
+
+We make some abbreviations to make the proof more readable:
 
 ```rzk
-#def temp-Z7hl-coslice-fun
+#def temp-b9wX-coslice-fun
   : coslice (total-type A C) (a, c) → coslice A a
   := coslice-fun (total-type A C) A (\ (x, _) → x) (a, c)
 
-#def temp-Z7hl-fib
+#def temp-b9wX-fib
+  (a' : A)
+  (f : hom A a a')
   : U
   :=
     fib (coslice (total-type A C) (a, c))
         (coslice A a)
-        (temp-Z7hl-coslice-fun)
+        (temp-b9wX-coslice-fun)
         (a', f)
 ```
 
-It is convenient to replace this fiber by an equivalent type,
-where we unpack the homs in the Sigma-type `Σ C`.
+We construct the forward map;
+this one is straightforward since
+it goes from strict extension type to a weak one.
 
 ```rzk
-#def temp-Z7hl-fib'
-  : U
-  :=
-    Σ (G : coslice (total-type A C) (a, c)),
-      Eq-Σ A (hom A a) (temp-Z7hl-coslice-fun G) (a', f)
-
-#def temp-Z7hl-fib-compare
-  : Equiv (temp-Z7hl-fib) (temp-Z7hl-fib')
-  :=
-    total-equiv-family-equiv
-      (coslice (total-type A C) (a, c))
-      (\ G → temp-Z7hl-coslice-fun G = (a', f))
-      (\ G → Eq-Σ A (hom A a) (temp-Z7hl-coslice-fun G) (a', f))
-      (\ G →
-        extensionality-Σ
-          A (hom A a)
-          (temp-Z7hl-coslice-fun G)
-          (a', f)
-      )
-
-```
-
-We prove the theorem by showing that the two types
-`dhom-from A a a' f C c` and `temp-Z7hl-fib'` are equivalent.
-Since the left side is stricter than the right,
-the forward map is straightforward.
-
-```rzk
-#def temp-Z7hl-forward
-  : dhom-from A a a' f C c → temp-Z7hl-fib
+#def temp-b9wX-forward
+  ( a' : A)
+  ( f : hom A a a')
+  : dhom-from A a a' f C c → temp-b9wX-fib a' f
   :=
     \ (c', f̂) → (((a', c'), \ t → (f t, f̂ t)) , refl)
-
-#def temp-Z7hl-forward'
-  : dhom-from A a a' f C c → temp-Z7hl-fib'
-  :=
-    \ (c', f̂) → (((a', c'), \ t → (f t, f̂ t)) , (refl, refl))
 ```
 
-Constructing the backward map requires some rectification.
+The only non-trivial part is showing that this map has a section.
+We do this by the following fiber induction.
 
 ```rzk
-#def temp-Z7hl-family
-  ( a'' : A)
-  ( p : a'' = a')
+#def temp-b9wX-has-section'-forward
+  ( (a', f) : coslice A a)
+  ( u : temp-b9wX-fib a' f)
   : U
-  :=
-    ( c'' : C a'') →
-    ( ĝ : hom (total-type A C) (a, c) (a'', c'')) →
-    ( q : transport A (hom A a) a'' a'
-            p (\ t → first (ĝ t))
-          = f
-    ) →
-    dhom-from A a a' f C c
+  := Σ ( v : dhom-from A a a' f C c), ( temp-b9wX-forward a' f v = u)
 
-#def temp-Z7hl-backward'
-  : ( a'' : A) → ( p : a'' = a') → temp-Z7hl-family a'' p
+#def temp-b9wX-forward-section'
+  : ( (a', f) : coslice A a) →
+    ( u : temp-b9wX-fib a' f) →
+    temp-b9wX-has-section'-forward (a', f) u
   :=
-    ind-path-l A a' (temp-Z7hl-family)
-    (\ c'' ĝ q →
-      transport (hom A a a')
-        (\ g → dhom-from A a a' g C c) (\ t → first (ĝ t)) f
-        q
-        (c'', \ t → second (ĝ t))
+    ind-fib
+      ( coslice (total-type A C) (a, c))
+      ( coslice A a)
+      ( temp-b9wX-coslice-fun)
+      ( temp-b9wX-has-section'-forward)
+      (\ ((a', c'), ĝ) → ((c', \ t → second (ĝ t)) , refl))
+```
+
+We have constructed a section; but it is automatically also a retraction,
+yielding the desired equivalence.
+
+```rzk
+#def temp-b9wX-has-inverse-forward
+  ( a' : A)
+  ( f : hom A a a')
+  : has-inverse
+      (dhom-from A a a' f C c)
+      (temp-b9wX-fib a' f)
+      (temp-b9wX-forward a' f)
+  :=
+    ( \ u → first (temp-b9wX-forward-section' (a', f) u),
+    ( \ _ → refl,
+      \ u → second (temp-b9wX-forward-section' (a', f) u)
+    ))
+
+#def temp-b9wX-equiv
+  ( a' : A)
+  ( f : hom A a a')
+  : Equiv
+      (dhom-from A a a' f C c)
+      (temp-b9wX-fib a' f)
+  :=
+    ( (temp-b9wX-forward a' f),
+      is-equiv-has-inverse
+        (dhom-from A a a' f C c)
+        (temp-b9wX-fib a' f)
+        (temp-b9wX-forward a' f)
+        (temp-b9wX-has-inverse-forward a' f)
     )
 
-#def temp-Z7hl-backward
-  : temp-Z7hl-fib → dhom-from A a a' f C c
-  :=
-    \ (((a'', c''), ĝ), γ) →
-    temp-Z7hl-backward' a''
-      (first-path-Σ A (hom A a)
-        (coslice-fun (total-type A C) A (\ (a, _) → a) (a, c) ((a'',c''), ĝ))
-        (a', f)
-        γ
-      )
-      c'' ĝ
-      (second-path-Σ A (hom A a)
-        (coslice-fun (total-type A C) A (\ (a, _) → a) (a, c) ((a'',c''), ĝ))
-        (a', f)
-        γ
-      )
-```
-
-One composite is definitionally equal to the identity.
-
-```rzk
-#def temp-Z7hl-forward-retract
-  : is-retract-of (dhom-from A a a' f C c) (temp-Z7hl-fib)
-  :=
-  (temp-Z7hl-forward, (temp-Z7hl-backward, \ _ → refl))
-
-#end is-naive-left-fibration-is-covariant-key-proofs
-```
-
-We deduce that if the projection `total-type A C → A`
-is a naive left fibration,
-then `C : A → U` is a covariant family.
-
-```rzk title="Theorem 8.5 (←)"
-#def is-naive-left-fibration-is-covariant-thm
-  ( A : U)
-  ( C : A → U)
-  ( inlf-A-C : is-naive-left-fibration A (total-type A C) (\ (a, _) → a))
-  : is-covariant A C
-  :=
-    \ a a' f c →
-    is-contr-is-retract-of-is-contr
-      (dhom-from A a a' f C c)
-      (temp-Z7hl-fib A a a' f C c)
-      (temp-Z7hl-forward-retract A a a' f C c)
-      (is-contr-map-is-equiv
-        (coslice (total-type A C) (a, c))
-        (coslice A a)
-        (coslice-fun (total-type A C) A (\ (a, _) → a) (a, c))
-        (inlf-A-C (a, c))
-        (a', f)
-      )
+#end is-naive-left-fibration-is-covariant-proof
 ```
 
 ## Representable covariant families

@@ -245,12 +245,16 @@ by invoking the induction principle for fibers.
 #variable a : A
 #variable C : A → U
 #variable c : C a
-       --  temp-b9wX
 ```
 
 We make some abbreviations to make the proof more readable:
 
 ```rzk
+-- We prepend all local names in this section
+-- with the random identifyier temp-b9wX
+-- to avoid cluttering the global name space.
+-- Once rzk supports local variables, these should be renamed.
+
 #def temp-b9wX-coslice-fun
   : coslice (total-type A C) (a, c) → coslice A a
   := coslice-fun (total-type A C) A (\ (x, _) → x) (a, c)
@@ -319,7 +323,7 @@ yielding the desired equivalence.
       \ u → second (temp-b9wX-forward-section' (a', f) u)
     ))
 
-#def temp-b9wX-equiv
+#def temp-b9wX-the-equivalence
   ( a' : A)
   ( f : hom A a a')
   : Equiv
@@ -337,12 +341,51 @@ yielding the desired equivalence.
 #end is-naive-left-fibration-is-covariant-proof
 ```
 
+Finally, we deduce the theorem by some straightforward logical bookkeeping.
+
+```rzk title="RS17, Theorem 8.5"
+#def is-naive-left-fibration-iff-is-covariant
+  ( A : U)
+  ( C : A → U)
+  :
+    iff
+      (is-covariant A C)
+      (is-naive-left-fibration A (total-type A C) (\ (a, _) → a))
+  :=
+    ( \ is-covariant-C (a, c) →
+        is-equiv-is-contr-map
+          ( coslice (total-type A C) (a, c))
+          ( coslice A a)
+          ( temp-b9wX-coslice-fun A a C c)
+          ( \ (a', f) →
+            is-contr-equiv-is-contr
+              (dhom-from A a a' f C c)
+              (temp-b9wX-fib A a C c a' f)
+              (temp-b9wX-the-equivalence A a C c a' f)
+              (is-covariant-C a a' f c)
+          )
+    , \ inlf-ΣC a a' f c →
+        is-contr-equiv-is-contr'
+          ( dhom-from A a a' f C c)
+          ( temp-b9wX-fib A a C c a' f)
+          ( temp-b9wX-the-equivalence A a C c a' f)
+          ( is-contr-map-is-equiv
+            ( coslice (total-type A C) (a, c))
+            ( coslice A a)
+            ( temp-b9wX-coslice-fun A a C c)
+            ( inlf-ΣC (a, c))
+            (a', f)
+          )
+    )
+```
+
 ## Representable covariant families
 
-If A is a Segal type and a : A is any term, then hom A a defines a covariant
-family over A, and conversely if this family is covariant for every a : A, then
-A must be a Segal type. The proof involves a rather lengthy composition of
-equivalences.
+If `A` is a Segal type and `a : A` is any term,
+then `hom A a` defines a covariant family over A,
+and conversely if this family is covariant for every `a : A`,
+then `A` must be a Segal type.
+The proof involves a rather lengthy composition of equivalences.
 
 ```rzk
 #def dhom-representable

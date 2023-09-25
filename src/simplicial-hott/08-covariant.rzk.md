@@ -14,14 +14,16 @@ This is a literate `rzk` file:
   instance the notion of contractible types.
 - `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
   subshapes.
-- `4-extension-types.md` — We use Theorem 4.1, an equivalence between lifts.  
+- `4-extension-types.md` — We use Theorem 4.1, an equivalence between lifts.
 - `5-segal-types.md` - We make use of the notion of Segal types and their
   structures.
+- `6-contractible.md` - We make use of weak function extensionality.
 
 Some of the definitions in this file rely on extension extensionality:
 
 ```rzk
 #assume extext : ExtExt
+#assume weakfunext : WeakFunExt
 ```
 
 ## Dependent hom types
@@ -1686,28 +1688,22 @@ commuting with the contravariant lifts.
 ## Closure properties of covariance
 
 ```rzk title="RS17, Theorem 8.30"
-#def weak-extensionality 
-  ( A : U )
-  : U :=
-   (C : A → U) →  (f : (a : A) → is-contr (C a) ) → (is-contr ( (a : A) → C a )) 
-
 #def locally-covariant-implies-covariant-dependent-types
    (A B : U)
    (C : A → B → U)
    (is-locally-covariant : (b : B) → is-covariant A ( \ a → C a b ) )
-  (we : weak-extensionality B)
-  : is-covariant A ( \ a → (( b : B ) → (C a b)) ) 
-  := 
-    ( first ( has-unique-fixed-domain-lifts-iff-is-covariant A ( \ a → ( b : B ) → (C a b) )) ) 
-        ( \ x y f g →  
+  : is-covariant A ( \ a → (( b : B ) → (C a b)) )
+  :=
+    ( first ( has-unique-fixed-domain-lifts-iff-is-covariant A ( \ a → ( b : B ) → (C a b) )) )
+        ( \ x y f g →
            equiv-with-contractible-codomain-implies-contractible-domain
-           ( (t : Δ¹) → ((b : B) → C (f t) b) [  t ≡ 0₂ ↦ g ])   
-           ( (b : B) → (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b]) 
-           ( flip-ext-fun 2 Δ¹ (\ t → t ≡ 0₂) B ( \ t →  C (f t)) ( \ t → g)) 
-          (we 
-            ( \ b → ( (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b] ) ) 
+           ( (t : Δ¹) → ((b : B) → C (f t) b) [  t ≡ 0₂ ↦ g ])
+           ( (b : B) → (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b])
+           ( flip-ext-fun 2 Δ¹ (\ t → t ≡ 0₂) B ( \ t →  C (f t)) ( \ t → g))
+          (weakfunext B
+            ( \ b → ( (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b] ) )
             ( \ b → ( (( second ( has-unique-fixed-domain-lifts-iff-is-covariant A ( \ a  → (C a b) )) ) (is-locally-covariant b)) x y f (g b) ) )
             )
-        ) 
-      
+        )
+
 ```

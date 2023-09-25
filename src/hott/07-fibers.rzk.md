@@ -45,6 +45,35 @@ We calculate the transport of (a , q) : fib b along p : a = a':
       ( p)
 ```
 
+### Induction principle for fibers
+
+The family of fibers has the following induction principle:
+To prove/construct something about/for every point in every fiber,
+it suffices to do so for points of the form
+`(a, refl : f a = f a) : fib A B f`.
+
+```rzk
+#def ind-fib
+  ( A B : U)
+  ( f : A → B)
+  ( C : (b : B) → fib A B f b → U)
+  ( s : (a : A) → C (f a) (a, refl))
+  ( b : B)
+  ( (a, q) : fib A B f b)
+  : C b (a, q)
+  :=
+    ind-path B (f a) (\ b p → C b (a, p)) (s a) b q
+
+#def ind-fib-computation
+  ( A B : U)
+  ( f : A → B)
+  ( C : (b : B) → fib A B f b → U)
+  ( s : (a : A) → C (f a) (a, refl))
+  ( a : A)
+  : ind-fib A B f C s (f a) (a, refl) = s a
+  := refl
+```
+
 ## Contractible maps
 
 A map is contractible just when its fibers are contractible.

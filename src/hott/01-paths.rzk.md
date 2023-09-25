@@ -24,10 +24,9 @@ it like any other function.
 ```
 
 To emphasize the fact that this version of path induction is biased towards
-paths with fixed starting point,
-we introduce the synonym `ind-path-start`.
-Later we will construct the analogous path induction `ind-path-end`,
-for paths with fixed end point.
+paths with fixed starting point, we introduce the synonym `ind-path-start`.
+Later we will construct the analogous path induction `ind-path-end`, for paths
+with fixed end point.
 
 ```rzk
 #define ind-path-start
@@ -41,7 +40,6 @@ for paths with fixed end point.
   :=
     ind-path A a C d x p
 ```
-
 
 ## Some basic path algebra
 
@@ -385,7 +383,7 @@ The following needs to be outside the previous section because of the usage of
 ### Concatenation with a path and its reversal
 
 ```rzk
-#def retraction-pre-concat
+#def retraction-preconcat
   ( A : U)
   ( x y z : A)
   ( p : x = y)
@@ -395,7 +393,7 @@ The following needs to be outside the previous section because of the usage of
     ind-path (A) (y)
     ( \ z' q' → concat A y x z' (rev A x y p) (concat A x y z' p q') = q') (left-inverse-concat A x y p) (z) (q)
 
-#def section-pre-concat
+#def section-preconcat
   ( A : U)
   ( x y z : A)
   ( p : x = y)
@@ -405,7 +403,7 @@ The following needs to be outside the previous section because of the usage of
     ind-path (A) (x)
     ( \ z' r' → concat A x y z' p (concat A y x z' (rev A x y p) r') = r') (right-inverse-concat A x y p) (z) (r)
 
-#def retraction-post-concat
+#def retraction-postconcat
   ( A : U)
   ( x y z : A)
   ( q : y = z)
@@ -416,7 +414,7 @@ The following needs to be outside the previous section because of the usage of
     ( \ z' q' → concat A x z' y (concat A x y z' p q') (rev A y z' q') = p)
     ( refl) (z) (q)
 
-#def section-post-concat
+#def section-postconcat
   ( A : U)
   ( x y z : A)
   ( q : y = z)

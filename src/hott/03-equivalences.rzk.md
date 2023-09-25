@@ -573,24 +573,24 @@ dependent function types.
 ## Concatenation with a fixed path is an equivalence
 
 ```rzk
-#def equiv-pre-concat
+#def equiv-preconcat
   ( A : U)
   ( x y z : A)
   ( p : x = y)
   : Equiv (y = z) (x = z)
   :=
     ( concat A x y z p,
-      ( ( concat A y x z (rev A x y p), retraction-pre-concat A x y z p),
-        ( concat A y x z (rev A x y p), section-pre-concat A x y z p)))
+      ( ( concat A y x z (rev A x y p), retraction-preconcat A x y z p),
+        ( concat A y x z (rev A x y p), section-preconcat A x y z p)))
 
-#def equiv-post-concat
+#def equiv-postconcat
   ( A : U)
   ( x y z : A)
   ( q : y = z) : Equiv (x = y) (x = z)
   :=
     ( \ p → concat A x y z p q,
       ( ( \ r → concat A x z y r (rev A y z q),
-          retraction-post-concat A x y z q),
+          retraction-postconcat A x y z q),
         ( \ r → concat A x z y r (rev A y z q),
-          section-post-concat A x y z q)))
+          section-postconcat A x y z q)))
 ```

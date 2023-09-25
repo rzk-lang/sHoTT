@@ -542,6 +542,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#concatenation-with-a-path-and-its-reversal" class="md-nav__link">
+    Concatenation with a path and its reversal
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1219,6 +1226,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#concatenation-with-a-path-and-its-reversal" class="md-nav__link">
+    Concatenation with a path and its reversal
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1348,10 +1362,9 @@ it like any other function.</p>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="err">  := </span><span class="s">idJ</span><span class="err"> (A , a , C , d , x , p)</span>
 </span></code></pre></div>
 <p>To emphasize the fact that this version of path induction is biased towards
-paths with fixed starting point,
-we introduce the synonym <code>ind-path-start</code>.
-Later we will construct the analogous path induction <code>ind-path-end</code>,
-for paths with fixed end point.</p>
+paths with fixed starting point, we introduce the synonym <code>ind-path-start</code>.
+Later we will construct the analogous path induction <code>ind-path-end</code>, for paths
+with fixed end point.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:ind-path-start" id="define:ind-path-start" style="visibility: visible; position: relative; color: inherit">ind-path-start</a></span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
@@ -1402,7 +1415,9 @@ situations where it is easier to induct on the first path.</p>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:rev-rev" id="define:rev-rev" style="visibility: visible; position: relative; color: inherit">rev-rev</a></span>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="err">  : (rev A y x (rev A x y p)) = p</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="err">  := ind-path (A) (x) (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (rev A y&#39; x (rev A x y&#39; p&#39;)) = p&#39;) (</span><span class="s">refl</span><span class="err">) (y) (p)</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="err">  :=</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="err">    ind-path</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="err">    ( A) (x) (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (rev A y&#39; x (rev A x y&#39; p&#39;)) = p&#39;) (</span><span class="s">refl</span><span class="err">) (y) (p)</span>
 </span></code></pre></div>
 <h3 id="left-unit-law-for-path-concatenation">Left unit law for path concatenation<a class="headerlink" href="#left-unit-law-for-path-concatenation" title="Permanent link">&para;</a></h3>
 <p>The left unit law for path concatenation does not hold definitionally due to our
@@ -1649,455 +1664,505 @@ of the path algebra coherences defined above.</p>
 </span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="err">          ( H)</span>
 </span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="err">          ( concat-concat&#39; A x y z q r)))</span>
 </span></code></pre></div>
-<h2 id="application-of-functions-to-paths">Application of functions to paths<a class="headerlink" href="#application-of-functions-to-paths" title="Permanent link">&para;</a></h2>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap" id="define:ap" style="visibility: visible; position: relative; color: inherit">ap</a></span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="err">  : (f x = f y)</span>
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="err">  := ind-path (A) (x) (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (f x = f y&#39;)) (</span><span class="s">refl</span><span class="err">) (y) (p)</span>
-</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-rev" id="define:ap-rev" style="visibility: visible; position: relative; color: inherit">ap-rev</a></span>
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="err">  : (ap A B y x f (rev A x y p)) = (rev B (f x) (f y) (ap A B x y f p))</span>
-</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="err">  :=</span>
-</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="err">    ind-path</span>
-</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="err">      ( A)</span>
-</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="err">      ( x)</span>
-</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
-</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="err">        ap A B y&#39; x f (rev A x y&#39; p&#39;) = rev B (f x) (f y&#39;) (ap A B x y&#39; f p&#39;))</span>
-</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="err">      ( y)</span>
-</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="err">      ( p)</span>
-</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>
-</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-concat" id="define:ap-concat" style="visibility: visible; position: relative; color: inherit">ap-concat</a></span>
-</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-18-30"><a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
-</span><span id="__span-18-31"><a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a><span class="err">  : ( ap A B x z f (concat A x y z p q)) =</span>
-</span><span id="__span-18-32"><a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a><span class="err">    ( concat B (f x) (f y) (f z) (ap A B x y f p) (ap A B y z f q))</span>
-</span><span id="__span-18-33"><a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a><span class="err">  :=</span>
-</span><span id="__span-18-34"><a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a><span class="err">    ind-path</span>
-</span><span id="__span-18-35"><a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a><span class="err">      ( A)</span>
-</span><span id="__span-18-36"><a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a><span class="err">      ( y)</span>
-</span><span id="__span-18-37"><a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a><span class="err">      ( </span><span class="p">\ </span>z&#39; q&#39; <span class="err">→</span>
-</span><span id="__span-18-38"><a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a><span class="err">        ( ap A B x z&#39; f (concat A x y z&#39; p q&#39;)) =</span>
-</span><span id="__span-18-39"><a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a><span class="err">        ( concat B (f x) (f y) (f z&#39;) (ap A B x y f p) (ap A B y z&#39; f q&#39;)))</span>
-</span><span id="__span-18-40"><a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-18-41"><a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a><span class="err">      ( z)</span>
-</span><span id="__span-18-42"><a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a><span class="err">      ( q)</span>
-</span><span id="__span-18-43"><a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a>
-</span><span id="__span-18-44"><a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:rev-ap-rev" id="define:rev-ap-rev" style="visibility: visible; position: relative; color: inherit">rev-ap-rev</a></span>
-</span><span id="__span-18-45"><a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-18-46"><a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-18-47"><a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-18-48"><a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-18-49"><a id="__codelineno-18-49" name="__codelineno-18-49" href="#__codelineno-18-49"></a><span class="err">  : (rev B (f y) (f x) (ap A B y x f (rev A x y p))) = (ap A B x y f p)</span>
-</span><span id="__span-18-50"><a id="__codelineno-18-50" name="__codelineno-18-50" href="#__codelineno-18-50"></a><span class="err">  :=</span>
-</span><span id="__span-18-51"><a id="__codelineno-18-51" name="__codelineno-18-51" href="#__codelineno-18-51"></a><span class="err">    ind-path</span>
-</span><span id="__span-18-52"><a id="__codelineno-18-52" name="__codelineno-18-52" href="#__codelineno-18-52"></a><span class="err">      ( A)</span>
-</span><span id="__span-18-53"><a id="__codelineno-18-53" name="__codelineno-18-53" href="#__codelineno-18-53"></a><span class="err">      ( x)</span>
-</span><span id="__span-18-54"><a id="__codelineno-18-54" name="__codelineno-18-54" href="#__codelineno-18-54"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
-</span><span id="__span-18-55"><a id="__codelineno-18-55" name="__codelineno-18-55" href="#__codelineno-18-55"></a><span class="err">        (rev B (f y&#39;) (f x) (ap A B y&#39; x f (rev A x y&#39; p&#39;))) =</span>
-</span><span id="__span-18-56"><a id="__codelineno-18-56" name="__codelineno-18-56" href="#__codelineno-18-56"></a><span class="err">        (ap A B x y&#39; f p&#39;))</span>
-</span><span id="__span-18-57"><a id="__codelineno-18-57" name="__codelineno-18-57" href="#__codelineno-18-57"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-18-58"><a id="__codelineno-18-58" name="__codelineno-18-58" href="#__codelineno-18-58"></a><span class="err">      ( y)</span>
-</span><span id="__span-18-59"><a id="__codelineno-18-59" name="__codelineno-18-59" href="#__codelineno-18-59"></a><span class="err">      ( p)</span>
+<h3 id="concatenation-with-a-path-and-its-reversal">Concatenation with a path and its reversal<a class="headerlink" href="#concatenation-with-a-path-and-its-reversal" title="Permanent link">&para;</a></h3>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:retraction-preconcat" id="define:retraction-preconcat" style="visibility: visible; position: relative; color: inherit">retraction-preconcat</a></span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="err">  : concat A y x z (rev A x y p) (concat A x y z p q) = q</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="err">  :=</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="err">    ind-path (A) (y)</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="err">    ( </span><span class="p">\ </span>z&#39; q&#39; <span class="err">→ concat A y x z&#39; (rev A x y p) (concat A x y z&#39; p q&#39;) = q&#39;) (left-inverse-concat A x y p) (z) (q)</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:section-preconcat" id="define:section-preconcat" style="visibility: visible; position: relative; color: inherit">section-preconcat</a></span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> x = z)</span>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="err">  : concat A x y z p (concat A y x z (rev A x y p) r) = r</span>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="err">  :=</span>
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="err">    ind-path (A) (x)</span>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="err">    ( </span><span class="p">\ </span>z&#39; r&#39; <span class="err">→ concat A x y z&#39; p (concat A y x z&#39; (rev A x y p) r&#39;) = r&#39;) (right-inverse-concat A x y p) (z) (r)</span>
+</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>
+</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:retraction-postconcat" id="define:retraction-postconcat" style="visibility: visible; position: relative; color: inherit">retraction-postconcat</a></span>
+</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
+</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="err">  : concat A x z y (concat A x y z p q) (rev A y z q) = p</span>
+</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="err">  :=</span>
+</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="err">    ind-path (A) (y)</span>
+</span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="err">    ( </span><span class="p">\ </span>z&#39; q&#39; <span class="err">→ concat A x z&#39; y (concat A x y z&#39; p q&#39;) (rev A y z&#39; q&#39;) = p)</span>
+</span><span id="__span-18-30"><a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="err">    ( </span><span class="s">refl</span><span class="err">) (z) (q)</span>
+</span><span id="__span-18-31"><a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a>
+</span><span id="__span-18-32"><a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:section-postconcat" id="define:section-postconcat" style="visibility: visible; position: relative; color: inherit">section-postconcat</a></span>
+</span><span id="__span-18-33"><a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-18-34"><a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-18-35"><a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
+</span><span id="__span-18-36"><a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> x = z)</span>
+</span><span id="__span-18-37"><a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a><span class="err">  : concat A x y z (concat A x z y r (rev A y z q)) q = r</span>
+</span><span id="__span-18-38"><a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a><span class="err">  :=</span>
+</span><span id="__span-18-39"><a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a><span class="err">    concat</span>
+</span><span id="__span-18-40"><a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a><span class="err">      ( x = z)</span>
+</span><span id="__span-18-41"><a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a><span class="err">      ( concat A x y z (concat A x z y r (rev A y z q)) q)</span>
+</span><span id="__span-18-42"><a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a><span class="err">      ( concat A x z z r (concat A z y z (rev A y z q) q))</span>
+</span><span id="__span-18-43"><a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a><span class="err">      ( r)</span>
+</span><span id="__span-18-44"><a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a><span class="err">      ( associative-concat A x z y z r (rev A y z q) q)</span>
+</span><span id="__span-18-45"><a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a><span class="err">      ( concat-eq-right A x z z r</span>
+</span><span id="__span-18-46"><a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a><span class="err">        ( concat A z y z (rev A y z q) q)</span>
+</span><span id="__span-18-47"><a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a><span class="err">        ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-18-48"><a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a><span class="err">        ( left-inverse-concat A y z q))</span>
 </span></code></pre></div>
-<p>The following is for a specific use.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:concat-ap-rev-ap-id" id="define:concat-ap-rev-ap-id" style="visibility: visible; position: relative; color: inherit">concat-ap-rev-ap-id</a></span>
+<h2 id="application-of-functions-to-paths">Application of functions to paths<a class="headerlink" href="#application-of-functions-to-paths" title="Permanent link">&para;</a></h2>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap" id="define:ap" style="visibility: visible; position: relative; color: inherit">ap</a></span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
 </span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
 </span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="err">  : ( concat</span>
-</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="err">      ( B) (f y) (f x) (f y)</span>
-</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="err">      ( ap A B y x f (rev A x y p))</span>
-</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="err">      ( ap A B x y f p)) =</span>
-</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="err">    ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="err">  :=</span>
-</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="err">    ind-path</span>
-</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="err">      ( A)</span>
-</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="err">      ( x)</span>
-</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
-</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="err">        ( concat</span>
-</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="err">          ( B) (f y&#39;) (f x) (f y&#39;)</span>
-</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="err">          ( ap A B y&#39; x f (rev A x y&#39; p&#39;)) (ap A B x y&#39; f p&#39;)) =</span>
-</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="err">        ( </span><span class="s">refl</span><span class="err">))</span>
-</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="err">      ( y)</span>
-</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="err">      ( p)</span>
-</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>
-</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-id" id="define:ap-id" style="visibility: visible; position: relative; color: inherit">ap-id</a></span>
-</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-19-28"><a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="err">  : (ap A A x y (identity A) p) = p</span>
-</span><span id="__span-19-29"><a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="err">  := ind-path (A) (x) (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (ap A A x y&#39; (</span><span class="p">\ </span>z <span class="err">→ z) p&#39;) = p&#39;) (</span><span class="s">refl</span><span class="err">) (y) (p)</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="err">  : (f x = f y)</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="err">  := ind-path (A) (x) (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (f x = f y&#39;)) (</span><span class="s">refl</span><span class="err">) (y) (p)</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-rev" id="define:ap-rev" style="visibility: visible; position: relative; color: inherit">ap-rev</a></span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="err">  : (ap A B y x f (rev A x y p)) = (rev B (f x) (f y) (ap A B x y f p))</span>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="err">  :=</span>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="err">    ind-path</span>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="err">      ( A)</span>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="err">      ( x)</span>
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="err">        ap A B y&#39; x f (rev A x y&#39; p&#39;) = rev B (f x) (f y&#39;) (ap A B x y&#39; f p&#39;))</span>
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="err">      ( y)</span>
+</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="err">      ( p)</span>
+</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a>
+</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-concat" id="define:ap-concat" style="visibility: visible; position: relative; color: inherit">ap-concat</a></span>
+</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-19-28"><a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-19-29"><a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-19-30"><a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
+</span><span id="__span-19-31"><a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a><span class="err">  : ( ap A B x z f (concat A x y z p q)) =</span>
+</span><span id="__span-19-32"><a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="err">    ( concat B (f x) (f y) (f z) (ap A B x y f p) (ap A B y z f q))</span>
+</span><span id="__span-19-33"><a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a><span class="err">  :=</span>
+</span><span id="__span-19-34"><a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a><span class="err">    ind-path</span>
+</span><span id="__span-19-35"><a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a><span class="err">      ( A)</span>
+</span><span id="__span-19-36"><a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a><span class="err">      ( y)</span>
+</span><span id="__span-19-37"><a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a><span class="err">      ( </span><span class="p">\ </span>z&#39; q&#39; <span class="err">→</span>
+</span><span id="__span-19-38"><a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a><span class="err">        ( ap A B x z&#39; f (concat A x y z&#39; p q&#39;)) =</span>
+</span><span id="__span-19-39"><a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a><span class="err">        ( concat B (f x) (f y) (f z&#39;) (ap A B x y f p) (ap A B y z&#39; f q&#39;)))</span>
+</span><span id="__span-19-40"><a id="__codelineno-19-40" name="__codelineno-19-40" href="#__codelineno-19-40"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-19-41"><a id="__codelineno-19-41" name="__codelineno-19-41" href="#__codelineno-19-41"></a><span class="err">      ( z)</span>
+</span><span id="__span-19-42"><a id="__codelineno-19-42" name="__codelineno-19-42" href="#__codelineno-19-42"></a><span class="err">      ( q)</span>
+</span><span id="__span-19-43"><a id="__codelineno-19-43" name="__codelineno-19-43" href="#__codelineno-19-43"></a>
+</span><span id="__span-19-44"><a id="__codelineno-19-44" name="__codelineno-19-44" href="#__codelineno-19-44"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:rev-ap-rev" id="define:rev-ap-rev" style="visibility: visible; position: relative; color: inherit">rev-ap-rev</a></span>
+</span><span id="__span-19-45"><a id="__codelineno-19-45" name="__codelineno-19-45" href="#__codelineno-19-45"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-46"><a id="__codelineno-19-46" name="__codelineno-19-46" href="#__codelineno-19-46"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-19-47"><a id="__codelineno-19-47" name="__codelineno-19-47" href="#__codelineno-19-47"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-19-48"><a id="__codelineno-19-48" name="__codelineno-19-48" href="#__codelineno-19-48"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-19-49"><a id="__codelineno-19-49" name="__codelineno-19-49" href="#__codelineno-19-49"></a><span class="err">  : (rev B (f y) (f x) (ap A B y x f (rev A x y p))) = (ap A B x y f p)</span>
+</span><span id="__span-19-50"><a id="__codelineno-19-50" name="__codelineno-19-50" href="#__codelineno-19-50"></a><span class="err">  :=</span>
+</span><span id="__span-19-51"><a id="__codelineno-19-51" name="__codelineno-19-51" href="#__codelineno-19-51"></a><span class="err">    ind-path</span>
+</span><span id="__span-19-52"><a id="__codelineno-19-52" name="__codelineno-19-52" href="#__codelineno-19-52"></a><span class="err">      ( A)</span>
+</span><span id="__span-19-53"><a id="__codelineno-19-53" name="__codelineno-19-53" href="#__codelineno-19-53"></a><span class="err">      ( x)</span>
+</span><span id="__span-19-54"><a id="__codelineno-19-54" name="__codelineno-19-54" href="#__codelineno-19-54"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
+</span><span id="__span-19-55"><a id="__codelineno-19-55" name="__codelineno-19-55" href="#__codelineno-19-55"></a><span class="err">        (rev B (f y&#39;) (f x) (ap A B y&#39; x f (rev A x y&#39; p&#39;))) =</span>
+</span><span id="__span-19-56"><a id="__codelineno-19-56" name="__codelineno-19-56" href="#__codelineno-19-56"></a><span class="err">        (ap A B x y&#39; f p&#39;))</span>
+</span><span id="__span-19-57"><a id="__codelineno-19-57" name="__codelineno-19-57" href="#__codelineno-19-57"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-19-58"><a id="__codelineno-19-58" name="__codelineno-19-58" href="#__codelineno-19-58"></a><span class="err">      ( y)</span>
+</span><span id="__span-19-59"><a id="__codelineno-19-59" name="__codelineno-19-59" href="#__codelineno-19-59"></a><span class="err">      ( p)</span>
 </span></code></pre></div>
-<p>Application of a function to homotopic paths yields homotopic paths.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-eq" id="define:ap-eq" style="visibility: visible; position: relative; color: inherit">ap-eq</a></span>
+<p>The following is for a specific use.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:concat-ap-rev-ap-id" id="define:concat-ap-rev-ap-id" style="visibility: visible; position: relative; color: inherit">concat-ap-rev-ap-id</a></span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
 </span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="err">  </span><span class="p">( </span>p q <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="err">  </span><span class="p">( </span>H <span class="p">:</span><span class="err"> p = q)</span>
-</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="err">  : (ap A B x y f p) = (ap A B x y f q)</span>
-</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="err">  :=</span>
-</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="err">    ind-path</span>
-</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="err">      ( x = y)</span>
-</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="err">      ( p)</span>
-</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="err">      ( </span><span class="p">\ </span>q&#39; H&#39; <span class="err">→ (ap A B x y f p) = (ap A B x y f q&#39;))</span>
-</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="err">      ( q)</span>
-</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="err">      ( H)</span>
-</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>
-</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-comp" id="define:ap-comp" style="visibility: visible; position: relative; color: inherit">ap-comp</a></span>
-</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="err">  </span><span class="p">( </span>A B C <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="err">  </span><span class="p">( </span>g <span class="p">:</span><span class="err"> B → C)</span>
-</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="err">  : ( ap A C x y (comp A B C g f) p) =</span>
-</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="err">    ( ap B C (f x) (f y) g (ap A B x y f p))</span>
-</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="err">  :=</span>
-</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="err">    ind-path</span>
-</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a><span class="err">      ( A)</span>
-</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="err">      ( x)</span>
-</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
-</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a><span class="err">        ( ap A C x y&#39; (</span><span class="p">\ </span>z <span class="err">→ g (f z)) p&#39;) =</span>
-</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a><span class="err">        ( ap B C (f x) (f y&#39;) g (ap A B x y&#39; f p&#39;)))</span>
-</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a><span class="err">      ( y)</span>
-</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a><span class="err">      ( p)</span>
-</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a>
-</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:rev-ap-comp" id="define:rev-ap-comp" style="visibility: visible; position: relative; color: inherit">rev-ap-comp</a></span>
-</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a><span class="err">  </span><span class="p">( </span>A B C <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-20-39"><a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-20-40"><a id="__codelineno-20-40" name="__codelineno-20-40" href="#__codelineno-20-40"></a><span class="err">  </span><span class="p">( </span>g <span class="p">:</span><span class="err"> B → C)</span>
-</span><span id="__span-20-41"><a id="__codelineno-20-41" name="__codelineno-20-41" href="#__codelineno-20-41"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-20-42"><a id="__codelineno-20-42" name="__codelineno-20-42" href="#__codelineno-20-42"></a><span class="err">  : ( ap B C (f x) (f y) g (ap A B x y f p)) =</span>
-</span><span id="__span-20-43"><a id="__codelineno-20-43" name="__codelineno-20-43" href="#__codelineno-20-43"></a><span class="err">    ( ap A C x y (comp A B C g f) p)</span>
-</span><span id="__span-20-44"><a id="__codelineno-20-44" name="__codelineno-20-44" href="#__codelineno-20-44"></a><span class="err">  :=</span>
-</span><span id="__span-20-45"><a id="__codelineno-20-45" name="__codelineno-20-45" href="#__codelineno-20-45"></a><span class="err">    rev</span>
-</span><span id="__span-20-46"><a id="__codelineno-20-46" name="__codelineno-20-46" href="#__codelineno-20-46"></a><span class="err">      ( g (f x) = g (f y))</span>
-</span><span id="__span-20-47"><a id="__codelineno-20-47" name="__codelineno-20-47" href="#__codelineno-20-47"></a><span class="err">      ( ap A C x y (</span><span class="p">\ </span>z <span class="err">→ g (f z)) p)</span>
-</span><span id="__span-20-48"><a id="__codelineno-20-48" name="__codelineno-20-48" href="#__codelineno-20-48"></a><span class="err">      ( ap B C (f x) (f y) g (ap A B x y f p))</span>
-</span><span id="__span-20-49"><a id="__codelineno-20-49" name="__codelineno-20-49" href="#__codelineno-20-49"></a><span class="err">      ( ap-comp A B C x y f g p)</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="err">  : ( concat</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="err">      ( B) (f y) (f x) (f y)</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="err">      ( ap A B y x f (rev A x y p))</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="err">      ( ap A B x y f p)) =</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="err">    ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="err">  :=</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="err">    ind-path</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="err">      ( A)</span>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="err">      ( x)</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="err">        ( concat</span>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="err">          ( B) (f y&#39;) (f x) (f y&#39;)</span>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="err">          ( ap A B y&#39; x f (rev A x y&#39; p&#39;)) (ap A B x y&#39; f p&#39;)) =</span>
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="err">        ( </span><span class="s">refl</span><span class="err">))</span>
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="err">      ( y)</span>
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="err">      ( p)</span>
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-id" id="define:ap-id" style="visibility: visible; position: relative; color: inherit">ap-id</a></span>
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="err">  : (ap A A x y (identity A) p) = p</span>
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a><span class="err">  := ind-path (A) (x) (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (ap A A x y&#39; (</span><span class="p">\ </span>z <span class="err">→ z) p&#39;) = p&#39;) (</span><span class="s">refl</span><span class="err">) (y) (p)</span>
+</span></code></pre></div>
+<p>Application of a function to homotopic paths yields homotopic paths.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-eq" id="define:ap-eq" style="visibility: visible; position: relative; color: inherit">ap-eq</a></span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="err">  </span><span class="p">( </span>p q <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="err">  </span><span class="p">( </span>H <span class="p">:</span><span class="err"> p = q)</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="err">  : (ap A B x y f p) = (ap A B x y f q)</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="err">  :=</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="err">    ind-path</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="err">      ( x = y)</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="err">      ( p)</span>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="err">      ( </span><span class="p">\ </span>q&#39; H&#39; <span class="err">→ (ap A B x y f p) = (ap A B x y f q&#39;))</span>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="err">      ( q)</span>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="err">      ( H)</span>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-comp" id="define:ap-comp" style="visibility: visible; position: relative; color: inherit">ap-comp</a></span>
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a><span class="err">  </span><span class="p">( </span>A B C <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a><span class="err">  </span><span class="p">( </span>g <span class="p">:</span><span class="err"> B → C)</span>
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a><span class="err">  : ( ap A C x y (comp A B C g f) p) =</span>
+</span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a><span class="err">    ( ap B C (f x) (f y) g (ap A B x y f p))</span>
+</span><span id="__span-21-25"><a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a><span class="err">  :=</span>
+</span><span id="__span-21-26"><a id="__codelineno-21-26" name="__codelineno-21-26" href="#__codelineno-21-26"></a><span class="err">    ind-path</span>
+</span><span id="__span-21-27"><a id="__codelineno-21-27" name="__codelineno-21-27" href="#__codelineno-21-27"></a><span class="err">      ( A)</span>
+</span><span id="__span-21-28"><a id="__codelineno-21-28" name="__codelineno-21-28" href="#__codelineno-21-28"></a><span class="err">      ( x)</span>
+</span><span id="__span-21-29"><a id="__codelineno-21-29" name="__codelineno-21-29" href="#__codelineno-21-29"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
+</span><span id="__span-21-30"><a id="__codelineno-21-30" name="__codelineno-21-30" href="#__codelineno-21-30"></a><span class="err">        ( ap A C x y&#39; (</span><span class="p">\ </span>z <span class="err">→ g (f z)) p&#39;) =</span>
+</span><span id="__span-21-31"><a id="__codelineno-21-31" name="__codelineno-21-31" href="#__codelineno-21-31"></a><span class="err">        ( ap B C (f x) (f y&#39;) g (ap A B x y&#39; f p&#39;)))</span>
+</span><span id="__span-21-32"><a id="__codelineno-21-32" name="__codelineno-21-32" href="#__codelineno-21-32"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-21-33"><a id="__codelineno-21-33" name="__codelineno-21-33" href="#__codelineno-21-33"></a><span class="err">      ( y)</span>
+</span><span id="__span-21-34"><a id="__codelineno-21-34" name="__codelineno-21-34" href="#__codelineno-21-34"></a><span class="err">      ( p)</span>
+</span><span id="__span-21-35"><a id="__codelineno-21-35" name="__codelineno-21-35" href="#__codelineno-21-35"></a>
+</span><span id="__span-21-36"><a id="__codelineno-21-36" name="__codelineno-21-36" href="#__codelineno-21-36"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:rev-ap-comp" id="define:rev-ap-comp" style="visibility: visible; position: relative; color: inherit">rev-ap-comp</a></span>
+</span><span id="__span-21-37"><a id="__codelineno-21-37" name="__codelineno-21-37" href="#__codelineno-21-37"></a><span class="err">  </span><span class="p">( </span>A B C <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-21-38"><a id="__codelineno-21-38" name="__codelineno-21-38" href="#__codelineno-21-38"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-21-39"><a id="__codelineno-21-39" name="__codelineno-21-39" href="#__codelineno-21-39"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-21-40"><a id="__codelineno-21-40" name="__codelineno-21-40" href="#__codelineno-21-40"></a><span class="err">  </span><span class="p">( </span>g <span class="p">:</span><span class="err"> B → C)</span>
+</span><span id="__span-21-41"><a id="__codelineno-21-41" name="__codelineno-21-41" href="#__codelineno-21-41"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-21-42"><a id="__codelineno-21-42" name="__codelineno-21-42" href="#__codelineno-21-42"></a><span class="err">  : ( ap B C (f x) (f y) g (ap A B x y f p)) =</span>
+</span><span id="__span-21-43"><a id="__codelineno-21-43" name="__codelineno-21-43" href="#__codelineno-21-43"></a><span class="err">    ( ap A C x y (comp A B C g f) p)</span>
+</span><span id="__span-21-44"><a id="__codelineno-21-44" name="__codelineno-21-44" href="#__codelineno-21-44"></a><span class="err">  :=</span>
+</span><span id="__span-21-45"><a id="__codelineno-21-45" name="__codelineno-21-45" href="#__codelineno-21-45"></a><span class="err">    rev</span>
+</span><span id="__span-21-46"><a id="__codelineno-21-46" name="__codelineno-21-46" href="#__codelineno-21-46"></a><span class="err">      ( g (f x) = g (f y))</span>
+</span><span id="__span-21-47"><a id="__codelineno-21-47" name="__codelineno-21-47" href="#__codelineno-21-47"></a><span class="err">      ( ap A C x y (</span><span class="p">\ </span>z <span class="err">→ g (f z)) p)</span>
+</span><span id="__span-21-48"><a id="__codelineno-21-48" name="__codelineno-21-48" href="#__codelineno-21-48"></a><span class="err">      ( ap B C (f x) (f y) g (ap A B x y f p))</span>
+</span><span id="__span-21-49"><a id="__codelineno-21-49" name="__codelineno-21-49" href="#__codelineno-21-49"></a><span class="err">      ( ap-comp A B C x y f g p)</span>
 </span></code></pre></div>
 <h2 id="transport">Transport<a class="headerlink" href="#transport" title="Permanent link">&para;</a></h2>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nd">#section</span><span class="n"> transport</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="kr">#variable</span><span class="p"> </span>B<span class="err"> : A → U</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nd">#section</span><span class="n"> transport</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="kr">#variable</span><span class="p"> </span>B<span class="err"> : A → U</span>
 </span></code></pre></div>
 <h3 id="transport-in-a-type-family-along-a-path-in-the-base">Transport in a type family along a path in the base<a class="headerlink" href="#transport-in-a-type-family-along-a-path-in-the-base" title="Permanent link">&para;</a></h3>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport" id="define:transport" style="visibility: visible; position: relative; color: inherit">transport</a></span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> B x)</span>
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="err">  : B y</span>
-</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="err">  := ind-path (A) (x) (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ B y&#39;) (u) (y) (p)</span>
-</span></code></pre></div>
-<h3 id="the-lift-of-a-base-path-to-a-path-from-a-term-in-the-total-space-to-its-transport">The lift of a base path to a path from a term in the total space to its transport<a class="headerlink" href="#the-lift-of-a-base-path-to-a-path-from-a-term-in-the-total-space-to-its-transport" title="Permanent link">&para;</a></h3>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport-lift" id="define:transport-lift" style="visibility: visible; position: relative; color: inherit">transport-lift</a></span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport" id="define:transport" style="visibility: visible; position: relative; color: inherit">transport</a></span>
 </span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
 </span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
 </span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> B x)</span>
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="err">  : (x , u) =_{</span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) , B z} (y , transport x y p u)</span>
-</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="err">  :=</span>
-</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="err">    ind-path</span>
-</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="err">      ( A)</span>
-</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="err">      ( x)</span>
-</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (x , u) =_{</span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) , B z} (y&#39; , transport x y&#39; p&#39; u))</span>
-</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="err">      ( y)</span>
-</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="err">      ( p)</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="err">  : B y</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="err">  := ind-path (A) (x) (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ B y&#39;) (u) (y) (p)</span>
+</span></code></pre></div>
+<h3 id="the-lift-of-a-base-path-to-a-path-from-a-term-in-the-total-space-to-its-transport">The lift of a base path to a path from a term in the total space to its transport<a class="headerlink" href="#the-lift-of-a-base-path-to-a-path-from-a-term-in-the-total-space-to-its-transport" title="Permanent link">&para;</a></h3>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport-lift" id="define:transport-lift" style="visibility: visible; position: relative; color: inherit">transport-lift</a></span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> B x)</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="err">  : (x , u) =_{</span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) , B z} (y , transport x y p u)</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="err">  :=</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="err">    ind-path</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="err">      ( A)</span>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="err">      ( x)</span>
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (x , u) =_{</span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) , B z} (y&#39; , transport x y&#39; p&#39; u))</span>
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="err">      ( y)</span>
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="err">      ( p)</span>
 </span></code></pre></div>
 <h3 id="transport-along-concatenated-paths">Transport along concatenated paths<a class="headerlink" href="#transport-along-concatenated-paths" title="Permanent link">&para;</a></h3>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport-concat" id="define:transport-concat" style="visibility: visible; position: relative; color: inherit">transport-concat</a></span>
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
-</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> B x)</span>
-</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="err">  : ( transport x z (concat A x y z p q) u) =</span>
-</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="err">    ( transport y z q (transport x y p u))</span>
-</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="err">  :=</span>
-</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="err">    ind-path</span>
-</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="err">      ( A)</span>
-</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="err">      ( y)</span>
-</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="err">      ( </span><span class="p">\ </span>z&#39; q&#39; <span class="err">→</span>
-</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="err">        ( transport x z&#39; (concat A x y z&#39; p q&#39;) u) =</span>
-</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="err">        ( transport y z&#39; q&#39; (transport x y p u)))</span>
-</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a><span class="err">      ( z)</span>
-</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a><span class="err">      ( q)</span>
-</span><span id="__span-24-18"><a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a>
-</span><span id="__span-24-19"><a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport-concat-rev" id="define:transport-concat-rev" style="visibility: visible; position: relative; color: inherit">transport-concat-rev</a></span>
-</span><span id="__span-24-20"><a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
-</span><span id="__span-24-23"><a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> B x)</span>
-</span><span id="__span-24-24"><a id="__codelineno-24-24" name="__codelineno-24-24" href="#__codelineno-24-24"></a><span class="err">  : ( transport y z q (transport x y p u)) =</span>
-</span><span id="__span-24-25"><a id="__codelineno-24-25" name="__codelineno-24-25" href="#__codelineno-24-25"></a><span class="err">    ( transport x z (concat A x y z p q) u)</span>
-</span><span id="__span-24-26"><a id="__codelineno-24-26" name="__codelineno-24-26" href="#__codelineno-24-26"></a><span class="err">  :=</span>
-</span><span id="__span-24-27"><a id="__codelineno-24-27" name="__codelineno-24-27" href="#__codelineno-24-27"></a><span class="err">    ind-path</span>
-</span><span id="__span-24-28"><a id="__codelineno-24-28" name="__codelineno-24-28" href="#__codelineno-24-28"></a><span class="err">      ( A)</span>
-</span><span id="__span-24-29"><a id="__codelineno-24-29" name="__codelineno-24-29" href="#__codelineno-24-29"></a><span class="err">      ( y)</span>
-</span><span id="__span-24-30"><a id="__codelineno-24-30" name="__codelineno-24-30" href="#__codelineno-24-30"></a><span class="err">      ( </span><span class="p">\ </span>z&#39; q&#39; <span class="err">→</span>
-</span><span id="__span-24-31"><a id="__codelineno-24-31" name="__codelineno-24-31" href="#__codelineno-24-31"></a><span class="err">        ( transport y z&#39; q&#39; (transport x y p u)) =</span>
-</span><span id="__span-24-32"><a id="__codelineno-24-32" name="__codelineno-24-32" href="#__codelineno-24-32"></a><span class="err">        ( transport x z&#39; (concat A x y z&#39; p q&#39;) u))</span>
-</span><span id="__span-24-33"><a id="__codelineno-24-33" name="__codelineno-24-33" href="#__codelineno-24-33"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-24-34"><a id="__codelineno-24-34" name="__codelineno-24-34" href="#__codelineno-24-34"></a><span class="err">      ( z)</span>
-</span><span id="__span-24-35"><a id="__codelineno-24-35" name="__codelineno-24-35" href="#__codelineno-24-35"></a><span class="err">      ( q)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport-concat" id="define:transport-concat" style="visibility: visible; position: relative; color: inherit">transport-concat</a></span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> B x)</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="err">  : ( transport x z (concat A x y z p q) u) =</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="err">    ( transport y z q (transport x y p u))</span>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="err">  :=</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="err">    ind-path</span>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="err">      ( A)</span>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="err">      ( y)</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="err">      ( </span><span class="p">\ </span>z&#39; q&#39; <span class="err">→</span>
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="err">        ( transport x z&#39; (concat A x y z&#39; p q&#39;) u) =</span>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="err">        ( transport y z&#39; q&#39; (transport x y p u)))</span>
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="err">      ( z)</span>
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="err">      ( q)</span>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport-concat-rev" id="define:transport-concat-rev" style="visibility: visible; position: relative; color: inherit">transport-concat-rev</a></span>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
+</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> B x)</span>
+</span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a><span class="err">  : ( transport y z q (transport x y p u)) =</span>
+</span><span id="__span-25-25"><a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a><span class="err">    ( transport x z (concat A x y z p q) u)</span>
+</span><span id="__span-25-26"><a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a><span class="err">  :=</span>
+</span><span id="__span-25-27"><a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a><span class="err">    ind-path</span>
+</span><span id="__span-25-28"><a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a><span class="err">      ( A)</span>
+</span><span id="__span-25-29"><a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a><span class="err">      ( y)</span>
+</span><span id="__span-25-30"><a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a><span class="err">      ( </span><span class="p">\ </span>z&#39; q&#39; <span class="err">→</span>
+</span><span id="__span-25-31"><a id="__codelineno-25-31" name="__codelineno-25-31" href="#__codelineno-25-31"></a><span class="err">        ( transport y z&#39; q&#39; (transport x y p u)) =</span>
+</span><span id="__span-25-32"><a id="__codelineno-25-32" name="__codelineno-25-32" href="#__codelineno-25-32"></a><span class="err">        ( transport x z&#39; (concat A x y z&#39; p q&#39;) u))</span>
+</span><span id="__span-25-33"><a id="__codelineno-25-33" name="__codelineno-25-33" href="#__codelineno-25-33"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-25-34"><a id="__codelineno-25-34" name="__codelineno-25-34" href="#__codelineno-25-34"></a><span class="err">      ( z)</span>
+</span><span id="__span-25-35"><a id="__codelineno-25-35" name="__codelineno-25-35" href="#__codelineno-25-35"></a><span class="err">      ( q)</span>
 </span></code></pre></div>
 <h3 id="transport-along-homotopic-paths">Transport along homotopic paths<a class="headerlink" href="#transport-along-homotopic-paths" title="Permanent link">&para;</a></h3>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport2" id="define:transport2" style="visibility: visible; position: relative; color: inherit">transport2</a></span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="err">  </span><span class="p">( </span>p q <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="err">  </span><span class="p">( </span>H <span class="p">:</span><span class="err"> p = q)</span>
-</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> B x)</span>
-</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="err">  : (transport x y p u) = (transport x y q u)</span>
-</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="err">  :=</span>
-</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="err">    ind-path</span>
-</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="err">      ( x = y)</span>
-</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="err">      ( p)</span>
-</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="err">      ( </span><span class="p">\ </span>q&#39; H&#39; <span class="err">→ (transport x y p u) = (transport x y q&#39; u))</span>
-</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="err">      ( q)</span>
-</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="err">      ( H)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport2" id="define:transport2" style="visibility: visible; position: relative; color: inherit">transport2</a></span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="err">  </span><span class="p">( </span>p q <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="err">  </span><span class="p">( </span>H <span class="p">:</span><span class="err"> p = q)</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> B x)</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="err">  : (transport x y p u) = (transport x y q u)</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="err">  :=</span>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="err">    ind-path</span>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="err">      ( x = y)</span>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="err">      ( p)</span>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="err">      ( </span><span class="p">\ </span>q&#39; H&#39; <span class="err">→ (transport x y p u) = (transport x y q&#39; u))</span>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="err">      ( q)</span>
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="err">      ( H)</span>
 </span></code></pre></div>
 <h3 id="transport-along-a-loop">Transport along a loop<a class="headerlink" href="#transport-along-a-loop" title="Permanent link">&para;</a></h3>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport-loop" id="define:transport-loop" style="visibility: visible; position: relative; color: inherit">transport-loop</a></span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="err">  </span><span class="p">( </span>b <span class="p">:</span><span class="err"> B a)</span>
-</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="err">  : (a = a) → B a</span>
-</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="err">  := </span><span class="p">\ </span>p <span class="err">→ (transport a a p b)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:transport-loop" id="define:transport-loop" style="visibility: visible; position: relative; color: inherit">transport-loop</a></span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="err">  </span><span class="p">( </span>b <span class="p">:</span><span class="err"> B a)</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="err">  : (a = a) → B a</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="err">  := </span><span class="p">\ </span>p <span class="err">→ (transport a a p b)</span>
 </span></code></pre></div>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nd">#end</span><span class="n"> transport</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nd">#end</span><span class="n"> transport</span>
 </span></code></pre></div>
 <h3 id="path-induction_1">Path induction<a class="headerlink" href="#path-induction_1" title="Permanent link">&para;</a></h3>
 <p>Using <code>rev</code> we can deduce a path induction principle with fixed end point.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ind-path-end" id="define:ind-path-end" style="visibility: visible; position: relative; color: inherit">ind-path-end</a></span>
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → (x = a) -&gt; U)</span>
-</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="err">  </span><span class="p">( </span>d <span class="p">:</span><span class="err"> C a </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="err">  </span><span class="p">( </span>x <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = a)</span>
-</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="err">  : C x p</span>
-</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="err">  :=</span>
-</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="err">    transport (x = a) (</span><span class="p">\ </span>q <span class="err">→ C x q) (rev A a x (rev A x a p)) p</span>
-</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="err">      (rev-rev A x a p)</span>
-</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a><span class="err">      (ind-path A a (</span><span class="p">\ </span>y q <span class="err">→ C y (rev A a y q)) d x (rev A x a p))</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ind-path-end" id="define:ind-path-end" style="visibility: visible; position: relative; color: inherit">ind-path-end</a></span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → (x = a) -&gt; U)</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="err">  </span><span class="p">( </span>d <span class="p">:</span><span class="err"> C a </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="err">  </span><span class="p">( </span>x <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = a)</span>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="err">  : C x p</span>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="err">  :=</span>
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="err">    transport (x = a) (</span><span class="p">\ </span>q <span class="err">→ C x q) (rev A a x (rev A x a p)) p</span>
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="err">      (rev-rev A x a p)</span>
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="err">      (ind-path A a (</span><span class="p">\ </span>y q <span class="err">→ C y (rev A a y q)) d x (rev A x a p))</span>
 </span></code></pre></div>
 <h2 id="dependent-application">Dependent application<a class="headerlink" href="#dependent-application" title="Permanent link">&para;</a></h2>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:apd" id="define:apd" style="visibility: visible; position: relative; color: inherit">apd</a></span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → B z)</span>
-</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="err">  : (transport A B x y p (f x)) = f y</span>
-</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="err">  :=</span>
-</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="err">    ind-path</span>
-</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="err">      ( A)</span>
-</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="err">      ( x)</span>
-</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="err">      ( (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (transport A B x y&#39; p&#39; (f x)) = f y&#39;))</span>
-</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="err">      ( y)</span>
-</span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a><span class="err">      ( p)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:apd" id="define:apd" style="visibility: visible; position: relative; color: inherit">apd</a></span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → B z)</span>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="err">  : (transport A B x y p (f x)) = f y</span>
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="err">  :=</span>
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="err">    ind-path</span>
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="err">      ( A)</span>
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="err">      ( x)</span>
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="err">      ( (</span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ (transport A B x y&#39; p&#39; (f x)) = f y&#39;))</span>
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a><span class="err">      ( y)</span>
+</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a><span class="err">      ( p)</span>
 </span></code></pre></div>
 <h2 id="higher-order-concatenation">Higher-order concatenation<a class="headerlink" href="#higher-order-concatenation" title="Permanent link">&para;</a></h2>
 <p>For convenience, we record lemmas for higher-order concatenation here.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="nd">#section</span><span class="n"> higher-concatenation</span>
-</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
-</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
-</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:triple-concat" id="define:triple-concat" style="visibility: visible; position: relative; color: inherit">triple-concat</a></span>
-</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="err">  </span><span class="p">( </span>a0 a1 a2 a3 <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="err">  </span><span class="p">( </span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
-</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="err">  </span><span class="p">( </span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
-</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="err">  </span><span class="p">( </span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
-</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="err">  : a0 = a3</span>
-</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="err">  := concat A a0 a1 a3 p1 (concat A a1 a2 a3 p2 p3)</span>
-</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>
-</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:quadruple-concat" id="define:quadruple-concat" style="visibility: visible; position: relative; color: inherit">quadruple-concat</a></span>
-</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="err">  </span><span class="p">( </span>a0 a1 a2 a3 a4 <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a><span class="err">  </span><span class="p">( </span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
-</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a><span class="err">  </span><span class="p">( </span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
-</span><span id="__span-30-16"><a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a><span class="err">  </span><span class="p">( </span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
-</span><span id="__span-30-17"><a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a><span class="err">  </span><span class="p">( </span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
-</span><span id="__span-30-18"><a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a><span class="err">  : a0 = a4</span>
-</span><span id="__span-30-19"><a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a><span class="err">  := triple-concat a0 a1 a2 a4 p1 p2 (concat A a2 a3 a4 p3 p4)</span>
-</span><span id="__span-30-20"><a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>
-</span><span id="__span-30-21"><a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:quintuple-concat" id="define:quintuple-concat" style="visibility: visible; position: relative; color: inherit">quintuple-concat</a></span>
-</span><span id="__span-30-22"><a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a><span class="err">  </span><span class="p">( </span>a0 a1 a2 a3 a4 a5 <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-30-23"><a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a><span class="err">  </span><span class="p">( </span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
-</span><span id="__span-30-24"><a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a><span class="err">  </span><span class="p">( </span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
-</span><span id="__span-30-25"><a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a><span class="err">  </span><span class="p">( </span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
-</span><span id="__span-30-26"><a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a><span class="err">  </span><span class="p">( </span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
-</span><span id="__span-30-27"><a id="__codelineno-30-27" name="__codelineno-30-27" href="#__codelineno-30-27"></a><span class="err">  </span><span class="p">( </span>p5 <span class="p">:</span><span class="err"> a4 = a5)</span>
-</span><span id="__span-30-28"><a id="__codelineno-30-28" name="__codelineno-30-28" href="#__codelineno-30-28"></a><span class="err">  : a0 = a5</span>
-</span><span id="__span-30-29"><a id="__codelineno-30-29" name="__codelineno-30-29" href="#__codelineno-30-29"></a><span class="err">  := quadruple-concat a0 a1 a2 a3 a5 p1 p2 p3 (concat A a3 a4 a5 p4 p5)</span>
-</span><span id="__span-30-30"><a id="__codelineno-30-30" name="__codelineno-30-30" href="#__codelineno-30-30"></a>
-</span><span id="__span-30-31"><a id="__codelineno-30-31" name="__codelineno-30-31" href="#__codelineno-30-31"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:alternating-quintuple-concat" id="define:alternating-quintuple-concat" style="visibility: visible; position: relative; color: inherit">alternating-quintuple-concat</a></span>
-</span><span id="__span-30-32"><a id="__codelineno-30-32" name="__codelineno-30-32" href="#__codelineno-30-32"></a><span class="err">  </span><span class="p">( </span>a0 <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-30-33"><a id="__codelineno-30-33" name="__codelineno-30-33" href="#__codelineno-30-33"></a><span class="err">  </span><span class="p">( </span>a1 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
-</span><span id="__span-30-34"><a id="__codelineno-30-34" name="__codelineno-30-34" href="#__codelineno-30-34"></a><span class="err">  </span><span class="p">( </span>a2 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
-</span><span id="__span-30-35"><a id="__codelineno-30-35" name="__codelineno-30-35" href="#__codelineno-30-35"></a><span class="err">  </span><span class="p">( </span>a3 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
-</span><span id="__span-30-36"><a id="__codelineno-30-36" name="__codelineno-30-36" href="#__codelineno-30-36"></a><span class="err">  </span><span class="p">( </span>a4 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
-</span><span id="__span-30-37"><a id="__codelineno-30-37" name="__codelineno-30-37" href="#__codelineno-30-37"></a><span class="err">  </span><span class="p">( </span>a5 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p5 <span class="p">:</span><span class="err"> a4 = a5)</span>
-</span><span id="__span-30-38"><a id="__codelineno-30-38" name="__codelineno-30-38" href="#__codelineno-30-38"></a><span class="err">  : a0 = a5</span>
-</span><span id="__span-30-39"><a id="__codelineno-30-39" name="__codelineno-30-39" href="#__codelineno-30-39"></a><span class="err">  := quadruple-concat a0 a1 a2 a3 a5 p1 p2 p3 (concat A a3 a4 a5 p4 p5)</span>
-</span><span id="__span-30-40"><a id="__codelineno-30-40" name="__codelineno-30-40" href="#__codelineno-30-40"></a>
-</span><span id="__span-30-41"><a id="__codelineno-30-41" name="__codelineno-30-41" href="#__codelineno-30-41"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:12ary-concat" id="define:12ary-concat" style="visibility: visible; position: relative; color: inherit">12ary-concat</a></span>
-</span><span id="__span-30-42"><a id="__codelineno-30-42" name="__codelineno-30-42" href="#__codelineno-30-42"></a><span class="err">  </span><span class="p">( </span>a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-30-43"><a id="__codelineno-30-43" name="__codelineno-30-43" href="#__codelineno-30-43"></a><span class="err">  </span><span class="p">( </span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
-</span><span id="__span-30-44"><a id="__codelineno-30-44" name="__codelineno-30-44" href="#__codelineno-30-44"></a><span class="err">  </span><span class="p">( </span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
-</span><span id="__span-30-45"><a id="__codelineno-30-45" name="__codelineno-30-45" href="#__codelineno-30-45"></a><span class="err">  </span><span class="p">( </span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
-</span><span id="__span-30-46"><a id="__codelineno-30-46" name="__codelineno-30-46" href="#__codelineno-30-46"></a><span class="err">  </span><span class="p">( </span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
-</span><span id="__span-30-47"><a id="__codelineno-30-47" name="__codelineno-30-47" href="#__codelineno-30-47"></a><span class="err">  </span><span class="p">( </span>p5 <span class="p">:</span><span class="err"> a4 = a5)</span>
-</span><span id="__span-30-48"><a id="__codelineno-30-48" name="__codelineno-30-48" href="#__codelineno-30-48"></a><span class="err">  </span><span class="p">( </span>p6 <span class="p">:</span><span class="err"> a5 = a6)</span>
-</span><span id="__span-30-49"><a id="__codelineno-30-49" name="__codelineno-30-49" href="#__codelineno-30-49"></a><span class="err">  </span><span class="p">( </span>p7 <span class="p">:</span><span class="err"> a6 = a7)</span>
-</span><span id="__span-30-50"><a id="__codelineno-30-50" name="__codelineno-30-50" href="#__codelineno-30-50"></a><span class="err">  </span><span class="p">( </span>p8 <span class="p">:</span><span class="err"> a7 = a8)</span>
-</span><span id="__span-30-51"><a id="__codelineno-30-51" name="__codelineno-30-51" href="#__codelineno-30-51"></a><span class="err">  </span><span class="p">( </span>p9 <span class="p">:</span><span class="err"> a8 = a9)</span>
-</span><span id="__span-30-52"><a id="__codelineno-30-52" name="__codelineno-30-52" href="#__codelineno-30-52"></a><span class="err">  </span><span class="p">( </span>p10 <span class="p">:</span><span class="err"> a9 = a10)</span>
-</span><span id="__span-30-53"><a id="__codelineno-30-53" name="__codelineno-30-53" href="#__codelineno-30-53"></a><span class="err">  </span><span class="p">( </span>p11 <span class="p">:</span><span class="err"> a10 = a11)</span>
-</span><span id="__span-30-54"><a id="__codelineno-30-54" name="__codelineno-30-54" href="#__codelineno-30-54"></a><span class="err">  </span><span class="p">( </span>p12 <span class="p">:</span><span class="err"> a11 = a12)</span>
-</span><span id="__span-30-55"><a id="__codelineno-30-55" name="__codelineno-30-55" href="#__codelineno-30-55"></a><span class="err">  : a0 = a12</span>
-</span><span id="__span-30-56"><a id="__codelineno-30-56" name="__codelineno-30-56" href="#__codelineno-30-56"></a><span class="err">  :=</span>
-</span><span id="__span-30-57"><a id="__codelineno-30-57" name="__codelineno-30-57" href="#__codelineno-30-57"></a><span class="err">    quintuple-concat</span>
-</span><span id="__span-30-58"><a id="__codelineno-30-58" name="__codelineno-30-58" href="#__codelineno-30-58"></a><span class="err">      a0 a1 a2 a3 a4 a12</span>
-</span><span id="__span-30-59"><a id="__codelineno-30-59" name="__codelineno-30-59" href="#__codelineno-30-59"></a><span class="err">      p1 p2 p3 p4</span>
-</span><span id="__span-30-60"><a id="__codelineno-30-60" name="__codelineno-30-60" href="#__codelineno-30-60"></a><span class="err">      ( quintuple-concat</span>
-</span><span id="__span-30-61"><a id="__codelineno-30-61" name="__codelineno-30-61" href="#__codelineno-30-61"></a><span class="err">        a4 a5 a6 a7 a8 a12</span>
-</span><span id="__span-30-62"><a id="__codelineno-30-62" name="__codelineno-30-62" href="#__codelineno-30-62"></a><span class="err">        p5 p6 p7 p8</span>
-</span><span id="__span-30-63"><a id="__codelineno-30-63" name="__codelineno-30-63" href="#__codelineno-30-63"></a><span class="err">        ( quadruple-concat</span>
-</span><span id="__span-30-64"><a id="__codelineno-30-64" name="__codelineno-30-64" href="#__codelineno-30-64"></a><span class="err">          a8 a9 a10 a11 a12</span>
-</span><span id="__span-30-65"><a id="__codelineno-30-65" name="__codelineno-30-65" href="#__codelineno-30-65"></a><span class="err">          p9 p10 p11 p12))</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nd">#section</span><span class="n"> higher-concatenation</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:triple-concat" id="define:triple-concat" style="visibility: visible; position: relative; color: inherit">triple-concat</a></span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="err">  </span><span class="p">( </span>a0 a1 a2 a3 <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="err">  </span><span class="p">( </span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="err">  </span><span class="p">( </span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="err">  </span><span class="p">( </span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="err">  : a0 = a3</span>
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="err">  := concat A a0 a1 a3 p1 (concat A a1 a2 a3 p2 p3)</span>
+</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>
+</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:quadruple-concat" id="define:quadruple-concat" style="visibility: visible; position: relative; color: inherit">quadruple-concat</a></span>
+</span><span id="__span-31-13"><a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="err">  </span><span class="p">( </span>a0 a1 a2 a3 a4 <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-31-14"><a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a><span class="err">  </span><span class="p">( </span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
+</span><span id="__span-31-15"><a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a><span class="err">  </span><span class="p">( </span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
+</span><span id="__span-31-16"><a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a><span class="err">  </span><span class="p">( </span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
+</span><span id="__span-31-17"><a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a><span class="err">  </span><span class="p">( </span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
+</span><span id="__span-31-18"><a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a><span class="err">  : a0 = a4</span>
+</span><span id="__span-31-19"><a id="__codelineno-31-19" name="__codelineno-31-19" href="#__codelineno-31-19"></a><span class="err">  := triple-concat a0 a1 a2 a4 p1 p2 (concat A a2 a3 a4 p3 p4)</span>
+</span><span id="__span-31-20"><a id="__codelineno-31-20" name="__codelineno-31-20" href="#__codelineno-31-20"></a>
+</span><span id="__span-31-21"><a id="__codelineno-31-21" name="__codelineno-31-21" href="#__codelineno-31-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:quintuple-concat" id="define:quintuple-concat" style="visibility: visible; position: relative; color: inherit">quintuple-concat</a></span>
+</span><span id="__span-31-22"><a id="__codelineno-31-22" name="__codelineno-31-22" href="#__codelineno-31-22"></a><span class="err">  </span><span class="p">( </span>a0 a1 a2 a3 a4 a5 <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-31-23"><a id="__codelineno-31-23" name="__codelineno-31-23" href="#__codelineno-31-23"></a><span class="err">  </span><span class="p">( </span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
+</span><span id="__span-31-24"><a id="__codelineno-31-24" name="__codelineno-31-24" href="#__codelineno-31-24"></a><span class="err">  </span><span class="p">( </span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
+</span><span id="__span-31-25"><a id="__codelineno-31-25" name="__codelineno-31-25" href="#__codelineno-31-25"></a><span class="err">  </span><span class="p">( </span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
+</span><span id="__span-31-26"><a id="__codelineno-31-26" name="__codelineno-31-26" href="#__codelineno-31-26"></a><span class="err">  </span><span class="p">( </span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
+</span><span id="__span-31-27"><a id="__codelineno-31-27" name="__codelineno-31-27" href="#__codelineno-31-27"></a><span class="err">  </span><span class="p">( </span>p5 <span class="p">:</span><span class="err"> a4 = a5)</span>
+</span><span id="__span-31-28"><a id="__codelineno-31-28" name="__codelineno-31-28" href="#__codelineno-31-28"></a><span class="err">  : a0 = a5</span>
+</span><span id="__span-31-29"><a id="__codelineno-31-29" name="__codelineno-31-29" href="#__codelineno-31-29"></a><span class="err">  := quadruple-concat a0 a1 a2 a3 a5 p1 p2 p3 (concat A a3 a4 a5 p4 p5)</span>
+</span><span id="__span-31-30"><a id="__codelineno-31-30" name="__codelineno-31-30" href="#__codelineno-31-30"></a>
+</span><span id="__span-31-31"><a id="__codelineno-31-31" name="__codelineno-31-31" href="#__codelineno-31-31"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:alternating-quintuple-concat" id="define:alternating-quintuple-concat" style="visibility: visible; position: relative; color: inherit">alternating-quintuple-concat</a></span>
+</span><span id="__span-31-32"><a id="__codelineno-31-32" name="__codelineno-31-32" href="#__codelineno-31-32"></a><span class="err">  </span><span class="p">( </span>a0 <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-31-33"><a id="__codelineno-31-33" name="__codelineno-31-33" href="#__codelineno-31-33"></a><span class="err">  </span><span class="p">( </span>a1 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
+</span><span id="__span-31-34"><a id="__codelineno-31-34" name="__codelineno-31-34" href="#__codelineno-31-34"></a><span class="err">  </span><span class="p">( </span>a2 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
+</span><span id="__span-31-35"><a id="__codelineno-31-35" name="__codelineno-31-35" href="#__codelineno-31-35"></a><span class="err">  </span><span class="p">( </span>a3 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
+</span><span id="__span-31-36"><a id="__codelineno-31-36" name="__codelineno-31-36" href="#__codelineno-31-36"></a><span class="err">  </span><span class="p">( </span>a4 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
+</span><span id="__span-31-37"><a id="__codelineno-31-37" name="__codelineno-31-37" href="#__codelineno-31-37"></a><span class="err">  </span><span class="p">( </span>a5 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p5 <span class="p">:</span><span class="err"> a4 = a5)</span>
+</span><span id="__span-31-38"><a id="__codelineno-31-38" name="__codelineno-31-38" href="#__codelineno-31-38"></a><span class="err">  : a0 = a5</span>
+</span><span id="__span-31-39"><a id="__codelineno-31-39" name="__codelineno-31-39" href="#__codelineno-31-39"></a><span class="err">  := quadruple-concat a0 a1 a2 a3 a5 p1 p2 p3 (concat A a3 a4 a5 p4 p5)</span>
+</span><span id="__span-31-40"><a id="__codelineno-31-40" name="__codelineno-31-40" href="#__codelineno-31-40"></a>
+</span><span id="__span-31-41"><a id="__codelineno-31-41" name="__codelineno-31-41" href="#__codelineno-31-41"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:12ary-concat" id="define:12ary-concat" style="visibility: visible; position: relative; color: inherit">12ary-concat</a></span>
+</span><span id="__span-31-42"><a id="__codelineno-31-42" name="__codelineno-31-42" href="#__codelineno-31-42"></a><span class="err">  </span><span class="p">( </span>a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-31-43"><a id="__codelineno-31-43" name="__codelineno-31-43" href="#__codelineno-31-43"></a><span class="err">  </span><span class="p">( </span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
+</span><span id="__span-31-44"><a id="__codelineno-31-44" name="__codelineno-31-44" href="#__codelineno-31-44"></a><span class="err">  </span><span class="p">( </span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
+</span><span id="__span-31-45"><a id="__codelineno-31-45" name="__codelineno-31-45" href="#__codelineno-31-45"></a><span class="err">  </span><span class="p">( </span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
+</span><span id="__span-31-46"><a id="__codelineno-31-46" name="__codelineno-31-46" href="#__codelineno-31-46"></a><span class="err">  </span><span class="p">( </span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
+</span><span id="__span-31-47"><a id="__codelineno-31-47" name="__codelineno-31-47" href="#__codelineno-31-47"></a><span class="err">  </span><span class="p">( </span>p5 <span class="p">:</span><span class="err"> a4 = a5)</span>
+</span><span id="__span-31-48"><a id="__codelineno-31-48" name="__codelineno-31-48" href="#__codelineno-31-48"></a><span class="err">  </span><span class="p">( </span>p6 <span class="p">:</span><span class="err"> a5 = a6)</span>
+</span><span id="__span-31-49"><a id="__codelineno-31-49" name="__codelineno-31-49" href="#__codelineno-31-49"></a><span class="err">  </span><span class="p">( </span>p7 <span class="p">:</span><span class="err"> a6 = a7)</span>
+</span><span id="__span-31-50"><a id="__codelineno-31-50" name="__codelineno-31-50" href="#__codelineno-31-50"></a><span class="err">  </span><span class="p">( </span>p8 <span class="p">:</span><span class="err"> a7 = a8)</span>
+</span><span id="__span-31-51"><a id="__codelineno-31-51" name="__codelineno-31-51" href="#__codelineno-31-51"></a><span class="err">  </span><span class="p">( </span>p9 <span class="p">:</span><span class="err"> a8 = a9)</span>
+</span><span id="__span-31-52"><a id="__codelineno-31-52" name="__codelineno-31-52" href="#__codelineno-31-52"></a><span class="err">  </span><span class="p">( </span>p10 <span class="p">:</span><span class="err"> a9 = a10)</span>
+</span><span id="__span-31-53"><a id="__codelineno-31-53" name="__codelineno-31-53" href="#__codelineno-31-53"></a><span class="err">  </span><span class="p">( </span>p11 <span class="p">:</span><span class="err"> a10 = a11)</span>
+</span><span id="__span-31-54"><a id="__codelineno-31-54" name="__codelineno-31-54" href="#__codelineno-31-54"></a><span class="err">  </span><span class="p">( </span>p12 <span class="p">:</span><span class="err"> a11 = a12)</span>
+</span><span id="__span-31-55"><a id="__codelineno-31-55" name="__codelineno-31-55" href="#__codelineno-31-55"></a><span class="err">  : a0 = a12</span>
+</span><span id="__span-31-56"><a id="__codelineno-31-56" name="__codelineno-31-56" href="#__codelineno-31-56"></a><span class="err">  :=</span>
+</span><span id="__span-31-57"><a id="__codelineno-31-57" name="__codelineno-31-57" href="#__codelineno-31-57"></a><span class="err">    quintuple-concat</span>
+</span><span id="__span-31-58"><a id="__codelineno-31-58" name="__codelineno-31-58" href="#__codelineno-31-58"></a><span class="err">      a0 a1 a2 a3 a4 a12</span>
+</span><span id="__span-31-59"><a id="__codelineno-31-59" name="__codelineno-31-59" href="#__codelineno-31-59"></a><span class="err">      p1 p2 p3 p4</span>
+</span><span id="__span-31-60"><a id="__codelineno-31-60" name="__codelineno-31-60" href="#__codelineno-31-60"></a><span class="err">      ( quintuple-concat</span>
+</span><span id="__span-31-61"><a id="__codelineno-31-61" name="__codelineno-31-61" href="#__codelineno-31-61"></a><span class="err">        a4 a5 a6 a7 a8 a12</span>
+</span><span id="__span-31-62"><a id="__codelineno-31-62" name="__codelineno-31-62" href="#__codelineno-31-62"></a><span class="err">        p5 p6 p7 p8</span>
+</span><span id="__span-31-63"><a id="__codelineno-31-63" name="__codelineno-31-63" href="#__codelineno-31-63"></a><span class="err">        ( quadruple-concat</span>
+</span><span id="__span-31-64"><a id="__codelineno-31-64" name="__codelineno-31-64" href="#__codelineno-31-64"></a><span class="err">          a8 a9 a10 a11 a12</span>
+</span><span id="__span-31-65"><a id="__codelineno-31-65" name="__codelineno-31-65" href="#__codelineno-31-65"></a><span class="err">          p9 p10 p11 p12))</span>
 </span></code></pre></div>
 <p>The following is the same as above but with alternating arguments.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:alternating-12ary-concat" id="define:alternating-12ary-concat" style="visibility: visible; position: relative; color: inherit">alternating-12ary-concat</a></span>
-</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="err">  </span><span class="p">( </span>a0 <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="err">  </span><span class="p">( </span>a1 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
-</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="err">  </span><span class="p">( </span>a2 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
-</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="err">  </span><span class="p">( </span>a3 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
-</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="err">  </span><span class="p">( </span>a4 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
-</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="err">  </span><span class="p">( </span>a5 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p5 <span class="p">:</span><span class="err"> a4 = a5)</span>
-</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="err">  </span><span class="p">( </span>a6 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p6 <span class="p">:</span><span class="err"> a5 = a6)</span>
-</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="err">  </span><span class="p">( </span>a7 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p7 <span class="p">:</span><span class="err"> a6 = a7)</span>
-</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="err">  </span><span class="p">( </span>a8 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p8 <span class="p">:</span><span class="err"> a7 = a8)</span>
-</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="err">  </span><span class="p">( </span>a9 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p9 <span class="p">:</span><span class="err"> a8 = a9)</span>
-</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="err">  </span><span class="p">( </span>a10 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p10 <span class="p">:</span><span class="err"> a9 = a10)</span>
-</span><span id="__span-31-13"><a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="err">  </span><span class="p">( </span>a11 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p11 <span class="p">:</span><span class="err"> a10 = a11)</span>
-</span><span id="__span-31-14"><a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a><span class="err">  </span><span class="p">( </span>a12 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p12 <span class="p">:</span><span class="err"> a11 = a12)</span>
-</span><span id="__span-31-15"><a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a><span class="err">  : a0 = a12</span>
-</span><span id="__span-31-16"><a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a><span class="err">  :=</span>
-</span><span id="__span-31-17"><a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a><span class="err">    12ary-concat</span>
-</span><span id="__span-31-18"><a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a><span class="err">      a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12</span>
-</span><span id="__span-31-19"><a id="__codelineno-31-19" name="__codelineno-31-19" href="#__codelineno-31-19"></a><span class="err">      p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12</span>
-</span><span id="__span-31-20"><a id="__codelineno-31-20" name="__codelineno-31-20" href="#__codelineno-31-20"></a>
-</span><span id="__span-31-21"><a id="__codelineno-31-21" name="__codelineno-31-21" href="#__codelineno-31-21"></a><span class="nd">#end</span><span class="n"> higher-concatenation</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:alternating-12ary-concat" id="define:alternating-12ary-concat" style="visibility: visible; position: relative; color: inherit">alternating-12ary-concat</a></span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="err">  </span><span class="p">( </span>a0 <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="err">  </span><span class="p">( </span>a1 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p1 <span class="p">:</span><span class="err"> a0 = a1)</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="err">  </span><span class="p">( </span>a2 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p2 <span class="p">:</span><span class="err"> a1 = a2)</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="err">  </span><span class="p">( </span>a3 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p3 <span class="p">:</span><span class="err"> a2 = a3)</span>
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="err">  </span><span class="p">( </span>a4 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p4 <span class="p">:</span><span class="err"> a3 = a4)</span>
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="err">  </span><span class="p">( </span>a5 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p5 <span class="p">:</span><span class="err"> a4 = a5)</span>
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="err">  </span><span class="p">( </span>a6 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p6 <span class="p">:</span><span class="err"> a5 = a6)</span>
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="err">  </span><span class="p">( </span>a7 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p7 <span class="p">:</span><span class="err"> a6 = a7)</span>
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="err">  </span><span class="p">( </span>a8 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p8 <span class="p">:</span><span class="err"> a7 = a8)</span>
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="err">  </span><span class="p">( </span>a9 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p9 <span class="p">:</span><span class="err"> a8 = a9)</span>
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="err">  </span><span class="p">( </span>a10 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p10 <span class="p">:</span><span class="err"> a9 = a10)</span>
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="err">  </span><span class="p">( </span>a11 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p11 <span class="p">:</span><span class="err"> a10 = a11)</span>
+</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a><span class="err">  </span><span class="p">( </span>a12 <span class="p">:</span><span class="err"> A) </span><span class="p">(</span>p12 <span class="p">:</span><span class="err"> a11 = a12)</span>
+</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="err">  : a0 = a12</span>
+</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a><span class="err">  :=</span>
+</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a><span class="err">    12ary-concat</span>
+</span><span id="__span-32-18"><a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a><span class="err">      a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12</span>
+</span><span id="__span-32-19"><a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a><span class="err">      p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12</span>
+</span><span id="__span-32-20"><a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a>
+</span><span id="__span-32-21"><a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a><span class="nd">#end</span><span class="n"> higher-concatenation</span>
 </span></code></pre></div>
 <h2 id="higher-order-coherences">Higher-order coherences<a class="headerlink" href="#higher-order-coherences" title="Permanent link">&para;</a></h2>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:rev-refl-id-triple-concat" id="define:rev-refl-id-triple-concat" style="visibility: visible; position: relative; color: inherit">rev-refl-id-triple-concat</a></span>
-</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="err">  : triple-concat A y x x y (rev A x y p) </span><span class="s">refl</span><span class="err"> p = </span><span class="s">refl</span>
-</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="err">  :=</span>
-</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="err">    ind-path</span>
-</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="err">      ( A)</span>
-</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="err">      ( x)</span>
-</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ triple-concat A y&#39; x x y&#39; (rev A x y&#39; p&#39;) </span><span class="s">refl</span><span class="err"> p&#39; = </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="err">      ( y)</span>
-</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="err">      ( p)</span>
-</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>
-</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-rev-refl-id-triple-concat" id="define:ap-rev-refl-id-triple-concat" style="visibility: visible; position: relative; color: inherit">ap-rev-refl-id-triple-concat</a></span>
-</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-32-18"><a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-32-19"><a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-32-20"><a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a><span class="err">  : (ap A B y y f (triple-concat A y x x y (rev A x y p) </span><span class="s">refl</span><span class="err"> p)) = </span><span class="s">refl</span>
-</span><span id="__span-32-21"><a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a><span class="err">  :=</span>
-</span><span id="__span-32-22"><a id="__codelineno-32-22" name="__codelineno-32-22" href="#__codelineno-32-22"></a><span class="err">    ind-path</span>
-</span><span id="__span-32-23"><a id="__codelineno-32-23" name="__codelineno-32-23" href="#__codelineno-32-23"></a><span class="err">      ( A)</span>
-</span><span id="__span-32-24"><a id="__codelineno-32-24" name="__codelineno-32-24" href="#__codelineno-32-24"></a><span class="err">      ( x)</span>
-</span><span id="__span-32-25"><a id="__codelineno-32-25" name="__codelineno-32-25" href="#__codelineno-32-25"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
-</span><span id="__span-32-26"><a id="__codelineno-32-26" name="__codelineno-32-26" href="#__codelineno-32-26"></a><span class="err">        ( ap A B y&#39; y&#39; f (triple-concat A y&#39; x x y&#39; (rev A x y&#39; p&#39;) </span><span class="s">refl</span><span class="err"> p&#39;)) =</span>
-</span><span id="__span-32-27"><a id="__codelineno-32-27" name="__codelineno-32-27" href="#__codelineno-32-27"></a><span class="err">        ( </span><span class="s">refl</span><span class="err">))</span>
-</span><span id="__span-32-28"><a id="__codelineno-32-28" name="__codelineno-32-28" href="#__codelineno-32-28"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-32-29"><a id="__codelineno-32-29" name="__codelineno-32-29" href="#__codelineno-32-29"></a><span class="err">      ( y)</span>
-</span><span id="__span-32-30"><a id="__codelineno-32-30" name="__codelineno-32-30" href="#__codelineno-32-30"></a><span class="err">      ( p)</span>
-</span><span id="__span-32-31"><a id="__codelineno-32-31" name="__codelineno-32-31" href="#__codelineno-32-31"></a>
-</span><span id="__span-32-32"><a id="__codelineno-32-32" name="__codelineno-32-32" href="#__codelineno-32-32"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-triple-concat" id="define:ap-triple-concat" style="visibility: visible; position: relative; color: inherit">ap-triple-concat</a></span>
-</span><span id="__span-32-33"><a id="__codelineno-32-33" name="__codelineno-32-33" href="#__codelineno-32-33"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-32-34"><a id="__codelineno-32-34" name="__codelineno-32-34" href="#__codelineno-32-34"></a><span class="err">  </span><span class="p">( </span>w x y z <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-32-35"><a id="__codelineno-32-35" name="__codelineno-32-35" href="#__codelineno-32-35"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-32-36"><a id="__codelineno-32-36" name="__codelineno-32-36" href="#__codelineno-32-36"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> w = x)</span>
-</span><span id="__span-32-37"><a id="__codelineno-32-37" name="__codelineno-32-37" href="#__codelineno-32-37"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-32-38"><a id="__codelineno-32-38" name="__codelineno-32-38" href="#__codelineno-32-38"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> y = z)</span>
-</span><span id="__span-32-39"><a id="__codelineno-32-39" name="__codelineno-32-39" href="#__codelineno-32-39"></a><span class="err">  : ( ap A B w z f (triple-concat A w x y z p q r)) =</span>
-</span><span id="__span-32-40"><a id="__codelineno-32-40" name="__codelineno-32-40" href="#__codelineno-32-40"></a><span class="err">    ( triple-concat</span>
-</span><span id="__span-32-41"><a id="__codelineno-32-41" name="__codelineno-32-41" href="#__codelineno-32-41"></a><span class="err">      ( B)</span>
-</span><span id="__span-32-42"><a id="__codelineno-32-42" name="__codelineno-32-42" href="#__codelineno-32-42"></a><span class="err">      ( f w)</span>
-</span><span id="__span-32-43"><a id="__codelineno-32-43" name="__codelineno-32-43" href="#__codelineno-32-43"></a><span class="err">      ( f x)</span>
-</span><span id="__span-32-44"><a id="__codelineno-32-44" name="__codelineno-32-44" href="#__codelineno-32-44"></a><span class="err">      ( f y)</span>
-</span><span id="__span-32-45"><a id="__codelineno-32-45" name="__codelineno-32-45" href="#__codelineno-32-45"></a><span class="err">      ( f z)</span>
-</span><span id="__span-32-46"><a id="__codelineno-32-46" name="__codelineno-32-46" href="#__codelineno-32-46"></a><span class="err">      ( ap A B w x f p)</span>
-</span><span id="__span-32-47"><a id="__codelineno-32-47" name="__codelineno-32-47" href="#__codelineno-32-47"></a><span class="err">      ( ap A B x y f q)</span>
-</span><span id="__span-32-48"><a id="__codelineno-32-48" name="__codelineno-32-48" href="#__codelineno-32-48"></a><span class="err">      ( ap A B y z f r))</span>
-</span><span id="__span-32-49"><a id="__codelineno-32-49" name="__codelineno-32-49" href="#__codelineno-32-49"></a><span class="err">  :=</span>
-</span><span id="__span-32-50"><a id="__codelineno-32-50" name="__codelineno-32-50" href="#__codelineno-32-50"></a><span class="err">    ind-path</span>
-</span><span id="__span-32-51"><a id="__codelineno-32-51" name="__codelineno-32-51" href="#__codelineno-32-51"></a><span class="err">      ( A)</span>
-</span><span id="__span-32-52"><a id="__codelineno-32-52" name="__codelineno-32-52" href="#__codelineno-32-52"></a><span class="err">      ( y)</span>
-</span><span id="__span-32-53"><a id="__codelineno-32-53" name="__codelineno-32-53" href="#__codelineno-32-53"></a><span class="err">      ( </span><span class="p">\ </span>z&#39; r&#39; <span class="err">→</span>
-</span><span id="__span-32-54"><a id="__codelineno-32-54" name="__codelineno-32-54" href="#__codelineno-32-54"></a><span class="err">        ( ap A B w z&#39; f (triple-concat A w x y z&#39; p q r&#39;)) =</span>
-</span><span id="__span-32-55"><a id="__codelineno-32-55" name="__codelineno-32-55" href="#__codelineno-32-55"></a><span class="err">        ( triple-concat</span>
-</span><span id="__span-32-56"><a id="__codelineno-32-56" name="__codelineno-32-56" href="#__codelineno-32-56"></a><span class="err">          ( B)</span>
-</span><span id="__span-32-57"><a id="__codelineno-32-57" name="__codelineno-32-57" href="#__codelineno-32-57"></a><span class="err">          ( f w) (f x) (f y) (f z&#39;)</span>
-</span><span id="__span-32-58"><a id="__codelineno-32-58" name="__codelineno-32-58" href="#__codelineno-32-58"></a><span class="err">          ( ap A B w x f p)</span>
-</span><span id="__span-32-59"><a id="__codelineno-32-59" name="__codelineno-32-59" href="#__codelineno-32-59"></a><span class="err">          ( ap A B x y f q)</span>
-</span><span id="__span-32-60"><a id="__codelineno-32-60" name="__codelineno-32-60" href="#__codelineno-32-60"></a><span class="err">          ( ap A B y z&#39; f r&#39;)))</span>
-</span><span id="__span-32-61"><a id="__codelineno-32-61" name="__codelineno-32-61" href="#__codelineno-32-61"></a><span class="err">      ( ap-concat A B w x y f p q)</span>
-</span><span id="__span-32-62"><a id="__codelineno-32-62" name="__codelineno-32-62" href="#__codelineno-32-62"></a><span class="err">      ( z)</span>
-</span><span id="__span-32-63"><a id="__codelineno-32-63" name="__codelineno-32-63" href="#__codelineno-32-63"></a><span class="err">      ( r)</span>
-</span><span id="__span-32-64"><a id="__codelineno-32-64" name="__codelineno-32-64" href="#__codelineno-32-64"></a>
-</span><span id="__span-32-65"><a id="__codelineno-32-65" name="__codelineno-32-65" href="#__codelineno-32-65"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:triple-concat-eq-first" id="define:triple-concat-eq-first" style="visibility: visible; position: relative; color: inherit">triple-concat-eq-first</a></span>
-</span><span id="__span-32-66"><a id="__codelineno-32-66" name="__codelineno-32-66" href="#__codelineno-32-66"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-32-67"><a id="__codelineno-32-67" name="__codelineno-32-67" href="#__codelineno-32-67"></a><span class="err">  </span><span class="p">( </span>w x y z <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-32-68"><a id="__codelineno-32-68" name="__codelineno-32-68" href="#__codelineno-32-68"></a><span class="err">  </span><span class="p">( </span>p q <span class="p">:</span><span class="err"> w = x)</span>
-</span><span id="__span-32-69"><a id="__codelineno-32-69" name="__codelineno-32-69" href="#__codelineno-32-69"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-32-70"><a id="__codelineno-32-70" name="__codelineno-32-70" href="#__codelineno-32-70"></a><span class="err">  </span><span class="p">( </span>s <span class="p">:</span><span class="err"> y = z)</span>
-</span><span id="__span-32-71"><a id="__codelineno-32-71" name="__codelineno-32-71" href="#__codelineno-32-71"></a><span class="err">  </span><span class="p">( </span>H <span class="p">:</span><span class="err"> p = q)</span>
-</span><span id="__span-32-72"><a id="__codelineno-32-72" name="__codelineno-32-72" href="#__codelineno-32-72"></a><span class="err">  : (triple-concat A w x y z p r s) = (triple-concat A w x y z q r s)</span>
-</span><span id="__span-32-73"><a id="__codelineno-32-73" name="__codelineno-32-73" href="#__codelineno-32-73"></a><span class="err">  := concat-eq-left A w x z p q H (concat A x y z r s)</span>
-</span><span id="__span-32-74"><a id="__codelineno-32-74" name="__codelineno-32-74" href="#__codelineno-32-74"></a>
-</span><span id="__span-32-75"><a id="__codelineno-32-75" name="__codelineno-32-75" href="#__codelineno-32-75"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:triple-concat-eq-second" id="define:triple-concat-eq-second" style="visibility: visible; position: relative; color: inherit">triple-concat-eq-second</a></span>
-</span><span id="__span-32-76"><a id="__codelineno-32-76" name="__codelineno-32-76" href="#__codelineno-32-76"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-32-77"><a id="__codelineno-32-77" name="__codelineno-32-77" href="#__codelineno-32-77"></a><span class="err">  </span><span class="p">( </span>w x y z <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-32-78"><a id="__codelineno-32-78" name="__codelineno-32-78" href="#__codelineno-32-78"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> w = x)</span>
-</span><span id="__span-32-79"><a id="__codelineno-32-79" name="__codelineno-32-79" href="#__codelineno-32-79"></a><span class="err">  </span><span class="p">( </span>q r <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-32-80"><a id="__codelineno-32-80" name="__codelineno-32-80" href="#__codelineno-32-80"></a><span class="err">  </span><span class="p">( </span>s <span class="p">:</span><span class="err"> y = z)</span>
-</span><span id="__span-32-81"><a id="__codelineno-32-81" name="__codelineno-32-81" href="#__codelineno-32-81"></a><span class="err">  </span><span class="p">( </span>H <span class="p">:</span><span class="err"> q = r)</span>
-</span><span id="__span-32-82"><a id="__codelineno-32-82" name="__codelineno-32-82" href="#__codelineno-32-82"></a><span class="err">  : (triple-concat A w x y z p q s) = (triple-concat A w x y z p r s)</span>
-</span><span id="__span-32-83"><a id="__codelineno-32-83" name="__codelineno-32-83" href="#__codelineno-32-83"></a><span class="err">  :=</span>
-</span><span id="__span-32-84"><a id="__codelineno-32-84" name="__codelineno-32-84" href="#__codelineno-32-84"></a><span class="err">    ind-path</span>
-</span><span id="__span-32-85"><a id="__codelineno-32-85" name="__codelineno-32-85" href="#__codelineno-32-85"></a><span class="err">      ( x = y)</span>
-</span><span id="__span-32-86"><a id="__codelineno-32-86" name="__codelineno-32-86" href="#__codelineno-32-86"></a><span class="err">      ( q)</span>
-</span><span id="__span-32-87"><a id="__codelineno-32-87" name="__codelineno-32-87" href="#__codelineno-32-87"></a><span class="err">      ( </span><span class="p">\ </span>r&#39; H&#39; <span class="err">→</span>
-</span><span id="__span-32-88"><a id="__codelineno-32-88" name="__codelineno-32-88" href="#__codelineno-32-88"></a><span class="err">        triple-concat A w x y z p q s = triple-concat A w x y z p r&#39; s)</span>
-</span><span id="__span-32-89"><a id="__codelineno-32-89" name="__codelineno-32-89" href="#__codelineno-32-89"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-32-90"><a id="__codelineno-32-90" name="__codelineno-32-90" href="#__codelineno-32-90"></a><span class="err">      ( r)</span>
-</span><span id="__span-32-91"><a id="__codelineno-32-91" name="__codelineno-32-91" href="#__codelineno-32-91"></a><span class="err">      ( H)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:rev-refl-id-triple-concat" id="define:rev-refl-id-triple-concat" style="visibility: visible; position: relative; color: inherit">rev-refl-id-triple-concat</a></span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a><span class="err">  : triple-concat A y x x y (rev A x y p) </span><span class="s">refl</span><span class="err"> p = </span><span class="s">refl</span>
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a><span class="err">  :=</span>
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a><span class="err">    ind-path</span>
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a><span class="err">      ( A)</span>
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a><span class="err">      ( x)</span>
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→ triple-concat A y&#39; x x y&#39; (rev A x y&#39; p&#39;) </span><span class="s">refl</span><span class="err"> p&#39; = </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-33-12"><a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a><span class="err">      ( y)</span>
+</span><span id="__span-33-13"><a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a><span class="err">      ( p)</span>
+</span><span id="__span-33-14"><a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a>
+</span><span id="__span-33-15"><a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-rev-refl-id-triple-concat" id="define:ap-rev-refl-id-triple-concat" style="visibility: visible; position: relative; color: inherit">ap-rev-refl-id-triple-concat</a></span>
+</span><span id="__span-33-16"><a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-33-17"><a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-33-19"><a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-33-20"><a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a><span class="err">  : (ap A B y y f (triple-concat A y x x y (rev A x y p) </span><span class="s">refl</span><span class="err"> p)) = </span><span class="s">refl</span>
+</span><span id="__span-33-21"><a id="__codelineno-33-21" name="__codelineno-33-21" href="#__codelineno-33-21"></a><span class="err">  :=</span>
+</span><span id="__span-33-22"><a id="__codelineno-33-22" name="__codelineno-33-22" href="#__codelineno-33-22"></a><span class="err">    ind-path</span>
+</span><span id="__span-33-23"><a id="__codelineno-33-23" name="__codelineno-33-23" href="#__codelineno-33-23"></a><span class="err">      ( A)</span>
+</span><span id="__span-33-24"><a id="__codelineno-33-24" name="__codelineno-33-24" href="#__codelineno-33-24"></a><span class="err">      ( x)</span>
+</span><span id="__span-33-25"><a id="__codelineno-33-25" name="__codelineno-33-25" href="#__codelineno-33-25"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
+</span><span id="__span-33-26"><a id="__codelineno-33-26" name="__codelineno-33-26" href="#__codelineno-33-26"></a><span class="err">        ( ap A B y&#39; y&#39; f (triple-concat A y&#39; x x y&#39; (rev A x y&#39; p&#39;) </span><span class="s">refl</span><span class="err"> p&#39;)) =</span>
+</span><span id="__span-33-27"><a id="__codelineno-33-27" name="__codelineno-33-27" href="#__codelineno-33-27"></a><span class="err">        ( </span><span class="s">refl</span><span class="err">))</span>
+</span><span id="__span-33-28"><a id="__codelineno-33-28" name="__codelineno-33-28" href="#__codelineno-33-28"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-33-29"><a id="__codelineno-33-29" name="__codelineno-33-29" href="#__codelineno-33-29"></a><span class="err">      ( y)</span>
+</span><span id="__span-33-30"><a id="__codelineno-33-30" name="__codelineno-33-30" href="#__codelineno-33-30"></a><span class="err">      ( p)</span>
+</span><span id="__span-33-31"><a id="__codelineno-33-31" name="__codelineno-33-31" href="#__codelineno-33-31"></a>
+</span><span id="__span-33-32"><a id="__codelineno-33-32" name="__codelineno-33-32" href="#__codelineno-33-32"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-triple-concat" id="define:ap-triple-concat" style="visibility: visible; position: relative; color: inherit">ap-triple-concat</a></span>
+</span><span id="__span-33-33"><a id="__codelineno-33-33" name="__codelineno-33-33" href="#__codelineno-33-33"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-33-34"><a id="__codelineno-33-34" name="__codelineno-33-34" href="#__codelineno-33-34"></a><span class="err">  </span><span class="p">( </span>w x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-33-35"><a id="__codelineno-33-35" name="__codelineno-33-35" href="#__codelineno-33-35"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-33-36"><a id="__codelineno-33-36" name="__codelineno-33-36" href="#__codelineno-33-36"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> w = x)</span>
+</span><span id="__span-33-37"><a id="__codelineno-33-37" name="__codelineno-33-37" href="#__codelineno-33-37"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-33-38"><a id="__codelineno-33-38" name="__codelineno-33-38" href="#__codelineno-33-38"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> y = z)</span>
+</span><span id="__span-33-39"><a id="__codelineno-33-39" name="__codelineno-33-39" href="#__codelineno-33-39"></a><span class="err">  : ( ap A B w z f (triple-concat A w x y z p q r)) =</span>
+</span><span id="__span-33-40"><a id="__codelineno-33-40" name="__codelineno-33-40" href="#__codelineno-33-40"></a><span class="err">    ( triple-concat</span>
+</span><span id="__span-33-41"><a id="__codelineno-33-41" name="__codelineno-33-41" href="#__codelineno-33-41"></a><span class="err">      ( B)</span>
+</span><span id="__span-33-42"><a id="__codelineno-33-42" name="__codelineno-33-42" href="#__codelineno-33-42"></a><span class="err">      ( f w)</span>
+</span><span id="__span-33-43"><a id="__codelineno-33-43" name="__codelineno-33-43" href="#__codelineno-33-43"></a><span class="err">      ( f x)</span>
+</span><span id="__span-33-44"><a id="__codelineno-33-44" name="__codelineno-33-44" href="#__codelineno-33-44"></a><span class="err">      ( f y)</span>
+</span><span id="__span-33-45"><a id="__codelineno-33-45" name="__codelineno-33-45" href="#__codelineno-33-45"></a><span class="err">      ( f z)</span>
+</span><span id="__span-33-46"><a id="__codelineno-33-46" name="__codelineno-33-46" href="#__codelineno-33-46"></a><span class="err">      ( ap A B w x f p)</span>
+</span><span id="__span-33-47"><a id="__codelineno-33-47" name="__codelineno-33-47" href="#__codelineno-33-47"></a><span class="err">      ( ap A B x y f q)</span>
+</span><span id="__span-33-48"><a id="__codelineno-33-48" name="__codelineno-33-48" href="#__codelineno-33-48"></a><span class="err">      ( ap A B y z f r))</span>
+</span><span id="__span-33-49"><a id="__codelineno-33-49" name="__codelineno-33-49" href="#__codelineno-33-49"></a><span class="err">  :=</span>
+</span><span id="__span-33-50"><a id="__codelineno-33-50" name="__codelineno-33-50" href="#__codelineno-33-50"></a><span class="err">    ind-path</span>
+</span><span id="__span-33-51"><a id="__codelineno-33-51" name="__codelineno-33-51" href="#__codelineno-33-51"></a><span class="err">      ( A)</span>
+</span><span id="__span-33-52"><a id="__codelineno-33-52" name="__codelineno-33-52" href="#__codelineno-33-52"></a><span class="err">      ( y)</span>
+</span><span id="__span-33-53"><a id="__codelineno-33-53" name="__codelineno-33-53" href="#__codelineno-33-53"></a><span class="err">      ( </span><span class="p">\ </span>z&#39; r&#39; <span class="err">→</span>
+</span><span id="__span-33-54"><a id="__codelineno-33-54" name="__codelineno-33-54" href="#__codelineno-33-54"></a><span class="err">        ( ap A B w z&#39; f (triple-concat A w x y z&#39; p q r&#39;)) =</span>
+</span><span id="__span-33-55"><a id="__codelineno-33-55" name="__codelineno-33-55" href="#__codelineno-33-55"></a><span class="err">        ( triple-concat</span>
+</span><span id="__span-33-56"><a id="__codelineno-33-56" name="__codelineno-33-56" href="#__codelineno-33-56"></a><span class="err">          ( B)</span>
+</span><span id="__span-33-57"><a id="__codelineno-33-57" name="__codelineno-33-57" href="#__codelineno-33-57"></a><span class="err">          ( f w) (f x) (f y) (f z&#39;)</span>
+</span><span id="__span-33-58"><a id="__codelineno-33-58" name="__codelineno-33-58" href="#__codelineno-33-58"></a><span class="err">          ( ap A B w x f p)</span>
+</span><span id="__span-33-59"><a id="__codelineno-33-59" name="__codelineno-33-59" href="#__codelineno-33-59"></a><span class="err">          ( ap A B x y f q)</span>
+</span><span id="__span-33-60"><a id="__codelineno-33-60" name="__codelineno-33-60" href="#__codelineno-33-60"></a><span class="err">          ( ap A B y z&#39; f r&#39;)))</span>
+</span><span id="__span-33-61"><a id="__codelineno-33-61" name="__codelineno-33-61" href="#__codelineno-33-61"></a><span class="err">      ( ap-concat A B w x y f p q)</span>
+</span><span id="__span-33-62"><a id="__codelineno-33-62" name="__codelineno-33-62" href="#__codelineno-33-62"></a><span class="err">      ( z)</span>
+</span><span id="__span-33-63"><a id="__codelineno-33-63" name="__codelineno-33-63" href="#__codelineno-33-63"></a><span class="err">      ( r)</span>
+</span><span id="__span-33-64"><a id="__codelineno-33-64" name="__codelineno-33-64" href="#__codelineno-33-64"></a>
+</span><span id="__span-33-65"><a id="__codelineno-33-65" name="__codelineno-33-65" href="#__codelineno-33-65"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:triple-concat-eq-first" id="define:triple-concat-eq-first" style="visibility: visible; position: relative; color: inherit">triple-concat-eq-first</a></span>
+</span><span id="__span-33-66"><a id="__codelineno-33-66" name="__codelineno-33-66" href="#__codelineno-33-66"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-33-67"><a id="__codelineno-33-67" name="__codelineno-33-67" href="#__codelineno-33-67"></a><span class="err">  </span><span class="p">( </span>w x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-33-68"><a id="__codelineno-33-68" name="__codelineno-33-68" href="#__codelineno-33-68"></a><span class="err">  </span><span class="p">( </span>p q <span class="p">:</span><span class="err"> w = x)</span>
+</span><span id="__span-33-69"><a id="__codelineno-33-69" name="__codelineno-33-69" href="#__codelineno-33-69"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-33-70"><a id="__codelineno-33-70" name="__codelineno-33-70" href="#__codelineno-33-70"></a><span class="err">  </span><span class="p">( </span>s <span class="p">:</span><span class="err"> y = z)</span>
+</span><span id="__span-33-71"><a id="__codelineno-33-71" name="__codelineno-33-71" href="#__codelineno-33-71"></a><span class="err">  </span><span class="p">( </span>H <span class="p">:</span><span class="err"> p = q)</span>
+</span><span id="__span-33-72"><a id="__codelineno-33-72" name="__codelineno-33-72" href="#__codelineno-33-72"></a><span class="err">  : (triple-concat A w x y z p r s) = (triple-concat A w x y z q r s)</span>
+</span><span id="__span-33-73"><a id="__codelineno-33-73" name="__codelineno-33-73" href="#__codelineno-33-73"></a><span class="err">  := concat-eq-left A w x z p q H (concat A x y z r s)</span>
+</span><span id="__span-33-74"><a id="__codelineno-33-74" name="__codelineno-33-74" href="#__codelineno-33-74"></a>
+</span><span id="__span-33-75"><a id="__codelineno-33-75" name="__codelineno-33-75" href="#__codelineno-33-75"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:triple-concat-eq-second" id="define:triple-concat-eq-second" style="visibility: visible; position: relative; color: inherit">triple-concat-eq-second</a></span>
+</span><span id="__span-33-76"><a id="__codelineno-33-76" name="__codelineno-33-76" href="#__codelineno-33-76"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-33-77"><a id="__codelineno-33-77" name="__codelineno-33-77" href="#__codelineno-33-77"></a><span class="err">  </span><span class="p">( </span>w x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-33-78"><a id="__codelineno-33-78" name="__codelineno-33-78" href="#__codelineno-33-78"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> w = x)</span>
+</span><span id="__span-33-79"><a id="__codelineno-33-79" name="__codelineno-33-79" href="#__codelineno-33-79"></a><span class="err">  </span><span class="p">( </span>q r <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-33-80"><a id="__codelineno-33-80" name="__codelineno-33-80" href="#__codelineno-33-80"></a><span class="err">  </span><span class="p">( </span>s <span class="p">:</span><span class="err"> y = z)</span>
+</span><span id="__span-33-81"><a id="__codelineno-33-81" name="__codelineno-33-81" href="#__codelineno-33-81"></a><span class="err">  </span><span class="p">( </span>H <span class="p">:</span><span class="err"> q = r)</span>
+</span><span id="__span-33-82"><a id="__codelineno-33-82" name="__codelineno-33-82" href="#__codelineno-33-82"></a><span class="err">  : (triple-concat A w x y z p q s) = (triple-concat A w x y z p r s)</span>
+</span><span id="__span-33-83"><a id="__codelineno-33-83" name="__codelineno-33-83" href="#__codelineno-33-83"></a><span class="err">  :=</span>
+</span><span id="__span-33-84"><a id="__codelineno-33-84" name="__codelineno-33-84" href="#__codelineno-33-84"></a><span class="err">    ind-path</span>
+</span><span id="__span-33-85"><a id="__codelineno-33-85" name="__codelineno-33-85" href="#__codelineno-33-85"></a><span class="err">      ( x = y)</span>
+</span><span id="__span-33-86"><a id="__codelineno-33-86" name="__codelineno-33-86" href="#__codelineno-33-86"></a><span class="err">      ( q)</span>
+</span><span id="__span-33-87"><a id="__codelineno-33-87" name="__codelineno-33-87" href="#__codelineno-33-87"></a><span class="err">      ( </span><span class="p">\ </span>r&#39; H&#39; <span class="err">→</span>
+</span><span id="__span-33-88"><a id="__codelineno-33-88" name="__codelineno-33-88" href="#__codelineno-33-88"></a><span class="err">        triple-concat A w x y z p q s = triple-concat A w x y z p r&#39; s)</span>
+</span><span id="__span-33-89"><a id="__codelineno-33-89" name="__codelineno-33-89" href="#__codelineno-33-89"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-33-90"><a id="__codelineno-33-90" name="__codelineno-33-90" href="#__codelineno-33-90"></a><span class="err">      ( r)</span>
+</span><span id="__span-33-91"><a id="__codelineno-33-91" name="__codelineno-33-91" href="#__codelineno-33-91"></a><span class="err">      ( H)</span>
 </span></code></pre></div>
 
 

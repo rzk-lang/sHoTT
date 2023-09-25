@@ -33,6 +33,7 @@ nav:
       - Rezk Types: simplicial-hott/10-rezk-types.rzk.md
       - Adjunctions: simplicial-hott/11-adjunctions.rzk.md
       - Cocartesian Families: simplicial-hott/12-cocartesian.rzk.md
+      - Limits and Colimits: simplicial-hott/13-limits.rzk.md
 
 markdown_extensions:
   - admonition

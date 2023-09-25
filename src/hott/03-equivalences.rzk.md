@@ -176,6 +176,22 @@ notion.
 #end has-inverse-data
 ```
 
+## Symmetry of having an inverse
+
+The inverse of an invertible map has an inverse. 
+
+```rzk
+#def has-inverse-map-inverse-has-inverse
+  ( A B : U)
+  ( f : A → B)
+  ( has-inverse-f : has-inverse A B f)
+  : has-inverse B A ( map-inverse-has-inverse A B f has-inverse-f)  
+  := 
+    ( f, 
+      ( second ( second has-inverse-f) ,
+        first ( second has-inverse-f))) 
+```
+
 ## Composing equivalences
 
 The type of equivalences between types uses `#!rzk is-equiv` rather than
@@ -415,6 +431,39 @@ If a map is homotopic to an equivalence it is an equivalence.
   := is-equiv-homotopy A B g f (rev-homotopy A B f g H) is-equiv-f
 ```
 
+## Reversing equivalences
+
+The section associated with an equivalence is an equivalence. 
+
+```rzk
+#def is-equiv-section-is-equiv
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : is-equiv B A ( section-is-equiv A B f is-equiv-f)
+  := 
+    is-equiv-has-inverse B A 
+      ( section-is-equiv A B f is-equiv-f) 
+      ( has-inverse-map-inverse-has-inverse A B f
+        ( has-inverse-is-equiv A B f is-equiv-f))  
+```
+
+The retraction associated with an equivalence is an equivalence. 
+
+```rzk
+#def is-equiv-retraction-is-equiv
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : is-equiv B A ( retraction-is-equiv A B f is-equiv-f)
+  := 
+    is-equiv-rev-homotopy B A 
+      ( section-is-equiv A B f is-equiv-f)
+      ( retraction-is-equiv A B f is-equiv-f)
+      ( homotopy-section-retraction-is-equiv A B f is-equiv-f)
+      ( is-equiv-section-is-equiv A B f is-equiv-f)
+```
+
 ## Function extensionality
 
 By path induction, an identification between functions defines a homotopy.
@@ -563,46 +612,34 @@ dependent function types.
 ## Reversal is an equivalence
 
 ```rzk
-#def has-retraction-rev
-  ( A : U)
-  ( y : A)
-  : (x : A) → has-retraction (x = y) (y = x) (rev A x y)
-  :=
-    \ x →
-    ( ( rev A y x) ,
-      ( \ p →
-        ind-path
-          ( A)
-          ( x)
-          ( \ y' p' →
-            ( comp
-              ( x = y') (y' = x) (x = y') (rev A y' x) (rev A x y') (p'))
-            =_{x = y'}
-            ( p'))
-            ( refl)
-            ( y)
-            ( p)))
-
-#def has-section-rev
-  ( A : U)
-  ( y x : A)
-  : has-section (x = y) (y = x) (rev A x y)
-  :=
-    ( ( rev A y x) ,
-      ( ind-path
-        ( A)
-        ( y)
-        ( \ x' p' →
-          ( comp
-            ( y = x') (x' = y) (y = x') (rev A x' y) (rev A y x') (p'))
-          =_{y = x'}
-          ( p'))
-        ( refl)
-        ( x)))
-
-#def is-equiv-rev
+#def equiv-rev
   ( A : U)
   ( x y : A)
-  : is-equiv (x = y) (y = x) (rev A x y)
-  := ((has-retraction-rev A y x) , (has-section-rev A y x))
+  : Equiv (x = y) (y = x)
+  := (rev A x y , ((rev A y x , rev-rev A x y) , (rev A y x , rev-rev A y x)))
+```
+
+## Concatenation with a fixed path is an equivalence
+
+```rzk
+#def equiv-preconcat
+  ( A : U)
+  ( x y z : A)
+  ( p : x = y)
+  : Equiv (y = z) (x = z)
+  :=
+    ( concat A x y z p,
+      ( ( concat A y x z (rev A x y p), retraction-preconcat A x y z p),
+        ( concat A y x z (rev A x y p), section-preconcat A x y z p)))
+
+#def equiv-postconcat
+  ( A : U)
+  ( x y z : A)
+  ( q : y = z) : Equiv (x = y) (x = z)
+  :=
+    ( \ p → concat A x y z p q,
+      ( ( \ r → concat A x z y r (rev A y z q),
+          retraction-postconcat A x y z q),
+        ( \ r → concat A x z y r (rev A y z q),
+          section-postconcat A x y z q)))
 ```

@@ -176,6 +176,22 @@ notion.
 #end has-inverse-data
 ```
 
+## Symmetry of having an inverse
+
+The inverse of an invertible map has an inverse. 
+
+```rzk
+#def has-inverse-map-inverse-has-inverse
+  ( A B : U)
+  ( f : A → B)
+  ( has-inverse-f : has-inverse A B f)
+  : has-inverse B A ( map-inverse-has-inverse A B f has-inverse-f)  
+  := 
+    ( f, 
+      ( second ( second has-inverse-f) ,
+        first ( second has-inverse-f))) 
+```
+
 ## Composing equivalences
 
 The type of equivalences between types uses `#!rzk is-equiv` rather than
@@ -376,6 +392,39 @@ If a map is homotopic to an equivalence it is an equivalence.
   ( is-equiv-f : is-equiv A B f)
   : is-equiv A B g
   := is-equiv-homotopy A B g f (rev-homotopy A B f g H) is-equiv-f
+```
+
+## Reversing equivalences
+
+The section associated with an equivalence is an equivalence. 
+
+```rzk
+#def is-equiv-section-is-equiv
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : is-equiv B A ( section-is-equiv A B f is-equiv-f)
+  := 
+    is-equiv-has-inverse B A 
+      ( section-is-equiv A B f is-equiv-f) 
+      ( has-inverse-map-inverse-has-inverse A B f
+        ( has-inverse-is-equiv A B f is-equiv-f))  
+```
+
+The retraction associated with an equivalence is an equivalence. 
+
+```rzk
+#def is-equiv-retraction-is-equiv
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : is-equiv B A ( retraction-is-equiv A B f is-equiv-f)
+  := 
+    is-equiv-rev-homotopy B A 
+      ( section-is-equiv A B f is-equiv-f)
+      ( retraction-is-equiv A B f is-equiv-f)
+      ( homotopy-section-retraction-is-equiv A B f is-equiv-f)
+      ( is-equiv-section-is-equiv A B f is-equiv-f)
 ```
 
 ## Function extensionality

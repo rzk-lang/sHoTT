@@ -731,7 +731,7 @@ as an application of the dependent Yoneda lemma.
         ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )))
     ( \ b → id-hom A (u b))
 
-#def application-comp-components-comp-nat-trans-is-segal uses (funext)
+#def eq-ladj-triangle-comp-components-comp-nat-trans-is-segal uses (funext)
   (b : B)
   : ( comp-is-segal A is-segal-A (u b) (u (f (u b))) (u b)
       ( \ t → η t (u b) )
@@ -758,6 +758,9 @@ as an application of the dependent Yoneda lemma.
     ( prewhisker-nat-trans B A A u (identity A) (comp A B A u f) η )
     ( postwhisker-nat-trans B B A (comp B A B f u) (identity B) u ϵ )
     ( b)
+
+
+
 
 
 #def equiv-ladj-triangle uses (funext)

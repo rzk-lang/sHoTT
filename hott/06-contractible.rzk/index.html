@@ -602,6 +602,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#weak-function-extensionality" class="md-nav__link">
+    Weak function extensionality
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#singleton-induction" class="md-nav__link">
     Singleton induction
   </a>
@@ -1037,6 +1044,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#weak-function-extensionality" class="md-nav__link">
+    Weak function extensionality
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#singleton-induction" class="md-nav__link">
     Singleton induction
   </a>
@@ -1404,94 +1418,118 @@
 </span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a><span class="err">              ( a , b a)</span>
 </span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a><span class="err">              ( </span><span class="s">second</span><span class="err"> is-contr-AB (a , b a)))</span>
 </span></code></pre></div>
+<h2 id="weak-function-extensionality">Weak function extensionality<a class="headerlink" href="#weak-function-extensionality" title="Permanent link">&para;</a></h2>
+<p>The weak function extensionality axiom asserts that if a dependent type is
+locally contractible then its dependent function type is contractible.</p>
+<p>Weak function extensionality is logically equivalent to function extensionality.
+However, for various applications it may be useful to have it stated as a
+separate hypothesis.</p>
+<div class="language-rzk highlight"><span class="filename">Weak function extensionality gives us contractible pi types</span><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:WeakFunExt" id="define:WeakFunExt" style="visibility: visible; position: relative; color: inherit">WeakFunExt</a></span><span class="err"> : U</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="err">  :=</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="err">    </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U ) → </span><span class="p">(</span>C <span class="p">:</span><span class="err"> A → U) →</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="err">    </span><span class="p">(</span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → is-contr (C a) ) →</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="err">    </span><span class="p">(</span>is-contr ( (a <span class="p">:</span><span class="err"> A) → C a ))</span>
+</span></code></pre></div>
+<p>For future reference we add a variable we can assume.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kr">#assume</span><span class="p"> </span>weakfunext<span class="err"> : WeakFunExt</span>
+</span></code></pre></div>
+<p>Whenever a definition (implicitly) uses function extensionality, we write
+<code class="language-rzk highlight"><span class="err">uses (weakfunext)</span></code>.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:call-weakfunext" id="define:call-weakfunext" style="visibility: visible; position: relative; color: inherit">call-weakfunext</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakfunext<span class="p">)</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U )</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → is-contr (C a) )</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="err">  : </span><span class="p">(</span>is-contr ( (a <span class="p">:</span><span class="err"> A) → C a ))</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="err">  := weakfunext A C f</span>
+</span></code></pre></div>
 <h2 id="singleton-induction">Singleton induction<a class="headerlink" href="#singleton-induction" title="Permanent link">&para;</a></h2>
 <p>A type is contractible if and only if it has singleton induction.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ev-pt" id="define:ev-pt" style="visibility: visible; position: relative; color: inherit">ev-pt</a></span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="err">  : </span><span class="p">(</span>(x <span class="p">:</span><span class="err"> A) → B x) → B a</span>
-</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="err">  := </span><span class="p">\ </span>f <span class="err">→ f a</span>
-</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
-</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-singleton-induction-pointed" id="define:has-singleton-induction-pointed" style="visibility: visible; position: relative; color: inherit">has-singleton-induction-pointed</a></span>
-</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="err">  : U</span>
-</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="err">  := has-section </span><span class="p">(</span>(x <span class="p">:</span><span class="err"> A) → B x) (B a) (ev-pt A a B)</span>
-</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>
-</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-singleton-induction-pointed-structure" id="define:has-singleton-induction-pointed-structure" style="visibility: visible; position: relative; color: inherit">has-singleton-induction-pointed-structure</a></span>
-</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a><span class="err">  : U</span>
-</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="err">  := </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U) → has-section </span><span class="p">(</span>(x <span class="p">:</span><span class="err"> A) → B x) (B a) (ev-pt A a B)</span>
-</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>
-</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-singleton-induction" id="define:has-singleton-induction" style="visibility: visible; position: relative; color: inherit">has-singleton-induction</a></span>
-</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a><span class="err">  : U</span>
-</span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a><span class="err">  := </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>B <span class="p">:</span><span class="err"> A → U) → (has-singleton-induction-pointed A a B)</span>
-</span><span id="__span-21-25"><a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a>
-</span><span id="__span-21-26"><a id="__codelineno-21-26" name="__codelineno-21-26" href="#__codelineno-21-26"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ind-sing" id="define:ind-sing" style="visibility: visible; position: relative; color: inherit">ind-sing</a></span>
-</span><span id="__span-21-27"><a id="__codelineno-21-27" name="__codelineno-21-27" href="#__codelineno-21-27"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-21-28"><a id="__codelineno-21-28" name="__codelineno-21-28" href="#__codelineno-21-28"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-21-29"><a id="__codelineno-21-29" name="__codelineno-21-29" href="#__codelineno-21-29"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-21-30"><a id="__codelineno-21-30" name="__codelineno-21-30" href="#__codelineno-21-30"></a><span class="err">  </span><span class="p">(</span>singleton-ind-A <span class="p">:</span><span class="err"> has-singleton-induction-pointed A a B)</span>
-</span><span id="__span-21-31"><a id="__codelineno-21-31" name="__codelineno-21-31" href="#__codelineno-21-31"></a><span class="err">  : (B a) → </span><span class="p">(</span>(x <span class="p">:</span><span class="err"> A) → B x)</span>
-</span><span id="__span-21-32"><a id="__codelineno-21-32" name="__codelineno-21-32" href="#__codelineno-21-32"></a><span class="err">  := ( </span><span class="s">first</span><span class="err"> singleton-ind-A)</span>
-</span><span id="__span-21-33"><a id="__codelineno-21-33" name="__codelineno-21-33" href="#__codelineno-21-33"></a>
-</span><span id="__span-21-34"><a id="__codelineno-21-34" name="__codelineno-21-34" href="#__codelineno-21-34"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:compute-ind-sing" id="define:compute-ind-sing" style="visibility: visible; position: relative; color: inherit">compute-ind-sing</a></span>
-</span><span id="__span-21-35"><a id="__codelineno-21-35" name="__codelineno-21-35" href="#__codelineno-21-35"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-21-36"><a id="__codelineno-21-36" name="__codelineno-21-36" href="#__codelineno-21-36"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-21-37"><a id="__codelineno-21-37" name="__codelineno-21-37" href="#__codelineno-21-37"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-21-38"><a id="__codelineno-21-38" name="__codelineno-21-38" href="#__codelineno-21-38"></a><span class="err">  </span><span class="p">( </span>singleton-ind-A <span class="p">:</span><span class="err"> has-singleton-induction-pointed A a B)</span>
-</span><span id="__span-21-39"><a id="__codelineno-21-39" name="__codelineno-21-39" href="#__codelineno-21-39"></a><span class="err">  : ( homotopy</span>
-</span><span id="__span-21-40"><a id="__codelineno-21-40" name="__codelineno-21-40" href="#__codelineno-21-40"></a><span class="err">      ( B a)</span>
-</span><span id="__span-21-41"><a id="__codelineno-21-41" name="__codelineno-21-41" href="#__codelineno-21-41"></a><span class="err">      ( B a)</span>
-</span><span id="__span-21-42"><a id="__codelineno-21-42" name="__codelineno-21-42" href="#__codelineno-21-42"></a><span class="err">      ( comp</span>
-</span><span id="__span-21-43"><a id="__codelineno-21-43" name="__codelineno-21-43" href="#__codelineno-21-43"></a><span class="err">        ( B a)</span>
-</span><span id="__span-21-44"><a id="__codelineno-21-44" name="__codelineno-21-44" href="#__codelineno-21-44"></a><span class="err">        </span><span class="p">( </span>(x <span class="p">:</span><span class="err"> A) → B x)</span>
-</span><span id="__span-21-45"><a id="__codelineno-21-45" name="__codelineno-21-45" href="#__codelineno-21-45"></a><span class="err">        ( B a)</span>
-</span><span id="__span-21-46"><a id="__codelineno-21-46" name="__codelineno-21-46" href="#__codelineno-21-46"></a><span class="err">        ( ev-pt A a B)</span>
-</span><span id="__span-21-47"><a id="__codelineno-21-47" name="__codelineno-21-47" href="#__codelineno-21-47"></a><span class="err">        ( ind-sing A a B singleton-ind-A))</span>
-</span><span id="__span-21-48"><a id="__codelineno-21-48" name="__codelineno-21-48" href="#__codelineno-21-48"></a><span class="err">      ( identity (B a)))</span>
-</span><span id="__span-21-49"><a id="__codelineno-21-49" name="__codelineno-21-49" href="#__codelineno-21-49"></a><span class="err">  := (</span><span class="s">second</span><span class="err"> singleton-ind-A)</span>
-</span><span id="__span-21-50"><a id="__codelineno-21-50" name="__codelineno-21-50" href="#__codelineno-21-50"></a>
-</span><span id="__span-21-51"><a id="__codelineno-21-51" name="__codelineno-21-51" href="#__codelineno-21-51"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:contr-implies-singleton-induction-ind" id="define:contr-implies-singleton-induction-ind" style="visibility: visible; position: relative; color: inherit">contr-implies-singleton-induction-ind</a></span>
-</span><span id="__span-21-52"><a id="__codelineno-21-52" name="__codelineno-21-52" href="#__codelineno-21-52"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-21-53"><a id="__codelineno-21-53" name="__codelineno-21-53" href="#__codelineno-21-53"></a><span class="err">  </span><span class="p">( </span>is-contr-A <span class="p">:</span><span class="err"> is-contr A)</span>
-</span><span id="__span-21-54"><a id="__codelineno-21-54" name="__codelineno-21-54" href="#__codelineno-21-54"></a><span class="err">  : (has-singleton-induction A)</span>
-</span><span id="__span-21-55"><a id="__codelineno-21-55" name="__codelineno-21-55" href="#__codelineno-21-55"></a><span class="err">  :=</span>
-</span><span id="__span-21-56"><a id="__codelineno-21-56" name="__codelineno-21-56" href="#__codelineno-21-56"></a><span class="err">    ( ( center-contraction A is-contr-A) ,</span>
-</span><span id="__span-21-57"><a id="__codelineno-21-57" name="__codelineno-21-57" href="#__codelineno-21-57"></a><span class="err">      </span><span class="p">\ </span>B <span class="err">→</span>
-</span><span id="__span-21-58"><a id="__codelineno-21-58" name="__codelineno-21-58" href="#__codelineno-21-58"></a><span class="err">        ( ( </span><span class="p">\ </span>b x <span class="err">→</span>
-</span><span id="__span-21-59"><a id="__codelineno-21-59" name="__codelineno-21-59" href="#__codelineno-21-59"></a><span class="err">                ( transport A B</span>
-</span><span id="__span-21-60"><a id="__codelineno-21-60" name="__codelineno-21-60" href="#__codelineno-21-60"></a><span class="err">                  ( center-contraction A is-contr-A) x</span>
-</span><span id="__span-21-61"><a id="__codelineno-21-61" name="__codelineno-21-61" href="#__codelineno-21-61"></a><span class="err">                  ( realign-homotopy-contraction A is-contr-A x) b)) ,</span>
-</span><span id="__span-21-62"><a id="__codelineno-21-62" name="__codelineno-21-62" href="#__codelineno-21-62"></a><span class="err">          ( </span><span class="p">\ </span>b <span class="err">→</span>
-</span><span id="__span-21-63"><a id="__codelineno-21-63" name="__codelineno-21-63" href="#__codelineno-21-63"></a><span class="err">                ( ap</span>
-</span><span id="__span-21-64"><a id="__codelineno-21-64" name="__codelineno-21-64" href="#__codelineno-21-64"></a><span class="err">                  ( (center-contraction A is-contr-A) =</span>
-</span><span id="__span-21-65"><a id="__codelineno-21-65" name="__codelineno-21-65" href="#__codelineno-21-65"></a><span class="err">                    (center-contraction A is-contr-A))</span>
-</span><span id="__span-21-66"><a id="__codelineno-21-66" name="__codelineno-21-66" href="#__codelineno-21-66"></a><span class="err">                  ( B (center-contraction A is-contr-A))</span>
-</span><span id="__span-21-67"><a id="__codelineno-21-67" name="__codelineno-21-67" href="#__codelineno-21-67"></a><span class="err">                  ( realign-homotopy-contraction A is-contr-A</span>
-</span><span id="__span-21-68"><a id="__codelineno-21-68" name="__codelineno-21-68" href="#__codelineno-21-68"></a><span class="err">                    ( center-contraction A is-contr-A))</span>
-</span><span id="__span-21-69"><a id="__codelineno-21-69" name="__codelineno-21-69" href="#__codelineno-21-69"></a><span class="err">                  </span><span class="s">refl</span><span class="err">_{(center-contraction A is-contr-A)}</span>
-</span><span id="__span-21-70"><a id="__codelineno-21-70" name="__codelineno-21-70" href="#__codelineno-21-70"></a><span class="err">                  ( </span><span class="p">\ </span>p <span class="err">→</span>
-</span><span id="__span-21-71"><a id="__codelineno-21-71" name="__codelineno-21-71" href="#__codelineno-21-71"></a><span class="err">                    ( transport-loop A B (center-contraction A is-contr-A) b p))</span>
-</span><span id="__span-21-72"><a id="__codelineno-21-72" name="__codelineno-21-72" href="#__codelineno-21-72"></a><span class="err">                  ( path-realign-homotopy-contraction A is-contr-A)))))</span>
-</span><span id="__span-21-73"><a id="__codelineno-21-73" name="__codelineno-21-73" href="#__codelineno-21-73"></a>
-</span><span id="__span-21-74"><a id="__codelineno-21-74" name="__codelineno-21-74" href="#__codelineno-21-74"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:contr-implies-singleton-induction-pointed" id="define:contr-implies-singleton-induction-pointed" style="visibility: visible; position: relative; color: inherit">contr-implies-singleton-induction-pointed</a></span>
-</span><span id="__span-21-75"><a id="__codelineno-21-75" name="__codelineno-21-75" href="#__codelineno-21-75"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-21-76"><a id="__codelineno-21-76" name="__codelineno-21-76" href="#__codelineno-21-76"></a><span class="err">  </span><span class="p">( </span>is-contr-A <span class="p">:</span><span class="err"> is-contr A)</span>
-</span><span id="__span-21-77"><a id="__codelineno-21-77" name="__codelineno-21-77" href="#__codelineno-21-77"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-21-78"><a id="__codelineno-21-78" name="__codelineno-21-78" href="#__codelineno-21-78"></a><span class="err">  : has-singleton-induction-pointed A (center-contraction A is-contr-A) B</span>
-</span><span id="__span-21-79"><a id="__codelineno-21-79" name="__codelineno-21-79" href="#__codelineno-21-79"></a><span class="err">  := ( </span><span class="s">second</span><span class="err"> (contr-implies-singleton-induction-ind A is-contr-A)) B</span>
-</span><span id="__span-21-80"><a id="__codelineno-21-80" name="__codelineno-21-80" href="#__codelineno-21-80"></a>
-</span><span id="__span-21-81"><a id="__codelineno-21-81" name="__codelineno-21-81" href="#__codelineno-21-81"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:singleton-induction-ind-implies-contr" id="define:singleton-induction-ind-implies-contr" style="visibility: visible; position: relative; color: inherit">singleton-induction-ind-implies-contr</a></span>
-</span><span id="__span-21-82"><a id="__codelineno-21-82" name="__codelineno-21-82" href="#__codelineno-21-82"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-21-83"><a id="__codelineno-21-83" name="__codelineno-21-83" href="#__codelineno-21-83"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-21-84"><a id="__codelineno-21-84" name="__codelineno-21-84" href="#__codelineno-21-84"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> has-singleton-induction-pointed-structure A a)</span>
-</span><span id="__span-21-85"><a id="__codelineno-21-85" name="__codelineno-21-85" href="#__codelineno-21-85"></a><span class="err">  : ( is-contr A)</span>
-</span><span id="__span-21-86"><a id="__codelineno-21-86" name="__codelineno-21-86" href="#__codelineno-21-86"></a><span class="err">  := ( a , (</span><span class="s">first</span><span class="err"> (f ( </span><span class="p">\ </span>x <span class="err">→ a = x))) (</span><span class="s">refl</span><span class="err">_{a}))</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ev-pt" id="define:ev-pt" style="visibility: visible; position: relative; color: inherit">ev-pt</a></span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="err">  : </span><span class="p">(</span>(x <span class="p">:</span><span class="err"> A) → B x) → B a</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="err">  := </span><span class="p">\ </span>f <span class="err">→ f a</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-singleton-induction-pointed" id="define:has-singleton-induction-pointed" style="visibility: visible; position: relative; color: inherit">has-singleton-induction-pointed</a></span>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="err">  : U</span>
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="err">  := has-section </span><span class="p">(</span>(x <span class="p">:</span><span class="err"> A) → B x) (B a) (ev-pt A a B)</span>
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-singleton-induction-pointed-structure" id="define:has-singleton-induction-pointed-structure" style="visibility: visible; position: relative; color: inherit">has-singleton-induction-pointed-structure</a></span>
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-24-18"><a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a><span class="err">  : U</span>
+</span><span id="__span-24-19"><a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a><span class="err">  := </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U) → has-section </span><span class="p">(</span>(x <span class="p">:</span><span class="err"> A) → B x) (B a) (ev-pt A a B)</span>
+</span><span id="__span-24-20"><a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a>
+</span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-singleton-induction" id="define:has-singleton-induction" style="visibility: visible; position: relative; color: inherit">has-singleton-induction</a></span>
+</span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-24-23"><a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a><span class="err">  : U</span>
+</span><span id="__span-24-24"><a id="__codelineno-24-24" name="__codelineno-24-24" href="#__codelineno-24-24"></a><span class="err">  := </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>B <span class="p">:</span><span class="err"> A → U) → (has-singleton-induction-pointed A a B)</span>
+</span><span id="__span-24-25"><a id="__codelineno-24-25" name="__codelineno-24-25" href="#__codelineno-24-25"></a>
+</span><span id="__span-24-26"><a id="__codelineno-24-26" name="__codelineno-24-26" href="#__codelineno-24-26"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ind-sing" id="define:ind-sing" style="visibility: visible; position: relative; color: inherit">ind-sing</a></span>
+</span><span id="__span-24-27"><a id="__codelineno-24-27" name="__codelineno-24-27" href="#__codelineno-24-27"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-24-28"><a id="__codelineno-24-28" name="__codelineno-24-28" href="#__codelineno-24-28"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-24-29"><a id="__codelineno-24-29" name="__codelineno-24-29" href="#__codelineno-24-29"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-24-30"><a id="__codelineno-24-30" name="__codelineno-24-30" href="#__codelineno-24-30"></a><span class="err">  </span><span class="p">(</span>singleton-ind-A <span class="p">:</span><span class="err"> has-singleton-induction-pointed A a B)</span>
+</span><span id="__span-24-31"><a id="__codelineno-24-31" name="__codelineno-24-31" href="#__codelineno-24-31"></a><span class="err">  : (B a) → </span><span class="p">(</span>(x <span class="p">:</span><span class="err"> A) → B x)</span>
+</span><span id="__span-24-32"><a id="__codelineno-24-32" name="__codelineno-24-32" href="#__codelineno-24-32"></a><span class="err">  := ( </span><span class="s">first</span><span class="err"> singleton-ind-A)</span>
+</span><span id="__span-24-33"><a id="__codelineno-24-33" name="__codelineno-24-33" href="#__codelineno-24-33"></a>
+</span><span id="__span-24-34"><a id="__codelineno-24-34" name="__codelineno-24-34" href="#__codelineno-24-34"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:compute-ind-sing" id="define:compute-ind-sing" style="visibility: visible; position: relative; color: inherit">compute-ind-sing</a></span>
+</span><span id="__span-24-35"><a id="__codelineno-24-35" name="__codelineno-24-35" href="#__codelineno-24-35"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-24-36"><a id="__codelineno-24-36" name="__codelineno-24-36" href="#__codelineno-24-36"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-24-37"><a id="__codelineno-24-37" name="__codelineno-24-37" href="#__codelineno-24-37"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-24-38"><a id="__codelineno-24-38" name="__codelineno-24-38" href="#__codelineno-24-38"></a><span class="err">  </span><span class="p">( </span>singleton-ind-A <span class="p">:</span><span class="err"> has-singleton-induction-pointed A a B)</span>
+</span><span id="__span-24-39"><a id="__codelineno-24-39" name="__codelineno-24-39" href="#__codelineno-24-39"></a><span class="err">  : ( homotopy</span>
+</span><span id="__span-24-40"><a id="__codelineno-24-40" name="__codelineno-24-40" href="#__codelineno-24-40"></a><span class="err">      ( B a)</span>
+</span><span id="__span-24-41"><a id="__codelineno-24-41" name="__codelineno-24-41" href="#__codelineno-24-41"></a><span class="err">      ( B a)</span>
+</span><span id="__span-24-42"><a id="__codelineno-24-42" name="__codelineno-24-42" href="#__codelineno-24-42"></a><span class="err">      ( comp</span>
+</span><span id="__span-24-43"><a id="__codelineno-24-43" name="__codelineno-24-43" href="#__codelineno-24-43"></a><span class="err">        ( B a)</span>
+</span><span id="__span-24-44"><a id="__codelineno-24-44" name="__codelineno-24-44" href="#__codelineno-24-44"></a><span class="err">        </span><span class="p">( </span>(x <span class="p">:</span><span class="err"> A) → B x)</span>
+</span><span id="__span-24-45"><a id="__codelineno-24-45" name="__codelineno-24-45" href="#__codelineno-24-45"></a><span class="err">        ( B a)</span>
+</span><span id="__span-24-46"><a id="__codelineno-24-46" name="__codelineno-24-46" href="#__codelineno-24-46"></a><span class="err">        ( ev-pt A a B)</span>
+</span><span id="__span-24-47"><a id="__codelineno-24-47" name="__codelineno-24-47" href="#__codelineno-24-47"></a><span class="err">        ( ind-sing A a B singleton-ind-A))</span>
+</span><span id="__span-24-48"><a id="__codelineno-24-48" name="__codelineno-24-48" href="#__codelineno-24-48"></a><span class="err">      ( identity (B a)))</span>
+</span><span id="__span-24-49"><a id="__codelineno-24-49" name="__codelineno-24-49" href="#__codelineno-24-49"></a><span class="err">  := (</span><span class="s">second</span><span class="err"> singleton-ind-A)</span>
+</span><span id="__span-24-50"><a id="__codelineno-24-50" name="__codelineno-24-50" href="#__codelineno-24-50"></a>
+</span><span id="__span-24-51"><a id="__codelineno-24-51" name="__codelineno-24-51" href="#__codelineno-24-51"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:contr-implies-singleton-induction-ind" id="define:contr-implies-singleton-induction-ind" style="visibility: visible; position: relative; color: inherit">contr-implies-singleton-induction-ind</a></span>
+</span><span id="__span-24-52"><a id="__codelineno-24-52" name="__codelineno-24-52" href="#__codelineno-24-52"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-24-53"><a id="__codelineno-24-53" name="__codelineno-24-53" href="#__codelineno-24-53"></a><span class="err">  </span><span class="p">( </span>is-contr-A <span class="p">:</span><span class="err"> is-contr A)</span>
+</span><span id="__span-24-54"><a id="__codelineno-24-54" name="__codelineno-24-54" href="#__codelineno-24-54"></a><span class="err">  : (has-singleton-induction A)</span>
+</span><span id="__span-24-55"><a id="__codelineno-24-55" name="__codelineno-24-55" href="#__codelineno-24-55"></a><span class="err">  :=</span>
+</span><span id="__span-24-56"><a id="__codelineno-24-56" name="__codelineno-24-56" href="#__codelineno-24-56"></a><span class="err">    ( ( center-contraction A is-contr-A) ,</span>
+</span><span id="__span-24-57"><a id="__codelineno-24-57" name="__codelineno-24-57" href="#__codelineno-24-57"></a><span class="err">      </span><span class="p">\ </span>B <span class="err">→</span>
+</span><span id="__span-24-58"><a id="__codelineno-24-58" name="__codelineno-24-58" href="#__codelineno-24-58"></a><span class="err">        ( ( </span><span class="p">\ </span>b x <span class="err">→</span>
+</span><span id="__span-24-59"><a id="__codelineno-24-59" name="__codelineno-24-59" href="#__codelineno-24-59"></a><span class="err">                ( transport A B</span>
+</span><span id="__span-24-60"><a id="__codelineno-24-60" name="__codelineno-24-60" href="#__codelineno-24-60"></a><span class="err">                  ( center-contraction A is-contr-A) x</span>
+</span><span id="__span-24-61"><a id="__codelineno-24-61" name="__codelineno-24-61" href="#__codelineno-24-61"></a><span class="err">                  ( realign-homotopy-contraction A is-contr-A x) b)) ,</span>
+</span><span id="__span-24-62"><a id="__codelineno-24-62" name="__codelineno-24-62" href="#__codelineno-24-62"></a><span class="err">          ( </span><span class="p">\ </span>b <span class="err">→</span>
+</span><span id="__span-24-63"><a id="__codelineno-24-63" name="__codelineno-24-63" href="#__codelineno-24-63"></a><span class="err">                ( ap</span>
+</span><span id="__span-24-64"><a id="__codelineno-24-64" name="__codelineno-24-64" href="#__codelineno-24-64"></a><span class="err">                  ( (center-contraction A is-contr-A) =</span>
+</span><span id="__span-24-65"><a id="__codelineno-24-65" name="__codelineno-24-65" href="#__codelineno-24-65"></a><span class="err">                    (center-contraction A is-contr-A))</span>
+</span><span id="__span-24-66"><a id="__codelineno-24-66" name="__codelineno-24-66" href="#__codelineno-24-66"></a><span class="err">                  ( B (center-contraction A is-contr-A))</span>
+</span><span id="__span-24-67"><a id="__codelineno-24-67" name="__codelineno-24-67" href="#__codelineno-24-67"></a><span class="err">                  ( realign-homotopy-contraction A is-contr-A</span>
+</span><span id="__span-24-68"><a id="__codelineno-24-68" name="__codelineno-24-68" href="#__codelineno-24-68"></a><span class="err">                    ( center-contraction A is-contr-A))</span>
+</span><span id="__span-24-69"><a id="__codelineno-24-69" name="__codelineno-24-69" href="#__codelineno-24-69"></a><span class="err">                  </span><span class="s">refl</span><span class="err">_{(center-contraction A is-contr-A)}</span>
+</span><span id="__span-24-70"><a id="__codelineno-24-70" name="__codelineno-24-70" href="#__codelineno-24-70"></a><span class="err">                  ( </span><span class="p">\ </span>p <span class="err">→</span>
+</span><span id="__span-24-71"><a id="__codelineno-24-71" name="__codelineno-24-71" href="#__codelineno-24-71"></a><span class="err">                    ( transport-loop A B (center-contraction A is-contr-A) b p))</span>
+</span><span id="__span-24-72"><a id="__codelineno-24-72" name="__codelineno-24-72" href="#__codelineno-24-72"></a><span class="err">                  ( path-realign-homotopy-contraction A is-contr-A)))))</span>
+</span><span id="__span-24-73"><a id="__codelineno-24-73" name="__codelineno-24-73" href="#__codelineno-24-73"></a>
+</span><span id="__span-24-74"><a id="__codelineno-24-74" name="__codelineno-24-74" href="#__codelineno-24-74"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:contr-implies-singleton-induction-pointed" id="define:contr-implies-singleton-induction-pointed" style="visibility: visible; position: relative; color: inherit">contr-implies-singleton-induction-pointed</a></span>
+</span><span id="__span-24-75"><a id="__codelineno-24-75" name="__codelineno-24-75" href="#__codelineno-24-75"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-24-76"><a id="__codelineno-24-76" name="__codelineno-24-76" href="#__codelineno-24-76"></a><span class="err">  </span><span class="p">( </span>is-contr-A <span class="p">:</span><span class="err"> is-contr A)</span>
+</span><span id="__span-24-77"><a id="__codelineno-24-77" name="__codelineno-24-77" href="#__codelineno-24-77"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-24-78"><a id="__codelineno-24-78" name="__codelineno-24-78" href="#__codelineno-24-78"></a><span class="err">  : has-singleton-induction-pointed A (center-contraction A is-contr-A) B</span>
+</span><span id="__span-24-79"><a id="__codelineno-24-79" name="__codelineno-24-79" href="#__codelineno-24-79"></a><span class="err">  := ( </span><span class="s">second</span><span class="err"> (contr-implies-singleton-induction-ind A is-contr-A)) B</span>
+</span><span id="__span-24-80"><a id="__codelineno-24-80" name="__codelineno-24-80" href="#__codelineno-24-80"></a>
+</span><span id="__span-24-81"><a id="__codelineno-24-81" name="__codelineno-24-81" href="#__codelineno-24-81"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:singleton-induction-ind-implies-contr" id="define:singleton-induction-ind-implies-contr" style="visibility: visible; position: relative; color: inherit">singleton-induction-ind-implies-contr</a></span>
+</span><span id="__span-24-82"><a id="__codelineno-24-82" name="__codelineno-24-82" href="#__codelineno-24-82"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-24-83"><a id="__codelineno-24-83" name="__codelineno-24-83" href="#__codelineno-24-83"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-24-84"><a id="__codelineno-24-84" name="__codelineno-24-84" href="#__codelineno-24-84"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> has-singleton-induction-pointed-structure A a)</span>
+</span><span id="__span-24-85"><a id="__codelineno-24-85" name="__codelineno-24-85" href="#__codelineno-24-85"></a><span class="err">  : ( is-contr A)</span>
+</span><span id="__span-24-86"><a id="__codelineno-24-86" name="__codelineno-24-86" href="#__codelineno-24-86"></a><span class="err">  := ( a , (</span><span class="s">first</span><span class="err"> (f ( </span><span class="p">\ </span>x <span class="err">→ a = x))) (</span><span class="s">refl</span><span class="err">_{a}))</span>
 </span></code></pre></div>
 
 

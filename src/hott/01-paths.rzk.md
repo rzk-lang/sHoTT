@@ -23,6 +23,26 @@ it like any other function.
   := idJ (A , a , C , d , x , p)
 ```
 
+To emphasize the fact that this version of path induction is biased towards
+paths with fixed starting point,
+we introduce the synonym `ind-path-start`.
+Later we will construct the analogous path induction `ind-path-end`,
+for paths with fixed end point.
+
+```rzk
+#define ind-path-start
+  ( A : U)
+  ( a : A)
+  ( C : (x : A) -> (a = x) -> U)
+  ( d : C a refl)
+  ( x : A)
+  ( p : a = x)
+  : C x p
+  :=
+    ind-path A a C d x p
+```
+
+
 ## Some basic path algebra
 
 ```rzk
@@ -623,10 +643,12 @@ Application of a function to homotopic paths yields homotopic paths.
 #end transport
 ```
 
-### Path induction for left paths
+### Path induction
+
+Using `rev` we can deduce a path induction principle with fixed end point.
 
 ```rzk
-#def ind-path-l
+#def ind-path-end
   ( A : U)
   ( a : A)
   ( C : (x : A) → (x = a) -> U)

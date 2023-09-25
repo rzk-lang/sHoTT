@@ -217,6 +217,12 @@ We fix the following variables.
 #variable f : hom A a a'
 #variable C : A → U
 #variable c : C a
+
+-- We prepend all local variables in this section
+-- with the randomly string "temp-Z7hl"
+-- to avoid clashes in the global name-space.
+-- Once the language supports local scoping,
+-- these variables should be renamed.
 ```
 The two sides of the equivalence assert, respectively, the contractibility
 of `dhom-from A a a' f C c`
@@ -224,19 +230,43 @@ and of the fiber at `(a', f)` of the map
 `coslice (total-type C) (a, c) → coslice A a`.
 
 ```rzk
--- We prepend all local variables in this section
--- with the randomly string "temp-Z7hl"
--- to avoid clashes in the global name-space.
--- Once the language supports local scoping,
--- these variables should be renamed.
+#def temp-Z7hl-coslice-fun
+  : coslice (total-type A C) (a, c) → coslice A a
+  := coslice-fun (total-type A C) A (\ (x, _) → x) (a, c)
 
 #def temp-Z7hl-fib
   : U
   :=
     fib (coslice (total-type A C) (a, c))
         (coslice A a)
-        (coslice-fun (total-type A C) A (\ (a, _) → a) (a, c))
+        (temp-Z7hl-coslice-fun)
         (a', f)
+```
+
+It is convenient to replace this fiber by an equivalent type,
+where we unpack the homs in the Sigma-type `Σ C`.
+
+```rzk
+#def temp-Z7hl-fib-Σ
+  : U
+  :=
+    Σ (G : coslice (total-type A C) (a, c)),
+      Eq-Σ A (hom A a) (temp-Z7hl-coslice-fun G) (a', f)
+
+#def temp-Z7hl-fib-compare
+  : Equiv (temp-Z7hl-fib) (temp-Z7hl-fib-Σ)
+  :=
+    total-equiv-family-equiv
+      (coslice (total-type A C) (a, c))
+      (\ G → temp-Z7hl-coslice-fun G = (a', f))
+      (\ G → Eq-Σ A (hom A a) (temp-Z7hl-coslice-fun G) (a', f))
+      (\ G →
+        extensionality-Σ
+          A (hom A a)
+          (temp-Z7hl-coslice-fun G)
+          (a', f)
+      )
+
 ```
 
 We prove the theorem by showing that these two types are equivalent.
@@ -265,6 +295,22 @@ Constructing the backward map requires some rectification.
           = f
     ) →
     dhom-from A a a' f C c
+
+#def temp-Z7hl-family-with-comp
+  ( a'' : A)
+  ( p : a'' = a')
+  : U
+  :=
+    ( c'' : C a'') →
+    ( ĝ : hom (total-type A C) (a, c) (a'', c'')) →
+    ( γ : coslice-fun (total-type A C) A
+            (\ (a, _) → a)
+            (a, c)
+            ((a'', c''), ĝ)
+            =   (a', f)
+    ) →
+    Σ ( u : dhom-from A a a' f C c),
+      temp-Z7hl-forward u = (((a'', c''), ĝ), γ)
 
 #def temp-Z7hl-backward'
   : ( a'' : A) → ( p : a'' = a') → temp-Z7hl-family a'' p

@@ -318,3 +318,61 @@ the "Gray interchanger" built from two commutative triangles.
     ( horizontal-comp-nat-trans A B C f g f' g' η η')
   := \ (t, s) a → η' t (η s a)
 ```
+
+### Naturality square
+
+```rzk title="RS17, Proposition 6.6"
+#section comp-eq-square-is-segal
+
+#variable A : U
+#variable is-segal-A : is-segal A
+#variable α : (Δ¹×Δ¹) → A
+
+#def α00 : A := α (0₂,0₂)
+#def α01 : A := α (0₂,1₂)
+#def α10 : A := α (1₂,0₂)
+#def α11 : A := α (1₂,1₂)
+
+#def α0* : Δ¹ → A := \ t → α (0₂,t)
+#def α1* : Δ¹ → A := \ t → α (1₂,t)
+#def α*0 : Δ¹ → A := \ s → α (s,0₂)
+#def α*1 : Δ¹ → A := \ s → α (s,1₂)
+#def α-diag : Δ¹ → A := \ s → α (s,s)
+
+#def lhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α01 α11 α0* α*1
+#def rhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
+
+#def lower-triangle-square : hom2 A α00 α01 α11 α0* α*1 α-diag
+  := \ (s, t) → α (t,s)
+
+#def upper-triangle-square : hom2 A α00 α10 α11 α*0 α1* α-diag
+  := \ (s,t) → α (s,t)
+
+#def comp-eq-square-is-segal uses (α)
+  : comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 =
+    comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
+  :=
+    zig-zag-concat (hom A α00 α11) lhs α-diag rhs
+    ( uniqueness-comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 α-diag
+      ( lower-triangle-square))
+    ( uniqueness-comp-is-segal A is-segal-A α00 α10 α11 α*0 α1* α-diag
+      ( upper-triangle-square))
+
+
+#end comp-eq-square-is-segal
+
+#def naturality-nat-trans-is-segal
+  (A B : U)
+  (is-segal-B : is-segal B)
+  (f g : A → B)
+  (α : hom (A → B) f g)
+  (x y : A)
+  (k : hom A x y)
+  : comp-is-segal B is-segal-B (f x) (f y) (g y)
+    ( ap-hom A B f x y k)
+    ( \ s → α s y) =
+    comp-is-segal B is-segal-B (f x) (g x) (g y)
+    ( \ s → α s x)
+    ( ap-hom A B g x y k)
+  := comp-eq-square-is-segal B is-segal-B (\ (s,t) → α s (k t))
+```

@@ -330,6 +330,43 @@ Now we compose the functions that are equivalences.
   := equiv-comp B A C (inv-equiv A B A≃B) (A≃C)
 ```
 
+```rzk title="Right cancellation of equivalence property in diagrammatic order"
+#def ap-cancel-has-retraction
+  ( B C : U)
+  ( g : B → C)
+  ( (retr-g, η-g) : has-retraction B C g)
+  ( b b' : B)
+  : (g b = g b') → (b = b')
+  :=
+    \ gp →
+      triple-concat B b (retr-g (g b)) (retr-g (g b')) b'
+        (rev B (retr-g (g b)) b
+          (η-g b))
+        (ap C B (g b) (g b') retr-g gp)
+        (η-g b')
+
+
+#def is-equiv-right-cancel
+  ( A B C : U)
+  ( f : A → B)
+  ( g : B → C)
+  ( (has-retraction-g, (sec-g, ε-g)) : is-equiv B C g)
+  ( ((retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
+  : is-equiv A B f
+  :=
+    ( (comp B C A
+      retr-gf g,
+    η-gf) ,
+    (comp B C A
+      sec-gf g,
+    \ b → -- need (f ∘ sec-gf ∘ g) b = b
+      ap-cancel-has-retraction B C g has-retraction-g (f (sec-gf (g b))) b
+      (ε-gf (g b)) -- have g (f ∘ sec-gf ∘ g) b) = g b
+    )
+    )
+
+```
+
 ```rzk title="A composition of three equivalences"
 #def equiv-triple-comp
   ( A B C D : U)

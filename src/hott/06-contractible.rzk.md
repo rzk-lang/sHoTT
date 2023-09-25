@@ -396,19 +396,19 @@ The center of contraction in the based path space is `#!rzk (a , refl)`.
 
 ## Weak function extensionality
 
-The weak function extensionality axiom asserts that if a dependent type
-is locally contractible then its resulting pi type is contractible.
+The weak function extensionality axiom asserts that if a dependent type is
+locally contractible then its dependent function type is contractible.
 
-Is is an implication of the univalence axiom and a special case of
-function extensionality. However, for various cases it is useful to be
-stated separately.
+Weak function extensionality is logically equivalent to function extensionality.
+However, for various applications it may be useful to have it stated as a
+separate hypothesis.
 
 ```rzk title="Weak function extensionality gives us contractible pi types"
 #def WeakFunExt : U
   :=
-   ( A : U ) → (C : A → U) →
-   (f : (a : A) → is-contr (C a) ) →
-   (is-contr ( (a : A) → C a ))
+    ( A : U ) → (C : A → U) →
+    (f : (a : A) → is-contr (C a) ) →
+    (is-contr ( (a : A) → C a ))
 
 ```
 
@@ -424,12 +424,11 @@ Whenever a definition (implicitly) uses function extensionality, we write
 ```rzk
 #def call-weakfunext uses (weakfunext)
   ( A : U )
-  (C : A → U)
-  (f : (a : A) → is-contr (C a) )
+  ( C : A → U)
+  ( f : (a : A) → is-contr (C a) )
   : (is-contr ( (a : A) → C a ))
   := weakfunext A C f
 ```
-
 
 ## Singleton induction
 

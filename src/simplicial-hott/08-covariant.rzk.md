@@ -154,6 +154,32 @@ here.
 By the equivalence-invariance of contractibility, this proves the desired
 logical equivalence
 
+```rzk
+#def is-covariant-has-unique-fixed-domain-lifts
+  ( A : U)
+  ( C : A → U)
+  : (has-unique-fixed-domain-lifts A C) → ( is-covariant A C)
+  :=
+    \ C-has-unique-lifts x y f u →
+      is-contr-equiv-is-contr
+        ( (t : Δ¹) → C (f t) [ t ≡ 0₂ ↦ u])
+        ( dhom-from A x y f C u)
+        ( equiv-lifts-with-fixed-domain A C x y f u)
+        ( C-has-unique-lifts x y f u)
+
+#def has-unique-fixed-domain-lifts-is-covariant
+  ( A : U)
+  ( C : A → U)
+  : (is-covariant A C) → (has-unique-fixed-domain-lifts A C)
+  :=
+    \ is-covariant-C x y f u →
+      is-contr-equiv-is-contr'
+        ( (t : Δ¹) → C (f t) [ t ≡ 0₂ ↦ u])
+        ( dhom-from A x y f C u)
+        ( equiv-lifts-with-fixed-domain A C x y f u)
+        ( is-covariant-C x y f u)
+```
+
 ```rzk title="RS17, Proposition 8.4"
 #def has-unique-fixed-domain-lifts-iff-is-covariant
   ( A : U)
@@ -162,18 +188,8 @@ logical equivalence
       ( has-unique-fixed-domain-lifts A C)
       ( is-covariant A C)
   :=
-    ( ( \ C-has-unique-lifts x y f u →
-        is-contr-equiv-is-contr
-          ( (t : Δ¹) → C (f t) [ t ≡ 0₂ ↦ u])
-          ( dhom-from A x y f C u)
-          ( equiv-lifts-with-fixed-domain A C x y f u)
-          ( C-has-unique-lifts x y f u)) ,
-      ( \ C-is-covariant x y f u →
-        is-contr-equiv-is-contr'
-          ( (t : Δ¹) → C (f t) [ t ≡ 0₂ ↦ u])
-          ( dhom-from A x y f C u)
-          ( equiv-lifts-with-fixed-domain A C x y f u)
-          ( C-is-covariant x y f u)))
+    ( is-covariant-has-unique-fixed-domain-lifts A C,
+      has-unique-fixed-domain-lifts-is-covariant A C)
 ```
 
 ## Representable covariant families
@@ -789,14 +805,14 @@ is covariant as shown above. Transport of an `e : C x` along an arrow
 
 ```rzk title="RS17, Example 8.14"
 #def compute-covariant-transport-of-hom-family-is-segal
-  (A : U)
-  (is-segal-A : is-segal A)
-  (a x y : A)
-  (e : hom A a x)
-  (f : hom A x y)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a x y : A)
+  ( e : hom A a x)
+  ( f : hom A x y)
   : covariant-transport A x y f
-      (hom A a) (is-covariant-representable-is-segal A is-segal-A a) e
-    = comp-is-segal A is-segal-A a x y e f
+      (hom A a) (is-covariant-representable-is-segal A is-segal-A a) e =
+    comp-is-segal A is-segal-A a x y e f
   :=
     refl
 ```
@@ -1190,6 +1206,32 @@ here.
 By the equivalence-invariance of contractibility, this proves the desired
 logical equivalence
 
+```rzk
+#def is-contravariant-has-unique-fixed-codomain-lifts
+  ( A : U)
+  ( C : A → U)
+  : (has-unique-fixed-codomain-lifts A C) → ( is-contravariant A C)
+  :=
+    \ C-has-unique-lifts x y f v →
+      is-contr-equiv-is-contr
+      ( (t : Δ¹) → C (f t) [t ≡ 1₂ ↦ v])
+      ( dhom-to A x y f C v)
+      ( equiv-lifts-with-fixed-codomain A C x y f v)
+      ( C-has-unique-lifts x y f v)
+
+#def has-unique-fixed-codomain-lifts-is-contravariant
+  ( A : U)
+  ( C : A → U)
+  : (is-contravariant A C) → (has-unique-fixed-codomain-lifts A C)
+  :=
+    \ is-contravariant-C x y f v →
+      is-contr-equiv-is-contr'
+      ( (t : Δ¹) → C (f t) [t ≡ 1₂ ↦ v])
+      ( dhom-to A x y f C v)
+      ( equiv-lifts-with-fixed-codomain A C x y f v)
+      ( is-contravariant-C x y f v)
+```
+
 ```rzk title="RS17, Proposition 8.4"
 #def has-unique-fixed-codomain-lifts-iff-is-contravariant
   ( A : U)
@@ -1198,18 +1240,8 @@ logical equivalence
       ( has-unique-fixed-codomain-lifts A C)
       ( is-contravariant A C)
   :=
-    ( ( \ C-has-unique-lifts x y f v →
-        is-contr-equiv-is-contr
-          ( (t : Δ¹) → C (f t) [t ≡ 1₂ ↦ v])
-          ( dhom-to A x y f C v)
-          ( equiv-lifts-with-fixed-codomain A C x y f v)
-          ( C-has-unique-lifts x y f v)) ,
-      ( \ is-contravariant-C x y f v →
-        is-contr-equiv-is-contr'
-          ( (t : Δ¹) → C (f t) [t ≡ 1₂ ↦ v])
-          ( dhom-to A x y f C v)
-          ( equiv-lifts-with-fixed-codomain A C x y f v)
-          ( is-contravariant-C x y f v)))
+    ( is-contravariant-has-unique-fixed-codomain-lifts A C,
+      has-unique-fixed-codomain-lifts-is-contravariant A C)
 ```
 
 ## Representable contravariant families
@@ -1685,25 +1717,31 @@ commuting with the contravariant lifts.
       is-contravariant-representable-is-segal A is-segal-A)
 
 ```
+
 ## Closure properties of covariance
 
 ```rzk title="RS17, Theorem 8.30"
-#def locally-covariant-implies-covariant-dependent-types
-   (A B : U)
-   (C : A → B → U)
-   (is-locally-covariant : (b : B) → is-covariant A ( \ a → C a b ) )
-  : is-covariant A ( \ a → (( b : B ) → (C a b)) )
+#def is-covariant-is-locally-covariant uses (weakfunext)
+  ( A B : U)
+  ( C : A → B → U)
+  ( is-locally-covariant : (b : B) → is-covariant A ( \ a → C a b ) )
+  : is-covariant A ( \ a → (( b : B ) → (C a b)))
   :=
-    ( first ( has-unique-fixed-domain-lifts-iff-is-covariant A ( \ a → ( b : B ) → (C a b) )) )
-        ( \ x y f g →
-           equiv-with-contractible-codomain-implies-contractible-domain
-           ( (t : Δ¹) → ((b : B) → C (f t) b) [  t ≡ 0₂ ↦ g ])
-           ( (b : B) → (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b])
-           ( flip-ext-fun 2 Δ¹ (\ t → t ≡ 0₂) B ( \ t →  C (f t)) ( \ t → g))
-          (weakfunext B
+    is-covariant-has-unique-fixed-domain-lifts
+      ( A)
+      ( \ a → ( b : B ) → (C a b) )
+      ( \ x y f g →
+        equiv-with-contractible-codomain-implies-contractible-domain
+          ( (t : Δ¹) → ((b : B) → C (f t) b) [  t ≡ 0₂ ↦ g ])
+          ( (b : B) → (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b])
+          ( flip-ext-fun 2 Δ¹ (\ t → t ≡ 0₂) B ( \ t →  C (f t)) ( \ t → g))
+          ( weakfunext B
             ( \ b → ( (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b] ) )
-            ( \ b → ( (( second ( has-unique-fixed-domain-lifts-iff-is-covariant A ( \ a  → (C a b) )) ) (is-locally-covariant b)) x y f (g b) ) )
-            )
-        )
+            ( \ b →
+              ( has-unique-fixed-domain-lifts-is-covariant
+                ( A)
+                ( \ a  → (C a b))
+                ( is-locally-covariant b))
+             x y f (g b))))
 
 ```

@@ -8,15 +8,51 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
-Some of the definitions in this file rely on function extensionality and
-extension extensionality:
+## Definition limits and colimits
+
+Given a function `#!rzk f : A → B` and `#!rzk b:B` we define the type of cones
+over `#!rzk f`.
 
 ```rzk
--- #assume funext : FunExt
--- #assume extext : ExtExt
+#def cone
+  ( A B : U )
+  ( f : A → B )
+  : U
+  := Σ (b : B), hom (A → B) (constant A B b) f
 ```
 
-## Uniqueness of initial and final objects. [From 10-rezk-types.rzk.md]
+Given a function `#!rzk f : A → B` and `#!rzk b:B` we define the type of cocones
+under `#!rzk f`.
+
+```rzk
+#def cocone
+  ( A B : U )
+  ( f : A → B )
+  : U
+  := Σ (b : B), hom ( A → B) f (constant A B b)
+```
+
+We define a colimit for `#!rzk f : A → B` as an initial cocone under `#!rzk f`.
+
+```rzk
+#def colimit
+  ( A B : U )
+  ( f : A → B )
+  : U
+  := Σ ( x : cocone A B f ) , is-initial (cocone A B f) x
+```
+
+We define a limit of `#!rzk f : A → B` as a terminal cone over `#!rzk f`.
+
+```rzk
+#def limit
+  ( A B : U )
+  ( f : A → B )
+  : U
+  :=  Σ ( x : cone A B f ) , is-final (cone A B f) x
+```
+
+## Uniqueness of initial and final objects.
 
 In a Segal type, initial objects are isomorphic.
 
@@ -79,50 +115,4 @@ In a Segal type, final objects are isomorphic.
             ( id-hom A b))))
 ```
 
-## Definition (co)limits
-
-Given a function $f: A → B$ and $b:B$ we define the type of cones over f.
-
-```rzk
-#def cone
-  ( A B : U )
-  ( f : A → B )
-  : U
-  := ∑ (b : B), hom ( A → B) (constant A B b) f
-```
-
-Given a function $f: A → B$ and $b:B$ we define the type of cocones under f.
-
-```rzk
-#def cocone
-  ( A B : U )
-  ( f : A → B )
-  : U
-  := ∑ (b : B), hom ( A → B) f (constant A B b)
-```
-
-We give the definition of a colimit for $ f : A → B$ as an initial cocone under
-$f$.
-
-```rzk
-#def colimit
-  ( A B : U )
-  ( f : A → B )
-  : U
-  := ( x : cocone A B f ) → is-initial (cocone A B f) x
-```
-
-Now the definition of a limit of $ f : A →
-B$, this is terminal element in the space of cones
-over $f$.
-
-```rzk
-#def limit
-  ( A B : U )
-  ( f : A → B )
-  : U
-  := ( x : cone A B f ) → is-final (cone A B f) x
-```
-
 ## Uniqueness up to isomophism of (co)limits
-

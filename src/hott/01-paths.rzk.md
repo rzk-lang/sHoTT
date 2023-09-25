@@ -77,7 +77,9 @@ situations where it is easier to induct on the first path.
 #def rev-rev
   ( p : x = y)
   : (rev A y x (rev A x y p)) = p
-  := ind-path (A) (x) (\ y' p' → (rev A y' x (rev A x y' p')) = p') (refl) (y) (p)
+  :=
+    ind-path
+    ( A) (x) (\ y' p' → (rev A y' x (rev A x y' p')) = p') (refl) (y) (p)
 ```
 
 ### Left unit law for path concatenation
@@ -358,6 +360,59 @@ The following needs to be outside the previous section because of the usage of
           ( concat' A x y z q r)
           ( H)
           ( concat-concat' A x y z q r)))
+```
+
+### Concatenation with a path and its reversal
+
+```rzk
+#def retraction-pre-concat
+  ( A : U)
+  ( x y z : A)
+  ( p : x = y)
+  ( q : y = z)
+  : concat A y x z (rev A x y p) (concat A x y z p q) = q
+  :=
+    ind-path (A) (y)
+    ( \ z' q' → concat A y x z' (rev A x y p) (concat A x y z' p q') = q') (left-inverse-concat A x y p) (z) (q)
+
+#def section-pre-concat
+  ( A : U)
+  ( x y z : A)
+  ( p : x = y)
+  ( r : x = z)
+  : concat A x y z p (concat A y x z (rev A x y p) r) = r
+  :=
+    ind-path (A) (x)
+    ( \ z' r' → concat A x y z' p (concat A y x z' (rev A x y p) r') = r') (right-inverse-concat A x y p) (z) (r)
+
+#def retraction-post-concat
+  ( A : U)
+  ( x y z : A)
+  ( q : y = z)
+  ( p : x = y)
+  : concat A x z y (concat A x y z p q) (rev A y z q) = p
+  :=
+    ind-path (A) (y)
+    ( \ z' q' → concat A x z' y (concat A x y z' p q') (rev A y z' q') = p)
+    ( refl) (z) (q)
+
+#def section-post-concat
+  ( A : U)
+  ( x y z : A)
+  ( q : y = z)
+  ( r : x = z)
+  : concat A x y z (concat A x z y r (rev A y z q)) q = r
+  :=
+    concat
+      ( x = z)
+      ( concat A x y z (concat A x z y r (rev A y z q)) q)
+      ( concat A x z z r (concat A z y z (rev A y z q) q))
+      ( r)
+      ( associative-concat A x z y z r (rev A y z q) q)
+      ( concat-eq-right A x z z r
+        ( concat A z y z (rev A y z q) q)
+        ( refl)
+        ( left-inverse-concat A y z q))
 ```
 
 ## Application of functions to paths
@@ -835,4 +890,8 @@ The following is the same as above but with alternating arguments.
       ( refl)
       ( r)
       ( H)
+```
+
+```
+
 ```

@@ -563,46 +563,34 @@ dependent function types.
 ## Reversal is an equivalence
 
 ```rzk
-#def has-retraction-rev
-  ( A : U)
-  ( y : A)
-  : (x : A) → has-retraction (x = y) (y = x) (rev A x y)
-  :=
-    \ x →
-    ( ( rev A y x) ,
-      ( \ p →
-        ind-path
-          ( A)
-          ( x)
-          ( \ y' p' →
-            ( comp
-              ( x = y') (y' = x) (x = y') (rev A y' x) (rev A x y') (p'))
-            =_{x = y'}
-            ( p'))
-            ( refl)
-            ( y)
-            ( p)))
-
-#def has-section-rev
-  ( A : U)
-  ( y x : A)
-  : has-section (x = y) (y = x) (rev A x y)
-  :=
-    ( ( rev A y x) ,
-      ( ind-path
-        ( A)
-        ( y)
-        ( \ x' p' →
-          ( comp
-            ( y = x') (x' = y) (y = x') (rev A x' y) (rev A y x') (p'))
-          =_{y = x'}
-          ( p'))
-        ( refl)
-        ( x)))
-
-#def is-equiv-rev
+#def equiv-rev
   ( A : U)
   ( x y : A)
-  : is-equiv (x = y) (y = x) (rev A x y)
-  := ((has-retraction-rev A y x) , (has-section-rev A y x))
+  : Equiv (x = y) (y = x)
+  := (rev A x y , ((rev A y x , rev-rev A x y) , (rev A y x , rev-rev A y x)))
+```
+
+## Concatenation with a fixed path is an equivalence
+
+```rzk
+#def equiv-pre-concat
+  ( A : U)
+  ( x y z : A)
+  ( p : x = y)
+  : Equiv (y = z) (x = z)
+  :=
+    ( concat A x y z p,
+      ( ( concat A y x z (rev A x y p), retraction-pre-concat A x y z p),
+        ( concat A y x z (rev A x y p), section-pre-concat A x y z p)))
+
+#def equiv-post-concat
+  ( A : U)
+  ( x y z : A)
+  ( q : y = z) : Equiv (x = y) (x = z)
+  :=
+    ( \ p → concat A x y z p q,
+      ( ( \ r → concat A x z y r (rev A y z q),
+          retraction-post-concat A x y z q),
+        ( \ r → concat A x z y r (rev A y z q),
+          section-post-concat A x y z q)))
 ```

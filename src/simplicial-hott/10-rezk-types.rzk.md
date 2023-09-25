@@ -435,7 +435,7 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
 
 ```rzk title="RS17, Definition 10.6"
 #def is-rezk
-  (A : U)
+  ( A : U)
   : U
   :=
     Σ ( is-segal-A : is-segal A) ,
@@ -443,65 +443,65 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
         is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y)
 ```
 
-## Uniqueness of initial and final objects
+The following results show how `#!rzk iso-eq` mediates between the
+type-theoretic operations on paths and the category-theoretic operations on
+arrows.
 
-In a Segal type, initial objects are isomorphic.
-
-```rzk
-#def iso-initial
+```rzk title="RS17, Lemma 10.7"
+#def compute-covariant-transport-of-hom-family-iso-eq-is-segal
   ( A : U)
   ( is-segal-A : is-segal A)
-  ( a b : A)
-  ( is-initial-a : is-initial A a)
-  ( is-initial-b : is-initial A b)
-  : Iso A is-segal-A a b
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y : A)
+  ( e : x = y)
+  ( u : C x)
+  : covariant-transport
+      ( A)
+      ( x)
+      ( y)
+      ( first (iso-eq A is-segal-A x y e))
+      ( C)
+      ( is-covariant-C)
+      ( u)
+    = transport A C x y e u
   :=
-    ( first (is-initial-a b) ,
-      ( ( first (is-initial-b a) ,
-          eq-is-contr
-            ( hom A a a)
-            ( is-initial-a a)
-            ( comp-is-segal A is-segal-A a b a
-              ( first (is-initial-a b))
-              ( first (is-initial-b a)))
-            ( id-hom A a)) ,
-        ( first (is-initial-b a) ,
-          eq-is-contr
-            ( hom A b b)
-            ( is-initial-b b)
-            ( comp-is-segal A is-segal-A b a b
-              ( first (is-initial-b a))
-              ( first (is-initial-a b)))
-            ( id-hom A b))))
+    ind-path
+      ( A)
+      ( x)
+      ( \ y' e' →
+        covariant-transport
+          ( A)
+          ( x)
+          ( y')
+          ( first (iso-eq A is-segal-A x y' e'))
+          ( C)
+          ( is-covariant-C)
+          ( u)
+        = transport A C x y' e' u)
+      ( id-arr-covariant-transport A x C is-covariant-C u)
+      ( y)
+      ( e)
 ```
 
-In a Segal type, final objects are isomorphic.
-
-```rzk
-#def iso-final
-  ( A : U)
+```rzk title="RS17, Lemma 10.8"
+#def compute-ap-hom-of-iso-eq
+  ( A B : U)
   ( is-segal-A : is-segal A)
-  ( a b : A)
-  ( is-final-a : is-final A a)
-  ( is-final-b : is-final A b)
-  ( iso : Iso A is-segal-A a b)
-  : Iso A is-segal-A a b
+  ( is-segal-B : is-segal B)
+  ( f : A → B)
+  ( x y : A)
+  ( e : x = y)
+  : ( ap-hom A B f x y (first (iso-eq A is-segal-A x y e))) =
+    ( first ( iso-eq B is-segal-B (f x) (f y) (ap A B x y f e)))
   :=
-    ( first (is-final-b a) ,
-      ( ( first (is-final-a b) ,
-          eq-is-contr
-            ( hom A a a)
-            ( is-final-a a)
-            ( comp-is-segal A is-segal-A a b a
-              ( first (is-final-b a))
-              ( first (is-final-a b)))
-            ( id-hom A a)) ,
-        ( first (is-final-a b) ,
-          eq-is-contr
-            ( hom A b b)
-            ( is-final-b b)
-            ( comp-is-segal A is-segal-A b a b
-              ( first (is-final-a b))
-              ( first (is-final-b a)))
-            ( id-hom A b))))
+    ind-path
+      ( A)
+      ( x)
+      ( \ y' e' →
+        ( ap-hom A B f x y' (first (iso-eq A is-segal-A x y' e'))) =
+        ( first (iso-eq B is-segal-B (f x) (f y') (ap A B x y' f e'))))
+      ( refl)
+      ( y)
+      ( e)
 ```

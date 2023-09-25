@@ -219,7 +219,7 @@ We fix the following variables.
 #variable c : C a
 
 -- We prepend all local variables in this section
--- with the randomly string "temp-Z7hl"
+-- with the random identifier "temp-Z7hl"
 -- to avoid clashes in the global name-space.
 -- Once the language supports local scoping,
 -- these variables should be renamed.
@@ -247,14 +247,14 @@ It is convenient to replace this fiber by an equivalent type,
 where we unpack the homs in the Sigma-type `Σ C`.
 
 ```rzk
-#def temp-Z7hl-fib-Σ
+#def temp-Z7hl-fib'
   : U
   :=
     Σ (G : coslice (total-type A C) (a, c)),
       Eq-Σ A (hom A a) (temp-Z7hl-coslice-fun G) (a', f)
 
 #def temp-Z7hl-fib-compare
-  : Equiv (temp-Z7hl-fib) (temp-Z7hl-fib-Σ)
+  : Equiv (temp-Z7hl-fib) (temp-Z7hl-fib')
   :=
     total-equiv-family-equiv
       (coslice (total-type A C) (a, c))
@@ -269,7 +269,8 @@ where we unpack the homs in the Sigma-type `Σ C`.
 
 ```
 
-We prove the theorem by showing that these two types are equivalent.
+We prove the theorem by showing that the two types
+`dhom-from A a a' f C c` and `temp-Z7hl-fib'` are equivalent.
 Since the left side is stricter than the right,
 the forward map is straightforward.
 
@@ -278,6 +279,11 @@ the forward map is straightforward.
   : dhom-from A a a' f C c → temp-Z7hl-fib
   :=
     \ (c', f̂) → (((a', c'), \ t → (f t, f̂ t)) , refl)
+
+#def temp-Z7hl-forward'
+  : dhom-from A a a' f C c → temp-Z7hl-fib'
+  :=
+    \ (c', f̂) → (((a', c'), \ t → (f t, f̂ t)) , (refl, refl))
 ```
 
 Constructing the backward map requires some rectification.
@@ -295,22 +301,6 @@ Constructing the backward map requires some rectification.
           = f
     ) →
     dhom-from A a a' f C c
-
-#def temp-Z7hl-family-with-comp
-  ( a'' : A)
-  ( p : a'' = a')
-  : U
-  :=
-    ( c'' : C a'') →
-    ( ĝ : hom (total-type A C) (a, c) (a'', c'')) →
-    ( γ : coslice-fun (total-type A C) A
-            (\ (a, _) → a)
-            (a, c)
-            ((a'', c''), ĝ)
-            =   (a', f)
-    ) →
-    Σ ( u : dhom-from A a a' f C c),
-      temp-Z7hl-forward u = (((a'', c''), ĝ), γ)
 
 #def temp-Z7hl-backward'
   : ( a'' : A) → ( p : a'' = a') → temp-Z7hl-family a'' p

@@ -627,7 +627,7 @@ Both directions of this statement will be needed.
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
   ( a' : (t : ψ ) → A t [ϕ t ↦ a t])
   ( c : (t : ψ ) → (f t = a' t))
-  : (t : ψ ) → (c t = refl)
+  : (t : ψ ) → (c t =_{f t = a' t} refl)
   :=  \ t →
     all-paths-eq-is-contr
       ( A t)
@@ -635,7 +635,7 @@ Both directions of this statement will be needed.
       ( f t)
       ( a' t)
       ( c t)
-      ( refl _)
+      ( refl)
 
 
 ```

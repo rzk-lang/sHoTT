@@ -1456,3 +1456,68 @@ As a special case of the above:
       (is-segal-A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
           (\ t → h' (t,0₂)) (\ s → h' (1₂,s)))
 ```
+
+
+```rzk title="RS17, lemma 5.20"
+
+#def pushout-product-codomain
+  ( I J : CUBE)
+  ( ψ : I → TOPE)
+  ( ζ : J → TOPE)
+  : (I × J) → TOPE
+  := \ (t,s) → ψ t ∧ ζ s
+
+#def pushout-product-domain
+  ( I J : CUBE)
+  ( ψ : I → TOPE)
+  ( Φ : ψ → TOPE)
+  ( ζ : J → TOPE)
+  ( χ : ζ → TOPE)
+  : (pushout-product-codomain I J ψ ζ) → TOPE
+  := \ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s)
+
+#def is-inner-anodyne-pushout-product-left-is-inner-anodyne
+  (weakExtExt : WeakExtExt)
+  ( I J : CUBE)
+  ( ψ : I → TOPE)
+  ( Φ : ψ → TOPE)
+  (is-inner-anodyne-ψ-Φ : is-inner-anodyne I ψ Φ)
+  ( ζ : J → TOPE)
+  ( χ : ζ → TOPE)
+  : is-inner-anodyne (I × J) (\ (t,s) → ψ t ∧ ζ s) (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
+  := \ A is-segal-A h →
+    equiv-with-contractible-codomain-implies-contractible-domain
+      (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
+      ( (s : ζ) → ((t : ψ) → A[ Φ t ↦ h (t,s)])[ χ s ↦ \ t → h (t, s)])
+      (uncurry-opcurry I J ψ Φ ζ χ (\ s t → A) h)
+      (weakExtExt
+        J
+        ζ
+        χ
+        (\ s → (t : ψ) → A[ Φ t ↦ h (t,s)])
+        (\ s → is-inner-anodyne-ψ-Φ A is-segal-A (\ t → h (t,s)))
+        (\ s t → h (t,s)))
+
+#def is-inner-anodyne-pushout-product-right-is-inner-anodyne
+  (weakExtExt : WeakExtExt)
+  ( I J : CUBE)
+  ( ψ : I → TOPE)
+  ( Φ : ψ → TOPE)
+  ( ζ : J → TOPE)
+  ( χ : ζ → TOPE)
+  (is-inner-anodyne-ζ-χ : is-inner-anodyne J ζ χ)
+  : is-inner-anodyne (I × J) (\ (t,s) → ψ t ∧ ζ s) (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
+  := \ A is-segal-A h →
+    equiv-with-contractible-domain-implies-contractible-codomain
+      ( (t : ψ) → ((s : ζ) → A[ χ s ↦ h (t,s)])[ Φ t ↦ \ s → h (t, s)])
+      (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
+      (curry-uncurry I J ψ Φ ζ χ (\ s t → A) h)
+      (weakExtExt
+        I
+        ψ
+        Φ
+        (\ t → (s : ζ) → A[ χ s ↦ h (t,s)])
+        (\ t → is-inner-anodyne-ζ-χ A is-segal-A (\ s → h (t,s)))
+        (\ s t → h (s,t)))
+
+```

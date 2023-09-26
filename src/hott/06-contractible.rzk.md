@@ -522,3 +522,51 @@ A type is contractible if and only if it has singleton induction.
   : ( is-contr A)
   := ( a , (first (f ( \ x → a = x))) (refl_{a}))
 ```
+
+## Identity types of contractible types
+
+We show that any two paths between the same endpoints in a contractible type are the same. 
+
+In a contractible type any path $p : x = y$ is equal to the path constructed in `eq-is-contr`. 
+```rzk
+#define path-eq-path-through-center-is-contr
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( x y : A)
+  ( p : x = y)
+  : ((eq-is-contr A is-contr-A x y) = p)
+  := 
+    ind-path
+    ( A)
+    ( x)
+    ( \ y' p' → (eq-is-contr A is-contr-A x y') = p') 
+    ( left-inverse-concat A (center-contraction A is-contr-A) x (homotopy-contraction A is-contr-A x)) 
+    ( y) 
+    ( p) 
+
+```
+
+Finally, in a contractible type any two paths between the same end points are equal. There are many possible proofs of this (e.g. identifying contractible types with the unit type where it is more transparent), but we proceed by gluing together the two identifications to the out and back path.
+
+```rzk
+#define all-paths-eq-is-contr 
+ ( A : U)
+ ( is-contr-A : is-contr A)
+ ( x y : A)
+ ( p q : x = y) 
+ : (p = q)
+ := 
+  concat
+    ( x = y)
+    ( p)
+    ( eq-is-contr A is-contr-A x y)
+    ( q)
+    ( rev
+      (x = y) 
+      ( eq-is-contr A is-contr-A x y)
+      ( p) 
+      ( path-eq-path-through-center-is-contr A is-contr-A x y p))
+    ( path-eq-path-through-center-is-contr A is-contr-A x y q)
+```
+
+

@@ -828,8 +828,13 @@ types over a product type.
   := Σ (f : A' → A), Σ (F : (a' : A') → C' a' → C (f a')),
     is-homotopy-cartesian A' C' A C f F
 
+```
 
-#section homotopy-cartesian-pasting
+Homotopy cartesian squares have a calculus of pasting and cancellation.
+We have a horizontal and a vertical version.
+
+```rzk
+#section homotopy-cartesian-horizontal-pasting
 
 #variable A'' : U
 #variable C'' : A'' → U
@@ -842,7 +847,7 @@ types over a product type.
 #variable f : A' → A
 #variable F : (a' : A') → C' a' → C (f a')
 
-#def is-homotopy-cartesian-composition
+#def is-homotopy-cartesian-horizontal-composition
   : is-homotopy-cartesian A'' C'' A' C' f' F' →
     is-homotopy-cartesian A' C' A C f F →
     is-homotopy-cartesian A'' C'' A C
@@ -858,7 +863,7 @@ types over a product type.
       (F' a'') (ihc' a'')
       (F (f' a'')) (ihc (f' a''))
 
-#def is-homotopy-cartesian-cancellation
+#def is-homotopy-cartesian-horizontal-cancellation
   : is-homotopy-cartesian A' C' A C f F
   → is-homotopy-cartesian A'' C'' A C
       (comp A'' A' A f f')
@@ -874,5 +879,36 @@ types over a product type.
       (ihc (f' a''))
       (ihc'' a'')
 
-#end homotopy-cartesian-pasting
+#end homotopy-cartesian-horizontal-pasting
+```
+
+```rzk
+#section homotopy-cartesian-vertical-pasting
+#variable A' : U
+#variable C' : A' → U
+#variable D' : ( a' : A') → C' a' → U
+#variable A : U
+#variable C : A → U
+#variable D : (a : A) → C a → U
+#variable α : A' → A
+#variable γ : (a' : A') → C' a' → C (α a')
+#variable δ : (a' : A') → (c' : C' a') → D' a' c' → D (α a') (γ a' c')
+
+#def is-homotopy-cartesian-vertical-composition
+  ( is-hc-A-C : is-homotopy-cartesian A' C' A C α γ )
+  ( is-hc-C-D : is-homotopy-cartesian
+      ( total-type A' C')
+      ( \ (a', c') → D' a' c')
+      ( total-type A C)
+      ( \ (a, c) → D a c)
+      ( \ (a', c') → (α a', γ a' c'))
+      ( \ (a', c') → δ a' c'))
+  : is-homotopy-cartesian
+      A' (\ a' → total-type (C' a') (D' a'))
+      A (\ a → total-type (C a) (D a))
+      α (\ a' (c', d') → (γ a' c', δ a' c' d'))
+  :=
+    U
+
+#end homotopy-cartesian-vertical-pasting
 ```

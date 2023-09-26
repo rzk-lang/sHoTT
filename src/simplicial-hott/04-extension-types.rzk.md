@@ -536,7 +536,10 @@ extensionality.
         ( \ t → ( a t , e t) )))
 ```
 
-In an extension type of a dependent type that is pointwise contractible, then we have an inhabitant of the extension type witnessing the contraction, at every inhabitant of the base, of each point in the fiber to the center of the fiber. Both directions of this statement will be needed. 
+In an extension type of a dependent type that is pointwise contractible, then we
+have an inhabitant of the extension type witnessing the contraction, at every
+inhabitant of the base, of each point in the fiber to the center of the fiber.
+Both directions of this statement will be needed.
 
 ```rzk
 
@@ -558,16 +561,16 @@ In an extension type of a dependent type that is pointwise contractible, then we
   ( a : (t : ϕ ) → A t)
   ( is-contr-fiberwise-A : (t : ψ ) → is-contr ( A t))
   : (t : ϕ ) → (a t = first (is-contr-fiberwise-A t))
-  :=  \ t → 
+  :=  \ t →
           rev
             ( A t )
             ( first (is-contr-fiberwise-A t) )
-            ( a t) -- 
+            ( a t) --
             ( second (is-contr-fiberwise-A t) (a t))
 
 ```
 
-```rzk 
+```rzk
 
 #define first-4-11
   (weak-ext-ext : WeakExtExt)
@@ -578,11 +581,11 @@ In an extension type of a dependent type that is pointwise contractible, then we
   ( a : (t : ϕ ) → A t)
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
   : Σ (a' : (t : ψ ) → A t [ϕ t ↦ a t]),
-           ((t : ψ ) → 
-            (restrict I ψ ϕ A a a' t = 
+           ((t : ψ ) →
+            (restrict I ψ ϕ A a a' t =
               first (is-contr-fiberwise-A t))
               [ϕ t ↦ codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A t] )
-  := 
+  :=
     htpy-ext-property
     ( weak-ext-ext)
     ( I )
@@ -605,9 +608,34 @@ In an extension type of a dependent type that is pointwise contractible, then we
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
   : (t : ψ ) → f t = (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t
-  := \ t → eq-is-contr 
+  := \ t → eq-is-contr
               ( A t)
               ( is-contr-fiberwise-A t)
               ( f t )
               ( restrict I ψ ϕ A a (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t)
+```
+
+```rzk
+#define third-4-11
+  ( weak-ext-ext : WeakExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-fiberwise-contr : (t : ψ ) → is-contr (A t))
+  ( a : (t : ϕ ) → A t)
+  ( f : (t : ψ ) → A t [ϕ t ↦ a t])
+  ( a' : (t : ψ ) → A t [ϕ t ↦ a t])
+  ( c : (t : ψ ) → (f t = a' t))
+  : (t : ψ ) → (c t = refl)
+  :=  \ t →
+    all-paths-eq-is-contr
+      ( A t)
+      ( is-fiberwise-contr t)
+      ( f t)
+      ( a' t)
+      ( c t)
+      ( refl _)
+
+
 ```

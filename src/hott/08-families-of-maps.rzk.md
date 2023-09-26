@@ -289,14 +289,6 @@ equivalence.
 
 ## Codomain based path spaces
 
-```rzk
-#def equiv-rev
-  ( A : U)
-  ( x y : A)
-  : Equiv (x = y) (y = x)
-  := (rev A x y , ((rev A y x , rev-rev A x y) , (rev A y x , rev-rev A y x)))
-```
-
 ```rzk title="An equivalence between the based path spaces"
 #def equiv-based-paths
   ( A : U)
@@ -814,7 +806,6 @@ types over a product type.
 ```
 
 ## Homotopy cartesian squares
-
 
 ```rzk
 #def is-homotopy-cartesian

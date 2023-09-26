@@ -831,10 +831,11 @@ types over a product type.
 ```
 
 Homotopy cartesian squares have a calculus of pasting and cancellation.
-We have a horizontal and a vertical version.
+
+We have the horizontal version of pasting and cancellation.
 
 ```rzk
-#section homotopy-cartesian-horizontal-pasting
+#section homotopy-cartesian-horizontal-calculus
 
 #variable A'' : U
 #variable C'' : A'' → U
@@ -847,7 +848,7 @@ We have a horizontal and a vertical version.
 #variable f : A' → A
 #variable F : (a' : A') → C' a' → C (f a')
 
-#def is-homotopy-cartesian-horizontal-composition
+#def is-homotopy-cartesian-horizontal-pasting
   : is-homotopy-cartesian A'' C'' A' C' f' F' →
     is-homotopy-cartesian A' C' A C f F →
     is-homotopy-cartesian A'' C'' A C
@@ -879,11 +880,13 @@ We have a horizontal and a vertical version.
       (ihc (f' a''))
       (ihc'' a'')
 
-#end homotopy-cartesian-horizontal-pasting
+#end homotopy-cartesian-horizontal-calculus
 ```
 
+And we have the vertical version of pasting and cancellation.
+
 ```rzk
-#section homotopy-cartesian-vertical-pasting
+#section homotopy-cartesian-vertical-calculus
 #variable A' : U
 #variable C' : A' → U
 #variable D' : ( a' : A') → C' a' → U
@@ -894,7 +897,24 @@ We have a horizontal and a vertical version.
 #variable γ : (a' : A') → C' a' → C (α a')
 #variable δ : (a' : A') → (c' : C' a') → D' a' c' → D (α a') (γ a' c')
 
-#def is-homotopy-cartesian-vertical-composition
+#def temp-1y5f-Σγδ uses (A)
+  ( a' : A')
+  : total-type (C' a') (D' a') → total-type (C (α a')) (D (α a'))
+  :=
+    \ (c', d') → (γ a' c', δ a' c' d')
+
+#def temp-1y5f-comp uses (A)
+  (a' : A')
+  : ( total-type (C' a') (D' a')) → ( total-type (C (α a')) (D (α a')))
+  := ( comp
+       ( total-type (C' a') (D' a'))
+       ( Σ (c' : C' a'), D (α a') (γ a' c'))
+       ( total-type (C (α a')) (D (α a')))
+       ( \ (c', d) → (γ a' c', d) )
+       ( total-map (C' a') (D' a') (\ c' → D (α a') (γ a' c')) ( δ a'))
+     )
+
+#def is-homotopy-cartesian-vertical-pasting
   ( is-hc-A-C : is-homotopy-cartesian A' C' A C α γ )
   ( is-hc-C-D : is-homotopy-cartesian
       ( total-type A' C')
@@ -902,13 +922,91 @@ We have a horizontal and a vertical version.
       ( total-type A C)
       ( \ (a, c) → D a c)
       ( \ (a', c') → (α a', γ a' c'))
-      ( \ (a', c') → δ a' c'))
+      ( \ (a', c') → δ a' c')
+  )
   : is-homotopy-cartesian
       A' (\ a' → total-type (C' a') (D' a'))
       A (\ a → total-type (C a) (D a))
       α (\ a' (c', d') → (γ a' c', δ a' c' d'))
   :=
-    U
+    \ a' →
+      ( is-equiv-homotopy
+        ( total-type (C' a') (D' a'))
+        ( total-type (C (α a')) (D (α a')))
+        ( temp-1y5f-Σγδ a')
+        ( temp-1y5f-comp a')
+        ( \ _ → refl)
+        ( is-equiv-comp
+          ( total-type (C' a') (D' a'))
+          ( Σ (c' : C' a'), D (α a') (γ a' c'))
+          ( total-type (C (α a')) (D (α a')))
+          ( total-map ( C' a') ( D' a') ( \ c' → D (α a') (γ a' c')) ( δ a'))
+          ( family-of-equiv-total-equiv
+            ( C' a')
+            ( D' a')
+            ( \ c' → D (α a') (γ a' c'))
+            ( δ a')
+            ( \ c' → is-hc-C-D (a', c'))
+          )
+          ( \ (c', d) → (γ a' c', d) )
+          ( second
+            ( total-equiv-pullback-is-equiv
+              ( C' a')
+              ( C (α a'))
+              ( γ a')
+              ( is-hc-A-C a')
+              ( D (α a'))
+            )
+          )
+        )
+      )
 
-#end homotopy-cartesian-vertical-pasting
+#def is-homotopy-cartesian-vertical-cancellation
+  ( is-hc-A-C : is-homotopy-cartesian A' C' A C α γ )
+  ( is-hc-A-D : is-homotopy-cartesian
+      A'(\ a' → total-type (C' a') (D' a'))
+      A (\ a → total-type (C a) (D a))
+      α (\ a' (c', d') → (γ a' c', δ a' c' d'))
+  )
+  : is-homotopy-cartesian
+      ( total-type A' C')
+      ( \ (a', c') → D' a' c')
+      ( total-type A C)
+      ( \ (a, c) → D a c)
+      ( \ (a', c') → (α a', γ a' c'))
+      ( \ (a', c') → δ a' c')
+  :=
+    \ ( a', c') →
+      total-equiv-family-of-equiv
+        ( C' a')
+        ( D' a')
+        ( \ x → D (α a') (γ a' x))
+        ( δ a')
+        ( is-equiv-right-factor
+            ( total-type (C' a') (D' a'))
+            ( Σ (c' : C' a'), D (α a') (γ a' c'))
+            ( total-type (C (α a')) (D (α a')))
+            ( total-map (C' a') (D' a') (\ c' → D (α a') (γ a' c')) ( δ a'))
+            ( \ (c', d) → (γ a' c', d) )
+            ( second
+              ( total-equiv-pullback-is-equiv
+                ( C' a')
+                ( C (α a'))
+                ( γ a')
+                ( is-hc-A-C a')
+                ( D (α a'))
+              )
+            )
+            ( is-equiv-homotopy
+                ( total-type (C' a') (D' a'))
+                ( total-type (C (α a')) (D (α a')))
+                ( temp-1y5f-comp a')
+                ( temp-1y5f-Σγδ a')
+                ( \ _ → refl)
+                ( is-hc-A-D a')
+            )
+        )
+        ( c')
+
+#end homotopy-cartesian-vertical-calculus
 ```

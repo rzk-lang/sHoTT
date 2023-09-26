@@ -192,6 +192,63 @@ logical equivalence
       has-unique-fixed-domain-lifts-is-covariant A C)
 ```
 
+## Theorem 8.8 from RS17.
+
+We prove that the total space of a covariant family over a Segal type is a Segal
+type. We split the proof into intermediate steps. Let $A$ be a type and a type family
+`#!rzk C : A → U`.
+
+We examine the fibers of the horn restriction on the total space of C.
+First note we have the equivalences:
+
+```rzk
+#def apply-4-3
+  ( A : U )
+  ( C : A → U )
+  : Equiv
+    ( Λ → (Σ ( a : A ), C a ) )
+    ( Σ ( f : Λ → A ), ( t : Λ ) → ( C ( f t ) ) )
+  := axiom-choice ( 2 × 2 ) Λ ( \ t → BOT ) ( \ t → A )
+  ( \ t a → C a ) ( \ t → recBOT ) ( \ t → recBOT )
+
+#def apply-4-3-again
+  ( A : U )
+  ( C : A → U )
+  : Equiv
+    ( Δ² → (Σ ( a : A ), C a ) )
+    ( Σ ( f : Δ² → A ), ( t : Δ² ) → ( C ( f t ) ) )
+  := axiom-choice ( 2 × 2 ) Δ² ( \ t → BOT ) ( \ t → A )
+  ( \ t a → C a ) ( \ t → recBOT ) ( \ t → recBOT )
+```
+We show that the induced map between this types is an equivalence. First we exhibit
+the map:
+
+```rzk
+#def restriction
+  ( A : U )
+  ( C : A → U )
+  : ( Σ ( f : Δ² → A ), ( t : Δ² ) → ( C ( f t ) ) ) →
+    ( Σ ( g : Λ → A ), ( t : Λ ) → ( C ( g t ) ) )
+  := \ ( f, μ ) → ( \ t → f t , \ t → μ t)
+```
+
+Compute the fibers of this map by showing the equivalence as claimed in the proof of Theorem 8.8 in RS17.
+The following maps will be packed into some `#!rzk Equiv`.
+
+```rzk
+#def map-to-fiber
+  ( A : U )
+  ( C : A → U )
+  ( (g , φ) : ( Σ ( k : Λ → A ), ( t : Λ ) → C ( k t ) ) )
+  : (Σ (h : (t : Δ²) → A [ Λ t ↦ g t ] )
+      , (( t : Δ² ) → C (h t) [ Λ t ↦ φ t])) →  (fib (Σ ( l : Δ² → A ), ( t : Δ² ) → ( C ( l t ) ))
+                                                (Σ ( k : Λ → A ), ( t : Λ ) → ( C ( k t ) ))
+                                                ( restriction A C )
+                                                (g,φ) )
+  := \ ( f,μ ) → ( ( \ t → f t, \ t → μ t  ), refl )
+```
+
+
 ## Representable covariant families
 
 If A is a Segal type and a : A is any term, then hom A a defines a covariant

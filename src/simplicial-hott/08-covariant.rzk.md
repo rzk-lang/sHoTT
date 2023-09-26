@@ -192,12 +192,217 @@ logical equivalence
       has-unique-fixed-domain-lifts-is-covariant A C)
 ```
 
+## Naive left fibrations
+
+For any functor `p : Ĉ → A`,
+we can make a naive definition of what it means to be a left fibration.
+
+```rzk
+#def is-naive-left-fibration
+  ( A Ĉ : U)
+  ( p : Ĉ → A)
+  : U
+  :=
+    is-homotopy-cartesian
+      Ĉ (coslice Ĉ)
+      A (coslice A)
+      p (coslice-fun Ĉ A p)
+```
+
+As a sanity check we unpack the definition of `is-naive-left-fibration`.
+
+```rzk
+#def is-naive-left-fibration-unpacked
+  ( A Ĉ : U)
+  ( p : Ĉ → A)
+  : is-naive-left-fibration A Ĉ p =
+      ((c : Ĉ) → is-equiv (coslice Ĉ c) (coslice A (p c)) (coslice-fun Ĉ A p c))
+  := refl
+```
+
+### Naive left fibrations vs. covariant families
+
+We aim to prove that a type family  `#!rzk C : A → U`,
+is covariant if and only if
+the projection `#!rzk p : total-type A C → A` is a naive left fibration.
+
+The theorem asserts the logical equivalence of two contractibility statements,
+one for the types `dhom-from A a a' f C c`
+and one for the fibers of the canonical map
+`coslice (total-type A C) (a, c) → coslice A a`;
+Thus it suffices to show that for each
+`a a' : A`, `f : hom A a a'`, `c : C a`.
+these two types are equivalent.
+
+We fix the following variables.
+
+```rzk
+#section is-naive-left-fibration-is-covariant-proof
+#variable A : U
+#variable a : A
+#variable C : A → U
+#variable c : C a
+```
+
+Note that we do not fix `a' : A` and `f : hom A a a'`.
+Letting these vary lets us give an easy proof
+by invoking the induction principle for fibers.
+
+
+We make some abbreviations to make the proof more readable:
+
+```rzk
+-- We prepend all local names in this section
+-- with the random identifyier temp-b9wX
+-- to avoid cluttering the global name space.
+-- Once rzk supports local variables, these should be renamed.
+
+#def temp-b9wX-coslice-fun
+  : coslice (total-type A C) (a, c) → coslice A a
+  := coslice-fun (total-type A C) A (\ (x, _) → x) (a, c)
+
+#def temp-b9wX-fib
+  (a' : A)
+  (f : hom A a a')
+  : U
+  :=
+    fib (coslice (total-type A C) (a, c))
+        (coslice A a)
+        (temp-b9wX-coslice-fun)
+        (a', f)
+```
+
+We construct the forward map;
+this one is straightforward since
+it goes from strict extension type to a weak one.
+
+```rzk
+#def temp-b9wX-forward
+  ( a' : A)
+  ( f : hom A a a')
+  : dhom-from A a a' f C c → temp-b9wX-fib a' f
+  :=
+    \ (c', f̂) → (((a', c'), \ t → (f t, f̂ t)) , refl)
+```
+
+The only non-trivial part is showing that this map has a section.
+We do this by the following fiber induction.
+
+```rzk
+#def temp-b9wX-has-section'-forward
+  ( (a', f) : coslice A a)
+  ( u : temp-b9wX-fib a' f)
+  : U
+  := Σ ( v : dhom-from A a a' f C c), ( temp-b9wX-forward a' f v = u)
+
+#def temp-b9wX-forward-section'
+  : ( (a', f) : coslice A a) →
+    ( u : temp-b9wX-fib a' f) →
+    temp-b9wX-has-section'-forward (a', f) u
+  :=
+    ind-fib
+      ( coslice (total-type A C) (a, c))
+      ( coslice A a)
+      ( temp-b9wX-coslice-fun)
+      ( temp-b9wX-has-section'-forward)
+      (\ ((a', c'), ĝ) → ((c', \ t → second (ĝ t)) , refl))
+```
+
+We have constructed a section.
+It is also definitionally a retraction, yielding the desired equivalence.
+
+```rzk
+#def temp-b9wX-has-inverse-forward
+  ( a' : A)
+  ( f : hom A a a')
+  : has-inverse
+      (dhom-from A a a' f C c)
+      (temp-b9wX-fib a' f)
+      (temp-b9wX-forward a' f)
+  :=
+    ( \ u → first (temp-b9wX-forward-section' (a', f) u),
+    ( \ _ → refl,
+      \ u → second (temp-b9wX-forward-section' (a', f) u)
+    ))
+
+#def temp-b9wX-the-equivalence
+  ( a' : A)
+  ( f : hom A a a')
+  : Equiv
+      (dhom-from A a a' f C c)
+      (temp-b9wX-fib a' f)
+  :=
+    ( (temp-b9wX-forward a' f),
+      is-equiv-has-inverse
+        (dhom-from A a a' f C c)
+        (temp-b9wX-fib a' f)
+        (temp-b9wX-forward a' f)
+        (temp-b9wX-has-inverse-forward a' f)
+    )
+
+#end is-naive-left-fibration-is-covariant-proof
+```
+
+Finally, we deduce the theorem by some straightforward logical bookkeeping.
+
+```rzk title="RS17, Theorem 8.5"
+#def is-naive-left-fibration-is-covariant
+  ( A : U)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  : is-naive-left-fibration A (total-type A C) (\ (a, _) → a)
+  :=
+    \ (a, c) →
+      is-equiv-is-contr-map
+        ( coslice (total-type A C) (a, c))
+        ( coslice A a)
+        ( temp-b9wX-coslice-fun A a C c)
+        ( \ (a', f) →
+          is-contr-equiv-is-contr
+            (dhom-from A a a' f C c)
+            (temp-b9wX-fib A a C c a' f)
+            (temp-b9wX-the-equivalence A a C c a' f)
+            (is-covariant-C a a' f c)
+        )
+
+#def is-covariant-is-naive-left-fibration
+  ( A : U)
+  ( C : A → U)
+  ( inlf-ΣC : is-naive-left-fibration A (total-type A C) (\ (a, _) → a))
+  : is-covariant A C
+  :=
+    \ a a' f c →
+      is-contr-equiv-is-contr'
+        ( dhom-from A a a' f C c)
+        ( temp-b9wX-fib A a C c a' f)
+        ( temp-b9wX-the-equivalence A a C c a' f)
+        ( is-contr-map-is-equiv
+          ( coslice (total-type A C) (a, c))
+          ( coslice A a)
+          ( temp-b9wX-coslice-fun A a C c)
+          ( inlf-ΣC (a, c))
+          (a', f)
+        )
+
+#def is-naive-left-fibration-iff-is-covariant
+  ( A : U)
+  ( C : A → U)
+  :
+    iff
+      (is-covariant A C)
+      (is-naive-left-fibration A (total-type A C) (\ (a, _) → a))
+  :=
+    ( is-naive-left-fibration-is-covariant A C,
+      is-covariant-is-naive-left-fibration A C)
+```
+
 ## Representable covariant families
 
-If A is a Segal type and a : A is any term, then hom A a defines a covariant
-family over A, and conversely if this family is covariant for every a : A, then
-A must be a Segal type. The proof involves a rather lengthy composition of
-equivalences.
+If `A` is a Segal type and `a : A` is any term,
+then `hom A a` defines a covariant family over A,
+and conversely if this family is covariant for every `a : A`,
+then `A` must be a Segal type.
+The proof involves a rather lengthy composition of equivalences.
 
 ```rzk
 #def dhom-representable

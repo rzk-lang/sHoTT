@@ -853,7 +853,7 @@ then so is the upper one `Σαγ : Σ C' → Σ C`.
 #def pull-up-equiv-is-homotopy-cartesian
   ( is-hc-α-γ : is-homotopy-cartesian)
   ( is-equiv-α : is-equiv A' A α)
-  : is-equiv (total-type A' C') (total-type A C) temp-uBDx-Σαγ
+  : is-equiv (total-type A' C') (total-type A C) (\ (a', c') → (α a', γ a' c'))
   :=
     is-equiv-homotopy
       ( total-type A' C')
@@ -893,7 +893,7 @@ then the square is homotopy-cartesian.
 #def is-homotopy-cartesian-is-horizontal-equiv
   ( is-equiv-α : is-equiv A' A α)
   ( is-equiv-Σαγ : is-equiv
-      (total-type A' C') (total-type A C) temp-uBDx-Σαγ
+      (total-type A' C') (total-type A C) (\ (a', c') → (α a', γ a' c'))
   )
   : is-homotopy-cartesian
   :=
@@ -919,10 +919,10 @@ then the square is homotopy-cartesian.
       ( a' )
 ```
 
-
 In a general homotopy-cartesian square we cannot
 deduce `is-equiv α` from `is-equiv (Σγ)`.
-This changes in the presence of a section:
+However, if the square has a vertical section
+then we can always do this (whether the square is homotopy-cartesian or not).
 
 ```rzk
 #def has-section-family-over-map
@@ -931,71 +931,101 @@ This changes in the presence of a section:
     Σ ( ( s', s) : product ((a' : A') → C' a') ((a : A) → C a) ),
       ( (a' : A') → γ a' (s' a') = s (α a'))
 
+#def induced-map-on-fibers-Σ uses (γ)
+  ( ĉ : total-type A C)
+  ( (ĉ', q̂) : fib
+                (total-type A' C') (total-type A C)
+                (\ (a', c') → (α a', γ a' c'))
+                ĉ
+  )
+  : fib A' A α (first ĉ)
+  :=
+    (first ĉ', first-path-Σ A C (temp-uBDx-Σαγ ĉ') ĉ q̂)
+
+#def temp-uBDx-helper-type uses (γ C')
+  ( ((s', s) , η) : has-section-family-over-map)
+  ( a : A )
+  ( (a', p) : fib A' A α a )
+  : U
+  :=
+    Σ ( q̂ : temp-uBDx-Σαγ (a', s' a') = (a, s a)),
+        ( induced-map-on-fibers-Σ (a, s a) ((a', s' a'), q̂) = (a', p))
+
+#def temp-uBDx-helper uses (γ C')
+  ( ((s', s) , η) : has-section-family-over-map)
+  : ( a : A) →
+    ( (a', p) : fib A' A α a ) →
+    temp-uBDx-helper-type ((s',s), η) a (a', p)
+  :=
+    ind-fib A' A α
+      (temp-uBDx-helper-type ((s',s), η))
+      ( \ a' →
+        ( eq-pair A C (α a', γ a' (s' a')) (α a', s (α a')) ( refl, η a' ) ,
+          eq-pair
+            ( A')
+            ( \ x → α x = α a')
+            ( a' ,
+              first-path-Σ A C
+                ( α a', γ a' (s' a'))
+                ( α a', s (α a'))
+                ( eq-pair A C (α a', γ a' (s' a')) (α a', s (α a')) ( refl, η a' ))
+            )
+            ( a' , refl)
+            ( refl ,
+              first-path-Σ-eq-pair
+                A C (α a', γ a' (s' a')) (α a', s (α a')) ( refl, η a' )
+            )
+        )
+      )
+
+#def induced-retraction-on-fibers-with-section uses (γ)
+  ( ((s',s),η) : has-section-family-over-map)
+  ( a : A )
+  : ( is-retract-of
+      ( fib A' A α a )
+      ( fib
+        ( total-type A' C') (total-type A C)
+        ( \ (a', c') → (α a', γ a' c'))
+        ( a, s a)
+      )
+    )
+  :=
+    ( \ (a', p) → ( (a', s' a'), first (temp-uBDx-helper ((s',s),η) a (a',p))),
+      ( induced-map-on-fibers-Σ (a, s a) ,
+        \ (a', p) → second (temp-uBDx-helper ((s',s),η) a (a',p))
+      )
+    )
+
+#def push-down-equiv-with-section uses (γ)
+  ( ((s',s),η) : has-section-family-over-map)
+  ( is-equiv-Σαγ : is-equiv
+      (total-type A' C') (total-type A C) temp-uBDx-Σαγ
+  )
+  : is-equiv A' A α
+  :=
+    is-equiv-is-contr-map A' A α
+      ( \ a →
+        is-contr-is-retract-of-is-contr
+          ( fib A' A α a)
+          ( fib (total-type A' C') (total-type A C) (temp-uBDx-Σαγ) (a, s a))
+          ( induced-retraction-on-fibers-with-section ((s',s),η) a)
+          ( is-contr-map-is-equiv
+            ( total-type A' C') (total-type A C)
+            (temp-uBDx-Σαγ)
+            ( is-equiv-Σαγ )
+            (a, s a)
+          )
+      )
+
 #end homotopy-cartesian
 ```
 
-Homotopy cartesian squares have a calculus of pasting and cancellation.
 
-We have the horizontal version of pasting and cancellation.
-
-```rzk
-#section homotopy-cartesian-horizontal-calculus
-
-#variable A'' : U
-#variable C'' : A'' → U
-#variable A' : U
-#variable C' : A' → U
-#variable A : U
-#variable C : A → U
-#variable f' : A'' → A'
-#variable F' : (a'' : A'') → C'' a'' → C' (f' a'')
-#variable f : A' → A
-#variable F : (a' : A') → C' a' → C (f a')
-
-#def is-homotopy-cartesian-horizontal-pasting
-  : is-homotopy-cartesian A'' C'' A' C' f' F' →
-    is-homotopy-cartesian A' C' A C f F →
-    is-homotopy-cartesian A'' C'' A C
-      (comp A'' A' A
-        f f')
-      (\ a'' →
-        comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
-          (F (f' a'')) (F' a'')
-      )
-  :=
-    \ ihc' ihc a'' →
-    is-equiv-comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
-      (F' a'') (ihc' a'')
-      (F (f' a'')) (ihc (f' a''))
-
-#def is-homotopy-cartesian-right-cancellation
-  : is-homotopy-cartesian A' C' A C f F
-  → is-homotopy-cartesian A'' C'' A C
-      (comp A'' A' A f f')
-      (\ a'' →
-        comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
-          (F (f' a'')) (F' a'')
-      )
-  → is-homotopy-cartesian A'' C'' A' C' f' F'
-  :=
-    \ ihc ihc'' a'' →
-    is-equiv-right-cancel (C'' a'') (C' (f' a'')) (C (f (f' a'')))
-      (F' a'') (F (f' a''))
-      (ihc (f' a''))
-      (ihc'' a'')
-
-#end homotopy-cartesian-horizontal-calculus
-```
-
-And we have the vertical version of pasting and cancellation.
+Form this interaction with equivalences we deduce corresponding facts about
+vertical pasting and cancellation of homotopy cartesian squares.
 
 ```rzk
 #section homotopy-cartesian-vertical-calculus
--- We prepend all local names in this section
--- with the random identifier temp-1y5f
--- to avoid cluttering the global name space.
--- Once rzk supports local variables, these should be renamed.
-
 
 #variable A' : U
 #variable C' : A' → U
@@ -1006,23 +1036,6 @@ And we have the vertical version of pasting and cancellation.
 #variable α : A' → A
 #variable γ : (a' : A') → C' a' → C (α a')
 #variable δ : (a' : A') → (c' : C' a') → D' a' c' → D (α a') (γ a' c')
-
-#def temp-1y5f-Σγδ uses (A)
-  ( a' : A')
-  : total-type (C' a') (D' a') → total-type (C (α a')) (D (α a'))
-  :=
-    \ (c', d') → (γ a' c', δ a' c' d')
-
-#def temp-1y5f-comp uses (A)
-  (a' : A')
-  : ( total-type (C' a') (D' a')) → ( total-type (C (α a')) (D (α a')))
-  := ( comp
-       ( total-type (C' a') (D' a'))
-       ( Σ (c' : C' a'), D (α a') (γ a' c'))
-       ( total-type (C (α a')) (D (α a')))
-       ( \ (c', d) → (γ a' c', d) )
-       ( total-map (C' a') (D' a') (\ c' → D (α a') (γ a' c')) ( δ a'))
-     )
 
 #def is-homotopy-cartesian-upper
   : U
@@ -1035,14 +1048,14 @@ And we have the vertical version of pasting and cancellation.
        ( \ (a', c') → δ a' c')
      )
 
-#def is-homotopy-cartesian-upper-to-fibers
+#def is-homotopy-cartesian-upper-to-fibers uses (A)
   ( is-hc-γ-δ : is-homotopy-cartesian-upper)
   ( a' : A')
   : is-homotopy-cartesian (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a')
   :=
     \ c' → is-hc-γ-δ (a', c')
 
-#def is-homotopy-cartesian-upper-from-fibers
+#def is-homotopy-cartesian-upper-from-fibers uses (A)
   ( is-fiberwise-hc-γ-δ
     : ( a' : A') →
       is-homotopy-cartesian (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a')
@@ -1051,14 +1064,12 @@ And we have the vertical version of pasting and cancellation.
   :=
     \ (a', c') → is-fiberwise-hc-γ-δ a' c'
 
-
 #def is-homotopy-cartesian-vertical-pasted
   : U
   := is-homotopy-cartesian
        A' (\ a' → total-type (C' a') (D' a'))
        A (\ a → total-type (C a) (D a))
        α (\ a' (c', d') → (γ a' c', δ a' c' d'))
-
 
 #def is-homotopy-cartesian-vertical-pasting
   ( is-hc-α-γ : is-homotopy-cartesian A' C' A C α γ )
@@ -1086,15 +1097,70 @@ And we have the vertical version of pasting and cancellation.
       )
 
 #def is-homotopy-cartesian-upper-cancellation-with-section
-  ( is-hc-A-D : is-homotopy-cartesian-vertical-pasted)
-  ( is-hc-C-D : is-homotopy-cartesian-upper)
-  ( has-sec-C-D : (a' : A') →
+  ( has-sec-γ-δ : (a' : A') →
       has-section-family-over-map
         (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a')
   )
+  ( is-hc-α-δ : is-homotopy-cartesian-vertical-pasted)
   : is-homotopy-cartesian A' C' A C α γ
   :=
-    \ a' → undefined
+    \ a' →
+      push-down-equiv-with-section
+        (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a')
+        (has-sec-γ-δ a')
+        (is-hc-α-δ a')
 
 #end homotopy-cartesian-vertical-calculus
+```
+
+We also have the horizontal version of pasting and cancellation
+which follows from composition and cancelling laws for equivalences.
+
+```rzk
+#section homotopy-cartesian-horizontal-calculus
+
+#variable A'' : U
+#variable C'' : A'' → U
+#variable A' : U
+#variable C' : A' → U
+#variable A : U
+#variable C : A → U
+#variable f' : A'' → A'
+#variable F' : (a'' : A'') → C'' a'' → C' (f' a'')
+#variable f : A' → A
+#variable F : (a' : A') → C' a' → C (f a')
+
+#def is-homotopy-cartesian-horizontal-pasting
+  ( ihc : is-homotopy-cartesian A' C' A C f F)
+  ( ihc' : is-homotopy-cartesian A'' C'' A' C' f' F')
+  : is-homotopy-cartesian A'' C'' A C
+      ( comp A'' A' A f f')
+      ( \ a'' →
+        comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+         (F (f' a'')) (F' a'')
+      )
+  :=
+    \ a'' →
+    is-equiv-comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+      (F' a'') (ihc' a'')
+      (F (f' a'')) (ihc (f' a''))
+
+#def is-homotopy-cartesian-right-cancellation
+  ( ihc : is-homotopy-cartesian A' C' A C f F)
+  ( ihc'' : is-homotopy-cartesian A'' C'' A C
+              ( comp A'' A' A f f')
+              ( \ a'' →
+                comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+                  (F (f' a'')) (F' a'')
+              )
+   )
+   : is-homotopy-cartesian A'' C'' A' C' f' F'
+  :=
+    \ a'' →
+    is-equiv-right-cancel (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+      (F' a'') (F (f' a''))
+      (ihc (f' a''))
+      (ihc'' a'')
+
+#end homotopy-cartesian-horizontal-calculus
 ```

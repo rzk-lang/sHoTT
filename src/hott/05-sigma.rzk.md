@@ -201,6 +201,7 @@ Here we've decomposed `#!rzk e : Eq-Σ s t` as `#!rzk (e0, e1)` and decomposed
     pair-eq-eq-pair-split
       ( first s) (second s) (first t) (first e) (second t) (second e)
 
+
 #def extensionality-Σ
   ( s t : Σ (a : A) , B a)
   : Equiv (s = t) (Eq-Σ s t)
@@ -210,6 +211,20 @@ Here we've decomposed `#!rzk e : Eq-Σ s t` as `#!rzk (e0, e1)` and decomposed
         ( eq-pair s t , pair-eq-eq-pair s t)))
 
 #end paths-in-sigma
+
+#def first-path-Σ-eq-pair
+  ( A : U)
+  ( B : A → U)
+  ( (a,b) (a',b') : Σ (a : A), B a)
+  ( (e0, e1) : Eq-Σ A B (a,b) (a',b'))
+  : first-path-Σ A B (a,b) (a',b') (eq-pair A B (a,b) (a',b') (e0, e1)) = e0
+  :=
+    first-path-Σ
+      ( a = a' )
+      ( \ p → transport A B a a' p b = b' )
+      ( pair-eq A B (a,b) (a',b') (eq-pair A B (a,b) (a',b') (e0,e1)) )
+      ( e0, e1 )
+      ( pair-eq-eq-pair A B (a,b) (a',b') (e0,e1))
 ```
 
 ## Identity types of Sigma types over a product

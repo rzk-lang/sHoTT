@@ -1426,3 +1426,33 @@ As a special case of the above:
     }
   </style>
 </svg>
+
+
+
+### Anodyne maps
+
+
+```rzk title="RS17, definition 5.19"
+
+#def is-inner-anodyne
+  (I : CUBE)
+  (ψ : I → TOPE)
+  (Φ : ψ → TOPE)
+  : U
+  := (A : U) → is-segal A → (h : Φ → A) → is-contr ((t : ψ) → A[ Φ t ↦ h t ])
+
+#def Λ²₁ : Δ² → TOPE := \ (s,t) → Λ (s,t)
+
+#def is-inner-anodyne-Λ²₁ : is-inner-anodyne (2 × 2) Δ² Λ²₁
+  := \ A is-segal-A h' →
+    equiv-with-contractible-domain-implies-contractible-codomain
+      ( Σ (h : hom A (h' (0₂,0₂)) (h' (1₂,1₂))) ,
+         (hom2 A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
+          (\ t → h' (t,0₂)) (\ s → h' (1₂,s)) h))
+      ( (t : Δ²) → A [Λ t ↦ h' t])
+      (compositions-are-horn-fillings
+        A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
+          (\ t → h' (t,0₂)) (\ s → h' (1₂,s)))
+      (is-segal-A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
+          (\ t → h' (t,0₂)) (\ s → h' (1₂,s)))
+```

@@ -346,6 +346,44 @@ It is also definitionally a retraction, yielding the desired equivalence.
 Finally, we deduce the theorem by some straightforward logical bookkeeping.
 
 ```rzk title="RS17, Theorem 8.5"
+#def is-naive-left-fibration-is-covariant
+  ( A : U)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  : is-naive-left-fibration A (total-type A C) (\ (a, _) → a)
+  :=
+    \ (a, c) →
+      is-equiv-is-contr-map
+        ( coslice (total-type A C) (a, c))
+        ( coslice A a)
+        ( temp-b9wX-coslice-fun A a C c)
+        ( \ (a', f) →
+          is-contr-equiv-is-contr
+            (dhom-from A a a' f C c)
+            (temp-b9wX-fib A a C c a' f)
+            (temp-b9wX-the-equivalence A a C c a' f)
+            (is-covariant-C a a' f c)
+        )
+
+#def is-covariant-is-naive-left-fibration
+  ( A : U)
+  ( C : A → U)
+  ( inlf-ΣC : is-naive-left-fibration A (total-type A C) (\ (a, _) → a))
+  : is-covariant A C
+  :=
+    \ a a' f c →
+      is-contr-equiv-is-contr'
+        ( dhom-from A a a' f C c)
+        ( temp-b9wX-fib A a C c a' f)
+        ( temp-b9wX-the-equivalence A a C c a' f)
+        ( is-contr-map-is-equiv
+          ( coslice (total-type A C) (a, c))
+          ( coslice A a)
+          ( temp-b9wX-coslice-fun A a C c)
+          ( inlf-ΣC (a, c))
+          (a', f)
+        )
+
 #def is-naive-left-fibration-iff-is-covariant
   ( A : U)
   ( C : A → U)
@@ -354,31 +392,8 @@ Finally, we deduce the theorem by some straightforward logical bookkeeping.
       (is-covariant A C)
       (is-naive-left-fibration A (total-type A C) (\ (a, _) → a))
   :=
-    ( \ is-covariant-C (a, c) →
-        is-equiv-is-contr-map
-          ( coslice (total-type A C) (a, c))
-          ( coslice A a)
-          ( temp-b9wX-coslice-fun A a C c)
-          ( \ (a', f) →
-            is-contr-equiv-is-contr
-              (dhom-from A a a' f C c)
-              (temp-b9wX-fib A a C c a' f)
-              (temp-b9wX-the-equivalence A a C c a' f)
-              (is-covariant-C a a' f c)
-          )
-    , \ inlf-ΣC a a' f c →
-        is-contr-equiv-is-contr'
-          ( dhom-from A a a' f C c)
-          ( temp-b9wX-fib A a C c a' f)
-          ( temp-b9wX-the-equivalence A a C c a' f)
-          ( is-contr-map-is-equiv
-            ( coslice (total-type A C) (a, c))
-            ( coslice A a)
-            ( temp-b9wX-coslice-fun A a C c)
-            ( inlf-ΣC (a, c))
-            (a', f)
-          )
-    )
+    ( is-naive-left-fibration-is-covariant A C,
+      is-covariant-is-naive-left-fibration A C)
 ```
 
 ## Representable covariant families

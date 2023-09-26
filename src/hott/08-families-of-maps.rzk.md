@@ -808,26 +808,83 @@ types over a product type.
 ## Homotopy cartesian squares
 
 ```rzk
-#def is-homotopy-cartesian
-  ( A' : U)
-  ( C' : A' → U)
-  ( A : U)
-  ( C : A → U)
-  ( f : A' → A)
-  ( F : (a' : A') → C' a' → C (f a'))
+#section homotopy-cartesian
+
+#variable A' : U
+#variable C' : A' → U
+#variable A : U
+#variable C : A → U
+#variable α : A' → A
+#variable γ : (a' : A') → C' a' → C (α a')
+
+#def is-homotopy-cartesian uses (A)
   : U
   :=
-    (a' : A') → is-equiv (C' a') (C (f a')) (F a')
+    (a' : A') → is-equiv (C' a') (C (α a')) (γ a')
 
-#def homotopy-cartesian-square
+#def has-section-family-over-map
+  : U
+  :=
+    Σ ( ( s', s) : product ((a' : A') → C' a') ((a : A) → C a) ),
+      ( (a' : A') → γ a' (s' a') = s (α a'))
+
+#def temp-uBDx-comp
+  : (total-type A' C') → (total-type A C)
+  := ( comp
+        ( total-type A' C')
+        ( Σ (a' : A'), C (α a'))
+        ( total-type A C)
+        ( \ (a', c) → (α a', c) )
+        ( total-map A' C' (\ a' → C (α a')) γ)
+     )
+
+#def homotopy-cartesian-pull-up-equiv
+  ( is-hc-α-γ : is-homotopy-cartesian)
+  ( is-equiv-α : is-equiv A' A α)
+  : is-equiv (total-type A' C') (total-type A C) (\ (a', c') → (α a', γ a' c'))
+  :=
+    is-equiv-homotopy
+      ( total-type A' C')
+      ( total-type A C)
+      ( \ (a', c') → (α a', γ a' c'))
+      ( temp-uBDx-comp )
+      (\ _ → refl)
+      ( is-equiv-comp
+        ( total-type A' C')
+        ( Σ (a' : A'), C (α a'))
+        ( total-type A C)
+        ( total-map A' C' (\ a' → C (α a')) γ)
+        ( family-of-equiv-total-equiv
+          ( A' )
+          ( C' )
+          ( \ a' → C (α a') )
+          ( γ)
+          ( \ a' → is-hc-α-γ a')
+        )
+        ( \ (a', c) → (α a', c) )
+        ( second
+          ( total-equiv-pullback-is-equiv
+            ( A')
+            ( A )
+            ( α )
+            ( is-equiv-α )
+            ( C )
+          )
+        )
+      )
+
+#end homotopy-cartesian
+```
+
+```rzk
+#def homotopy-cartesian-map-of-families
   ( A' : U)
   ( C' : A' → U)
   ( A : U)
   ( C : A → U)
   : U
-  := Σ (f : A' → A), Σ (F : (a' : A') → C' a' → C (f a')),
-    is-homotopy-cartesian A' C' A C f F
-
+  := Σ (α : A' → A), Σ (γ : (a' : A') → C' a' → C (α a')),
+    is-homotopy-cartesian A' C' A C α γ
 ```
 
 Homotopy cartesian squares have a calculus of pasting and cancellation.
@@ -864,7 +921,7 @@ We have the horizontal version of pasting and cancellation.
       (F' a'') (ihc' a'')
       (F (f' a'')) (ihc (f' a''))
 
-#def is-homotopy-cartesian-horizontal-cancellation
+#def is-homotopy-cartesian-right-cancellation
   : is-homotopy-cartesian A' C' A C f F
   → is-homotopy-cartesian A'' C'' A C
       (comp A'' A' A f f')
@@ -914,20 +971,38 @@ And we have the vertical version of pasting and cancellation.
        ( total-map (C' a') (D' a') (\ c' → D (α a') (γ a' c')) ( δ a'))
      )
 
+#def is-homotopy-cartesian-upper
+  : U
+  := ( is-homotopy-cartesian
+       ( total-type A' C')
+       ( \ (a', c') → D' a' c')
+       ( total-type A C)
+       ( \ (a, c) → D a c)
+       ( \ (a', c') → (α a', γ a' c'))
+       ( \ (a', c') → δ a' c')
+     )
+
+#def is-homotopy-cartesian-upper-to-fibers
+  ( is-hc-γ-δ : is-homotopy-cartesian-upper)
+  ( a' : A')
+  : is-homotopy-cartesian (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a')
+  :=
+    \ c' → is-hc-γ-δ (a', c')
+
+
+
+#def is-homotopy-cartesian-vertical-pasted
+  : U
+  := is-homotopy-cartesian
+       A' (\ a' → total-type (C' a') (D' a'))
+       A (\ a → total-type (C a) (D a))
+       α (\ a' (c', d') → (γ a' c', δ a' c' d'))
+
+
 #def is-homotopy-cartesian-vertical-pasting
   ( is-hc-A-C : is-homotopy-cartesian A' C' A C α γ )
-  ( is-hc-C-D : is-homotopy-cartesian
-      ( total-type A' C')
-      ( \ (a', c') → D' a' c')
-      ( total-type A C)
-      ( \ (a, c) → D a c)
-      ( \ (a', c') → (α a', γ a' c'))
-      ( \ (a', c') → δ a' c')
-  )
-  : is-homotopy-cartesian
-      A' (\ a' → total-type (C' a') (D' a'))
-      A (\ a → total-type (C a) (D a))
-      α (\ a' (c', d') → (γ a' c', δ a' c' d'))
+  ( is-hc-C-D : is-homotopy-cartesian-upper)
+  : is-homotopy-cartesian-vertical-pasted
   :=
     \ a' →
       ( is-equiv-homotopy
@@ -961,20 +1036,11 @@ And we have the vertical version of pasting and cancellation.
         )
       )
 
-#def is-homotopy-cartesian-vertical-cancellation
+#def is-homotopy-cartesian-lower-cancellation
   ( is-hc-A-C : is-homotopy-cartesian A' C' A C α γ )
-  ( is-hc-A-D : is-homotopy-cartesian
-      A'(\ a' → total-type (C' a') (D' a'))
-      A (\ a → total-type (C a) (D a))
-      α (\ a' (c', d') → (γ a' c', δ a' c' d'))
+  ( is-hc-A-D : is-homotopy-cartesian-vertical-pasted
   )
-  : is-homotopy-cartesian
-      ( total-type A' C')
-      ( \ (a', c') → D' a' c')
-      ( total-type A C)
-      ( \ (a, c) → D a c)
-      ( \ (a', c') → (α a', γ a' c'))
-      ( \ (a', c') → δ a' c')
+  : is-homotopy-cartesian-upper
   :=
     \ ( a', c') →
       total-equiv-family-of-equiv
@@ -1007,6 +1073,17 @@ And we have the vertical version of pasting and cancellation.
             )
         )
         ( c')
+
+#def is-homotopy-cartesian-upper-cancellation-with-section
+  ( is-hc-A-D : is-homotopy-cartesian-vertical-pasted)
+  ( is-hc-C-D : is-homotopy-cartesian-upper)
+  ( has-sec-C-D : (a' : A') →
+      has-section-family-over-map
+        (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a')
+  )
+  : is-homotopy-cartesian A' C' A C α γ
+  :=
+    \ a' → undefined
 
 #end homotopy-cartesian-vertical-calculus
 ```

@@ -1521,3 +1521,85 @@ As a special case of the above:
         (\ s t → h (s,t)))
 
 ```
+
+
+```rzk title="RS17, lemma 5.21"
+
+#def Λ³₁ : Δ³ → TOPE
+  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t2 ≡ t1 ∨ t1 ≡ 1₂
+
+#def Λ³₂ : Δ³ → TOPE
+  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t3 ≡ t2 ∨ t1 ≡ 1₂
+
+#section retraction-Δ³-Δ³×Δ²
+
+#def Δ³×Δ² : ((2 × 2 × 2) × (2 × 2)) → TOPE
+  := pushout-product-codomain (2 × 2 × 2) (2 × 2) Δ³ Δ²
+
+#def X : (Δ³×Δ²) → TOPE
+  := pushout-product-domain (2 × 2 × 2) (2 × 2) Δ³ Λ³₂ Δ² Λ²₁
+
+
+#variable A : U
+#variable h : Λ³₂ → A
+
+#def h^ : X → A
+  := \ ( ((t1, t2), t3), (s1, s2) ) →
+    recOR
+      ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ h ((t1, t2), t3),
+        t1 ≤ s1 ∧ t2 ≤ s2 ↦ h ((s1, t2), t3),
+        s1 ≤ t1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ h ((t1, s2), t3),
+        t1 ≤ s1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ h ((s1, s2), t3),
+        s1 ≤ t1 ∧ s2 ≤ t3 ↦ h ((t1, s2), s2),
+        t1 ≤ s1 ∧ s2 ≤ t3 ↦ h ((s1, s2), s2))
+
+
+#def small : U := (t : Δ³) → A[ Λ³₂ t ↦ h t ]
+#def large uses (h) : U := (x : Δ³×Δ²) → A[ X x ↦ h^ x]
+
+#def retract uses (A h) (f : large) : small
+  := \ ((t1, t2), t3) → f ( ((t1, t2), t3), (t1, t2) )
+
+#def section uses (A h) (g : (t : Δ³) → A[ Λ³₂ t ↦ h t ])
+  : (x : Δ³×Δ²) → A[ X x ↦ h^ x]
+  :=  \ ( ((t1, t2), t3), (s1, s2) ) →
+    recOR
+      ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ g ((t1, t2), t3),
+        t1 ≤ s1 ∧ t2 ≤ s2 ↦ g ((s1, t2), t3),
+        s1 ≤ t1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ g ((t1, s2), t3),
+        t1 ≤ s1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ g ((s1, s2), t3),
+        s1 ≤ t1 ∧ s2 ≤ t3 ↦ g ((t1, s2), s2),
+        t1 ≤ s1 ∧ s2 ≤ t3 ↦ g ((s1, s2), s2))
+
+#def homotopy-retraction-section-id uses (A h)
+  : homotopy small small
+    ( comp small large small retract section)
+    ( identity small)
+  := \ t → refl
+
+#def is-retract-of-Δ³-Δ³×Δ² uses (A h)
+  : is-retract-of small large
+  := (section , (retract , homotopy-retraction-section-id))
+
+#end retraction-Δ³-Δ³×Δ²
+
+#def lemma-5-21 (weakExtExt : WeakExtExt)
+  : is-inner-anodyne (2 × 2 × 2) Δ³ Λ³₂
+  := \ A is-segal-A h →
+    is-contr-is-retract-of-is-contr
+      (small A h)
+      (large A h)
+      (is-retract-of-Δ³-Δ³×Δ² A h)
+      (is-inner-anodyne-pushout-product-right-is-inner-anodyne
+        ( weakExtExt)
+        ( 2 × 2 × 2)
+        ( 2 × 2)
+        ( Δ³)
+        ( Λ³₂)
+        ( Δ²)
+        ( Λ²₁)
+        ( is-inner-anodyne-Λ²₁)
+        ( A)
+        ( is-segal-A)
+        ( h^ A h))
+```

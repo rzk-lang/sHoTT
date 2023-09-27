@@ -128,6 +128,36 @@ Maps out of $Δ³$ are a retract of maps out of $Δ²×Δ¹$.
       ( Δ³-is-retract-Δ²×Δ¹-retraction A , \ _ → refl))
 ```
 
+For a subshape `ϕ ⊂ ψ` we have an easy way of stating
+that it is a retract in a strict and functorial way.
+
+```rzk
+#def is-functorial-shape-retract
+  ( I : CUBE )
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  : U
+  :=
+    (A' : U) → (A : U) → (α : A' → A) →
+    has-section-family-over-map
+      (ϕ → A') (\ f → (t : ψ) → A' [ϕ t ↦ f t])
+      (ϕ → A) (\ f → (t : ψ) → A [ϕ t ↦ f t])
+      (\ f t → α (f t))
+      (\ _ g t → α (g t))
+```
+
+For example, this applies to `Δ² ⊂ Δ¹×Δ¹`.
+
+```rzk
+#def Δ²-is-functorial-retract-Δ¹×Δ¹
+  : is-functorial-shape-retract (2 × 2) (Δ¹×Δ¹) (Δ²)
+  :=
+    \ A' A α →
+      ( ( first (Δ²-is-retract-Δ¹×Δ¹ A'), first (Δ²-is-retract-Δ¹×Δ¹ A) ) ,
+        \ a' → refl
+      )
+```
+
 ### Intersections
 
 The intersection of shapes is defined by conjunction on topes.
@@ -237,4 +267,3 @@ The union of shapes is defined by disjunction on topes.
     }
   </style>
 </svg>
-

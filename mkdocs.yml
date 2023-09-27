@@ -8,6 +8,7 @@ nav:
   - General:
       - About: index.md
       - Code style: STYLEGUIDE.md
+      - Contributors: CONTRIBUTORS.md
 
   - HoTT:
       - Common: hott/00-common.rzk.md

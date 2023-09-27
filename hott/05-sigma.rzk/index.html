@@ -1249,6 +1249,20 @@ which avoids explicit naming the variable <code>x : A</code>.</p>
 </span><span id="__span-9-49"><a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a><span class="err">        ( eq-pair s t , pair-eq-eq-pair s t)))</span>
 </span><span id="__span-9-50"><a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a>
 </span><span id="__span-9-51"><a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a><span class="nd">#end</span><span class="n"> paths-in-sigma</span>
+</span><span id="__span-9-52"><a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a>
+</span><span id="__span-9-53"><a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:first-path-Σ-eq-pair" id="define:first-path-Σ-eq-pair" style="visibility: visible; position: relative; color: inherit">first-path-Σ-eq-pair</a></span>
+</span><span id="__span-9-54"><a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-9-55"><a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-9-56"><a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a><span class="err">  ( (a,b) (a&#39;,b&#39;) : </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A), B a)</span>
+</span><span id="__span-9-57"><a id="__codelineno-9-57" name="__codelineno-9-57" href="#__codelineno-9-57"></a><span class="err">  ( (e0, e1) : Eq-Σ A B (a,b) (a&#39;,b&#39;))</span>
+</span><span id="__span-9-58"><a id="__codelineno-9-58" name="__codelineno-9-58" href="#__codelineno-9-58"></a><span class="err">  : first-path-Σ A B (a,b) (a&#39;,b&#39;) (eq-pair A B (a,b) (a&#39;,b&#39;) (e0, e1)) = e0</span>
+</span><span id="__span-9-59"><a id="__codelineno-9-59" name="__codelineno-9-59" href="#__codelineno-9-59"></a><span class="err">  :=</span>
+</span><span id="__span-9-60"><a id="__codelineno-9-60" name="__codelineno-9-60" href="#__codelineno-9-60"></a><span class="err">    first-path-Σ</span>
+</span><span id="__span-9-61"><a id="__codelineno-9-61" name="__codelineno-9-61" href="#__codelineno-9-61"></a><span class="err">      ( a = a&#39; )</span>
+</span><span id="__span-9-62"><a id="__codelineno-9-62" name="__codelineno-9-62" href="#__codelineno-9-62"></a><span class="err">      ( </span><span class="p">\ </span>p <span class="err">→ transport A B a a&#39; p b = b&#39; )</span>
+</span><span id="__span-9-63"><a id="__codelineno-9-63" name="__codelineno-9-63" href="#__codelineno-9-63"></a><span class="err">      ( pair-eq A B (a,b) (a&#39;,b&#39;) (eq-pair A B (a,b) (a&#39;,b&#39;) (e0,e1)) )</span>
+</span><span id="__span-9-64"><a id="__codelineno-9-64" name="__codelineno-9-64" href="#__codelineno-9-64"></a><span class="err">      ( e0, e1 )</span>
+</span><span id="__span-9-65"><a id="__codelineno-9-65" name="__codelineno-9-65" href="#__codelineno-9-65"></a><span class="err">      ( pair-eq-eq-pair A B (a,b) (a&#39;,b&#39;) (e0,e1))</span>
 </span></code></pre></div>
 <h2 id="identity-types-of-sigma-types-over-a-product">Identity types of Sigma types over a product<a class="headerlink" href="#identity-types-of-sigma-types-over-a-product" title="Permanent link">&para;</a></h2>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nd">#section</span><span class="n"> paths-in-sigma-over-product</span>

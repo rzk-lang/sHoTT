@@ -1,2 +1,2 @@
-*.rzk.md linguist-language=Rzk
-*.rzk linguist-language=Rzk
+*.rzk.md linguist-detectable
+overrides/** linguist-documentation

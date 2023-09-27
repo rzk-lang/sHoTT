@@ -364,7 +364,7 @@ providing control over the underlying maps of the equivalence.
   ( A B C : U)
   ( f : A → B)
   ( g : B → C)
-  ( ( has-retraction-g, (sec-g, _)) : is-equiv B C g)
+  ( has-retraction-g : has-retraction B C g)
   ( ( (retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
   : is-equiv A B f
   :=
@@ -383,7 +383,7 @@ providing control over the underlying maps of the equivalence.
   ( A B C : U)
   ( f : A → B)
   ( g : B → C)
-  ( ( ( retr-f , η-f), has-section-f ) : is-equiv A B f)
+  ( has-section-f : has-section A B f)
   ( ( ( retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
   : is-equiv B C g
   :=
@@ -405,7 +405,7 @@ providing control over the underlying maps of the equivalence.
   ( is-equiv-gf : is-equiv A C (comp A B C g f))
   : is-equiv A B f
   :=
-    is-equiv-right-cancel A B C f g is-equiv-g is-equiv-gf
+    is-equiv-right-cancel A B C f g (first is-equiv-g) is-equiv-gf
 
 #def is-equiv-left-factor
   ( A B C : U)
@@ -415,7 +415,7 @@ providing control over the underlying maps of the equivalence.
   ( is-equiv-gf : is-equiv A C (comp A B C g f))
   : is-equiv B C g
   :=
-    is-equiv-left-cancel A B C f g is-equiv-f is-equiv-gf
+    is-equiv-left-cancel A B C f g (second is-equiv-f) is-equiv-gf
 ```
 
 ```rzk title="A composition of three equivalences"
@@ -719,7 +719,7 @@ dependent function types.
   ( is-equiv-β : is-equiv B' B β)
   : is-equiv A' A α
   :=
-    is-equiv-right-cancel A' A B α s is-equiv-s
+    is-equiv-right-factor A' A B α s is-equiv-s
       ( is-equiv-rev-homotopy A' B
           ( comp A' B' B β s')
           ( comp A' A B s α)
@@ -738,7 +738,7 @@ dependent function types.
   ( is-equiv-α : is-equiv A' A α)
   : is-equiv B' B β
   :=
-    is-equiv-left-cancel A' B' B s' β is-equiv-s'
+    is-equiv-left-factor A' B' B s' is-equiv-s' β
       ( is-equiv-homotopy A' B
         ( comp A' B' B β s')
         ( comp A' A B s α)

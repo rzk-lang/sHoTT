@@ -801,7 +801,7 @@ types over a product type.
   → is-homotopy-cartesian A'' C'' A' C' f' F'
   :=
     \ ihc ihc'' a'' →
-    is-equiv-right-cancel (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+    is-equiv-right-factor (C'' a'') (C' (f' a'')) (C (f (f' a'')))
       (F' a'') (F (f' a''))
       (ihc (f' a''))
       (ihc'' a'')

@@ -26,6 +26,7 @@ extension extensionality:
 
 ```rzk
 #assume funext : FunExt
+#assume weakextext : WeakExtExt
 #assume extext : ExtExt
 ```
 
@@ -416,33 +417,33 @@ We have now proven that both notions of Segal types are logically equivalent.
 
 Using the new characterization of Segal types, we can show that the type of
 functions or extensions into a family of Segal types is again a Segal type. For
-instance if $X$ is a type and $A : X → U$ is such that $A x$ is a Segal type for
-all $x$ then $(x : X) → A x$ is a Segal type.
+instance if $pushout-prod-Λ³₂-Λ²₁$ is a type and $A : pushout-prod-Λ³₂-Λ²₁ → U$ is such that $A x$ is a Segal type for
+all $x$ then $(x : pushout-prod-Λ³₂-Λ²₁) → A x$ is a Segal type.
 
 ```rzk title="RS17, Corollary 5.6(i)"
 #def is-segal-function-type uses (funext)
-  ( X : U)
-  ( A : X → U)
-  ( fiberwise-is-segal-A : (x : X) → is-local-horn-inclusion (A x))
-  : is-local-horn-inclusion ((x : X) → A x)
+  ( pushout-prod-Λ³₂-Λ²₁ : U)
+  ( A : pushout-prod-Λ³₂-Λ²₁ → U)
+  ( fiberwise-is-segal-A : (x : pushout-prod-Λ³₂-Λ²₁) → is-local-horn-inclusion (A x))
+  : is-local-horn-inclusion ((x : pushout-prod-Λ³₂-Λ²₁) → A x)
   :=
     is-equiv-triple-comp
-      ( Δ² → ((x : X) → A x))
-      ( (x : X) → Δ² → A x)
-      ( (x : X) → Λ → A x)
-      ( Λ → ((x : X) → A x))
+      ( Δ² → ((x : pushout-prod-Λ³₂-Λ²₁) → A x))
+      ( (x : pushout-prod-Λ³₂-Λ²₁) → Δ² → A x)
+      ( (x : pushout-prod-Λ³₂-Λ²₁) → Λ → A x)
+      ( Λ → ((x : pushout-prod-Λ³₂-Λ²₁) → A x))
       ( \ g x t → g t x) -- first equivalence
       ( second (flip-ext-fun
         ( 2 × 2)
         ( Δ²)
         ( \ t → BOT)
-        ( X)
+        ( pushout-prod-Λ³₂-Λ²₁)
         ( \ t → A)
         ( \ t → recBOT)))
       ( \ h x t → h x t) -- second equivalence
       ( second (equiv-function-equiv-family
         ( funext)
-        ( X)
+        ( pushout-prod-Λ³₂-Λ²₁)
         ( \ x → (Δ² → A x))
         ( \ x → (Λ → A x))
         ( \ x → (horn-restriction (A x) , fiberwise-is-segal-A x))))
@@ -451,13 +452,13 @@ all $x$ then $(x : X) → A x$ is a Segal type.
         ( 2 × 2)
         ( Λ)
         ( \ t → BOT)
-        ( X)
+        ( pushout-prod-Λ³₂-Λ²₁)
         ( \ t → A)
         ( \ t → recBOT)))
 ```
 
-If $X$ is a shape and $A : X → U$ is such that $A x$ is a Segal type for all $x$
-then $(x : X) → A x$ is a Segal type.
+If $pushout-prod-Λ³₂-Λ²₁$ is a shape and $A : pushout-prod-Λ³₂-Λ²₁ → U$ is such that $A x$ is a Segal type for all $x$
+then $(x : pushout-prod-Λ³₂-Λ²₁) → A x$ is a Segal type.
 
 ```rzk title="RS17, Corollary 5.6(ii)"
 #def is-segal-extension-type' uses (extext)
@@ -1429,7 +1430,7 @@ As a special case of the above:
 
 
 
-### Anodyne maps
+### Inner anodyne maps
 
 
 ```rzk title="RS17, definition 5.19"
@@ -1440,14 +1441,17 @@ As a special case of the above:
   (Φ : ψ → TOPE)
   : U
   := (A : U) → is-segal A → (h : Φ → A) → is-contr ((t : ψ) → A[ Φ t ↦ h t ])
+```
 
-#def Λ²₁ : Δ² → TOPE := \ (s,t) → Λ (s,t)
+The cofibration Λ²₁ → Δ² is inner anodyne
 
-#def is-inner-anodyne-Λ²₁ : is-inner-anodyne (2 × 2) Δ² Λ²₁
+```rzk
+#def is-inner-anodyne-Λ²₁
+  : is-inner-anodyne (2 × 2) Δ² Λ²₁
   := \ A is-segal-A h' →
     equiv-with-contractible-domain-implies-contractible-codomain
       ( Σ (h : hom A (h' (0₂,0₂)) (h' (1₂,1₂))) ,
-         (hom2 A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
+          (hom2 A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
           (\ t → h' (t,0₂)) (\ s → h' (1₂,s)) h))
       ( (t : Δ²) → A [Λ t ↦ h' t])
       (compositions-are-horn-fillings
@@ -1457,93 +1461,69 @@ As a special case of the above:
           (\ t → h' (t,0₂)) (\ s → h' (1₂,s)))
 ```
 
-
 ```rzk title="RS17, lemma 5.20"
-
-#def pushout-product-codomain
-  ( I J : CUBE)
-  ( ψ : I → TOPE)
-  ( ζ : J → TOPE)
-  : (I × J) → TOPE
-  := \ (t,s) → ψ t ∧ ζ s
-
-#def pushout-product-domain
-  ( I J : CUBE)
-  ( ψ : I → TOPE)
-  ( Φ : ψ → TOPE)
-  ( ζ : J → TOPE)
-  ( χ : ζ → TOPE)
-  : (pushout-product-codomain I J ψ ζ) → TOPE
-  := \ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s)
-
-#def is-inner-anodyne-pushout-product-left-is-inner-anodyne
-  (weakExtExt : WeakExtExt)
+#def is-inner-anodyne-pushout-product-left-is-inner-anodyne uses (weakextext)
   ( I J : CUBE)
   ( ψ : I → TOPE)
   ( Φ : ψ → TOPE)
   (is-inner-anodyne-ψ-Φ : is-inner-anodyne I ψ Φ)
   ( ζ : J → TOPE)
   ( χ : ζ → TOPE)
-  : is-inner-anodyne (I × J) (\ (t,s) → ψ t ∧ ζ s) (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
+  : is-inner-anodyne (I × J)
+      (\ (t,s) → ψ t ∧ ζ s)
+      (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
   := \ A is-segal-A h →
     equiv-with-contractible-codomain-implies-contractible-domain
       (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
       ( (s : ζ) → ((t : ψ) → A[ Φ t ↦ h (t,s)])[ χ s ↦ \ t → h (t, s)])
       (uncurry-opcurry I J ψ Φ ζ χ (\ s t → A) h)
-      (weakExtExt
-        J
-        ζ
-        χ
-        (\ s → (t : ψ) → A[ Φ t ↦ h (t,s)])
-        (\ s → is-inner-anodyne-ψ-Φ A is-segal-A (\ t → h (t,s)))
-        (\ s t → h (t,s)))
+      (weakextext
+        ( J)
+        ( ζ)
+        ( χ)
+        ( \ s → (t : ψ) → A[ Φ t ↦ h (t,s)])
+        ( \ s → is-inner-anodyne-ψ-Φ A is-segal-A (\ t → h (t,s)))
+        ( \ s t → h (t,s)))
 
-#def is-inner-anodyne-pushout-product-right-is-inner-anodyne
-  (weakExtExt : WeakExtExt)
+#def is-inner-anodyne-pushout-product-right-is-inner-anodyne uses (weakextext)
   ( I J : CUBE)
   ( ψ : I → TOPE)
   ( Φ : ψ → TOPE)
   ( ζ : J → TOPE)
   ( χ : ζ → TOPE)
   (is-inner-anodyne-ζ-χ : is-inner-anodyne J ζ χ)
-  : is-inner-anodyne (I × J) (\ (t,s) → ψ t ∧ ζ s) (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
+  : is-inner-anodyne (I × J)
+      (\ (t,s) → ψ t ∧ ζ s)
+      (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
   := \ A is-segal-A h →
     equiv-with-contractible-domain-implies-contractible-codomain
       ( (t : ψ) → ((s : ζ) → A[ χ s ↦ h (t,s)])[ Φ t ↦ \ s → h (t, s)])
       (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
       (curry-uncurry I J ψ Φ ζ χ (\ s t → A) h)
-      (weakExtExt
-        I
-        ψ
-        Φ
-        (\ t → (s : ζ) → A[ χ s ↦ h (t,s)])
-        (\ t → is-inner-anodyne-ζ-χ A is-segal-A (\ s → h (t,s)))
-        (\ s t → h (s,t)))
-
+      (weakextext
+        ( I)
+        ( ψ)
+        ( Φ)
+        ( \ t → (s : ζ) → A[ χ s ↦ h (t,s)])
+        ( \ t → is-inner-anodyne-ζ-χ A is-segal-A (\ s → h (t,s)))
+        ( \ s t → h (s,t)))
 ```
 
 
 ```rzk title="RS17, lemma 5.21"
+#section retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
 
-#def Λ³₁ : Δ³ → TOPE
-  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t2 ≡ t1 ∨ t1 ≡ 1₂
-
-#def Λ³₂ : Δ³ → TOPE
-  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t3 ≡ t2 ∨ t1 ≡ 1₂
-
-#section retraction-Δ³-Δ³×Δ²
-
-#def Δ³×Δ² : ((2 × 2 × 2) × (2 × 2)) → TOPE
-  := pushout-product-codomain (2 × 2 × 2) (2 × 2) Δ³ Δ²
-
-#def X : (Δ³×Δ²) → TOPE
-  := pushout-product-domain (2 × 2 × 2) (2 × 2) Δ³ Λ³₂ Δ² Λ²₁
+-- Δ³×Λ²₁ ∪_{Λ³₂×Λ²₁} Λ³₂×Δ²
+#def pushout-prod-Λ³₂-Λ²₁
+  : (Δ³×Δ²) → TOPE
+  := shape-pushout-prod (2 × 2 × 2) (2 × 2) Δ³ Λ³₂ Δ² Λ²₁
 
 
 #variable A : U
 #variable h : Λ³₂ → A
 
-#def h^ : X → A
+#def h^
+  : pushout-prod-Λ³₂-Λ²₁ → A
   := \ ( ((t1, t2), t3), (s1, s2) ) →
     recOR
       ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ h ((t1, t2), t3),
@@ -1554,14 +1534,20 @@ As a special case of the above:
         t1 ≤ s1 ∧ s2 ≤ t3 ↦ h ((s1, s2), s2))
 
 
-#def small : U := (t : Δ³) → A[ Λ³₂ t ↦ h t ]
-#def large uses (h) : U := (x : Δ³×Δ²) → A[ X x ↦ h^ x]
+#def extend-against-Λ³₂-Δ³
+  : U
+  := (t : Δ³) → A[ Λ³₂ t ↦ h t ]
 
-#def retract uses (A h) (f : large) : small
+#def extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (h)
+  : U
+  := (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
+
+#def retract uses (A h) (f : extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
+  : extend-against-Λ³₂-Δ³
   := \ ((t1, t2), t3) → f ( ((t1, t2), t3), (t1, t2) )
 
 #def section uses (A h) (g : (t : Δ³) → A[ Λ³₂ t ↦ h t ])
-  : (x : Δ³×Δ²) → A[ X x ↦ h^ x]
+  : (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
   :=  \ ( ((t1, t2), t3), (s1, s2) ) →
     recOR
       ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ g ((t1, t2), t3),
@@ -1572,26 +1558,32 @@ As a special case of the above:
         t1 ≤ s1 ∧ s2 ≤ t3 ↦ g ((s1, s2), s2))
 
 #def homotopy-retraction-section-id uses (A h)
-  : homotopy small small
-    ( comp small large small retract section)
-    ( identity small)
+  : homotopy extend-against-Λ³₂-Δ³ extend-against-Λ³₂-Δ³
+    ( comp
+      ( extend-against-Λ³₂-Δ³)
+      ( extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
+      ( extend-against-Λ³₂-Δ³)
+      ( retract)
+      ( section))
+    ( identity extend-against-Λ³₂-Δ³)
   := \ t → refl
 
 #def is-retract-of-Δ³-Δ³×Δ² uses (A h)
-  : is-retract-of small large
+  : is-retract-of
+      extend-against-Λ³₂-Δ³
+      extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
   := (section , (retract , homotopy-retraction-section-id))
 
-#end retraction-Δ³-Δ³×Δ²
+#end retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
 
-#def lemma-5-21 (weakExtExt : WeakExtExt)
+#def is-inner-anodyne-Δ³-Λ³₂ uses (weakextext)
   : is-inner-anodyne (2 × 2 × 2) Δ³ Λ³₂
   := \ A is-segal-A h →
     is-contr-is-retract-of-is-contr
-      (small A h)
-      (large A h)
+      (extend-against-Λ³₂-Δ³ A h)
+      (extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)
       (is-retract-of-Δ³-Δ³×Δ² A h)
       (is-inner-anodyne-pushout-product-right-is-inner-anodyne
-        ( weakExtExt)
         ( 2 × 2 × 2)
         ( 2 × 2)
         ( Δ³)

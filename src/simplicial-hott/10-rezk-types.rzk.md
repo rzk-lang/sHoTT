@@ -593,7 +593,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
                   ( id-arr-components-id-nat-trans X A g x))))))))
 
 
-#def TODO uses (funext extext weakfunext)
+#def is-equiv-is-iso-pointwise-is-iso uses (funext extext weakfunext)
   ( X : U)
   ( A : X → U)
   ( is-segal-A : (x : X) → is-segal (A x))

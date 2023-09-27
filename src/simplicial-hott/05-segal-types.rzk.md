@@ -93,6 +93,88 @@ are functorial in `A` in the following sense:
     \ (a', g) → (f a', \ t → f (g t))
 ```
 
+Slices and coslices can also be defined directly as extension types:
+
+```rzk
+#section coslice-as-extension-type
+#variable A : U
+#variable a : A
+
+#def coslice'
+  : U
+  := ( t : Δ¹) → A[t ≡ 0₂ ↦ a]
+
+#def coslice'-coslice
+  : coslice A a → coslice'
+  := \ (_, f) → f
+
+#def coslice-coslice'
+  : coslice' → coslice A a
+  := \ f → ( f 1₂ , \ t → f t) -- does not typecheck after η-reduction
+
+#def is-id-coslice-coslice'-coslice
+  ( (a', f) : coslice A a)
+  : ( coslice-coslice' ( coslice'-coslice (a', f)) = (a', f))
+  :=
+    eq-pair A (hom A a)
+      ( coslice-coslice' ( coslice'-coslice (a', f))) (a', f)
+      (refl, refl)
+
+#def is-id-coslice'-coslice-coslice'
+  ( f : coslice')
+  : ( coslice'-coslice ( coslice-coslice' f) = f)
+  :=
+    refl
+
+#def equiv-coslice-coslice'
+  : is-equiv (coslice A a) coslice' coslice'-coslice
+  :=
+    ( ( coslice-coslice', is-id-coslice-coslice'-coslice),
+      ( coslice-coslice', is-id-coslice'-coslice-coslice')
+    )
+
+#end coslice-as-extension-type
+
+#section slice-as-extension-type
+#variable A : U
+#variable a : A
+
+#def slice'
+  : U
+  := ( t : Δ¹) → A[t ≡ 1₂ ↦ a]
+
+#def slice'-slice
+  : slice A a → slice'
+  := \ (_, f) → f
+
+#def slice-slice'
+  : slice' → slice A a
+  := \ f → ( f 0₂ , \ t → f t) -- does not typecheck after η-reduction
+
+#def is-id-slice-slice'-slice
+  ( (a', f) : slice A a)
+  : ( slice-slice' ( slice'-slice (a', f)) = (a', f))
+  :=
+    eq-pair A (\ a' → hom A a' a)
+      ( slice-slice' ( slice'-slice (a', f))) (a', f)
+      (refl, refl)
+
+#def is-id-slice'-slice-slice'
+  ( f : slice')
+  : ( slice'-slice ( slice-slice' f) = f)
+  :=
+    refl
+
+#def equiv-slice-slice'
+  : is-equiv (slice A a) slice' slice'-slice
+  :=
+    ( ( slice-slice', is-id-slice-slice'-slice),
+      ( slice-slice', is-id-slice'-slice-slice')
+    )
+
+#end slice-as-extension-type
+```
+
 Extension types are also used to define the type of commutative triangles:
 
 <svg style="float: right" viewBox="0 0 200 200" width="150" height="200">

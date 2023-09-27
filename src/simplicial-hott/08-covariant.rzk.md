@@ -411,11 +411,11 @@ if `A` is a Segal type, then so is `A'`.
 
 #def is-homotopy-cartesian-01-Λ uses (is-nlf-α)
   : is-homotopy-cartesian
-      ( Δ¹ → A') ( \ σ → coslice A' (σ 1₂))
+      ( Δ¹ → A') ( \ σ' → coslice A' (σ' 1₂))
       ( Δ¹ → A) ( \ σ → coslice A (σ 1₂))
-      ( \ σ t → α (σ t)) ( \ σ → coslice-fun A' A α (σ 1₂))
+      ( \ σ' t → α (σ' t)) ( \ σ' → coslice-fun A' A α (σ' 1₂))
   :=
-    \ σ → is-nlf-α (σ 1₂)
+    \ σ' → is-nlf-α (σ' 1₂)
 
 #def is-homotopy-cartesian-0-Δ¹ uses (is-nlf-α)
   : is-homotopy-cartesian
@@ -423,11 +423,20 @@ if `A` is a Segal type, then so is `A'`.
         A ( \ a → (t : Δ¹) → A [t ≡ 0₂ ↦ a] )
         α ( \ _ σ' t → α (σ' t))
   :=
-    \ a' → U
+    \ a' →
+      is-equiv-equiv-is-equiv
+        ( coslice' A' a') (coslice' A (α a'))
+        ( \ σ' t → α (σ' t))
+        ( coslice A' a') (coslice A (α a'))
+        ( coslice-fun A' A α a')
+        ( ( coslice-coslice' A' a', coslice-coslice' A (α a')), \ _ → refl)
+        ( is-equiv-coslice-coslice' A' a')
+        ( is-equiv-coslice-coslice' A (α a'))
+        ( is-nlf-α a')
 
 #def is-homotopy-cartesian-Δ¹-t0-Δ¹×Δ¹ uses (is-nlf-α)
   : is-homotopy-cartesian
-      ( Δ¹ → A') ( \ σ' → ((t,s) : Δ¹×Δ¹) → A' [s ≡ 0₂ ↦ σ t])
+      ( Δ¹ → A') ( \ σ' → ((t,s) : Δ¹×Δ¹) → A' [s ≡ 0₂ ↦ σ' t])
       ( Δ¹ → A) ( \ σ → ((t,s) : Δ¹×Δ¹) → A [s ≡ 0₂ ↦ σ t])
       ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
   := \ σ' → U

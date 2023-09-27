@@ -382,8 +382,8 @@ providing control over the underlying maps of the equivalence.
 #def is-equiv-left-cancel
   ( A B C : U)
   ( f : A → B)
-  ( g : B → C)
   ( has-section-f : has-section A B f)
+  ( g : B → C)
   ( ( ( retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
   : is-equiv B C g
   :=
@@ -415,7 +415,7 @@ providing control over the underlying maps of the equivalence.
   ( is-equiv-gf : is-equiv A C (comp A B C g f))
   : is-equiv B C g
   :=
-    is-equiv-left-cancel A B C f g (second is-equiv-f) is-equiv-gf
+    is-equiv-left-cancel A B C f (second is-equiv-f) g is-equiv-gf
 ```
 
 ```rzk title="A composition of three equivalences"

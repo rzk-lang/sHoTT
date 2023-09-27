@@ -24,6 +24,18 @@ This is a literate `rzk` file:
   := Σ (r : B → A) , (homotopy A A (comp A B A r f) (identity A))
 ```
 
+```rzk
+#def ind-has-section
+  ( f : A → B)
+  ( ( sec-f , ε-f) : has-section f)
+  ( C : B → U)
+  ( s : ( a : A) → C ( f a))
+  ( b : B)
+  : C b
+  :=
+    transport B C ( f (sec-f b)) b ( ε-f b) ( s (sec-f b))
+```
+
 We define equivalences to be bi-invertible maps.
 
 ```rzk
@@ -330,6 +342,9 @@ Now we compose the functions that are equivalences.
   := equiv-comp B A C (inv-equiv A B A≃B) (A≃C)
 ```
 
+The following functions refine `equiv-right-cancel` and `equiv-left-cancel` by
+providing control over the underlying maps of the equivalence.
+
 ```rzk title="Right cancellation of equivalence property in diagrammatic order"
 #def ap-cancel-has-retraction
   ( B C : U)
@@ -345,26 +360,62 @@ Now we compose the functions that are equivalences.
         (ap C B (g b) (g b') retr-g gp)
         (η-g b')
 
-
 #def is-equiv-right-cancel
   ( A B C : U)
   ( f : A → B)
   ( g : B → C)
-  ( (has-retraction-g, (sec-g, _)) : is-equiv B C g)
-  ( ((retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
+  ( ( has-retraction-g, (sec-g, _)) : is-equiv B C g)
+  ( ( (retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
   : is-equiv A B f
   :=
-    ( (comp B C A
-      retr-gf g,
-    η-gf) ,
-    (comp B C A
-      sec-gf g,
-    \ b → -- need (f ∘ sec-gf ∘ g) b = b
-      ap-cancel-has-retraction B C g has-retraction-g (f (sec-gf (g b))) b
-      (ε-gf (g b)) -- have g (f ∘ sec-gf ∘ g) b) = g b
+    ( ( comp B C A retr-gf g, η-gf) ,
+      ( comp B C A sec-gf g ,
+        \ b →
+            ap-cancel-has-retraction B C g
+            has-retraction-g (f (sec-gf (g b))) b
+            ( ε-gf (g b))
+      )
     )
-    )
+```
 
+```rzk title="Left cancellation of equivalence property in diagrammatic order"
+#def is-equiv-left-cancel
+  ( A B C : U)
+  ( f : A → B)
+  ( g : B → C)
+  ( ( ( retr-f , η-f), has-section-f ) : is-equiv A B f)
+  ( ( ( retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
+  : is-equiv B C g
+  :=
+    ( ( comp C A B f retr-gf ,
+        ind-has-section A B f has-section-f
+          ( \ b → f (retr-gf (g b)) = b)
+          ( \ a → ap A B (retr-gf (g ( f a))) a f (η-gf a))
+      ) ,
+      ( comp C A B f sec-gf, ε-gf)
+    )
+```
+
+```rzk
+#def is-equiv-right-factor
+  ( A B C : U)
+  ( f : A → B)
+  ( g : B → C)
+  ( is-equiv-g : is-equiv B C g)
+  ( is-equiv-gf : is-equiv A C (comp A B C g f))
+  : is-equiv A B f
+  :=
+    is-equiv-right-cancel A B C f g is-equiv-g is-equiv-gf
+
+#def is-equiv-left-factor
+  ( A B C : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( g : B → C)
+  ( is-equiv-gf : is-equiv A C (comp A B C g f))
+  : is-equiv B C g
+  :=
+    is-equiv-left-cancel A B C f g is-equiv-f is-equiv-gf
 ```
 
 ```rzk title="A composition of three equivalences"
@@ -646,7 +697,7 @@ dependent function types.
 
 ## Equivalence is equivalence invariant
 
-
+```rzk
 #def map-of-maps
   ( A' A : U)
   ( α : A' → A)
@@ -654,8 +705,8 @@ dependent function types.
   ( β : B' → B)
   : U
   :=
-    Σ ( ( s',s) : product ( A' → B' ) ( A → A)),
-      ( ( a' : A) → β ( s' a') = s ( α a'))
+    Σ ( ( s',s) : product ( A' → B' ) ( A → B)),
+      ( ( a' : A') → β ( s' a') = s ( α a'))
 
 #def is-equiv-equiv-is-equiv
   ( A' A : U)
@@ -673,8 +724,25 @@ dependent function types.
           ( comp A' B' B β s')
           ( comp A' A B s α)
           ( η )
-          ( is-equiv-comp A' B' B
-              s' is-equiv-s'
-              β is-equiv-β
-          )
+          ( is-equiv-comp A' B' B s' is-equiv-s' β is-equiv-β)
       )
+
+#def is-equiv-equiv-is-equiv'
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ((s', s), η) : map-of-maps A' A α B' B β)
+  ( is-equiv-s' : is-equiv A' B' s')
+  ( is-equiv-s : is-equiv A B s)
+  ( is-equiv-α : is-equiv A' A α)
+  : is-equiv B' B β
+  :=
+    is-equiv-left-cancel A' B' B s' β is-equiv-s'
+      ( is-equiv-homotopy A' B
+        ( comp A' B' B β s')
+        ( comp A' A B s α)
+        ( η)
+        ( is-equiv-comp A' A B α is-equiv-α s is-equiv-s)
+      )
+```

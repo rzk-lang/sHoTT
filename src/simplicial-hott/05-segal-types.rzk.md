@@ -52,12 +52,8 @@ Extension types are used to define the type of arrows between fixed terms:
 
 ```
 
-For each `a : A`, the total types of the representables
-`\ z → hom A a z`
-and
-`\ z → hom A z a`
-are called the coslice and slice, respectively.
-
+For each `a : A`, the total types of the representables `\ z → hom A a z` and
+`\ z → hom A z a` are called the coslice and slice, respectively.
 
 ```rzk
 #def coslice
@@ -73,8 +69,8 @@ are called the coslice and slice, respectively.
   := Σ (z : A) , (hom A z a)
 ```
 
-The types `coslice A a` and `slice A a`
-are functorial in `A` in the following sense:
+The types `coslice A a` and `slice A a` are functorial in `A` in the following
+sense:
 
 ```rzk
 #def coslice-fun
@@ -417,33 +413,33 @@ We have now proven that both notions of Segal types are logically equivalent.
 
 Using the new characterization of Segal types, we can show that the type of
 functions or extensions into a family of Segal types is again a Segal type. For
-instance if $pushout-prod-Λ³₂-Λ²₁$ is a type and $A : pushout-prod-Λ³₂-Λ²₁ → U$ is such that $A x$ is a Segal type for
-all $x$ then $(x : pushout-prod-Λ³₂-Λ²₁) → A x$ is a Segal type.
+instance if $X$ is a type and $A : X → U$ is such that $A x$ is a Segal type for
+all $x$ then $(x : X) → A x$ is a Segal type.
 
 ```rzk title="RS17, Corollary 5.6(i)"
 #def is-segal-function-type uses (funext)
-  ( pushout-prod-Λ³₂-Λ²₁ : U)
-  ( A : pushout-prod-Λ³₂-Λ²₁ → U)
-  ( fiberwise-is-segal-A : (x : pushout-prod-Λ³₂-Λ²₁) → is-local-horn-inclusion (A x))
-  : is-local-horn-inclusion ((x : pushout-prod-Λ³₂-Λ²₁) → A x)
+  ( X : U)
+  ( A : X → U)
+  ( fiberwise-is-segal-A : (x : X) → is-local-horn-inclusion (A x))
+  : is-local-horn-inclusion ((x : X) → A x)
   :=
     is-equiv-triple-comp
-      ( Δ² → ((x : pushout-prod-Λ³₂-Λ²₁) → A x))
-      ( (x : pushout-prod-Λ³₂-Λ²₁) → Δ² → A x)
-      ( (x : pushout-prod-Λ³₂-Λ²₁) → Λ → A x)
-      ( Λ → ((x : pushout-prod-Λ³₂-Λ²₁) → A x))
+      ( Δ² → ((x : X) → A x))
+      ( (x : X) → Δ² → A x)
+      ( (x : X) → Λ → A x)
+      ( Λ → ((x : X) → A x))
       ( \ g x t → g t x) -- first equivalence
       ( second (flip-ext-fun
         ( 2 × 2)
         ( Δ²)
         ( \ t → BOT)
-        ( pushout-prod-Λ³₂-Λ²₁)
+        ( X)
         ( \ t → A)
         ( \ t → recBOT)))
       ( \ h x t → h x t) -- second equivalence
       ( second (equiv-function-equiv-family
         ( funext)
-        ( pushout-prod-Λ³₂-Λ²₁)
+        ( X)
         ( \ x → (Δ² → A x))
         ( \ x → (Λ → A x))
         ( \ x → (horn-restriction (A x) , fiberwise-is-segal-A x))))
@@ -452,13 +448,13 @@ all $x$ then $(x : pushout-prod-Λ³₂-Λ²₁) → A x$ is a Segal type.
         ( 2 × 2)
         ( Λ)
         ( \ t → BOT)
-        ( pushout-prod-Λ³₂-Λ²₁)
+        ( X)
         ( \ t → A)
         ( \ t → recBOT)))
 ```
 
-If $pushout-prod-Λ³₂-Λ²₁$ is a shape and $A : pushout-prod-Λ³₂-Λ²₁ → U$ is such that $A x$ is a Segal type for all $x$
-then $(x : pushout-prod-Λ³₂-Λ²₁) → A x$ is a Segal type.
+If $X$ is a shape and $A : X → U$ is such that $A x$ is a Segal type for all $x$
+then $(x : X) → A x$ is a Segal type.
 
 ```rzk title="RS17, Corollary 5.6(ii)"
 #def is-segal-extension-type' uses (extext)
@@ -1428,10 +1424,7 @@ As a special case of the above:
   </style>
 </svg>
 
-
-
 ### Inner anodyne maps
-
 
 ```rzk title="RS17, definition 5.19"
 
@@ -1508,7 +1501,6 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         ( \ t → is-inner-anodyne-ζ-χ A is-segal-A (\ s → h (t,s)))
         ( \ s t → h (s,t)))
 ```
-
 
 ```rzk title="RS17, lemma 5.21"
 #section retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²

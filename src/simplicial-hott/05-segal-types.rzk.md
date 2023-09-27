@@ -126,11 +126,18 @@ Slices and coslices can also be defined directly as extension types:
   :=
     refl
 
-#def equiv-coslice-coslice'
+#def is-equiv-coslice'-coslice
   : is-equiv (coslice A a) coslice' coslice'-coslice
   :=
     ( ( coslice-coslice', is-id-coslice-coslice'-coslice),
       ( coslice-coslice', is-id-coslice'-coslice-coslice')
+    )
+
+#def is-equiv-coslice-coslice'
+  : is-equiv coslice' (coslice A a)  coslice-coslice'
+  :=
+    ( ( coslice'-coslice, is-id-coslice'-coslice-coslice'),
+      ( coslice'-coslice, is-id-coslice-coslice'-coslice)
     )
 
 #end coslice-as-extension-type
@@ -165,11 +172,18 @@ Slices and coslices can also be defined directly as extension types:
   :=
     refl
 
-#def equiv-slice-slice'
+#def is-equiv-slice'-slice
   : is-equiv (slice A a) slice' slice'-slice
   :=
     ( ( slice-slice', is-id-slice-slice'-slice),
       ( slice-slice', is-id-slice'-slice-slice')
+    )
+
+#def is-equiv-slice-slice'
+  : is-equiv slice' (slice A a)  slice-slice'
+  :=
+    ( ( slice'-slice, is-id-slice'-slice-slice'),
+      ( slice'-slice, is-id-slice-slice'-slice)
     )
 
 #end slice-as-extension-type

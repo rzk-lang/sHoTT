@@ -633,74 +633,6 @@ fundamental theorem:
 #end fundamental-thm-id-types
 ```
 
-## 2-of-3 for equivalences
-
-The following functions refine `equiv-right-cancel` and `equiv-left-cancel` by
-providing control over the underlying maps of the equivalence.
-
-```rzk
-#def is-equiv-right-factor
-  ( A B C : U)
-  ( f : A → B)
-  ( g : B → C)
-  ( is-equiv-g : is-equiv B C g)
-  ( is-equiv-gf : is-equiv A C (comp A B C g f))
-  : is-equiv A B f
-  :=
-    ( ( comp B C A
-        (retraction-is-equiv A C (comp A B C g f) is-equiv-gf) g ,
-        (second (first is-equiv-gf))) ,
-      ( comp B C A
-        (section-is-equiv A C (comp A B C g f) is-equiv-gf) g ,
-        \ b →
-          inv-ap-is-emb
-            B C g
-            ( is-emb-is-equiv B C g is-equiv-g)
-            ( f ((section-is-equiv A C (comp A B C g f) is-equiv-gf) (g b)))
-            b
-            ( (second (second is-equiv-gf)) (g b))))
-
-#def is-equiv-left-factor
-  ( A B C : U)
-  ( f : A → B)
-  ( is-equiv-f : is-equiv A B f)
-  ( g : B → C)
-  ( is-equiv-gf : is-equiv A C (comp A B C g f))
-  : is-equiv B C g
-  :=
-    ( ( comp C A B
-          f (retraction-is-equiv A C (comp A B C g f) is-equiv-gf) ,
-        \ b →
-          triple-concat B
-            ( f ((retraction-is-equiv A C (comp A B C g f) is-equiv-gf)
-              (g b)))
-            ( f ((retraction-is-equiv A C (comp A B C g f) is-equiv-gf)
-              (g (f ((section-is-equiv A B f is-equiv-f) b)))))
-            ( f ((section-is-equiv A B f is-equiv-f) b))
-            ( b)
-            ( ap B B
-              ( b)
-              ( f ((section-is-equiv A B f is-equiv-f) b))
-              ( \ b0 →
-                ( f ((retraction-is-equiv A C
-                      ( comp A B C g f) is-equiv-gf) (g b0))))
-              ( rev B (f ((section-is-equiv A B f is-equiv-f) b)) b
-                ( (second (second is-equiv-f)) b)))
-            ( ( whisker-homotopy B A A B
-                ( \ a →
-                  ( retraction-is-equiv A C
-                    ( comp A B C g f) is-equiv-gf) (g (f a)))
-                ( \ a → a)
-                ( second (first is-equiv-gf))
-                ( section-is-equiv A B f is-equiv-f)
-                f) b)
-            ( (second (second is-equiv-f)) b)) ,
-      ( comp C A B
-        ( f)
-        ( section-is-equiv A C (comp A B C g f) is-equiv-gf) ,
-        ( second (second is-equiv-gf))))
-```
-
 ## Maps over product types
 
 For later use, we specialize the previous results to the case of a family of
@@ -1157,7 +1089,7 @@ which follows from composition and cancelling laws for equivalences.
    : is-homotopy-cartesian A'' C'' A' C' f' F'
   :=
     \ a'' →
-    is-equiv-right-cancel (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+    is-equiv-right-factor (C'' a'') (C' (f' a'')) (C (f (f' a'')))
       (F' a'') (F (f' a''))
       (ihc (f' a''))
       (ihc'' a'')

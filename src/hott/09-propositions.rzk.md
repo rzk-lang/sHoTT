@@ -6,6 +6,14 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
+Some of the definitions in this file rely on function extensionality and weak
+function extensionality:
+
+```rzk
+#assume funext : FunExt
+#assume weakfunext : WeakFunExt
+```
+
 ## Propositions
 
 A type is a proposition when its identity types are contractible.
@@ -89,4 +97,43 @@ A type is a proposition when its identity types are contractible.
   :=
     ( is-prop-is-emb-terminal-map A
       ( terminal-map-is-emb-is-contr-is-inhabited A c))
+```
+
+## Properties of propositions
+
+If some family $B$ is fiberwise a proposition, then the type of dependent
+functions over $B$ is a proposition:
+
+```rzk
+#def fiberwise-prop-is-prop uses (funext weakfunext)
+  ( A : U)
+  ( B : A → U)
+  ( fiberwise-prop-B : (x : A) → is-prop (B x))
+  : is-prop ((x : A) → B x)
+  :=
+    \ f g →
+    is-contr-equiv-is-contr'
+      ( f = g)
+      ( (x : A) → f x = g x)
+      ( equiv-FunExt funext A B f g)
+      ( weakfunext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
+```
+
+If two propositions are bijective, then they are equivalent:
+
+```rzk
+#def bijective-props-are-equiv
+  ( A B : U)
+  ( is-prop-A : is-prop A)
+  ( is-prop-B : is-prop B)
+  ( f : A → B)
+  ( g : B → A)
+  : is-equiv A B f
+  :=
+    ( ( g ,
+        \ a →
+          (all-elements-equal-is-prop A is-prop-A) ((comp A B A g f) a) a) ,
+      ( g ,
+        \ b →
+          (all-elements-equal-is-prop B is-prop-B) ((comp B A B f g) b) b))
 ```

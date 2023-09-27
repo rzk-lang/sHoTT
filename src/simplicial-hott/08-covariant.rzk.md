@@ -396,6 +396,46 @@ Finally, we deduce the theorem by some straightforward logical bookkeeping.
       is-covariant-is-naive-left-fibration A C)
 ```
 
+### Segal types vs naive left fibrations
+
+We aim to prove that for any naive left fibration `α : A' → A`,
+if `A` is a Segal type, then so is `A'`.
+
+```rzk title="RS17, Theorem 8.8, categorical version"
+#section is-segal-is-naive-left-fibration-is-segal
+#variables A' A : U
+#variable α : A' → A
+
+#assume is-nlf-α : is-naive-left-fibration A A' α
+#assume is-segal-A : is-segal A
+
+#def is-homotopy-cartesian-01-Λ uses (is-nlf-α)
+  : is-homotopy-cartesian
+      ( Δ¹ → A') ( \ σ → coslice A' (σ 1₂))
+      ( Δ¹ → A) ( \ σ → coslice A (σ 1₂))
+      ( \ σ t → α (σ t)) ( \ σ → coslice-fun A' A α (σ 1₂))
+  :=
+    \ σ → is-nlf-α (σ 1₂)
+
+#def is-homotopy-cartesian-0-Δ¹ uses (is-nlf-α)
+  : is-homotopy-cartesian
+        A' ( \ a' → (t : Δ¹) → A' [t ≡ 0₂ ↦ a'] )
+        A ( \ a → (t : Δ¹) → A [t ≡ 0₂ ↦ a] )
+        α ( \ _ σ' t → α (σ' t))
+  :=
+    \ a' → U
+
+#def is-homotopy-cartesian-Δ¹-t0-Δ¹×Δ¹ uses (is-nlf-α)
+  : is-homotopy-cartesian
+      ( Δ¹ → A') ( \ σ' → ((t,s) : Δ¹×Δ¹) → A' [s ≡ 0₂ ↦ σ t])
+      ( Δ¹ → A) ( \ σ → ((t,s) : Δ¹×Δ¹) → A [s ≡ 0₂ ↦ σ t])
+      ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
+  := \ σ' → U
+
+
+#end is-segal-is-naive-left-fibration-is-segal
+```
+
 ## Representable covariant families
 
 If `A` is a Segal type and `a : A` is any term,

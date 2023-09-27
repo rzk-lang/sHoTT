@@ -178,18 +178,18 @@ notion.
 
 ## Symmetry of having an inverse
 
-The inverse of an invertible map has an inverse. 
+The inverse of an invertible map has an inverse.
 
 ```rzk
 #def has-inverse-map-inverse-has-inverse
   ( A B : U)
   ( f : A → B)
   ( has-inverse-f : has-inverse A B f)
-  : has-inverse B A ( map-inverse-has-inverse A B f has-inverse-f)  
-  := 
-    ( f, 
+  : has-inverse B A ( map-inverse-has-inverse A B f has-inverse-f)
+  :=
+    ( f,
       ( second ( second has-inverse-f) ,
-        first ( second has-inverse-f))) 
+        first ( second has-inverse-f)))
 ```
 
 ## Composing equivalences
@@ -350,7 +350,7 @@ Now we compose the functions that are equivalences.
   ( A B C : U)
   ( f : A → B)
   ( g : B → C)
-  ( (has-retraction-g, (sec-g, ε-g)) : is-equiv B C g)
+  ( (has-retraction-g, (sec-g, _)) : is-equiv B C g)
   ( ((retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
   : is-equiv A B f
   :=
@@ -433,7 +433,7 @@ If a map is homotopic to an equivalence it is an equivalence.
 
 ## Reversing equivalences
 
-The section associated with an equivalence is an equivalence. 
+The section associated with an equivalence is an equivalence.
 
 ```rzk
 #def is-equiv-section-is-equiv
@@ -441,14 +441,14 @@ The section associated with an equivalence is an equivalence.
   ( f : A → B)
   ( is-equiv-f : is-equiv A B f)
   : is-equiv B A ( section-is-equiv A B f is-equiv-f)
-  := 
-    is-equiv-has-inverse B A 
-      ( section-is-equiv A B f is-equiv-f) 
+  :=
+    is-equiv-has-inverse B A
+      ( section-is-equiv A B f is-equiv-f)
       ( has-inverse-map-inverse-has-inverse A B f
-        ( has-inverse-is-equiv A B f is-equiv-f))  
+        ( has-inverse-is-equiv A B f is-equiv-f))
 ```
 
-The retraction associated with an equivalence is an equivalence. 
+The retraction associated with an equivalence is an equivalence.
 
 ```rzk
 #def is-equiv-retraction-is-equiv
@@ -456,8 +456,8 @@ The retraction associated with an equivalence is an equivalence.
   ( f : A → B)
   ( is-equiv-f : is-equiv A B f)
   : is-equiv B A ( retraction-is-equiv A B f is-equiv-f)
-  := 
-    is-equiv-rev-homotopy B A 
+  :=
+    is-equiv-rev-homotopy B A
       ( section-is-equiv A B f is-equiv-f)
       ( retraction-is-equiv A B f is-equiv-f)
       ( homotopy-section-retraction-is-equiv A B f is-equiv-f)
@@ -643,3 +643,38 @@ dependent function types.
         ( \ r → concat A x z y r (rev A y z q),
           section-postconcat A x y z q)))
 ```
+
+## Equivalence is equivalence invariant
+
+
+#def map-of-maps
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  : U
+  :=
+    Σ ( ( s',s) : product ( A' → B' ) ( A → A)),
+      ( ( a' : A) → β ( s' a') = s ( α a'))
+
+#def is-equiv-equiv-is-equiv
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ((s', s), η) : map-of-maps A' A α B' B β)
+  ( is-equiv-s' : is-equiv A' B' s')
+  ( is-equiv-s : is-equiv A B s)
+  ( is-equiv-β : is-equiv B' B β)
+  : is-equiv A' A α
+  :=
+    is-equiv-right-cancel A' A B α s is-equiv-s
+      ( is-equiv-rev-homotopy A' B
+          ( comp A' B' B β s')
+          ( comp A' A B s α)
+          ( η )
+          ( is-equiv-comp A' B' B
+              s' is-equiv-s'
+              β is-equiv-β
+          )
+      )

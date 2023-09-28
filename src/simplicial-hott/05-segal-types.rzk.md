@@ -417,7 +417,7 @@ instance if $X$ is a type and $A : X → U$ is such that $A x$ is a Segal type f
 all $x$ then $(x : X) → A x$ is a Segal type.
 
 ```rzk title="RS17, Corollary 5.6(i)"
-#def is-segal-function-type' uses (funext)
+#def is-local-horn-inclusion-function-type uses (funext)
   ( X : U)
   ( A : X → U)
   ( fiberwise-is-segal-A : (x : X) → is-local-horn-inclusion (A x))

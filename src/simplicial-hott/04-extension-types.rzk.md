@@ -265,6 +265,30 @@ We refer to another form as an "extension extensionality" axiom.
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
 ```
 
+Sometimes, an even weaker form of extension extensionality suffices.
+
+```rzk title="Very weak extension extensionality"
+#def NaiveExtExt
+  : U
+  :=
+    ( I : CUBE) →
+    ( ψ : I → TOPE) →
+    ( ϕ : ψ → TOPE) →
+    ( A : ψ → U) →
+    ( a : (t : ϕ) → A t) →
+    ( f : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( g : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( (t : ψ) → (f t = g t) [ϕ t ↦ refl]) →
+    ( f = g)
+
+#def naiveweakext-extext
+  ( extext : ExtExt)
+  : NaiveExtExt
+  :=
+    \ I ψ ϕ A a f g →
+      ( first (first (extext I ψ ϕ A a f g)))
+```
+
 Weak extension extensionality implies extension extensionality; this is the
 context of RS17 Proposition 4.8 (i). We prove this in a series of lemmas. The
 `ext-projection-temp` function is a (hopefully temporary) helper that explicitly
@@ -536,7 +560,7 @@ extensionality.
         ( \ t → ( a t , e t) )))
 ```
 
-In an extension type of a dependent type that is pointwise contractible, then we have an inhabitant of the extension type witnessing the contraction, at every inhabitant of the base, of each point in the fiber to the center of the fiber. Both directions of this statement will be needed. 
+In an extension type of a dependent type that is pointwise contractible, then we have an inhabitant of the extension type witnessing the contraction, at every inhabitant of the base, of each point in the fiber to the center of the fiber. Both directions of this statement will be needed.
 
 ```rzk
 
@@ -558,16 +582,16 @@ In an extension type of a dependent type that is pointwise contractible, then we
   ( a : (t : ϕ ) → A t)
   ( is-contr-fiberwise-A : (t : ψ ) → is-contr ( A t))
   : (t : ϕ ) → (a t = first (is-contr-fiberwise-A t))
-  :=  \ t → 
+  :=  \ t →
           rev
             ( A t )
             ( first (is-contr-fiberwise-A t) )
-            ( a t) -- 
+            ( a t) --
             ( second (is-contr-fiberwise-A t) (a t))
 
 ```
 
-```rzk 
+```rzk
 
 #define first-4-11
   (weak-ext-ext : WeakExtExt)
@@ -578,11 +602,11 @@ In an extension type of a dependent type that is pointwise contractible, then we
   ( a : (t : ϕ ) → A t)
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
   : Σ (a' : (t : ψ ) → A t [ϕ t ↦ a t]),
-           ((t : ψ ) → 
-            (restrict I ψ ϕ A a a' t = 
+           ((t : ψ ) →
+            (restrict I ψ ϕ A a a' t =
               first (is-contr-fiberwise-A t))
               [ϕ t ↦ codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A t] )
-  := 
+  :=
     htpy-ext-property
     ( weak-ext-ext)
     ( I )
@@ -605,7 +629,7 @@ In an extension type of a dependent type that is pointwise contractible, then we
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
   : (t : ψ ) → f t = (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t
-  := \ t → eq-is-contr 
+  := \ t → eq-is-contr
               ( A t)
               ( is-contr-fiberwise-A t)
               ( f t )

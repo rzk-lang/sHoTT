@@ -1602,7 +1602,7 @@ Interchange law
 #end homotopy-interchange-law
 ```
 
-### Inner anodyne maps
+## Inner anodyne maps
 
 ```rzk title="RS17, Definition 5.19"
 

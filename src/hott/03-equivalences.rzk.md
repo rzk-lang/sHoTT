@@ -715,14 +715,16 @@ dependent function types.
 
 ## Transport along a path is an equivalence
 
+```rzk
 #def is-equiv-transport
   ( A : U)
   ( C : A → U)
-  ( x : A
+  ( x : A)
   : (y : A) → ( p : x = y) → is-equiv (C x) (C y) (transport A C x y p)
   := ind-path A x
-       ( y p → is-equiv (C x) (C y) (transport A C x y p))
+       ( \ y p → is-equiv (C x) (C y) (transport A C x y p))
        ( is-equiv-identity (C x) )
+```
 
 ## Equivalence is equivalence invariant
 

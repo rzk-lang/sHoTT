@@ -1558,8 +1558,8 @@ The cofibration Λ²₁ → Δ² is inner anodyne
       ( extend-against-Λ³₂-Δ³)
       ( extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
       ( extend-against-Λ³₂-Δ³)
-      ( retract)
-      ( section))
+      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
+      ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
     ( identity extend-against-Λ³₂-Δ³)
   := \ t → refl
 
@@ -1567,7 +1567,10 @@ The cofibration Λ²₁ → Δ² is inner anodyne
   : is-retract-of
       extend-against-Λ³₂-Δ³
       extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
-  := (section , (retract , homotopy-retraction-section-id))
+  :=
+    ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,
+      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,
+        homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
 
 #end retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
 

@@ -6,10 +6,13 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
-Some of the definitions in this file rely on extension extensionality:
+Some of the definitions in this file rely on function extensionality, extension
+extensionality and weak function extensionality:
 
 ```rzk
+#assume funext : FunExt
 #assume extext : ExtExt
+#assume weakfunext : WeakFunExt
 ```
 
 ## Isomorphisms
@@ -389,6 +392,255 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
           ( second (first is-isof))
           ( first (second is-isof))
           ( second (second is-isof)))))
+```
+
+## Isomorphism extensionality
+
+```rzk title="RS17, Proposition 10.3"
+#def ev-components-nat-trans-preserves-iso uses (funext)
+  ( X : U)
+  ( A : X → U)
+  ( is-segal-A : (x : X) → is-segal (A x))
+  ( f g : (x : X) → A x)
+  ( α : nat-trans X A f g)
+  : ( is-iso-arrow
+      ( (x : X) → A x)
+      ( is-segal-function-type funext X A is-segal-A) f g α) →
+    ( x : X) →
+    ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
+      ( ev-components-nat-trans X A f g α x))
+  :=
+    \ ((β , p) , (γ , q)) →
+    \ x →
+    ( ( ( ev-components-nat-trans X A g f β x) ,
+        ( triple-concat
+          ( hom (A x) (f x) (f x))
+          ( comp-is-segal (A x) (is-segal-A x) (f x) (g x) (f x)
+            ( ev-components-nat-trans X A f g α x)
+            ( ev-components-nat-trans X A g f β x))
+          ( ev-components-nat-trans X A f f
+            ( comp-is-segal
+              ( (x' : X) → (A x'))
+              ( is-segal-function-type funext X A is-segal-A) f g f α β)
+            ( x))
+          ( ev-components-nat-trans X A f f (id-hom ((x' : X) → (A x')) f) x)
+          ( id-hom (A x) (f x))
+          ( comp-components-comp-nat-trans-is-segal
+            funext X A is-segal-A f g f α β x)
+          ( ap
+            ( nat-trans X A f f)
+            ( hom (A x) (f x) (f x))
+            ( comp-is-segal
+              ( (x' : X) → (A x'))
+              ( is-segal-function-type funext X A is-segal-A) f g f α β)
+            ( id-hom ((x' : X) → (A x')) f)
+            (\ α' → ev-components-nat-trans X A f f α' x)
+            ( p))
+          ( id-arr-components-id-nat-trans X A f x))) ,
+      ( ( ev-components-nat-trans X A g f γ x) ,
+        ( triple-concat
+          (hom (A x) (g x) (g x))
+          ( comp-is-segal (A x) (is-segal-A x) (g x) (f x) (g x)
+            ( ev-components-nat-trans X A g f γ x)
+            ( ev-components-nat-trans X A f g α x))
+          ( ev-components-nat-trans X A g g
+            ( comp-is-segal
+              ( (x' : X) → (A x'))
+              ( is-segal-function-type funext X A is-segal-A) g f g γ α)
+            ( x))
+          ( ev-components-nat-trans X A g g (id-hom ((x' : X) → (A x')) g) x)
+          ( id-hom (A x) (g x))
+          ( comp-components-comp-nat-trans-is-segal
+            funext X A is-segal-A g f g γ α x)
+          ( ap
+            ( nat-trans X A g g)
+            ( hom (A x) (g x) (g x))
+            ( comp-is-segal
+              ( (x' : X) → (A x'))
+              ( is-segal-function-type funext X A is-segal-A) g f g γ α)
+            ( id-hom ((x' : X) → (A x')) g)
+            ( \ α' → ev-components-nat-trans X A g g α' x)
+            ( q))
+          ( id-arr-components-id-nat-trans X A g x))))
+
+#def nat-trans-nat-trans-components-preserves-iso-helper uses (funext)
+  ( X : U)
+  ( A : X → U)
+  ( is-segal-A : (x : X) → is-segal (A x))
+  ( f g : (x : X) → A x)
+  ( α : nat-trans X A f g)
+  ( β : nat-trans X A g f)
+  : ( ( x : X) →
+      ( comp-is-segal (A x) (is-segal-A x) (f x) (g x) (f x)
+        ( ev-components-nat-trans X A f g α x)
+        ( ev-components-nat-trans X A g f β x)) =
+      (id-hom (A x) (f x))) →
+    ( comp-is-segal
+      ( (x' : X) → A x')
+      ( is-segal-function-type funext X A is-segal-A)
+      f g f α β) =
+    (id-hom ((x' : X) → A x') f)
+  :=
+    \ H →
+    ap
+      ( nat-trans-components X A f f)
+      ( nat-trans X A f f)
+      ( \ x →
+        ev-components-nat-trans X A f f
+          ( comp-is-segal
+            ( (x' : X) → A x')
+            ( is-segal-function-type funext X A is-segal-A)
+            f g f α β)
+          ( x))
+      ( \ x → ev-components-nat-trans X A f f (id-hom ((x' : X) → A x') f) x)
+      ( first
+        ( has-inverse-is-equiv
+          ( hom ((x' : X) → A x') f f)
+          ( (x : X) → hom (A x) (f x) (f x))
+          ( ev-components-nat-trans X A f f)
+          ( is-equiv-ev-components-nat-trans X A f f)))
+      ( eq-htpy funext X
+        ( \ x → (hom (A x) (f x) (f x)))
+        ( \ x →
+          ( ev-components-nat-trans X A f f
+            ( comp-is-segal
+              ( (x' : X) → A x')
+              ( is-segal-function-type funext X A is-segal-A)
+              f g f α β)
+            ( x)))
+        ( \ x → (id-hom (A x) (f x)))
+        ( \ x →
+          ( triple-concat
+            ( hom (A x) (f x) (f x))
+            ( ev-components-nat-trans X A f f
+              ( comp-is-segal
+                ( (x' : X) → A x')
+                ( is-segal-function-type funext X A is-segal-A)
+                f g f α β)
+              ( x))
+            ( comp-is-segal (A x) (is-segal-A x) (f x) (g x) (f x)
+              ( ev-components-nat-trans X A f g α x)
+              ( ev-components-nat-trans X A g f β x))
+            ( id-hom (A x) (f x))
+            ( ev-components-nat-trans X A f f (id-hom ((x' : X) → A x') f) x)
+            ( rev
+              (hom (A x) (f x) (f x))
+              ( comp-is-segal (A x) (is-segal-A x) (f x) (g x) (f x)
+                ( ev-components-nat-trans X A f g α x)
+                ( ev-components-nat-trans X A g f β x))
+              ( ev-components-nat-trans X A f f
+                ( comp-is-segal
+                  ( (x' : X) → A x')
+                  ( is-segal-function-type funext X A is-segal-A)
+                  f g f α β)
+                ( x))
+              ( comp-components-comp-nat-trans-is-segal
+                funext X A is-segal-A f g f α β x))
+            ( H x)
+            ( rev
+              ( hom (A x) (f x) (f x))
+              ( ev-components-nat-trans X A f f (id-hom ((x' : X) → A x') f) x)
+              ( id-hom (A x) (f x))
+              ( id-arr-components-id-nat-trans X A f x)))))
+
+#def nat-trans-nat-trans-components-preserves-iso uses (funext)
+  ( X : U)
+  ( A : X → U)
+  ( is-segal-A : (x : X) → is-segal (A x))
+  ( f g : (x : X) → A x)
+  ( α : nat-trans X A f g)
+  : ( ( x : X) →
+      ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
+        ( ev-components-nat-trans X A f g α x))) →
+    ( is-iso-arrow
+      ( (x' : X) → A x')
+      ( is-segal-function-type funext X A is-segal-A) f g α)
+  :=
+    \ H →
+    ( ( \ t x → (first (first (H x))) t ,
+        nat-trans-nat-trans-components-preserves-iso-helper X A is-segal-A f g
+          ( α)
+          ( \ t x → (first (first (H x))) t)
+          ( \ x → (second (first (H x))))) ,
+      ( \ t x → (first (second (H x))) t ,
+        nat-trans-nat-trans-components-preserves-iso-helper X A is-segal-A g f
+          ( \ t x → (first (second (H x))) t)
+          ( α)
+          ( \ x → (second (second (H x))))))
+
+#def iff-is-iso-pointwise-is-iso uses (funext)
+  ( X : U)
+  ( A : X → U)
+  ( is-segal-A : (x : X) → is-segal (A x))
+  ( f g : (x : X) → A x)
+  ( α : nat-trans X A f g)
+  : iff
+    ( is-iso-arrow
+      ( (x : X) → A x)
+      ( is-segal-function-type funext X A is-segal-A) f g α)
+    ( ( x : X) →
+        ( is-iso-arrow
+          ( A x)
+          ( is-segal-A x)
+          ( f x)
+          ( g x)
+          ( ev-components-nat-trans X A f g α x)))
+  :=
+    ( ev-components-nat-trans-preserves-iso X A is-segal-A f g α,
+      nat-trans-nat-trans-components-preserves-iso X A is-segal-A f g α)
+
+#def equiv-is-iso-pointwise-is-iso uses (extext funext weakfunext)
+  ( X : U)
+  ( A : X → U)
+  ( is-segal-A : (x : X) → is-segal (A x))
+  ( f g : (x : X) → A x)
+  ( α : nat-trans X A f g)
+  : Equiv
+    ( is-iso-arrow
+      ( (x : X) → A x)
+      ( is-segal-function-type funext X A is-segal-A) f g α)
+    ( ( x : X) →
+        ( is-iso-arrow
+          ( A x)
+          ( is-segal-A x)
+          ( f x)
+          ( g x)
+          ( ev-components-nat-trans X A f g α x)))
+  :=
+    equiv-iff-is-prop-is-prop
+      ( is-iso-arrow
+        ( (x : X) → A x)
+        ( is-segal-function-type funext X A is-segal-A) f g α)
+      ( ( x : X) →
+        ( is-iso-arrow
+          ( A x)
+          ( is-segal-A x)
+          ( f x)
+          ( g x)
+          ( ev-components-nat-trans X A f g α x)))
+      ( is-prop-is-iso-arrow
+        ( (x : X) → A x)
+        ( is-segal-function-type funext X A is-segal-A)
+        ( f)
+        ( g)
+        ( α))
+      ( is-prop-fiberwise-prop funext weakfunext
+        ( X)
+        ( \ x →
+          ( is-iso-arrow
+            ( A x)
+            ( is-segal-A x)
+            ( f x)
+            ( g x)
+            ( ev-components-nat-trans X A f g α x)))
+        ( \ x →
+          is-prop-is-iso-arrow
+            ( A x)
+            ( is-segal-A x)
+            ( f x)
+            ( g x)
+            ( ev-components-nat-trans X A f g α x)))
+      ( iff-is-iso-pointwise-is-iso X A is-segal-A f g α)
 ```
 
 ## Rezk types

@@ -722,17 +722,3 @@ And below proves that $c(t) = refl$.
     ))
 
 ```
-
-The name of the following type is cumbersome. It says that the weak extension
-extensionality statement follows from RS Prop 4.8 (ii), which is encoded as
-`eq-ext-htpy` combined with the homotopy extension property,
-`htpy-ext-property`. The proposition appears as RS Proposition 4.11
-
-```rzk
-#define weak-ext-ext-from-eq-ext-htpy-htpy-ext-property
- (extext : ExtExt)
- (htpy-ext-prop : HtpyExtProp)
- : WeakExtExt
-  := \ I ψ ϕ A is-locally-contr-A a →
-
-```

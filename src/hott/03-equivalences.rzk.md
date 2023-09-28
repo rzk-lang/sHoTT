@@ -703,6 +703,10 @@ dependent function types.
           section-postconcat A x y z q)))
 ```
 
+### Transport along a path is an equivalence
+
+
+
 ## Equivalence is equivalence invariant
 
 ```rzk

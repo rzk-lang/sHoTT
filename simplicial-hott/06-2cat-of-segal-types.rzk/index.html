@@ -1424,23 +1424,22 @@ the "Gray interchanger" built from two commutative triangles.</p>
 </span><span id="__span-14-34"><a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="err">    ( uniqueness-comp-is-segal A is-segal-A α00 α10 α11 α*0 α1* α-diag</span>
 </span><span id="__span-14-35"><a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a><span class="err">      ( upper-triangle-square))</span>
 </span><span id="__span-14-36"><a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>
-</span><span id="__span-14-37"><a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>
-</span><span id="__span-14-38"><a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a><span class="nd">#end</span><span class="n"> comp-eq-square-is-segal</span>
-</span><span id="__span-14-39"><a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a>
-</span><span id="__span-14-40"><a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:naturality-nat-trans-is-segal" id="define:naturality-nat-trans-is-segal" style="visibility: visible; position: relative; color: inherit">naturality-nat-trans-is-segal</a></span>
-</span><span id="__span-14-41"><a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a><span class="err">  </span><span class="p">(</span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-14-42"><a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a><span class="err">  </span><span class="p">(</span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
-</span><span id="__span-14-43"><a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a><span class="err">  </span><span class="p">(</span>f g <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-14-44"><a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a><span class="err">  </span><span class="p">(</span>α <span class="p">:</span><span class="err"> hom (A → B) f g)</span>
-</span><span id="__span-14-45"><a id="__codelineno-14-45" name="__codelineno-14-45" href="#__codelineno-14-45"></a><span class="err">  </span><span class="p">(</span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-14-46"><a id="__codelineno-14-46" name="__codelineno-14-46" href="#__codelineno-14-46"></a><span class="err">  </span><span class="p">(</span>k <span class="p">:</span><span class="err"> hom A x y)</span>
-</span><span id="__span-14-47"><a id="__codelineno-14-47" name="__codelineno-14-47" href="#__codelineno-14-47"></a><span class="err">  : comp-is-segal B is-segal-B (f x) (f y) (g y)</span>
-</span><span id="__span-14-48"><a id="__codelineno-14-48" name="__codelineno-14-48" href="#__codelineno-14-48"></a><span class="err">    ( ap-hom A B f x y k)</span>
-</span><span id="__span-14-49"><a id="__codelineno-14-49" name="__codelineno-14-49" href="#__codelineno-14-49"></a><span class="err">    ( </span><span class="p">\ </span>s <span class="err">→ α s y) =</span>
-</span><span id="__span-14-50"><a id="__codelineno-14-50" name="__codelineno-14-50" href="#__codelineno-14-50"></a><span class="err">    comp-is-segal B is-segal-B (f x) (g x) (g y)</span>
-</span><span id="__span-14-51"><a id="__codelineno-14-51" name="__codelineno-14-51" href="#__codelineno-14-51"></a><span class="err">    ( </span><span class="p">\ </span>s <span class="err">→ α s x)</span>
-</span><span id="__span-14-52"><a id="__codelineno-14-52" name="__codelineno-14-52" href="#__codelineno-14-52"></a><span class="err">    ( ap-hom A B g x y k)</span>
-</span><span id="__span-14-53"><a id="__codelineno-14-53" name="__codelineno-14-53" href="#__codelineno-14-53"></a><span class="err">  := comp-eq-square-is-segal B is-segal-B (\ (s,t) → α s (k t))</span>
+</span><span id="__span-14-37"><a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a><span class="nd">#end</span><span class="n"> comp-eq-square-is-segal</span>
+</span><span id="__span-14-38"><a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a>
+</span><span id="__span-14-39"><a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:naturality-nat-trans-is-segal" id="define:naturality-nat-trans-is-segal" style="visibility: visible; position: relative; color: inherit">naturality-nat-trans-is-segal</a></span>
+</span><span id="__span-14-40"><a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a><span class="err">  </span><span class="p">(</span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-14-41"><a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a><span class="err">  </span><span class="p">(</span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
+</span><span id="__span-14-42"><a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a><span class="err">  </span><span class="p">(</span>f g <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-14-43"><a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a><span class="err">  </span><span class="p">(</span>α <span class="p">:</span><span class="err"> hom (A → B) f g)</span>
+</span><span id="__span-14-44"><a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a><span class="err">  </span><span class="p">(</span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-14-45"><a id="__codelineno-14-45" name="__codelineno-14-45" href="#__codelineno-14-45"></a><span class="err">  </span><span class="p">(</span>k <span class="p">:</span><span class="err"> hom A x y)</span>
+</span><span id="__span-14-46"><a id="__codelineno-14-46" name="__codelineno-14-46" href="#__codelineno-14-46"></a><span class="err">  : comp-is-segal B is-segal-B (f x) (f y) (g y)</span>
+</span><span id="__span-14-47"><a id="__codelineno-14-47" name="__codelineno-14-47" href="#__codelineno-14-47"></a><span class="err">    ( ap-hom A B f x y k)</span>
+</span><span id="__span-14-48"><a id="__codelineno-14-48" name="__codelineno-14-48" href="#__codelineno-14-48"></a><span class="err">    ( </span><span class="p">\ </span>s <span class="err">→ α s y) =</span>
+</span><span id="__span-14-49"><a id="__codelineno-14-49" name="__codelineno-14-49" href="#__codelineno-14-49"></a><span class="err">    comp-is-segal B is-segal-B (f x) (g x) (g y)</span>
+</span><span id="__span-14-50"><a id="__codelineno-14-50" name="__codelineno-14-50" href="#__codelineno-14-50"></a><span class="err">    ( </span><span class="p">\ </span>s <span class="err">→ α s x)</span>
+</span><span id="__span-14-51"><a id="__codelineno-14-51" name="__codelineno-14-51" href="#__codelineno-14-51"></a><span class="err">    ( ap-hom A B g x y k)</span>
+</span><span id="__span-14-52"><a id="__codelineno-14-52" name="__codelineno-14-52" href="#__codelineno-14-52"></a><span class="err">  := comp-eq-square-is-segal B is-segal-B (\ (s,t) → α s (k t))</span>
 </span></code></pre></div>
 
 

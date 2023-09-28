@@ -536,7 +536,7 @@ extensionality.
         ( \ t → ( a t , e t) )))
 ```
 
-In an extension type of a dependent type that is pointwise contractible, then we have an inhabitant of the extension type witnessing the contraction, at every inhabitant of the base, of each point in the fiber to the center of the fiber. Both directions of this statement will be needed. 
+In an extension type of a dependent type that is pointwise contractible, then we have an inhabitant of the extension type witnessing the contraction, at every inhabitant of the base, of each point in the fiber to the center of the fiber. Both directions of this statement will be needed.
 
 ```rzk
 
@@ -558,16 +558,16 @@ In an extension type of a dependent type that is pointwise contractible, then we
   ( a : (t : ϕ ) → A t)
   ( is-contr-fiberwise-A : (t : ψ ) → is-contr ( A t))
   : (t : ϕ ) → (a t = first (is-contr-fiberwise-A t))
-  :=  \ t → 
+  :=  \ t →
           rev
             ( A t )
             ( first (is-contr-fiberwise-A t) )
-            ( a t) -- 
+            ( a t) --
             ( second (is-contr-fiberwise-A t) (a t))
 
 ```
 
-```rzk 
+```rzk
 
 #define first-4-11
   (weak-ext-ext : WeakExtExt)
@@ -578,11 +578,11 @@ In an extension type of a dependent type that is pointwise contractible, then we
   ( a : (t : ϕ ) → A t)
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
   : Σ (a' : (t : ψ ) → A t [ϕ t ↦ a t]),
-           ((t : ψ ) → 
-            (restrict I ψ ϕ A a a' t = 
+           ((t : ψ ) →
+            (restrict I ψ ϕ A a a' t =
               first (is-contr-fiberwise-A t))
               [ϕ t ↦ codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A t] )
-  := 
+  :=
     htpy-ext-property
     ( weak-ext-ext)
     ( I )
@@ -605,9 +605,66 @@ In an extension type of a dependent type that is pointwise contractible, then we
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
   : (t : ψ ) → f t = (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t
-  := \ t → eq-is-contr 
+  := \ t → eq-is-contr
               ( A t)
               ( is-contr-fiberwise-A t)
               ( f t )
               ( restrict I ψ ϕ A a (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t)
+```
+
+## Right orthogonal fibrations
+
+For every shape inclusion `ϕ ⊂ ψ`,
+we obtain a possible fibrancy condition for a map `α : A' → A`
+in terms of unique extension along `ϕ ⊂ ψ`.
+We say that `α : A' → A` is _j-orthogonal_ to the shape `ϕ ⊂ ψ`
+if the following holds:
+
+
+```rzk title="BW23, Section 3"
+#def is-j-orthogonal-to-shape
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE)
+  ( A' A : U)
+  ( α : A' → A)
+  : U
+  :=
+    is-homotopy-cartesian
+      ( ϕ → A' ) ( \ σ' → (t : ψ) → A'[ϕ t ↦ σ' t])
+      ( ϕ → A ) ( \ σ → (t : ψ) → A[ϕ t ↦ σ t])
+      ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
+```
+
+The j-orthogonality condition is preserved when crossing the inclusion `ϕ ⊂ ψ`
+with another shape `χ`.
+
+
+```rzk title="uncurried version of BW23, Corollary 3.16"
+#def is-j-orthogonal-to-shape-×
+  ( extext : ExtExt)
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE)
+  ( A' A : U)
+  ( α : A' → A)
+  ( is-jo : is-j-orthogonal-to-shape I ψ ϕ A' A α)
+  : is-j-orthogonal-to-shape
+      ( J × I) ( \ (t,s) → χ t ∧ ψ s) ( \ (t,s) → χ t ∧ ϕ s) A' A α
+  :=
+    \ σ →
+      (
+        ( \ τ (t, s) →
+          ( first (first (is-jo (\ s' → σ (t, s'))))) ( \ s' → τ (t, s')) s,
+          \ τ' → undefined
+
+        ),
+        ( \ τ (t, s) →
+          ( first (first (is-jo (\ s' → σ (t, s'))))) ( \ s' → τ (t, s')) s,
+          \ τ → undefined
+        )
+      )
+
 ```

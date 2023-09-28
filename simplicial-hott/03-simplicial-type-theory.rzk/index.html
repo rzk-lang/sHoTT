@@ -724,8 +724,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#the-inner-horn" class="md-nav__link">
-    The inner horn
+  <a href="#the-2-dimensional-inner-horn" class="md-nav__link">
+    The 2 dimensional inner horn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-3-dimensional-inner-horns" class="md-nav__link">
+    The 3 dimensional inner horns
   </a>
   
 </li>
@@ -733,6 +740,13 @@
           <li class="md-nav__item">
   <a href="#products" class="md-nav__link">
     Products
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pushout-product" class="md-nav__link">
+    Pushout product
   </a>
   
 </li>
@@ -1028,8 +1042,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#the-inner-horn" class="md-nav__link">
-    The inner horn
+  <a href="#the-2-dimensional-inner-horn" class="md-nav__link">
+    The 2 dimensional inner horn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-3-dimensional-inner-horns" class="md-nav__link">
+    The 3 dimensional inner horns
   </a>
   
 </li>
@@ -1037,6 +1058,13 @@
           <li class="md-nav__item">
   <a href="#products" class="md-nav__link">
     Products
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pushout-product" class="md-nav__link">
+    Pushout product
   </a>
   
 </li>
@@ -1114,85 +1142,109 @@
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="err">  :=</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="err">    \ (t , s) → (s </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err"> </span><span class="sx">∨</span><span class="err"> t </span><span class="sx">≡</span><span class="err"> </span><span class="m">1₂</span><span class="err"> </span><span class="sx">∨</span><span class="err"> s </span><span class="sx">≡</span><span class="err"> t)</span>
 </span></code></pre></div>
-<h3 id="the-inner-horn">The inner horn<a class="headerlink" href="#the-inner-horn" title="Permanent link">&para;</a></h3>
+<h3 id="the-2-dimensional-inner-horn">The 2 dimensional inner horn<a class="headerlink" href="#the-2-dimensional-inner-horn" title="Permanent link">&para;</a></h3>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Λ" id="define:Λ" style="visibility: visible; position: relative; color: inherit">Λ</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="err">  := \ (t , s) → (s </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err"> </span><span class="sx">∨</span><span class="err"> t </span><span class="sx">≡</span><span class="err"> </span><span class="m">1₂</span><span class="err">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Λ²₁" id="define:Λ²₁" style="visibility: visible; position: relative; color: inherit">Λ²₁</a></span><span class="err"> : Δ² → TOPE</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="err">  := \ (s,t) → Λ (s,t)</span>
+</span></code></pre></div>
+<h3 id="the-3-dimensional-inner-horns">The 3 dimensional inner horns<a class="headerlink" href="#the-3-dimensional-inner-horns" title="Permanent link">&para;</a></h3>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Λ³₁" id="define:Λ³₁" style="visibility: visible; position: relative; color: inherit">Λ³₁</a></span><span class="err"> : Δ³ → TOPE</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="err">  := \ ((t1, t2), t3) → t3 </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err"> </span><span class="sx">∨</span><span class="err"> t2 </span><span class="sx">≡</span><span class="err"> t1 </span><span class="sx">∨</span><span class="err"> t1 </span><span class="sx">≡</span><span class="err"> </span><span class="m">1₂</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Λ³₂" id="define:Λ³₂" style="visibility: visible; position: relative; color: inherit">Λ³₂</a></span><span class="err"> : Δ³ → TOPE</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="err">  := \ ((t1, t2), t3) → t3 </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err"> </span><span class="sx">∨</span><span class="err"> t3 </span><span class="sx">≡</span><span class="err"> t2 </span><span class="sx">∨</span><span class="err"> t1 </span><span class="sx">≡</span><span class="err"> </span><span class="m">1₂</span>
 </span></code></pre></div>
 <h3 id="products">Products<a class="headerlink" href="#products" title="Permanent link">&para;</a></h3>
 <p>The product of topes defines the product of shapes.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:shape-prod" id="define:shape-prod" style="visibility: visible; position: relative; color: inherit">shape-prod</a></span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="err">  </span><span class="p">( </span>I J <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="err">  </span><span class="p">( </span>χ <span class="p">:</span><span class="err"> J → TOPE)</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="err">  : (I × J) → TOPE</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="err">  := \ (t , s) → ψ t </span><span class="sx">∧</span><span class="err"> χ s</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:shape-prod" id="define:shape-prod" style="visibility: visible; position: relative; color: inherit">shape-prod</a></span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="err">  </span><span class="p">( </span>I J <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="err">  </span><span class="p">( </span>χ <span class="p">:</span><span class="err"> J → TOPE)</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="err">  : (I × J) → TOPE</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="err">  := \ (t , s) → ψ t </span><span class="sx">∧</span><span class="err"> χ s</span>
 </span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">The square as a product</span><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ¹×Δ¹" id="define:Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">Δ¹×Δ¹</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="err">  := shape-prod </span><span class="kt">2</span><span class="err"> </span><span class="kt">2</span><span class="err"> Δ¹ Δ¹</span>
+<div class="language-rzk highlight"><span class="filename">The square as a product</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ¹×Δ¹" id="define:Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">Δ¹×Δ¹</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="err">  := shape-prod </span><span class="kt">2</span><span class="err"> </span><span class="kt">2</span><span class="err"> Δ¹ Δ¹</span>
 </span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">The total boundary of the square</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:∂□" id="define:∂□" style="visibility: visible; position: relative; color: inherit">∂□</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="err">  := \ (t ,s) → ((∂Δ¹ t) </span><span class="sx">∧</span><span class="err"> (Δ¹ s)) </span><span class="sx">∨</span><span class="err"> ((Δ¹ t) </span><span class="sx">∧</span><span class="err"> (∂Δ¹ s))</span>
+<div class="language-rzk highlight"><span class="filename">The total boundary of the square</span><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:∂□" id="define:∂□" style="visibility: visible; position: relative; color: inherit">∂□</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="err">  := \ (t ,s) → ((∂Δ¹ t) </span><span class="sx">∧</span><span class="err"> (Δ¹ s)) </span><span class="sx">∨</span><span class="err"> ((Δ¹ t) </span><span class="sx">∧</span><span class="err"> (∂Δ¹ s))</span>
 </span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">The vertical boundary of the square</span><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:∂Δ¹×Δ¹" id="define:∂Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">∂Δ¹×Δ¹</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="err">  := shape-prod </span><span class="kt">2</span><span class="err"> </span><span class="kt">2</span><span class="err"> ∂Δ¹ Δ¹</span>
+<div class="language-rzk highlight"><span class="filename">The vertical boundary of the square</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:∂Δ¹×Δ¹" id="define:∂Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">∂Δ¹×Δ¹</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="err">  := shape-prod </span><span class="kt">2</span><span class="err"> </span><span class="kt">2</span><span class="err"> ∂Δ¹ Δ¹</span>
 </span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">The horizontal boundary of the square</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ¹×∂Δ¹" id="define:Δ¹×∂Δ¹" style="visibility: visible; position: relative; color: inherit">Δ¹×∂Δ¹</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="err">  := shape-prod </span><span class="kt">2</span><span class="err"> </span><span class="kt">2</span><span class="err"> Δ¹ ∂Δ¹</span>
+<div class="language-rzk highlight"><span class="filename">The horizontal boundary of the square</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ¹×∂Δ¹" id="define:Δ¹×∂Δ¹" style="visibility: visible; position: relative; color: inherit">Δ¹×∂Δ¹</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  := shape-prod </span><span class="kt">2</span><span class="err"> </span><span class="kt">2</span><span class="err"> Δ¹ ∂Δ¹</span>
 </span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">The prism from a 2-simplex in an arrow type</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ²×Δ¹" id="define:Δ²×Δ¹" style="visibility: visible; position: relative; color: inherit">Δ²×Δ¹</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  := shape-prod (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) </span><span class="kt">2</span><span class="err"> Δ² Δ¹</span>
+<div class="language-rzk highlight"><span class="filename">The prism from a 2-simplex in an arrow type</span><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ²×Δ¹" id="define:Δ²×Δ¹" style="visibility: visible; position: relative; color: inherit">Δ²×Δ¹</a></span><span class="err"> : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → TOPE</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  := shape-prod (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) </span><span class="kt">2</span><span class="err"> Δ² Δ¹</span>
+</span></code></pre></div>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ³×Δ²" id="define:Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">Δ³×Δ²</a></span><span class="err"> : ((</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) × (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">)) → TOPE</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="err">  := shape-prod (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) Δ³ Δ²</span>
 </span></code></pre></div>
 <p>Maps out of <span class="arithmatex">\(Δ²\)</span> are a retract of maps out of <span class="arithmatex">\(Δ¹×Δ¹\)</span>.</p>
-<div class="language-rzk highlight"><span class="filename">RS17, Proposition 3.6</span><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ²-is-retract-Δ¹×Δ¹" id="define:Δ²-is-retract-Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">Δ²-is-retract-Δ¹×Δ¹</a></span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  : is-retract-of (Δ² → A) (Δ¹×Δ¹ → A)</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="err">  :=</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="err">    ( ( </span><span class="p">\ </span>f <span class="err">→ \ (t , s) →</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="err">        </span><span class="s">recOR</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="err">          ( t </span><span class="sx">&lt;=</span><span class="err"> s |-&gt; f (t , t) ,</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="err">            s </span><span class="sx">&lt;=</span><span class="err"> t |-&gt; f (t , s))) ,</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="err">      ( ( </span><span class="p">\ </span>f <span class="err">→ </span><span class="p">\ </span>ts <span class="err">→ f ts ) , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">))</span>
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 3.6</span><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ²-is-retract-Δ¹×Δ¹" id="define:Δ²-is-retract-Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">Δ²-is-retract-Δ¹×Δ¹</a></span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="err">  : is-retract-of (Δ² → A) (Δ¹×Δ¹ → A)</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="err">  :=</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="err">    ( ( </span><span class="p">\ </span>f <span class="err">→ \ (t , s) →</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="err">        </span><span class="s">recOR</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="err">          ( t </span><span class="sx">&lt;=</span><span class="err"> s |-&gt; f (t , t) ,</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="err">            s </span><span class="sx">&lt;=</span><span class="err"> t |-&gt; f (t , s))) ,</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="err">      ( ( </span><span class="p">\ </span>f <span class="err">→ </span><span class="p">\ </span>ts <span class="err">→ f ts ) , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">))</span>
 </span></code></pre></div>
 <p>Maps out of <span class="arithmatex">\(Δ³\)</span> are a retract of maps out of <span class="arithmatex">\(Δ²×Δ¹\)</span>.</p>
-<div class="language-rzk highlight"><span class="filename">RS17, Proposition 3.7</span><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ³-is-retract-Δ²×Δ¹-retraction" id="define:Δ³-is-retract-Δ²×Δ¹-retraction" style="visibility: visible; position: relative; color: inherit">Δ³-is-retract-Δ²×Δ¹-retraction</a></span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="err">  : (Δ²×Δ¹ → A) → (Δ³ → A)</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="err">  := </span><span class="p">\ </span>f <span class="err">→ \ ((t1 , t2) , t3) → f ((t1 , t3) , t2)</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ³-is-retract-Δ²×Δ¹-section" id="define:Δ³-is-retract-Δ²×Δ¹-section" style="visibility: visible; position: relative; color: inherit">Δ³-is-retract-Δ²×Δ¹-section</a></span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="err">  : (Δ³ → A) → (Δ²×Δ¹ → A)</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="err">  :=</span>
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="err">    </span><span class="p">\ </span>f <span class="err">→ \ ((t1 , t2) , t3) →</span>
-</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="err">    </span><span class="s">recOR</span>
-</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="err">      ( t3 </span><span class="sx">&lt;=</span><span class="err"> t2 |-&gt; f ((t1 , t2) , t2) ,</span>
-</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="err">        t2 </span><span class="sx">&lt;=</span><span class="err"> t3 |-&gt;</span>
-</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="err">          </span><span class="s">recOR</span>
-</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="err">            ( t3 </span><span class="sx">&lt;=</span><span class="err"> t1 |-&gt; f ((t1 , t3) , t2) ,</span>
-</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="err">              t1 </span><span class="sx">&lt;=</span><span class="err"> t3 |-&gt; f ((t1 , t1) , t2)))</span>
-</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
-</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ³-is-retract-Δ²×Δ¹" id="define:Δ³-is-retract-Δ²×Δ¹" style="visibility: visible; position: relative; color: inherit">Δ³-is-retract-Δ²×Δ¹</a></span>
-</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="err">  : is-retract-of (Δ³ → A) (Δ²×Δ¹ → A)</span>
-</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="err">  :=</span>
-</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="err">    ( Δ³-is-retract-Δ²×Δ¹-section A ,</span>
-</span><span id="__span-14-23"><a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="err">      ( Δ³-is-retract-Δ²×Δ¹-retraction A , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">))</span>
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 3.7</span><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ³-is-retract-Δ²×Δ¹-retraction" id="define:Δ³-is-retract-Δ²×Δ¹-retraction" style="visibility: visible; position: relative; color: inherit">Δ³-is-retract-Δ²×Δ¹-retraction</a></span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="err">  : (Δ²×Δ¹ → A) → (Δ³ → A)</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="err">  := </span><span class="p">\ </span>f <span class="err">→ \ ((t1 , t2) , t3) → f ((t1 , t3) , t2)</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ³-is-retract-Δ²×Δ¹-section" id="define:Δ³-is-retract-Δ²×Δ¹-section" style="visibility: visible; position: relative; color: inherit">Δ³-is-retract-Δ²×Δ¹-section</a></span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="err">  : (Δ³ → A) → (Δ²×Δ¹ → A)</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="err">  :=</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="err">    </span><span class="p">\ </span>f <span class="err">→ \ ((t1 , t2) , t3) →</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="err">    </span><span class="s">recOR</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="err">      ( t3 </span><span class="sx">&lt;=</span><span class="err"> t2 |-&gt; f ((t1 , t2) , t2) ,</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="err">        t2 </span><span class="sx">&lt;=</span><span class="err"> t3 |-&gt;</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="err">          </span><span class="s">recOR</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="err">            ( t3 </span><span class="sx">&lt;=</span><span class="err"> t1 |-&gt; f ((t1 , t3) , t2) ,</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="err">              t1 </span><span class="sx">&lt;=</span><span class="err"> t3 |-&gt; f ((t1 , t1) , t2)))</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Δ³-is-retract-Δ²×Δ¹" id="define:Δ³-is-retract-Δ²×Δ¹" style="visibility: visible; position: relative; color: inherit">Δ³-is-retract-Δ²×Δ¹</a></span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="err">  : is-retract-of (Δ³ → A) (Δ²×Δ¹ → A)</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="err">  :=</span>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="err">    ( Δ³-is-retract-Δ²×Δ¹-section A ,</span>
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="err">      ( Δ³-is-retract-Δ²×Δ¹-retraction A , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">))</span>
+</span></code></pre></div>
+<h3 id="pushout-product">Pushout product<a class="headerlink" href="#pushout-product" title="Permanent link">&para;</a></h3>
+<p>Pushout product Φ×ζ ∪_{Φ×χ} ψ×χ of Φ ↪ ψ and χ ↪ ζ, domain of the co-gap map.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:shape-pushout-prod" id="define:shape-pushout-prod" style="visibility: visible; position: relative; color: inherit">shape-pushout-prod</a></span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="err">  </span><span class="p">( </span>I J <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="err">  </span><span class="p">( </span>Φ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="err">  </span><span class="p">( </span>ζ <span class="p">:</span><span class="err"> J → TOPE)</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="err">  </span><span class="p">( </span>χ <span class="p">:</span><span class="err"> ζ → TOPE)</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="err">  : (shape-prod I J ψ ζ) → TOPE</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="err">  := \ (t,s) → (Φ t </span><span class="sx">∧</span><span class="err"> ζ s) </span><span class="sx">∨</span><span class="err"> (ψ t </span><span class="sx">∧</span><span class="err"> χ s)</span>
 </span></code></pre></div>
 <h3 id="intersections">Intersections<a class="headerlink" href="#intersections" title="Permanent link">&para;</a></h3>
 <p>The intersection of shapes is defined by conjunction on topes.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:shape-intersection" id="define:shape-intersection" style="visibility: visible; position: relative; color: inherit">shape-intersection</a></span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="err">  </span><span class="p">( </span>ψ χ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="err">  : I → TOPE</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="err">  := </span><span class="p">\ </span>t <span class="err">→ ψ t </span><span class="sx">∧</span><span class="err"> χ t</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:shape-intersection" id="define:shape-intersection" style="visibility: visible; position: relative; color: inherit">shape-intersection</a></span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="err">  </span><span class="p">( </span>ψ χ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="err">  : I → TOPE</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="err">  := </span><span class="p">\ </span>t <span class="err">→ ψ t </span><span class="sx">∧</span><span class="err"> χ t</span>
 </span></code></pre></div>
 <h3 id="unions">Unions<a class="headerlink" href="#unions" title="Permanent link">&para;</a></h3>
 <p>The union of shapes is defined by disjunction on topes.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:shapeUnion" id="define:shapeUnion" style="visibility: visible; position: relative; color: inherit">shapeUnion</a></span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="err">  </span><span class="p">( </span>ψ χ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="err">  : I → TOPE</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="err">  := </span><span class="p">\ </span>t <span class="err">→ ψ t </span><span class="sx">∨</span><span class="err"> χ t</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:shapeUnion" id="define:shapeUnion" style="visibility: visible; position: relative; color: inherit">shapeUnion</a></span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  </span><span class="p">( </span>ψ χ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="err">  : I → TOPE</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="err">  := </span><span class="p">\ </span>t <span class="err">→ ψ t </span><span class="sx">∨</span><span class="err"> χ t</span>
 </span></code></pre></div>
 <h3 id="connection-squares">Connection Squares<a class="headerlink" href="#connection-squares" title="Permanent link">&para;</a></h3>
 <!-- This is manually adjusted diagram (hopefully fully supported in the future by rzk) -->
@@ -1218,11 +1270,11 @@
   <text x="110.03982894447466" y="-47.97354751998429" fill="purple" stroke="white" stroke-width="10" stroke-opacity=".8" paint-order="stroke">•</text>
   <text x="99.24496273247308" y="117.31436252725841" fill="purple" stroke="white" stroke-width="10" stroke-opacity=".8" paint-order="stroke">•</text>
 </svg></p>
-<div class="language-rzk highlight"><span class="filename">RS17 Proposition 3.5(a)</span><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:join-square-arrow" id="define:join-square-arrow" style="visibility: visible; position: relative; color: inherit">join-square-arrow</a></span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="err">  </span><span class="p">(</span>f <span class="p">:</span><span class="err"> </span><span class="kt">2</span><span class="err"> → A)</span>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="err">  : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → A</span>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="err">  := \ (t, s) → </span><span class="s">recOR</span><span class="err"> ( t </span><span class="sx">≤</span><span class="err"> s ↦ f s , s </span><span class="sx">≤</span><span class="err"> t ↦ f t )</span>
+<div class="language-rzk highlight"><span class="filename">RS17 Proposition 3.5(a)</span><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:join-square-arrow" id="define:join-square-arrow" style="visibility: visible; position: relative; color: inherit">join-square-arrow</a></span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="err">  </span><span class="p">(</span>f <span class="p">:</span><span class="err"> </span><span class="kt">2</span><span class="err"> → A)</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="err">  : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → A</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="err">  := \ (t, s) → </span><span class="s">recOR</span><span class="err"> ( t </span><span class="sx">≤</span><span class="err"> s ↦ f s , s </span><span class="sx">≤</span><span class="err"> t ↦ f t )</span>
 </span></code></pre></div>
 <!-- This is manually adjusted diagram (hopefully fully supported in the future by rzk) -->
 <p><svg class="rzk-render" viewBox="-175 -100 350 375" width="150" height="150">
@@ -1247,11 +1299,11 @@
   <text x="110.03982894447466" y="-47.97354751998429" fill="purple" stroke="white" stroke-width="10" stroke-opacity=".8" paint-order="stroke">•</text>
   <text x="99.24496273247308" y="117.31436252725841" fill="purple" stroke="white" stroke-width="10" stroke-opacity=".8" paint-order="stroke">•</text>
 </svg></p>
-<div class="language-rzk highlight"><span class="filename">RS17 Proposition 3.5(b)</span><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:meet-square-arrow" id="define:meet-square-arrow" style="visibility: visible; position: relative; color: inherit">meet-square-arrow</a></span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="err">  </span><span class="p">(</span>f <span class="p">:</span><span class="err"> </span><span class="kt">2</span><span class="err"> → A)</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="err">  : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → A</span>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="err">  := \ (t, s) → </span><span class="s">recOR</span><span class="err"> ( t </span><span class="sx">≤</span><span class="err"> s ↦ f t , s </span><span class="sx">≤</span><span class="err"> t ↦ f s )</span>
+<div class="language-rzk highlight"><span class="filename">RS17 Proposition 3.5(b)</span><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:meet-square-arrow" id="define:meet-square-arrow" style="visibility: visible; position: relative; color: inherit">meet-square-arrow</a></span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="err">  </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="err">  </span><span class="p">(</span>f <span class="p">:</span><span class="err"> </span><span class="kt">2</span><span class="err"> → A)</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="err">  : (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) → A</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="err">  := \ (t, s) → </span><span class="s">recOR</span><span class="err"> ( t </span><span class="sx">≤</span><span class="err"> s ↦ f t , s </span><span class="sx">≤</span><span class="err"> t ↦ f s )</span>
 </span></code></pre></div>
 <!-- Definitions for the SVG images above -->
 <p><svg width="0" height="0">

@@ -1438,7 +1438,7 @@ As a special case of the above:
 
 Interchange law
 
-```rzk title="RS17, Proposition 5.15"
+```rzk
 #section homotopy-interchange-law
 
 #variable A : U
@@ -1463,9 +1463,10 @@ Interchange law
       ( comp-is-segal A is-segal-A x y z f3 h3)
       ( congruence-homotopy-is-segal A is-segal-A x y z f1 f2 h1 h2 p p')
       ( congruence-homotopy-is-segal A is-segal-A x y z f2 f3 h2 h3 q q')
+```
 
+```rzk title="RS17, Proposition 5.15"
 #def homotopy-interchange-law
-  uses (A is-segal-A x y z)
   ( f1 f2 f3 : hom A x y)
   ( h1 h2 h3 : hom A y z)
   ( p : f1 = f2)
@@ -1505,10 +1506,9 @@ Interchange law
 #end homotopy-interchange-law
 ```
 
-
 ### Inner anodyne maps
 
-```rzk title="RS17, definition 5.19"
+```rzk title="RS17, Definition 5.19"
 
 #def is-inner-anodyne
   (I : CUBE)

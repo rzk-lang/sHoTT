@@ -407,9 +407,48 @@ separate hypothesis.
 #def WeakFunExt : U
   :=
     ( A : U ) → (C : A → U) →
+    -- TODO: rename f (also below)?
     (f : (a : A) → is-contr (C a) ) →
     (is-contr ( (a : A) → C a ))
 
+```
+
+Weak function extensionality implies function extensionality.
+
+
+```rzk
+-- TODO: delete
+#assume hole : (A : U) → A
+
+#def funext-weakfunext
+  ( weakfunext : WeakFunExt )
+  : FunExt
+  := hole FunExt
+```
+
+```rzk
+-- TODO: better name? or inline this?
+#def map-weakfunext-funext
+  (A : U)
+  (C : A → U)
+  (f : (a : A) → is-contr (C a))
+  : (a : A) → C a
+  :=
+  \ a → first (f a)
+
+#def weakfunext-funext
+  (funext : FunExt)
+  : WeakFunExt
+  :=
+  ( \ A → \ C → \ f →
+    ( map-weakfunext-funext A C f ,
+      ( \ (g : (a : A) → C a) →
+        ( eq-htpy funext
+          ( A)
+          ( C)
+          ( map-weakfunext-funext A C f)
+          ( g)
+          ( \ a → second (f a) (g a))))))
 ```
 
 ## Singleton induction

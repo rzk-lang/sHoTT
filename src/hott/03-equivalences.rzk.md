@@ -47,6 +47,16 @@ We define equivalences to be bi-invertible maps.
 #end is-equiv
 ```
 
+### The identity is an equivalence
+
+```rzk
+#def is-equiv-identity
+  ( A : U)
+  : is-equiv A A (\ a → a)
+  :=
+    ( (\ a → a, \ _ → refl), (\ a → a, \ _ → refl))
+```
+
 ## Equivalence data
 
 ```rzk
@@ -703,9 +713,16 @@ dependent function types.
           section-postconcat A x y z q)))
 ```
 
-### Transport along a path is an equivalence
+## Transport along a path is an equivalence
 
-
+#def is-equiv-transport
+  ( A : U)
+  ( C : A → U)
+  ( x : A
+  : (y : A) → ( p : x = y) → is-equiv (C x) (C y) (transport A C x y p)
+  := ind-path A x
+       ( y p → is-equiv (C x) (C y) (transport A C x y p))
+       ( is-equiv-identity (C x) )
 
 ## Equivalence is equivalence invariant
 

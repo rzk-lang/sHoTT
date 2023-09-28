@@ -24,6 +24,8 @@ Some of the definitions in this file rely on extension extensionality:
 ```rzk
 #assume extext : ExtExt
 #assume weakfunext : WeakFunExt
+#assume naiveextext : NaiveExtExt
+
 ```
 
 ## Dependent hom types
@@ -460,6 +462,7 @@ if `A` is a Segal type, then so is `A'`.
 
 ```rzk title="RS17, Theorem 8.8, categorical version"
 #section is-segal-is-naive-left-fibration-is-segal
+
 #variables A' A : U
 #variable α : A' → A
 
@@ -474,29 +477,25 @@ if `A` is a Segal type, then so is `A'`.
   :=
     \ σ' → is-nlf-α (σ' 1₂)
 
-#def is-homotopy-cartesian-0-Δ¹ uses (is-nlf-α)
-  : is-homotopy-cartesian
-        A' ( \ a' → (t : Δ¹) → A' [t ≡ 0₂ ↦ a'] )
-        A ( \ a → (t : Δ¹) → A [t ≡ 0₂ ↦ a] )
-        α ( \ _ σ' t → α (σ' t))
+#def is-j-orthogonal-0-Δ¹-α uses (is-nlf-α)
+  : is-j-orthogonal-to-shape 2 Δ¹ ( \ s → s ≡ 0₂) A' A α
   :=
     \ a' →
       is-equiv-equiv-is-equiv
-        ( coslice' A' a') (coslice' A (α a'))
+        ( coslice' A' (a' 0₂)) (coslice' A (α (a' 0₂)))
         ( \ σ' t → α (σ' t))
-        ( coslice A' a') (coslice A (α a'))
-        ( coslice-fun A' A α a')
-        ( ( coslice-coslice' A' a', coslice-coslice' A (α a')), \ _ → refl)
-        ( is-equiv-coslice-coslice' A' a')
-        ( is-equiv-coslice-coslice' A (α a'))
-        ( is-nlf-α a')
+        ( coslice A' (a' 0₂)) (coslice A (α (a' 0₂)))
+        ( coslice-fun A' A α (a' 0₂))
+        ( ( coslice-coslice' A' (a' 0₂), coslice-coslice' A (α (a' 0₂))),
+          \ _ → refl)
+        ( is-equiv-coslice-coslice' A' (a' 0₂))
+        ( is-equiv-coslice-coslice' A (α (a' 0₂)))
+        ( is-nlf-α (a' 0₂))
 
-#def is-homotopy-cartesian-Δ¹-t0-Δ¹×Δ¹ uses (is-nlf-α)
-  : is-homotopy-cartesian
-      ( Δ¹ → A') ( \ σ' → ((t,s) : Δ¹×Δ¹) → A' [s ≡ 0₂ ↦ σ' t])
-      ( Δ¹ → A) ( \ σ → ((t,s) : Δ¹×Δ¹) → A [s ≡ 0₂ ↦ σ t])
-      ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
-  := \ σ' → U
+#def is-homotopy-cartesian-Δ¹-Δ¹×Δ¹-α uses (naiveextext is-nlf-α)
+  : is-j-orthogonal-to-shape (2 × 2) (Δ¹×Δ¹) (\ (t,s) → s ≡ 0₂) A' A α
+  := is-j-orthogonal-to-shape-× naiveextext
+        2 Δ¹ 2 Δ¹ (\ s → s ≡ 0₂) A' A α is-j-orthogonal-0-Δ¹-α
 
 #end is-segal-is-naive-left-fibration-is-segal
 ```

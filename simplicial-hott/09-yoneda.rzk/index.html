@@ -605,6 +605,26 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hott/11-homotopy-pullbacks.rzk.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Homotopy pullbacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -760,7 +780,7 @@
         
   
   <span class="md-ellipsis">
-    Covariantly Functorial Type Families
+    Covariant Families
   </span>
   
 
@@ -1184,9 +1204,9 @@ extension extensionality:</p>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kr">#assume</span><span class="p"> </span>extext<span class="err"> : ExtExt</span>
 </span></code></pre></div>
 <h2 id="natural-transformations-involving-a-representable-functor">Natural transformations involving a representable functor<a class="headerlink" href="#natural-transformations-involving-a-representable-functor" title="Permanent link">&para;</a></h2>
-<p>Fix a Segal type <span class="arithmatex">\(A\)</span> and a term <span class="arithmatex">\(a : A\)</span>. The Yoneda lemma characterizes natural
-transformations from the representable type family <code class="language-rzk highlight"><span class="err">hom A a : A → U</span></code> to a
-covariant type family <code class="language-rzk highlight"><span class="err">C : A → U</span></code>.</p>
+<p>Fix a Segal type <code class="language-rzk highlight"><span class="err">A</span></code> and a term <code class="language-rzk highlight"><span class="err">a : A</span></code>. The Yoneda lemma
+characterizes natural transformations from the representable type family
+<code class="language-rzk highlight"><span class="err">hom A a : A → U</span></code> to a covariant type family <code class="language-rzk highlight"><span class="err">C : A → U</span></code>.</p>
 <p>Ordinarily, such a natural transformation would involve a family of maps</p>
 <p><code class="language-rzk highlight"><span class="err">ϕ : </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → hom A a z → C z</span></code></p>
 <p>together with a proof of naturality of these components, but by
@@ -1212,10 +1232,10 @@ naturality-covariant-fiberwise-transformation naturality is automatic.</p>
 </span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="err">      ( f)</span>
 </span></code></pre></div>
 <h2 id="the-yoneda-maps">The Yoneda maps<a class="headerlink" href="#the-yoneda-maps" title="Permanent link">&para;</a></h2>
-<p>For any Segal type <span class="arithmatex">\(A\)</span> and term <span class="arithmatex">\(a : A\)</span>, the Yoneda lemma provides an
-equivalence between the type <code class="language-rzk highlight"><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → hom A a z → C z</span></code> of natural
+<p>For any Segal type <code class="language-rzk highlight"><span class="err">A</span></code> and term <code class="language-rzk highlight"><span class="err">a : A</span></code>, the Yoneda lemma provides
+an equivalence between the type <code class="language-rzk highlight"><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → hom A a z → C z</span></code> of natural
 transformations out of the functor <code class="language-rzk highlight"><span class="err">hom A a</span></code> and values in an arbitrary
-covariant family <span class="arithmatex">\(C\)</span> and the type <span class="arithmatex">\(C a\)</span>.</p>
+covariant family <code class="language-rzk highlight"><span class="err">C</span></code> and the type <code class="language-rzk highlight"><span class="err">C a</span></code>.</p>
 <p>One of the maps in this equivalence is evaluation at the identity. The inverse
 map makes use of the covariant transport operation.</p>
 <p>The following map, <code class="language-rzk highlight"><span class="err">evid</span></code>, evaluates a natural transformation out of a
@@ -1250,9 +1270,9 @@ straightforward:</p>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="err">  : ( evid A a C) ((yon A is-segal-A a C is-covariant-C) u) = u</span>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="err">  := id-arr-covariant-transport A a C is-covariant-C u</span>
 </span></code></pre></div>
-<p>The other composite carries <span class="arithmatex">\(ϕ\)</span> to an a priori distinct natural transformation.
-We first show that these are pointwise equal at all <code class="language-rzk highlight"><span class="err">x : A</span></code> and
-<code class="language-rzk highlight"><span class="err">f : hom A a x</span></code> in two steps.</p>
+<p>The other composite carries <code class="language-rzk highlight"><span class="err">ϕ</span></code> to an a priori distinct natural
+transformation. We first show that these are pointwise equal at all
+<code class="language-rzk highlight"><span class="err">x : A</span></code> and <code class="language-rzk highlight"><span class="err">f : hom A a x</span></code> in two steps.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nd">#section</span><span class="n"> yon-evid</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
@@ -1346,10 +1366,11 @@ equivalence.</p>
 </span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="err">        ( yon-evid A is-segal-A a C is-covariant-C)))</span>
 </span></code></pre></div>
 <h2 id="naturality">Naturality<a class="headerlink" href="#naturality" title="Permanent link">&para;</a></h2>
-<p>The equivalence of the Yoneda lemma is natural in both <span class="arithmatex">\(a : A\)</span> and <span class="arithmatex">\(C : A → U\)</span>.</p>
-<p>Naturality in <span class="arithmatex">\(a\)</span> follows from the fact that the maps <code class="language-rzk highlight"><span class="err">evid</span></code> and
-<code class="language-rzk highlight"><span class="err">yon</span></code> are fiberwise equivalences between covariant families over <span class="arithmatex">\(A\)</span>,
-though it requires some work to prove that the domain is covariant.</p>
+<p>The equivalence of the Yoneda lemma is natural in both <code class="language-rzk highlight"><span class="err">a : A</span></code> and
+<code class="language-rzk highlight"><span class="err">C : A → U</span></code>.</p>
+<p>Naturality in <code class="language-rzk highlight"><span class="err">a</span></code> follows from the fact that the maps <code class="language-rzk highlight"><span class="err">evid</span></code> and
+<code class="language-rzk highlight"><span class="err">yon</span></code> are fiberwise equivalences between covariant families over
+<code class="language-rzk highlight"><span class="err">A</span></code>, though it requires some work to prove that the domain is covariant.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-covariant-yoneda-domain" id="define:is-covariant-yoneda-domain" style="visibility: visible; position: relative; color: inherit">is-covariant-yoneda-domain</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="err">  </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
@@ -1421,7 +1442,7 @@ though it requires some work to prove that the domain is covariant.</p>
 </span><span id="__span-12-69"><a id="__codelineno-12-69" name="__codelineno-12-69" href="#__codelineno-12-69"></a><span class="err">    ( </span><span class="p">\ </span>x <span class="err">-&gt; yon A is-segal-A x C is-covariant-C)</span>
 </span><span id="__span-12-70"><a id="__codelineno-12-70" name="__codelineno-12-70" href="#__codelineno-12-70"></a><span class="err">    ( u)</span>
 </span></code></pre></div>
-<p>Naturality in <span class="arithmatex">\(C\)</span> is not automatic but can be proven easily:</p>
+<p>Naturality in <code class="language-rzk highlight"><span class="err">C</span></code> is not automatic but can be proven easily:</p>
 <div class="language-rzk highlight"><span class="filename">RS17, Lemma 9.2(i)</span><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-natural-in-family-evid" id="define:is-natural-in-family-evid" style="visibility: visible; position: relative; color: inherit">is-natural-in-family-evid</a></span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
@@ -1509,8 +1530,8 @@ though it requires some work to prove that the domain is covariant.</p>
 </span></code></pre></div>
 <h2 id="yoneda-for-contravariant-families">Yoneda for contravariant families<a class="headerlink" href="#yoneda-for-contravariant-families" title="Permanent link">&para;</a></h2>
 <p>Dually, the Yoneda lemma for contravariant type families characterizes natural
-transformations from the contravariant family represented by a term <span class="arithmatex">\(a : A\)</span> in a
-Segal type to a contravariant type family <span class="arithmatex">\(C : A → U\)</span>.</p>
+transformations from the contravariant family represented by a term
+<code class="language-rzk highlight"><span class="err">a : A</span></code> in a Segal type to a contravariant type family <code class="language-rzk highlight"><span class="err">C : A → U</span></code>.</p>
 <p>By <code class="language-rzk highlight"><span class="err">naturality-contravariant-fiberwise-transformation</span></code> naturality is again
 automatic.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:naturality-contravariant-fiberwise-representable-transformation" id="define:naturality-contravariant-fiberwise-representable-transformation" style="visibility: visible; position: relative; color: inherit">naturality-contravariant-fiberwise-representable-transformation</a></span>
@@ -1532,10 +1553,10 @@ automatic.</p>
 </span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="err">      ( ϕ)</span>
 </span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="err">      ( f)</span>
 </span></code></pre></div>
-<p>For any Segal type <span class="arithmatex">\(A\)</span> and term <span class="arithmatex">\(a : A\)</span>, the contravariant Yoneda lemma provides
-an equivalence between the type <code class="language-rzk highlight"><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → hom A z a → C z</span></code> of natural
-transformations out of the functor <code class="language-rzk highlight"><span class="p">\ </span>z <span class="err">→ hom A z a</span></code> and valued in an
-arbitrary contravariant family <span class="arithmatex">\(C\)</span> and the type <span class="arithmatex">\(C a\)</span>.</p>
+<p>For any Segal type <code class="language-rzk highlight"><span class="err">A</span></code> and term <code class="language-rzk highlight"><span class="err">a : A</span></code>, the contravariant Yoneda
+lemma provides an equivalence between the type <code class="language-rzk highlight"><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → hom A z a → C z</span></code>
+of natural transformations out of the functor <code class="language-rzk highlight"><span class="p">\ </span>z <span class="err">→ hom A z a</span></code> and valued
+in an arbitrary contravariant family <code class="language-rzk highlight"><span class="err">C</span></code> and the type <code class="language-rzk highlight"><span class="err">C a</span></code>.</p>
 <p>One of the maps in this equivalence is evaluation at the identity. The inverse
 map makes use of the contravariant transport operation.</p>
 <p>The following map, <code class="language-rzk highlight"><span class="err">contra-evid</span></code> evaluates a natural transformation out of
@@ -1569,9 +1590,9 @@ straightforward:</p>
 </span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="err">  : contra-evid A a C ((contra-yon A is-segal-A a C is-contravariant-C) v) = v</span>
 </span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="err">  := id-arr-contravariant-transport A a C is-contravariant-C v</span>
 </span></code></pre></div>
-<p>The other composite carries <span class="arithmatex">\(ϕ\)</span> to an a priori distinct natural transformation.
-We first show that these are pointwise equal at all <code class="language-rzk highlight"><span class="err">x : A</span></code> and
-<code class="language-rzk highlight"><span class="err">f : hom A x a</span></code> in two steps.</p>
+<p>The other composite carries <code class="language-rzk highlight"><span class="err">ϕ</span></code> to an a priori distinct natural
+transformation. We first show that these are pointwise equal at all
+<code class="language-rzk highlight"><span class="err">x : A</span></code> and <code class="language-rzk highlight"><span class="err">f : hom A x a</span></code> in two steps.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nd">#section</span><span class="n"> contra-yon-evid</span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
@@ -1669,12 +1690,13 @@ equivalence.</p>
 </span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="err">        ( contra-yon-evid A is-segal-A a C is-contravariant-C)))</span>
 </span></code></pre></div>
 <h2 id="contravariant-naturality">Contravariant Naturality<a class="headerlink" href="#contravariant-naturality" title="Permanent link">&para;</a></h2>
-<p>The equivalence of the Yoneda lemma is natural in both <span class="arithmatex">\(a : A\)</span> and <span class="arithmatex">\(C : A → U\)</span>.</p>
-<p>Naturality in <span class="arithmatex">\(a\)</span> follows from the fact that the maps <code class="language-rzk highlight"><span class="err">evid</span></code> and
-<code class="language-rzk highlight"><span class="err">yon</span></code> are fiberwise equivalences between contravariant families over <span class="arithmatex">\(A\)</span>,
-though it requires some work, which has not yet been formalized, to prove that
-the domain is contravariant.</p>
-<p>Naturality in <span class="arithmatex">\(C\)</span> is not automatic but can be proven easily:</p>
+<p>The equivalence of the Yoneda lemma is natural in both <code class="language-rzk highlight"><span class="err">a : A</span></code> and
+<code class="language-rzk highlight"><span class="err">C : A → U</span></code>.</p>
+<p>Naturality in <code class="language-rzk highlight"><span class="err">a</span></code> follows from the fact that the maps <code class="language-rzk highlight"><span class="err">evid</span></code> and
+<code class="language-rzk highlight"><span class="err">yon</span></code> are fiberwise equivalences between contravariant families over
+<code class="language-rzk highlight"><span class="err">A</span></code>, though it requires some work, which has not yet been formalized, to
+prove that the domain is contravariant.</p>
+<p>Naturality in <code class="language-rzk highlight"><span class="err">C</span></code> is not automatic but can be proven easily:</p>
 <div class="language-rzk highlight"><span class="filename">RS17, Lemma 9.2(i), dual</span><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-natural-in-family-contra-evid" id="define:is-natural-in-family-contra-evid" style="visibility: visible; position: relative; color: inherit">is-natural-in-family-contra-evid</a></span>
 </span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
@@ -1772,8 +1794,8 @@ typed” generalization of the Yoneda lemma, analogous to the full induction
 principle for identity types. We prove this as a special case of a result about
 covariant families over a type with an initial object.</p>
 <h2 id="initial-objects">Initial objects<a class="headerlink" href="#initial-objects" title="Permanent link">&para;</a></h2>
-<p>A term <span class="arithmatex">\(a\)</span> in a type <span class="arithmatex">\(A\)</span> is initial if all of its mapping-out hom types are
-contractible.</p>
+<p>A term <code class="language-rzk highlight"><span class="err">a</span></code> in a type <code class="language-rzk highlight"><span class="err">A</span></code> is initial if all of its mapping-out hom
+types are contractible.</p>
 <div class="language-rzk highlight"><span class="filename">RS17, Definition 9.6</span><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-initial" id="define:is-initial" style="visibility: visible; position: relative; color: inherit">is-initial</a></span>
 </span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
@@ -1866,10 +1888,11 @@ family defines an inverse equivalence to evaluation at the element.</p>
 </span><span id="__span-29-19"><a id="__codelineno-29-19" name="__codelineno-29-19" href="#__codelineno-29-19"></a><span class="err">      ( has-cov-section-ev-pt A a is-initial-a C is-covariant-C))</span>
 </span></code></pre></div>
 <h2 id="initial-objects-in-slice-categories">Initial objects in slice categories<a class="headerlink" href="#initial-objects-in-slice-categories" title="Permanent link">&para;</a></h2>
-<p>Recall that the type <code class="language-rzk highlight"><span class="err">coslice A a</span></code>
-is the type of arrows in <span class="arithmatex">\(A\)</span> with domain <span class="arithmatex">\(a\)</span>.</p>
-<p>We now show that the coslice under <span class="arithmatex">\(a\)</span> in a Segal type <span class="arithmatex">\(A\)</span> has an initial object
-given by the identity arrow at <span class="arithmatex">\(a\)</span>. This makes use of the following equivalence.</p>
+<p>Recall that the type <code class="language-rzk highlight"><span class="err">coslice A a</span></code> is the type of arrows in <code class="language-rzk highlight"><span class="err">A</span></code> with
+domain <code class="language-rzk highlight"><span class="err">a</span></code>.</p>
+<p>We now show that the coslice under <code class="language-rzk highlight"><span class="err">a</span></code> in a Segal type <code class="language-rzk highlight"><span class="err">A</span></code> has an
+initial object given by the identity arrow at <code class="language-rzk highlight"><span class="err">a</span></code>. This makes use of the
+following equivalence.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-hom-in-coslice" id="define:equiv-hom-in-coslice" style="visibility: visible; position: relative; color: inherit">equiv-hom-in-coslice</a></span>
 </span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="err">  </span><span class="p">( </span>a x <span class="p">:</span><span class="err"> A)</span>
@@ -1884,7 +1907,7 @@ given by the identity arrow at <span class="arithmatex">\(a\)</span>. This makes
 </span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="err">      ( </span><span class="p">\ </span>k s <span class="err">→ ( k </span><span class="m">1₂</span><span class="err"> s , </span><span class="p">\ </span>t <span class="err">→ k t s) ,</span>
 </span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="err">        </span><span class="p">\ </span>k <span class="err">→ </span><span class="s">refl</span><span class="err">)))</span>
 </span></code></pre></div>
-<p>Since <span class="arithmatex">\(hom A a\)</span> is covariant when <span class="arithmatex">\(A\)</span> is Segal, this latter type is
+<p>Since <code class="language-rzk highlight"><span class="err">hom A a</span></code> is covariant when <code class="language-rzk highlight"><span class="err">A</span></code> is Segal, this latter type is
 contractible.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-is-segal-hom-in-coslice" id="define:is-contr-is-segal-hom-in-coslice" style="visibility: visible; position: relative; color: inherit">is-contr-is-segal-hom-in-coslice</a></span>
 </span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
@@ -1965,8 +1988,8 @@ an equivalent type in the domain of the evaluation map.</p>
 </span><span id="__span-34-19"><a id="__codelineno-34-19" name="__codelineno-34-19" href="#__codelineno-34-19"></a><span class="err">      ( dependent-yoneda-lemma&#39; A is-segal-A a C is-covariant-C)</span>
 </span></code></pre></div>
 <h2 id="final-objects">Final objects<a class="headerlink" href="#final-objects" title="Permanent link">&para;</a></h2>
-<p>A term <span class="arithmatex">\(a\)</span> in a type <span class="arithmatex">\(A\)</span> is initial if all of its mapping-out hom types are
-contractible.</p>
+<p>A term <code class="language-rzk highlight"><span class="err">a</span></code> in a type <code class="language-rzk highlight"><span class="err">A</span></code> is initial if all of its mapping-out hom
+types are contractible.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-final" id="define:is-final" style="visibility: visible; position: relative; color: inherit">is-final</a></span>
 </span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
@@ -2060,10 +2083,11 @@ family defines an inverse equivalence to evaluation at the element.</p>
 </span><span id="__span-37-19"><a id="__codelineno-37-19" name="__codelineno-37-19" href="#__codelineno-37-19"></a><span class="err">      ( has-contra-section-ev-pt A a is-final-a C is-contravariant-C))</span>
 </span></code></pre></div>
 <h2 id="final-objects-in-slice-categories">Final objects in slice categories<a class="headerlink" href="#final-objects-in-slice-categories" title="Permanent link">&para;</a></h2>
-<p>Recall that the type <code class="language-rzk highlight"><span class="err">slice A a</span></code>
-is the type of arrows in <span class="arithmatex">\(A\)</span> with codomain <span class="arithmatex">\(a\)</span>.</p>
-<p>We now show that the slice over <span class="arithmatex">\(a\)</span> in a Segal type <span class="arithmatex">\(A\)</span> has a final object given
-by the identity arrow at <span class="arithmatex">\(a\)</span>. This makes use of the following equivalence.</p>
+<p>Recall that the type <code class="language-rzk highlight"><span class="err">slice A a</span></code> is the type of arrows in <code class="language-rzk highlight"><span class="err">A</span></code> with
+codomain <code class="language-rzk highlight"><span class="err">a</span></code>.</p>
+<p>We now show that the slice over <code class="language-rzk highlight"><span class="err">a</span></code> in a Segal type <code class="language-rzk highlight"><span class="err">A</span></code> has a final
+object given by the identity arrow at <code class="language-rzk highlight"><span class="err">a</span></code>. This makes use of the following
+equivalence.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-hom-in-slice" id="define:equiv-hom-in-slice" style="visibility: visible; position: relative; color: inherit">equiv-hom-in-slice</a></span>
 </span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="err">  </span><span class="p">( </span>a x <span class="p">:</span><span class="err"> A)</span>
@@ -2078,8 +2102,8 @@ by the identity arrow at <span class="arithmatex">\(a\)</span>. This makes use o
 </span><span id="__span-38-12"><a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a><span class="err">      ( </span><span class="p">\ </span>k s <span class="err">→ ( k </span><span class="m">0₂</span><span class="err"> s , </span><span class="p">\ </span>t <span class="err">→ k t s) ,</span>
 </span><span id="__span-38-13"><a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a><span class="err">        </span><span class="p">\ </span>k <span class="err">→ </span><span class="s">refl</span><span class="err">)))</span>
 </span></code></pre></div>
-<p>Since <span class="arithmatex">\(\ z → hom A z a\)</span> is contravariant when <span class="arithmatex">\(A\)</span> is Segal, this latter type is
-contractible.</p>
+<p>Since <code class="language-rzk highlight"><span class="p">\ </span>z <span class="err">→ hom A z a</span></code> is contravariant when <code class="language-rzk highlight"><span class="err">A</span></code> is Segal, this
+latter type is contractible.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-is-segal-hom-in-slice" id="define:is-contr-is-segal-hom-in-slice" style="visibility: visible; position: relative; color: inherit">is-contr-is-segal-hom-in-slice</a></span>
 </span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="err">  </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
@@ -2181,7 +2205,7 @@ proven, just with an equivalent type in the domain of the evaluation map.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../08-covariant.rzk/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Covariantly Functorial Type Families" rel="prev">
+          <a href="../08-covariant.rzk/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Covariant Families" rel="prev">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -2191,7 +2215,7 @@ proven, just with an equivalent type in the domain of the evaluation map.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Covariantly Functorial Type Families
+                Covariant Families
               </div>
             </div>
           </a>

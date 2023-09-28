@@ -605,6 +605,26 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hott/11-homotopy-pullbacks.rzk.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Homotopy pullbacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -795,18 +815,12 @@
     Homotopies
   </a>
   
-    <nav class="md-nav" aria-label="Homotopies">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#inner-anodyne-maps" class="md-nav__link">
     Inner anodyne maps
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -869,7 +883,7 @@
         
   
   <span class="md-ellipsis">
-    Covariantly Functorial Type Families
+    Covariant Families
   </span>
   
 
@@ -1066,18 +1080,12 @@
     Homotopies
   </a>
   
-    <nav class="md-nav" aria-label="Homotopies">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#inner-anodyne-maps" class="md-nav__link">
     Inner anodyne maps
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2473,165 +2481,230 @@ composition:</p>
     }
   </style></p>
 <p></svg></p>
-<h3 id="inner-anodyne-maps">Inner anodyne maps<a class="headerlink" href="#inner-anodyne-maps" title="Permanent link">&para;</a></h3>
-<div class="language-rzk highlight"><span class="filename">RS17, definition 5.19</span><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne" id="define:is-inner-anodyne" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne</a></span>
-</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a><span class="err">  </span><span class="p">(</span>I <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a><span class="err">  </span><span class="p">(</span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="err">  </span><span class="p">(</span>Φ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
-</span><span id="__span-51-5"><a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a><span class="err">  : U</span>
-</span><span id="__span-51-6"><a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a><span class="err">  := </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U) → is-segal A → </span><span class="p">(</span>h <span class="p">:</span><span class="err"> Φ → A) → is-contr </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → A[ Φ t ↦ h t ])</span>
+<p>Interchange law</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="nd">#section</span><span class="n"> homotopy-interchange-law</span>
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>
+</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
+</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="kr">#variable</span><span class="p"> </span>is-segal-A<span class="err"> : is-segal A</span>
+</span><span id="__span-51-5"><a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a><span class="kr">#variables</span><span class="p"> </span>x y z<span class="err"> : A</span>
+</span><span id="__span-51-6"><a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>
+</span><span id="__span-51-7"><a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:homotopy-interchange-law-statement" id="define:homotopy-interchange-law-statement" style="visibility: visible; position: relative; color: inherit">homotopy-interchange-law-statement</a></span>
+</span><span id="__span-51-8"><a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a><span class="err">  </span><span class="p">( </span>f1 f2 f3 <span class="p">:</span><span class="err"> hom A x y)</span>
+</span><span id="__span-51-9"><a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a><span class="err">  </span><span class="p">( </span>h1 h2 h3 <span class="p">:</span><span class="err"> hom A y z)</span>
+</span><span id="__span-51-10"><a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> f1 = f2)</span>
+</span><span id="__span-51-11"><a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> f2 = f3)</span>
+</span><span id="__span-51-12"><a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a><span class="err">  </span><span class="p">( </span>p&#39; <span class="p">:</span><span class="err"> h1 = h2)</span>
+</span><span id="__span-51-13"><a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a><span class="err">  </span><span class="p">( </span>q&#39; <span class="p">:</span><span class="err"> h2 = h3)</span>
+</span><span id="__span-51-14"><a id="__codelineno-51-14" name="__codelineno-51-14" href="#__codelineno-51-14"></a><span class="err">  : U</span>
+</span><span id="__span-51-15"><a id="__codelineno-51-15" name="__codelineno-51-15" href="#__codelineno-51-15"></a><span class="err">  := congruence-homotopy-is-segal A is-segal-A x y z f1 f3 h1 h3</span>
+</span><span id="__span-51-16"><a id="__codelineno-51-16" name="__codelineno-51-16" href="#__codelineno-51-16"></a><span class="err">      ( concat (hom A x y) f1 f2 f3 p q)</span>
+</span><span id="__span-51-17"><a id="__codelineno-51-17" name="__codelineno-51-17" href="#__codelineno-51-17"></a><span class="err">      ( concat (hom A y z) h1 h2 h3 p&#39; q&#39;) =</span>
+</span><span id="__span-51-18"><a id="__codelineno-51-18" name="__codelineno-51-18" href="#__codelineno-51-18"></a><span class="err">    concat</span>
+</span><span id="__span-51-19"><a id="__codelineno-51-19" name="__codelineno-51-19" href="#__codelineno-51-19"></a><span class="err">      ( hom A x z)</span>
+</span><span id="__span-51-20"><a id="__codelineno-51-20" name="__codelineno-51-20" href="#__codelineno-51-20"></a><span class="err">      ( comp-is-segal A is-segal-A x y z f1 h1)</span>
+</span><span id="__span-51-21"><a id="__codelineno-51-21" name="__codelineno-51-21" href="#__codelineno-51-21"></a><span class="err">      ( comp-is-segal A is-segal-A x y z f2 h2)</span>
+</span><span id="__span-51-22"><a id="__codelineno-51-22" name="__codelineno-51-22" href="#__codelineno-51-22"></a><span class="err">      ( comp-is-segal A is-segal-A x y z f3 h3)</span>
+</span><span id="__span-51-23"><a id="__codelineno-51-23" name="__codelineno-51-23" href="#__codelineno-51-23"></a><span class="err">      ( congruence-homotopy-is-segal A is-segal-A x y z f1 f2 h1 h2 p p&#39;)</span>
+</span><span id="__span-51-24"><a id="__codelineno-51-24" name="__codelineno-51-24" href="#__codelineno-51-24"></a><span class="err">      ( congruence-homotopy-is-segal A is-segal-A x y z f2 f3 h2 h3 q q&#39;)</span>
+</span></code></pre></div>
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 5.15</span><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:homotopy-interchange-law" id="define:homotopy-interchange-law" style="visibility: visible; position: relative; color: inherit">homotopy-interchange-law</a></span>
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="err">  </span><span class="p">( </span>f1 f2 f3 <span class="p">:</span><span class="err"> hom A x y)</span>
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="err">  </span><span class="p">( </span>h1 h2 h3 <span class="p">:</span><span class="err"> hom A y z)</span>
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> f1 = f2)</span>
+</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> f2 = f3)</span>
+</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a><span class="err">  </span><span class="p">( </span>p&#39; <span class="p">:</span><span class="err"> h1 = h2)</span>
+</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="err">  </span><span class="p">( </span>q&#39; <span class="p">:</span><span class="err"> h2 = h3)</span>
+</span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a><span class="err">  : homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p&#39; q&#39;</span>
+</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a><span class="err">  := ind-path</span>
+</span><span id="__span-52-10"><a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a><span class="err">    ( hom A x y)</span>
+</span><span id="__span-52-11"><a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a><span class="err">    ( f2)</span>
+</span><span id="__span-52-12"><a id="__codelineno-52-12" name="__codelineno-52-12" href="#__codelineno-52-12"></a><span class="err">    ( </span><span class="p">\ </span>f3 q <span class="err">-&gt; homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p&#39; q&#39;)</span>
+</span><span id="__span-52-13"><a id="__codelineno-52-13" name="__codelineno-52-13" href="#__codelineno-52-13"></a><span class="err">    ( ind-path</span>
+</span><span id="__span-52-14"><a id="__codelineno-52-14" name="__codelineno-52-14" href="#__codelineno-52-14"></a><span class="err">      ( hom A x y)</span>
+</span><span id="__span-52-15"><a id="__codelineno-52-15" name="__codelineno-52-15" href="#__codelineno-52-15"></a><span class="err">      ( f1)</span>
+</span><span id="__span-52-16"><a id="__codelineno-52-16" name="__codelineno-52-16" href="#__codelineno-52-16"></a><span class="err">      ( </span><span class="p">\ </span>f2 p <span class="err">-&gt; homotopy-interchange-law-statement f1 f2 f2 h1 h2 h3</span>
+</span><span id="__span-52-17"><a id="__codelineno-52-17" name="__codelineno-52-17" href="#__codelineno-52-17"></a><span class="err">          p </span><span class="s">refl</span><span class="err"> p&#39; q&#39;)</span>
+</span><span id="__span-52-18"><a id="__codelineno-52-18" name="__codelineno-52-18" href="#__codelineno-52-18"></a><span class="err">      ( ind-path</span>
+</span><span id="__span-52-19"><a id="__codelineno-52-19" name="__codelineno-52-19" href="#__codelineno-52-19"></a><span class="err">        ( hom A y z)</span>
+</span><span id="__span-52-20"><a id="__codelineno-52-20" name="__codelineno-52-20" href="#__codelineno-52-20"></a><span class="err">        ( h2)</span>
+</span><span id="__span-52-21"><a id="__codelineno-52-21" name="__codelineno-52-21" href="#__codelineno-52-21"></a><span class="err">        ( </span><span class="p">\ </span>h3 q&#39; <span class="err">-&gt; homotopy-interchange-law-statement f1 f1 f1 h1 h2 h3</span>
+</span><span id="__span-52-22"><a id="__codelineno-52-22" name="__codelineno-52-22" href="#__codelineno-52-22"></a><span class="err">            </span><span class="s">refl</span><span class="err"> </span><span class="s">refl</span><span class="err"> p&#39; q&#39;)</span>
+</span><span id="__span-52-23"><a id="__codelineno-52-23" name="__codelineno-52-23" href="#__codelineno-52-23"></a><span class="err">        ( ind-path</span>
+</span><span id="__span-52-24"><a id="__codelineno-52-24" name="__codelineno-52-24" href="#__codelineno-52-24"></a><span class="err">          ( hom A y z)</span>
+</span><span id="__span-52-25"><a id="__codelineno-52-25" name="__codelineno-52-25" href="#__codelineno-52-25"></a><span class="err">          ( h1)</span>
+</span><span id="__span-52-26"><a id="__codelineno-52-26" name="__codelineno-52-26" href="#__codelineno-52-26"></a><span class="err">          ( </span><span class="p">\ </span>h2 p&#39; <span class="err">-&gt; homotopy-interchange-law-statement f1 f1 f1 h1 h2 h2</span>
+</span><span id="__span-52-27"><a id="__codelineno-52-27" name="__codelineno-52-27" href="#__codelineno-52-27"></a><span class="err">              </span><span class="s">refl</span><span class="err"> </span><span class="s">refl</span><span class="err"> p&#39; </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-52-28"><a id="__codelineno-52-28" name="__codelineno-52-28" href="#__codelineno-52-28"></a><span class="err">          ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-52-29"><a id="__codelineno-52-29" name="__codelineno-52-29" href="#__codelineno-52-29"></a><span class="err">          ( h2)</span>
+</span><span id="__span-52-30"><a id="__codelineno-52-30" name="__codelineno-52-30" href="#__codelineno-52-30"></a><span class="err">          ( p&#39;))</span>
+</span><span id="__span-52-31"><a id="__codelineno-52-31" name="__codelineno-52-31" href="#__codelineno-52-31"></a><span class="err">        ( h3)</span>
+</span><span id="__span-52-32"><a id="__codelineno-52-32" name="__codelineno-52-32" href="#__codelineno-52-32"></a><span class="err">        ( q&#39;))</span>
+</span><span id="__span-52-33"><a id="__codelineno-52-33" name="__codelineno-52-33" href="#__codelineno-52-33"></a><span class="err">      ( f2)</span>
+</span><span id="__span-52-34"><a id="__codelineno-52-34" name="__codelineno-52-34" href="#__codelineno-52-34"></a><span class="err">      ( p))</span>
+</span><span id="__span-52-35"><a id="__codelineno-52-35" name="__codelineno-52-35" href="#__codelineno-52-35"></a><span class="err">    ( f3)</span>
+</span><span id="__span-52-36"><a id="__codelineno-52-36" name="__codelineno-52-36" href="#__codelineno-52-36"></a><span class="err">    ( q)</span>
+</span><span id="__span-52-37"><a id="__codelineno-52-37" name="__codelineno-52-37" href="#__codelineno-52-37"></a>
+</span><span id="__span-52-38"><a id="__codelineno-52-38" name="__codelineno-52-38" href="#__codelineno-52-38"></a><span class="nd">#end</span><span class="n"> homotopy-interchange-law</span>
+</span></code></pre></div>
+<h2 id="inner-anodyne-maps">Inner anodyne maps<a class="headerlink" href="#inner-anodyne-maps" title="Permanent link">&para;</a></h2>
+<div class="language-rzk highlight"><span class="filename">RS17, Definition 5.19</span><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne" id="define:is-inner-anodyne" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne</a></span>
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="err">  </span><span class="p">(</span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="err">  </span><span class="p">(</span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="err">  </span><span class="p">(</span>Φ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="err">  : U</span>
+</span><span id="__span-53-6"><a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="err">  := </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U) → is-segal A → </span><span class="p">(</span>h <span class="p">:</span><span class="err"> Φ → A) → is-contr </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → A[ Φ t ↦ h t ])</span>
 </span></code></pre></div>
 <p>The cofibration Λ²₁ → Δ² is inner anodyne</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne-Λ²₁" id="define:is-inner-anodyne-Λ²₁" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne-Λ²₁</a></span>
-</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="err">  : is-inner-anodyne (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) Δ² Λ²₁</span>
-</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="err">  := </span><span class="p">\ </span>A is-segal-A h&#39; <span class="err">→</span>
-</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="err">    equiv-with-contractible-domain-implies-contractible-codomain</span>
-</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a><span class="err">      </span><span class="p">( </span>Σ (h <span class="p">:</span><span class="err"> hom A (h&#39; (</span><span class="m">0₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">))) ,</span>
-</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a><span class="err">          (hom2 A (h&#39; (</span><span class="m">0₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="err">          (</span><span class="p">\ </span>t <span class="err">→ h&#39; (t,</span><span class="m">0₂</span><span class="err">)) (</span><span class="p">\ </span>s <span class="err">→ h&#39; (</span><span class="m">1₂</span><span class="err">,s)) h))</span>
-</span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a><span class="err">      </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> Δ²) → A [Λ t ↦ h&#39; t])</span>
-</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a><span class="err">      (compositions-are-horn-fillings</span>
-</span><span id="__span-52-10"><a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a><span class="err">        A (h&#39; (</span><span class="m">0₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-52-11"><a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a><span class="err">          (</span><span class="p">\ </span>t <span class="err">→ h&#39; (t,</span><span class="m">0₂</span><span class="err">)) (</span><span class="p">\ </span>s <span class="err">→ h&#39; (</span><span class="m">1₂</span><span class="err">,s)))</span>
-</span><span id="__span-52-12"><a id="__codelineno-52-12" name="__codelineno-52-12" href="#__codelineno-52-12"></a><span class="err">      (is-segal-A (h&#39; (</span><span class="m">0₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-52-13"><a id="__codelineno-52-13" name="__codelineno-52-13" href="#__codelineno-52-13"></a><span class="err">          (</span><span class="p">\ </span>t <span class="err">→ h&#39; (t,</span><span class="m">0₂</span><span class="err">)) (</span><span class="p">\ </span>s <span class="err">→ h&#39; (</span><span class="m">1₂</span><span class="err">,s)))</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne-Λ²₁" id="define:is-inner-anodyne-Λ²₁" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne-Λ²₁</a></span>
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a><span class="err">  : is-inner-anodyne (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) Δ² Λ²₁</span>
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="err">  := </span><span class="p">\ </span>A is-segal-A h&#39; <span class="err">→</span>
+</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a><span class="err">    equiv-with-contractible-domain-implies-contractible-codomain</span>
+</span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="err">      </span><span class="p">( </span>Σ (h <span class="p">:</span><span class="err"> hom A (h&#39; (</span><span class="m">0₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">))) ,</span>
+</span><span id="__span-54-6"><a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a><span class="err">          (hom2 A (h&#39; (</span><span class="m">0₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">))</span>
+</span><span id="__span-54-7"><a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a><span class="err">          (</span><span class="p">\ </span>t <span class="err">→ h&#39; (t,</span><span class="m">0₂</span><span class="err">)) (</span><span class="p">\ </span>s <span class="err">→ h&#39; (</span><span class="m">1₂</span><span class="err">,s)) h))</span>
+</span><span id="__span-54-8"><a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a><span class="err">      </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> Δ²) → A [Λ t ↦ h&#39; t])</span>
+</span><span id="__span-54-9"><a id="__codelineno-54-9" name="__codelineno-54-9" href="#__codelineno-54-9"></a><span class="err">      (compositions-are-horn-fillings</span>
+</span><span id="__span-54-10"><a id="__codelineno-54-10" name="__codelineno-54-10" href="#__codelineno-54-10"></a><span class="err">        A (h&#39; (</span><span class="m">0₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">))</span>
+</span><span id="__span-54-11"><a id="__codelineno-54-11" name="__codelineno-54-11" href="#__codelineno-54-11"></a><span class="err">          (</span><span class="p">\ </span>t <span class="err">→ h&#39; (t,</span><span class="m">0₂</span><span class="err">)) (</span><span class="p">\ </span>s <span class="err">→ h&#39; (</span><span class="m">1₂</span><span class="err">,s)))</span>
+</span><span id="__span-54-12"><a id="__codelineno-54-12" name="__codelineno-54-12" href="#__codelineno-54-12"></a><span class="err">      (is-segal-A (h&#39; (</span><span class="m">0₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">0₂</span><span class="err">)) (h&#39; (</span><span class="m">1₂</span><span class="err">,</span><span class="m">1₂</span><span class="err">))</span>
+</span><span id="__span-54-13"><a id="__codelineno-54-13" name="__codelineno-54-13" href="#__codelineno-54-13"></a><span class="err">          (</span><span class="p">\ </span>t <span class="err">→ h&#39; (t,</span><span class="m">0₂</span><span class="err">)) (</span><span class="p">\ </span>s <span class="err">→ h&#39; (</span><span class="m">1₂</span><span class="err">,s)))</span>
 </span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">RS17, lemma 5.20</span><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne-pushout-product-left-is-inner-anodyne" id="define:is-inner-anodyne-pushout-product-left-is-inner-anodyne" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne-pushout-product-left-is-inner-anodyne</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
-</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="err">  </span><span class="p">( </span>I J <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="err">  </span><span class="p">( </span>Φ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
-</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="err">  </span><span class="p">(</span>is-inner-anodyne-ψ-Φ <span class="p">:</span><span class="err"> is-inner-anodyne I ψ Φ)</span>
-</span><span id="__span-53-6"><a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="err">  </span><span class="p">( </span>ζ <span class="p">:</span><span class="err"> J → TOPE)</span>
-</span><span id="__span-53-7"><a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="err">  </span><span class="p">( </span>χ <span class="p">:</span><span class="err"> ζ → TOPE)</span>
-</span><span id="__span-53-8"><a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a><span class="err">  : is-inner-anodyne (I × J)</span>
-</span><span id="__span-53-9"><a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="err">      (\ (t,s) → ψ t </span><span class="sx">∧</span><span class="err"> ζ s)</span>
-</span><span id="__span-53-10"><a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a><span class="err">      (\ (t,s) → (Φ t </span><span class="sx">∧</span><span class="err"> ζ s) </span><span class="sx">∨</span><span class="err"> (ψ t </span><span class="sx">∧</span><span class="err"> χ s))</span>
-</span><span id="__span-53-11"><a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a><span class="err">  := </span><span class="p">\ </span>A is-segal-A h <span class="err">→</span>
-</span><span id="__span-53-12"><a id="__codelineno-53-12" name="__codelineno-53-12" href="#__codelineno-53-12"></a><span class="err">    equiv-with-contractible-codomain-implies-contractible-domain</span>
-</span><span id="__span-53-13"><a id="__codelineno-53-13" name="__codelineno-53-13" href="#__codelineno-53-13"></a><span class="err">      (((t,s) : I × J | ψ t </span><span class="sx">∧</span><span class="err"> ζ s) → A[(Φ t </span><span class="sx">∧</span><span class="err"> ζ s) </span><span class="sx">∨</span><span class="err"> (ψ t </span><span class="sx">∧</span><span class="err"> χ s) ↦ h (t,s)])</span>
-</span><span id="__span-53-14"><a id="__codelineno-53-14" name="__codelineno-53-14" href="#__codelineno-53-14"></a><span class="err">      </span><span class="p">( </span>(s <span class="p">:</span><span class="err"> ζ) → </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → A[ Φ t ↦ h (t,s)])[ χ s ↦ </span><span class="p">\ </span>t <span class="err">→ h (t, s)])</span>
-</span><span id="__span-53-15"><a id="__codelineno-53-15" name="__codelineno-53-15" href="#__codelineno-53-15"></a><span class="err">      (uncurry-opcurry I J ψ Φ ζ χ (</span><span class="p">\ </span>s t <span class="err">→ A) h)</span>
-</span><span id="__span-53-16"><a id="__codelineno-53-16" name="__codelineno-53-16" href="#__codelineno-53-16"></a><span class="err">      (weakextext</span>
-</span><span id="__span-53-17"><a id="__codelineno-53-17" name="__codelineno-53-17" href="#__codelineno-53-17"></a><span class="err">        ( J)</span>
-</span><span id="__span-53-18"><a id="__codelineno-53-18" name="__codelineno-53-18" href="#__codelineno-53-18"></a><span class="err">        ( ζ)</span>
-</span><span id="__span-53-19"><a id="__codelineno-53-19" name="__codelineno-53-19" href="#__codelineno-53-19"></a><span class="err">        ( χ)</span>
-</span><span id="__span-53-20"><a id="__codelineno-53-20" name="__codelineno-53-20" href="#__codelineno-53-20"></a><span class="err">        </span><span class="p">( </span>\ s → (t <span class="p">:</span><span class="err"> ψ) → A[ Φ t ↦ h (t,s)])</span>
-</span><span id="__span-53-21"><a id="__codelineno-53-21" name="__codelineno-53-21" href="#__codelineno-53-21"></a><span class="err">        ( </span><span class="p">\ </span>s <span class="err">→ is-inner-anodyne-ψ-Φ A is-segal-A (</span><span class="p">\ </span>t <span class="err">→ h (t,s)))</span>
-</span><span id="__span-53-22"><a id="__codelineno-53-22" name="__codelineno-53-22" href="#__codelineno-53-22"></a><span class="err">        ( </span><span class="p">\ </span>s t <span class="err">→ h (t,s)))</span>
-</span><span id="__span-53-23"><a id="__codelineno-53-23" name="__codelineno-53-23" href="#__codelineno-53-23"></a>
-</span><span id="__span-53-24"><a id="__codelineno-53-24" name="__codelineno-53-24" href="#__codelineno-53-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne-pushout-product-right-is-inner-anodyne" id="define:is-inner-anodyne-pushout-product-right-is-inner-anodyne" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne-pushout-product-right-is-inner-anodyne</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
-</span><span id="__span-53-25"><a id="__codelineno-53-25" name="__codelineno-53-25" href="#__codelineno-53-25"></a><span class="err">  </span><span class="p">( </span>I J <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-53-26"><a id="__codelineno-53-26" name="__codelineno-53-26" href="#__codelineno-53-26"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-53-27"><a id="__codelineno-53-27" name="__codelineno-53-27" href="#__codelineno-53-27"></a><span class="err">  </span><span class="p">( </span>Φ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
-</span><span id="__span-53-28"><a id="__codelineno-53-28" name="__codelineno-53-28" href="#__codelineno-53-28"></a><span class="err">  </span><span class="p">( </span>ζ <span class="p">:</span><span class="err"> J → TOPE)</span>
-</span><span id="__span-53-29"><a id="__codelineno-53-29" name="__codelineno-53-29" href="#__codelineno-53-29"></a><span class="err">  </span><span class="p">( </span>χ <span class="p">:</span><span class="err"> ζ → TOPE)</span>
-</span><span id="__span-53-30"><a id="__codelineno-53-30" name="__codelineno-53-30" href="#__codelineno-53-30"></a><span class="err">  </span><span class="p">(</span>is-inner-anodyne-ζ-χ <span class="p">:</span><span class="err"> is-inner-anodyne J ζ χ)</span>
-</span><span id="__span-53-31"><a id="__codelineno-53-31" name="__codelineno-53-31" href="#__codelineno-53-31"></a><span class="err">  : is-inner-anodyne (I × J)</span>
-</span><span id="__span-53-32"><a id="__codelineno-53-32" name="__codelineno-53-32" href="#__codelineno-53-32"></a><span class="err">      (\ (t,s) → ψ t </span><span class="sx">∧</span><span class="err"> ζ s)</span>
-</span><span id="__span-53-33"><a id="__codelineno-53-33" name="__codelineno-53-33" href="#__codelineno-53-33"></a><span class="err">      (\ (t,s) → (Φ t </span><span class="sx">∧</span><span class="err"> ζ s) </span><span class="sx">∨</span><span class="err"> (ψ t </span><span class="sx">∧</span><span class="err"> χ s))</span>
-</span><span id="__span-53-34"><a id="__codelineno-53-34" name="__codelineno-53-34" href="#__codelineno-53-34"></a><span class="err">  := </span><span class="p">\ </span>A is-segal-A h <span class="err">→</span>
-</span><span id="__span-53-35"><a id="__codelineno-53-35" name="__codelineno-53-35" href="#__codelineno-53-35"></a><span class="err">    equiv-with-contractible-domain-implies-contractible-codomain</span>
-</span><span id="__span-53-36"><a id="__codelineno-53-36" name="__codelineno-53-36" href="#__codelineno-53-36"></a><span class="err">      </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → </span><span class="p">(</span>(s <span class="p">:</span><span class="err"> ζ) → A[ χ s ↦ h (t,s)])[ Φ t ↦ </span><span class="p">\ </span>s <span class="err">→ h (t, s)])</span>
-</span><span id="__span-53-37"><a id="__codelineno-53-37" name="__codelineno-53-37" href="#__codelineno-53-37"></a><span class="err">      (((t,s) : I × J | ψ t </span><span class="sx">∧</span><span class="err"> ζ s) → A[(Φ t </span><span class="sx">∧</span><span class="err"> ζ s) </span><span class="sx">∨</span><span class="err"> (ψ t </span><span class="sx">∧</span><span class="err"> χ s) ↦ h (t,s)])</span>
-</span><span id="__span-53-38"><a id="__codelineno-53-38" name="__codelineno-53-38" href="#__codelineno-53-38"></a><span class="err">      (curry-uncurry I J ψ Φ ζ χ (</span><span class="p">\ </span>s t <span class="err">→ A) h)</span>
-</span><span id="__span-53-39"><a id="__codelineno-53-39" name="__codelineno-53-39" href="#__codelineno-53-39"></a><span class="err">      (weakextext</span>
-</span><span id="__span-53-40"><a id="__codelineno-53-40" name="__codelineno-53-40" href="#__codelineno-53-40"></a><span class="err">        ( I)</span>
-</span><span id="__span-53-41"><a id="__codelineno-53-41" name="__codelineno-53-41" href="#__codelineno-53-41"></a><span class="err">        ( ψ)</span>
-</span><span id="__span-53-42"><a id="__codelineno-53-42" name="__codelineno-53-42" href="#__codelineno-53-42"></a><span class="err">        ( Φ)</span>
-</span><span id="__span-53-43"><a id="__codelineno-53-43" name="__codelineno-53-43" href="#__codelineno-53-43"></a><span class="err">        </span><span class="p">( </span>\ t → (s <span class="p">:</span><span class="err"> ζ) → A[ χ s ↦ h (t,s)])</span>
-</span><span id="__span-53-44"><a id="__codelineno-53-44" name="__codelineno-53-44" href="#__codelineno-53-44"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ is-inner-anodyne-ζ-χ A is-segal-A (</span><span class="p">\ </span>s <span class="err">→ h (t,s)))</span>
-</span><span id="__span-53-45"><a id="__codelineno-53-45" name="__codelineno-53-45" href="#__codelineno-53-45"></a><span class="err">        ( </span><span class="p">\ </span>s t <span class="err">→ h (s,t)))</span>
+<div class="language-rzk highlight"><span class="filename">RS17, lemma 5.20</span><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne-pushout-product-left-is-inner-anodyne" id="define:is-inner-anodyne-pushout-product-left-is-inner-anodyne" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne-pushout-product-left-is-inner-anodyne</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="err">  </span><span class="p">( </span>I J <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="err">  </span><span class="p">( </span>Φ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a><span class="err">  </span><span class="p">(</span>is-inner-anodyne-ψ-Φ <span class="p">:</span><span class="err"> is-inner-anodyne I ψ Φ)</span>
+</span><span id="__span-55-6"><a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a><span class="err">  </span><span class="p">( </span>ζ <span class="p">:</span><span class="err"> J → TOPE)</span>
+</span><span id="__span-55-7"><a id="__codelineno-55-7" name="__codelineno-55-7" href="#__codelineno-55-7"></a><span class="err">  </span><span class="p">( </span>χ <span class="p">:</span><span class="err"> ζ → TOPE)</span>
+</span><span id="__span-55-8"><a id="__codelineno-55-8" name="__codelineno-55-8" href="#__codelineno-55-8"></a><span class="err">  : is-inner-anodyne (I × J)</span>
+</span><span id="__span-55-9"><a id="__codelineno-55-9" name="__codelineno-55-9" href="#__codelineno-55-9"></a><span class="err">      (\ (t,s) → ψ t </span><span class="sx">∧</span><span class="err"> ζ s)</span>
+</span><span id="__span-55-10"><a id="__codelineno-55-10" name="__codelineno-55-10" href="#__codelineno-55-10"></a><span class="err">      (\ (t,s) → (Φ t </span><span class="sx">∧</span><span class="err"> ζ s) </span><span class="sx">∨</span><span class="err"> (ψ t </span><span class="sx">∧</span><span class="err"> χ s))</span>
+</span><span id="__span-55-11"><a id="__codelineno-55-11" name="__codelineno-55-11" href="#__codelineno-55-11"></a><span class="err">  := </span><span class="p">\ </span>A is-segal-A h <span class="err">→</span>
+</span><span id="__span-55-12"><a id="__codelineno-55-12" name="__codelineno-55-12" href="#__codelineno-55-12"></a><span class="err">    equiv-with-contractible-codomain-implies-contractible-domain</span>
+</span><span id="__span-55-13"><a id="__codelineno-55-13" name="__codelineno-55-13" href="#__codelineno-55-13"></a><span class="err">      (((t,s) : I × J | ψ t </span><span class="sx">∧</span><span class="err"> ζ s) → A[(Φ t </span><span class="sx">∧</span><span class="err"> ζ s) </span><span class="sx">∨</span><span class="err"> (ψ t </span><span class="sx">∧</span><span class="err"> χ s) ↦ h (t,s)])</span>
+</span><span id="__span-55-14"><a id="__codelineno-55-14" name="__codelineno-55-14" href="#__codelineno-55-14"></a><span class="err">      </span><span class="p">( </span>(s <span class="p">:</span><span class="err"> ζ) → </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → A[ Φ t ↦ h (t,s)])[ χ s ↦ </span><span class="p">\ </span>t <span class="err">→ h (t, s)])</span>
+</span><span id="__span-55-15"><a id="__codelineno-55-15" name="__codelineno-55-15" href="#__codelineno-55-15"></a><span class="err">      (uncurry-opcurry I J ψ Φ ζ χ (</span><span class="p">\ </span>s t <span class="err">→ A) h)</span>
+</span><span id="__span-55-16"><a id="__codelineno-55-16" name="__codelineno-55-16" href="#__codelineno-55-16"></a><span class="err">      (weakextext</span>
+</span><span id="__span-55-17"><a id="__codelineno-55-17" name="__codelineno-55-17" href="#__codelineno-55-17"></a><span class="err">        ( J)</span>
+</span><span id="__span-55-18"><a id="__codelineno-55-18" name="__codelineno-55-18" href="#__codelineno-55-18"></a><span class="err">        ( ζ)</span>
+</span><span id="__span-55-19"><a id="__codelineno-55-19" name="__codelineno-55-19" href="#__codelineno-55-19"></a><span class="err">        ( χ)</span>
+</span><span id="__span-55-20"><a id="__codelineno-55-20" name="__codelineno-55-20" href="#__codelineno-55-20"></a><span class="err">        </span><span class="p">( </span>\ s → (t <span class="p">:</span><span class="err"> ψ) → A[ Φ t ↦ h (t,s)])</span>
+</span><span id="__span-55-21"><a id="__codelineno-55-21" name="__codelineno-55-21" href="#__codelineno-55-21"></a><span class="err">        ( </span><span class="p">\ </span>s <span class="err">→ is-inner-anodyne-ψ-Φ A is-segal-A (</span><span class="p">\ </span>t <span class="err">→ h (t,s)))</span>
+</span><span id="__span-55-22"><a id="__codelineno-55-22" name="__codelineno-55-22" href="#__codelineno-55-22"></a><span class="err">        ( </span><span class="p">\ </span>s t <span class="err">→ h (t,s)))</span>
+</span><span id="__span-55-23"><a id="__codelineno-55-23" name="__codelineno-55-23" href="#__codelineno-55-23"></a>
+</span><span id="__span-55-24"><a id="__codelineno-55-24" name="__codelineno-55-24" href="#__codelineno-55-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne-pushout-product-right-is-inner-anodyne" id="define:is-inner-anodyne-pushout-product-right-is-inner-anodyne" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne-pushout-product-right-is-inner-anodyne</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-55-25"><a id="__codelineno-55-25" name="__codelineno-55-25" href="#__codelineno-55-25"></a><span class="err">  </span><span class="p">( </span>I J <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-55-26"><a id="__codelineno-55-26" name="__codelineno-55-26" href="#__codelineno-55-26"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-55-27"><a id="__codelineno-55-27" name="__codelineno-55-27" href="#__codelineno-55-27"></a><span class="err">  </span><span class="p">( </span>Φ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-55-28"><a id="__codelineno-55-28" name="__codelineno-55-28" href="#__codelineno-55-28"></a><span class="err">  </span><span class="p">( </span>ζ <span class="p">:</span><span class="err"> J → TOPE)</span>
+</span><span id="__span-55-29"><a id="__codelineno-55-29" name="__codelineno-55-29" href="#__codelineno-55-29"></a><span class="err">  </span><span class="p">( </span>χ <span class="p">:</span><span class="err"> ζ → TOPE)</span>
+</span><span id="__span-55-30"><a id="__codelineno-55-30" name="__codelineno-55-30" href="#__codelineno-55-30"></a><span class="err">  </span><span class="p">(</span>is-inner-anodyne-ζ-χ <span class="p">:</span><span class="err"> is-inner-anodyne J ζ χ)</span>
+</span><span id="__span-55-31"><a id="__codelineno-55-31" name="__codelineno-55-31" href="#__codelineno-55-31"></a><span class="err">  : is-inner-anodyne (I × J)</span>
+</span><span id="__span-55-32"><a id="__codelineno-55-32" name="__codelineno-55-32" href="#__codelineno-55-32"></a><span class="err">      (\ (t,s) → ψ t </span><span class="sx">∧</span><span class="err"> ζ s)</span>
+</span><span id="__span-55-33"><a id="__codelineno-55-33" name="__codelineno-55-33" href="#__codelineno-55-33"></a><span class="err">      (\ (t,s) → (Φ t </span><span class="sx">∧</span><span class="err"> ζ s) </span><span class="sx">∨</span><span class="err"> (ψ t </span><span class="sx">∧</span><span class="err"> χ s))</span>
+</span><span id="__span-55-34"><a id="__codelineno-55-34" name="__codelineno-55-34" href="#__codelineno-55-34"></a><span class="err">  := </span><span class="p">\ </span>A is-segal-A h <span class="err">→</span>
+</span><span id="__span-55-35"><a id="__codelineno-55-35" name="__codelineno-55-35" href="#__codelineno-55-35"></a><span class="err">    equiv-with-contractible-domain-implies-contractible-codomain</span>
+</span><span id="__span-55-36"><a id="__codelineno-55-36" name="__codelineno-55-36" href="#__codelineno-55-36"></a><span class="err">      </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → </span><span class="p">(</span>(s <span class="p">:</span><span class="err"> ζ) → A[ χ s ↦ h (t,s)])[ Φ t ↦ </span><span class="p">\ </span>s <span class="err">→ h (t, s)])</span>
+</span><span id="__span-55-37"><a id="__codelineno-55-37" name="__codelineno-55-37" href="#__codelineno-55-37"></a><span class="err">      (((t,s) : I × J | ψ t </span><span class="sx">∧</span><span class="err"> ζ s) → A[(Φ t </span><span class="sx">∧</span><span class="err"> ζ s) </span><span class="sx">∨</span><span class="err"> (ψ t </span><span class="sx">∧</span><span class="err"> χ s) ↦ h (t,s)])</span>
+</span><span id="__span-55-38"><a id="__codelineno-55-38" name="__codelineno-55-38" href="#__codelineno-55-38"></a><span class="err">      (curry-uncurry I J ψ Φ ζ χ (</span><span class="p">\ </span>s t <span class="err">→ A) h)</span>
+</span><span id="__span-55-39"><a id="__codelineno-55-39" name="__codelineno-55-39" href="#__codelineno-55-39"></a><span class="err">      (weakextext</span>
+</span><span id="__span-55-40"><a id="__codelineno-55-40" name="__codelineno-55-40" href="#__codelineno-55-40"></a><span class="err">        ( I)</span>
+</span><span id="__span-55-41"><a id="__codelineno-55-41" name="__codelineno-55-41" href="#__codelineno-55-41"></a><span class="err">        ( ψ)</span>
+</span><span id="__span-55-42"><a id="__codelineno-55-42" name="__codelineno-55-42" href="#__codelineno-55-42"></a><span class="err">        ( Φ)</span>
+</span><span id="__span-55-43"><a id="__codelineno-55-43" name="__codelineno-55-43" href="#__codelineno-55-43"></a><span class="err">        </span><span class="p">( </span>\ t → (s <span class="p">:</span><span class="err"> ζ) → A[ χ s ↦ h (t,s)])</span>
+</span><span id="__span-55-44"><a id="__codelineno-55-44" name="__codelineno-55-44" href="#__codelineno-55-44"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ is-inner-anodyne-ζ-χ A is-segal-A (</span><span class="p">\ </span>s <span class="err">→ h (t,s)))</span>
+</span><span id="__span-55-45"><a id="__codelineno-55-45" name="__codelineno-55-45" href="#__codelineno-55-45"></a><span class="err">        ( </span><span class="p">\ </span>s t <span class="err">→ h (s,t)))</span>
 </span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">RS17, lemma 5.21</span><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="nd">#section</span><span class="n"> retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²</span>
-</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>
-</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="c">-- Δ³×Λ²₁ ∪_{Λ³₂×Λ²₁} Λ³₂×Δ²</span>
-</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:pushout-prod-Λ³₂-Λ²₁" id="define:pushout-prod-Λ³₂-Λ²₁" style="visibility: visible; position: relative; color: inherit">pushout-prod-Λ³₂-Λ²₁</a></span>
-</span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="err">  : (Δ³×Δ²) → TOPE</span>
-</span><span id="__span-54-6"><a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a><span class="err">  := shape-pushout-prod (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) Δ³ Λ³₂ Δ² Λ²₁</span>
-</span><span id="__span-54-7"><a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a>
-</span><span id="__span-54-8"><a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a>
-</span><span id="__span-54-9"><a id="__codelineno-54-9" name="__codelineno-54-9" href="#__codelineno-54-9"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
-</span><span id="__span-54-10"><a id="__codelineno-54-10" name="__codelineno-54-10" href="#__codelineno-54-10"></a><span class="kr">#variable</span><span class="p"> </span>h<span class="err"> : Λ³₂ → A</span>
-</span><span id="__span-54-11"><a id="__codelineno-54-11" name="__codelineno-54-11" href="#__codelineno-54-11"></a>
-</span><span id="__span-54-12"><a id="__codelineno-54-12" name="__codelineno-54-12" href="#__codelineno-54-12"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:h^" id="define:h^" style="visibility: visible; position: relative; color: inherit">h^</a></span>
-</span><span id="__span-54-13"><a id="__codelineno-54-13" name="__codelineno-54-13" href="#__codelineno-54-13"></a><span class="err">  : pushout-prod-Λ³₂-Λ²₁ → A</span>
-</span><span id="__span-54-14"><a id="__codelineno-54-14" name="__codelineno-54-14" href="#__codelineno-54-14"></a><span class="err">  := \ ( ((t1, t2), t3), (s1, s2) ) →</span>
-</span><span id="__span-54-15"><a id="__codelineno-54-15" name="__codelineno-54-15" href="#__codelineno-54-15"></a><span class="err">    </span><span class="s">recOR</span>
-</span><span id="__span-54-16"><a id="__codelineno-54-16" name="__codelineno-54-16" href="#__codelineno-54-16"></a><span class="err">      ( s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> t2 </span><span class="sx">≤</span><span class="err"> s2 ↦ h ((t1, t2), t3),</span>
-</span><span id="__span-54-17"><a id="__codelineno-54-17" name="__codelineno-54-17" href="#__codelineno-54-17"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> t2 </span><span class="sx">≤</span><span class="err"> s2 ↦ h ((s1, t2), t3),</span>
-</span><span id="__span-54-18"><a id="__codelineno-54-18" name="__codelineno-54-18" href="#__codelineno-54-18"></a><span class="err">        s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> t3 </span><span class="sx">≤</span><span class="err"> s2 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t2 ↦ h ((t1, s2), t3),</span>
-</span><span id="__span-54-19"><a id="__codelineno-54-19" name="__codelineno-54-19" href="#__codelineno-54-19"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> t3 </span><span class="sx">≤</span><span class="err"> s2 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t2 ↦ h ((s1, s2), t3),</span>
-</span><span id="__span-54-20"><a id="__codelineno-54-20" name="__codelineno-54-20" href="#__codelineno-54-20"></a><span class="err">        s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t3 ↦ h ((t1, s2), s2),</span>
-</span><span id="__span-54-21"><a id="__codelineno-54-21" name="__codelineno-54-21" href="#__codelineno-54-21"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t3 ↦ h ((s1, s2), s2))</span>
-</span><span id="__span-54-22"><a id="__codelineno-54-22" name="__codelineno-54-22" href="#__codelineno-54-22"></a>
-</span><span id="__span-54-23"><a id="__codelineno-54-23" name="__codelineno-54-23" href="#__codelineno-54-23"></a>
-</span><span id="__span-54-24"><a id="__codelineno-54-24" name="__codelineno-54-24" href="#__codelineno-54-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:extend-against-Λ³₂-Δ³" id="define:extend-against-Λ³₂-Δ³" style="visibility: visible; position: relative; color: inherit">extend-against-Λ³₂-Δ³</a></span>
-</span><span id="__span-54-25"><a id="__codelineno-54-25" name="__codelineno-54-25" href="#__codelineno-54-25"></a><span class="err">  : U</span>
-</span><span id="__span-54-26"><a id="__codelineno-54-26" name="__codelineno-54-26" href="#__codelineno-54-26"></a><span class="err">  := </span><span class="p">(</span>t <span class="p">:</span><span class="err"> Δ³) → A[ Λ³₂ t ↦ h t ]</span>
-</span><span id="__span-54-27"><a id="__codelineno-54-27" name="__codelineno-54-27" href="#__codelineno-54-27"></a>
-</span><span id="__span-54-28"><a id="__codelineno-54-28" name="__codelineno-54-28" href="#__codelineno-54-28"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" id="define:extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>h<span class="p">)</span>
-</span><span id="__span-54-29"><a id="__codelineno-54-29" name="__codelineno-54-29" href="#__codelineno-54-29"></a><span class="err">  : U</span>
-</span><span id="__span-54-30"><a id="__codelineno-54-30" name="__codelineno-54-30" href="#__codelineno-54-30"></a><span class="err">  := </span><span class="p">(</span>x <span class="p">:</span><span class="err"> Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]</span>
-</span><span id="__span-54-31"><a id="__codelineno-54-31" name="__codelineno-54-31" href="#__codelineno-54-31"></a>
-</span><span id="__span-54-32"><a id="__codelineno-54-32" name="__codelineno-54-32" href="#__codelineno-54-32"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" id="define:retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A h<span class="p">)</span>
-</span><span id="__span-54-33"><a id="__codelineno-54-33" name="__codelineno-54-33" href="#__codelineno-54-33"></a><span class="err">  </span><span class="p">(</span>f <span class="p">:</span><span class="err"> extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)</span>
-</span><span id="__span-54-34"><a id="__codelineno-54-34" name="__codelineno-54-34" href="#__codelineno-54-34"></a><span class="err">  : extend-against-Λ³₂-Δ³</span>
-</span><span id="__span-54-35"><a id="__codelineno-54-35" name="__codelineno-54-35" href="#__codelineno-54-35"></a><span class="err">  := \ ((t1, t2), t3) → f ( ((t1, t2), t3), (t1, t2) )</span>
-</span><span id="__span-54-36"><a id="__codelineno-54-36" name="__codelineno-54-36" href="#__codelineno-54-36"></a>
-</span><span id="__span-54-37"><a id="__codelineno-54-37" name="__codelineno-54-37" href="#__codelineno-54-37"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" id="define:section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A h<span class="p">)</span>
-</span><span id="__span-54-38"><a id="__codelineno-54-38" name="__codelineno-54-38" href="#__codelineno-54-38"></a><span class="err">  </span><span class="p">(</span>g <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> Δ³) → A[ Λ³₂ t ↦ h t ])</span>
-</span><span id="__span-54-39"><a id="__codelineno-54-39" name="__codelineno-54-39" href="#__codelineno-54-39"></a><span class="err">  : </span><span class="p">(</span>x <span class="p">:</span><span class="err"> Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]</span>
-</span><span id="__span-54-40"><a id="__codelineno-54-40" name="__codelineno-54-40" href="#__codelineno-54-40"></a><span class="err">  :=</span>
-</span><span id="__span-54-41"><a id="__codelineno-54-41" name="__codelineno-54-41" href="#__codelineno-54-41"></a><span class="err">    \ ( ((t1, t2), t3), (s1, s2) ) →</span>
-</span><span id="__span-54-42"><a id="__codelineno-54-42" name="__codelineno-54-42" href="#__codelineno-54-42"></a><span class="err">    </span><span class="s">recOR</span>
-</span><span id="__span-54-43"><a id="__codelineno-54-43" name="__codelineno-54-43" href="#__codelineno-54-43"></a><span class="err">      ( s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> t2 </span><span class="sx">≤</span><span class="err"> s2 ↦ g ((t1, t2), t3),</span>
-</span><span id="__span-54-44"><a id="__codelineno-54-44" name="__codelineno-54-44" href="#__codelineno-54-44"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> t2 </span><span class="sx">≤</span><span class="err"> s2 ↦ g ((s1, t2), t3),</span>
-</span><span id="__span-54-45"><a id="__codelineno-54-45" name="__codelineno-54-45" href="#__codelineno-54-45"></a><span class="err">        s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> t3 </span><span class="sx">≤</span><span class="err"> s2 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t2 ↦ g ((t1, s2), t3),</span>
-</span><span id="__span-54-46"><a id="__codelineno-54-46" name="__codelineno-54-46" href="#__codelineno-54-46"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> t3 </span><span class="sx">≤</span><span class="err"> s2 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t2 ↦ g ((s1, s2), t3),</span>
-</span><span id="__span-54-47"><a id="__codelineno-54-47" name="__codelineno-54-47" href="#__codelineno-54-47"></a><span class="err">        s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t3 ↦ g ((t1, s2), s2),</span>
-</span><span id="__span-54-48"><a id="__codelineno-54-48" name="__codelineno-54-48" href="#__codelineno-54-48"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t3 ↦ g ((s1, s2), s2))</span>
-</span><span id="__span-54-49"><a id="__codelineno-54-49" name="__codelineno-54-49" href="#__codelineno-54-49"></a>
-</span><span id="__span-54-50"><a id="__codelineno-54-50" name="__codelineno-54-50" href="#__codelineno-54-50"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" id="define:homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A h<span class="p">)</span>
-</span><span id="__span-54-51"><a id="__codelineno-54-51" name="__codelineno-54-51" href="#__codelineno-54-51"></a><span class="err">  : homotopy extend-against-Λ³₂-Δ³ extend-against-Λ³₂-Δ³</span>
-</span><span id="__span-54-52"><a id="__codelineno-54-52" name="__codelineno-54-52" href="#__codelineno-54-52"></a><span class="err">    ( comp</span>
-</span><span id="__span-54-53"><a id="__codelineno-54-53" name="__codelineno-54-53" href="#__codelineno-54-53"></a><span class="err">      ( extend-against-Λ³₂-Δ³)</span>
-</span><span id="__span-54-54"><a id="__codelineno-54-54" name="__codelineno-54-54" href="#__codelineno-54-54"></a><span class="err">      ( extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)</span>
-</span><span id="__span-54-55"><a id="__codelineno-54-55" name="__codelineno-54-55" href="#__codelineno-54-55"></a><span class="err">      ( extend-against-Λ³₂-Δ³)</span>
-</span><span id="__span-54-56"><a id="__codelineno-54-56" name="__codelineno-54-56" href="#__codelineno-54-56"></a><span class="err">      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)</span>
-</span><span id="__span-54-57"><a id="__codelineno-54-57" name="__codelineno-54-57" href="#__codelineno-54-57"></a><span class="err">      ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))</span>
-</span><span id="__span-54-58"><a id="__codelineno-54-58" name="__codelineno-54-58" href="#__codelineno-54-58"></a><span class="err">    ( identity extend-against-Λ³₂-Δ³)</span>
-</span><span id="__span-54-59"><a id="__codelineno-54-59" name="__codelineno-54-59" href="#__codelineno-54-59"></a><span class="err">  := </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">refl</span>
-</span><span id="__span-54-60"><a id="__codelineno-54-60" name="__codelineno-54-60" href="#__codelineno-54-60"></a>
-</span><span id="__span-54-61"><a id="__codelineno-54-61" name="__codelineno-54-61" href="#__codelineno-54-61"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-retract-of-Δ³-Δ³×Δ²" id="define:is-retract-of-Δ³-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">is-retract-of-Δ³-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A h<span class="p">)</span>
-</span><span id="__span-54-62"><a id="__codelineno-54-62" name="__codelineno-54-62" href="#__codelineno-54-62"></a><span class="err">  : is-retract-of</span>
-</span><span id="__span-54-63"><a id="__codelineno-54-63" name="__codelineno-54-63" href="#__codelineno-54-63"></a><span class="err">      extend-against-Λ³₂-Δ³</span>
-</span><span id="__span-54-64"><a id="__codelineno-54-64" name="__codelineno-54-64" href="#__codelineno-54-64"></a><span class="err">      extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</span>
-</span><span id="__span-54-65"><a id="__codelineno-54-65" name="__codelineno-54-65" href="#__codelineno-54-65"></a><span class="err">  :=</span>
-</span><span id="__span-54-66"><a id="__codelineno-54-66" name="__codelineno-54-66" href="#__codelineno-54-66"></a><span class="err">    ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,</span>
-</span><span id="__span-54-67"><a id="__codelineno-54-67" name="__codelineno-54-67" href="#__codelineno-54-67"></a><span class="err">      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,</span>
-</span><span id="__span-54-68"><a id="__codelineno-54-68" name="__codelineno-54-68" href="#__codelineno-54-68"></a><span class="err">        homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))</span>
-</span><span id="__span-54-69"><a id="__codelineno-54-69" name="__codelineno-54-69" href="#__codelineno-54-69"></a>
-</span><span id="__span-54-70"><a id="__codelineno-54-70" name="__codelineno-54-70" href="#__codelineno-54-70"></a><span class="nd">#end</span><span class="n"> retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²</span>
-</span><span id="__span-54-71"><a id="__codelineno-54-71" name="__codelineno-54-71" href="#__codelineno-54-71"></a>
-</span><span id="__span-54-72"><a id="__codelineno-54-72" name="__codelineno-54-72" href="#__codelineno-54-72"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne-Δ³-Λ³₂" id="define:is-inner-anodyne-Δ³-Λ³₂" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne-Δ³-Λ³₂</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
-</span><span id="__span-54-73"><a id="__codelineno-54-73" name="__codelineno-54-73" href="#__codelineno-54-73"></a><span class="err">  : is-inner-anodyne (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) Δ³ Λ³₂</span>
-</span><span id="__span-54-74"><a id="__codelineno-54-74" name="__codelineno-54-74" href="#__codelineno-54-74"></a><span class="err">  :=</span>
-</span><span id="__span-54-75"><a id="__codelineno-54-75" name="__codelineno-54-75" href="#__codelineno-54-75"></a><span class="err">    </span><span class="p">\ </span>A is-segal-A h <span class="err">→</span>
-</span><span id="__span-54-76"><a id="__codelineno-54-76" name="__codelineno-54-76" href="#__codelineno-54-76"></a><span class="err">    is-contr-is-retract-of-is-contr</span>
-</span><span id="__span-54-77"><a id="__codelineno-54-77" name="__codelineno-54-77" href="#__codelineno-54-77"></a><span class="err">      (extend-against-Λ³₂-Δ³ A h)</span>
-</span><span id="__span-54-78"><a id="__codelineno-54-78" name="__codelineno-54-78" href="#__codelineno-54-78"></a><span class="err">      (extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)</span>
-</span><span id="__span-54-79"><a id="__codelineno-54-79" name="__codelineno-54-79" href="#__codelineno-54-79"></a><span class="err">      (is-retract-of-Δ³-Δ³×Δ² A h)</span>
-</span><span id="__span-54-80"><a id="__codelineno-54-80" name="__codelineno-54-80" href="#__codelineno-54-80"></a><span class="err">      (is-inner-anodyne-pushout-product-right-is-inner-anodyne</span>
-</span><span id="__span-54-81"><a id="__codelineno-54-81" name="__codelineno-54-81" href="#__codelineno-54-81"></a><span class="err">        ( </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">)</span>
-</span><span id="__span-54-82"><a id="__codelineno-54-82" name="__codelineno-54-82" href="#__codelineno-54-82"></a><span class="err">        ( </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">)</span>
-</span><span id="__span-54-83"><a id="__codelineno-54-83" name="__codelineno-54-83" href="#__codelineno-54-83"></a><span class="err">        ( Δ³)</span>
-</span><span id="__span-54-84"><a id="__codelineno-54-84" name="__codelineno-54-84" href="#__codelineno-54-84"></a><span class="err">        ( Λ³₂)</span>
-</span><span id="__span-54-85"><a id="__codelineno-54-85" name="__codelineno-54-85" href="#__codelineno-54-85"></a><span class="err">        ( Δ²)</span>
-</span><span id="__span-54-86"><a id="__codelineno-54-86" name="__codelineno-54-86" href="#__codelineno-54-86"></a><span class="err">        ( Λ²₁)</span>
-</span><span id="__span-54-87"><a id="__codelineno-54-87" name="__codelineno-54-87" href="#__codelineno-54-87"></a><span class="err">        ( is-inner-anodyne-Λ²₁)</span>
-</span><span id="__span-54-88"><a id="__codelineno-54-88" name="__codelineno-54-88" href="#__codelineno-54-88"></a><span class="err">        ( A)</span>
-</span><span id="__span-54-89"><a id="__codelineno-54-89" name="__codelineno-54-89" href="#__codelineno-54-89"></a><span class="err">        ( is-segal-A)</span>
-</span><span id="__span-54-90"><a id="__codelineno-54-90" name="__codelineno-54-90" href="#__codelineno-54-90"></a><span class="err">        ( h^ A h))</span>
+<div class="language-rzk highlight"><span class="filename">RS17, lemma 5.21</span><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="nd">#section</span><span class="n"> retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²</span>
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="c">-- Δ³×Λ²₁ ∪_{Λ³₂×Λ²₁} Λ³₂×Δ²</span>
+</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:pushout-prod-Λ³₂-Λ²₁" id="define:pushout-prod-Λ³₂-Λ²₁" style="visibility: visible; position: relative; color: inherit">pushout-prod-Λ³₂-Λ²₁</a></span>
+</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a><span class="err">  : (Δ³×Δ²) → TOPE</span>
+</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a><span class="err">  := shape-pushout-prod (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) Δ³ Λ³₂ Δ² Λ²₁</span>
+</span><span id="__span-56-7"><a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a>
+</span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a>
+</span><span id="__span-56-9"><a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
+</span><span id="__span-56-10"><a id="__codelineno-56-10" name="__codelineno-56-10" href="#__codelineno-56-10"></a><span class="kr">#variable</span><span class="p"> </span>h<span class="err"> : Λ³₂ → A</span>
+</span><span id="__span-56-11"><a id="__codelineno-56-11" name="__codelineno-56-11" href="#__codelineno-56-11"></a>
+</span><span id="__span-56-12"><a id="__codelineno-56-12" name="__codelineno-56-12" href="#__codelineno-56-12"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:h^" id="define:h^" style="visibility: visible; position: relative; color: inherit">h^</a></span>
+</span><span id="__span-56-13"><a id="__codelineno-56-13" name="__codelineno-56-13" href="#__codelineno-56-13"></a><span class="err">  : pushout-prod-Λ³₂-Λ²₁ → A</span>
+</span><span id="__span-56-14"><a id="__codelineno-56-14" name="__codelineno-56-14" href="#__codelineno-56-14"></a><span class="err">  := \ ( ((t1, t2), t3), (s1, s2) ) →</span>
+</span><span id="__span-56-15"><a id="__codelineno-56-15" name="__codelineno-56-15" href="#__codelineno-56-15"></a><span class="err">    </span><span class="s">recOR</span>
+</span><span id="__span-56-16"><a id="__codelineno-56-16" name="__codelineno-56-16" href="#__codelineno-56-16"></a><span class="err">      ( s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> t2 </span><span class="sx">≤</span><span class="err"> s2 ↦ h ((t1, t2), t3),</span>
+</span><span id="__span-56-17"><a id="__codelineno-56-17" name="__codelineno-56-17" href="#__codelineno-56-17"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> t2 </span><span class="sx">≤</span><span class="err"> s2 ↦ h ((s1, t2), t3),</span>
+</span><span id="__span-56-18"><a id="__codelineno-56-18" name="__codelineno-56-18" href="#__codelineno-56-18"></a><span class="err">        s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> t3 </span><span class="sx">≤</span><span class="err"> s2 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t2 ↦ h ((t1, s2), t3),</span>
+</span><span id="__span-56-19"><a id="__codelineno-56-19" name="__codelineno-56-19" href="#__codelineno-56-19"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> t3 </span><span class="sx">≤</span><span class="err"> s2 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t2 ↦ h ((s1, s2), t3),</span>
+</span><span id="__span-56-20"><a id="__codelineno-56-20" name="__codelineno-56-20" href="#__codelineno-56-20"></a><span class="err">        s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t3 ↦ h ((t1, s2), s2),</span>
+</span><span id="__span-56-21"><a id="__codelineno-56-21" name="__codelineno-56-21" href="#__codelineno-56-21"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t3 ↦ h ((s1, s2), s2))</span>
+</span><span id="__span-56-22"><a id="__codelineno-56-22" name="__codelineno-56-22" href="#__codelineno-56-22"></a>
+</span><span id="__span-56-23"><a id="__codelineno-56-23" name="__codelineno-56-23" href="#__codelineno-56-23"></a>
+</span><span id="__span-56-24"><a id="__codelineno-56-24" name="__codelineno-56-24" href="#__codelineno-56-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:extend-against-Λ³₂-Δ³" id="define:extend-against-Λ³₂-Δ³" style="visibility: visible; position: relative; color: inherit">extend-against-Λ³₂-Δ³</a></span>
+</span><span id="__span-56-25"><a id="__codelineno-56-25" name="__codelineno-56-25" href="#__codelineno-56-25"></a><span class="err">  : U</span>
+</span><span id="__span-56-26"><a id="__codelineno-56-26" name="__codelineno-56-26" href="#__codelineno-56-26"></a><span class="err">  := </span><span class="p">(</span>t <span class="p">:</span><span class="err"> Δ³) → A[ Λ³₂ t ↦ h t ]</span>
+</span><span id="__span-56-27"><a id="__codelineno-56-27" name="__codelineno-56-27" href="#__codelineno-56-27"></a>
+</span><span id="__span-56-28"><a id="__codelineno-56-28" name="__codelineno-56-28" href="#__codelineno-56-28"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" id="define:extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>h<span class="p">)</span>
+</span><span id="__span-56-29"><a id="__codelineno-56-29" name="__codelineno-56-29" href="#__codelineno-56-29"></a><span class="err">  : U</span>
+</span><span id="__span-56-30"><a id="__codelineno-56-30" name="__codelineno-56-30" href="#__codelineno-56-30"></a><span class="err">  := </span><span class="p">(</span>x <span class="p">:</span><span class="err"> Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]</span>
+</span><span id="__span-56-31"><a id="__codelineno-56-31" name="__codelineno-56-31" href="#__codelineno-56-31"></a>
+</span><span id="__span-56-32"><a id="__codelineno-56-32" name="__codelineno-56-32" href="#__codelineno-56-32"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" id="define:retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A h<span class="p">)</span>
+</span><span id="__span-56-33"><a id="__codelineno-56-33" name="__codelineno-56-33" href="#__codelineno-56-33"></a><span class="err">  </span><span class="p">(</span>f <span class="p">:</span><span class="err"> extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)</span>
+</span><span id="__span-56-34"><a id="__codelineno-56-34" name="__codelineno-56-34" href="#__codelineno-56-34"></a><span class="err">  : extend-against-Λ³₂-Δ³</span>
+</span><span id="__span-56-35"><a id="__codelineno-56-35" name="__codelineno-56-35" href="#__codelineno-56-35"></a><span class="err">  := \ ((t1, t2), t3) → f ( ((t1, t2), t3), (t1, t2) )</span>
+</span><span id="__span-56-36"><a id="__codelineno-56-36" name="__codelineno-56-36" href="#__codelineno-56-36"></a>
+</span><span id="__span-56-37"><a id="__codelineno-56-37" name="__codelineno-56-37" href="#__codelineno-56-37"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" id="define:section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A h<span class="p">)</span>
+</span><span id="__span-56-38"><a id="__codelineno-56-38" name="__codelineno-56-38" href="#__codelineno-56-38"></a><span class="err">  </span><span class="p">(</span>g <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> Δ³) → A[ Λ³₂ t ↦ h t ])</span>
+</span><span id="__span-56-39"><a id="__codelineno-56-39" name="__codelineno-56-39" href="#__codelineno-56-39"></a><span class="err">  : </span><span class="p">(</span>x <span class="p">:</span><span class="err"> Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]</span>
+</span><span id="__span-56-40"><a id="__codelineno-56-40" name="__codelineno-56-40" href="#__codelineno-56-40"></a><span class="err">  :=</span>
+</span><span id="__span-56-41"><a id="__codelineno-56-41" name="__codelineno-56-41" href="#__codelineno-56-41"></a><span class="err">    \ ( ((t1, t2), t3), (s1, s2) ) →</span>
+</span><span id="__span-56-42"><a id="__codelineno-56-42" name="__codelineno-56-42" href="#__codelineno-56-42"></a><span class="err">    </span><span class="s">recOR</span>
+</span><span id="__span-56-43"><a id="__codelineno-56-43" name="__codelineno-56-43" href="#__codelineno-56-43"></a><span class="err">      ( s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> t2 </span><span class="sx">≤</span><span class="err"> s2 ↦ g ((t1, t2), t3),</span>
+</span><span id="__span-56-44"><a id="__codelineno-56-44" name="__codelineno-56-44" href="#__codelineno-56-44"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> t2 </span><span class="sx">≤</span><span class="err"> s2 ↦ g ((s1, t2), t3),</span>
+</span><span id="__span-56-45"><a id="__codelineno-56-45" name="__codelineno-56-45" href="#__codelineno-56-45"></a><span class="err">        s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> t3 </span><span class="sx">≤</span><span class="err"> s2 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t2 ↦ g ((t1, s2), t3),</span>
+</span><span id="__span-56-46"><a id="__codelineno-56-46" name="__codelineno-56-46" href="#__codelineno-56-46"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> t3 </span><span class="sx">≤</span><span class="err"> s2 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t2 ↦ g ((s1, s2), t3),</span>
+</span><span id="__span-56-47"><a id="__codelineno-56-47" name="__codelineno-56-47" href="#__codelineno-56-47"></a><span class="err">        s1 </span><span class="sx">≤</span><span class="err"> t1 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t3 ↦ g ((t1, s2), s2),</span>
+</span><span id="__span-56-48"><a id="__codelineno-56-48" name="__codelineno-56-48" href="#__codelineno-56-48"></a><span class="err">        t1 </span><span class="sx">≤</span><span class="err"> s1 </span><span class="sx">∧</span><span class="err"> s2 </span><span class="sx">≤</span><span class="err"> t3 ↦ g ((s1, s2), s2))</span>
+</span><span id="__span-56-49"><a id="__codelineno-56-49" name="__codelineno-56-49" href="#__codelineno-56-49"></a>
+</span><span id="__span-56-50"><a id="__codelineno-56-50" name="__codelineno-56-50" href="#__codelineno-56-50"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" id="define:homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A h<span class="p">)</span>
+</span><span id="__span-56-51"><a id="__codelineno-56-51" name="__codelineno-56-51" href="#__codelineno-56-51"></a><span class="err">  : homotopy extend-against-Λ³₂-Δ³ extend-against-Λ³₂-Δ³</span>
+</span><span id="__span-56-52"><a id="__codelineno-56-52" name="__codelineno-56-52" href="#__codelineno-56-52"></a><span class="err">    ( comp</span>
+</span><span id="__span-56-53"><a id="__codelineno-56-53" name="__codelineno-56-53" href="#__codelineno-56-53"></a><span class="err">      ( extend-against-Λ³₂-Δ³)</span>
+</span><span id="__span-56-54"><a id="__codelineno-56-54" name="__codelineno-56-54" href="#__codelineno-56-54"></a><span class="err">      ( extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)</span>
+</span><span id="__span-56-55"><a id="__codelineno-56-55" name="__codelineno-56-55" href="#__codelineno-56-55"></a><span class="err">      ( extend-against-Λ³₂-Δ³)</span>
+</span><span id="__span-56-56"><a id="__codelineno-56-56" name="__codelineno-56-56" href="#__codelineno-56-56"></a><span class="err">      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)</span>
+</span><span id="__span-56-57"><a id="__codelineno-56-57" name="__codelineno-56-57" href="#__codelineno-56-57"></a><span class="err">      ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))</span>
+</span><span id="__span-56-58"><a id="__codelineno-56-58" name="__codelineno-56-58" href="#__codelineno-56-58"></a><span class="err">    ( identity extend-against-Λ³₂-Δ³)</span>
+</span><span id="__span-56-59"><a id="__codelineno-56-59" name="__codelineno-56-59" href="#__codelineno-56-59"></a><span class="err">  := </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">refl</span>
+</span><span id="__span-56-60"><a id="__codelineno-56-60" name="__codelineno-56-60" href="#__codelineno-56-60"></a>
+</span><span id="__span-56-61"><a id="__codelineno-56-61" name="__codelineno-56-61" href="#__codelineno-56-61"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-retract-of-Δ³-Δ³×Δ²" id="define:is-retract-of-Δ³-Δ³×Δ²" style="visibility: visible; position: relative; color: inherit">is-retract-of-Δ³-Δ³×Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A h<span class="p">)</span>
+</span><span id="__span-56-62"><a id="__codelineno-56-62" name="__codelineno-56-62" href="#__codelineno-56-62"></a><span class="err">  : is-retract-of</span>
+</span><span id="__span-56-63"><a id="__codelineno-56-63" name="__codelineno-56-63" href="#__codelineno-56-63"></a><span class="err">      extend-against-Λ³₂-Δ³</span>
+</span><span id="__span-56-64"><a id="__codelineno-56-64" name="__codelineno-56-64" href="#__codelineno-56-64"></a><span class="err">      extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²</span>
+</span><span id="__span-56-65"><a id="__codelineno-56-65" name="__codelineno-56-65" href="#__codelineno-56-65"></a><span class="err">  :=</span>
+</span><span id="__span-56-66"><a id="__codelineno-56-66" name="__codelineno-56-66" href="#__codelineno-56-66"></a><span class="err">    ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,</span>
+</span><span id="__span-56-67"><a id="__codelineno-56-67" name="__codelineno-56-67" href="#__codelineno-56-67"></a><span class="err">      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,</span>
+</span><span id="__span-56-68"><a id="__codelineno-56-68" name="__codelineno-56-68" href="#__codelineno-56-68"></a><span class="err">        homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))</span>
+</span><span id="__span-56-69"><a id="__codelineno-56-69" name="__codelineno-56-69" href="#__codelineno-56-69"></a>
+</span><span id="__span-56-70"><a id="__codelineno-56-70" name="__codelineno-56-70" href="#__codelineno-56-70"></a><span class="nd">#end</span><span class="n"> retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²</span>
+</span><span id="__span-56-71"><a id="__codelineno-56-71" name="__codelineno-56-71" href="#__codelineno-56-71"></a>
+</span><span id="__span-56-72"><a id="__codelineno-56-72" name="__codelineno-56-72" href="#__codelineno-56-72"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-anodyne-Δ³-Λ³₂" id="define:is-inner-anodyne-Δ³-Λ³₂" style="visibility: visible; position: relative; color: inherit">is-inner-anodyne-Δ³-Λ³₂</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-56-73"><a id="__codelineno-56-73" name="__codelineno-56-73" href="#__codelineno-56-73"></a><span class="err">  : is-inner-anodyne (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) Δ³ Λ³₂</span>
+</span><span id="__span-56-74"><a id="__codelineno-56-74" name="__codelineno-56-74" href="#__codelineno-56-74"></a><span class="err">  :=</span>
+</span><span id="__span-56-75"><a id="__codelineno-56-75" name="__codelineno-56-75" href="#__codelineno-56-75"></a><span class="err">    </span><span class="p">\ </span>A is-segal-A h <span class="err">→</span>
+</span><span id="__span-56-76"><a id="__codelineno-56-76" name="__codelineno-56-76" href="#__codelineno-56-76"></a><span class="err">    is-contr-is-retract-of-is-contr</span>
+</span><span id="__span-56-77"><a id="__codelineno-56-77" name="__codelineno-56-77" href="#__codelineno-56-77"></a><span class="err">      (extend-against-Λ³₂-Δ³ A h)</span>
+</span><span id="__span-56-78"><a id="__codelineno-56-78" name="__codelineno-56-78" href="#__codelineno-56-78"></a><span class="err">      (extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)</span>
+</span><span id="__span-56-79"><a id="__codelineno-56-79" name="__codelineno-56-79" href="#__codelineno-56-79"></a><span class="err">      (is-retract-of-Δ³-Δ³×Δ² A h)</span>
+</span><span id="__span-56-80"><a id="__codelineno-56-80" name="__codelineno-56-80" href="#__codelineno-56-80"></a><span class="err">      (is-inner-anodyne-pushout-product-right-is-inner-anodyne</span>
+</span><span id="__span-56-81"><a id="__codelineno-56-81" name="__codelineno-56-81" href="#__codelineno-56-81"></a><span class="err">        ( </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">)</span>
+</span><span id="__span-56-82"><a id="__codelineno-56-82" name="__codelineno-56-82" href="#__codelineno-56-82"></a><span class="err">        ( </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">)</span>
+</span><span id="__span-56-83"><a id="__codelineno-56-83" name="__codelineno-56-83" href="#__codelineno-56-83"></a><span class="err">        ( Δ³)</span>
+</span><span id="__span-56-84"><a id="__codelineno-56-84" name="__codelineno-56-84" href="#__codelineno-56-84"></a><span class="err">        ( Λ³₂)</span>
+</span><span id="__span-56-85"><a id="__codelineno-56-85" name="__codelineno-56-85" href="#__codelineno-56-85"></a><span class="err">        ( Δ²)</span>
+</span><span id="__span-56-86"><a id="__codelineno-56-86" name="__codelineno-56-86" href="#__codelineno-56-86"></a><span class="err">        ( Λ²₁)</span>
+</span><span id="__span-56-87"><a id="__codelineno-56-87" name="__codelineno-56-87" href="#__codelineno-56-87"></a><span class="err">        ( is-inner-anodyne-Λ²₁)</span>
+</span><span id="__span-56-88"><a id="__codelineno-56-88" name="__codelineno-56-88" href="#__codelineno-56-88"></a><span class="err">        ( A)</span>
+</span><span id="__span-56-89"><a id="__codelineno-56-89" name="__codelineno-56-89" href="#__codelineno-56-89"></a><span class="err">        ( is-segal-A)</span>
+</span><span id="__span-56-90"><a id="__codelineno-56-90" name="__codelineno-56-90" href="#__codelineno-56-90"></a><span class="err">        ( h^ A h))</span>
 </span></code></pre></div>
 
 

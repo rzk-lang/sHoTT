@@ -232,9 +232,9 @@ along any map of maps `β → α` and obtain another homotopy cartesian square.
   ( ((s', s), η) : map-of-maps B' B β A' A α)
   ( is-hc-α : is-homotopy-cartesian A' C' A C α γ)
   : is-homotopy-cartesian
-      B'( \ b' → C' (s' b'))
-      B ( \ b → C (s b))
-      β ( \ b' c' → transport A C (α (s' b')) (s (β b')) (η b') (γ (s' b') c'))
+      B' ( \ b' → C' (s' b'))
+      B  ( \ b → C (s b))
+      β  ( \ b' c' → transport A C (α (s' b')) (s (β b')) (η b') (γ (s' b') c'))
   :=
     \ b' →
       is-equiv-comp (C' (s' b')) (C (α (s' b'))) (C (s (β b')))

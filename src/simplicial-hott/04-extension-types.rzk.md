@@ -265,6 +265,30 @@ We refer to another form as an "extension extensionality" axiom.
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
 ```
 
+Sometimes, an even weaker form of extension extensionality suffices.
+
+```rzk title="Very weak extension extensionality"
+#def NaiveExtExt
+  : U
+  :=
+    ( I : CUBE) →
+    ( ψ : I → TOPE) →
+    ( ϕ : ψ → TOPE) →
+    ( A : ψ → U) →
+    ( a : (t : ϕ) → A t) →
+    ( f : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( g : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( (t : ψ) → (f t = g t) [ϕ t ↦ refl]) →
+    ( f = g)
+
+#def naiveextext-extext
+  ( extext : ExtExt)
+  : NaiveExtExt
+  :=
+    \ I ψ ϕ A a f g →
+      ( first (first (extext I ψ ϕ A a f g)))
+```
+
 Weak extension extensionality implies extension extensionality; this is the
 context of RS17 Proposition 4.8 (i). We prove this in a series of lemmas. The
 `ext-projection-temp` function is a (hopefully temporary) helper that explicitly

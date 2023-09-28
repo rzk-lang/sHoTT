@@ -568,25 +568,49 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
           ( α)
           ( \ x → (second (second (H x))))))
 
-#def is-equiv-is-iso-pointwise-is-iso uses (funext extext weakfunext)
+#def iff-is-iso-pointwise-is-iso uses (funext)
   ( X : U)
   ( A : X → U)
   ( is-segal-A : (x : X) → is-segal (A x))
   ( f g : (x : X) → A x)
   ( α : nat-trans X A f g)
-  : is-equiv
-      ( is-iso-arrow ((x : X) → A x) (is-segal-function-type funext X A is-segal-A) f g α)
-      ( ( x : X) →
+  : iff
+    ( is-iso-arrow
+      ( (x : X) → A x)
+      ( is-segal-function-type funext X A is-segal-A) f g α)
+    ( ( x : X) →
         ( is-iso-arrow
           ( A x)
           ( is-segal-A x)
           ( f x)
           ( g x)
           ( ev-components-nat-trans X A f g α x)))
-      ( ev-components-nat-trans-preserves-iso X A is-segal-A f g α)
   :=
-    bijective-props-are-equiv
-      ( is-iso-arrow ((x : X) → A x) (is-segal-function-type funext X A is-segal-A) f g α)
+    ( ev-components-nat-trans-preserves-iso X A is-segal-A f g α,
+      nat-trans-nat-trans-components-preserves-iso X A is-segal-A f g α)
+
+#def equiv-is-iso-pointwise-is-iso uses (extext funext weakfunext)
+  ( X : U)
+  ( A : X → U)
+  ( is-segal-A : (x : X) → is-segal (A x))
+  ( f g : (x : X) → A x)
+  ( α : nat-trans X A f g)
+  : Equiv
+    ( is-iso-arrow
+      ( (x : X) → A x)
+      ( is-segal-function-type funext X A is-segal-A) f g α)
+    ( ( x : X) →
+        ( is-iso-arrow
+          ( A x)
+          ( is-segal-A x)
+          ( f x)
+          ( g x)
+          ( ev-components-nat-trans X A f g α x)))
+  :=
+    equiv-iff-is-prop-is-prop
+      ( is-iso-arrow
+        ( (x : X) → A x)
+        ( is-segal-function-type funext X A is-segal-A) f g α)
       ( ( x : X) →
         ( is-iso-arrow
           ( A x)
@@ -600,7 +624,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
         ( f)
         ( g)
         ( α))
-      ( fiberwise-prop-is-prop funext weakfunext
+      ( is-prop-fiberwise-prop funext weakfunext
         ( X)
         ( \ x →
           ( is-iso-arrow
@@ -616,8 +640,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
             ( f x)
             ( g x)
             ( ev-components-nat-trans X A f g α x)))
-      ( ev-components-nat-trans-preserves-iso X A is-segal-A f g α)
-      ( nat-trans-nat-trans-components-preserves-iso X A is-segal-A f g α)
+      ( iff-is-iso-pointwise-is-iso X A is-segal-A f g α)
 ```
 
 ## Rezk types

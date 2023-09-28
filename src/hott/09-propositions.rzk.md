@@ -101,11 +101,11 @@ A type is a proposition when its identity types are contractible.
 
 ## Properties of propositions
 
-If some family $B$ is fiberwise a proposition, then the type of dependent
-functions over $B$ is a proposition:
+If some family `#!rzk B : A A → U` is fiberwise a proposition, then the type of
+dependent functions `#!rzk (x : A) → B x` is a proposition.
 
 ```rzk
-#def fiberwise-prop-is-prop uses (funext weakfunext)
+#def is-prop-fiberwise-prop uses (funext weakfunext)
   ( A : U)
   ( B : A → U)
   ( fiberwise-prop-B : (x : A) → is-prop (B x))
@@ -119,15 +119,14 @@ functions over $B$ is a proposition:
       ( weakfunext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
 ```
 
-If two propositions are bijective, then they are equivalent:
+If two propositions are logically equivalent, then they are equivalent:
 
 ```rzk
-#def bijective-props-are-equiv
+#def is-equiv-iff-is-prop-is-prop
   ( A B : U)
   ( is-prop-A : is-prop A)
   ( is-prop-B : is-prop B)
-  ( f : A → B)
-  ( g : B → A)
+  ( (f , g) : iff A B)
   : is-equiv A B f
   :=
     ( ( g ,
@@ -136,4 +135,12 @@ If two propositions are bijective, then they are equivalent:
       ( g ,
         \ b →
           (all-elements-equal-is-prop B is-prop-B) ((comp B A B f g) b) b))
+
+#def equiv-iff-is-prop-is-prop
+  ( A B : U)
+  ( is-prop-A : is-prop A)
+  ( is-prop-B : is-prop B)
+  ( e : iff A B)
+  : Equiv A B
+  := (first e, is-equiv-iff-is-prop-is-prop A B is-prop-A is-prop-B e)
 ```

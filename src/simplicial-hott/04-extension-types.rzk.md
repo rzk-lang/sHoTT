@@ -498,9 +498,30 @@ arguments below.
 
 ```
 
-The homotopy extension property follows from a straightforward application of
-the axiom of choice to the point of contraction for weak extension
-extensionality.
+The homotopy extension property has the following signature. We state this
+separately since below we will will both show that this follows from extension
+extensionality, but we will also show that extension extensionality follows from
+the homotopy extension property together with extra hypotheses.
+
+```rzk
+#define HtpyExtProp
+  : U
+  :=
+    ( I : CUBE) →
+    ( ψ : I → TOPE) →
+    ( ϕ : ψ → TOPE) →
+    ( A : ψ → U) →
+    ( b : (t : ψ) → A t) →
+    ( a : (t : ϕ) → A t) →
+    ( e : (t : ϕ) → a t = b t) →
+      Σ (a' : (t : ψ) → A t [ϕ t ↦ a t]) ,
+      ((t : ψ) → (restrict I ψ ϕ A a a' t = b t) [ϕ t ↦ e t])
+
+```
+
+If we assume weak extension extensionality, then then homotopy extension
+property follows from a straightforward application of the axiom of choice to
+the point of contraction for weak extension extensionality.
 
 ```rzk title="RS17 Proposition 4.10"
 #define htpy-ext-property
@@ -570,6 +591,9 @@ Both directions of this statement will be needed.
 
 ```
 
+The below gives us the inhabitant $(a', e')$ from the first part of the proof of
+RS Prop 4.11.
+
 ```rzk
 
 #define first-4-11
@@ -597,6 +621,8 @@ Both directions of this statement will be needed.
     ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A )
 ```
 
+This gives us the inhabitant $c$
+
 ```rzk
 #define second-4-11
   (weak-ext-ext : WeakExtExt)
@@ -608,12 +634,15 @@ Both directions of this statement will be needed.
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
   : (t : ψ ) → f t = (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t
-  := \ t → eq-is-contr
-              ( A t)
-              ( is-contr-fiberwise-A t)
-              ( f t )
-              ( restrict I ψ ϕ A a (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t)
+  := \ t →
+      eq-is-contr
+      ( A t)
+      ( is-contr-fiberwise-A t)
+      ( f t )
+      ( restrict I ψ ϕ A a (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t)
 ```
+
+And below proves that $c(t) = refl$.
 
 ```rzk
 #define third-4-11
@@ -627,15 +656,83 @@ Both directions of this statement will be needed.
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
   ( a' : (t : ψ ) → A t [ϕ t ↦ a t])
   ( c : (t : ψ ) → (f t = a' t))
-  : (t : ψ ) → (c t =_{f t = a' t} refl)
+  : (t : ϕ ) → (refl =_{f t = a' t} c t)
   :=  \ t →
     all-paths-eq-is-contr
-      ( A t)
-      ( is-fiberwise-contr t)
-      ( f t)
-      ( a' t)
-      ( c t)
-      ( refl)
+    ( A t)
+    ( is-fiberwise-contr t)
+    ( f t)
+    ( a' t)
+    ( refl )
+    ( c t )
 
+
+```
+
+```rzk
+#define fourth-4-11
+  ( weak-ext-ext : WeakExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
+  ( b : (t : ψ) → A t)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ ) → A t [ϕ t ↦ a t])
+  : (t : ψ ) → (f t = (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t)[ϕ t ↦ refl]
+  :=
+  first(
+    htpy-ext-property
+    ( weak-ext-ext) --- weak ext ext
+    ( I )  --- I
+    ( ψ ) --- psi
+    ( ϕ )  --- phi
+    ( \ t → f t = first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A) t) --- ft = a't, i.e. A
+    ( second-4-11
+      ( weak-ext-ext)
+      ( I)
+      ( ψ)
+      ( ϕ)
+      ( A)
+      ( a)
+      ( f)
+      ( is-contr-fiberwise-A )
+    )
+    ( \ t → refl )
+    ( third-4-11
+      ( weak-ext-ext )
+      ( I )
+      ( ψ )
+      ( ϕ )
+      ( A )
+      ( is-contr-fiberwise-A)
+      ( a )
+      ( f )
+      (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A))
+      (second-4-11
+      ( weak-ext-ext)
+      ( I)
+      ( ψ)
+      ( ϕ)
+      ( A)
+      ( a)
+      ( f)
+      ( is-contr-fiberwise-A )) -- c
+    ))
+
+```
+
+The name of the following type is cumbersome. It says that the weak extension
+extensionality statement follows from RS Prop 4.8 (ii), which is encoded as
+`eq-ext-htpy` combined with the homotopy extension property,
+`htpy-ext-property`. The proposition appears as RS Proposition 4.11
+
+```rzk
+#define weak-ext-ext-from-eq-ext-htpy-htpy-ext-property
+ (extext : ExtExt)
+ (htpy-ext-prop : HtpyExtProp)
+ : WeakExtExt
+  := \ I ψ ϕ A is-locally-contr-A a →
 
 ```

@@ -139,7 +139,7 @@ Maps out of $Δ³$ are a retract of maps out of $Δ²×Δ¹$.
               t1 <= t3 |-> f ((t1 , t1) , t2)))
 
 #def Δ³-is-retract-Δ²×Δ¹
-  (A : U)
+  ( A : U)
   : is-retract-of (Δ³ → A) (Δ²×Δ¹ → A)
   :=
     ( Δ³-is-retract-Δ²×Δ¹-section A ,
@@ -147,7 +147,10 @@ Maps out of $Δ³$ are a retract of maps out of $Δ²×Δ¹$.
 ```
 
 For a subshape `ϕ ⊂ ψ` we have an easy way of stating that it is a retract in a
-strict and functorial way.
+strict and functorial way. Intuitively this happens when there is a map from `ψ`
+to `ϕ` that fixes the subshape `ψ`. But in the definition below we actually ask
+for a section of the family of extensions of a function `ϕ → A` to a function
+`ψ → A` and we ask for this section to be natural in the type `A`.
 
 ```rzk
 #def is-functorial-shape-retract
@@ -156,12 +159,12 @@ strict and functorial way.
   ( ϕ : ψ → TOPE )
   : U
   :=
-    (A' : U) → (A : U) → (α : A' → A) →
+    ( A' : U) → (A : U) → (α : A' → A) →
     has-section-family-over-map
-      (ϕ → A') (\ f → (t : ψ) → A' [ϕ t ↦ f t])
-      (ϕ → A) (\ f → (t : ψ) → A [ϕ t ↦ f t])
-      (\ f t → α (f t))
-      (\ _ g t → α (g t))
+      ( ϕ → A') (\ f → (t : ψ) → A' [ϕ t ↦ f t])
+      ( ϕ → A) (\ f → (t : ψ) → A [ϕ t ↦ f t])
+      ( \ f t → α (f t))
+      ( \ _ g t → α (g t))
 ```
 
 For example, this applies to `Δ² ⊂ Δ¹×Δ¹`.
@@ -172,8 +175,7 @@ For example, this applies to `Δ² ⊂ Δ¹×Δ¹`.
   :=
     \ A' A α →
       ( ( first (Δ²-is-retract-Δ¹×Δ¹ A'), first (Δ²-is-retract-Δ¹×Δ¹ A) ) ,
-        \ a' → refl
-      )
+          \ a' → refl)
 ```
 
 ### Pushout product

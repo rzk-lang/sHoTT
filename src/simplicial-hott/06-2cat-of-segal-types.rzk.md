@@ -358,7 +358,6 @@ the "Gray interchanger" built from two commutative triangles.
     ( uniqueness-comp-is-segal A is-segal-A α00 α10 α11 α*0 α1* α-diag
       ( upper-triangle-square))
 
-
 #end comp-eq-square-is-segal
 
 #def naturality-nat-trans-is-segal

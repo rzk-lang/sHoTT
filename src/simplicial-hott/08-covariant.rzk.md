@@ -194,8 +194,8 @@ logical equivalence
 
 ## Naive left fibrations
 
-For any functor `p : Ĉ → A`,
-we can make a naive definition of what it means to be a left fibration.
+For any functor `p : Ĉ → A`, we can make a naive definition of what it means to
+be a left fibration.
 
 ```rzk
 #def is-naive-left-fibration
@@ -222,17 +222,14 @@ As a sanity check we unpack the definition of `is-naive-left-fibration`.
 
 ### Naive left fibrations vs. covariant families
 
-We aim to prove that a type family  `#!rzk C : A → U`,
-is covariant if and only if
-the projection `#!rzk p : total-type A C → A` is a naive left fibration.
+We aim to prove that a type family `#!rzk C : A → U`, is covariant if and only
+if the projection `#!rzk p : total-type A C → A` is a naive left fibration.
 
 The theorem asserts the logical equivalence of two contractibility statements,
-one for the types `dhom-from A a a' f C c`
-and one for the fibers of the canonical map
-`coslice (total-type A C) (a, c) → coslice A a`;
-Thus it suffices to show that for each
-`a a' : A`, `f : hom A a a'`, `c : C a`.
-these two types are equivalent.
+one for the types `dhom-from A a a' f C c` and one for the fibers of the
+canonical map `coslice (total-type A C) (a, c) → coslice A a`; Thus it suffices
+to show that for each `a a' : A`, `f : hom A a a'`, `c : C a`. these two types
+are equivalent.
 
 We fix the following variables.
 
@@ -244,10 +241,8 @@ We fix the following variables.
 #variable c : C a
 ```
 
-Note that we do not fix `a' : A` and `f : hom A a a'`.
-Letting these vary lets us give an easy proof
-by invoking the induction principle for fibers.
-
+Note that we do not fix `a' : A` and `f : hom A a a'`. Letting these vary lets
+us give an easy proof by invoking the induction principle for fibers.
 
 We make some abbreviations to make the proof more readable:
 
@@ -272,9 +267,8 @@ We make some abbreviations to make the proof more readable:
         (a', f)
 ```
 
-We construct the forward map;
-this one is straightforward since
-it goes from strict extension type to a weak one.
+We construct the forward map; this one is straightforward since it goes from
+strict extension type to a weak one.
 
 ```rzk
 #def temp-b9wX-forward
@@ -285,8 +279,8 @@ it goes from strict extension type to a weak one.
     \ (c', f̂) → (((a', c'), \ t → (f t, f̂ t)) , refl)
 ```
 
-The only non-trivial part is showing that this map has a section.
-We do this by the following fiber induction.
+The only non-trivial part is showing that this map has a section. We do this by
+the following fiber induction.
 
 ```rzk
 #def temp-b9wX-has-section'-forward
@@ -308,8 +302,8 @@ We do this by the following fiber induction.
       (\ ((a', c'), ĝ) → ((c', \ t → second (ĝ t)) , refl))
 ```
 
-We have constructed a section.
-It is also definitionally a retraction, yielding the desired equivalence.
+We have constructed a section. It is also definitionally a retraction, yielding
+the desired equivalence.
 
 ```rzk
 #def temp-b9wX-has-inverse-forward
@@ -396,7 +390,70 @@ Finally, we deduce the theorem by some straightforward logical bookkeeping.
       is-covariant-is-naive-left-fibration A C)
 ```
 
+## Total space of a covariant family over a Segal type
+
+We prove that the total space of a covariant family over a Segal type is a Segal
+type. We split the proof into intermediate steps. Let `A` be a type and a type
+family `#!rzk C : A → U`.
+
+We examine the fibers of the horn restriction on the total space of `C`. First
+note we have the equivalences:
+
+```rzk
+#def apply-4-3
+  ( A : U )
+  ( C : A → U )
+  : Equiv
+    ( Λ → (Σ ( a : A ), C a ) )
+    ( Σ ( f : Λ → A ), ( t : Λ ) → ( C ( f t ) ) )
+  :=
+    axiom-choice ( 2 × 2 ) Λ ( \ t → BOT ) ( \ t → A )
+    ( \ t a → C a ) ( \ t → recBOT ) ( \ t → recBOT )
+
+#def apply-4-3-again
+  ( A : U )
+  ( C : A → U )
+  : Equiv
+    ( Δ² → (Σ ( a : A ), C a ) )
+    ( Σ ( f : Δ² → A ), ( t : Δ² ) → ( C ( f t ) ) )
+  :=
+    axiom-choice ( 2 × 2 ) Δ² ( \ t → BOT ) ( \ t → A )
+    ( \ t a → C a ) ( \ t → recBOT ) ( \ t → recBOT )
+```
+
+We show that the induced map between this types is an equivalence. First we
+exhibit the map:
+
+```rzk
+#def total-inner-horn-restriction
+  ( A : U )
+  ( C : A → U )
+  : ( Σ ( f : Δ² → A ), ( t : Δ² ) → ( C ( f t ) ) ) →
+    ( Σ ( g : Λ → A ), ( t : Λ ) → ( C ( g t ) ) )
+  := \ ( f, μ ) → ( \ t → f t , \ t → μ t)
+```
+
+Next we compute the fibers of this map by showing the equivalence as claimed in
+the proof of Theorem 8.8 in RS17. The following maps will be packed into some
+`#!rzk Equiv`.
+
+```rzk
+#def map-to-total-inner-horn-restriction-fiber
+  ( A : U )
+  ( C : A → U )
+  ( (g , φ) : ( Σ ( k : Λ → A ), ( t : Λ ) → C ( k t ) ) )
+  : ( Σ (h : (t : Δ²) → A [ Λ t ↦ g t ] ) ,
+      (( t : Δ² ) → C (h t) [ Λ t ↦ φ t])) →
+    ( fib ( Σ ( l : Δ² → A ), ( t : Δ² ) → ( C ( l t ) ))
+          ( Σ ( k : Λ → A ), ( t : Λ ) → ( C ( k t ) ))
+          ( total-inner-horn-restriction A C )
+          ( g,  φ) )
+  := \ ( f,μ ) → ( ( \ t → f t, \ t → μ t  ), refl )
+```
+
 ### Segal types vs naive left fibrations
+
+We give an alternative proof using the calculus of homotopy cartesian squares.
 
 We aim to prove that for any naive left fibration `α : A' → A`,
 if `A` is a Segal type, then so is `A'`.
@@ -441,17 +498,15 @@ if `A` is a Segal type, then so is `A'`.
       ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
   := \ σ' → U
 
-
 #end is-segal-is-naive-left-fibration-is-segal
 ```
 
 ## Representable covariant families
 
-If `A` is a Segal type and `a : A` is any term,
-then `hom A a` defines a covariant family over A,
-and conversely if this family is covariant for every `a : A`,
-then `A` must be a Segal type.
-The proof involves a rather lengthy composition of equivalences.
+If `A` is a Segal type and `a : A` is any term, then `hom A a` defines a
+covariant family over A, and conversely if this family is covariant for every
+`a : A`, then `A` must be a Segal type. The proof involves a rather lengthy
+composition of equivalences.
 
 ```rzk
 #def dhom-representable
@@ -1346,8 +1401,8 @@ domain are equivalent:
 #end dhom-from-equivalence
 ```
 
-Now we introduce the hypothesis that $C$ is covariant in the form of
-`has-unique-fixed-domain-lifts`.
+Now we introduce the hypothesis that `#!rzk C` is covariant in the form of
+`#!rzk has-unique-fixed-domain-lifts`.
 
 ```rzk
 #def equiv-has-unique-fixed-domain-lifts uses (extext)

@@ -343,9 +343,11 @@ Now we compose the functions that are equivalences.
 ```
 
 The following functions refine `equiv-right-cancel` and `equiv-left-cancel` by
-providing control over the underlying maps of the equivalence.
+providing control over the underlying maps of the equivalence. They also weaken
+the hypotheses: if a composite is an equivalence and the second map has a
+retraction the first map is an equivalence, and dually.
 
-```rzk title="Right cancellation of equivalence property in diagrammatic order"
+```rzk
 #def ap-cancel-has-retraction
   ( B C : U)
   ( g : B → C)
@@ -359,7 +361,9 @@ providing control over the underlying maps of the equivalence.
           (η-g b))
         (ap C B (g b) (g b') retr-g gp)
         (η-g b')
+```
 
+```rzk title="Right cancellation of equivalence property in diagrammatic order"
 #def is-equiv-right-cancel
   ( A B C : U)
   ( f : A → B)
@@ -395,6 +399,10 @@ providing control over the underlying maps of the equivalence.
       ( comp C A B f sec-gf, ε-gf)
     )
 ```
+
+We typically apply the cancelation property in a setting where the composite and
+one map are known to be equivalences, so we define versions of the above
+functions with these stronger hypotheses.
 
 ```rzk
 #def is-equiv-right-factor

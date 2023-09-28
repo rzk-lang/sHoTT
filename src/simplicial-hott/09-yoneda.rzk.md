@@ -29,9 +29,9 @@ extension extensionality:
 
 ## Natural transformations involving a representable functor
 
-Fix a Segal type $A$ and a term $a : A$. The Yoneda lemma characterizes natural
-transformations from the representable type family `#!rzk hom A a : A → U` to a
-covariant type family `#!rzk C : A → U`.
+Fix a Segal type `#!rzk A` and a term `#!rzk a : A`. The Yoneda lemma
+characterizes natural transformations from the representable type family
+`#!rzk hom A a : A → U` to a covariant type family `#!rzk C : A → U`.
 
 Ordinarily, such a natural transformation would involve a family of maps
 
@@ -64,10 +64,10 @@ naturality-covariant-fiberwise-transformation naturality is automatic.
 
 ## The Yoneda maps
 
-For any Segal type $A$ and term $a : A$, the Yoneda lemma provides an
-equivalence between the type `#!rzk (z : A) → hom A a z → C z` of natural
+For any Segal type `#!rzk A` and term `#!rzk a : A`, the Yoneda lemma provides
+an equivalence between the type `#!rzk (z : A) → hom A a z → C z` of natural
 transformations out of the functor `#!rzk hom A a` and values in an arbitrary
-covariant family $C$ and the type $C a$.
+covariant family `#!rzk C` and the type `#!rzk C a`.
 
 One of the maps in this equivalence is evaluation at the identity. The inverse
 map makes use of the covariant transport operation.
@@ -114,9 +114,9 @@ straightforward:
   := id-arr-covariant-transport A a C is-covariant-C u
 ```
 
-The other composite carries $ϕ$ to an a priori distinct natural transformation.
-We first show that these are pointwise equal at all `#!rzk x : A` and
-`#!rzk f : hom A a x` in two steps.
+The other composite carries `#!rzk ϕ` to an a priori distinct natural
+transformation. We first show that these are pointwise equal at all
+`#!rzk x : A` and `#!rzk f : hom A a x` in two steps.
 
 ```rzk
 #section yon-evid
@@ -230,11 +230,12 @@ equivalence.
 
 ## Naturality
 
-The equivalence of the Yoneda lemma is natural in both $a : A$ and $C : A → U$.
+The equivalence of the Yoneda lemma is natural in both `#!rzk a : A` and
+`#!rzk C : A → U`.
 
-Naturality in $a$ follows from the fact that the maps `#!rzk evid` and
-`#!rzk yon` are fiberwise equivalences between covariant families over $A$,
-though it requires some work to prove that the domain is covariant.
+Naturality in `#!rzk a` follows from the fact that the maps `#!rzk evid` and
+`#!rzk yon` are fiberwise equivalences between covariant families over
+`#!rzk A`, though it requires some work to prove that the domain is covariant.
 
 ```rzk
 #def is-covariant-yoneda-domain uses (funext)
@@ -309,7 +310,7 @@ though it requires some work to prove that the domain is covariant.
     ( u)
 ```
 
-Naturality in $C$ is not automatic but can be proven easily:
+Naturality in `#!rzk C` is not automatic but can be proven easily:
 
 ```rzk title="RS17, Lemma 9.2(i)"
 #def is-natural-in-family-evid
@@ -403,8 +404,8 @@ Naturality in $C$ is not automatic but can be proven easily:
 ## Yoneda for contravariant families
 
 Dually, the Yoneda lemma for contravariant type families characterizes natural
-transformations from the contravariant family represented by a term $a : A$ in a
-Segal type to a contravariant type family $C : A → U$.
+transformations from the contravariant family represented by a term
+`#!rzk a : A` in a Segal type to a contravariant type family `#!rzk C : A → U`.
 
 By `#!rzk naturality-contravariant-fiberwise-transformation` naturality is again
 automatic.
@@ -430,10 +431,10 @@ automatic.
       ( f)
 ```
 
-For any Segal type $A$ and term $a : A$, the contravariant Yoneda lemma provides
-an equivalence between the type `#!rzk (z : A) → hom A z a → C z` of natural
-transformations out of the functor `#!rzk \ z → hom A z a` and valued in an
-arbitrary contravariant family $C$ and the type $C a$.
+For any Segal type `#!rzk A` and term `#!rzk a : A`, the contravariant Yoneda
+lemma provides an equivalence between the type `#!rzk (z : A) → hom A z a → C z`
+of natural transformations out of the functor `#!rzk \ z → hom A z a` and valued
+in an arbitrary contravariant family `#!rzk C` and the type `#!rzk C a`.
 
 One of the maps in this equivalence is evaluation at the identity. The inverse
 map makes use of the contravariant transport operation.
@@ -478,9 +479,9 @@ straightforward:
   := id-arr-contravariant-transport A a C is-contravariant-C v
 ```
 
-The other composite carries $ϕ$ to an a priori distinct natural transformation.
-We first show that these are pointwise equal at all `#!rzk x : A` and
-`#!rzk f : hom A x a` in two steps.
+The other composite carries `#!rzk ϕ` to an a priori distinct natural
+transformation. We first show that these are pointwise equal at all
+`#!rzk x : A` and `#!rzk f : hom A x a` in two steps.
 
 ```rzk
 #section contra-yon-evid
@@ -597,14 +598,15 @@ equivalence.
 
 ## Contravariant Naturality
 
-The equivalence of the Yoneda lemma is natural in both $a : A$ and $C : A → U$.
+The equivalence of the Yoneda lemma is natural in both `#!rzk a : A` and
+`#!rzk C : A → U`.
 
-Naturality in $a$ follows from the fact that the maps `#!rzk evid` and
-`#!rzk yon` are fiberwise equivalences between contravariant families over $A$,
-though it requires some work, which has not yet been formalized, to prove that
-the domain is contravariant.
+Naturality in `#!rzk a` follows from the fact that the maps `#!rzk evid` and
+`#!rzk yon` are fiberwise equivalences between contravariant families over
+`#!rzk A`, though it requires some work, which has not yet been formalized, to
+prove that the domain is contravariant.
 
-Naturality in $C$ is not automatic but can be proven easily:
+Naturality in `#!rzk C` is not automatic but can be proven easily:
 
 ```rzk title="RS17, Lemma 9.2(i), dual"
 #def is-natural-in-family-contra-evid
@@ -709,8 +711,8 @@ covariant families over a type with an initial object.
 
 ## Initial objects
 
-A term $a$ in a type $A$ is initial if all of its mapping-out hom types are
-contractible.
+A term `#!rzk a` in a type `#!rzk A` is initial if all of its mapping-out hom
+types are contractible.
 
 ```rzk title="RS17, Definition 9.6"
 #def is-initial
@@ -813,11 +815,12 @@ family defines an inverse equivalence to evaluation at the element.
 
 ## Initial objects in slice categories
 
-Recall that the type `#!rzk coslice A a`
-is the type of arrows in $A$ with domain $a$.
+Recall that the type `#!rzk coslice A a` is the type of arrows in `#!rzk A` with
+domain `#!rzk a`.
 
-We now show that the coslice under $a$ in a Segal type $A$ has an initial object
-given by the identity arrow at $a$. This makes use of the following equivalence.
+We now show that the coslice under `#!rzk a` in a Segal type `#!rzk A` has an
+initial object given by the identity arrow at `#!rzk a`. This makes use of the
+following equivalence.
 
 ```rzk
 #def equiv-hom-in-coslice
@@ -835,7 +838,7 @@ given by the identity arrow at $a$. This makes use of the following equivalence.
         \ k → refl)))
 ```
 
-Since $hom A a$ is covariant when $A$ is Segal, this latter type is
+Since `#!rzk hom A a` is covariant when `#!rzk A` is Segal, this latter type is
 contractible.
 
 ```rzk
@@ -930,8 +933,8 @@ an equivalent type in the domain of the evaluation map.
 
 ## Final objects
 
-A term $a$ in a type $A$ is initial if all of its mapping-out hom types are
-contractible.
+A term `#!rzk a` in a type `#!rzk A` is initial if all of its mapping-out hom
+types are contractible.
 
 ```rzk
 #def is-final
@@ -1035,11 +1038,12 @@ family defines an inverse equivalence to evaluation at the element.
 
 ## Final objects in slice categories
 
-Recall that the type `#!rzk slice A a`
-is the type of arrows in $A$ with codomain $a$.
+Recall that the type `#!rzk slice A a` is the type of arrows in `#!rzk A` with
+codomain `#!rzk a`.
 
-We now show that the slice over $a$ in a Segal type $A$ has a final object given
-by the identity arrow at $a$. This makes use of the following equivalence.
+We now show that the slice over `#!rzk a` in a Segal type `#!rzk A` has a final
+object given by the identity arrow at `#!rzk a`. This makes use of the following
+equivalence.
 
 ```rzk
 #def equiv-hom-in-slice
@@ -1057,8 +1061,8 @@ by the identity arrow at $a$. This makes use of the following equivalence.
         \ k → refl)))
 ```
 
-Since $\ z → hom A z a$ is contravariant when $A$ is Segal, this latter type is
-contractible.
+Since `#!rzk \ z → hom A z a` is contravariant when `#!rzk A` is Segal, this
+latter type is contractible.
 
 ```rzk
 #def is-contr-is-segal-hom-in-slice

@@ -1,4 +1,4 @@
-# 11. Homotopy pullbacks
+# 11. Homotopy cartesian squares
 
 This is a literate `rzk` file:
 
@@ -241,9 +241,7 @@ along any map of maps `β → α` and obtain another homotopy cartesian square.
         ( γ (s' b'))
         ( is-hc-α (s' b'))
         ( transport A C (α (s' b')) (s (β b')) (η b'))
-        undefined
-
-
+        ( is-equiv-transport A C (α (s' b')) (s (β b')) (η b'))
 ```
 
 ## Pasting calculus for homotopy cartesian squares

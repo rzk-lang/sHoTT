@@ -24,6 +24,18 @@ This is a literate `rzk` file:
   := Σ (r : B → A) , (homotopy A A (comp A B A r f) (identity A))
 ```
 
+```rzk
+#def ind-has-section
+  ( f : A → B)
+  ( ( sec-f , ε-f) : has-section f)
+  ( C : B → U)
+  ( s : ( a : A) → C ( f a))
+  ( b : B)
+  : C b
+  :=
+    transport B C ( f (sec-f b)) b ( ε-f b) ( s (sec-f b))
+```
+
 We define equivalences to be bi-invertible maps.
 
 ```rzk
@@ -178,18 +190,18 @@ notion.
 
 ## Symmetry of having an inverse
 
-The inverse of an invertible map has an inverse. 
+The inverse of an invertible map has an inverse.
 
 ```rzk
 #def has-inverse-map-inverse-has-inverse
   ( A B : U)
   ( f : A → B)
   ( has-inverse-f : has-inverse A B f)
-  : has-inverse B A ( map-inverse-has-inverse A B f has-inverse-f)  
-  := 
-    ( f, 
+  : has-inverse B A ( map-inverse-has-inverse A B f has-inverse-f)
+  :=
+    ( f,
       ( second ( second has-inverse-f) ,
-        first ( second has-inverse-f))) 
+        first ( second has-inverse-f)))
 ```
 
 ## Composing equivalences
@@ -330,7 +342,12 @@ Now we compose the functions that are equivalences.
   := equiv-comp B A C (inv-equiv A B A≃B) (A≃C)
 ```
 
-```rzk title="Right cancellation of equivalence property in diagrammatic order"
+The following functions refine `equiv-right-cancel` and `equiv-left-cancel` by
+providing control over the underlying maps of the equivalence. They also weaken
+the hypotheses: if a composite is an equivalence and the second map has a
+retraction the first map is an equivalence, and dually.
+
+```rzk
 #def ap-cancel-has-retraction
   ( B C : U)
   ( g : B → C)
@@ -344,27 +361,69 @@ Now we compose the functions that are equivalences.
           (η-g b))
         (ap C B (g b) (g b') retr-g gp)
         (η-g b')
+```
 
-
+```rzk title="Right cancellation of equivalence property in diagrammatic order"
 #def is-equiv-right-cancel
   ( A B C : U)
   ( f : A → B)
   ( g : B → C)
-  ( (has-retraction-g, (sec-g, ε-g)) : is-equiv B C g)
-  ( ((retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
+  ( has-retraction-g : has-retraction B C g)
+  ( ( (retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
   : is-equiv A B f
   :=
-    ( (comp B C A
-      retr-gf g,
-    η-gf) ,
-    (comp B C A
-      sec-gf g,
-    \ b → -- need (f ∘ sec-gf ∘ g) b = b
-      ap-cancel-has-retraction B C g has-retraction-g (f (sec-gf (g b))) b
-      (ε-gf (g b)) -- have g (f ∘ sec-gf ∘ g) b) = g b
+    ( ( comp B C A retr-gf g, η-gf) ,
+      ( comp B C A sec-gf g ,
+        \ b →
+            ap-cancel-has-retraction B C g
+            has-retraction-g (f (sec-gf (g b))) b
+            ( ε-gf (g b))
+      )
     )
-    )
+```
 
+```rzk title="Left cancellation of equivalence property in diagrammatic order"
+#def is-equiv-left-cancel
+  ( A B C : U)
+  ( f : A → B)
+  ( has-section-f : has-section A B f)
+  ( g : B → C)
+  ( ( ( retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
+  : is-equiv B C g
+  :=
+    ( ( comp C A B f retr-gf ,
+        ind-has-section A B f has-section-f
+          ( \ b → f (retr-gf (g b)) = b)
+          ( \ a → ap A B (retr-gf (g ( f a))) a f (η-gf a))
+      ) ,
+      ( comp C A B f sec-gf, ε-gf)
+    )
+```
+
+We typically apply the cancelation property in a setting where the composite and
+one map are known to be equivalences, so we define versions of the above
+functions with these stronger hypotheses.
+
+```rzk
+#def is-equiv-right-factor
+  ( A B C : U)
+  ( f : A → B)
+  ( g : B → C)
+  ( is-equiv-g : is-equiv B C g)
+  ( is-equiv-gf : is-equiv A C (comp A B C g f))
+  : is-equiv A B f
+  :=
+    is-equiv-right-cancel A B C f g (first is-equiv-g) is-equiv-gf
+
+#def is-equiv-left-factor
+  ( A B C : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( g : B → C)
+  ( is-equiv-gf : is-equiv A C (comp A B C g f))
+  : is-equiv B C g
+  :=
+    is-equiv-left-cancel A B C f (second is-equiv-f) g is-equiv-gf
 ```
 
 ```rzk title="A composition of three equivalences"
@@ -433,7 +492,7 @@ If a map is homotopic to an equivalence it is an equivalence.
 
 ## Reversing equivalences
 
-The section associated with an equivalence is an equivalence. 
+The section associated with an equivalence is an equivalence.
 
 ```rzk
 #def is-equiv-section-is-equiv
@@ -441,14 +500,14 @@ The section associated with an equivalence is an equivalence.
   ( f : A → B)
   ( is-equiv-f : is-equiv A B f)
   : is-equiv B A ( section-is-equiv A B f is-equiv-f)
-  := 
-    is-equiv-has-inverse B A 
-      ( section-is-equiv A B f is-equiv-f) 
+  :=
+    is-equiv-has-inverse B A
+      ( section-is-equiv A B f is-equiv-f)
       ( has-inverse-map-inverse-has-inverse A B f
-        ( has-inverse-is-equiv A B f is-equiv-f))  
+        ( has-inverse-is-equiv A B f is-equiv-f))
 ```
 
-The retraction associated with an equivalence is an equivalence. 
+The retraction associated with an equivalence is an equivalence.
 
 ```rzk
 #def is-equiv-retraction-is-equiv
@@ -456,8 +515,8 @@ The retraction associated with an equivalence is an equivalence.
   ( f : A → B)
   ( is-equiv-f : is-equiv A B f)
   : is-equiv B A ( retraction-is-equiv A B f is-equiv-f)
-  := 
-    is-equiv-rev-homotopy B A 
+  :=
+    is-equiv-rev-homotopy B A
       ( section-is-equiv A B f is-equiv-f)
       ( retraction-is-equiv A B f is-equiv-f)
       ( homotopy-section-retraction-is-equiv A B f is-equiv-f)
@@ -642,4 +701,56 @@ dependent function types.
           retraction-postconcat A x y z q),
         ( \ r → concat A x z y r (rev A y z q),
           section-postconcat A x y z q)))
+```
+
+## Equivalence is equivalence invariant
+
+```rzk
+#def map-of-maps
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  : U
+  :=
+    Σ ( ( s',s) : product ( A' → B' ) ( A → B)),
+      ( ( a' : A') → β ( s' a') = s ( α a'))
+
+#def is-equiv-equiv-is-equiv
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ((s', s), η) : map-of-maps A' A α B' B β)
+  ( is-equiv-s' : is-equiv A' B' s')
+  ( is-equiv-s : is-equiv A B s)
+  ( is-equiv-β : is-equiv B' B β)
+  : is-equiv A' A α
+  :=
+    is-equiv-right-factor A' A B α s is-equiv-s
+      ( is-equiv-rev-homotopy A' B
+          ( comp A' B' B β s')
+          ( comp A' A B s α)
+          ( η )
+          ( is-equiv-comp A' B' B s' is-equiv-s' β is-equiv-β)
+      )
+
+#def is-equiv-equiv-is-equiv'
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ((s', s), η) : map-of-maps A' A α B' B β)
+  ( is-equiv-s' : is-equiv A' B' s')
+  ( is-equiv-s : is-equiv A B s)
+  ( is-equiv-α : is-equiv A' A α)
+  : is-equiv B' B β
+  :=
+    is-equiv-left-factor A' B' B s' is-equiv-s' β
+      ( is-equiv-homotopy A' B
+        ( comp A' B' B β s')
+        ( comp A' A B s α)
+        ( η)
+        ( is-equiv-comp A' A B α is-equiv-α s is-equiv-s)
+      )
 ```

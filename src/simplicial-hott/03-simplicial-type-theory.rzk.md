@@ -40,11 +40,24 @@ This is a literate `rzk` file:
     \ (t , s) → (s ≡ 0₂ ∨ t ≡ 1₂ ∨ s ≡ t)
 ```
 
-### The inner horn
+### The 2 dimensional inner horn
 
 ```rzk
 #def Λ : (2 × 2) → TOPE
   := \ (t , s) → (s ≡ 0₂ ∨ t ≡ 1₂)
+
+#def Λ²₁ : Δ² → TOPE
+  := \ (s,t) → Λ (s,t)
+```
+
+### The 3 dimensional inner horns
+
+```rzk
+#def Λ³₁ : Δ³ → TOPE
+  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t2 ≡ t1 ∨ t1 ≡ 1₂
+
+#def Λ³₂ : Δ³ → TOPE
+  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t3 ≡ t2 ∨ t1 ≡ 1₂
 ```
 
 ### Products
@@ -85,6 +98,11 @@ The product of topes defines the product of shapes.
   := shape-prod (2 × 2) 2 Δ² Δ¹
 ```
 
+```rzk
+#def Δ³×Δ² : ((2 × 2 × 2) × (2 × 2)) → TOPE
+  := shape-prod (2 × 2 × 2) (2 × 2) Δ³ Δ²
+```
+
 Maps out of $Δ²$ are a retract of maps out of $Δ¹×Δ¹$.
 
 ```rzk title="RS17, Proposition 3.6"
@@ -121,11 +139,58 @@ Maps out of $Δ³$ are a retract of maps out of $Δ²×Δ¹$.
               t1 <= t3 |-> f ((t1 , t1) , t2)))
 
 #def Δ³-is-retract-Δ²×Δ¹
-  (A : U)
+  ( A : U)
   : is-retract-of (Δ³ → A) (Δ²×Δ¹ → A)
   :=
     ( Δ³-is-retract-Δ²×Δ¹-section A ,
       ( Δ³-is-retract-Δ²×Δ¹-retraction A , \ _ → refl))
+```
+
+For a subshape `ϕ ⊂ ψ` we have an easy way of stating that it is a retract in a
+strict and functorial way. Intuitively this happens when there is a map from `ψ`
+to `ϕ` that fixes the subshape `ψ`. But in the definition below we actually ask
+for a section of the family of extensions of a function `ϕ → A` to a function
+`ψ → A` and we ask for this section to be natural in the type `A`.
+
+```rzk
+#def is-functorial-shape-retract
+  ( I : CUBE )
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  : U
+  :=
+    ( A' : U) → (A : U) → (α : A' → A) →
+    has-section-family-over-map
+      ( ϕ → A') (\ f → (t : ψ) → A' [ϕ t ↦ f t])
+      ( ϕ → A) (\ f → (t : ψ) → A [ϕ t ↦ f t])
+      ( \ f t → α (f t))
+      ( \ _ g t → α (g t))
+```
+
+For example, this applies to `Δ² ⊂ Δ¹×Δ¹`.
+
+```rzk
+#def Δ²-is-functorial-retract-Δ¹×Δ¹
+  : is-functorial-shape-retract (2 × 2) (Δ¹×Δ¹) (Δ²)
+  :=
+    \ A' A α →
+      ( ( first (Δ²-is-retract-Δ¹×Δ¹ A'), first (Δ²-is-retract-Δ¹×Δ¹ A) ) ,
+          \ a' → refl)
+```
+
+### Pushout product
+
+Pushout product Φ×ζ ∪\_{Φ×χ} ψ×χ of Φ ↪ ψ and χ ↪ ζ, domain of the co-gap map.
+
+```rzk
+#def shape-pushout-prod
+  ( I J : CUBE)
+  ( ψ : I → TOPE)
+  ( Φ : ψ → TOPE)
+  ( ζ : J → TOPE)
+  ( χ : ζ → TOPE)
+  : (shape-prod I J ψ ζ) → TOPE
+  := \ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s)
 ```
 
 ### Intersections
@@ -151,7 +216,6 @@ The union of shapes is defined by disjunction on topes.
   : I → TOPE
   := \ t → ψ t ∨ χ t
 ```
-
 
 ### Connection Squares
 
@@ -237,4 +301,3 @@ The union of shapes is defined by disjunction on topes.
     }
   </style>
 </svg>
-

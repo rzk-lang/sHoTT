@@ -460,7 +460,7 @@ all $x$ then $(x : X) → A x$ is a Segal type.
   :=
     is-segal-is-local-horn-inclusion
       ( (x : X) → A x)
-      ( is-segal-function-type'
+      ( is-local-horn-inclusion-function-type
         ( X) (A)
         ( \ x → is-local-horn-inclusion-is-segal (A x)(fiberwise-is-segal-A x)))
 ```
@@ -469,7 +469,7 @@ If $X$ is a shape and $A : X → U$ is such that $A x$ is a Segal type for all $
 then $(x : X) → A x$ is a Segal type.
 
 ```rzk title="RS17, Corollary 5.6(ii)"
-#def is-segal-extension-type' uses (extext)
+#def is-local-horn-inclusion-extension-type uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( A : ψ → U)
@@ -518,9 +518,9 @@ then $(x : X) → A x$ is a Segal type.
   :=
     is-segal-is-local-horn-inclusion
       ( (s : ψ) → A s)
-      ( is-segal-extension-type'
+      ( is-local-horn-inclusion-extension-type
         ( I) (ψ) (A)
-        ( \ s → is-local-horn-inclusion-is-segal (A s) (fiberwise-is-segal-A s)))
+        ( \ s → is-local-horn-inclusion-is-segal (A s)(fiberwise-is-segal-A s)))
 ```
 
 In particular, the arrow type of a Segal type is Segal. First, we define the
@@ -560,7 +560,7 @@ For later use, an equivalent characterization of the arrow type.
   ( is-segal-A : is-local-horn-inclusion A)
   : is-local-horn-inclusion (arr A)
   :=
-    is-segal-extension-type'
+    is-local-horn-inclusion-extension-type
       ( 2)
       ( Δ¹)
       ( \ _ → A)

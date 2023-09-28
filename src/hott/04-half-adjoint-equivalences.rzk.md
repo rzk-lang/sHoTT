@@ -375,10 +375,10 @@ one.
       ( has-inverse-is-equiv A B f is-equiv-f)
 ```
 
-## Equivalences of identity types
+## Equivalences are embeddings
 
 We use the notion of half adjoint equivalence to prove that equivalent types
-have equivalent identity types.
+have equivalent identity types by showing that equivalences are embeddings.
 
 ```rzk
 #section equiv-identity-types-equiv

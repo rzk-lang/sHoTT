@@ -332,7 +332,7 @@ cases an extension type to a function type.
     ( ψ)
     ( ϕ)
     ( \ t → (Σ (y : A t) , y = ext-projection-temp t))
-    ( \ t → is-contr-codomain-based-paths (A t) (ext-projection-temp t))
+    ( \ t → is-contr-endpoint-based-paths (A t) (ext-projection-temp t))
     ( \ t → (a t , refl))
 
 #define is-contr-based-paths-ext uses (weak-ext-ext)
@@ -554,13 +554,16 @@ extensionality.
         ( ψ)
         ( ϕ)
         ( \ t → (Σ (y : A t) , y = b t))
-        ( \ t → is-contr-codomain-based-paths
+        ( \ t → is-contr-endpoint-based-paths
                 ( A t)
                 ( b t))
         ( \ t → ( a t , e t) )))
 ```
 
-In an extension type of a dependent type that is pointwise contractible, then we have an inhabitant of the extension type witnessing the contraction, at every inhabitant of the base, of each point in the fiber to the center of the fiber. Both directions of this statement will be needed.
+In an extension type of a dependent type that is pointwise contractible, then we
+have an inhabitant of the extension type witnessing the contraction, at every
+inhabitant of the base, of each point in the fiber to the center of the fiber.
+Both directions of this statement will be needed.
 
 ```rzk
 

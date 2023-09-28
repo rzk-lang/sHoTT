@@ -26,6 +26,7 @@ extension extensionality:
 
 ```rzk
 #assume funext : FunExt
+#assume weakextext : WeakExtExt
 #assume extext : ExtExt
 ```
 
@@ -51,12 +52,8 @@ Extension types are used to define the type of arrows between fixed terms:
 
 ```
 
-For each `a : A`, the total types of the representables
-`\ z → hom A a z`
-and
-`\ z → hom A z a`
-are called the coslice and slice, respectively.
-
+For each `a : A`, the total types of the representables `\ z → hom A a z` and
+`\ z → hom A z a` are called the coslice and slice, respectively.
 
 ```rzk
 #def coslice
@@ -72,8 +69,8 @@ are called the coslice and slice, respectively.
   := Σ (z : A) , (hom A z a)
 ```
 
-The types `coslice A a` and `slice A a`
-are functorial in `A` in the following sense:
+The types `coslice A a` and `slice A a` are functorial in `A` in the following
+sense:
 
 ```rzk
 #def coslice-fun
@@ -1426,3 +1423,174 @@ As a special case of the above:
     }
   </style>
 </svg>
+
+### Inner anodyne maps
+
+```rzk title="RS17, definition 5.19"
+
+#def is-inner-anodyne
+  (I : CUBE)
+  (ψ : I → TOPE)
+  (Φ : ψ → TOPE)
+  : U
+  := (A : U) → is-segal A → (h : Φ → A) → is-contr ((t : ψ) → A[ Φ t ↦ h t ])
+```
+
+The cofibration Λ²₁ → Δ² is inner anodyne
+
+```rzk
+#def is-inner-anodyne-Λ²₁
+  : is-inner-anodyne (2 × 2) Δ² Λ²₁
+  := \ A is-segal-A h' →
+    equiv-with-contractible-domain-implies-contractible-codomain
+      ( Σ (h : hom A (h' (0₂,0₂)) (h' (1₂,1₂))) ,
+          (hom2 A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
+          (\ t → h' (t,0₂)) (\ s → h' (1₂,s)) h))
+      ( (t : Δ²) → A [Λ t ↦ h' t])
+      (compositions-are-horn-fillings
+        A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
+          (\ t → h' (t,0₂)) (\ s → h' (1₂,s)))
+      (is-segal-A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
+          (\ t → h' (t,0₂)) (\ s → h' (1₂,s)))
+```
+
+```rzk title="RS17, lemma 5.20"
+#def is-inner-anodyne-pushout-product-left-is-inner-anodyne uses (weakextext)
+  ( I J : CUBE)
+  ( ψ : I → TOPE)
+  ( Φ : ψ → TOPE)
+  (is-inner-anodyne-ψ-Φ : is-inner-anodyne I ψ Φ)
+  ( ζ : J → TOPE)
+  ( χ : ζ → TOPE)
+  : is-inner-anodyne (I × J)
+      (\ (t,s) → ψ t ∧ ζ s)
+      (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
+  := \ A is-segal-A h →
+    equiv-with-contractible-codomain-implies-contractible-domain
+      (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
+      ( (s : ζ) → ((t : ψ) → A[ Φ t ↦ h (t,s)])[ χ s ↦ \ t → h (t, s)])
+      (uncurry-opcurry I J ψ Φ ζ χ (\ s t → A) h)
+      (weakextext
+        ( J)
+        ( ζ)
+        ( χ)
+        ( \ s → (t : ψ) → A[ Φ t ↦ h (t,s)])
+        ( \ s → is-inner-anodyne-ψ-Φ A is-segal-A (\ t → h (t,s)))
+        ( \ s t → h (t,s)))
+
+#def is-inner-anodyne-pushout-product-right-is-inner-anodyne uses (weakextext)
+  ( I J : CUBE)
+  ( ψ : I → TOPE)
+  ( Φ : ψ → TOPE)
+  ( ζ : J → TOPE)
+  ( χ : ζ → TOPE)
+  (is-inner-anodyne-ζ-χ : is-inner-anodyne J ζ χ)
+  : is-inner-anodyne (I × J)
+      (\ (t,s) → ψ t ∧ ζ s)
+      (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
+  := \ A is-segal-A h →
+    equiv-with-contractible-domain-implies-contractible-codomain
+      ( (t : ψ) → ((s : ζ) → A[ χ s ↦ h (t,s)])[ Φ t ↦ \ s → h (t, s)])
+      (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
+      (curry-uncurry I J ψ Φ ζ χ (\ s t → A) h)
+      (weakextext
+        ( I)
+        ( ψ)
+        ( Φ)
+        ( \ t → (s : ζ) → A[ χ s ↦ h (t,s)])
+        ( \ t → is-inner-anodyne-ζ-χ A is-segal-A (\ s → h (t,s)))
+        ( \ s t → h (s,t)))
+```
+
+```rzk title="RS17, lemma 5.21"
+#section retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
+
+-- Δ³×Λ²₁ ∪_{Λ³₂×Λ²₁} Λ³₂×Δ²
+#def pushout-prod-Λ³₂-Λ²₁
+  : (Δ³×Δ²) → TOPE
+  := shape-pushout-prod (2 × 2 × 2) (2 × 2) Δ³ Λ³₂ Δ² Λ²₁
+
+
+#variable A : U
+#variable h : Λ³₂ → A
+
+#def h^
+  : pushout-prod-Λ³₂-Λ²₁ → A
+  := \ ( ((t1, t2), t3), (s1, s2) ) →
+    recOR
+      ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ h ((t1, t2), t3),
+        t1 ≤ s1 ∧ t2 ≤ s2 ↦ h ((s1, t2), t3),
+        s1 ≤ t1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ h ((t1, s2), t3),
+        t1 ≤ s1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ h ((s1, s2), t3),
+        s1 ≤ t1 ∧ s2 ≤ t3 ↦ h ((t1, s2), s2),
+        t1 ≤ s1 ∧ s2 ≤ t3 ↦ h ((s1, s2), s2))
+
+
+#def extend-against-Λ³₂-Δ³
+  : U
+  := (t : Δ³) → A[ Λ³₂ t ↦ h t ]
+
+#def extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (h)
+  : U
+  := (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
+
+#def retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
+  (f : extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
+  : extend-against-Λ³₂-Δ³
+  := \ ((t1, t2), t3) → f ( ((t1, t2), t3), (t1, t2) )
+
+#def section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
+  (g : (t : Δ³) → A[ Λ³₂ t ↦ h t ])
+  : (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
+  :=
+    \ ( ((t1, t2), t3), (s1, s2) ) →
+    recOR
+      ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ g ((t1, t2), t3),
+        t1 ≤ s1 ∧ t2 ≤ s2 ↦ g ((s1, t2), t3),
+        s1 ≤ t1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ g ((t1, s2), t3),
+        t1 ≤ s1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ g ((s1, s2), t3),
+        s1 ≤ t1 ∧ s2 ≤ t3 ↦ g ((t1, s2), s2),
+        t1 ≤ s1 ∧ s2 ≤ t3 ↦ g ((s1, s2), s2))
+
+#def homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
+  : homotopy extend-against-Λ³₂-Δ³ extend-against-Λ³₂-Δ³
+    ( comp
+      ( extend-against-Λ³₂-Δ³)
+      ( extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
+      ( extend-against-Λ³₂-Δ³)
+      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
+      ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
+    ( identity extend-against-Λ³₂-Δ³)
+  := \ t → refl
+
+#def is-retract-of-Δ³-Δ³×Δ² uses (A h)
+  : is-retract-of
+      extend-against-Λ³₂-Δ³
+      extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
+  :=
+    ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,
+      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,
+        homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
+
+#end retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
+
+#def is-inner-anodyne-Δ³-Λ³₂ uses (weakextext)
+  : is-inner-anodyne (2 × 2 × 2) Δ³ Λ³₂
+  :=
+    \ A is-segal-A h →
+    is-contr-is-retract-of-is-contr
+      (extend-against-Λ³₂-Δ³ A h)
+      (extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)
+      (is-retract-of-Δ³-Δ³×Δ² A h)
+      (is-inner-anodyne-pushout-product-right-is-inner-anodyne
+        ( 2 × 2 × 2)
+        ( 2 × 2)
+        ( Δ³)
+        ( Λ³₂)
+        ( Δ²)
+        ( Λ²₁)
+        ( is-inner-anodyne-Λ²₁)
+        ( A)
+        ( is-segal-A)
+        ( h^ A h))
+```

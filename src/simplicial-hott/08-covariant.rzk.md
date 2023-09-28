@@ -1351,8 +1351,8 @@ domain are equivalent:
 #end dhom-from-equivalence
 ```
 
-Now we introduce the hypothesis that $C$ is covariant in the form of
-`has-unique-fixed-domain-lifts`.
+Now we introduce the hypothesis that `#!rzk C` is covariant in the form of
+`#!rzk has-unique-fixed-domain-lifts`.
 
 ```rzk
 #def equiv-has-unique-fixed-domain-lifts uses (extext)

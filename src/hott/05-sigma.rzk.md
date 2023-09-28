@@ -201,6 +201,7 @@ Here we've decomposed `#!rzk e : Eq-Σ s t` as `#!rzk (e0, e1)` and decomposed
     pair-eq-eq-pair-split
       ( first s) (second s) (first t) (first e) (second t) (second e)
 
+
 #def extensionality-Σ
   ( s t : Σ (a : A) , B a)
   : Equiv (s = t) (Eq-Σ s t)

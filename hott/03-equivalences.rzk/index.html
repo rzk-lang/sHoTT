@@ -1289,16 +1289,16 @@ notion.</p>
 </span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nd">#end</span><span class="n"> has-inverse-data</span>
 </span></code></pre></div>
 <h2 id="symmetry-of-having-an-inverse">Symmetry of having an inverse<a class="headerlink" href="#symmetry-of-having-an-inverse" title="Permanent link">&para;</a></h2>
-<p>The inverse of an invertible map has an inverse. </p>
+<p>The inverse of an invertible map has an inverse.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-inverse-map-inverse-has-inverse" id="define:has-inverse-map-inverse-has-inverse" style="visibility: visible; position: relative; color: inherit">has-inverse-map-inverse-has-inverse</a></span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="err">  </span><span class="p">( </span>has-inverse-f <span class="p">:</span><span class="err"> has-inverse A B f)</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="err">  : has-inverse B A ( map-inverse-has-inverse A B f has-inverse-f)  </span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="err">  := </span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="err">    ( f, </span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="err">  : has-inverse B A ( map-inverse-has-inverse A B f has-inverse-f)</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="err">  :=</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="err">    ( f,</span>
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="err">      ( </span><span class="s">second</span><span class="err"> ( </span><span class="s">second</span><span class="err"> has-inverse-f) ,</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="err">        </span><span class="s">first</span><span class="err"> ( </span><span class="s">second</span><span class="err"> has-inverse-f))) </span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="err">        </span><span class="s">first</span><span class="err"> ( </span><span class="s">second</span><span class="err"> has-inverse-f)))</span>
 </span></code></pre></div>
 <h2 id="composing-equivalences">Composing equivalences<a class="headerlink" href="#composing-equivalences" title="Permanent link">&para;</a></h2>
 <p>The type of equivalences between types uses <code class="language-rzk highlight"><span class="err">is-equiv</span></code> rather than
@@ -1515,26 +1515,26 @@ invertible map to prove symmetry:</p>
 </span><span id="__span-22-31"><a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a><span class="err">  := is-equiv-homotopy A B g f (rev-homotopy A B f g H) is-equiv-f</span>
 </span></code></pre></div>
 <h2 id="reversing-equivalences">Reversing equivalences<a class="headerlink" href="#reversing-equivalences" title="Permanent link">&para;</a></h2>
-<p>The section associated with an equivalence is an equivalence. </p>
+<p>The section associated with an equivalence is an equivalence.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-section-is-equiv" id="define:is-equiv-section-is-equiv" style="visibility: visible; position: relative; color: inherit">is-equiv-section-is-equiv</a></span>
 </span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
 </span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="err">  </span><span class="p">( </span>is-equiv-f <span class="p">:</span><span class="err"> is-equiv A B f)</span>
 </span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="err">  : is-equiv B A ( section-is-equiv A B f is-equiv-f)</span>
-</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="err">  := </span>
-</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="err">    is-equiv-has-inverse B A </span>
-</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="err">      ( section-is-equiv A B f is-equiv-f) </span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="err">  :=</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="err">    is-equiv-has-inverse B A</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="err">      ( section-is-equiv A B f is-equiv-f)</span>
 </span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="err">      ( has-inverse-map-inverse-has-inverse A B f</span>
-</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="err">        ( has-inverse-is-equiv A B f is-equiv-f))  </span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="err">        ( has-inverse-is-equiv A B f is-equiv-f))</span>
 </span></code></pre></div>
-<p>The retraction associated with an equivalence is an equivalence. </p>
+<p>The retraction associated with an equivalence is an equivalence.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-retraction-is-equiv" id="define:is-equiv-retraction-is-equiv" style="visibility: visible; position: relative; color: inherit">is-equiv-retraction-is-equiv</a></span>
 </span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
 </span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="err">  </span><span class="p">( </span>is-equiv-f <span class="p">:</span><span class="err"> is-equiv A B f)</span>
 </span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="err">  : is-equiv B A ( retraction-is-equiv A B f is-equiv-f)</span>
-</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="err">  := </span>
-</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="err">    is-equiv-rev-homotopy B A </span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="err">  :=</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="err">    is-equiv-rev-homotopy B A</span>
 </span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="err">      ( section-is-equiv A B f is-equiv-f)</span>
 </span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="err">      ( retraction-is-equiv A B f is-equiv-f)</span>
 </span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="err">      ( homotopy-section-retraction-is-equiv A B f is-equiv-f)</span>

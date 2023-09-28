@@ -1436,6 +1436,76 @@ As a special case of the above:
   </style>
 </svg>
 
+Interchange law
+
+```rzk title="RS17, Proposition 5.15"
+#section homotopy-interchange-law
+
+#variable A : U
+#variable is-segal-A : is-segal A
+#variables x y z : A
+
+#def homotopy-interchange-law-statement
+  ( f1 f2 f3 : hom A x y)
+  ( h1 h2 h3 : hom A y z)
+  ( p : f1 = f2)
+  ( q : f2 = f3)
+  ( p' : h1 = h2)
+  ( q' : h2 = h3)
+  : U
+  := congruence-homotopy-is-segal A is-segal-A x y z f1 f3 h1 h3
+      ( concat (hom A x y) f1 f2 f3 p q)
+      ( concat (hom A y z) h1 h2 h3 p' q') =
+    concat
+      ( hom A x z)
+      ( comp-is-segal A is-segal-A x y z f1 h1)
+      ( comp-is-segal A is-segal-A x y z f2 h2)
+      ( comp-is-segal A is-segal-A x y z f3 h3)
+      ( congruence-homotopy-is-segal A is-segal-A x y z f1 f2 h1 h2 p p')
+      ( congruence-homotopy-is-segal A is-segal-A x y z f2 f3 h2 h3 q q')
+
+#def homotopy-interchange-law
+  uses (A is-segal-A x y z)
+  ( f1 f2 f3 : hom A x y)
+  ( h1 h2 h3 : hom A y z)
+  ( p : f1 = f2)
+  ( q : f2 = f3)
+  ( p' : h1 = h2)
+  ( q' : h2 = h3)
+  : homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q'
+  := ind-path
+    ( hom A x y)
+    ( f2)
+    ( \ f3 q -> homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q')
+    ( ind-path
+      ( hom A x y)
+      ( f1)
+      ( \ f2 p -> homotopy-interchange-law-statement f1 f2 f2 h1 h2 h3
+          p refl p' q')
+      ( ind-path
+        ( hom A y z)
+        ( h2)
+        ( \ h3 q' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h3
+            refl refl p' q')
+        ( ind-path
+          ( hom A y z)
+          ( h1)
+          ( \ h2 p' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h2
+              refl refl p' refl)
+          ( refl)
+          ( h2)
+          ( p'))
+        ( h3)
+        ( q'))
+      ( f2)
+      ( p))
+    ( f3)
+    ( q)
+
+#end homotopy-interchange-law
+```
+
+
 ### Inner anodyne maps
 
 ```rzk title="RS17, definition 5.19"

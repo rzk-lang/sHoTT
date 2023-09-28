@@ -43,6 +43,53 @@ is homotopy cartesian.
 Right orthogonal fibrations with respect to a shape inclusion `ϕ ⊂ ψ`
 are stable under many operations.
 
+### Stability under composition
+
+The j-orthogonality is preserved both by composition of maps
+and by composition of shape inclusions.
+
+```rzk title="j-orthogonality for composition of shape inclusions"
+#section j-orthogonal-to-shape-comp
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable χ : ψ → TOPE
+#variable ϕ : χ → TOPE
+#variables A' A : U
+#variable α : A' → A
+#variable is-jo-ψ-χ : is-j-orthogonal-to-shape I ψ χ A' A α
+#variable is-jo-χ-ϕ : is-j-orthogonal-to-shape I
+                        ( \ t → χ t) ( \ t → ϕ t) A' A α
+
+#def is-j-orthogonal-to-shape-comp
+  : is-j-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
+  :=
+    is-homotopy-cartesian-vertical-pasting
+      ( ϕ → A' )
+      ( \ σ' → (t : χ) → A'[ϕ t ↦ σ' t])
+      ( \ _ τ' → (t : ψ) → A'[χ t ↦ τ' t])
+      ( ϕ → A )
+      ( \ σ' → (t : χ) → A[ϕ t ↦ σ' t])
+      ( \ _ τ' → (t : ψ) → A[χ t ↦ τ' t])
+      ( \ σ' t → α (σ' t))
+      ( \ _ τ' x → α (τ' x) )
+      ( \ _ _ υ' x → α (υ' x) )
+      is-jo-χ-ϕ
+      ( is-homotopy-cartesian-upper-from-fibers
+        ( ϕ → A' )
+        ( \ σ' → (t : χ) → A'[ϕ t ↦ σ' t])
+        ( \ _ τ' → (t : ψ) → A'[χ t ↦ τ' t])
+        ( ϕ → A )
+        ( \ σ' → (t : χ) → A[ϕ t ↦ σ' t])
+        ( \ _ τ' → (t : ψ) → A[χ t ↦ τ' t])
+        ( \ σ' t → α (σ' t))
+        ( \ _ τ' x → α (τ' x) )
+        ( \ _ _ υ' x → α (υ' x) )
+        ( \ _ τ' → is-jo-ψ-χ τ')
+      )
+
+#end j-orthogonal-to-shape-comp
+```
+
 ### Stability under exponentiation
 
 The j-orthogonality condition is preserved when crossing the inclusion `ϕ ⊂ ψ`

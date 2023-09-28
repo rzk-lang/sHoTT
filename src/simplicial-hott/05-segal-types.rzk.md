@@ -1534,13 +1534,16 @@ The cofibration Λ²₁ → Δ² is inner anodyne
   : U
   := (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
 
-#def retract uses (A h) (f : extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
+#def retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
+  (f : extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
   : extend-against-Λ³₂-Δ³
   := \ ((t1, t2), t3) → f ( ((t1, t2), t3), (t1, t2) )
 
-#def section uses (A h) (g : (t : Δ³) → A[ Λ³₂ t ↦ h t ])
+#def section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
+  (g : (t : Δ³) → A[ Λ³₂ t ↦ h t ])
   : (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
-  :=  \ ( ((t1, t2), t3), (s1, s2) ) →
+  :=
+    \ ( ((t1, t2), t3), (s1, s2) ) →
     recOR
       ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ g ((t1, t2), t3),
         t1 ≤ s1 ∧ t2 ≤ s2 ↦ g ((s1, t2), t3),
@@ -1549,7 +1552,7 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         s1 ≤ t1 ∧ s2 ≤ t3 ↦ g ((t1, s2), s2),
         t1 ≤ s1 ∧ s2 ≤ t3 ↦ g ((s1, s2), s2))
 
-#def homotopy-retraction-section-id uses (A h)
+#def homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
   : homotopy extend-against-Λ³₂-Δ³ extend-against-Λ³₂-Δ³
     ( comp
       ( extend-against-Λ³₂-Δ³)
@@ -1570,7 +1573,8 @@ The cofibration Λ²₁ → Δ² is inner anodyne
 
 #def is-inner-anodyne-Δ³-Λ³₂ uses (weakextext)
   : is-inner-anodyne (2 × 2 × 2) Δ³ Λ³₂
-  := \ A is-segal-A h →
+  :=
+    \ A is-segal-A h →
     is-contr-is-retract-of-is-contr
       (extend-against-Λ³₂-Δ³ A h)
       (extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)

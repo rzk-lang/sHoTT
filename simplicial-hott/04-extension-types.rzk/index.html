@@ -611,7 +611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hott/11-homotopy-pullbacks.rzk.md" class="md-nav__link">
+      <a href="../../hott/11-homotopy-pullbacks.rzk/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1345,7 +1345,7 @@ cases an extension type to a function type.</p>
 </span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="err">    ( ψ)</span>
 </span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="err">    ( ϕ)</span>
 </span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="err">    </span><span class="p">( </span>\ t → (Σ (y <span class="p">:</span><span class="err"> A t) , y = ext-projection-temp t))</span>
-</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a><span class="err">    ( </span><span class="p">\ </span>t <span class="err">→ is-contr-codomain-based-paths (A t) (ext-projection-temp t))</span>
+</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a><span class="err">    ( </span><span class="p">\ </span>t <span class="err">→ is-contr-endpoint-based-paths (A t) (ext-projection-temp t))</span>
 </span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a><span class="err">    ( </span><span class="p">\ </span>t <span class="err">→ (a t , </span><span class="s">refl</span><span class="err">))</span>
 </span><span id="__span-11-40"><a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a>
 </span><span id="__span-11-41"><a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-based-paths-ext" id="define:is-contr-based-paths-ext" style="visibility: visible; position: relative; color: inherit">is-contr-based-paths-ext</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weak-ext-ext<span class="p">)</span>
@@ -1537,12 +1537,15 @@ extensionality.</p>
 </span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="err">        ( ψ)</span>
 </span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="err">        ( ϕ)</span>
 </span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a><span class="err">        </span><span class="p">( </span>\ t → (Σ (y <span class="p">:</span><span class="err"> A t) , y = b t))</span>
-</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ is-contr-codomain-based-paths</span>
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ is-contr-endpoint-based-paths</span>
 </span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a><span class="err">                ( A t)</span>
 </span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a><span class="err">                ( b t))</span>
 </span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ ( a t , e t) )))</span>
 </span></code></pre></div>
-<p>In an extension type of a dependent type that is pointwise contractible, then we have an inhabitant of the extension type witnessing the contraction, at every inhabitant of the base, of each point in the fiber to the center of the fiber. Both directions of this statement will be needed. </p>
+<p>In an extension type of a dependent type that is pointwise contractible, then we
+have an inhabitant of the extension type witnessing the contraction, at every
+inhabitant of the base, of each point in the fiber to the center of the fiber.
+Both directions of this statement will be needed.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:eq-ext-is-contr" id="define:eq-ext-is-contr" style="visibility: visible; position: relative; color: inherit">eq-ext-is-contr</a></span>
 </span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
@@ -1561,11 +1564,11 @@ extensionality.</p>
 </span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ ) → A t)</span>
 </span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a><span class="err">  </span><span class="p">( </span>is-contr-fiberwise-A <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ ) → is-contr ( A t))</span>
 </span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a><span class="err">  : </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ ) → (a t = </span><span class="s">first</span><span class="err"> (is-contr-fiberwise-A t))</span>
-</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="err">  :=  </span><span class="p">\ </span>t <span class="err">→ </span>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="err">  :=  </span><span class="p">\ </span>t <span class="err">→</span>
 </span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a><span class="err">          rev</span>
 </span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a><span class="err">            ( A t )</span>
 </span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a><span class="err">            ( </span><span class="s">first</span><span class="err"> (is-contr-fiberwise-A t) )</span>
-</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a><span class="err">            ( a t) </span><span class="c">-- </span>
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a><span class="err">            ( a t) </span><span class="c">--</span>
 </span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a><span class="err">            ( </span><span class="s">second</span><span class="err"> (is-contr-fiberwise-A t) (a t))</span>
 </span></code></pre></div>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:first-4-11" id="define:first-4-11" style="visibility: visible; position: relative; color: inherit">first-4-11</a></span>
@@ -1577,11 +1580,11 @@ extensionality.</p>
 </span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ ) → A t)</span>
 </span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="err">  </span><span class="p">(</span>is-contr-fiberwise-A <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ ) → is-contr (A t))</span>
 </span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="err">  : </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>a&#39; <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ ) → A t [ϕ t ↦ a t]),</span>
-</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="err">           </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ ) → </span>
-</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="err">            (restrict I ψ ϕ A a a&#39; t = </span>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="err">           </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ ) →</span>
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="err">            (restrict I ψ ϕ A a a&#39; t =</span>
 </span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="err">              </span><span class="s">first</span><span class="err"> (is-contr-fiberwise-A t))</span>
 </span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="err">              [ϕ t ↦ codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A t] )</span>
-</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="err">  := </span>
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="err">  :=</span>
 </span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="err">    htpy-ext-property</span>
 </span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="err">    ( weak-ext-ext)</span>
 </span><span id="__span-22-17"><a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a><span class="err">    ( I )</span>
@@ -1602,7 +1605,7 @@ extensionality.</p>
 </span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ ) → A t [ϕ t ↦ a t])</span>
 </span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="err">  </span><span class="p">(</span>is-contr-fiberwise-A <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ ) → is-contr (A t))</span>
 </span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="err">  : </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ ) → f t = (</span><span class="s">first</span><span class="err"> (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t</span>
-</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="err">  := </span><span class="p">\ </span>t <span class="err">→ eq-is-contr </span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="err">  := </span><span class="p">\ </span>t <span class="err">→ eq-is-contr</span>
 </span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="err">              ( A t)</span>
 </span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="err">              ( is-contr-fiberwise-A t)</span>
 </span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="err">              ( f t )</span>

@@ -412,24 +412,6 @@ separate hypothesis.
 
 ```
 
-For future reference we add a variable we can assume.
-
-```rzk
-#assume weakfunext : WeakFunExt
-```
-
-Whenever a definition (implicitly) uses function extensionality, we write
-`#!rzk uses (weakfunext)`.
-
-```rzk
-#def call-weakfunext uses (weakfunext)
-  ( A : U )
-  ( C : A → U)
-  ( f : (a : A) → is-contr (C a) )
-  : (is-contr ( (a : A) → C a ))
-  := weakfunext A C f
-```
-
 ## Singleton induction
 
 A type is contractible if and only if it has singleton induction.

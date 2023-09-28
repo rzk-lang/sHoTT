@@ -407,7 +407,7 @@ separate hypothesis.
 #def WeakFunExt : U
   :=
     ( A : U ) → (C : A → U) →
-    -- TODO: rename f (also below)?
+    -- TODO: rename f to is-contr-C (also below)?
     (f : (a : A) → is-contr (C a) ) →
     (is-contr ( (a : A) → C a ))
 

@@ -33,8 +33,8 @@ is homotopy cartesian.
   : U
   :=
     is-homotopy-cartesian
-      ( ϕ → A' ) ( \ σ' → (t : ψ) → A'[ϕ t ↦ σ' t])
-      ( ϕ → A ) ( \ σ → (t : ψ) → A[ϕ t ↦ σ t])
+      ( ϕ → A' ) ( \ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
+      ( ϕ → A ) ( \ σ → (t : ψ) → A [ϕ t ↦ σ t])
       ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
 ```
 

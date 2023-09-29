@@ -307,7 +307,7 @@ Sometimes, an even weaker form of extension extensionality suffices.
     ( (t : ψ) → (f t = g t) [ϕ t ↦ refl]) →
     ( f = g)
 
-#def naiveweakext-extext
+#def naiveextext-extext
   ( extext : ExtExt)
   : NaiveExtExt
   :=

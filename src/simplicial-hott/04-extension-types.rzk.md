@@ -244,7 +244,8 @@ We refer to another form as an "extension extensionality" axiom.
     ( ϕ : ψ → TOPE) →
     ( A : ψ → U) →
     ( a : (t : ϕ) → A t) →
-    ( f g : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( f  : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( g : (t : ψ ) → A t [ϕ t ↦ a t]) →
     is-equiv
       ( f = g)
       ( (t : ψ) → (f t = g t) [ϕ t ↦ refl])
@@ -262,6 +263,24 @@ We refer to another form as an "extension extensionality" axiom.
   ( f g : (t : ψ) → A t [ϕ t ↦ a t])
   : Equiv (f = g) ((t : ψ) → (f t = g t) [ϕ t ↦ refl])
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
+```
+
+For readability of code, it is useful to have the forward map of extension
+extensionality available. In fact, sometimes only this implication is needed.
+
+```rzk title = "The equality provided by extension extensionality"
+#def EqExtExt
+  : U
+  :=
+  ( I : CUBE) →
+  ( ψ : I → TOPE) →
+  ( ϕ : ψ → TOPE) →
+  ( A : ψ → U) →
+  ( a : (t : ϕ) → A t) →
+  ( f  : (t : ψ) → A t [ϕ t ↦ a t]) →
+  ( g  : (t : ψ) → A t [ϕ t ↦ a t]) →
+  ( (t : ψ ) → (f t = g t) [ϕ t ↦ refl]) →
+  ( f = g)
 ```
 
 Weak extension extensionality implies extension extensionality; this is the
@@ -652,16 +671,13 @@ we are entitled to the conclusion.
     ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A)
 ```
 
-The two expressions below give us the inhabitant
-$c : \prod_{t: I | \psi} f(t) = a' (t)$ used in the proof of RS Proposition 4.11
+The expression below give us the inhabitant
+$c : \prod_{t: I | \psi} f(t) = a' (t)$ used in the proof of RS Proposition
+4.11. It follows from a more general statement about the contractibility of
+identity types, but it is unclear if that generality is needed.
 
 ```rzk
-
-
-```
-
-```rzk
-#define second-4-11
+#define RS-4-11-c
   (htpy-ext-prop : HtpyExtProperty)
   ( I : CUBE)
   ( ψ : I → TOPE)
@@ -681,10 +697,11 @@ $c : \prod_{t: I | \psi} f(t) = a' (t)$ used in the proof of RS Proposition 4.11
          (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t)
 ```
 
-And below proves that $c(t) = refl$.
+And below proves that $c(t) = refl$. Again, this is a consequence of a slightly
+more general statement.
 
 ```rzk
-#define third-4-11
+#define RS-4-11-c-is-refl
  -- ( weak-ext-ext : WeakExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
@@ -708,8 +725,11 @@ And below proves that $c(t) = refl$.
 
 ```
 
+Given the $a'$ produced above, the following gives an inhabitant of
+$\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
+
 ```rzk
-#define fourth-4-11
+#define is-fiberwise-contr-ext-is-fiberwise-contr
   (htpy-ext-prop : HtpyExtProperty)
   ( I : CUBE)
   ( ψ : I → TOPE)
@@ -719,43 +739,72 @@ And below proves that $c(t) = refl$.
  -- ( b : (t : ψ) → A t)
   ( a : (t : ϕ) → A t)
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
-  : (t : ψ ) → (f t = (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t)[ϕ t ↦ refl]
+  : (t : ψ ) →
+      (f t = (first
+              (htpy-ext-prop-is-fiberwise-contr
+                htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t)[ϕ t ↦ refl]
   :=
   first(
     htpy-ext-prop
     ( I )
     ( ψ )
     ( ϕ )
-    ( \ t → f t = first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A) t) --- ft = a't, i.e. A
-    ( second-4-11
-      ( htpy-ext-prop)
+    ( \ t → f t = first
+                  (htpy-ext-prop-is-fiberwise-contr
+                    htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A) t)
+    ( RS-4-11-c
+      htpy-ext-prop I ψ ϕ A a f is-contr-fiberwise-A)
+    ( \ t → refl )
+    ( RS-4-11-c-is-refl
       ( I)
       ( ψ)
       ( ϕ)
       ( A)
-      ( a)
-      ( f)
-      ( is-contr-fiberwise-A )
-    )
-    ( \ t → refl )
-    ( third-4-11
-      ( I )
-      ( ψ )
-      ( ϕ )
-      ( A )
       ( is-contr-fiberwise-A)
       ( a )
       ( f )
-      (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A))
-      (second-4-11
-      ( htpy-ext-prop)
+      ( first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A))
+      ( RS-4-11-c
+        ( htpy-ext-prop)
+        ( I)
+        ( ψ)
+        ( ϕ)
+        ( A)
+        ( a)
+        ( f)
+        ( is-contr-fiberwise-A ))))
+
+```
+
+```rzk
+#define weak-ext-ext-from-eq-ext-htpy-htpy-ext-property
+ (eq-ext-ext : EqExtExt)
+ (htpy-ext-prop : HtpyExtProperty)
+ : WeakExtExt
+  := \ I ψ ϕ A is-contr-fiberwise-A a →
+    (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A),
+     \ f →
+      rev
+      ( (t : ψ ) → A t [ϕ t ↦ a t])
+      ( f )
+      ( first (htpy-ext-prop-is-fiberwise-contr
+                htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A))
+      (eq-ext-ext
       ( I)
-      ( ψ)
-      ( ϕ)
+      ( ψ )
+      ( ϕ )
       ( A)
       ( a)
       ( f)
-      ( is-contr-fiberwise-A ))
-    ))
-
+      ( first (htpy-ext-prop-is-fiberwise-contr
+                htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A))
+      ( is-fiberwise-contr-ext-is-fiberwise-contr
+        ( htpy-ext-prop)
+        ( I)
+        ( ψ )
+        ( ϕ )
+        ( A)
+        ( is-contr-fiberwise-A)
+        ( a)
+        ( f))))
 ```

@@ -6,13 +6,22 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
+## Prerequisites
+
+Some of the definitions in this file rely on naive extension extensionality:
+
+```rzk
+#assume naiveextext : NaiveExtExt
+```
+
+## Right orthogonal maps with respect to shapes
+
 For every shape inclusion `ϕ ⊂ ψ`,
 we obtain a fibrancy condition for a map `α : A' → A`
 in terms of unique extension along `ϕ ⊂ ψ`.
 This is a relative version of unique extension along `ϕ ⊂ ψ`.
 
-We say that `α : A' → A` is _j-orthogonal_ to the shape inclusion `ϕ ⊂ ψ`,
-or a right orthogonal fibration with respect to `ϕ ⊂ ψ`,
+We say that `α : A' → A` is _right orthogonal_ to the shape inclusion `ϕ ⊂ ψ`,
 if the square
 ```
 (ψ → A') → (ψ → A)
@@ -22,9 +31,11 @@ if the square
 (ϕ → A') → (ϕ → A)
 ```
 is homotopy cartesian.
+Equivalently,
+we also say that the shape inclusion `ϕ ⊂ ψ` is _left orthogonal_ to the map `α`.
 
 ```rzk title="BW23, Section 3"
-#def is-j-orthogonal-to-shape
+#def is-right-orthogonal-to-shape
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE)
@@ -38,30 +49,31 @@ is homotopy cartesian.
       ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
 ```
 
-## Stability properties of right orthogonal fibrations
+## Stability properties of left orthogonal shape inclusions
 
-Right orthogonal fibrations with respect to a shape inclusion `ϕ ⊂ ψ`
-are stable under many operations.
+We fix a map `α : A' → A`.
+
+```rzk
+#section left-orthogonal-calculus
+
+#variables A' A : U
+#variable α : A' → A
+```
 
 ### Stability under composition
 
-The j-orthogonality is preserved both by composition of maps
-and by composition of shape inclusions.
+Left orthogonal shape inclusions are preserved under composition.
 
-```rzk title="j-orthogonality for composition of shape inclusions"
-#section j-orthogonal-to-shape-comp
-#variable I : CUBE
-#variable ψ : I → TOPE
-#variable χ : ψ → TOPE
-#variable ϕ : χ → TOPE
-#variables A' A : U
-#variable α : A' → A
-#variable is-jo-ψ-χ : is-j-orthogonal-to-shape I ψ χ A' A α
-#variable is-jo-χ-ϕ : is-j-orthogonal-to-shape I
-                        ( \ t → χ t) ( \ t → ϕ t) A' A α
+```rzk title="right-orthogonality for composition of shape inclusions"
 
-#def is-j-orthogonal-to-shape-comp
-  : is-j-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
+#def is-right-orthogonal-to-shape-comp
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( χ : ψ → TOPE)
+  ( ϕ : χ → TOPE)
+  ( is-orth-ψ-χ : is-right-orthogonal-to-shape I ψ χ A' A α)
+  ( is-orth-χ-ϕ : is-right-orthogonal-to-shape I ( \ t → χ t) ( \ t → ϕ t) A' A α)
+  : is-right-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
   :=
     \ σ' →
       is-equiv-equiv-is-equiv
@@ -95,38 +107,33 @@ and by composition of shape inclusions.
           ( \ σ' t → α (σ' t))
           ( \ _ τ' x → α (τ' x) )
           ( \ _ _ υ' x → α (υ' x) )
-          is-jo-χ-ϕ
-          ( \ _ τ' → is-jo-ψ-χ τ')
+          is-orth-χ-ϕ
+          ( \ _ τ' → is-orth-ψ-χ τ')
           σ'
         )
-
-#end j-orthogonal-to-shape-comp
 ```
 
 ### Stability under exponentiation
 
-The j-orthogonality condition is preserved when crossing the inclusion `ϕ ⊂ ψ`
-with another shape `χ`.
+If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`
+then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
 
 ```rzk title="uncurried version of BW23, Corollary 3.16"
-#def is-j-orthogonal-to-shape-×
-  ( naiveextext : NaiveExtExt)
+#def is-right-orthogonal-to-shape-× uses (naiveextext)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
-  ( A' A : U)
-  ( α : A' → A)
-  ( is-jo : is-j-orthogonal-to-shape I ψ ϕ A' A α)
-  : is-j-orthogonal-to-shape
+  ( is-orth : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : is-right-orthogonal-to-shape
       ( J × I) ( shape-prod J I χ ψ) ( \ (t,s) → χ t ∧ ϕ s) A' A α
   :=
     \ ( σ' : ( (t,s) : J × I | χ t ∧ ϕ s) → A') →
       (
         ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t,s))])
             ( t, s) →
-          ( first (first (is-jo (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
+          ( first (first (is-orth (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         ,
           \ ( τ' : ( (t,s) : J × I | χ t ∧ ψ s) → A'[ϕ s ↦ σ' (t,s)]) →
             naiveextext
@@ -134,17 +141,17 @@ with another shape `χ`.
               ( \ _ → A')
               ( \ ( t,s) → σ' (t,s))
               ( \ ( t,s) →
-                ( first (first (is-jo (\ s' → σ' (t, s')))))
+                ( first (first (is-orth (\ s' → σ' (t, s')))))
                   ( \ s' → α (τ' (t, s'))) s
               )
               ( τ')
               ( \ ( t,s) →
                 ext-htpy-eq I ψ ϕ (\ _ → A') ( \ s' → σ' (t, s'))
-                  ( ( first (first (is-jo (\ s' → σ' (t, s')))))
+                  ( ( first (first (is-orth (\ s' → σ' (t, s')))))
                     ( \ s' → α (τ' (t, s')))
                   )
                   ( \ s' → τ' (t, s') )
-                  ( ( second (first (is-jo (\ s' → σ' (t, s')))))
+                  ( ( second (first (is-orth (\ s' → σ' (t, s')))))
                     ( \ s' → τ' (t, s'))
                   )
                   ( s)
@@ -153,7 +160,7 @@ with another shape `χ`.
       ,
         ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t,s))])
             ( t, s) →
-          ( first (second (is-jo (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
+          ( first (second (is-orth (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         ,
           \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t,s))]) →
             naiveextext
@@ -161,7 +168,7 @@ with another shape `χ`.
               ( \ _ → A)
               ( \ (t,s) → α (σ' (t,s)))
               ( \ (t,s) →
-                α ( ( first ( second ( is-jo (\ s' → σ' (t, s')))))
+                α ( ( first ( second ( is-orth (\ s' → σ' (t, s')))))
                       ( \ s' → τ (t, s')) s
                   )
               )
@@ -169,18 +176,19 @@ with another shape `χ`.
               ( \ ( t,s) →
                 ext-htpy-eq I ψ ϕ (\ _ → A) ( \ s' → α (σ' (t, s')))
                   ( \ s'' →
-                      α ( ( first (second (is-jo (\ s' → σ' (t, s')))))
+                      α ( ( first (second (is-orth (\ s' → σ' (t, s')))))
                           ( \ s' → τ (t, s'))
                           (s'')
                         )
                   )
                   ( \ s' → τ (t, s') )
-                  ( ( second ( second (is-jo (\ s' → σ' (t, s')))))
+                  ( ( second ( second (is-orth (\ s' → σ' (t, s')))))
                     ( \ s' → τ (t, s'))
                   )
                   ( s)
-
               )
         )
       )
+
+#end left-orthogonal-calculus
 ```

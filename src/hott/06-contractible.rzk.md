@@ -429,7 +429,7 @@ Function extensionality implies weak function extensionality.
   :=
   \ A C is-contr-C →
   ( map-for-weakfunext A C is-contr-C ,
-    ( \ (g : (a : A) → C a) →
+    ( \ g →
       ( eq-htpy funext
         ( A)
         ( C)

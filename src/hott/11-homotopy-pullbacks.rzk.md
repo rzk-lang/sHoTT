@@ -325,20 +325,27 @@ the corresponding statements about equivalences established above.
       is-hc-α-γ
       ( is-homotopy-cartesian-upper-from-fibers is-fiberwise-hc-γ-δ)
 
-#def is-homotopy-cartesian-lower-cancellation
+#def is-homotopy-cartesian-lower-cancel-to-fibers
+  ( is-hc-α-γ : is-homotopy-cartesian A' C' A C α γ )
+  ( is-hc-α-δ : is-homotopy-cartesian-vertical-pasted)
+  ( a' : A')
+  : is-homotopy-cartesian (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a')
+  :=
+    is-homotopy-cartesian-is-horizontal-equiv
+      ( C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a')
+      ( is-hc-α-γ a')
+      ( is-hc-α-δ a')
+
+#def is-homotopy-cartesian-lower-cancel uses (D D' δ)
   ( is-hc-α-γ : is-homotopy-cartesian A' C' A C α γ )
   ( is-hc-α-δ : is-homotopy-cartesian-vertical-pasted
   )
   : is-homotopy-cartesian-upper
   :=
     is-homotopy-cartesian-upper-from-fibers
-    ( \ a' →
-        is-homotopy-cartesian-is-horizontal-equiv
-        ( C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a')
-        ( is-hc-α-γ a')
-        ( is-hc-α-δ a'))
+      (is-homotopy-cartesian-lower-cancel-to-fibers is-hc-α-γ is-hc-α-δ)
 
-#def is-homotopy-cartesian-upper-cancellation-with-section
+#def is-homotopy-cartesian-upper-cancel-with-section
   ( has-sec-γ-δ : (a' : A') →
       has-section-family-over-map
         (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a'))
@@ -387,7 +394,7 @@ from composition and cancelling laws for equivalences.
       (F' a'') (ihc' a'')
       (F (f' a'')) (ihc (f' a''))
 
-#def is-homotopy-cartesian-right-cancellation
+#def is-homotopy-cartesian-right-cancel
   ( ihc : is-homotopy-cartesian A' C' A C f F)
   ( ihc'' : is-homotopy-cartesian A'' C'' A C
               ( comp A'' A' A f f')

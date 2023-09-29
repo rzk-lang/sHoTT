@@ -79,7 +79,7 @@ Left orthogonal shape inclusions are preserved under composition.
   : is-right-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
   :=
     \ σ' →
-      is-equiv-equiv-is-equiv
+      is-equiv-Equiv-is-equiv
         ( ( t : ψ) → A' [ϕ t ↦ σ' t])
         ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
         ( \ υ' t → α ( υ' t))
@@ -88,14 +88,8 @@ Left orthogonal shape inclusions are preserved under composition.
         ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)]),
           ( ( t : ψ) → A [χ t ↦ τ t]))
         ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
-        ( ( ( first ( cofibration-composition I ψ χ ϕ ( \ _ → A') σ'))
-          ,
-            ( first ( cofibration-composition I ψ χ ϕ
-                      ( \ _ → A) ( \ t → α (σ' t))))
-          ),
-          ( \ _ → refl))
-        ( second ( cofibration-composition I ψ χ ϕ ( \ _ → A') σ'))
-        ( second ( cofibration-composition I ψ χ ϕ ( \ _ → A) ( \ t → α (σ' t))))
+        ( cofibration-composition-functorial I ψ χ ϕ
+          ( \ _ → A') ( \ _ → A) ( \ _ → α) σ')
         ( is-homotopy-cartesian-vertical-pasting-from-fibers
           ( ϕ → A' )
           ( \ σ' → (t : χ) → A' [ϕ t ↦ σ' t])
@@ -111,19 +105,65 @@ Left orthogonal shape inclusions are preserved under composition.
           σ')
 ```
 
+### Cancellation laws
+
+If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so is `χ ⊂ ψ`.
+
+```rzk
+#def is-right-orthogonal-to-shape-left-cancel
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( χ : ψ → TOPE)
+  ( ϕ : χ → TOPE)
+  ( is-orth-χ-ϕ : is-right-orthogonal-to-shape I ( \ t → χ t) ( \ t → ϕ t) A' A α)
+  ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α)
+  : is-right-orthogonal-to-shape I ψ χ A' A α
+  :=
+    \ τ' →
+        is-homotopy-cartesian-lower-cancel-to-fibers
+          ( ϕ → A' )
+          ( \ σ' → (t : χ) → A' [ϕ t ↦ σ' t])
+          ( \ _ τ' → (t : ψ) → A' [χ t ↦ τ' t])
+          ( ϕ → A )
+          ( \ σ → (t : χ) → A [ϕ t ↦ σ t])
+          ( \ _ τ → (t : ψ) → A [χ t ↦ τ t])
+          ( \ σ' t → α (σ' t))
+          ( \ _ τ' x → α (τ' x) )
+          ( \ _ _ υ' x → α (υ' x) )
+          ( is-orth-χ-ϕ )
+          ( \ (σ' : ϕ → A') →
+            is-equiv-Equiv-is-equiv'
+              ( ( t : ψ) → A' [ϕ t ↦ σ' t])
+              ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
+              ( \ υ' t → α ( υ' t))
+              ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]),
+                ( ( t : ψ) → A' [χ t ↦ τ' t]))
+              ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)]),
+                ( ( t : ψ) → A [χ t ↦ τ t]))
+              ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
+              ( cofibration-composition-functorial I ψ χ ϕ
+                ( \ _ → A') ( \ _ → A) ( \ _ → α) σ')
+              ( is-orth-ψ-ϕ σ')
+          )
+          ( \ ( t : ϕ) → τ' t)
+          τ'
+
+
+```
+
 ### Stability under exponentiation
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`
 then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
 
-```rzk title="uncurried version of BW23, Corollary 3.16"
+```rzk
 #def is-right-orthogonal-to-shape-× uses (naiveextext)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
-  ( is-orth : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ϕ A' A α)
   : is-right-orthogonal-to-shape
       ( J × I) ( shape-prod J I χ ψ) ( \ (t,s) → χ t ∧ ϕ s) A' A α
   :=
@@ -131,7 +171,7 @@ then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
       (
         ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t,s))])
             ( t, s) →
-          ( first (first (is-orth (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
+          ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         ,
           \ ( τ' : ( (t,s) : J × I | χ t ∧ ψ s) → A' [ϕ s ↦ σ' (t,s)]) →
             naiveextext
@@ -139,15 +179,15 @@ then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
               ( \ _ → A')
               ( \ ( t,s) → σ' (t,s))
               ( \ ( t,s) →
-                ( first (first (is-orth (\ s' → σ' (t, s')))))
+                ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                   ( \ s' → α (τ' (t, s'))) s)
               ( τ')
               ( \ ( t,s) →
                 ext-htpy-eq I ψ ϕ (\ _ → A') ( \ s' → σ' (t, s'))
-                  ( ( first (first (is-orth (\ s' → σ' (t, s')))))
+                  ( ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                     ( \ s' → α (τ' (t, s'))))
                   ( \ s' → τ' (t, s') )
-                  ( ( second (first (is-orth (\ s' → σ' (t, s')))))
+                  ( ( second (first (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                     ( \ s' → τ' (t, s')))
                   ( s)
               )
@@ -155,7 +195,7 @@ then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
       ,
         ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t,s))])
             ( t, s) →
-          ( first (second (is-orth (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
+          ( first (second (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         ,
           \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t,s))]) →
             naiveextext
@@ -163,17 +203,17 @@ then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
               ( \ _ → A)
               ( \ (t,s) → α (σ' (t,s)))
               ( \ (t,s) →
-                α ( ( first ( second ( is-orth (\ s' → σ' (t, s')))))
+                α ( ( first ( second ( is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                       ( \ s' → τ (t, s')) s))
               ( τ)
               ( \ ( t,s) →
                 ext-htpy-eq I ψ ϕ (\ _ → A) ( \ s' → α (σ' (t, s')))
                   ( \ s'' →
-                      α ( ( first (second (is-orth (\ s' → σ' (t, s')))))
+                      α ( ( first (second (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                           ( \ s' → τ (t, s'))
                           (s'')))
                   ( \ s' → τ (t, s') )
-                  ( ( second ( second (is-orth (\ s' → σ' (t, s')))))
+                  ( ( second ( second (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                     ( \ s' → τ (t, s')))
                   ( s)
               )

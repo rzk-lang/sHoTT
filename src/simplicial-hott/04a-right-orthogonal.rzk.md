@@ -31,8 +31,11 @@ if the square
 (ϕ → A') → (ϕ → A)
 ```
 is homotopy cartesian.
-Equivalently,
-we also say that the shape inclusion `ϕ ⊂ ψ` is _left orthogonal_ to the map `α`.
+
+Equivalently, we can interpret this orthogonality
+as a cofibrancy condition on the shape inclusion.
+We say that the shape inclusion `ϕ ⊂ ψ` is _left orthogonal_ to the map `α`,
+if `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
 
 ```rzk title="BW23, Section 3"
 #def is-right-orthogonal-to-shape
@@ -81,20 +84,16 @@ Left orthogonal shape inclusions are preserved under composition.
         ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
         ( \ υ' t → α ( υ' t))
         ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]),
-          ( ( t : ψ) → A' [χ t ↦ τ' t])
-        )
+          ( ( t : ψ) → A' [χ t ↦ τ' t]))
         ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)]),
-          ( ( t : ψ) → A [χ t ↦ τ t])
-        )
+          ( ( t : ψ) → A [χ t ↦ τ t]))
         ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
-        ( (
-            ( first ( cofibration-composition I ψ χ ϕ ( \ _ → A') σ'))
+        ( ( ( first ( cofibration-composition I ψ χ ϕ ( \ _ → A') σ'))
           ,
             ( first ( cofibration-composition I ψ χ ϕ
                       ( \ _ → A) ( \ t → α (σ' t))))
           ),
-          ( \ _ → refl)
-        )
+          ( \ _ → refl))
         ( second ( cofibration-composition I ψ χ ϕ ( \ _ → A') σ'))
         ( second ( cofibration-composition I ψ χ ϕ ( \ _ → A) ( \ t → α (σ' t))))
         ( is-homotopy-cartesian-vertical-pasting-from-fibers
@@ -109,8 +108,7 @@ Left orthogonal shape inclusions are preserved under composition.
           ( \ _ _ υ' x → α (υ' x) )
           is-orth-χ-ϕ
           ( \ _ τ' → is-orth-ψ-χ τ')
-          σ'
-        )
+          σ')
 ```
 
 ### Stability under exponentiation
@@ -135,56 +133,48 @@ then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
             ( t, s) →
           ( first (first (is-orth (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         ,
-          \ ( τ' : ( (t,s) : J × I | χ t ∧ ψ s) → A'[ϕ s ↦ σ' (t,s)]) →
+          \ ( τ' : ( (t,s) : J × I | χ t ∧ ψ s) → A' [ϕ s ↦ σ' (t,s)]) →
             naiveextext
               ( J × I) ( \ (t,s) → χ t ∧ ψ s) ( \ (t,s) → χ t ∧ ϕ s)
               ( \ _ → A')
               ( \ ( t,s) → σ' (t,s))
               ( \ ( t,s) →
                 ( first (first (is-orth (\ s' → σ' (t, s')))))
-                  ( \ s' → α (τ' (t, s'))) s
-              )
+                  ( \ s' → α (τ' (t, s'))) s)
               ( τ')
               ( \ ( t,s) →
                 ext-htpy-eq I ψ ϕ (\ _ → A') ( \ s' → σ' (t, s'))
                   ( ( first (first (is-orth (\ s' → σ' (t, s')))))
-                    ( \ s' → α (τ' (t, s')))
-                  )
+                    ( \ s' → α (τ' (t, s'))))
                   ( \ s' → τ' (t, s') )
                   ( ( second (first (is-orth (\ s' → σ' (t, s')))))
-                    ( \ s' → τ' (t, s'))
-                  )
+                    ( \ s' → τ' (t, s')))
                   ( s)
               )
         )
       ,
-        ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t,s))])
+        ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t,s))])
             ( t, s) →
           ( first (second (is-orth (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         ,
-          \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t,s))]) →
+          \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t,s))]) →
             naiveextext
               ( J × I) ( \ (t,s) → χ t ∧ ψ s) ( \ (t,s) → χ t ∧ ϕ s)
               ( \ _ → A)
               ( \ (t,s) → α (σ' (t,s)))
               ( \ (t,s) →
                 α ( ( first ( second ( is-orth (\ s' → σ' (t, s')))))
-                      ( \ s' → τ (t, s')) s
-                  )
-              )
+                      ( \ s' → τ (t, s')) s))
               ( τ)
               ( \ ( t,s) →
                 ext-htpy-eq I ψ ϕ (\ _ → A) ( \ s' → α (σ' (t, s')))
                   ( \ s'' →
                       α ( ( first (second (is-orth (\ s' → σ' (t, s')))))
                           ( \ s' → τ (t, s'))
-                          (s'')
-                        )
-                  )
+                          (s'')))
                   ( \ s' → τ (t, s') )
                   ( ( second ( second (is-orth (\ s' → σ' (t, s')))))
-                    ( \ s' → τ (t, s'))
-                  )
+                    ( \ s' → τ (t, s')))
                   ( s)
               )
         )

@@ -15,9 +15,11 @@ This is a literate `rzk` file:
 - `4-extension-types.md` — We use extension extensionality.
 - `5-segal-types.md` - We use the notion of hom types.
 
-Some of the definitions in this file rely on extension extensionality:
+Some of the definitions in this file rely on function extensionality and
+extension extensionality:
 
 ```rzk
+#assume funext : FunExt
 #assume extext : ExtExt
 ```
 
@@ -171,30 +173,70 @@ Equivalently , natural transformations can be determined by their **components**
       is-equiv-ev-components-nat-trans A B f g)
 ```
 
-### Horizontal composition
+### Naturality square
 
-Horizontal composition of natural transformations makes sense over any type. In
-particular , contrary to what is written in [RS17] we do not need `#!rzk C` to
-be Segal.
+Natural transformations are automatically natural when the codomain is a Segal
+type.
 
-```rzk
-#def horizontal-comp-nat-trans
-  ( A B C : U)
-  ( f g : A → B)
-  ( f' g' : B → C)
-  ( η : nat-trans A (\ _ → B) f g)
-  ( η' : nat-trans B (\ _ → C) f' g')
-  : nat-trans A (\ _ → C) (\ x → f' (f x)) (\ x → g' (g x))
-  := \ t x → η' t (η t x)
+```rzk title="RS17, Proposition 6.6"
+#section comp-eq-square-is-segal
 
-#def horizontal-comp-nat-trans-components
-  ( A B C : U)
-  ( f g : A → B)
-  ( f' g' : B → C)
-  ( η : nat-trans-components A (\ _ → B) f g)
-  ( η' : nat-trans-components B (\ _ → C) f' g')
-  : nat-trans-components A (\ _ → C) (\ x → f' (f x)) (\ x → g' (g x))
-  := \ x t → η' (η x t) t
+#variable A : U
+#variable is-segal-A : is-segal A
+#variable α : (Δ¹×Δ¹) → A
+
+#def α00 : A := α (0₂,0₂)
+#def α01 : A := α (0₂,1₂)
+#def α10 : A := α (1₂,0₂)
+#def α11 : A := α (1₂,1₂)
+
+#def α0* : Δ¹ → A := \ t → α (0₂,t)
+#def α1* : Δ¹ → A := \ t → α (1₂,t)
+#def α*0 : Δ¹ → A := \ s → α (s,0₂)
+#def α*1 : Δ¹ → A := \ s → α (s,1₂)
+#def α-diag : Δ¹ → A := \ s → α (s,s)
+
+#def lhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α01 α11 α0* α*1
+#def rhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
+
+#def lower-triangle-square : hom2 A α00 α01 α11 α0* α*1 α-diag
+  := \ (s, t) → α (t,s)
+
+#def upper-triangle-square : hom2 A α00 α10 α11 α*0 α1* α-diag
+  := \ (s,t) → α (s,t)
+
+#def comp-eq-square-is-segal uses (α)
+  : comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 =
+    comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
+  :=
+    zig-zag-concat (hom A α00 α11) lhs α-diag rhs
+    ( uniqueness-comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 α-diag
+      ( lower-triangle-square))
+    ( uniqueness-comp-is-segal A is-segal-A α00 α10 α11 α*0 α1* α-diag
+      ( upper-triangle-square))
+
+
+#end comp-eq-square-is-segal
+```
+
+We now extract a naturality square from a natural transformation whose codomain
+is a Segal type.
+
+```rzk title="RS17, Proposition 6.6"
+#def naturality-nat-trans-is-segal
+  (A B : U)
+  (is-segal-B : is-segal B)
+  (f g : A → B)
+  (α : nat-trans A (\ _ → B) f g)
+  (x y : A)
+  (k : hom A x y)
+  : comp-is-segal B is-segal-B (f x) (f y) (g y)
+    ( ap-hom A B f x y k)
+    ( \ s → α s y) =
+    comp-is-segal B is-segal-B (f x) (g x) (g y)
+    ( \ s → α s x)
+    ( ap-hom A B g x y k)
+  := comp-eq-square-is-segal B is-segal-B (\ (s,t) → α s (k t))
 ```
 
 ### Vertical composition
@@ -230,7 +272,9 @@ Segal types.
       ( t)
 ```
 
-The identity natural transformation is identity arrows on components
+### Functoriality of evaluation at components
+
+The components of the identity natural transformation are identity arrows.
 
 ```rzk title="RS17, Proposition 6.5(ii)"
 #def id-arr-components-id-nat-trans
@@ -238,8 +282,62 @@ The identity natural transformation is identity arrows on components
   ( B : A → U)
   ( f : (x : A) → (B x))
   ( a : A)
-  : ( \ t → id-hom ((x : A) → B x) f t a) =_{Δ¹ → B a} id-hom (B a) (f a)
+  : (ev-components-nat-trans A B f f (id-hom ((x : A) → B x) f)) a =
+    id-hom (B a) (f a)
   := refl
+```
+
+When the fibers of a family of types `#!rzk B : A → U` are Segal types, the
+components of the natural transformation defined by composing in the Segal type
+`#!rzk (x : A) → B x` agree with the components defined by vertical composition.
+
+```rzk title="RS17, Proposition 6.5(i)"
+#def comp-components-comp-nat-trans-is-segal uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( is-segal-B : (x : A) → is-segal (B x))
+  ( f g h : (x : A) → (B x))
+  ( α : nat-trans A B f g)
+  ( β : nat-trans A B g h)
+  ( a : A)
+  : ( comp-is-segal (B a) (is-segal-B a) (f a) (g a) (h a)
+      ( ev-components-nat-trans A B f g α a)
+      ( ev-components-nat-trans A B g h β a)) =
+    ( ev-components-nat-trans A B f h
+      ( comp-is-segal
+        ( (x : A) → B x) ( is-segal-function-type (funext) (A) (B) (is-segal-B))
+        ( f) (g) (h) (α) (β))) a
+  :=
+    functors-pres-comp
+    ( (x : A) → (B x)) (B a)
+    ( is-segal-function-type (funext) (A) (B) (is-segal-B)) (is-segal-B a)
+    ( \ s → s a) (f) (g) (h) (α) (β)
+```
+
+### Horizontal composition
+
+Horizontal composition of natural transformations makes sense over any type. In
+particular , contrary to what is written in [RS17] we do not need `#!rzk C` to
+be Segal.
+
+```rzk
+#def horizontal-comp-nat-trans
+  ( A B C : U)
+  ( f g : A → B)
+  ( f' g' : B → C)
+  ( η : nat-trans A (\ _ → B) f g)
+  ( η' : nat-trans B (\ _ → C) f' g')
+  : nat-trans A (\ _ → C) (\ x → f' (f x)) (\ x → g' (g x))
+  := \ t x → η' t (η t x)
+
+#def horizontal-comp-nat-trans-components
+  ( A B C : U)
+  ( f g : A → B)
+  ( f' g' : B → C)
+  ( η : nat-trans-components A (\ _ → B) f g)
+  ( η' : nat-trans-components B (\ _ → C) f' g')
+  : nat-trans-components A (\ _ → C) (\ x → f' (f x)) (\ x → g' (g x))
+  := \ x t → η' (η x t) t
 ```
 
 ### Whiskering
@@ -317,61 +415,4 @@ the "Gray interchanger" built from two commutative triangles.
     ( postwhisker-nat-trans A B C f g g' η)
     ( horizontal-comp-nat-trans A B C f g f' g' η η')
   := \ (t, s) a → η' t (η s a)
-```
-
-### Naturality square
-
-```rzk title="RS17, Proposition 6.6"
-#section comp-eq-square-is-segal
-
-#variable A : U
-#variable is-segal-A : is-segal A
-#variable α : (Δ¹×Δ¹) → A
-
-#def α00 : A := α (0₂,0₂)
-#def α01 : A := α (0₂,1₂)
-#def α10 : A := α (1₂,0₂)
-#def α11 : A := α (1₂,1₂)
-
-#def α0* : Δ¹ → A := \ t → α (0₂,t)
-#def α1* : Δ¹ → A := \ t → α (1₂,t)
-#def α*0 : Δ¹ → A := \ s → α (s,0₂)
-#def α*1 : Δ¹ → A := \ s → α (s,1₂)
-#def α-diag : Δ¹ → A := \ s → α (s,s)
-
-#def lhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α01 α11 α0* α*1
-#def rhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
-
-#def lower-triangle-square : hom2 A α00 α01 α11 α0* α*1 α-diag
-  := \ (s, t) → α (t,s)
-
-#def upper-triangle-square : hom2 A α00 α10 α11 α*0 α1* α-diag
-  := \ (s,t) → α (s,t)
-
-#def comp-eq-square-is-segal uses (α)
-  : comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 =
-    comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
-  :=
-    zig-zag-concat (hom A α00 α11) lhs α-diag rhs
-    ( uniqueness-comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 α-diag
-      ( lower-triangle-square))
-    ( uniqueness-comp-is-segal A is-segal-A α00 α10 α11 α*0 α1* α-diag
-      ( upper-triangle-square))
-
-#end comp-eq-square-is-segal
-
-#def naturality-nat-trans-is-segal
-  (A B : U)
-  (is-segal-B : is-segal B)
-  (f g : A → B)
-  (α : hom (A → B) f g)
-  (x y : A)
-  (k : hom A x y)
-  : comp-is-segal B is-segal-B (f x) (f y) (g y)
-    ( ap-hom A B f x y k)
-    ( \ s → α s y) =
-    comp-is-segal B is-segal-B (f x) (g x) (g y)
-    ( \ s → α s x)
-    ( ap-hom A B g x y k)
-  := comp-eq-square-is-segal B is-segal-B (\ (s,t) → α s (k t))
 ```

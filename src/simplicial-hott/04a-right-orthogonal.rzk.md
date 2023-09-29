@@ -57,11 +57,37 @@ if `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
 We fix a map `α : A' → A`.
 
 ```rzk
-#section left-orthogonal-calculus
+#section left-orthogonal-calculus-1
 
 #variables A' A : U
 #variable α : A' → A
 ```
+Consider nested shapes `ϕ ⊂ χ ⊂ ψ`
+and the three possible right orthogonality conditions.
+
+```rzk
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable χ : ψ → TOPE
+#variable ϕ : χ → TOPE
+#variable is-orth-ψ-χ : is-right-orthogonal-to-shape I ψ χ A' A α
+#variable is-orth-χ-ϕ : is-right-orthogonal-to-shape
+                          I ( \ t → χ t) ( \ t → ϕ t) A' A α
+#variable is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
+  -- rzk does not accept these terms after η-reduction
+```
+
+Using the vertical pasting calculus for homotopy cartesian squares,
+it is not hard to deduce the corresponding composition and cancellation properties
+for left orthogonality of shape inclusion with respect to `α : A' → A`.
+Apart from the fact that we have to make explicit all arguments,
+the only fact that stops these from being a direct corollary
+is that the `Σ`-types appearing in the vertical pasting of the relevant squares
+(such as `Σ (\ σ : ϕ → A), ( (t : χ) → A [ϕ t ↦ σ t])`)
+are not literally equal to the corresponding extension types
+(such as `τ → A `).
+Therefore we have to occasionally go back or forth along the
+functorial equivalence `cofibration-composition-functorial`.
 
 ### Stability under composition
 
@@ -69,13 +95,7 @@ Left orthogonal shape inclusions are preserved under composition.
 
 ```rzk title="right-orthogonality for composition of shape inclusions"
 
-#def is-right-orthogonal-to-shape-comp
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( χ : ψ → TOPE)
-  ( ϕ : χ → TOPE)
-  ( is-orth-ψ-χ : is-right-orthogonal-to-shape I ψ χ A' A α)
-  ( is-orth-χ-ϕ : is-right-orthogonal-to-shape I ( \ t → χ t) ( \ t → ϕ t) A' A α)
+#def is-right-orthogonal-to-shape-comp uses (is-orth-ψ-χ is-orth-χ-ϕ)
   : is-right-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
   :=
     \ σ' →
@@ -110,13 +130,7 @@ Left orthogonal shape inclusions are preserved under composition.
 If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so is `χ ⊂ ψ`.
 
 ```rzk
-#def is-right-orthogonal-to-shape-left-cancel
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( χ : ψ → TOPE)
-  ( ϕ : χ → TOPE)
-  ( is-orth-χ-ϕ : is-right-orthogonal-to-shape I ( \ t → χ t) ( \ t → ϕ t) A' A α)
-  ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α)
+#def is-right-orthogonal-to-shape-left-cancel uses (is-orth-χ-ϕ is-orth-ψ-ϕ)
   : is-right-orthogonal-to-shape I ψ χ A' A α
   :=
     \ τ' →
@@ -148,7 +162,7 @@ If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so i
           ( \ ( t : ϕ) → τ' t)
           τ'
 
-
+#end left-orthogonal-calculus-1
 ```
 
 ### Stability under exponentiation
@@ -158,6 +172,8 @@ then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
 
 ```rzk
 #def is-right-orthogonal-to-shape-× uses (naiveextext)
+  ( A' A : U)
+  ( α : A' → A)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( I : CUBE)
@@ -219,6 +235,4 @@ then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
               )
         )
       )
-
-#end left-orthogonal-calculus
 ```

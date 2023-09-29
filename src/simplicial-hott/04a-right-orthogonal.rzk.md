@@ -165,6 +165,31 @@ If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so i
 #end left-orthogonal-calculus-1
 ```
 
+If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`
+and `χ ⊂ ψ` is a (functorial) shape retract,
+then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
+
+```rzk
+#def is-right-orthogonal-to-shape-right-cancel-with-section uses (is-orth-ψ-ϕ)
+  ( is-retract-ψ-χ : is-functorial-shape-retract I ψ χ)
+  : is-right-orthogonal-to-shape I ( \ t → χ t) ( \ t → ϕ t) A' A α
+  :=
+    is-homotopy-cartesian-upper-cancel-with-section
+      ( ϕ → A' )
+      ( \ σ' → (t : χ) → A' [ϕ t ↦ σ' t])
+      ( \ _ τ' → (t : ψ) → A' [χ t ↦ τ' t])
+      ( ϕ → A )
+      ( \ σ → (t : χ) → A [ϕ t ↦ σ t])
+      ( \ _ τ → (t : ψ) → A [χ t ↦ τ t])
+      ( \ σ' t → α (σ' t))
+      ( \ _ τ' x → α (τ' x) )
+      ( \ _ _ υ' x → α (υ' x) )
+      undefined
+      undefined
+
+#end left-orthogonal-calculus-1
+```
+
 ### Stability under exponentiation
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`

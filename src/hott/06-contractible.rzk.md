@@ -426,6 +426,8 @@ Weak function extensionality implies function extensionality.
   := hole FunExt
 ```
 
+Function extensionality implies weak function extensionality.
+
 ```rzk
 -- TODO: better name? or inline this?
 #def map-weakfunext-funext
@@ -440,15 +442,15 @@ Weak function extensionality implies function extensionality.
   (funext : FunExt)
   : WeakFunExt
   :=
-  ( \ A → \ C → \ f →
-    ( map-weakfunext-funext A C f ,
-      ( \ (g : (a : A) → C a) →
-        ( eq-htpy funext
-          ( A)
-          ( C)
-          ( map-weakfunext-funext A C f)
-          ( g)
-          ( \ a → second (f a) (g a))))))
+  \ A C f →
+  ( map-weakfunext-funext A C f ,
+    ( \ (g : (a : A) → C a) →
+      ( eq-htpy funext
+        ( A)
+        ( C)
+        ( map-weakfunext-funext A C f)
+        ( g)
+        ( \ a → second (f a) (g a)))))
 ```
 
 ## Singleton induction

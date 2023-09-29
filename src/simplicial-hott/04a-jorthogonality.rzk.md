@@ -63,29 +63,42 @@ and by composition of shape inclusions.
 #def is-j-orthogonal-to-shape-comp
   : is-j-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
   :=
-    is-homotopy-cartesian-vertical-pasting
-      ( ϕ → A' )
-      ( \ σ' → (t : χ) → A'[ϕ t ↦ σ' t])
-      ( \ _ τ' → (t : ψ) → A'[χ t ↦ τ' t])
-      ( ϕ → A )
-      ( \ σ' → (t : χ) → A[ϕ t ↦ σ' t])
-      ( \ _ τ' → (t : ψ) → A[χ t ↦ τ' t])
-      ( \ σ' t → α (σ' t))
-      ( \ _ τ' x → α (τ' x) )
-      ( \ _ _ υ' x → α (υ' x) )
-      is-jo-χ-ϕ
-      ( is-homotopy-cartesian-upper-from-fibers
-        ( ϕ → A' )
-        ( \ σ' → (t : χ) → A'[ϕ t ↦ σ' t])
-        ( \ _ τ' → (t : ψ) → A'[χ t ↦ τ' t])
-        ( ϕ → A )
-        ( \ σ' → (t : χ) → A[ϕ t ↦ σ' t])
-        ( \ _ τ' → (t : ψ) → A[χ t ↦ τ' t])
-        ( \ σ' t → α (σ' t))
-        ( \ _ τ' x → α (τ' x) )
-        ( \ _ _ υ' x → α (υ' x) )
-        ( \ _ τ' → is-jo-ψ-χ τ')
-      )
+    \ σ' →
+      is-equiv-equiv-is-equiv
+        ( ( t : ψ) → A' [ϕ t ↦ σ' t])
+        ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
+        ( \ υ' t → α ( υ' t))
+        ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]),
+          ( ( t : ψ) → A' [χ t ↦ τ' t])
+        )
+        ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)]),
+          ( ( t : ψ) → A [χ t ↦ τ t])
+        )
+        ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
+        ( (
+            ( first ( cofibration-composition I ψ χ ϕ ( \ _ → A') σ'))
+          ,
+            ( first ( cofibration-composition I ψ χ ϕ
+                      ( \ _ → A) ( \ t → α (σ' t))))
+          ),
+          ( \ _ → refl)
+        )
+        ( second ( cofibration-composition I ψ χ ϕ ( \ _ → A') σ'))
+        ( second ( cofibration-composition I ψ χ ϕ ( \ _ → A) ( \ t → α (σ' t))))
+        ( is-homotopy-cartesian-vertical-pasting-from-fibers
+          ( ϕ → A' )
+          ( \ σ' → (t : χ) → A' [ϕ t ↦ σ' t])
+          ( \ _ τ' → (t : ψ) → A' [χ t ↦ τ' t])
+          ( ϕ → A )
+          ( \ σ → (t : χ) → A [ϕ t ↦ σ t])
+          ( \ _ τ → (t : ψ) → A [χ t ↦ τ t])
+          ( \ σ' t → α (σ' t))
+          ( \ _ τ' x → α (τ' x) )
+          ( \ _ _ υ' x → α (υ' x) )
+          is-jo-χ-ϕ
+          ( \ _ τ' → is-jo-ψ-χ τ')
+          σ'
+        )
 
 #end j-orthogonal-to-shape-comp
 ```

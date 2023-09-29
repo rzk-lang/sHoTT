@@ -314,6 +314,17 @@ the corresponding statements about equivalences established above.
         ( is-homotopy-cartesian-upper-to-fibers is-hc-γ-δ a')
         ( is-hc-α-γ a' )
 
+#def is-homotopy-cartesian-vertical-pasting-from-fibers
+  ( is-hc-α-γ : is-homotopy-cartesian A' C' A C α γ )
+  ( is-fiberwise-hc-γ-δ
+    : ( a' : A') →
+      is-homotopy-cartesian (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a'))
+  : is-homotopy-cartesian-vertical-pasted
+  :=
+    is-homotopy-cartesian-vertical-pasting
+      is-hc-α-γ
+      ( is-homotopy-cartesian-upper-from-fibers is-fiberwise-hc-γ-δ)
+
 #def is-homotopy-cartesian-lower-cancellation
   ( is-hc-α-γ : is-homotopy-cartesian A' C' A C α γ )
   ( is-hc-α-δ : is-homotopy-cartesian-vertical-pasted

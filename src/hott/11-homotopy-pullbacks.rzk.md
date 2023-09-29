@@ -1,4 +1,4 @@
-# 11. Homotopy pullbacks
+# 11. Homotopy cartesian squares
 
 This is a literate `rzk` file:
 
@@ -7,6 +7,14 @@ This is a literate `rzk` file:
 ```
 
 ## Homotopy cartesian squares
+
+We start by fixing the data of a map between two type families
+`A' → U` and `A → U`, which we think of as a commutative square
+```
+Σ A' → Σ A
+ ↓      ↓
+ A'  →  A
+```
 
 ```rzk
 #section homotopy-cartesian
@@ -25,12 +33,19 @@ This is a literate `rzk` file:
 #def temp-uBDx-Σαγ
   : total-type A' C' → total-type A C
   := \ (a', c') → (α a', γ a' c')
+```
 
+We say that such a square is homotopy cartesian
+just if it induces an equivalence componentwise.
+
+```rzk
 #def is-homotopy-cartesian uses (A)
   : U
   :=
     ( a' : A') → is-equiv (C' a') (C (α a')) (γ a')
 ```
+
+### Interaction with horizontal equivalences
 
 We implement various ways homotopy-cartesian squares interact with horizontal
 equivalences.
@@ -199,8 +214,48 @@ always do this (whether the square is homotopy-cartesian or not).
 #end homotopy-cartesian
 ```
 
-Form this interaction with equivalences we deduce corresponding facts about
-vertical pasting and cancellation of homotopy cartesian squares.
+### Invariance under pullbacks
+
+We can pullback a homotopy cartesian square over `α : A' → A`
+along any map of maps `β → α` and obtain another homotopy cartesian square.
+
+```rzk
+#def is-homotopy-cartesian-pullback
+  ( A' : U)
+  ( C' : A' → U)
+  ( A : U)
+  ( C : A → U)
+  ( α : A' → A)
+  ( γ : ( a' : A') → C' a' → C (α a'))
+  ( B' B : U)
+  ( β : B' → B)
+  ( ((s', s), η) : map-of-maps B' B β A' A α)
+  ( is-hc-α : is-homotopy-cartesian A' C' A C α γ)
+  : is-homotopy-cartesian
+      B' ( \ b' → C' (s' b'))
+      B  ( \ b → C (s b))
+      β  ( \ b' c' → transport A C (α (s' b')) (s (β b')) (η b') (γ (s' b') c'))
+  :=
+    \ b' →
+      is-equiv-comp (C' (s' b')) (C (α (s' b'))) (C (s (β b')))
+        ( γ (s' b'))
+        ( is-hc-α (s' b'))
+        ( transport A C (α (s' b')) (s (β b')) (η b'))
+        ( is-equiv-transport A C (α (s' b')) (s (β b')) (η b'))
+```
+
+## Pasting calculus for homotopy cartesian squares
+
+Currently our notion of squares is not symmetric,
+since the vertical maps are given by type families,
+i.e. they are _display maps_,
+while the horizontal maps are arbitrary.
+Therefore we distinquish between the vertical and the horizontal pasting calculus.
+
+### Vertical calculus
+
+The following vertical composition and cancellation laws follow easily from
+the corresponding statements about equivalences established above.
 
 ```rzk
 #section homotopy-cartesian-vertical-calculus
@@ -287,6 +342,8 @@ vertical pasting and cancellation of homotopy cartesian squares.
 
 #end homotopy-cartesian-vertical-calculus
 ```
+
+### Horizontal calculus
 
 We also have the horizontal version of pasting and cancellation which follows
 from composition and cancelling laws for equivalences.

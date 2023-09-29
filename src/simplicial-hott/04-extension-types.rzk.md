@@ -162,6 +162,32 @@ The original form.
     ( \ h → (\ t → h t , \ t → h t) ,
       ( ( \ (_f , g) t → g t , \ h → refl) ,
         ( ( \ (_f , g) t → g t , \ h → refl))))
+
+#def cofibration-composition-functorial
+  ( I : CUBE)
+  ( χ : I → TOPE)
+  ( ψ : χ → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A' A : χ → U)
+  ( α : (t : χ) → A' t → A t)
+  ( σ' : (t : ϕ) → A' t)
+  : Equiv-of-maps
+     ( (t : χ) → A' t [ϕ t ↦ σ' t])
+     ( (t : χ) → A t [ϕ t ↦ α t (σ' t)])
+     ( \ τ' t → α t (τ' t))
+     ( Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t]) ,
+        ( (t : χ) → A' t [ψ t ↦ τ' t]))
+     ( Σ ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)]) ,
+        ( (t : χ) → A t [ψ t ↦ τ t]))
+     ( \ (τ', υ') → ( \ t → α t (τ' t), \t → α t (υ' t)))
+  :=
+    ( ( ( \ h → (\ t → h t , \ t → h t) , \ h → (\ t → h t , \ t → h t)),
+        \ _ → refl),
+      ( ( ( \ (_f , g) t → g t , \ h → refl) ,
+          ( ( \ (_f , g) t → g t , \ h → refl))),
+        ( ( \ (_f , g) t → g t , \ h → refl) ,
+          ( ( \ (_f , g) t → g t , \ h → refl)))))
+
 ```
 
 A reformulated version via tope disjunction instead of inclusion (see

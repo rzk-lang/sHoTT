@@ -716,6 +716,19 @@ dependent function types.
     Σ ( ( s',s) : product ( A' → B' ) ( A → B)),
       ( ( a' : A') → β ( s' a') = s ( α a'))
 
+#def Equiv-of-maps
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  : U
+  :=
+    Σ ( ((s', s), _) : map-of-maps A' A α B' B β),
+      ( product
+          ( is-equiv A' B' s')
+          ( is-equiv A B s)
+      )
+
 #def is-equiv-equiv-is-equiv
   ( A' A : U)
   ( α : A' → A)
@@ -734,6 +747,16 @@ dependent function types.
           ( η )
           ( is-equiv-comp A' B' B s' is-equiv-s' β is-equiv-β)
       )
+
+#def is-equiv-Equiv-is-equiv
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ( S, (is-equiv-s',is-equiv-s)) : Equiv-of-maps A' A α B' B β )
+  : is-equiv B' B β → is-equiv A' A α
+  :=
+    is-equiv-equiv-is-equiv A' A α B' B β S is-equiv-s' is-equiv-s
 
 #def is-equiv-equiv-is-equiv'
   ( A' A : U)

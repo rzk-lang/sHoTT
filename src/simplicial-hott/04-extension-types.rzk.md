@@ -244,8 +244,7 @@ We refer to another form as an "extension extensionality" axiom.
     ( ϕ : ψ → TOPE) →
     ( A : ψ → U) →
     ( a : (t : ϕ) → A t) →
-    ( f : (t : ψ) → A t [ϕ t ↦ a t]) →
-    ( g : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( f g : (t : ψ) → A t [ϕ t ↦ a t]) →
     is-equiv
       ( f = g)
       ( (t : ψ) → (f t = g t) [ϕ t ↦ refl])
@@ -504,7 +503,7 @@ extensionality, but we will also show that extension extensionality follows from
 the homotopy extension property together with extra hypotheses.
 
 ```rzk
-#define HtpyExtProp
+#define HtpyExtProperty
   : U
   :=
     ( I : CUBE) →
@@ -522,6 +521,34 @@ the homotopy extension property together with extra hypotheses.
 If we assume weak extension extensionality, then then homotopy extension
 property follows from a straightforward application of the axiom of choice to
 the point of contraction for weak extension extensionality.
+
+```rzk title="RS17 Proposition 4.10
+#define htpy-ext-proprty-weak-ext-ext
+  ( weak-ext-ext : WeakExtExt)
+  : HtpyExtProperty
+  :=
+    \ I ψ ϕ A b a e →
+    first
+    ( axiom-choice
+      ( I)
+      ( ψ)
+      ( ϕ)
+      ( A)
+      ( \ t y → y = b t)
+      ( a)
+      ( e))
+    ( first
+      ( weak-ext-ext
+        ( I)
+        ( ψ)
+        ( ϕ)
+        ( \ t → (Σ (y : A t) , y = b t))
+        ( \ t → is-contr-codomain-based-paths
+                ( A t)
+                ( b t))
+        ( \ t → ( a t , e t) )))
+
+```
 
 ```rzk title="RS17 Proposition 4.10"
 #define htpy-ext-property
@@ -591,13 +618,18 @@ Both directions of this statement will be needed.
 
 ```
 
-The below gives us the inhabitant $(a', e')$ from the first part of the proof of
-RS Prop 4.11.
+The below gives us the inhabitant
+$(a', e') : \sum_{\left\langle\prod_{t : I|\psi} A (t) \biggr|^\phi_a\right\rangle} \left\langle \prod_{t: I |\psi} a'(t) = b(t)\biggr|^\phi_e \right\rangle$
+from the first part of the proof of RS Prop 4.11. It amounts to the fact that
+parameterized contractibility, i.e. $A : \{t : I | \psi\} → \mathcal{U}$ such
+that each $A(t)$ is contractible, implies the hypotheses of the homotopy
+extension property are satisfied, and so assuming homotopy extension property,
+we are entitled to the conclusion.
 
 ```rzk
 
-#define first-4-11
-  (weak-ext-ext : WeakExtExt)
+#define htpy-ext-prop-is-fiberwise-contr
+  (htpy-ext-prop : HtpyExtProperty)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -610,22 +642,27 @@ RS Prop 4.11.
               first (is-contr-fiberwise-A t))
               [ϕ t ↦ codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A t] )
   :=
-    htpy-ext-property
-    ( weak-ext-ext)
-    ( I )
-    ( ψ )
-    ( ϕ )
-    ( A )
+    htpy-ext-prop
+    ( I)
+    ( ψ)
+    ( ϕ)
+    ( A)
     (\ t →  first (is-contr-fiberwise-A t))
-    ( a )
-    ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A )
+    ( a)
+    ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A)
 ```
 
-This gives us the inhabitant $c$
+The two expressions below give us the inhabitant
+$c : \prod_{t: I | \psi} f(t) = a' (t)$ used in the proof of RS Proposition 4.11
+
+```rzk
+
+
+```
 
 ```rzk
 #define second-4-11
-  (weak-ext-ext : WeakExtExt)
+  (htpy-ext-prop : HtpyExtProperty)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -633,20 +670,22 @@ This gives us the inhabitant $c$
   ( a : (t : ϕ ) → A t)
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
-  : (t : ψ ) → f t = (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t
+  : (t : ψ ) →
+      f t = (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t
   := \ t →
       eq-is-contr
       ( A t)
       ( is-contr-fiberwise-A t)
       ( f t )
-      ( restrict I ψ ϕ A a (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t)
+      ( restrict I ψ ϕ A a
+         (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t)
 ```
 
 And below proves that $c(t) = refl$.
 
 ```rzk
 #define third-4-11
-  ( weak-ext-ext : WeakExtExt)
+ -- ( weak-ext-ext : WeakExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -671,26 +710,25 @@ And below proves that $c(t) = refl$.
 
 ```rzk
 #define fourth-4-11
-  ( weak-ext-ext : WeakExtExt)
+  (htpy-ext-prop : HtpyExtProperty)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
   ( A : ψ → U)
   ( is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
-  ( b : (t : ψ) → A t)
+ -- ( b : (t : ψ) → A t)
   ( a : (t : ϕ) → A t)
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
-  : (t : ψ ) → (f t = (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t)[ϕ t ↦ refl]
+  : (t : ψ ) → (f t = (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t)[ϕ t ↦ refl]
   :=
   first(
-    htpy-ext-property
-    ( weak-ext-ext) --- weak ext ext
-    ( I )  --- I
-    ( ψ ) --- psi
-    ( ϕ )  --- phi
-    ( \ t → f t = first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A) t) --- ft = a't, i.e. A
+    htpy-ext-prop
+    ( I )
+    ( ψ )
+    ( ϕ )
+    ( \ t → f t = first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A) t) --- ft = a't, i.e. A
     ( second-4-11
-      ( weak-ext-ext)
+      ( htpy-ext-prop)
       ( I)
       ( ψ)
       ( ϕ)
@@ -701,7 +739,6 @@ And below proves that $c(t) = refl$.
     )
     ( \ t → refl )
     ( third-4-11
-      ( weak-ext-ext )
       ( I )
       ( ψ )
       ( ϕ )
@@ -709,16 +746,16 @@ And below proves that $c(t) = refl$.
       ( is-contr-fiberwise-A)
       ( a )
       ( f )
-      (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A))
+      (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A))
       (second-4-11
-      ( weak-ext-ext)
+      ( htpy-ext-prop)
       ( I)
       ( ψ)
       ( ϕ)
       ( A)
       ( a)
       ( f)
-      ( is-contr-fiberwise-A )) -- c
+      ( is-contr-fiberwise-A ))
     ))
 
 ```

@@ -1,4 +1,4 @@
-# Covariantly functorial type families
+# Covariant families
 
 These formalisations correspond to Section 8 of the RS17 paper.
 

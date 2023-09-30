@@ -247,7 +247,7 @@ work from the assumption that `f` is a half adjoint equivalence.
 #end is-contr-map-is-equiv
 ```
 
-## Half adjoint equivalences are contractible
+### OLD half adjoint equivalences are contractible
 
 We now show that half adjoint equivalences are contractible maps.
 

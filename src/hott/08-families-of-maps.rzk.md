@@ -287,7 +287,7 @@ equivalence.
   := (family-of-equiv-total-equiv A B C f , total-equiv-family-of-equiv A B C f)
 ```
 
-## Codomain based path spaces
+## Endpoint based path spaces
 
 ```rzk title="An equivalence between the based path spaces"
 #def equiv-based-paths
@@ -297,8 +297,8 @@ equivalence.
   := total-equiv-family-equiv A (\ x → x = a) (\ x → a = x) (\ x → equiv-rev A x a)
 ```
 
-```rzk title="Codomain based path spaces are contractible"
-#def is-contr-codomain-based-paths
+```rzk title="Endpoint based path spaces are contractible"
+#def is-contr-endpoint-based-paths
   ( A : U)
   ( a : A)
   : is-contr (Σ (x : A) , x = a)

@@ -265,22 +265,30 @@ We refer to another form as an "extension extensionality" axiom.
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
 ```
 
-For readability of code, it is useful to have the forward map of extension
-extensionality available. In fact, sometimes only this implication is needed.
+For readability of code, it is useful to the function that supplies an equality
+between terms of an extension type from a pointwise equality extending refl. In
+fact, sometimes only this weaker form of the axiom is needed.
 
-```rzk title = "The equality provided by extension extensionality"
-#def EqExtExt
+```rzk
+#def NaiveExtExt
   : U
   :=
-  ( I : CUBE) →
-  ( ψ : I → TOPE) →
-  ( ϕ : ψ → TOPE) →
-  ( A : ψ → U) →
-  ( a : (t : ϕ) → A t) →
-  ( f  : (t : ψ) → A t [ϕ t ↦ a t]) →
-  ( g  : (t : ψ) → A t [ϕ t ↦ a t]) →
-  ( (t : ψ ) → (f t = g t) [ϕ t ↦ refl]) →
-  ( f = g)
+    ( I : CUBE) →
+    ( ψ : I → TOPE) →
+    ( ϕ : ψ → TOPE) →
+    ( A : ψ → U) →
+    ( a : (t : ϕ) → A t) →
+    ( f : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( g : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( (t : ψ) → (f t = g t) [ϕ t ↦ refl]) →
+    ( f = g)
+
+#def naiveextext-extext
+  ( extext : ExtExt)
+  : NaiveExtExt
+  :=
+    \ I ψ ϕ A a f g →
+      ( first (first (extext I ψ ϕ A a f g)))
 ```
 
 Weak extension extensionality implies extension extensionality; this is the
@@ -291,7 +299,7 @@ cases an extension type to a function type.
 ```rzk
 #section rs-4-8
 
-#variable  weak-ext-ext : WeakExtExt
+#variable  weakextext : WeakExtExt
 #variable  I : CUBE
 #variable  ψ : I → TOPE
 #variable  ϕ : ψ → TOPE
@@ -303,11 +311,11 @@ cases an extension type to a function type.
   : ((t : ψ ) → A t)
   := f
 
-#define is-contr-ext-based-paths uses (weak-ext-ext f)
+#define is-contr-ext-based-paths uses (weakextext f)
   : is-contr ((t : ψ ) → (Σ (y : A t) ,
               ((ext-projection-temp) t = y))[ϕ t ↦ (a t , refl)])
   :=
-    weak-ext-ext
+    weakextext
     ( I )
     ( ψ )
     ( ϕ )
@@ -316,20 +324,20 @@ cases an extension type to a function type.
       is-contr-based-paths (A t ) ((ext-projection-temp) t))
     ( \ t → (a t , refl) )
 
-#define is-contr-ext-codomain-based-paths uses (weak-ext-ext f)
+#define is-contr-ext-endpoint-based-paths uses (weakextext f)
   : is-contr
     ( ( t : ψ) →
       ( Σ (y : A t) , (y = ext-projection-temp t)) [ ϕ t ↦ (a t , refl)])
   :=
-    weak-ext-ext
+    weakextext
     ( I)
     ( ψ)
     ( ϕ)
     ( \ t → (Σ (y : A t) , y = ext-projection-temp t))
-    ( \ t → is-contr-codomain-based-paths (A t) (ext-projection-temp t))
+    ( \ t → is-contr-endpoint-based-paths (A t) (ext-projection-temp t))
     ( \ t → (a t , refl))
 
-#define is-contr-based-paths-ext uses (weak-ext-ext)
+#define is-contr-based-paths-ext uses (weakextext)
   : is-contr (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) ,
               (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
   :=
@@ -354,7 +362,7 @@ cases an extension type to a function type.
 The map that defines extension extensionality
 
 ```rzk title="RS17 4.7"
-#define ext-ext-weak-ext-ext-map
+#define extext-weakextext-map
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -375,8 +383,8 @@ The map that defines extension extensionality
 The total bundle version of extension extensionality
 
 ```rzk
-#define ext-ext-weak-ext-ext-bundle-version
-  ( weak-ext-ext : WeakExtExt)
+#define extext-weakextext-bundle-version
+  ( weakextext : WeakExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -386,7 +394,7 @@ The total bundle version of extension extensionality
   : is-equiv ((Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g)))
                (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) ,
                   ((t : ψ ) → (f t = g t) [ϕ t ↦ refl]))
-               (ext-ext-weak-ext-ext-map I ψ ϕ A a f)
+               (extext-weakextext-map I ψ ϕ A a f)
   :=
     is-equiv-are-contr
     ( Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g)  )
@@ -395,8 +403,8 @@ The total bundle version of extension extensionality
     ( is-contr-based-paths
       ( (t : ψ ) → A t [ϕ t ↦ a t])
       ( f ))
-    ( is-contr-based-paths-ext weak-ext-ext I ψ ϕ A a f)
-    ( ext-ext-weak-ext-ext-map I ψ ϕ A a f)
+    ( is-contr-based-paths-ext weakextext I ψ ϕ A a f)
+    ( extext-weakextext-map I ψ ϕ A a f)
 ```
 
 Finally, using equivalences between families of equivalences and bundles of
@@ -404,16 +412,16 @@ equivalences we have that weak extension extensionality implies extension
 extensionality. The following is statement the as proved in RS17.
 
 ```rzk title="RS17 Prop 4.8(i) as proved"
-#define ext-ext-weak-ext-ext'
-  ( weak-ext-ext : WeakExtExt)
+#define extext-weakextext'
+  ( weakextext : WeakExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
   ( A : ψ → U)
   ( a : (t : ϕ ) → A t)
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
-  : (g : (t : ψ ) → A t [ϕ t ↦ a t])
-     → is-equiv
+  : (g : (t : ψ ) → A t [ϕ t ↦ a t]) →
+      is-equiv
         ( f = g)
         ( (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
         ( ext-htpy-eq I ψ ϕ A a f g)
@@ -422,18 +430,18 @@ extensionality. The following is statement the as proved in RS17.
       ( \ g → (f = g) )
       ( \ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
       ( ext-htpy-eq I ψ ϕ A a f)
-      ( ext-ext-weak-ext-ext-bundle-version weak-ext-ext I ψ ϕ A a f)
+      ( extext-weakextext-bundle-version weakextext I ψ ϕ A a f)
 ```
 
 The following is the literal statement of weak extension extensionality implying
 extension extensionality that we get by extraccting the fiberwise equivalence.
 
 ```rzk title="RS17 Proposition 4.8(i)"
-#define ext-ext-weak-ext-ext
-  (weak-ext-ext : WeakExtExt)
+#define extext-weakextext
+  (weakextext : WeakExtExt)
   :  ExtExt
   := \ I ψ ϕ A a f g →
-      ext-ext-weak-ext-ext' weak-ext-ext I ψ ϕ A a f g
+      extext-weakextext' weakextext I ψ ϕ A a f g
 ```
 
 ## Applications of extension extensionality
@@ -542,8 +550,8 @@ property follows from a straightforward application of the axiom of choice to
 the point of contraction for weak extension extensionality.
 
 ```rzk title="RS17 Proposition 4.10
-#define htpy-ext-proprty-weak-ext-ext
-  ( weak-ext-ext : WeakExtExt)
+#define htpy-ext-property-weakextext
+  ( weakextext : WeakExtExt)
   : HtpyExtProperty
   :=
     \ I ψ ϕ A b a e →
@@ -557,12 +565,12 @@ the point of contraction for weak extension extensionality.
       ( a)
       ( e))
     ( first
-      ( weak-ext-ext
+      ( weakextext
         ( I)
         ( ψ)
         ( ϕ)
         ( \ t → (Σ (y : A t) , y = b t))
-        ( \ t → is-contr-codomain-based-paths
+        ( \ t → is-contr-endpoint-based-paths
                 ( A t)
                 ( b t))
         ( \ t → ( a t , e t) )))
@@ -570,8 +578,8 @@ the point of contraction for weak extension extensionality.
 ```
 
 ```rzk title="RS17 Proposition 4.10"
-#define htpy-ext-property
-  ( weak-ext-ext : WeakExtExt)
+#define htpy-ext-prop-weakextext
+  ( weakextext : WeakExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -592,12 +600,12 @@ the point of contraction for weak extension extensionality.
       ( a)
       ( e))
     ( first
-      ( weak-ext-ext
+      ( weakextext
         ( I)
         ( ψ)
         ( ϕ)
         ( \ t → (Σ (y : A t) , y = b t))
-        ( \ t → is-contr-codomain-based-paths
+        ( \ t → is-contr-endpoint-based-paths
                 ( A t)
                 ( b t))
         ( \ t → ( a t , e t) )))
@@ -648,7 +656,7 @@ we are entitled to the conclusion.
 ```rzk
 
 #define htpy-ext-prop-is-fiberwise-contr
-  (htpy-ext-prop : HtpyExtProperty)
+  (htpy-ext-property : HtpyExtProperty)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -661,11 +669,11 @@ we are entitled to the conclusion.
               first (is-contr-fiberwise-A t))
               [ϕ t ↦ codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A t] )
   :=
-    htpy-ext-prop
-    ( I)
-    ( ψ)
-    ( ϕ)
-    ( A)
+    htpy-ext-property
+    ( I )
+    ( ψ )
+    ( ϕ )
+    ( A )
     (\ t →  first (is-contr-fiberwise-A t))
     ( a)
     ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A)
@@ -697,12 +705,11 @@ identity types, but it is unclear if that generality is needed.
          (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t)
 ```
 
-And below proves that $c(t) = refl$. Again, this is a consequence of a slightly
-more general statement.
+And below proves that `#!rzk c(t) = refl`. Again, this is a consequence of a
+slightly more general statement.
 
 ```rzk
 #define RS-4-11-c-is-refl
- -- ( weak-ext-ext : WeakExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -721,11 +728,9 @@ more general statement.
     ( a' t)
     ( refl )
     ( c t )
-
-
 ```
 
-Given the $a'$ produced above, the following gives an inhabitant of
+Given the `#rzk! a'` produced above, the following gives an inhabitant of
 $\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
 
 ```rzk
@@ -774,11 +779,8 @@ $\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\r
         ( f)
         ( is-contr-fiberwise-A ))))
 
-```
-
-```rzk
 #define weak-ext-ext-from-eq-ext-htpy-htpy-ext-property
- (eq-ext-ext : EqExtExt)
+ (naiveextext : NaiveExtExt)
  (htpy-ext-prop : HtpyExtProperty)
  : WeakExtExt
   := \ I ψ ϕ A is-contr-fiberwise-A a →
@@ -789,7 +791,7 @@ $\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\r
       ( f )
       ( first (htpy-ext-prop-is-fiberwise-contr
                 htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A))
-      (eq-ext-ext
+      (naiveextext
       ( I)
       ( ψ )
       ( ϕ )

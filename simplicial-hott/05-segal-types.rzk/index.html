@@ -824,6 +824,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#products-of-segal-types" class="md-nav__link">
+    Products of Segal Types
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1085,6 +1092,13 @@
         <li class="md-nav__item">
   <a href="#inner-anodyne-maps" class="md-nav__link">
     Inner anodyne maps
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#products-of-segal-types" class="md-nav__link">
+    Products of Segal Types
   </a>
   
 </li>
@@ -2705,6 +2719,51 @@ composition:</p>
 </span><span id="__span-56-88"><a id="__codelineno-56-88" name="__codelineno-56-88" href="#__codelineno-56-88"></a><span class="err">        ( A)</span>
 </span><span id="__span-56-89"><a id="__codelineno-56-89" name="__codelineno-56-89" href="#__codelineno-56-89"></a><span class="err">        ( is-segal-A)</span>
 </span><span id="__span-56-90"><a id="__codelineno-56-90" name="__codelineno-56-90" href="#__codelineno-56-90"></a><span class="err">        ( h^ A h))</span>
+</span></code></pre></div>
+<h2 id="products-of-segal-types">Products of Segal Types<a class="headerlink" href="#products-of-segal-types" title="Permanent link">&para;</a></h2>
+<p>This is an additional section which describes morphisms in products of types as products of morphisms.
+It is implicitly stated in Proposition 8.21.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="nd">#section</span><span class="n"> morphisms-of-products-is-products-of-morphisms</span>
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="kr">#variables</span><span class="p"> </span>A B<span class="err"> : U</span>
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="kr">#variable</span><span class="p"> </span>p<span class="err"> : ( product A B )</span>
+</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a><span class="kr">#variable</span><span class="p"> </span>p&#39;<span class="err"> : ( product A B )</span>
+</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>
+</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:morphism-in-product-to-product-of-morphism" id="define:morphism-in-product-to-product-of-morphism" style="visibility: visible; position: relative; color: inherit">morphism-in-product-to-product-of-morphism</a></span>
+</span><span id="__span-57-7"><a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a><span class="err">  : hom ( product A B ) p p&#39; →</span>
+</span><span id="__span-57-8"><a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a><span class="err">    product ( hom A ( </span><span class="s">first</span><span class="err"> p ) ( </span><span class="s">first</span><span class="err"> p&#39; ) ) ( hom B ( </span><span class="s">second</span><span class="err"> p ) ( </span><span class="s">second</span><span class="err"> p&#39; ) )</span>
+</span><span id="__span-57-9"><a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a><span class="err">  :=  </span><span class="p">\ </span>f <span class="err">→ </span><span class="p">( </span>\ ( t <span class="p">:</span><span class="err"> Δ¹ ) → </span><span class="s">first</span><span class="err"> ( f t ) , \ </span><span class="p">( </span>t <span class="p">:</span><span class="err"> Δ¹ ) → </span><span class="s">second</span><span class="err"> ( f t ) )</span>
+</span><span id="__span-57-10"><a id="__codelineno-57-10" name="__codelineno-57-10" href="#__codelineno-57-10"></a>
+</span><span id="__span-57-11"><a id="__codelineno-57-11" name="__codelineno-57-11" href="#__codelineno-57-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:product-of-morphism-to-morphism-in-product" id="define:product-of-morphism-to-morphism-in-product" style="visibility: visible; position: relative; color: inherit">product-of-morphism-to-morphism-in-product</a></span>
+</span><span id="__span-57-12"><a id="__codelineno-57-12" name="__codelineno-57-12" href="#__codelineno-57-12"></a><span class="err">  : product ( hom A ( </span><span class="s">first</span><span class="err"> p ) ( </span><span class="s">first</span><span class="err"> p&#39; ) ) ( hom B ( </span><span class="s">second</span><span class="err"> p ) ( </span><span class="s">second</span><span class="err"> p&#39; ) ) →</span>
+</span><span id="__span-57-13"><a id="__codelineno-57-13" name="__codelineno-57-13" href="#__codelineno-57-13"></a><span class="err">    hom ( product A B ) p p&#39;</span>
+</span><span id="__span-57-14"><a id="__codelineno-57-14" name="__codelineno-57-14" href="#__codelineno-57-14"></a><span class="err">  := \ ( f , g ) </span><span class="p">( </span>t <span class="p">:</span><span class="err"> Δ¹ ) → ( f t , g t )</span>
+</span><span id="__span-57-15"><a id="__codelineno-57-15" name="__codelineno-57-15" href="#__codelineno-57-15"></a>
+</span><span id="__span-57-16"><a id="__codelineno-57-16" name="__codelineno-57-16" href="#__codelineno-57-16"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id" id="define:morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id" style="visibility: visible; position: relative; color: inherit">morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id</a></span>
+</span><span id="__span-57-17"><a id="__codelineno-57-17" name="__codelineno-57-17" href="#__codelineno-57-17"></a><span class="err">  : </span><span class="p">( </span>f <span class="p">:</span><span class="err">  product ( hom A ( </span><span class="s">first</span><span class="err"> p ) ( </span><span class="s">first</span><span class="err"> p&#39; ) ) ( hom B ( </span><span class="s">second</span><span class="err"> p ) ( </span><span class="s">second</span><span class="err"> p&#39; ) ) ) →</span>
+</span><span id="__span-57-18"><a id="__codelineno-57-18" name="__codelineno-57-18" href="#__codelineno-57-18"></a><span class="err">    ( morphism-in-product-to-product-of-morphism )</span>
+</span><span id="__span-57-19"><a id="__codelineno-57-19" name="__codelineno-57-19" href="#__codelineno-57-19"></a><span class="err">    ( ( product-of-morphism-to-morphism-in-product )</span>
+</span><span id="__span-57-20"><a id="__codelineno-57-20" name="__codelineno-57-20" href="#__codelineno-57-20"></a><span class="err">      f ) = f</span>
+</span><span id="__span-57-21"><a id="__codelineno-57-21" name="__codelineno-57-21" href="#__codelineno-57-21"></a><span class="err">  := </span><span class="p">\ </span>f <span class="err">→ </span><span class="s">refl</span>
+</span><span id="__span-57-22"><a id="__codelineno-57-22" name="__codelineno-57-22" href="#__codelineno-57-22"></a>
+</span><span id="__span-57-23"><a id="__codelineno-57-23" name="__codelineno-57-23" href="#__codelineno-57-23"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id" id="define:product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id" style="visibility: visible; position: relative; color: inherit">product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id</a></span>
+</span><span id="__span-57-24"><a id="__codelineno-57-24" name="__codelineno-57-24" href="#__codelineno-57-24"></a><span class="err">  : </span><span class="p">( </span>f <span class="p">:</span><span class="err">  hom ( product A B ) p p&#39; ) →</span>
+</span><span id="__span-57-25"><a id="__codelineno-57-25" name="__codelineno-57-25" href="#__codelineno-57-25"></a><span class="err">    ( product-of-morphism-to-morphism-in-product )</span>
+</span><span id="__span-57-26"><a id="__codelineno-57-26" name="__codelineno-57-26" href="#__codelineno-57-26"></a><span class="err">    ( ( morphism-in-product-to-product-of-morphism )</span>
+</span><span id="__span-57-27"><a id="__codelineno-57-27" name="__codelineno-57-27" href="#__codelineno-57-27"></a><span class="err">      f ) = f</span>
+</span><span id="__span-57-28"><a id="__codelineno-57-28" name="__codelineno-57-28" href="#__codelineno-57-28"></a><span class="err">  := </span><span class="p">\ </span>f <span class="err">→ </span><span class="s">refl</span>
+</span><span id="__span-57-29"><a id="__codelineno-57-29" name="__codelineno-57-29" href="#__codelineno-57-29"></a>
+</span><span id="__span-57-30"><a id="__codelineno-57-30" name="__codelineno-57-30" href="#__codelineno-57-30"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:morphism-in-product-equiv-product-of-morphism" id="define:morphism-in-product-equiv-product-of-morphism" style="visibility: visible; position: relative; color: inherit">morphism-in-product-equiv-product-of-morphism</a></span>
+</span><span id="__span-57-31"><a id="__codelineno-57-31" name="__codelineno-57-31" href="#__codelineno-57-31"></a><span class="err">  : Equiv</span>
+</span><span id="__span-57-32"><a id="__codelineno-57-32" name="__codelineno-57-32" href="#__codelineno-57-32"></a><span class="err">    ( hom ( product A B ) p p&#39; )</span>
+</span><span id="__span-57-33"><a id="__codelineno-57-33" name="__codelineno-57-33" href="#__codelineno-57-33"></a><span class="err">    ( product ( hom A ( </span><span class="s">first</span><span class="err"> p ) ( </span><span class="s">first</span><span class="err"> p&#39; ) ) ( hom B ( </span><span class="s">second</span><span class="err"> p ) ( </span><span class="s">second</span><span class="err"> p&#39; ) ) )</span>
+</span><span id="__span-57-34"><a id="__codelineno-57-34" name="__codelineno-57-34" href="#__codelineno-57-34"></a><span class="err">  :=</span>
+</span><span id="__span-57-35"><a id="__codelineno-57-35" name="__codelineno-57-35" href="#__codelineno-57-35"></a><span class="err">    ( ( morphism-in-product-to-product-of-morphism ) ,</span>
+</span><span id="__span-57-36"><a id="__codelineno-57-36" name="__codelineno-57-36" href="#__codelineno-57-36"></a><span class="err">      ( ( ( product-of-morphism-to-morphism-in-product ) ,</span>
+</span><span id="__span-57-37"><a id="__codelineno-57-37" name="__codelineno-57-37" href="#__codelineno-57-37"></a><span class="err">          ( product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id ) ) ,</span>
+</span><span id="__span-57-38"><a id="__codelineno-57-38" name="__codelineno-57-38" href="#__codelineno-57-38"></a><span class="err">        ( ( product-of-morphism-to-morphism-in-product ) ,</span>
+</span><span id="__span-57-39"><a id="__codelineno-57-39" name="__codelineno-57-39" href="#__codelineno-57-39"></a><span class="err">          ( morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id ) ) ) )</span>
+</span><span id="__span-57-40"><a id="__codelineno-57-40" name="__codelineno-57-40" href="#__codelineno-57-40"></a>
+</span><span id="__span-57-41"><a id="__codelineno-57-41" name="__codelineno-57-41" href="#__codelineno-57-41"></a><span class="nd">#end</span><span class="n"> morphisms-of-products-is-products-of-morphisms</span>
 </span></code></pre></div>
 
 

@@ -80,14 +80,41 @@ and the three possible right orthogonality conditions.
 Using the vertical pasting calculus for homotopy cartesian squares,
 it is not hard to deduce the corresponding composition and cancellation properties
 for left orthogonality of shape inclusion with respect to `α : A' → A`.
-Apart from the fact that we have to make explicit all arguments,
-the only fact that stops these from being a direct corollary
+
+### Σ over an intermediate shape
+
+The only fact that stops these laws from being a direct corollary
 is that the `Σ`-types appearing in the vertical pasting of the relevant squares
 (such as `Σ (\ σ : ϕ → A), ( (t : χ) → A [ϕ t ↦ σ t])`)
 are not literally equal to the corresponding extension types
 (such as `τ → A `).
 Therefore we have to occasionally go back or forth along the
 functorial equivalence `cofibration-composition-functorial`.
+
+```rzk
+#def is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape uses (is-orth-ψ-ϕ)
+  : is-homotopy-cartesian
+    ( ϕ → A')
+    ( \ σ' → Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]), ( t : ψ) → A' [χ t ↦ τ' t])
+    ( ϕ → A)
+    ( \ σ → Σ ( τ : (t : χ) → A [ϕ t ↦ σ t]), ( t : ψ) → A [χ t ↦ τ t])
+    ( \ σ' t → α (σ' t))
+    ( \ _ (τ', υ') → ( \ t → α (τ' t), \ t → α (υ' t) ))
+  :=
+    ( \ (σ' : ϕ → A') →
+    is-equiv-Equiv-is-equiv'
+      ( ( t : ψ) → A' [ϕ t ↦ σ' t])
+      ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
+      ( \ υ' t → α ( υ' t))
+      ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]),
+      ( ( t : ψ) → A' [χ t ↦ τ' t]))
+      ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)]),
+      ( ( t : ψ) → A [χ t ↦ τ t]))
+      ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
+      ( cofibration-composition-functorial I ψ χ ϕ
+        ( \ _ → A') ( \ _ → A) ( \ _ → α) σ')
+      ( is-orth-ψ-ϕ σ'))
+```
 
 ### Stability under composition
 
@@ -145,24 +172,9 @@ If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so i
           ( \ _ τ' x → α (τ' x) )
           ( \ _ _ υ' x → α (υ' x) )
           ( is-orth-χ-ϕ )
-          ( \ (σ' : ϕ → A') →
-            is-equiv-Equiv-is-equiv'
-              ( ( t : ψ) → A' [ϕ t ↦ σ' t])
-              ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
-              ( \ υ' t → α ( υ' t))
-              ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]),
-                ( ( t : ψ) → A' [χ t ↦ τ' t]))
-              ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)]),
-                ( ( t : ψ) → A [χ t ↦ τ t]))
-              ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
-              ( cofibration-composition-functorial I ψ χ ϕ
-                ( \ _ → A') ( \ _ → A) ( \ _ → α) σ')
-              ( is-orth-ψ-ϕ σ')
-          )
+          (is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape)
           ( \ ( t : ϕ) → τ' t)
           τ'
-
-#end left-orthogonal-calculus-1
 ```
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`
@@ -170,8 +182,8 @@ and `χ ⊂ ψ` is a (functorial) shape retract,
 then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
 
 ```rzk
-#def is-right-orthogonal-to-shape-right-cancel-with-section uses (is-orth-ψ-ϕ)
-  ( is-retract-ψ-χ : is-functorial-shape-retract I ψ χ)
+#def is-right-orthogonal-to-shape-right-cancel-retract uses (is-orth-ψ-ϕ)
+  ( is-fretract-ψ-χ : is-functorial-shape-retract I ψ χ)
   : is-right-orthogonal-to-shape I ( \ t → χ t) ( \ t → ϕ t) A' A α
   :=
     is-homotopy-cartesian-upper-cancel-with-section
@@ -184,8 +196,8 @@ then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
       ( \ σ' t → α (σ' t))
       ( \ _ τ' x → α (τ' x) )
       ( \ _ _ υ' x → α (υ' x) )
-      undefined
-      undefined
+      ( relativize-is-functorial-shape-retract I ψ χ is-fretract-ψ-χ ϕ A' A α)
+      (is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape)
 
 #end left-orthogonal-calculus-1
 ```
@@ -194,6 +206,9 @@ then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`
 then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
+
+The following proof uses a lot of currying and uncurrying
+and relies on (the naive form of) extension extensionality.
 
 ```rzk
 #def is-right-orthogonal-to-shape-× uses (naiveextext)

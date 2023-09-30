@@ -187,7 +187,6 @@ The original form.
           ( ( \ (_f , g) t → g t , \ h → refl))),
         ( ( \ (_f , g) t → g t , \ h → refl) ,
           ( ( \ (_f , g) t → g t , \ h → refl)))))
-
 ```
 
 A reformulated version via tope disjunction instead of inclusion (see

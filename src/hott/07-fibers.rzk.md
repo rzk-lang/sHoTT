@@ -19,7 +19,7 @@ The homotopy fiber of a map is the following type:
   := Σ (a : A) , (f a) = b
 ```
 
-We calculate the transport of (a , q) : fib b along p : a = a':
+We calculate the transport of `#!rzk (a , q) : fib b` along `#!rzk p : a = a'`:
 
 ```rzk
 #def transport-in-fiber
@@ -47,10 +47,9 @@ We calculate the transport of (a , q) : fib b along p : a = a':
 
 ### Induction principle for fibers
 
-The family of fibers has the following induction principle:
-To prove/construct something about/for every point in every fiber,
-it suffices to do so for points of the form
-`(a, refl : f a = f a) : fib A B f`.
+The family of fibers has the following induction principle: To prove/construct
+something about/for every point in every fiber, it suffices to do so for points
+of the form `#!rzk (a, refl : f a = f a) : fib A B f`.
 
 ```rzk
 #def ind-fib
@@ -86,10 +85,12 @@ A map is contractible just when its fibers are contractible.
   := (b : B) → is-contr (fib A B f b)
 ```
 
+### Contractible maps are equivalences
+
 Contractible maps are equivalences:
 
 ```rzk
-#section is-contr-map-is-equiv
+#section is-equiv-is-contr-map
 
 #variables A B : U
 #variable f : A → B
@@ -135,6 +136,113 @@ Contractible maps are equivalences:
 #def is-equiv-is-contr-map uses (is-contr-f)
   : is-equiv A B f
   := (is-contr-map-has-retraction , has-section-is-contr-map)
+
+#end is-equiv-is-contr-map
+```
+
+### Half adjoint equivalences are contractible maps
+
+We prove the converse by fiber induction. To define the contracting homotopy to
+the point `#!rzk (f a, refl)` in the fiber over `#!rzk f a` we find it easier to
+work from the assumption that `f` is a half adjoint equivalence.
+
+```rzk
+#section is-contr-map-is-equiv
+
+#variables A B : U
+#variable f : A → B
+#variable is-hae-f : is-half-adjoint-equiv A B f
+
+#def is-split-surjection-is-hae
+  ( b : B)
+  : fib A B f b
+  :=
+    ( map-inverse-is-half-adjoint-equiv A B f is-hae-f b,
+      section-htpy-is-half-adjoint-equiv A B f is-hae-f b)
+
+#def calculate-is-split-surjection-is-hae
+  ( a : A)
+  : is-split-surjection-is-hae (f a) = (a, refl)
+  :=
+    path-of-pairs-pair-of-paths
+    ( A)
+    ( \ a' → f a' = f a)
+    ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
+    ( a)
+    ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)
+    ( section-htpy-is-half-adjoint-equiv A B f is-hae-f (f a))
+    ( refl)
+    ( triple-concat
+      ( f a = f a)
+      ( transport A ( \ x → (f x) = (f a))
+        ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
+        ( a)
+        ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)
+        ( section-htpy-is-half-adjoint-equiv A B f is-hae-f (f a)))
+      ( concat B
+        ( f a)
+        ( f (map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)))
+        ( f a)
+        ( ap A B
+          ( a)
+          ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
+          ( f)
+          ( rev A ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a
+            ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)))
+        ( section-htpy-is-half-adjoint-equiv A B f is-hae-f (f a)))
+      ( concat B
+        ( f a)
+        ( f (map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)))
+        ( f a)
+        ( ap A B
+          ( a)
+          ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
+          ( f)
+          ( rev A (map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a
+            ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)))
+        ( ap A B (map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a f
+          ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)))
+      ( refl)
+      ( transport-in-fiber A B f (f a)
+        ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
+        ( a)
+        ( section-htpy-is-half-adjoint-equiv A B f is-hae-f (f a))
+        ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a))
+      ( concat-eq-right B
+        ( f a)
+        ( f (map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)))
+        ( f a)
+        ( ap A B
+          ( a)
+          ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
+          ( f)
+          ( rev A ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a
+            ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)))
+        ( section-htpy-is-half-adjoint-equiv A B f is-hae-f (f a))
+        ( ap A B (map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a f
+          ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a))
+        (coherence-is-half-adjoint-equiv A B f is-hae-f a))
+      ( concat-ap-rev-ap-id A B
+        ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
+        ( a)
+        ( f)
+        ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)))
+
+#def contracting-homotopy-fib-is-hae uses (is-hae-f)
+  ( b : B)
+  ( z : fib A B f b)
+  : is-split-surjection-is-hae b = z
+  :=
+    ind-fib
+    ( A) (B) (f)
+    ( \ b' z' → is-split-surjection-is-hae b' = z')
+    ( calculate-is-split-surjection-is-hae)
+    ( b)
+    ( z)
+
+#def is-contr-map-is-hae uses (is-hae-f)
+  : is-contr-map A B f
+  := \ b → (is-split-surjection-is-hae b, contracting-homotopy-fib-is-hae b)
 
 #end is-contr-map-is-equiv
 ```
@@ -1217,7 +1325,7 @@ Half adjoint equivalences define contractible maps:
       contraction-fib-is-half-adjoint-equiv A B f is-hae-f b)
 ```
 
-## Equivalences are contractible maps
+### Equivalences are contractible maps
 
 ```rzk
 #def is-contr-map-is-equiv

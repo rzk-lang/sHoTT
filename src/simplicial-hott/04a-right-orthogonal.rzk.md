@@ -83,7 +83,7 @@ for left orthogonality of shape inclusion with respect to `α : A' → A`.
 
 ### Σ over an intermediate shape
 
-The only fact that stops these laws from being a direct corollary
+The only fact that stops some of these laws from being a direct corollary
 is that the `Σ`-types appearing in the vertical pasting of the relevant squares
 (such as `Σ (\ σ : ϕ → A), ( (t : χ) → A [ϕ t ↦ σ t])`)
 are not literally equal to the corresponding extension types
@@ -212,6 +212,7 @@ and relies on (the naive form of) extension extensionality.
 
 ```rzk
 #def is-right-orthogonal-to-shape-× uses (naiveextext)
+-- this should be refactored by introducing cofibration-product-functorial
   ( A' A : U)
   ( α : A' → A)
   ( J : CUBE)
@@ -275,4 +276,29 @@ and relies on (the naive form of) extension extensionality.
               )
         )
       )
+```
+
+### Stability under exact pushouts
+
+For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to `α : A' → A`,
+then so is `ψ ⊂ ϕ ∪ ψ`.
+
+```rzk
+#def is-right-orthogonal-to-shape-pushout
+  ( A' A : U)
+  ( α : A' → A)
+  ( I : CUBE)
+  ( ϕ ψ : I → TOPE)
+  ( is-orth-ϕ-ψ∧ϕ : is-right-orthogonal-to-shape I ϕ ( \ t → ϕ t ∧ ψ t) A' A α)
+  : is-right-orthogonal-to-shape I ( \ t → ϕ t ∨ ψ t) ( \ t → ψ t) A' A α
+  := \ ( τ' : ψ → A') →
+       is-equiv-Equiv-is-equiv
+         ( (t : I | ϕ t ∨ ψ t) → A' [ψ t ↦ τ' t])
+         ( (t : I | ϕ t ∨ ψ t) → A [ψ t ↦ α (τ' t)])
+         ( \ υ' t → α (υ' t))
+         ( (t : ϕ) → A' [ϕ t ∧ ψ t ↦ τ' t])
+         ( (t : ϕ) → A [ϕ t ∧ ψ t ↦ α (τ' t)])
+         ( \ ν' t → α (ν' t))
+         ( cofibration-union-functorial I ϕ ψ (\ _ → A') (\ _ → A) (\ _ → α) τ')
+         ( is-orth-ϕ-ψ∧ϕ ( \ t → τ' t))
 ```

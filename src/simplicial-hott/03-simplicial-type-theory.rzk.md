@@ -240,7 +240,7 @@ The intersection of shapes is defined by conjunction on topes.
 The union of shapes is defined by disjunction on topes.
 
 ```rzk
-#def shapeUnion
+#def shape-union
   ( I : CUBE)
   ( ψ χ : I → TOPE)
   : I → TOPE

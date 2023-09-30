@@ -187,7 +187,6 @@ The original form.
           ( ( \ (_f , g) t → g t , \ h → refl))),
         ( ( \ (_f , g) t → g t , \ h → refl) ,
           ( ( \ (_f , g) t → g t , \ h → refl)))))
-
 ```
 
 A reformulated version via tope disjunction instead of inclusion (see
@@ -222,6 +221,31 @@ A reformulated version via tope disjunction instead of inclusion (see
     (\ h t → h t ,
       ( ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl) ,
         ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl)))
+
+#def cofibration-union-functorial
+  ( I : CUBE)
+  ( ϕ ψ : I → TOPE)
+  ( A' A : (t : I | ϕ t ∨ ψ t) → U)
+  ( α : (t : I | ϕ t ∨ ψ t) → A' t → A t)
+  ( τ' : (t : ψ) → A' t)
+  : Equiv-of-maps
+      ( (t : I | ϕ t ∨ ψ t) → A' t [ψ t ↦ τ' t])
+      ( (t : I | ϕ t ∨ ψ t) → A t [ψ t ↦ α t (τ' t)])
+      ( \ υ' t → α t (υ' t))
+      ( (t : ϕ) → A' t [ϕ t ∧ ψ t ↦ τ' t])
+      ( (t : ϕ) → A t [ϕ t ∧ ψ t ↦ α t (τ' t)])
+      ( \ ν' t → α t (ν' t))
+  :=
+     ( ( ( \ υ' t → υ' t
+         , \ υ t → υ t
+         )
+       , \ _ → refl
+       )
+     , ( second (cofibration-union I ϕ ψ A' τ')
+       ,
+         second (cofibration-union I ϕ ψ A ( \ t → α t (τ' t)))
+       )
+     )
 ```
 
 ## Extension extensionality

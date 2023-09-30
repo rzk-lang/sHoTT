@@ -47,6 +47,16 @@ We define equivalences to be bi-invertible maps.
 #end is-equiv
 ```
 
+### The identity is an equivalence
+
+```rzk
+#def is-equiv-identity
+  ( A : U)
+  : is-equiv A A (\ a → a)
+  :=
+    ( (\ a → a, \ _ → refl), (\ a → a, \ _ → refl))
+```
+
 ## Equivalence data
 
 ```rzk
@@ -703,6 +713,19 @@ dependent function types.
           section-postconcat A x y z q)))
 ```
 
+## Transport along a path is an equivalence
+
+```rzk
+#def is-equiv-transport
+  ( A : U)
+  ( C : A → U)
+  ( x : A)
+  : (y : A) → ( p : x = y) → is-equiv (C x) (C y) (transport A C x y p)
+  := ind-path A x
+       ( \ y p → is-equiv (C x) (C y) (transport A C x y p))
+       ( is-equiv-identity (C x) )
+```
+
 ## Equivalence is equivalence invariant
 
 ```rzk
@@ -715,6 +738,19 @@ dependent function types.
   :=
     Σ ( ( s',s) : product ( A' → B' ) ( A → B)),
       ( ( a' : A') → β ( s' a') = s ( α a'))
+
+#def Equiv-of-maps
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  : U
+  :=
+    Σ ( ((s', s), _) : map-of-maps A' A α B' B β),
+      ( product
+          ( is-equiv A' B' s')
+          ( is-equiv A B s)
+      )
 
 #def is-equiv-equiv-is-equiv
   ( A' A : U)
@@ -735,6 +771,16 @@ dependent function types.
           ( is-equiv-comp A' B' B s' is-equiv-s' β is-equiv-β)
       )
 
+#def is-equiv-Equiv-is-equiv
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ( S, (is-equiv-s',is-equiv-s)) : Equiv-of-maps A' A α B' B β )
+  : is-equiv B' B β → is-equiv A' A α
+  :=
+    is-equiv-equiv-is-equiv A' A α B' B β S is-equiv-s' is-equiv-s
+
 #def is-equiv-equiv-is-equiv'
   ( A' A : U)
   ( α : A' → A)
@@ -753,4 +799,14 @@ dependent function types.
         ( η)
         ( is-equiv-comp A' A B α is-equiv-α s is-equiv-s)
       )
+
+#def is-equiv-Equiv-is-equiv'
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ( S, (is-equiv-s',is-equiv-s)) : Equiv-of-maps A' A α B' B β )
+  : is-equiv A' A α → is-equiv B' B β
+  :=
+    is-equiv-equiv-is-equiv' A' A α B' B β S is-equiv-s' is-equiv-s
 ```

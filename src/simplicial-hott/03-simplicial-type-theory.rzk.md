@@ -178,6 +178,36 @@ For example, this applies to `Δ² ⊂ Δ¹×Δ¹`.
           \ a' → refl)
 ```
 
+Every functorial shape retract automatically induces a section
+when restricting to diagrams extending a fixed diagram `σ': ϕ → A'`
+(or, respectively, its image `ϕ → A` under α).
+
+```rzk
+#def relativize-is-functorial-shape-retract
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( χ : ψ → TOPE)
+  ( is-fretract-ψ-χ : is-functorial-shape-retract I ψ χ)
+  ( ϕ : χ → TOPE)
+  ( A' A : U)
+  ( α : A' → A)
+  ( σ' : ϕ → A')
+  : has-section-family-over-map
+      ( (t : χ) → A' [ϕ t ↦ σ' t])
+      ( \ τ' → (t : ψ) → A' [χ t ↦ τ' t])
+      ( (t : χ) → A [ϕ t ↦ α (σ' t)])
+      ( \ τ → (t : ψ) → A [χ t ↦ τ t])
+      ( \ τ' t → α (τ' t))
+      ( \ _ υ' t → α (υ' t))
+  :=
+    ( ( \ τ' → first (first (is-fretract-ψ-χ A' A α)) τ'
+      , \ τ → second (first (is-fretract-ψ-χ A' A α)) τ
+      )
+    , \ τ' → second (is-fretract-ψ-χ A' A α) τ'
+    )
+
+```
+
 ### Pushout product
 
 Pushout product Φ×ζ ∪\_{Φ×χ} ψ×χ of Φ ↪ ψ and χ ↪ ζ, domain of the co-gap map.
@@ -210,7 +240,7 @@ The intersection of shapes is defined by conjunction on topes.
 The union of shapes is defined by disjunction on topes.
 
 ```rzk
-#def shapeUnion
+#def shape-union
   ( I : CUBE)
   ( ψ χ : I → TOPE)
   : I → TOPE

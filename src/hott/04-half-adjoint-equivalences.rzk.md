@@ -375,6 +375,30 @@ one.
       ( has-inverse-is-equiv A B f is-equiv-f)
 ```
 
+Some helper definitions to ease the access to the corrected inverse function
+and the corrected section homotopy associated to an equivalence:
+
+```rzk
+#def Equiv-corrected-inv
+  ( A B : U)
+  ( e : Equiv A B)
+  : B → A
+  :=
+    first
+      ( corrected-has-inverse-has-inverse A B (first e)
+        ( has-inverse-is-equiv A B (first e) (second e)))
+
+#def Equiv-corrected-section-htpy
+  ( A B : U)
+  ( e : Equiv A B)
+  : homotopy B B (comp B A B (first e) (Equiv-corrected-inv A B e)) (identity B)
+  :=
+    second
+      ( second
+        ( corrected-has-inverse-has-inverse A B (first e)
+          ( has-inverse-is-equiv A B (first e) (second e))))
+```
+
 ## Equivalences are embeddings
 
 We use the notion of half adjoint equivalence to prove that equivalent types

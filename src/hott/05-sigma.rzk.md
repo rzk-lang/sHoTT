@@ -535,3 +535,30 @@ This is the dependent version of the currying equivalence.
       ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
   := (choice A B C , is-equiv-choice A B C)
 ```
+
+## Preservation of equivalences
+
+```rzk
+#def sigma-preserves-second
+  ( A : U)
+  ( C D : A → U)
+  ( e : (x : A) → Equiv (C x) (D x))
+  : Equiv (Σ (x : A) , C x) (Σ (x : A) , D x)
+  :=
+    ( \ (x , c) → (x , (first (e x)) c) ,
+      is-equiv-has-inverse
+        ( Σ (x : A) , C x)
+        ( Σ (x : A) , D x)
+        ( \ (x , c) → (x , (first (e x)) c))
+        ( \ (x , d) → (x , (Equiv-inverse (C x) (D x) (e x)) d) ,
+          ( \ (x , c) →
+            ( eq-pair A C
+              ( x , (Equiv-inverse (C x) (D x) (e x)) ((first (e x)) c))
+              ( x , c)
+              ( refl , (Equiv-inverse-retraction-htpy (C x) (D x) (e x)) c)) ,
+            \ (x , d) →
+            ( eq-pair A D
+              ( x , (first (e x)) ((Equiv-inverse (C x) (D x) (e x)) d))
+              ( x , d)
+              ( refl , (Equiv-inverse-section-htpy (C x) (D x) (e x)) d)))))
+```

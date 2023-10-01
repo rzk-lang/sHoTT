@@ -656,44 +656,44 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
     equiv-triple-comp
       ( Iso ((x : X) → A x) (is-segal-function-type funext X A is-segal-A) f g)
       ( Σ ( α : nat-trans X A f g) ,
-        (x : X) →
+        ( x : X) →
         ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
-          (ev-components-nat-trans X A f g α x)))
+          ( ev-components-nat-trans X A f g α x)))
       ( Σ ( α' : nat-trans-components X A f g) ,
-        (x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
+        ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
       ( (x : X) → Iso (A x) (is-segal-A x) (f x) (g x))
       ( sigma-preserves-second
         ( nat-trans X A f g)
         ( \ α →
-          is-iso-arrow
+          ( is-iso-arrow
             ( (x : X) → A x)
             ( is-segal-function-type funext X A is-segal-A)
-            f g α)
+            f g α))
         ( \ α →
-          (x : X) →
-          is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
-            (ev-components-nat-trans X A f g α x))
+          ( x : X) →
+          ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
+            ( ev-components-nat-trans X A f g α x)))
         ( \ α → equiv-is-iso-pointwise-is-iso X A is-segal-A f g α))
       ( inv-equiv
         ( Σ ( α' : nat-trans-components X A f g) ,
-          (x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
+          ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
         ( Σ ( α : nat-trans X A f g) ,
-          (x : X) →
+          ( x : X) →
           ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
-            (ev-components-nat-trans X A f g α x)))
+            ( ev-components-nat-trans X A f g α x)))
         ( sigma-preserves-first
           ( nat-trans-components X A f g)
           ( nat-trans X A f g)
           ( \ α' →
-            (x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
+            ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
           ( equiv-components-nat-trans X A f g)))
       ( inv-equiv
         ( (x : X) → Iso (A x) (is-segal-A x) (f x) (g x))
         ( Σ ( α' : nat-trans-components X A f g) ,
-          (x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
+          ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
         ( equiv-choice X
-          (\ x → hom (A x) (f x) (g x))
-          (\ x αₓ → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) αₓ)))
+          ( \ x → hom (A x) (f x) (g x))
+          ( \ x αₓ → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) αₓ)))
 ```
 
 ## Rezk types

@@ -562,3 +562,225 @@ This is the dependent version of the currying equivalence.
               ( x , d)
               ( refl , (Equiv-inverse-section-htpy (C x) (D x) (e x)) d)))))
 ```
+
+```rzk
+#def sigma-preserves-first
+  ( A : U)
+  ( B : U)
+  ( C : A → U)
+  ( e : Equiv B A)
+  : Equiv (Σ (a : A) , C a) (Σ (b : B) , C ((first e) b))
+  :=
+    ( \ (a , c) →
+      ( (Equiv-corrected-inv B A e) a ,
+        transport A C a
+          ( (first e) ((Equiv-corrected-inv B A e) a))
+          ( rev A ((first e) ((Equiv-corrected-inv B A e) a)) a
+            ( Equiv-corrected-section-htpy B A e a))
+          ( c)) ,
+      is-equiv-has-inverse
+        ( Σ (a : A) , C a)
+        ( Σ (b : B) , C ((first e) b))
+        ( \ (a , c) →
+          ( (Equiv-corrected-inv B A e) a ,
+            ( transport A C a
+              ( (first e) ((Equiv-corrected-inv B A e) a))
+              ( rev A ((first e) ((Equiv-corrected-inv B A e) a)) a
+                ( Equiv-corrected-section-htpy B A e a))
+              ( c))))
+        ( \ (b , c) → ((first e) b , c) ,
+          ( \ (a , c) →
+            ( eq-pair A C
+              ( (first e) ((Equiv-corrected-inv B A e) a) ,
+                ( transport A C a
+                  ( (first e) ((Equiv-corrected-inv B A e) a))
+                  ( rev A ((first e) ((Equiv-corrected-inv B A e) a)) a
+                    ( Equiv-corrected-section-htpy B A e a))
+                  ( c)))
+              ( a , c)
+              ( Equiv-corrected-section-htpy B A e a ,
+                ( concat
+                  ( C a)
+                  ( transport A C
+                    ( (first e) (Equiv-corrected-inv B A e a))
+                    ( a)
+                    ( Equiv-corrected-section-htpy B A e a)
+                    ( transport A C
+                      ( a)
+                      ( (first e) (Equiv-corrected-inv B A e a))
+                      ( rev A ((first e) (Equiv-corrected-inv B A e a)) a
+                        ( Equiv-corrected-section-htpy B A e a))
+                      ( c)))
+                  ( transport A C
+                    ( a)
+                    ( a)
+                    ( concat A a
+                      ( (first e) (Equiv-corrected-inv B A e a))
+                      ( a)
+                      ( rev A ((first e) (Equiv-corrected-inv B A e a)) a
+                        ( Equiv-corrected-section-htpy B A e a))
+                      ( Equiv-corrected-section-htpy B A e a))
+                    ( c))
+                  ( c)
+                  ( transport-concat-rev A C
+                    ( a)
+                    ( (first e) (Equiv-corrected-inv B A e a))
+                    ( a)
+                    ( rev A ((first e) (Equiv-corrected-inv B A e a)) a
+                      ( Equiv-corrected-section-htpy B A e a))
+                    ( Equiv-corrected-section-htpy B A e a)
+                    ( c))
+                  ( ap (a = a) (C a)
+                    ( concat A a
+                      ( (first e) (Equiv-corrected-inv B A e a))
+                      ( a)
+                      ( rev A ((first e) (Equiv-corrected-inv B A e a)) a
+                        ( Equiv-corrected-section-htpy B A e a))
+                      ( Equiv-corrected-section-htpy B A e a))
+                    ( refl)
+                    (\ p → transport A C a a p c)
+                    ( left-inverse-concat A
+                      ( (first e) (Equiv-corrected-inv B A e a)) a
+                      ( Equiv-corrected-section-htpy B A e a)))))) ,
+            \ (b , c) →
+            ( eq-pair B (\ b → C ((first e) b))
+              ( Equiv-corrected-inv B A e ((first e) b) ,
+                ( transport A C ((first e) b)
+                  ( (first e) ((Equiv-corrected-inv B A e) ((first e) b)))
+                  ( rev A
+                    ( (first e) ((Equiv-corrected-inv B A e) ((first e) b)))
+                    ( (first e) b)
+                    ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                  ( c)))
+              ( b , c)
+              ( Equiv-inverse-retraction-htpy B A e b ,
+                ( quadruple-concat
+                  ( C ((first e) b))
+                  ( transport B (\ b → C ((first e) b))
+                    ( Equiv-corrected-inv B A e ((first e) b))
+                    ( b)
+                    ( Equiv-inverse-retraction-htpy B A e b)
+                    ( transport A C
+                      ( (first e) b)
+                      ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                      ( rev A
+                        ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                        ( (first e) b)
+                        ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                      ( c)))
+                  ( transport A C
+                    ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                    ( (first e) b)
+                    ( ap B A
+                      ( Equiv-corrected-inv B A e ((first e) b))
+                      ( b)
+                      ( first e)
+                      ( Equiv-inverse-retraction-htpy B A e b))
+                    ( transport A C
+                      ( (first e) b)
+                      ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                      ( rev A
+                        ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                        ( (first e) b)
+                        ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                      ( c)))
+                  ( transport A C
+                    ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                    ( (first e) b)
+                    ( Equiv-corrected-section-htpy B A e ((first e) b))
+                    ( transport A C
+                      ( (first e) b)
+                      ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                      ( rev A
+                        ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                        ( (first e) b)
+                        ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                      ( c)))
+                  ( transport A C
+                    ( ((first e) b))
+                    ( ((first e) b))
+                    ( concat A ((first e) b)
+                      ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                      ( ((first e) b))
+                      ( rev A
+                        ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                        ( (first e) b)
+                        ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                      ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                    ( c))
+                  ( c)
+                  ( transport-substitution B A C (first e)
+                    ( Equiv-corrected-inv B A e ((first e) b))
+                    ( b)
+                    ( Equiv-inverse-retraction-htpy B A e b)
+                    ( transport A C
+                      ( (first e) b)
+                      ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                      ( rev A
+                        ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                        ( (first e) b)
+                        ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                      ( c)))
+                  ( ap
+                    ( ( (first e) (Equiv-corrected-inv B A e ((first e) b))) =
+                      ( (first e) b))
+                    ( C ((first e) b))
+                    ( ap B A
+                      ( Equiv-corrected-inv B A e ((first e) b))
+                      ( b)
+                      ( first e)
+                      ( Equiv-inverse-retraction-htpy B A e b))
+                    ( Equiv-corrected-section-htpy B A e ((first e) b))
+                    ( \ p →
+                      transport A C
+                        ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                        ( (first e) b)
+                        ( p)
+                        ( transport A C
+                          ( (first e) b)
+                          ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                          ( rev A
+                            ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                            ( (first e) b)
+                            ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                          ( c)))
+                    ( rev
+                      ( ( (first e) (Equiv-corrected-inv B A e ((first e) b))) =
+                        ( (first e) b))
+                      ( Equiv-corrected-section-htpy B A e ((first e) b))
+                      ( ap B A
+                        ( Equiv-corrected-inv B A e ((first e) b))
+                        ( b)
+                        ( first e)
+                        ( Equiv-inverse-retraction-htpy B A e b))
+                      ( ( second
+                          ( is-half-adjoint-equiv-is-equiv B A (first e)
+                            ( second e)))
+                        ( b))))
+                  ( transport-concat-rev A C
+                    ( ((first e) b))
+                    ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                    ( ((first e) b))
+                    ( rev A
+                      ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                      ( (first e) b)
+                      ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                    ( Equiv-corrected-section-htpy B A e ((first e) b))
+                    ( c))
+                  ( ap (((first e) b) = ((first e) b)) (C ((first e) b))
+                    ( concat A ((first e) b)
+                      ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                      ( ((first e) b))
+                      ( rev A
+                        ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                        ( (first e) b)
+                        ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                      ( Equiv-corrected-section-htpy B A e ((first e) b)))
+                    ( refl)
+                    ( \ p → transport A C ((first e) b) ((first e) b) p c)
+                    ( left-inverse-concat A
+                      ( (first e) (Equiv-corrected-inv B A e ((first e) b)))
+                      ( (first e) b)
+                      ( Equiv-corrected-section-htpy B A e
+                        ( (first e) b))))))))))
+```

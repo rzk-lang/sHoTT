@@ -6,6 +6,12 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
+Some of the definitions in this file rely on function extensionality:
+
+```rzk
+#assume funext : FunExt
+```
+
 It is convenient to have a shorthand for `Σ (x : A), C x`
 which avoids explicit naming the variable `x : A`.
 
@@ -490,4 +496,67 @@ This is the dependent version of the currying equivalence.
             \ f → refl) ,
           ( \ f (a , b) → f a b ,
             \ s → refl))))
+```
+
+## Type theoretic principle of choice
+
+```rzk title="Rijke 22, Theorem 13.2.1"
+#def choice
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : ( (x : A) → Σ (y : B x) , C x y) →
+    ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+  := \ h → (\ x → first (h x) , \ x → second (h x))
+
+#def choice-inverse
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x)) →
+    ( (x : A) → Σ (y : B x) , C x y)
+  := \ s → \ x → ((first s) x , (second s) x)
+
+#def is-equiv-choice uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : is-equiv
+      ( (x : A) → Σ (y : B x) , C x y)
+      ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+      ( choice A B C)
+  :=
+    is-equiv-has-inverse
+      ( (x : A) → Σ (y : B x) , C x y)
+      ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+      ( choice A B C)
+      ( choice-inverse A B C ,
+        ( \ h →
+          ( eq-htpy funext A
+            ( \ x → Σ (y : B x) , C x y)
+            ( ( comp
+                ( (x : A) → Σ (y : B x) , C x y)
+                ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+                ( (x : A) → Σ (y : B x) , C x y)
+                ( choice-inverse A B C)
+                ( choice A B C))
+              ( h))
+            ( (identity ((x : A) → Σ (y : B x) , C x y)) h)
+            ( \ x →
+              eq-pair
+                ( B x)
+                ( \ y → C x y)
+                ( first (h x) , second (h x))
+                ( h x)
+                ( refl , refl))) ,
+          \ s → refl))
+
+#def equiv-choice uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : Equiv
+      ( (x : A) → Σ (y : B x) , C x y)
+      ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+  := (choice A B C , is-equiv-choice A B C)
 ```

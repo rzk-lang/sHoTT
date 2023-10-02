@@ -662,7 +662,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
       ( Σ ( α' : nat-trans-components X A f g) ,
         ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
       ( (x : X) → Iso (A x) (is-segal-A x) (f x) (g x))
-      ( sigma-preserves-second
+      ( total-equiv-family-equiv
         ( nat-trans X A f g)
         ( \ α →
           ( is-iso-arrow
@@ -674,19 +674,13 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
           ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
             ( ev-components-nat-trans X A f g α x)))
         ( \ α → equiv-is-iso-pointwise-is-iso X A is-segal-A f g α))
-      ( inv-equiv
-        ( Σ ( α' : nat-trans-components X A f g) ,
-          ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
-        ( Σ ( α : nat-trans X A f g) ,
-          ( x : X) →
-          ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
-            ( ev-components-nat-trans X A f g α x)))
-        ( sigma-preserves-first
-          ( nat-trans-components X A f g)
-          ( nat-trans X A f g)
-          ( \ α' →
-            ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
-          ( equiv-components-nat-trans X A f g)))
+      ( total-equiv-pullback-is-equiv
+        ( nat-trans X A f g)
+        ( nat-trans-components X A f g)
+        ( ev-components-nat-trans X A f g)
+        ( is-equiv-ev-components-nat-trans X A f g)
+        ( \ α' →
+          ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x)))
       ( inv-equiv
         ( (x : X) → Iso (A x) (is-segal-A x) (f x) (g x))
         ( Σ ( α' : nat-trans-components X A f g) ,

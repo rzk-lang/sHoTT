@@ -415,7 +415,7 @@ separate hypothesis.
 Function extensionality implies weak function extensionality.
 
 ```rzk
-#def map-for-weakfunext
+#def map-weakfunext
   (A : U)
   (C : A → U)
   (is-contr-C : (a : A) → is-contr (C a))
@@ -428,12 +428,12 @@ Function extensionality implies weak function extensionality.
   : WeakFunExt
   :=
   \ A C is-contr-C →
-  ( map-for-weakfunext A C is-contr-C ,
+  ( map-weakfunext A C is-contr-C ,
     ( \ g →
       ( eq-htpy funext
         ( A)
         ( C)
-        ( map-for-weakfunext A C is-contr-C)
+        ( map-weakfunext A C is-contr-C)
         ( g)
         ( \ a → second (is-contr-C a) (g a)))))
 ```

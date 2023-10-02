@@ -21,6 +21,13 @@ over `#!rzk f`.
   := Σ (b : B), hom (A → B) (constant A B b) f
 ```
 
+```rzk
+#def cone2
+  (A B : U)
+  : (f : A → B) → (b : B) → U
+  := \ f → \ b → (hom (A → B) (constant A B b) f)
+```
+
 Given a function `#!rzk f : A → B` and `#!rzk b:B` we define the type of cocones
 under `#!rzk f`.
 
@@ -30,6 +37,13 @@ under `#!rzk f`.
   ( f : A → B )
   : U
   := Σ (b : B), hom ( A → B) f (constant A B b)
+```
+
+```rzk
+#def cocone2
+  (A B : U)
+  : (f : A → B) → (b : B) → U
+  := \ f → \ b → (hom ( A → B) f (constant A B b))
 ```
 
 We define a colimit for `#!rzk f : A → B` as an initial cocone under `#!rzk f`.

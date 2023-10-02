@@ -302,3 +302,40 @@ then so is `ψ ⊂ ϕ ∪ ψ`.
          ( cofibration-union-functorial I ϕ ψ (\ _ → A') (\ _ → A) (\ _ → α) τ')
          ( is-orth-ϕ-ψ∧ϕ ( \ t → τ' t))
 ```
+
+## Types with unique extension
+
+We say that an type `A` has unique extensions for a shape inclusion `ϕ ⊂ ψ`,
+if for each `σ : ϕ → A` the type of `ψ`-extensions is contractible.
+
+```rzk
+#def has-unique-extensions
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : U)
+  : U
+  :=
+    ( σ : ϕ → A) → is-contr ( (t : ψ) → A [ϕ t ↦ σ t])
+```
+
+The property of having unique extension
+can be pulled back along any right orthogonal map.
+
+```rzk
+#def has-unique-extensions-right-orthogonal-has-unique-extensions
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A' A : U)
+  ( α : A' → A)
+  ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : has-unique-extensions I ψ ϕ A → has-unique-extensions I ψ ϕ A'
+  :=
+    \ has-ue-A ( σ' : ϕ → A') →
+      is-contr-equiv-is-contr'
+        ( ( t : ψ) → A' [ϕ t ↦ σ' t])
+        ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
+        ( \ τ' t → α (τ' t) , is-orth-ψ-ϕ-α σ')
+        ( has-ue-A (\ t → α (σ' t)))
+```

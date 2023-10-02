@@ -309,6 +309,25 @@ composite equals $h$.
         ( h , alpha))
 ```
 
+```rzk
+#def hom2-comp-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( h : hom A x z)
+  ( p : comp-is-segal A is-segal-A x y z f g = h)
+  : hom2 A x y z f g h
+  := ind-path
+      ( hom A x z)
+      ( comp-is-segal A is-segal-A x y z f g)
+      ( \ h _ → hom2 A x y z f g h)
+      ( witness-comp-is-segal A is-segal-A x y z f g)
+      ( h)
+      ( p)
+```
+
 ## Characterizing Segal types
 
 Our aim is to prove that a type is Segal if and only if the
@@ -1532,7 +1551,250 @@ As a special case of the above:
   </style>
 </svg>
 
+
+3d horn filling
+
+```rzk
+#section 3d-horn-filling
+
+#variable A : U
+#variable is-segal-A : is-segal A
+#variables x y z w : A
+#variable f : hom A x y
+#variable g : hom A y z
+#variable h : hom A z w
+#variable m : hom A x w
+
+#def horn-val
+  (k : hom A x z)
+  (l : hom A y w)
+  (p : comp-is-segal A is-segal-A x y z f g = k)
+  (q : comp-is-segal A is-segal-A y z w g h = l)
+  (r : comp-is-segal A is-segal-A x z w k h = m)
+  : (t : Λ³₂) → A
+  := \ ((t1, t2), t3) →
+    recOR (
+      t3 ≡ 0₂ ↦ hom2-comp-is-segal A is-segal-A x y z f g k p (t1,t2),
+      t1 ≡ 1₂ ↦ hom2-comp-is-segal A is-segal-A y z w g h l q (t2,t3),
+      t1 ≡ t2 ↦ hom2-comp-is-segal A is-segal-A x z w k h m r (t1,t3))
+
+#def Λ³₂-hole
+  : Δ³ → TOPE
+  := \ ((t1, t2), t3) → t2 ≡ t3
+
+#def missing-face-eq uses (extext)
+  (k : hom A x z)
+  (l : hom A y w)
+  (p : comp-is-segal A is-segal-A x y z f g = k)
+  (q : comp-is-segal A is-segal-A y z w g h = l)
+  (r : comp-is-segal A is-segal-A x z w k h = m)
+  : comp-is-segal A is-segal-A x y w f l = m
+  := zag-zig-concat
+      ( hom A x w)
+      ( comp-is-segal A is-segal-A x y w f l)
+      ( comp-is-segal A is-segal-A x y w f
+        ( comp-is-segal A is-segal-A y z w g h))
+      m
+      ( ap (hom A y w) (hom A x w)
+        ( comp-is-segal A is-segal-A y z w g h)
+        l
+        ( comp-is-segal A is-segal-A x y w f)
+        q)
+      ( zag-zig-concat (hom A x w)
+        ( comp-is-segal A is-segal-A x y w f
+          ( comp-is-segal A is-segal-A y z w g h))
+        ( comp-is-segal A is-segal-A x z w
+          ( comp-is-segal A is-segal-A x y z f g)
+          h)
+        m
+        ( associative-is-segal A is-segal-A x y z w f g h)
+        ( concat (hom A x w)
+          ( comp-is-segal A is-segal-A x z w
+            ( comp-is-segal A is-segal-A x y z f g)
+            h)
+          ( comp-is-segal A is-segal-A x z w k h)
+          m
+          ( ap (hom A x z) (hom A x w)
+            ( comp-is-segal A is-segal-A x y z f g)
+            k
+            ( \ k → comp-is-segal A is-segal-A x z w k h)
+            p)
+          r))
+
+#def missing-face uses (extext)
+  (k : hom A x z)
+  (l : hom A y w)
+  (p : comp-is-segal A is-segal-A x y z f g = k)
+  (q : comp-is-segal A is-segal-A y z w g h = l)
+  (r : comp-is-segal A is-segal-A x z w k h = m)
+  : (t : Λ³₂-hole) → A
+  := \ ((t1,t2), t3) →
+    hom2-comp-is-segal A is-segal-A x y w f l m
+      ( missing-face-eq k l p q r)
+      (t1, t2)
+
+
+#def proposition-5-16-statement -- uses (extext)
+  (k : hom A x z)
+  (l : hom A y w)
+  (p : comp-is-segal A is-segal-A x y z f g = k)
+  (q : comp-is-segal A is-segal-A y z w g h = l)
+  (r : comp-is-segal A is-segal-A x z w k h = m)
+  : U
+  := (t : Δ³) → A[
+      Λ³₂ t ↦ horn-val k l p q r t
+      -- ,
+      -- Λ³₂-hole t ↦ missing-face k l p q r t
+      ]
+
+#def fg-h-comp-type : U
+  :=
+    Σ (m : hom A x w) ,
+      hom2 A x z w ( comp-is-segal A is-segal-A x y z f g) h m
+
+#def m'-r' uses (extext)
+  : fg-h-comp-type
+  :=
+    ( triple-comp-is-segal A is-segal-A x y z w f g h,
+      left-witness-asociative-is-segal A is-segal-A x y z w f g h)
+
+#def m-r
+  (r : comp-is-segal A is-segal-A x z w (comp-is-segal A is-segal-A x y z f g) h = m)
+  : fg-h-comp-type
+  := ( m, hom2-comp-is-segal A is-segal-A x z w
+            (comp-is-segal A is-segal-A x y z f g) h m r)
+
+#def m'-r'-m-r-eq uses (extext m)
+  (r : comp-is-segal A is-segal-A x z w (comp-is-segal A is-segal-A x y z f g) h = m)
+  : m'-r' = m-r r
+  :=
+    eq-is-contr
+      ( fg-h-comp-type)
+      ( is-segal-A x z w ( comp-is-segal A is-segal-A x y z f g) h)
+      ( m'-r')
+      ( m-r r)
+
+#def fg-h-horn-filling-type uses (w)
+  : U
+  := (t : Δ²) → A[
+       π₂ t ≡ 0₂ ↦ comp-is-segal A is-segal-A x y z f g (π₁ t),
+       π₁ t ≡ 1₂ ↦ h (π₂ t) ]
+
+#def to-horn-filling
+  : fg-h-comp-type → fg-h-horn-filling-type
+  := first (compositions-are-horn-fillings A x z w
+      ( comp-is-segal A is-segal-A x y z f g) h)
+
+
+#def Δ²∪Δ²-over-Δ¹
+  : Δ³ → TOPE
+  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t1 ≡ 1₂
+
+#def 3-2-horn-reorder-type
+  : U
+  := Σ (α : (Δ²∪Δ²-over-Δ¹) → A), (t : Δ²) → A[ Λ²₁ t ↦ α ((π₁ t ,π₁ t), π₂ t)]
+
+#def 3-2-horn-reorder-fwd
+  ( f : (Λ³₂ → A))
+  : 3-2-horn-reorder-type
+  := ( \ t → f t, \ (t, s) → f ((t,t),s))
+
+#def 3-2-horn-reorder-bwd
+  : 3-2-horn-reorder-type → (Λ³₂ → A)
+  := \ (α , f) ((t1, t2), t3) →
+    recOR (
+      Δ²∪Δ²-over-Δ¹ ((t1, t2), t3) ↦ α ((t1, t2), t3),
+      t1 ≡ t2 ↦ f (t1, t3))
+
+#def 3-2-horn-reorder
+  : Equiv (Λ³₂ → A) 3-2-horn-reorder-type
+  :=
+    (3-2-horn-reorder-fwd,
+      ( (3-2-horn-reorder-bwd, \ t → refl),
+        (3-2-horn-reorder-bwd, \ t → refl)))
+
+#def gl uses (m A is-segal-A x y z w h g f extext)
+  (r : comp-is-segal A is-segal-A x z w (comp-is-segal A is-segal-A x y z f g) h = m)
+  : Λ³₂ → A
+  := 3-2-horn-reorder-bwd
+      ( \ t → tetrahedron-associative-is-segal A is-segal-A x y z w f g h t,
+        to-horn-filling (m-r r))
+
+#def gl' uses (A is-segal-A x y z w h g f extext)
+  : Λ³₂ → A
+  := 3-2-horn-reorder-bwd
+      ( \ t → tetrahedron-associative-is-segal A is-segal-A x y z w f g h t,
+        to-horn-filling m'-r')
+
+#def gl'-gl-eq uses (m A is-segal-A x y z w h g f extext)
+  (r : comp-is-segal A is-segal-A x z w (comp-is-segal A is-segal-A x y z f g) h = m)
+  : gl' = gl r
+  :=
+    ap
+      ( fg-h-comp-type)
+      ( Λ³₂ → A)
+      ( m'-r')
+      ( m-r r)
+      ( \ m-r →
+        3-2-horn-reorder-bwd
+          ( \ t → tetrahedron-associative-is-segal A is-segal-A x y z w f g h t,
+            to-horn-filling m-r))
+      ( m'-r'-m-r-eq r)
+
+
+#def proposition-5-16-helper uses (extext)
+  (r : comp-is-segal A is-segal-A x z w (comp-is-segal A is-segal-A x y z f g) h = m)
+  : proposition-5-16-statement
+      ( comp-is-segal A is-segal-A x y z f g)
+      ( comp-is-segal A is-segal-A y z w g h)
+      ( refl)
+      ( refl)
+      ( r)
+  :=
+    ind-path
+      ( Λ³₂ → A)
+      ( gl')
+      ( \ gl _ → (t : Δ³) → A[Λ³₂ t ↦ gl t])
+      ( \ t → tetrahedron-associative-is-segal A is-segal-A x y z w f g h t)
+      ( gl r)
+      ( gl'-gl-eq r)
+
+#def proposition-5-16 uses (extext)
+  (k : hom A x z)
+  (l : hom A y w)
+  (p : comp-is-segal A is-segal-A x y z f g = k)
+  (q : comp-is-segal A is-segal-A y z w g h = l)
+  (r : comp-is-segal A is-segal-A x z w k h = m)
+  : proposition-5-16-statement k l p q r
+  := ind-path
+      ( hom A x z)
+      ( comp-is-segal A is-segal-A x y z f g)
+      ( \ k p →
+        (r : comp-is-segal A is-segal-A x z w k h = m) →
+          proposition-5-16-statement k l p q r)
+      ( \ r →
+        ind-path
+          ( hom A y w)
+          ( comp-is-segal A is-segal-A y z w g h)
+          ( \ l q → proposition-5-16-statement
+              ( comp-is-segal A is-segal-A x y z f g)
+              ( l)
+              ( refl)
+              ( q)
+              ( r))
+        (proposition-5-16-helper r)
+        ( l)
+        ( q))
+      ( k)
+      ( p)
+      ( r)
+
+
+#end 3d-horn-filling
+```
+
 Interchange law
+
 
 ```rzk
 #section homotopy-interchange-law
@@ -1681,19 +1943,19 @@ The cofibration Λ²₁ → Δ² is inner anodyne
 ```
 
 ```rzk title="RS17, lemma 5.21"
-#section retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
+#section retraction-Λ³₁-Δ³-pushout-product-Λ²₁-Δ²
 
--- Δ³×Λ²₁ ∪_{Λ³₂×Λ²₁} Λ³₂×Δ²
-#def pushout-prod-Λ³₂-Λ²₁
+-- Δ³×Λ²₁ ∪_{Λ³₁×Λ²₁} Λ³₁×Δ²
+#def pushout-prod-Λ³₁-Λ²₁
   : (Δ³×Δ²) → TOPE
-  := shape-pushout-prod (2 × 2 × 2) (2 × 2) Δ³ Λ³₂ Δ² Λ²₁
+  := shape-pushout-prod (2 × 2 × 2) (2 × 2) Δ³ Λ³₁ Δ² Λ²₁
 
 
 #variable A : U
-#variable h : Λ³₂ → A
+#variable h : Λ³₁ → A
 
 #def h^
-  : pushout-prod-Λ³₂-Λ²₁ → A
+  : pushout-prod-Λ³₁-Λ²₁ → A
   := \ ( ((t1, t2), t3), (s1, s2) ) →
     recOR
       ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ h ((t1, t2), t3),
@@ -1704,22 +1966,22 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         t1 ≤ s1 ∧ s2 ≤ t3 ↦ h ((s1, s2), s2))
 
 
-#def extend-against-Λ³₂-Δ³
+#def extend-against-Λ³₁-Δ³
   : U
-  := (t : Δ³) → A[ Λ³₂ t ↦ h t ]
+  := (t : Δ³) → A[ Λ³₁ t ↦ h t ]
 
-#def extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (h)
+#def extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² uses (h)
   : U
-  := (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
+  := (x : Δ³×Δ²) → A[ pushout-prod-Λ³₁-Λ²₁ x ↦ h^ x]
 
-#def retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
-  (f : extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
-  : extend-against-Λ³₂-Δ³
+#def retract-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² uses (A h)
+  (f : extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²)
+  : extend-against-Λ³₁-Δ³
   := \ ((t1, t2), t3) → f ( ((t1, t2), t3), (t1, t2) )
 
-#def section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
-  (g : (t : Δ³) → A[ Λ³₂ t ↦ h t ])
-  : (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
+#def section-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² uses (A h)
+  (g : (t : Δ³) → A[ Λ³₁ t ↦ h t ])
+  : (x : Δ³×Δ²) → A[ pushout-prod-Λ³₁-Λ²₁ x ↦ h^ x]
   :=
     \ ( ((t1, t2), t3), (s1, s2) ) →
     recOR
@@ -1730,41 +1992,41 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         s1 ≤ t1 ∧ s2 ≤ t3 ↦ g ((t1, s2), s2),
         t1 ≤ s1 ∧ s2 ≤ t3 ↦ g ((s1, s2), s2))
 
-#def homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
-  : homotopy extend-against-Λ³₂-Δ³ extend-against-Λ³₂-Δ³
+#def homotopy-retraction-section-id-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² uses (A h)
+  : homotopy extend-against-Λ³₁-Δ³ extend-against-Λ³₁-Δ³
     ( comp
-      ( extend-against-Λ³₂-Δ³)
-      ( extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
-      ( extend-against-Λ³₂-Δ³)
-      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
-      ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
-    ( identity extend-against-Λ³₂-Δ³)
+      ( extend-against-Λ³₁-Δ³)
+      ( extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²)
+      ( extend-against-Λ³₁-Δ³)
+      ( retract-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²)
+      ( section-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²))
+    ( identity extend-against-Λ³₁-Δ³)
   := \ t → refl
 
 #def is-retract-of-Δ³-Δ³×Δ² uses (A h)
   : is-retract-of
-      extend-against-Λ³₂-Δ³
-      extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
+      extend-against-Λ³₁-Δ³
+      extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²
   :=
-    ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,
-      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,
-        homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
+    ( section-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² ,
+      ( retract-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² ,
+        homotopy-retraction-section-id-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²))
 
-#end retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
+#end retraction-Λ³₁-Δ³-pushout-product-Λ²₁-Δ²
 
-#def is-inner-anodyne-Δ³-Λ³₂ uses (weakextext)
-  : is-inner-anodyne (2 × 2 × 2) Δ³ Λ³₂
+#def is-inner-anodyne-Δ³-Λ³₁ uses (weakextext)
+  : is-inner-anodyne (2 × 2 × 2) Δ³ Λ³₁
   :=
     \ A is-segal-A h →
     is-contr-is-retract-of-is-contr
-      (extend-against-Λ³₂-Δ³ A h)
-      (extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)
+      (extend-against-Λ³₁-Δ³ A h)
+      (extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² A h)
       (is-retract-of-Δ³-Δ³×Δ² A h)
       (is-inner-anodyne-pushout-product-right-is-inner-anodyne
         ( 2 × 2 × 2)
         ( 2 × 2)
         ( Δ³)
-        ( Λ³₂)
+        ( Λ³₁)
         ( Δ²)
         ( Λ²₁)
         ( is-inner-anodyne-Λ²₁)

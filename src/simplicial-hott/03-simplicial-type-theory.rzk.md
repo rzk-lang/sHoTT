@@ -54,10 +54,10 @@ This is a literate `rzk` file:
 
 ```rzk
 #def Λ³₁ : Δ³ → TOPE
-  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t2 ≡ t1 ∨ t1 ≡ 1₂
+  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t2 ≡ t3 ∨ t1 ≡ 1₂
 
 #def Λ³₂ : Δ³ → TOPE
-  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t3 ≡ t2 ∨ t1 ≡ 1₂
+  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t1 ≡ t2 ∨ t1 ≡ 1₂
 ```
 
 ### Products

@@ -101,7 +101,7 @@ A type is a proposition when its identity types are contractible.
 
 ## Properties of propositions
 
-If some family `#!rzk B : A A → U` is fiberwise a proposition, then the type of
+If some family `#!rzk B : A → U` is fiberwise a proposition, then the type of
 dependent functions `#!rzk (x : A) → B x` is a proposition.
 
 ```rzk

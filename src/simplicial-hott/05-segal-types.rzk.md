@@ -1532,9 +1532,79 @@ As a special case of the above:
   </style>
 </svg>
 
-### Inner anodyne maps
+Interchange law
 
-```rzk title="RS17, definition 5.19"
+```rzk
+#section homotopy-interchange-law
+
+#variable A : U
+#variable is-segal-A : is-segal A
+#variables x y z : A
+
+#def homotopy-interchange-law-statement
+  ( f1 f2 f3 : hom A x y)
+  ( h1 h2 h3 : hom A y z)
+  ( p : f1 = f2)
+  ( q : f2 = f3)
+  ( p' : h1 = h2)
+  ( q' : h2 = h3)
+  : U
+  := congruence-homotopy-is-segal A is-segal-A x y z f1 f3 h1 h3
+      ( concat (hom A x y) f1 f2 f3 p q)
+      ( concat (hom A y z) h1 h2 h3 p' q') =
+    concat
+      ( hom A x z)
+      ( comp-is-segal A is-segal-A x y z f1 h1)
+      ( comp-is-segal A is-segal-A x y z f2 h2)
+      ( comp-is-segal A is-segal-A x y z f3 h3)
+      ( congruence-homotopy-is-segal A is-segal-A x y z f1 f2 h1 h2 p p')
+      ( congruence-homotopy-is-segal A is-segal-A x y z f2 f3 h2 h3 q q')
+```
+
+```rzk title="RS17, Proposition 5.15"
+#def homotopy-interchange-law
+  ( f1 f2 f3 : hom A x y)
+  ( h1 h2 h3 : hom A y z)
+  ( p : f1 = f2)
+  ( q : f2 = f3)
+  ( p' : h1 = h2)
+  ( q' : h2 = h3)
+  : homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q'
+  := ind-path
+    ( hom A x y)
+    ( f2)
+    ( \ f3 q -> homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q')
+    ( ind-path
+      ( hom A x y)
+      ( f1)
+      ( \ f2 p -> homotopy-interchange-law-statement f1 f2 f2 h1 h2 h3
+          p refl p' q')
+      ( ind-path
+        ( hom A y z)
+        ( h2)
+        ( \ h3 q' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h3
+            refl refl p' q')
+        ( ind-path
+          ( hom A y z)
+          ( h1)
+          ( \ h2 p' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h2
+              refl refl p' refl)
+          ( refl)
+          ( h2)
+          ( p'))
+        ( h3)
+        ( q'))
+      ( f2)
+      ( p))
+    ( f3)
+    ( q)
+
+#end homotopy-interchange-law
+```
+
+## Inner anodyne maps
+
+```rzk title="RS17, Definition 5.19"
 
 #def is-inner-anodyne
   (I : CUBE)
@@ -1701,4 +1771,53 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         ( A)
         ( is-segal-A)
         ( h^ A h))
+```
+
+## Products of Segal Types
+
+This is an additional section which describes morphisms in products of types as products of morphisms.
+It is implicitly stated in Proposition 8.21.
+
+```rzk
+#section morphisms-of-products-is-products-of-morphisms
+#variables A B : U
+#variable p : ( product A B )
+#variable p' : ( product A B )
+
+#def morphism-in-product-to-product-of-morphism
+  : hom ( product A B ) p p' →
+    product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) )
+  :=  \ f → ( \ ( t : Δ¹ ) → first ( f t ) , \ ( t : Δ¹ ) → second ( f t ) )
+
+#def product-of-morphism-to-morphism-in-product
+  : product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) ) →
+    hom ( product A B ) p p'
+  := \ ( f , g ) ( t : Δ¹ ) → ( f t , g t )
+
+#def morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id
+  : ( f :  product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) ) ) →
+    ( morphism-in-product-to-product-of-morphism )
+    ( ( product-of-morphism-to-morphism-in-product )
+      f ) = f
+  := \ f → refl
+
+#def product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id
+  : ( f :  hom ( product A B ) p p' ) →
+    ( product-of-morphism-to-morphism-in-product )
+    ( ( morphism-in-product-to-product-of-morphism )
+      f ) = f
+  := \ f → refl
+
+#def morphism-in-product-equiv-product-of-morphism
+  : Equiv
+    ( hom ( product A B ) p p' )
+    ( product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) ) )
+  :=
+    ( ( morphism-in-product-to-product-of-morphism ) ,
+      ( ( ( product-of-morphism-to-morphism-in-product ) ,
+          ( product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id ) ) ,
+        ( ( product-of-morphism-to-morphism-in-product ) ,
+          ( morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id ) ) ) )
+
+#end morphisms-of-products-is-products-of-morphisms
 ```

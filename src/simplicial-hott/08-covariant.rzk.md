@@ -1,4 +1,4 @@
-# Covariantly functorial type families
+# Covariant families
 
 These formalisations correspond to Section 8 of the RS17 paper.
 
@@ -740,7 +740,7 @@ Now we introduce the hypothesis that A is Segal type.
     equiv-projection-contractible-fibers
       ( hom2 A a x y u f d)
       ( \ α → (Σ (v : hom A a y) , (v = d)))
-      ( \ α → is-contr-codomain-based-paths (hom A a y) d)
+      ( \ α → is-contr-endpoint-based-paths (hom A a y) d)
 
 #def is-segal-representable-dhom-from-hom2
   ( A : U)
@@ -1351,8 +1351,8 @@ domain are equivalent:
 #end dhom-from-equivalence
 ```
 
-Now we introduce the hypothesis that $C$ is covariant in the form of
-`has-unique-fixed-domain-lifts`.
+Now we introduce the hypothesis that `#!rzk C` is covariant in the form of
+`#!rzk has-unique-fixed-domain-lifts`.
 
 ```rzk
 #def equiv-has-unique-fixed-domain-lifts uses (extext)

@@ -226,29 +226,6 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
   := Σ (f : A → B) , (is-equiv A B f)
 ```
 
-Some helper definitions to ease the access to the map and homotopies of the
-inverse associated to an equivalence:
-
-```rzk
-#def Equiv-inverse
-  ( A B : U)
-  ( e : Equiv A B)
-  : B → A
-  := first (has-inverse-is-equiv A B (first e) (second e))
-
-#def Equiv-inverse-retraction-htpy
-  ( A B : U)
-  ( e : Equiv A B)
-  : homotopy A A (comp A B A (Equiv-inverse A B e) (first e)) (identity A)
-  := first (second (has-inverse-is-equiv A B (first e) (second e)))
-
-#def Equiv-inverse-section-htpy
-  ( A B : U)
-  ( e : Equiv A B)
-  : homotopy B B (comp B A B (first e) (Equiv-inverse A B e)) (identity B)
-  := second (second (has-inverse-is-equiv A B (first e) (second e)))
-```
-
 The data of an equivalence is not symmetric so we promote an equivalence to an
 invertible map to prove symmetry:
 

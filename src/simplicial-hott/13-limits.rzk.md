@@ -24,8 +24,23 @@ over `#!rzk f`.
 ```rzk
 #def cone2
   (A B : U)
-  : (f : A → B) → (b : B) → U
+  : (A → B) → (B) → U
   := \ f → \ b → (hom (A → B) (constant A B b) f)
+```
+```rzk
+#def constant-natural-transformation
+  (A B : U)
+  : B → B → U
+  := \ x → \ y → (hom (A → B) (constant A B x) (constant A B x))
+```
+
+```rzk
+#def cone-precomposition
+  (A B : U)
+  ( f : A → B )
+  ( b x : B )
+  : (cone2 A B f x) → (hom B b x) →  (cone2 A B f b)
+  := \ α k → compose α k
 ```
 
 Given a function `#!rzk f : A → B` and `#!rzk b:B` we define the type of cocones

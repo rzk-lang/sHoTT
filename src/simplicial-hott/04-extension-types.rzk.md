@@ -294,8 +294,8 @@ We refer to another form as an "extension extensionality" axiom.
     ( ϕ : ψ → TOPE) →
     ( A : ψ → U) →
     ( a : (t : ϕ) → A t) →
-    ( f : (t : ψ) → A t [ϕ t ↦ a t]) →
-    ( g : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( f  : (t : ψ) → A t [ϕ t ↦ a t]) →
+    ( g : (t : ψ ) → A t [ϕ t ↦ a t]) →
     is-equiv
       ( f = g)
       ( (t : ψ) → (f t = g t) [ϕ t ↦ refl])
@@ -315,9 +315,11 @@ We refer to another form as an "extension extensionality" axiom.
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
 ```
 
-Sometimes, an even weaker form of extension extensionality suffices.
+For readability of code, it is useful to the function that supplies an equality
+between terms of an extension type from a pointwise equality extending refl. In
+fact, sometimes only this weaker form of the axiom is needed.
 
-```rzk title="Very weak extension extensionality"
+```rzk
 #def NaiveExtExt
   : U
   :=
@@ -347,7 +349,7 @@ cases an extension type to a function type.
 ```rzk
 #section rs-4-8
 
-#variable  weak-ext-ext : WeakExtExt
+#variable  weakextext : WeakExtExt
 #variable  I : CUBE
 #variable  ψ : I → TOPE
 #variable  ϕ : ψ → TOPE
@@ -359,11 +361,11 @@ cases an extension type to a function type.
   : ((t : ψ ) → A t)
   := f
 
-#define is-contr-ext-based-paths uses (weak-ext-ext f)
+#define is-contr-ext-based-paths uses (weakextext f)
   : is-contr ((t : ψ ) → (Σ (y : A t) ,
               ((ext-projection-temp) t = y))[ϕ t ↦ (a t , refl)])
   :=
-    weak-ext-ext
+    weakextext
     ( I )
     ( ψ )
     ( ϕ )
@@ -372,12 +374,12 @@ cases an extension type to a function type.
       is-contr-based-paths (A t ) ((ext-projection-temp) t))
     ( \ t → (a t , refl) )
 
-#define is-contr-ext-codomain-based-paths uses (weak-ext-ext f)
+#define is-contr-ext-endpoint-based-paths uses (weakextext f)
   : is-contr
     ( ( t : ψ) →
       ( Σ (y : A t) , (y = ext-projection-temp t)) [ ϕ t ↦ (a t , refl)])
   :=
-    weak-ext-ext
+    weakextext
     ( I)
     ( ψ)
     ( ϕ)
@@ -385,7 +387,7 @@ cases an extension type to a function type.
     ( \ t → is-contr-endpoint-based-paths (A t) (ext-projection-temp t))
     ( \ t → (a t , refl))
 
-#define is-contr-based-paths-ext uses (weak-ext-ext)
+#define is-contr-based-paths-ext uses (weakextext)
   : is-contr (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) ,
               (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
   :=
@@ -410,7 +412,7 @@ cases an extension type to a function type.
 The map that defines extension extensionality
 
 ```rzk title="RS17 4.7"
-#define ext-ext-weak-ext-ext-map
+#define extext-weakextext-map
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -431,8 +433,8 @@ The map that defines extension extensionality
 The total bundle version of extension extensionality
 
 ```rzk
-#define ext-ext-weak-ext-ext-bundle-version
-  ( weak-ext-ext : WeakExtExt)
+#define extext-weakextext-bundle-version
+  ( weakextext : WeakExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -442,7 +444,7 @@ The total bundle version of extension extensionality
   : is-equiv ((Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g)))
                (Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]) ,
                   ((t : ψ ) → (f t = g t) [ϕ t ↦ refl]))
-               (ext-ext-weak-ext-ext-map I ψ ϕ A a f)
+               (extext-weakextext-map I ψ ϕ A a f)
   :=
     is-equiv-are-contr
     ( Σ (g : (t : ψ ) → A t [ϕ t ↦ a t]), (f = g)  )
@@ -451,8 +453,8 @@ The total bundle version of extension extensionality
     ( is-contr-based-paths
       ( (t : ψ ) → A t [ϕ t ↦ a t])
       ( f ))
-    ( is-contr-based-paths-ext weak-ext-ext I ψ ϕ A a f)
-    ( ext-ext-weak-ext-ext-map I ψ ϕ A a f)
+    ( is-contr-based-paths-ext weakextext I ψ ϕ A a f)
+    ( extext-weakextext-map I ψ ϕ A a f)
 ```
 
 Finally, using equivalences between families of equivalences and bundles of
@@ -460,16 +462,16 @@ equivalences we have that weak extension extensionality implies extension
 extensionality. The following is statement the as proved in RS17.
 
 ```rzk title="RS17 Prop 4.8(i) as proved"
-#define ext-ext-weak-ext-ext'
-  ( weak-ext-ext : WeakExtExt)
+#define extext-weakextext'
+  ( weakextext : WeakExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
   ( A : ψ → U)
   ( a : (t : ϕ ) → A t)
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
-  : (g : (t : ψ ) → A t [ϕ t ↦ a t])
-     → is-equiv
+  : (g : (t : ψ ) → A t [ϕ t ↦ a t]) →
+      is-equiv
         ( f = g)
         ( (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
         ( ext-htpy-eq I ψ ϕ A a f g)
@@ -478,18 +480,18 @@ extensionality. The following is statement the as proved in RS17.
       ( \ g → (f = g) )
       ( \ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
       ( ext-htpy-eq I ψ ϕ A a f)
-      ( ext-ext-weak-ext-ext-bundle-version weak-ext-ext I ψ ϕ A a f)
+      ( extext-weakextext-bundle-version weakextext I ψ ϕ A a f)
 ```
 
 The following is the literal statement of weak extension extensionality implying
 extension extensionality that we get by extraccting the fiberwise equivalence.
 
 ```rzk title="RS17 Proposition 4.8(i)"
-#define ext-ext-weak-ext-ext
-  (weak-ext-ext : WeakExtExt)
+#define extext-weakextext
+  (weakextext : WeakExtExt)
   :  ExtExt
   := \ I ψ ϕ A a f g →
-      ext-ext-weak-ext-ext' weak-ext-ext I ψ ϕ A a f g
+      extext-weakextext' weakextext I ψ ϕ A a f g
 ```
 
 ## Applications of extension extensionality
@@ -572,13 +574,62 @@ arguments below.
 
 ```
 
-The homotopy extension property follows from a straightforward application of
-the axiom of choice to the point of contraction for weak extension
-extensionality.
+The homotopy extension property has the following signature. We state this
+separately since below we will will both show that this follows from extension
+extensionality, but we will also show that extension extensionality follows from
+the homotopy extension property together with extra hypotheses.
+
+```rzk
+#define HtpyExtProperty
+  : U
+  :=
+    ( I : CUBE) →
+    ( ψ : I → TOPE) →
+    ( ϕ : ψ → TOPE) →
+    ( A : ψ → U) →
+    ( b : (t : ψ) → A t) →
+    ( a : (t : ϕ) → A t) →
+    ( e : (t : ϕ) → a t = b t) →
+      Σ (a' : (t : ψ) → A t [ϕ t ↦ a t]) ,
+      ((t : ψ) → (restrict I ψ ϕ A a a' t = b t) [ϕ t ↦ e t])
+
+```
+
+If we assume weak extension extensionality, then then homotopy extension
+property follows from a straightforward application of the axiom of choice to
+the point of contraction for weak extension extensionality.
+
+```rzk title="RS17 Proposition 4.10
+#define htpy-ext-property-weakextext
+  ( weakextext : WeakExtExt)
+  : HtpyExtProperty
+  :=
+    \ I ψ ϕ A b a e →
+    first
+    ( axiom-choice
+      ( I)
+      ( ψ)
+      ( ϕ)
+      ( A)
+      ( \ t y → y = b t)
+      ( a)
+      ( e))
+    ( first
+      ( weakextext
+        ( I)
+        ( ψ)
+        ( ϕ)
+        ( \ t → (Σ (y : A t) , y = b t))
+        ( \ t → is-contr-endpoint-based-paths
+                ( A t)
+                ( b t))
+        ( \ t → ( a t , e t) )))
+
+```
 
 ```rzk title="RS17 Proposition 4.10"
-#define htpy-ext-property
-  ( weak-ext-ext : WeakExtExt)
+#define htpy-ext-prop-weakextext
+  ( weakextext : WeakExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -599,7 +650,7 @@ extensionality.
       ( a)
       ( e))
     ( first
-      ( weak-ext-ext
+      ( weakextext
         ( I)
         ( ψ)
         ( ϕ)
@@ -644,10 +695,18 @@ Both directions of this statement will be needed.
 
 ```
 
+The below gives us the inhabitant
+$(a', e') : \sum_{\left\langle\prod_{t : I|\psi} A (t) \biggr|^\phi_a\right\rangle} \left\langle \prod_{t: I |\psi} a'(t) = b(t)\biggr|^\phi_e \right\rangle$
+from the first part of the proof of RS Prop 4.11. It amounts to the fact that
+parameterized contractibility, i.e. $A : \{t : I | \psi\} → \mathcal{U}$ such
+that each $A(t)$ is contractible, implies the hypotheses of the homotopy
+extension property are satisfied, and so assuming homotopy extension property,
+we are entitled to the conclusion.
+
 ```rzk
 
-#define first-4-11
-  (weak-ext-ext : WeakExtExt)
+#define htpy-ext-prop-is-fiberwise-contr
+  (htpy-ext-property : HtpyExtProperty)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -661,19 +720,23 @@ Both directions of this statement will be needed.
               [ϕ t ↦ codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A t] )
   :=
     htpy-ext-property
-    ( weak-ext-ext)
     ( I )
     ( ψ )
     ( ϕ )
     ( A )
     (\ t →  first (is-contr-fiberwise-A t))
-    ( a )
-    ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A )
+    ( a)
+    ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A)
 ```
 
+The expression below give us the inhabitant
+$c : \prod_{t: I | \psi} f(t) = a' (t)$ used in the proof of RS Proposition
+4.11. It follows from a more general statement about the contractibility of
+identity types, but it is unclear if that generality is needed.
+
 ```rzk
-#define second-4-11
-  (weak-ext-ext : WeakExtExt)
+#define RS-4-11-c
+  (htpy-ext-prop : HtpyExtProperty)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -681,10 +744,116 @@ Both directions of this statement will be needed.
   ( a : (t : ϕ ) → A t)
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
-  : (t : ψ ) → f t = (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t
+  : (t : ψ ) → f t = (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t
   := \ t → eq-is-contr
               ( A t)
               ( is-contr-fiberwise-A t)
               ( f t )
-              ( restrict I ψ ϕ A a (first (first-4-11 weak-ext-ext I ψ ϕ A a is-contr-fiberwise-A)) t)
+              ( restrict I ψ ϕ A a (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t)
+```
+
+And below proves that `#!rzk c(t) = refl`. Again, this is a consequence of a
+slightly more general statement.
+
+```rzk
+#define RS-4-11-c-is-refl
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-fiberwise-contr : (t : ψ ) → is-contr (A t))
+  ( a : (t : ϕ ) → A t)
+  ( f : (t : ψ ) → A t [ϕ t ↦ a t])
+  ( a' : (t : ψ ) → A t [ϕ t ↦ a t])
+  ( c : (t : ψ ) → (f t = a' t))
+  : (t : ϕ ) → (refl =_{f t = a' t} c t)
+  :=  \ t →
+    all-paths-eq-is-contr
+    ( A t)
+    ( is-fiberwise-contr t)
+    ( f t)
+    ( a' t)
+    ( refl )
+    ( c t )
+```
+
+Given the `#rzk! a'` produced above, the following gives an inhabitant of
+$\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
+
+```rzk
+#define is-fiberwise-contr-ext-is-fiberwise-contr
+  (htpy-ext-prop : HtpyExtProperty)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
+ -- ( b : (t : ψ) → A t)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ ) → A t [ϕ t ↦ a t])
+  : (t : ψ ) →
+      (f t = (first
+              (htpy-ext-prop-is-fiberwise-contr
+                htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t)[ϕ t ↦ refl]
+  :=
+  first(
+    htpy-ext-prop
+    ( I )
+    ( ψ )
+    ( ϕ )
+    ( \ t → f t = first
+                  (htpy-ext-prop-is-fiberwise-contr
+                    htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A) t)
+    ( RS-4-11-c
+      htpy-ext-prop I ψ ϕ A a f is-contr-fiberwise-A)
+    ( \ t → refl )
+    ( RS-4-11-c-is-refl
+      ( I)
+      ( ψ)
+      ( ϕ)
+      ( A)
+      ( is-contr-fiberwise-A)
+      ( a )
+      ( f )
+      ( first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A))
+      ( RS-4-11-c
+        ( htpy-ext-prop)
+        ( I)
+        ( ψ)
+        ( ϕ)
+        ( A)
+        ( a)
+        ( f)
+        ( is-contr-fiberwise-A ))))
+
+#define weak-ext-ext-from-eq-ext-htpy-htpy-ext-property
+ (naiveextext : NaiveExtExt)
+ (htpy-ext-prop : HtpyExtProperty)
+ : WeakExtExt
+  := \ I ψ ϕ A is-contr-fiberwise-A a →
+    (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A),
+     \ f →
+      rev
+      ( (t : ψ ) → A t [ϕ t ↦ a t])
+      ( f )
+      ( first (htpy-ext-prop-is-fiberwise-contr
+                htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A))
+      (naiveextext
+      ( I)
+      ( ψ )
+      ( ϕ )
+      ( A)
+      ( a)
+      ( f)
+      ( first (htpy-ext-prop-is-fiberwise-contr
+                htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A))
+      ( is-fiberwise-contr-ext-is-fiberwise-contr
+        ( htpy-ext-prop)
+        ( I)
+        ( ψ )
+        ( ϕ )
+        ( A)
+        ( is-contr-fiberwise-A)
+        ( a)
+        ( f))))
 ```

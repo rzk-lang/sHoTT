@@ -28,19 +28,31 @@ over `#!rzk f`.
   := \ f → \ b → (hom (A → B) (constant A B b) f)
 ```
 ```rzk
-#def constant-natural-transformation
+#def constant-nat-trans-components
   (A B : U)
-  : B → B → U
-  := \ x → \ y → (hom (A → B) (constant A B x) (constant A B x))
+  ( x y : B )
+  ( k : hom B x y)
+  : hom (A → B) (constant A B x) (constant A B y)
+  := \ t a → ( constant A ( hom B x y ) k ) a t
 ```
+
+
 
 ```rzk
 #def cone-precomposition
-  (A B : U)
+  ( A B : U)
+  ( is-segal-B : is-segal B)
   ( f : A → B )
   ( b x : B )
   : (cone2 A B f x) → (hom B b x) →  (cone2 A B f b)
-  := \ α k → compose α k
+  := \ α k → vertical-comp-nat-trans
+              ( A)
+              ( \ a → B )
+              ( \ a → is-segal-B )
+              ( constant A B b)
+              ( constant A B x)
+              ( \ a → \ t → constant-nat-trans A B b x k a t)
+              ( α)
 ```
 
 Given a function `#!rzk f : A → B` and `#!rzk b:B` we define the type of cocones

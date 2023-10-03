@@ -93,7 +93,6 @@ Another definition of limit.
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
-  ( is-segal-B : is-segal B)
   : U
   := Σ (b : B),
      Σ ( c : cone2 A B f b ),
@@ -136,14 +135,29 @@ Another definition of colimit.
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
-  ( is-segal-B : is-segal B)
   : U
   := Σ (b : B),
      Σ ( c : cocone2 A B f b ),
      ( x : B) → ( k : hom B x b)
       → is-equiv (cocone2 A B f x) (cocone2 A B f b) (cocone-postcomposition A B is-segal-B f x b k )
 ```
+The following alternative definition does not require a Segalness condition. When
+`#!rzk is-segal B` then definitions 1 and 3 coincide.
 
+```rzk
+#def limit3
+  ( A B : U)
+  ( f : A → B)
+  : U
+  := Σ ( b : B),(x : B) → Equiv (hom B b x ) (cone2 A B f x)
+```
+```rzk
+#def colimit3
+  ( A B : U)
+  ( f : A → B)
+  : U
+  := Σ ( b : B),(x : B) → Equiv (hom B x b ) (cocone2 A B f x)
+```
 
 ## Uniqueness of initial and final objects.
 

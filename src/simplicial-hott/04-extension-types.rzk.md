@@ -162,6 +162,31 @@ The original form.
     ( \ h → (\ t → h t , \ t → h t) ,
       ( ( \ (_f , g) t → g t , \ h → refl) ,
         ( ( \ (_f , g) t → g t , \ h → refl))))
+
+#def cofibration-composition-functorial
+  ( I : CUBE)
+  ( χ : I → TOPE)
+  ( ψ : χ → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A' A : χ → U)
+  ( α : (t : χ) → A' t → A t)
+  ( σ' : (t : ϕ) → A' t)
+  : Equiv-of-maps
+     ( (t : χ) → A' t [ϕ t ↦ σ' t])
+     ( (t : χ) → A t [ϕ t ↦ α t (σ' t)])
+     ( \ τ' t → α t (τ' t))
+     ( Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t]) ,
+        ( (t : χ) → A' t [ψ t ↦ τ' t]))
+     ( Σ ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)]) ,
+        ( (t : χ) → A t [ψ t ↦ τ t]))
+     ( \ (τ', υ') → ( \ t → α t (τ' t), \t → α t (υ' t)))
+  :=
+    ( ( ( \ h → (\ t → h t , \ t → h t) , \ h → (\ t → h t , \ t → h t)),
+        \ _ → refl),
+      ( ( ( \ (_f , g) t → g t , \ h → refl) ,
+          ( ( \ (_f , g) t → g t , \ h → refl))),
+        ( ( \ (_f , g) t → g t , \ h → refl) ,
+          ( ( \ (_f , g) t → g t , \ h → refl)))))
 ```
 
 A reformulated version via tope disjunction instead of inclusion (see
@@ -196,6 +221,31 @@ A reformulated version via tope disjunction instead of inclusion (see
     (\ h t → h t ,
       ( ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl) ,
         ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl)))
+
+#def cofibration-union-functorial
+  ( I : CUBE)
+  ( ϕ ψ : I → TOPE)
+  ( A' A : (t : I | ϕ t ∨ ψ t) → U)
+  ( α : (t : I | ϕ t ∨ ψ t) → A' t → A t)
+  ( τ' : (t : ψ) → A' t)
+  : Equiv-of-maps
+      ( (t : I | ϕ t ∨ ψ t) → A' t [ψ t ↦ τ' t])
+      ( (t : I | ϕ t ∨ ψ t) → A t [ψ t ↦ α t (τ' t)])
+      ( \ υ' t → α t (υ' t))
+      ( (t : ϕ) → A' t [ϕ t ∧ ψ t ↦ τ' t])
+      ( (t : ϕ) → A t [ϕ t ∧ ψ t ↦ α t (τ' t)])
+      ( \ ν' t → α t (ν' t))
+  :=
+     ( ( ( \ υ' t → υ' t
+         , \ υ t → υ t
+         )
+       , \ _ → refl
+       )
+     , ( second (cofibration-union I ϕ ψ A' τ')
+       ,
+         second (cofibration-union I ϕ ψ A ( \ t → α t (τ' t)))
+       )
+     )
 ```
 
 ## Extension extensionality
@@ -352,7 +402,7 @@ cases an extension type to a function type.
       ( ϕ )
       ( A )
       ( \ t y → (ext-projection-temp) t = y)
-      ( a ) -- a
+      ( a )
       ( \t → refl ))
     ( is-contr-ext-based-paths)
 
@@ -640,7 +690,7 @@ Both directions of this statement will be needed.
           rev
             ( A t )
             ( first (is-contr-fiberwise-A t) )
-            ( a t) --
+            ( a t)
             ( second (is-contr-fiberwise-A t) (a t))
 
 ```

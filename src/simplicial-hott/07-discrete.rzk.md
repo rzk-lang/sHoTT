@@ -819,5 +819,3 @@ Finally, we conclude:
   : is-segal A
   := is-contr-hom2-is-discrete A is-discrete-A
 ```
-
-Something new

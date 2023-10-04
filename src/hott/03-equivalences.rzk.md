@@ -799,4 +799,14 @@ dependent function types.
         ( η)
         ( is-equiv-comp A' A B α is-equiv-α s is-equiv-s)
       )
+
+#def is-equiv-Equiv-is-equiv'
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ( S, (is-equiv-s',is-equiv-s)) : Equiv-of-maps A' A α B' B β )
+  : is-equiv A' A α → is-equiv B' B β
+  :=
+    is-equiv-equiv-is-equiv' A' A α B' B β S is-equiv-s' is-equiv-s
 ```

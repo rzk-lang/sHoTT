@@ -146,6 +146,68 @@ Maps out of $Δ³$ are a retract of maps out of $Δ²×Δ¹$.
       ( Δ³-is-retract-Δ²×Δ¹-retraction A , \ _ → refl))
 ```
 
+For a subshape `ϕ ⊂ ψ` we have an easy way of stating that it is a retract in a
+strict and functorial way. Intuitively this happens when there is a map from `ψ`
+to `ϕ` that fixes the subshape `ψ`. But in the definition below we actually ask
+for a section of the family of extensions of a function `ϕ → A` to a function
+`ψ → A` and we ask for this section to be natural in the type `A`.
+
+```rzk
+#def is-functorial-shape-retract
+  ( I : CUBE )
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  : U
+  :=
+    ( A' : U) → (A : U) → (α : A' → A) →
+    has-section-family-over-map
+      ( ϕ → A') (\ f → (t : ψ) → A' [ϕ t ↦ f t])
+      ( ϕ → A) (\ f → (t : ψ) → A [ϕ t ↦ f t])
+      ( \ f t → α (f t))
+      ( \ _ g t → α (g t))
+```
+
+For example, this applies to `Δ² ⊂ Δ¹×Δ¹`.
+
+```rzk
+#def Δ²-is-functorial-retract-Δ¹×Δ¹
+  : is-functorial-shape-retract (2 × 2) (Δ¹×Δ¹) (Δ²)
+  :=
+    \ A' A α →
+      ( ( first (Δ²-is-retract-Δ¹×Δ¹ A'), first (Δ²-is-retract-Δ¹×Δ¹ A) ) ,
+          \ a' → refl)
+```
+
+Every functorial shape retract automatically induces a section
+when restricting to diagrams extending a fixed diagram `σ': ϕ → A'`
+(or, respectively, its image `ϕ → A` under α).
+
+```rzk
+#def relativize-is-functorial-shape-retract
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( χ : ψ → TOPE)
+  ( is-fretract-ψ-χ : is-functorial-shape-retract I ψ χ)
+  ( ϕ : χ → TOPE)
+  ( A' A : U)
+  ( α : A' → A)
+  ( σ' : ϕ → A')
+  : has-section-family-over-map
+      ( (t : χ) → A' [ϕ t ↦ σ' t])
+      ( \ τ' → (t : ψ) → A' [χ t ↦ τ' t])
+      ( (t : χ) → A [ϕ t ↦ α (σ' t)])
+      ( \ τ → (t : ψ) → A [χ t ↦ τ t])
+      ( \ τ' t → α (τ' t))
+      ( \ _ υ' t → α (υ' t))
+  :=
+    ( ( \ τ' → first (first (is-fretract-ψ-χ A' A α)) τ'
+      , \ τ → second (first (is-fretract-ψ-χ A' A α)) τ
+      )
+    , \ τ' → second (is-fretract-ψ-χ A' A α) τ'
+    )
+
+```
+
 ### Pushout product
 
 Pushout product Φ×ζ ∪\_{Φ×χ} ψ×χ of Φ ↪ ψ and χ ↪ ζ, domain of the co-gap map.

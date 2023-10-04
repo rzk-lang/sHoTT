@@ -402,7 +402,7 @@ cases an extension type to a function type.
       ( ϕ )
       ( A )
       ( \ t y → (ext-projection-temp) t = y)
-      ( a ) -- a
+      ( a )
       ( \t → refl ))
     ( is-contr-ext-based-paths)
 
@@ -690,7 +690,7 @@ Both directions of this statement will be needed.
           rev
             ( A t )
             ( first (is-contr-fiberwise-A t) )
-            ( a t) --
+            ( a t)
             ( second (is-contr-fiberwise-A t) (a t))
 
 ```

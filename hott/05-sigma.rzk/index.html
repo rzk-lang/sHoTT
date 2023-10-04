@@ -587,6 +587,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#type-theoretic-principle-of-choice" class="md-nav__link">
+    Type theoretic principle of choice
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1061,6 +1068,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#type-theoretic-principle-of-choice" class="md-nav__link">
+    Type theoretic principle of choice
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1522,6 +1536,47 @@ unimportant.</p>
 </span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="err">            </span><span class="p">\ </span>f <span class="err">→ </span><span class="s">refl</span><span class="err">) ,</span>
 </span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="err">          ( </span><span class="p">\ </span>f <span class="err">(a , b) → f a b ,</span>
 </span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="err">            </span><span class="p">\ </span>s <span class="err">→ </span><span class="s">refl</span><span class="err">))))</span>
+</span></code></pre></div>
+<h2 id="type-theoretic-principle-of-choice">Type theoretic principle of choice<a class="headerlink" href="#type-theoretic-principle-of-choice" title="Permanent link">&para;</a></h2>
+<div class="language-rzk highlight"><span class="filename">Rijke 22, Theorem 13.2.1</span><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:choice" id="define:choice" style="visibility: visible; position: relative; color: inherit">choice</a></span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x → U)</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="err">  : </span><span class="p">( </span>(x <span class="p">:</span><span class="err"> A) → </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>y <span class="p">:</span><span class="err"> B x) , C x y) →</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="err">    </span><span class="p">( </span>Σ ( f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x) , </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x (f x))</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="err">  := </span><span class="p">\ </span>h <span class="err">→ (</span><span class="p">\ </span>x <span class="err">→ </span><span class="s">first</span><span class="err"> (h x) , </span><span class="p">\ </span>x <span class="err">→ </span><span class="s">second</span><span class="err"> (h x))</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:choice-inverse" id="define:choice-inverse" style="visibility: visible; position: relative; color: inherit">choice-inverse</a></span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x → U)</span>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="err">  : </span><span class="p">( </span>Σ ( f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x) , </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x (f x)) →</span>
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="err">    </span><span class="p">( </span>(x <span class="p">:</span><span class="err"> A) → </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>y <span class="p">:</span><span class="err"> B x) , C x y)</span>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="err">  := </span><span class="p">\ </span>s <span class="err">→ </span><span class="p">\ </span>x <span class="err">→ ((</span><span class="s">first</span><span class="err"> s) x , (</span><span class="s">second</span><span class="err"> s) x)</span>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-choice" id="define:is-equiv-choice" style="visibility: visible; position: relative; color: inherit">is-equiv-choice</a></span>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x → U)</span>
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="err">  : is-equiv</span>
+</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="err">      </span><span class="p">( </span>(x <span class="p">:</span><span class="err"> A) → </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>y <span class="p">:</span><span class="err"> B x) , C x y)</span>
+</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="err">      </span><span class="p">( </span>Σ ( f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x) , </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x (f x))</span>
+</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="err">      ( choice A B C)</span>
+</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="err">  :=</span>
+</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="err">    is-equiv-has-inverse</span>
+</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="err">      </span><span class="p">( </span>(x <span class="p">:</span><span class="err"> A) → </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>y <span class="p">:</span><span class="err"> B x) , C x y)</span>
+</span><span id="__span-19-28"><a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="err">      </span><span class="p">( </span>Σ ( f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x) , </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x (f x))</span>
+</span><span id="__span-19-29"><a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="err">      ( choice A B C)</span>
+</span><span id="__span-19-30"><a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="err">      ( choice-inverse A B C , ( </span><span class="p">\ </span>h <span class="err">→ </span><span class="s">refl</span><span class="err"> , </span><span class="p">\ </span>s <span class="err">→ </span><span class="s">refl</span><span class="err">))</span>
+</span><span id="__span-19-31"><a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a>
+</span><span id="__span-19-32"><a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-choice" id="define:equiv-choice" style="visibility: visible; position: relative; color: inherit">equiv-choice</a></span>
+</span><span id="__span-19-33"><a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-34"><a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-19-35"><a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x → U)</span>
+</span><span id="__span-19-36"><a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a><span class="err">  : Equiv</span>
+</span><span id="__span-19-37"><a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a><span class="err">      </span><span class="p">( </span>(x <span class="p">:</span><span class="err"> A) → </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>y <span class="p">:</span><span class="err"> B x) , C x y)</span>
+</span><span id="__span-19-38"><a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a><span class="err">      </span><span class="p">( </span>Σ ( f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x) , </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x (f x))</span>
+</span><span id="__span-19-39"><a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a><span class="err">  := (choice A B C , is-equiv-choice A B C)</span>
 </span></code></pre></div>
 
 

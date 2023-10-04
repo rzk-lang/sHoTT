@@ -696,6 +696,30 @@ Application of a function to homotopic paths yields homotopic paths.
 #end transport
 ```
 
+### Substitution law for transport
+
+```rzk
+#def transport-substitution
+  ( A' A : U)
+  ( B : A → U)
+  ( f : A' → A)
+  ( x y : A')
+  ( p : x = y)
+  ( u : B (f x))
+  : transport A' (\ x → B (f x)) x y p u =
+    transport A B (f x) (f y) (ap A' A x y f p) u
+  :=
+    ind-path
+      ( A')
+      ( x)
+      ( \ y' p' →
+        transport A' (\ x → B (f x)) x y' p' u =
+        transport A B (f x) (f y') (ap A' A x y' f p') u)
+      ( refl)
+      ( y)
+      ( p)
+```
+
 ### Path induction
 
 Using `rev` we can deduce a path induction principle with fixed end point.

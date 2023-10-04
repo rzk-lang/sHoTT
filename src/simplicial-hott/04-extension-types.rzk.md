@@ -599,7 +599,7 @@ If we assume weak extension extensionality, then then homotopy extension
 property follows from a straightforward application of the axiom of choice to
 the point of contraction for weak extension extensionality.
 
-```rzk title="RS17 Proposition 4.10
+```rzk title="RS17 Proposition 4.10"
 #define htpy-ext-property-weakextext
   ( weakextext : WeakExtExt)
   : HtpyExtProperty
@@ -698,10 +698,10 @@ Both directions of this statement will be needed.
 The below gives us the inhabitant
 $(a', e') : \sum_{\left\langle\prod_{t : I|\psi} A (t) \biggr|^\phi_a\right\rangle} \left\langle \prod_{t: I |\psi} a'(t) = b(t)\biggr|^\phi_e \right\rangle$
 from the first part of the proof of RS Prop 4.11. It amounts to the fact that
-parameterized contractibility, i.e. $A : \{t : I | \psi\} → \mathcal{U}$ such
-that each $A(t)$ is contractible, implies the hypotheses of the homotopy
-extension property are satisfied, and so assuming homotopy extension property,
-we are entitled to the conclusion.
+parameterized contractibility, i.e. `#!rzk A : ψ → U` such that each `A t` is
+contractible, implies the hypotheses of the homotopy extension property are
+satisfied, and so assuming homotopy extension property, we are entitled to the
+conclusion.
 
 ```rzk
 
@@ -729,10 +729,10 @@ we are entitled to the conclusion.
     ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A)
 ```
 
-The expression below give us the inhabitant
-$c : \prod_{t: I | \psi} f(t) = a' (t)$ used in the proof of RS Proposition
-4.11. It follows from a more general statement about the contractibility of
-identity types, but it is unclear if that generality is needed.
+The expression below give us the inhabitant `#!rzk c : (t : ψ) → f t = a' t`
+used in the proof of RS Proposition 4.11. It follows from a more general
+statement about the contractibility of identity types, but it is unclear if that
+generality is needed.
 
 ```rzk
 #define RS-4-11-c
@@ -777,7 +777,7 @@ slightly more general statement.
     ( c t )
 ```
 
-Given the `#rzk! a'` produced above, the following gives an inhabitant of
+Given the `#!rzk a'` produced above, the following gives an inhabitant of
 $\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
 
 ```rzk

@@ -46,6 +46,38 @@ one:
           ( first (second has-inverse-f) a)))
 ```
 
+## Half adjoint equivalence data
+
+```rzk
+#section half-adjoint-equivalence-data
+
+#variables A B : U
+#variable f : A → B
+#variable is-hae-f : is-half-adjoint-equiv A B f
+
+#def map-inverse-is-half-adjoint-equiv uses (f)
+  : B → A
+  := map-inverse-has-inverse A B f (first is-hae-f)
+
+
+#def retraction-htpy-is-half-adjoint-equiv
+  : homotopy A A (comp A B A map-inverse-is-half-adjoint-equiv f) (identity A)
+  := first (second (first is-hae-f))
+
+#def section-htpy-is-half-adjoint-equiv
+  : homotopy B B (comp B A B f map-inverse-is-half-adjoint-equiv) (identity B)
+  := second (second (first is-hae-f))
+
+#def coherence-is-half-adjoint-equiv
+  ( a : A)
+  : section-htpy-is-half-adjoint-equiv (f a) =
+    ap A B (map-inverse-is-half-adjoint-equiv (f a)) a f
+    ( retraction-htpy-is-half-adjoint-equiv a)
+  := (second is-hae-f) a
+
+#end half-adjoint-equivalence-data
+```
+
 ## Coherence data from an invertible map
 
 To promote an invertible map to a half adjoint equivalence we keep one homotopy
@@ -375,10 +407,10 @@ one.
       ( has-inverse-is-equiv A B f is-equiv-f)
 ```
 
-## Equivalences of identity types
+## Equivalences are embeddings
 
 We use the notion of half adjoint equivalence to prove that equivalent types
-have equivalent identity types.
+have equivalent identity types by showing that equivalences are embeddings.
 
 ```rzk
 #section equiv-identity-types-equiv

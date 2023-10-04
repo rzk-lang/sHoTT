@@ -287,7 +287,7 @@ equivalence.
   := (family-of-equiv-total-equiv A B C f , total-equiv-family-of-equiv A B C f)
 ```
 
-## Codomain based path spaces
+## Endpoint based path spaces
 
 ```rzk title="An equivalence between the based path spaces"
 #def equiv-based-paths
@@ -297,8 +297,8 @@ equivalence.
   := total-equiv-family-equiv A (\ x → x = a) (\ x → a = x) (\ x → equiv-rev A x a)
 ```
 
-```rzk title="Codomain based path spaces are contractible"
-#def is-contr-codomain-based-paths
+```rzk title="Endpoint based path spaces are contractible"
+#def is-contr-endpoint-based-paths
   ( A : U)
   ( a : A)
   : is-contr (Σ (x : A) , x = a)
@@ -633,74 +633,6 @@ fundamental theorem:
 #end fundamental-thm-id-types
 ```
 
-## 2-of-3 for equivalences
-
-The following functions refine `equiv-right-cancel` and `equiv-left-cancel` by
-providing control over the underlying maps of the equivalence.
-
-```rzk
-#def is-equiv-right-factor
-  ( A B C : U)
-  ( f : A → B)
-  ( g : B → C)
-  ( is-equiv-g : is-equiv B C g)
-  ( is-equiv-gf : is-equiv A C (comp A B C g f))
-  : is-equiv A B f
-  :=
-    ( ( comp B C A
-        (retraction-is-equiv A C (comp A B C g f) is-equiv-gf) g ,
-        (second (first is-equiv-gf))) ,
-      ( comp B C A
-        (section-is-equiv A C (comp A B C g f) is-equiv-gf) g ,
-        \ b →
-          inv-ap-is-emb
-            B C g
-            ( is-emb-is-equiv B C g is-equiv-g)
-            ( f ((section-is-equiv A C (comp A B C g f) is-equiv-gf) (g b)))
-            b
-            ( (second (second is-equiv-gf)) (g b))))
-
-#def is-equiv-left-factor
-  ( A B C : U)
-  ( f : A → B)
-  ( is-equiv-f : is-equiv A B f)
-  ( g : B → C)
-  ( is-equiv-gf : is-equiv A C (comp A B C g f))
-  : is-equiv B C g
-  :=
-    ( ( comp C A B
-          f (retraction-is-equiv A C (comp A B C g f) is-equiv-gf) ,
-        \ b →
-          triple-concat B
-            ( f ((retraction-is-equiv A C (comp A B C g f) is-equiv-gf)
-              (g b)))
-            ( f ((retraction-is-equiv A C (comp A B C g f) is-equiv-gf)
-              (g (f ((section-is-equiv A B f is-equiv-f) b)))))
-            ( f ((section-is-equiv A B f is-equiv-f) b))
-            ( b)
-            ( ap B B
-              ( b)
-              ( f ((section-is-equiv A B f is-equiv-f) b))
-              ( \ b0 →
-                ( f ((retraction-is-equiv A C
-                      ( comp A B C g f) is-equiv-gf) (g b0))))
-              ( rev B (f ((section-is-equiv A B f is-equiv-f) b)) b
-                ( (second (second is-equiv-f)) b)))
-            ( ( whisker-homotopy B A A B
-                ( \ a →
-                  ( retraction-is-equiv A C
-                    ( comp A B C g f) is-equiv-gf) (g (f a)))
-                ( \ a → a)
-                ( second (first is-equiv-gf))
-                ( section-is-equiv A B f is-equiv-f)
-                f) b)
-            ( (second (second is-equiv-f)) b)) ,
-      ( comp C A B
-        ( f)
-        ( section-is-equiv A C (comp A B C g f) is-equiv-gf) ,
-        ( second (second is-equiv-gf))))
-```
-
 ## Maps over product types
 
 For later use, we specialize the previous results to the case of a family of
@@ -803,76 +735,4 @@ types over a product type.
       ( b0)
 
 #end fibered-map-over-product
-```
-
-## Homotopy cartesian squares
-
-```rzk
-#def is-homotopy-cartesian
-  ( A' : U)
-  ( C' : A' → U)
-  ( A : U)
-  ( C : A → U)
-  ( f : A' → A)
-  ( F : (a' : A') → C' a' → C (f a'))
-  : U
-  :=
-    (a' : A') → is-equiv (C' a') (C (f a')) (F a')
-
-#def homotopy-cartesian-square
-  ( A' : U)
-  ( C' : A' → U)
-  ( A : U)
-  ( C : A → U)
-  : U
-  := Σ (f : A' → A), Σ (F : (a' : A') → C' a' → C (f a')),
-    is-homotopy-cartesian A' C' A C f F
-
-
-#section homotopy-cartesian-pasting
-
-#variable A'' : U
-#variable C'' : A'' → U
-#variable A' : U
-#variable C' : A' → U
-#variable A : U
-#variable C : A → U
-#variable f' : A'' → A'
-#variable F' : (a'' : A'') → C'' a'' → C' (f' a'')
-#variable f : A' → A
-#variable F : (a' : A') → C' a' → C (f a')
-
-#def is-homotopy-cartesian-composition
-  : is-homotopy-cartesian A'' C'' A' C' f' F' →
-    is-homotopy-cartesian A' C' A C f F →
-    is-homotopy-cartesian A'' C'' A C
-      (comp A'' A' A
-        f f')
-      (\ a'' →
-        comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
-          (F (f' a'')) (F' a'')
-      )
-  :=
-    \ ihc' ihc a'' →
-    is-equiv-comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
-      (F' a'') (ihc' a'')
-      (F (f' a'')) (ihc (f' a''))
-
-#def is-homotopy-cartesian-cancellation
-  : is-homotopy-cartesian A' C' A C f F
-  → is-homotopy-cartesian A'' C'' A C
-      (comp A'' A' A f f')
-      (\ a'' →
-        comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
-          (F (f' a'')) (F' a'')
-      )
-  → is-homotopy-cartesian A'' C'' A' C' f' F'
-  :=
-    \ ihc ihc'' a'' →
-    is-equiv-right-cancel (C'' a'') (C' (f' a'')) (C (f (f' a'')))
-      (F' a'') (F (f' a''))
-      (ihc (f' a''))
-      (ihc'' a'')
-
-#end homotopy-cartesian-pasting
 ```

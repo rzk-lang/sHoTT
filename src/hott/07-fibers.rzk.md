@@ -271,3 +271,157 @@ work from the assumption that `f` is a half adjoint equivalence.
   : iff (is-contr-map A B f) (is-equiv A B f)
   := (is-equiv-is-contr-map A B f , is-contr-map-is-equiv A B f)
 ```
+
+## Fibers of projections
+
+For a family of types `#!rzk B : A → U`, the fiber of the projection from
+`#!rzk total-type A B` to `#!rzk A` over `#!rzk a : A` is equivalent to
+`#!rzk B a`. While both types deserve the name "fibers" to disambiguate, we
+temporarily refer to the fiber as the "homotopy fiber" and `#!rzk B a` as the
+"strict fiber."
+
+```rzk
+#section strict-vs-homotopy-fiber
+
+#variable A : U
+#variable B : A → U
+
+#def homotopy-fiber-strict-fiber
+  (a : A)
+  (b : B a)
+  : fib (total-type A B) A (total-type-projection A B) a
+  := ((a, b), refl)
+
+#def strict-fiber-homotopy-fiber
+  (a : A)
+  (((a', b'), p) : fib (total-type A B) A (total-type-projection A B) a)
+  : B a
+  := transport A B a' a p b'
+
+#def retract-homotopy-fiber-strict-fiber
+  (a : A)
+  (b : B a)
+  : strict-fiber-homotopy-fiber a (homotopy-fiber-strict-fiber a b) = b
+  := refl
+
+#def calculation-retract-strict-fiber-homotopy-fiber
+  (a : A)
+  (b : B a)
+  : homotopy-fiber-strict-fiber a
+    ( strict-fiber-homotopy-fiber a ((a, b), refl)) =
+    ( (a, b), refl)
+  := refl
+
+#def retract-strict-fiber-homotopy-fiber
+  (a : A)
+  (((a', b'), p) : fib (total-type A B) A (total-type-projection A B) a)
+  : homotopy-fiber-strict-fiber a (strict-fiber-homotopy-fiber a ((a', b'), p))
+    = ((a', b'), p)
+  :=
+    ind-fib
+    ( total-type A B)
+    ( A)
+    ( total-type-projection A B)
+    ( \ a0 ((a'', b''), p') →
+      homotopy-fiber-strict-fiber a0
+      ( strict-fiber-homotopy-fiber a0 ((a'', b''), p')) = ((a'', b''), p'))
+    ( \ (a'', b'') → refl)
+    ( a)
+    ( ((a', b'), p))
+
+#def equiv-homotopy-fiber-strict-fiber
+  (a : A)
+  : Equiv
+    ( B a)
+    ( fib (total-type A B) A (total-type-projection A B) a)
+  :=
+    ( homotopy-fiber-strict-fiber a,
+      ( ( strict-fiber-homotopy-fiber a,
+          retract-homotopy-fiber-strict-fiber a),
+        ( strict-fiber-homotopy-fiber a,
+          retract-strict-fiber-homotopy-fiber a)))
+
+#end strict-vs-homotopy-fiber
+```
+
+## Fibers of composites
+
+The fiber of a composite function is a sum over the fiber of the second function
+of the fibers of the first function.
+
+```rzk
+#section fiber-composition
+
+#variables A B C : U
+#variable f : A → B
+#variable g : B → C
+
+#def fiber-sum-fiber-comp
+  (c : C)
+  ((a, r) : fib A C (comp A B C g f) c)
+  : ( Σ ((b, q) : fib B C g c), fib A B f b)
+  := ((f a, r), (a, refl))
+
+#def fiber-comp-fiber-sum
+  (c : C)
+  ( ((b, q), (a, p)) : Σ ((b, q) : fib B C g c), fib A B f b)
+  : fib A C (comp A B C g f) c
+  := (a, concat C (g (f a)) (g b) c (ap B C (f a) b g p) q)
+
+#def retract-fiber-sum-fiber-comp
+  (c : C)
+  ((a, r) : fib A C (comp A B C g f) c)
+  : fiber-comp-fiber-sum c (fiber-sum-fiber-comp c (a, r)) = (a, r)
+  :=
+    eq-eq-fiber-Σ
+    ( A)
+    ( \ a0 → (g (f a0)) = c)
+    ( a)
+    ( concat C (g (f a)) (g (f a)) c refl r)
+    ( r)
+    ( left-unit-concat C (g (f a)) c r)
+
+#def retract-fiber-comp-fiber-sum'
+  (c : C)
+  ((b, q) : fib B C g c)
+  : ((a, p) : fib A B f b) →
+    fiber-sum-fiber-comp c (fiber-comp-fiber-sum c ((b, q), (a, p))) =
+    ((b, q), (a, p))
+  :=
+    ind-fib B C g
+    ( \ c' (b', q') → ((a, p) : fib A B f b') →
+      fiber-sum-fiber-comp c' (fiber-comp-fiber-sum c' ((b', q'), (a, p))) =
+      ((b', q'), (a, p)))
+    ( \ b0 (a, p) →
+      ( ind-fib A B f
+        ( \b0' (a', p') →
+          fiber-sum-fiber-comp (g b0')
+          ( fiber-comp-fiber-sum (g b0') ((b0', refl), (a', p'))) =
+          ((b0', refl), (a', p')))
+        ( \a0 → refl)
+        ( b0)
+        ( (a, p))))
+    ( c)
+    ( (b, q))
+
+#def retract-fiber-comp-fiber-sum
+  (c : C)
+  ( ((b, q), (a, p)) : Σ ((b, q) : fib B C g c), fib A B f b)
+  : fiber-sum-fiber-comp c (fiber-comp-fiber-sum c ((b, q), (a, p))) =
+    ((b, q), (a, p))
+  := retract-fiber-comp-fiber-sum' c (b, q) (a, p)
+
+#def equiv-fiber-comp-fiber-sum
+  (c : C)
+  : Equiv
+    ( fib A C (comp A B C g f) c)
+    ( Σ ((b, q) : fib B C g c), fib A B f b)
+  :=
+    ( fiber-sum-fiber-comp c,
+      ( ( fiber-comp-fiber-sum c,
+          retract-fiber-sum-fiber-comp c),
+        ( fiber-comp-fiber-sum c,
+          retract-fiber-comp-fiber-sum c)))
+
+#end fiber-composition
+```

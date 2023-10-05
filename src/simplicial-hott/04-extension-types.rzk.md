@@ -18,7 +18,7 @@ This is a literate `rzk` file:
 ## Extension up to homotopy
 
 For a shape inclusion `ϕ ⊂ ψ` and any type `A`,
-we have the inbuild extension types `(t : ψ) → A [ϕ t ↦ σ t]`
+we have the inbuilt extension types `(t : ψ) → A [ϕ t ↦ σ t]`
 (for every `σ : ϕ → A`).
 
 We show that these extensions types are equivalent to the fibers

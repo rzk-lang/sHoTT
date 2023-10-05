@@ -2004,3 +2004,33 @@ commuting with the contravariant lifts.
              x y f (g b))))
 
 ```
+
+## Discrete fibers
+
+```rzk title="RS17, Proposition 8.18"
+
+#def is-discrete-is-covariant-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-cov-C : is-covariant A C)
+  ( x : A)
+  : is-discrete (C x)
+  :=
+    ( \ u v → total-equiv-family-of-equiv
+      ( C x)
+      ( \ v' → (u = v'))
+      ( hom (C x) u)
+      ( hom-eq (C x) u)
+      ( is-equiv-are-contr
+        ( Σ (y : (C x)) , u = y)
+        ( Σ (y : (C x)) , hom (C x) u y)
+        ( is-contr-based-paths (C x) u)
+        ( is-cov-C x x (id-hom A x) u)
+        ( total-map
+          ( C x)
+          (\ v' → u = v')
+          ( hom (C x) u)
+          ( hom-eq (C x) u)))
+      ( v))
+```

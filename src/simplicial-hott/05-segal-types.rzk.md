@@ -18,7 +18,7 @@ This is a literate `rzk` file:
   `#!rzk total-space-projection` in the proof of Theorem 5.5.
 - `2-simplicial-type-theory.md` — We rely on definitions of simplicies and their
   subshapes.
-- `3-extension-types.md` — We use the fubini theorem and extension
+- `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
 
 Some of the definitions in this file rely on function extensionality and

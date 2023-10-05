@@ -16,7 +16,7 @@ This is a literate `rzk` file:
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk total-space-projection` in the proof of Theorem 5.5.
-- `2-simplicial-type-theory.md` — We rely on definitions of simplicies and their
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and their
   subshapes.
 - `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.

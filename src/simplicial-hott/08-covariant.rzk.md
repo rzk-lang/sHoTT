@@ -337,7 +337,8 @@ to deduce that the pair `left-leg-of-Λ ⊂ Λ` is left orthogonal.
 ```
 
 Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹`
-is the product of `Δ¹` with the pair `{0} ⊂ Δ¹`.
+is the product of `Δ¹` with the left orthogonal pair `{0} ⊂ Δ¹`,
+hence left orthogonal itself.
 
 ```rzk
 #def is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-inner-fibration

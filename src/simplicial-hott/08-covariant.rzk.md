@@ -222,20 +222,29 @@ As a sanity check we unpack the definition of `is-naive-left-fibration`.
   := refl
 ```
 
-### Naive left fibration via right orthogonality
+### Naive left fibrations via right `{0}⊂Δ¹`-orthogonality
 
-A map `α : A' → A` is a naive left fibration if and only if
-it is right orthogonal with respect to the shape inclusion `{0} ⊂ Δ¹`.
+A map `α : A' → A` is called a left fibration if it is right orthogonal
+to the shape inclusion `{0} ⊂ Δ¹`.
 
 ```rzk
-#section naive-left-fibration-iff-has-unique-0-Δ¹-extensions
+#section is-left-fibration
 
 #variables A' A : U
 #variable α : A' → A
 
-#def is-right-orthogonal-to-0-Δ¹-is-naive-left-fibration
+#def is-left-fibration
+  : U
+  := is-right-orthogonal-to-shape 2 Δ¹ ( \ s → s ≡ 0₂) A' A α
+```
+
+This notion agrees with that of a naive left fibration.
+
+```rzk
+#def is-left-fibration-is-naive-left-fibration
+-- TODO : prove converse
   ( is-nlf : is-naive-left-fibration A A' α)
-  : is-right-orthogonal-to-shape 2 Δ¹ ( \ s → s ≡ 0₂) A' A α
+  : is-left-fibration
   :=
     \ a' →
       is-equiv-equiv-is-equiv
@@ -249,7 +258,144 @@ it is right orthogonal with respect to the shape inclusion `{0} ⊂ Δ¹`.
         ( is-equiv-coslice-coslice' A (α (a' 0₂)))
         ( is-nlf (a' 0₂))
 
-#end naive-left-fibration-iff-has-unique-0-Δ¹-extensions
+#end is-left-fibration
+```
+
+### Left fibrations are inner fibrations
+
+Recall that an inner fibration is a map `α : A' → A` which is right orthogonal
+to `Λ ⊂ Δ²`.
+
+We aim to show that every left fibration is an inner fibration.
+This is a sequence of manipulations where we start with the assumption
+that `{0} ⊂ Δ¹` is left orthogonal to `α : A' → A`, i.e.
+
+```rzk
+#section is-inner-fibration-is-left-fibration
+
+#variables A' A : U
+#variable α : A' → A
+
+#variable is-left-fib-α : is-left-fibration A' A α
+```
+
+and deduce that various other shape inclusions are left orthogonal as well.
+
+The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
+`{1} ⊂ right-leg-of-Λ` of `Λ`.
+
+```rzk
+#def right-leg-of-Λ : Λ → TOPE
+  := \ (t, s) → t ≡ 1₂
+
+#def is-equiv-Δ¹-to-right-leg-of-Λ-rel-start
+  ( B : U)
+  ( b : B)
+  : is-equiv
+      ( ( s : Δ¹) → B [ s ≡ 0₂ ↦ b])
+      ( ( (t,s) : right-leg-of-Λ) → B [ s ≡ 0₂ ↦ b])
+      ( \ τ (t,s) → τ s)
+  :=
+    ( ( \ υ s → υ (1₂, s) , \ _ → refl),
+      ( \ υ s → υ (1₂, s) , \ _ → refl))
+
+#def is-right-orthogonal-to-10-1×Δ¹-is-inner-fibration uses (is-left-fib-α)
+  : is-right-orthogonal-to-shape
+      ( 2 × 2) (\ ts → right-leg-of-Λ ts) ( \ (_,s) → s ≡ 0₂) A' A α
+  :=
+    \ ( σ' : ( (t,s) : 2 × 2 | right-leg-of-Λ (t,s) ∧ s ≡ 0₂) → A') →
+      is-equiv-Equiv-is-equiv'
+        ( ( s : Δ¹) → A' [s ≡ 0₂ ↦ σ' (1₂, s)])
+        ( ( s : Δ¹) → A [s ≡ 0₂ ↦ α (σ' (1₂, s))])
+        ( \ τ s → α (τ s))
+        ( ( (_, s) : right-leg-of-Λ) → A' [ s ≡ 0₂ ↦ σ' (1₂,s)])
+        ( ( (_, s) : right-leg-of-Λ) → A [ s ≡ 0₂ ↦ α ( σ' (1₂,s))])
+        ( \ υ ts → α (υ ts))
+        ( ( ( \ τ' (t,s) → τ' s , \ τ (t,s) → τ s) , \ _ → refl),
+          ( is-equiv-Δ¹-to-right-leg-of-Λ-rel-start A' ( σ' (1₂, 0₂))
+          , is-equiv-Δ¹-to-right-leg-of-Λ-rel-start A ( α ( σ' (1₂, 0₂)))
+          )
+        )
+        ( is-left-fib-α ( \ ( s : 2 | Δ¹ s ∧ s ≡ 0₂) → σ' (1₂,s)))
+```
+
+Next we use that `Λ` is the pushout of its left leg and its right leg
+to deduce that the pair `left-leg-of-Λ ⊂ Λ` is left orthogonal.
+
+```rzk
+#def left-leg-of-Λ : Λ → TOPE
+  := \ (t, s) → s ≡ 0₂
+
+#def is-right-orthogonal-to-left-leg-of-Λ-Λ-is-inner-fibration uses (is-left-fib-α)
+  : is-right-orthogonal-to-shape
+      ( 2 × 2) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts) A' A α
+  :=
+    is-right-orthogonal-to-shape-pushout A' A α
+      ( 2 × 2) ( \ ts → right-leg-of-Λ ts) (\ ts → left-leg-of-Λ ts)
+      ( is-right-orthogonal-to-10-1×Δ¹-is-inner-fibration)
+
+```
+
+Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹`
+is the product of `Δ¹` with the pair `{0} ⊂ Δ¹`.
+
+```rzk
+#def is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-inner-fibration
+       uses (naiveextext is-left-fib-α)
+  : is-right-orthogonal-to-shape
+      ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → left-leg-of-Λ ts) A' A α
+  :=
+    is-right-orthogonal-to-shape-× naiveextext A' A α
+      2 Δ¹ 2 Δ¹ ( \ s → s ≡ 0₂) is-left-fib-α
+```
+
+Next, we use the left cancellation of left orthogonal shape inclusions
+to deduce that `Λ ⊂ Δ¹×Δ¹` is left orthogonal to `α : A' → A`.
+
+```rzk
+#def is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-inner-fibration
+       uses (naiveextext is-left-fib-α)
+  : is-right-orthogonal-to-shape
+      ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts) A' A α
+  :=
+    is-right-orthogonal-to-shape-left-cancel A' A α
+      ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts)
+      ( is-right-orthogonal-to-left-leg-of-Λ-Λ-is-inner-fibration)
+      ( is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-inner-fibration)
+```
+
+Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹`
+to obtain the desired left orthogonal shape inclusion `Λ ⊂ Δ²`.
+
+```rzk
+#def is-inner-fibration-is-left-fibration uses (naiveextext is-left-fib-α)
+  : is-inner-fibration A' A α
+  :=
+    is-right-orthogonal-to-shape-right-cancel-retract A' A α
+      ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Δ² ts) ( \ ts → Λ ts)
+      ( is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-inner-fibration)
+      ( Δ²-is-functorial-retract-Δ¹×Δ¹)
+
+#end is-inner-fibration-is-left-fibration
+```
+
+Since the Segal types are precisely the local types with respect to `Λ ⊂ Δ¹`,
+we immediately deduce that in any left fibration `α : A' → A`,
+if `A` is a Segal type, then so is `A'`.
+
+```rzk title="Theorem 8.8, categorical version"
+#def is-segal-domain-inner-fibration-is-segal-codomain uses (naiveextext)
+  ( A' A : U)
+  ( α : A' → A)
+  ( is-inner-fib-α : is-inner-fibration A' A α)
+  ( is-segal-A : is-segal A)
+  : is-segal A'
+  :=
+    is-segal-is-local-horn-inclusion A'
+      ( is-local-type-domain-right-orthogonal-is-local-type-codomain
+        ( 2 × 2) Δ² ( \ ts → Λ ts) A' A α
+        ( is-inner-fib-α)
+        ( is-local-horn-inclusion-is-segal A is-segal-A))
 ```
 
 ### Naive left fibrations vs. covariant families
@@ -428,6 +574,29 @@ We prove that the total space of a covariant family over a Segal type is a Segal
 type. We split the proof into intermediate steps. Let `A` be a type and a type
 family `#!rzk C : A → U`.
 
+### Category theoretic proof
+
+For every covariant family `C : A → U`, the projection `Σ A, C → A`
+is an left fibration, hence an inner fibration.
+It immediately follows that if `A` is Segal, then so is `Σ A, C`.
+
+```rzk title="RS17, Theorem 8.8"
+#def is-segal-total-space-covariant-family-is-segal-base uses (naiveextext)
+  ( A : U)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  : is-segal A → is-segal (total-type A C)
+  :=
+    is-segal-domain-inner-fibration-is-segal-codomain
+      ( total-type A C) A (\ (a,_) → a)
+      ( is-inner-fibration-is-left-fibration (total-type A C) A (\ (a,_) → a)
+          ( is-left-fibration-is-naive-left-fibration
+              ( total-type A C) A (\ (a,_) → a)
+              ( is-naive-left-fibration-is-covariant A C is-covariant-C)))
+```
+
+### Type theoretic proof
+
 We examine the fibers of the horn restriction on the total space of `C`. First
 note we have the equivalences:
 
@@ -481,32 +650,6 @@ the proof of Theorem 8.8 in RS17. The following maps will be packed into some
           ( total-inner-horn-restriction A C )
           ( g,  φ) )
   := \ ( f,μ ) → ( ( \ t → f t, \ t → μ t  ), refl )
-```
-
-### Segal types vs naive left fibrations
-
-We give an alternative proof using the calculus of homotopy cartesian squares.
-
-We aim to prove that for any naive left fibration `α : A' → A`,
-if `A` is a Segal type, then so is `A'`.
-
-```rzk title="RS17, Theorem 8.8, categorical version"
-#section is-segal-is-naive-left-fibration-is-segal
-
-#variables A' A : U
-#variable α : A' → A
-
-#variable is-orth-0-Δ¹-α
-  : is-right-orthogonal-to-shape 2 Δ¹ ( \ t → t ≡ 0₂) A' A α
-#variable has-ue-Λ-Δ²-A
-  : has-unique-extensions (2 × 2) Δ² (\ (t, s) → s ≡ 0₂ ∨ t ≡ 1₂) A
-
-#def is-homotopy-cartesian-Δ¹-Δ¹×Δ¹-α uses (naiveextext is-orth-0-Δ¹-α)
-  : is-right-orthogonal-to-shape (2 × 2) (Δ¹×Δ¹) (\ (t,s) → s ≡ 0₂) A' A α
-  := is-right-orthogonal-to-shape-× naiveextext
-       A' A α 2 Δ¹ 2 Δ¹ (\ s → s ≡ 0₂) is-orth-0-Δ¹-α
-
-#end is-segal-is-naive-left-fibration-is-segal
 ```
 
 ## Representable covariant families

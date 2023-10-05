@@ -491,3 +491,47 @@ This is the dependent version of the currying equivalence.
           ( \ f (a , b) → f a b ,
             \ s → refl))))
 ```
+
+## Type theoretic principle of choice
+
+```rzk title="Rijke 22, Theorem 13.2.1"
+#def choice
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : ( (x : A) → Σ (y : B x) , C x y) →
+    ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+  := \ h → (\ x → first (h x) , \ x → second (h x))
+
+#def choice-inverse
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x)) →
+    ( (x : A) → Σ (y : B x) , C x y)
+  := \ s → \ x → ((first s) x , (second s) x)
+
+#def is-equiv-choice
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : is-equiv
+      ( (x : A) → Σ (y : B x) , C x y)
+      ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+      ( choice A B C)
+  :=
+    is-equiv-has-inverse
+      ( (x : A) → Σ (y : B x) , C x y)
+      ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+      ( choice A B C)
+      ( choice-inverse A B C , ( \ h → refl , \ s → refl))
+
+#def equiv-choice
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : Equiv
+      ( (x : A) → Σ (y : B x) , C x y)
+      ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+  := (choice A B C , is-equiv-choice A B C)
+```

@@ -643,6 +643,53 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
       ( iff-is-iso-pointwise-is-iso X A is-segal-A f g α)
 ```
 
+```rzk title="RS17, Corollary 10.4"
+#def iso-extensionality uses (extext funext weakfunext)
+  ( X : U)
+  ( A : X → U)
+  ( is-segal-A : (x : X) → is-segal (A x))
+  ( f g : (x : X) → A x)
+  : Equiv
+      ( Iso ((x : X) → A x) (is-segal-function-type funext X A is-segal-A) f g)
+      ( ( x : X) → Iso (A x) (is-segal-A x) (f x) (g x))
+  :=
+    equiv-triple-comp
+      ( Iso ((x : X) → A x) (is-segal-function-type funext X A is-segal-A) f g)
+      ( Σ ( α : nat-trans X A f g) ,
+        ( x : X) →
+        ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
+          ( ev-components-nat-trans X A f g α x)))
+      ( Σ ( α' : nat-trans-components X A f g) ,
+        ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
+      ( (x : X) → Iso (A x) (is-segal-A x) (f x) (g x))
+      ( total-equiv-family-equiv
+        ( nat-trans X A f g)
+        ( \ α →
+          ( is-iso-arrow
+            ( (x : X) → A x)
+            ( is-segal-function-type funext X A is-segal-A)
+            f g α))
+        ( \ α →
+          ( x : X) →
+          ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
+            ( ev-components-nat-trans X A f g α x)))
+        ( \ α → equiv-is-iso-pointwise-is-iso X A is-segal-A f g α))
+      ( total-equiv-pullback-is-equiv
+        ( nat-trans X A f g)
+        ( nat-trans-components X A f g)
+        ( ev-components-nat-trans X A f g)
+        ( is-equiv-ev-components-nat-trans X A f g)
+        ( \ α' →
+          ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x)))
+      ( inv-equiv
+        ( (x : X) → Iso (A x) (is-segal-A x) (f x) (g x))
+        ( Σ ( α' : nat-trans-components X A f g) ,
+          ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
+        ( equiv-choice X
+          ( \ x → hom (A x) (f x) (g x))
+          ( \ x αₓ → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) αₓ)))
+```
+
 ## Rezk types
 
 A Segal type $A$ is a Rezk type just when, for all `#!rzk x y : A`, the natural

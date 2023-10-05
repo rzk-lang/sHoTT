@@ -349,13 +349,18 @@ The underlying horn of a simplex:
   := \ f t → f t
 ```
 
-This provides an alternate definition of Segal types.
+This provides an alternate definition of Segal types as types which are local
+for the inclusion `Λ ⊂ Δ¹`.
 
 ```rzk
 #def is-local-horn-inclusion
+  : U → U
+  := is-local-type (2 × 2) Δ² (\ t → Λ t)
+
+#def is-local-horn-inclusion-explicit
   ( A : U)
-  : U
-  := is-equiv (Δ² → A) (Λ → A) (horn-restriction A)
+  : is-local-horn-inclusion A = is-equiv (Δ² → A) (Λ → A) (horn-restriction A)
+  := refl
 ```
 
 Now we prove this definition is equivalent to the original one. Here, we prove

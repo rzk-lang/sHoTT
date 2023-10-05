@@ -222,6 +222,36 @@ As a sanity check we unpack the definition of `is-naive-left-fibration`.
   := refl
 ```
 
+### Naive left fibration via right orthogonality
+
+A map `α : A' → A` is a naive left fibration if and only if
+it is right orthogonal with respect to the shape inclusion `{0} ⊂ Δ¹`.
+
+```rzk
+#section naive-left-fibration-iff-has-unique-0-Δ¹-extensions
+
+#variables A' A : U
+#variable α : A' → A
+
+#def is-right-orthogonal-to-0-Δ¹-is-naive-left-fibration
+  ( is-nlf : is-naive-left-fibration A A' α)
+  : is-right-orthogonal-to-shape 2 Δ¹ ( \ s → s ≡ 0₂) A' A α
+  :=
+    \ a' →
+      is-equiv-equiv-is-equiv
+        ( coslice' A' (a' 0₂)) (coslice' A (α (a' 0₂)))
+        ( \ σ' t → α (σ' t))
+        ( coslice A' (a' 0₂)) (coslice A (α (a' 0₂)))
+        ( coslice-fun A' A α (a' 0₂))
+        ( ( coslice-coslice' A' (a' 0₂), coslice-coslice' A (α (a' 0₂))),
+          \ _ → refl)
+        ( is-equiv-coslice-coslice' A' (a' 0₂))
+        ( is-equiv-coslice-coslice' A (α (a' 0₂)))
+        ( is-nlf (a' 0₂))
+
+#end naive-left-fibration-iff-has-unique-0-Δ¹-extensions
+```
+
 ### Naive left fibrations vs. covariant families
 
 We aim to prove that a type family `#!rzk C : A → U`, is covariant if and only
@@ -466,36 +496,15 @@ if `A` is a Segal type, then so is `A'`.
 #variables A' A : U
 #variable α : A' → A
 
-#assume is-nlf-α : is-naive-left-fibration A A' α
-#assume is-segal-A : is-segal A
+#variable is-orth-0-Δ¹-α
+  : is-right-orthogonal-to-shape 2 Δ¹ ( \ t → t ≡ 0₂) A' A α
+#variable has-ue-Λ-Δ²-A
+  : has-unique-extensions (2 × 2) Δ² (\ (t, s) → s ≡ 0₂ ∨ t ≡ 1₂) A
 
-#def is-homotopy-cartesian-01-Λ uses (is-nlf-α)
-  : is-homotopy-cartesian
-      ( Δ¹ → A') ( \ σ' → coslice A' (σ' 1₂))
-      ( Δ¹ → A) ( \ σ → coslice A (σ 1₂))
-      ( \ σ' t → α (σ' t)) ( \ σ' → coslice-fun A' A α (σ' 1₂))
-  :=
-    \ σ' → is-nlf-α (σ' 1₂)
-
-#def is-j-orthogonal-0-Δ¹-α uses (is-nlf-α)
-  : is-j-orthogonal-to-shape 2 Δ¹ ( \ s → s ≡ 0₂) A' A α
-  :=
-    \ a' →
-      is-equiv-equiv-is-equiv
-        ( coslice' A' (a' 0₂)) (coslice' A (α (a' 0₂)))
-        ( \ σ' t → α (σ' t))
-        ( coslice A' (a' 0₂)) (coslice A (α (a' 0₂)))
-        ( coslice-fun A' A α (a' 0₂))
-        ( ( coslice-coslice' A' (a' 0₂), coslice-coslice' A (α (a' 0₂))),
-          \ _ → refl)
-        ( is-equiv-coslice-coslice' A' (a' 0₂))
-        ( is-equiv-coslice-coslice' A (α (a' 0₂)))
-        ( is-nlf-α (a' 0₂))
-
-#def is-homotopy-cartesian-Δ¹-Δ¹×Δ¹-α uses (naiveextext is-nlf-α)
-  : is-j-orthogonal-to-shape (2 × 2) (Δ¹×Δ¹) (\ (t,s) → s ≡ 0₂) A' A α
-  := is-j-orthogonal-to-shape-× naiveextext
-        2 Δ¹ 2 Δ¹ (\ s → s ≡ 0₂) A' A α is-j-orthogonal-0-Δ¹-α
+#def is-homotopy-cartesian-Δ¹-Δ¹×Δ¹-α uses (naiveextext is-orth-0-Δ¹-α)
+  : is-right-orthogonal-to-shape (2 × 2) (Δ¹×Δ¹) (\ (t,s) → s ≡ 0₂) A' A α
+  := is-right-orthogonal-to-shape-× naiveextext
+       A' A α 2 Δ¹ 2 Δ¹ (\ s → s ≡ 0₂) is-orth-0-Δ¹-α
 
 #end is-segal-is-naive-left-fibration-is-segal
 ```

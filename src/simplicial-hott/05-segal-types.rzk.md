@@ -16,9 +16,9 @@ This is a literate `rzk` file:
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk total-space-projection` in the proof of Theorem 5.5.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and their
   subshapes.
-- `4-extension-types.md` — We use the fubini theorem and extension
+- `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
 
 Some of the definitions in this file rely on function extensionality and
@@ -1771,4 +1771,53 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         ( A)
         ( is-segal-A)
         ( h^ A h))
+```
+
+## Products of Segal Types
+
+This is an additional section which describes morphisms in products of types as products of morphisms.
+It is implicitly stated in Proposition 8.21.
+
+```rzk
+#section morphisms-of-products-is-products-of-morphisms
+#variables A B : U
+#variable p : ( product A B )
+#variable p' : ( product A B )
+
+#def morphism-in-product-to-product-of-morphism
+  : hom ( product A B ) p p' →
+    product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) )
+  :=  \ f → ( \ ( t : Δ¹ ) → first ( f t ) , \ ( t : Δ¹ ) → second ( f t ) )
+
+#def product-of-morphism-to-morphism-in-product
+  : product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) ) →
+    hom ( product A B ) p p'
+  := \ ( f , g ) ( t : Δ¹ ) → ( f t , g t )
+
+#def morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id
+  : ( f :  product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) ) ) →
+    ( morphism-in-product-to-product-of-morphism )
+    ( ( product-of-morphism-to-morphism-in-product )
+      f ) = f
+  := \ f → refl
+
+#def product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id
+  : ( f :  hom ( product A B ) p p' ) →
+    ( product-of-morphism-to-morphism-in-product )
+    ( ( morphism-in-product-to-product-of-morphism )
+      f ) = f
+  := \ f → refl
+
+#def morphism-in-product-equiv-product-of-morphism
+  : Equiv
+    ( hom ( product A B ) p p' )
+    ( product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) ) )
+  :=
+    ( ( morphism-in-product-to-product-of-morphism ) ,
+      ( ( ( product-of-morphism-to-morphism-in-product ) ,
+          ( product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id ) ) ,
+        ( ( product-of-morphism-to-morphism-in-product ) ,
+          ( morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id ) ) ) )
+
+#end morphisms-of-products-is-products-of-morphisms
 ```

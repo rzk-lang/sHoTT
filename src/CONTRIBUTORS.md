@@ -2,9 +2,11 @@
 
 Formalizations were contributed by the following people (listed alphabetically):
 
+- [Abdelrahman Aly Abounegm](https://github.com/aabounegm),
 - [Fredrik Bakke](https://github.com/fredrik-bakke),
 - [César Bardomiano Martínez](https://github.com/cesarbm03),
 - [Jonathan Campbell](https://github.com/jonalfcam),
+- [Matthias Hutzler](https://github.com/MatthiasHu),
 - [Nikolai Kudasov](https://fizruk.github.io/),
 - [Kenji Maillard](https://github.com/kyoDralliam),
 - [David Martínez Carpena](https://dvmcarpena.com/),

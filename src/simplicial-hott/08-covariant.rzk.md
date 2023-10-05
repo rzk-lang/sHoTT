@@ -222,7 +222,7 @@ As a sanity check we unpack the definition of `is-naive-left-fibration`.
   := refl
 ```
 
-### Naive left fibrations via right `{0}⊂Δ¹`-orthogonality
+### Naive left fibrations are left fibrations
 
 A map `α : A' → A` is called a left fibration if it is right orthogonal
 to the shape inclusion `{0} ⊂ Δ¹`.

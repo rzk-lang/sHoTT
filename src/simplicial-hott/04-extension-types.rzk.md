@@ -21,7 +21,7 @@ For a shape inclusion `ϕ ⊂ ψ` and any type `A`,
 we have the inbuilt extension types `(t : ψ) → A [ϕ t ↦ σ t]`
 (for every `σ : ϕ → A`).
 
-We show that these extensions types are equivalent to the fibers
+We show that these extension types are equivalent to the fibers
 of the canonical restriction map `(ψ → A) → (ϕ → A)`,
 which we can view as the types  of "extension up to homotopy".
 
@@ -43,7 +43,7 @@ which we can view as the types  of "extension up to homotopy".
   : U
   := fib (ψ → A) (ϕ → A) (\ τ t → τ t) (σ)
 
-#def extension-type-weakening
+#def extension-type-weakening-map
   ( σ : ϕ → A)
   : extension-type σ → homotopy-extension-type σ
   :=
@@ -63,19 +63,55 @@ which we can view as the types  of "extension up to homotopy".
 #def is-equiv-extension-type-weakening
   ( σ : ϕ → A)
   : is-equiv (extension-type σ) (homotopy-extension-type σ)
-      (extension-type-weakening σ)
+      (extension-type-weakening-map σ)
   :=
     ( ( \ th → first (extension-type-weakening-section σ th),
         \ _ → refl),
       ( \ th → ( first (extension-type-weakening-section σ th)),
         \ th → ( second (extension-type-weakening-section σ th))))
 
-#def extension-type-weakening-equivalence
+#def extension-type-weakening
   ( σ : ϕ → A)
   : Equiv (extension-type σ) (homotopy-extension-type σ)
-  := ( extension-type-weakening σ , is-equiv-extension-type-weakening σ)
+  := ( extension-type-weakening-map σ , is-equiv-extension-type-weakening σ)
 
 #end extensions-up-to-homotopy
+```
+
+This equivalence is functorial in the following sense:
+
+```rzk
+#def extension-type-weakening-functorial
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A' A : U)
+  ( α : A' → A)
+  ( σ' : ϕ → A')
+  : Equiv-of-maps
+      ( extension-type I ψ ϕ A' σ')
+      ( extension-type I ψ ϕ A (\ t → α (σ' t)))
+      ( \ τ' t → α (τ' t))
+      ( homotopy-extension-type I ψ ϕ A' σ')
+      ( homotopy-extension-type I ψ ϕ A (\ t → α (σ' t)))
+      ( \ (τ', p) →
+          ( \ t → α (τ' t),
+            ap (ϕ → A') (ϕ → A)
+               ( \ (t : ϕ) → τ' t)
+               ( \ (t : ϕ) → σ' t)
+               ( \ σ'' t → α (σ'' t))
+               ( p)))
+  :=
+    ( ( ( extension-type-weakening-map I ψ ϕ A' σ'
+        , extension-type-weakening-map I ψ ϕ A (\ t → α (σ' t))
+        )
+      , \ _ → refl
+      )
+    , ( is-equiv-extension-type-weakening I ψ ϕ A' σ'
+      , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α (σ' t))
+      )
+    )
+
 ```
 
 ## Commutation of arguments and currying

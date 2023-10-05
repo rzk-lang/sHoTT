@@ -15,6 +15,69 @@ This is a literate `rzk` file:
 - the file `hott/4-equivalences.rzk` relies in turn on the previous files in
   `hott/`
 
+## Extension up to homotopy
+
+For a shape inclusion `ϕ ⊂ ψ` and any type `A`,
+we have the inbuild extension types `(t : ψ) → A [ϕ t ↦ σ t]`
+(for every `σ : ϕ → A`).
+
+We show that these extensions types are equivalent to the fibers
+of the canonical restriction map `(ψ → A) → (ϕ → A)`,
+which we can view as the types  of "extension up to homotopy".
+
+```rzk
+#section extensions-up-to-homotopy
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variable A : U
+
+#def extension-type
+  ( σ : ϕ → A)
+  : U
+  :=
+    ( t : ψ) → A [ϕ t ↦ σ t]
+
+#def homotopy-extension-type
+  ( σ : ϕ → A)
+  : U
+  := fib (ψ → A) (ϕ → A) (\ τ t → τ t) (σ)
+
+#def extension-type-weakening
+  ( σ : ϕ → A)
+  : extension-type σ → homotopy-extension-type σ
+  :=
+    \ τ → ( τ, refl)
+
+#def extension-type-weakening-section
+  : ( σ : ϕ → A) →
+    ( th : homotopy-extension-type σ) →
+    Σ (τ : extension-type σ), (( τ, refl) =_{homotopy-extension-type σ} th)
+  :=
+    ind-fib (ψ → A) (ϕ → A) (\ τ t → τ t)
+      ( \ σ th →
+          Σ (τ : extension-type σ),
+            ( τ, refl) =_{homotopy-extension-type σ} th)
+      ( \ (τ : ψ → A) → (τ, refl))
+
+#def is-equiv-extension-type-weakening
+  ( σ : ϕ → A)
+  : is-equiv (extension-type σ) (homotopy-extension-type σ)
+      (extension-type-weakening σ)
+  :=
+    ( ( \ th → first (extension-type-weakening-section σ th),
+        \ _ → refl),
+      ( \ th → ( first (extension-type-weakening-section σ th)),
+        \ th → ( second (extension-type-weakening-section σ th))))
+
+#def extension-type-weakening-equivalence
+  ( σ : ϕ → A)
+  : Equiv (extension-type σ) (homotopy-extension-type σ)
+  := ( extension-type-weakening σ , is-equiv-extension-type-weakening σ)
+
+#end extensions-up-to-homotopy
+```
+
 ## Commutation of arguments and currying
 
 ```rzk title="RS17, Theorem 4.1"

@@ -339,3 +339,54 @@ can be pulled back along any right orthogonal map.
         ( \ τ' t → α (τ' t) , is-orth-ψ-ϕ-α σ')
         ( has-ue-A (\ t → α (σ' t)))
 ```
+
+Alternatively, we can ask that the canonical restriction map `(ψ → A) → (ϕ → A)`
+is an equivalence.
+
+```rzk
+#section is-local-type
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variable A : U
+
+#def is-local-type
+  : U
+  :=
+    is-equiv (ψ → A) (ϕ → A) ( \ τ t → τ t)
+```
+
+This follows straightforwardly from the fact that for every `σ : ϕ → A`
+we have an equivalence between the extension type `(t : ψ) → A [ϕ t ↦ σ t]`
+and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
+
+
+```rzk
+#def is-local-type-has-unique-extensions
+  ( has-ue-ψ-ϕ-A : has-unique-extensions I ψ ϕ A)
+  : is-local-type
+  :=
+    is-equiv-is-contr-map (ψ → A) (ϕ → A) ( \ τ t → τ t)
+      ( \ ( σ : ϕ → A) →
+          is-contr-equiv-is-contr
+            ( extension-type I ψ ϕ A σ)
+            ( homotopy-extension-type I ψ ϕ A σ)
+            ( extension-type-weakening-equivalence I ψ ϕ A σ)
+            ( has-ue-ψ-ϕ-A σ))
+
+#def has-unique-extensions-is-local-type
+  ( is-lt-ψ-ϕ-A : is-local-type)
+  : has-unique-extensions I ψ ϕ A
+  :=
+    \ σ →
+      is-contr-equiv-is-contr'
+        ( extension-type I ψ ϕ A σ)
+        ( homotopy-extension-type I ψ ϕ A σ)
+        ( extension-type-weakening-equivalence I ψ ϕ A σ)
+        ( is-contr-map-is-equiv
+            ( ψ → A) (ϕ → A) ( \ τ t → τ t)
+            ( is-lt-ψ-ϕ-A)
+            ( σ))
+
+#end is-local-type
+```

@@ -38,7 +38,7 @@ Install the
 assistant. Then run the following command from the root of this repository:
 
 ```sh
-rzk typecheck src/hott/* src/simplicial-hott/*
+rzk typecheck
 ```
 
 # References

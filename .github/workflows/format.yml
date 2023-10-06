@@ -1,0 +1,35 @@
+name: Code Formatting Check
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**.md'
+      - '**.json'
+      - '**.yaml'
+      - '**.yml'
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+
+      - name: Install Prettier
+        run: npm install --global prettier
+
+      - name: Check formatting
+        run: |
+          FILES=$(prettier --config .prettierrc.json --list-different "**/*.{md,json,yaml,yml}")
+          if [ "$FILES" ]; then
+            echo "The following files are not formatted correctly:"
+            echo "$FILES"
+            echo "Please install Prettier locally and format these files."
+            exit 1
+          fi

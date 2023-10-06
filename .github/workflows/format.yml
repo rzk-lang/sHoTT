@@ -1,6 +1,9 @@
 name: Code formatting check
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -18,18 +21,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-
-      - name: Install Prettier
-        run: npm install --global prettier
-
-      - name: Check formatting
-        run: |
-          FILES=$(prettier --config .prettierrc.json --list-different "**/*.{md,json,yaml,yml}")
-          if [ "$FILES" ]; then
-            echo "The following files are not formatted correctly:" >&2
-            echo "$FILES" >&2
-            echo "Please install Prettier locally and format these files." >&2
-            exit 2
-          fi
+      - name: Run Prettier
+        uses: creyD/prettier_action@v4.3
+        with:
+          dry: true
+          prettier_options: --check **/*.{md,json,yaml,yml}

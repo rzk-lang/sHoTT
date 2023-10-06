@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Typecheck Rzk files
-        uses: rzk-lang/rzk-action@v1
+        uses: rzk-lang/rzk-action@v1.1
         with:
           rzk-version: latest
           # rzk-version: v0.4.1.1   # example of a specific version

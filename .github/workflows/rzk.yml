@@ -26,4 +26,3 @@ jobs:
         with:
           rzk-version: latest
           # rzk-version: v0.4.1.1   # example of a specific version
-          files: ''

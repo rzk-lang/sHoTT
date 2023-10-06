@@ -17,6 +17,7 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    name: Check formalisations
     steps:
       - uses: actions/checkout@v3
 

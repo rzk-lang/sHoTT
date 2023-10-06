@@ -10,14 +10,14 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-- `hott/1-paths.md` - We require basic path algebra.
-- `hott/2-contractible.md` - We require the notion of contractible types and
-  their data.
+- `hott/01-paths.rzk.md` - We require basic path algebra.
+- `hott/02-contractible.rzk.md` - We require the notion of contractible types
+  and their data.
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk total-space-projection` in the proof of Theorem 5.5.
-- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and their
-  subshapes.
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
 - `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
 
@@ -1775,8 +1775,8 @@ The cofibration Λ²₁ → Δ² is inner anodyne
 
 ## Products of Segal Types
 
-This is an additional section which describes morphisms in products of types as products of morphisms.
-It is implicitly stated in Proposition 8.21.
+This is an additional section which describes morphisms in products of types as
+products of morphisms. It is implicitly stated in Proposition 8.21.
 
 ```rzk
 #section morphisms-of-products-is-products-of-morphisms

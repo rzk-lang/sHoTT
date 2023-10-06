@@ -16,12 +16,12 @@ This is a literate `rzk` file:
 
 - `hott/*` - We require various prerequisites from homotopy type theory, for
   instance the axiom of function extensionality.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
-  subshapes.
-- `4-extension-types.md` — We use the fubini theorem and extension
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
+- `04-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
-- `5-segal-types.md` - We make heavy use of the notion of Segal types
-- `10-rezk-types.md`- We use Rezk types.
+- `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types
+- `10-rezk-types.rzk.md`- We use Rezk types.
 
 ## (Iso-)Inner families
 
@@ -94,8 +94,8 @@ a given starting point in the fiber.
 
 ## Cocartesian family
 
-A family over cocartesian if it is isoinner and any arrow in
-the has a cocartesian lift, given a point in the fiber over the domain.
+A family over cocartesian if it is isoinner and any arrow in the has a
+cocartesian lift, given a point in the fiber over the domain.
 
 ```rzk title="BW23, Definition 5.2.1"
 #def has-cocartesian-lifts

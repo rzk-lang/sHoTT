@@ -1,17 +1,9 @@
-name: Code formatting check
+name: Code autoformatting
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-    paths:
-      - '**.md'
-      - '**.json'
-      - '**.yaml'
-      - '**.yml'
 
 jobs:
   format:
@@ -19,10 +11,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          # This is important to fetch the changes to the previous commit
+          fetch-depth: 0
 
       - name: Run Prettier
         uses: creyD/prettier_action@v4.3
         with:
-          dry: true
-          prettier_options: --check **/*.{md,json,yaml,yml}
+          prettier_options: --write **/*.{md,json,yaml,yml}
+          # Update the current commit instead of creating a new one. Only works if checkout fetch depth is set to `0`
+          same_commit: true
+          # Prettify changed files. Only works if checkout fetch depth is set to `0`
+          only_changed: true

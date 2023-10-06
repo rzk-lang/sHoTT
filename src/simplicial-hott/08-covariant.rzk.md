@@ -242,7 +242,6 @@ This notion agrees with that of a naive left fibration.
 
 ```rzk
 #def is-left-fibration-is-naive-left-fibration
--- TODO : prove converse
   ( is-nlf : is-naive-left-fibration A A' α)
   : is-left-fibration
   :=
@@ -257,6 +256,30 @@ This notion agrees with that of a naive left fibration.
         ( is-equiv-coslice-coslice' A' (a' 0₂))
         ( is-equiv-coslice-coslice' A (α (a' 0₂)))
         ( is-nlf (a' 0₂))
+
+#def is-naive-left-fibration-is-left-fibration
+  ( is-lf : is-left-fibration)
+  : is-naive-left-fibration A A' α
+  :=
+    \ a' →
+      is-equiv-equiv-is-equiv'
+        ( coslice' A' a') (coslice' A (α a'))
+        ( \ σ' t → α (σ' t))
+        ( coslice A' a') (coslice A (α a'))
+        ( coslice-fun A' A α a')
+        ( ( coslice-coslice' A' a', coslice-coslice' A (α a')),
+          \ _ → refl)
+        ( is-equiv-coslice-coslice' A' a')
+        ( is-equiv-coslice-coslice' A (α a'))
+        ( is-lf (\ t → a'))
+
+#def is-naive-left-fibration-iff-is-left-fibration
+  : iff
+      ( is-naive-left-fibration A A' α)
+      ( is-left-fibration)
+  :=
+    ( is-left-fibration-is-naive-left-fibration,
+      is-naive-left-fibration-is-left-fibration)
 
 #end is-left-fibration
 ```
@@ -385,17 +408,17 @@ we immediately deduce that in any left fibration `α : A' → A`,
 if `A` is a Segal type, then so is `A'`.
 
 ```rzk title="Theorem 8.8, categorical version"
-#def is-segal-domain-inner-fibration-is-segal-codomain uses (naiveextext)
+#def is-segal-domain-left-fibration-is-segal-codomain uses (naiveextext)
   ( A' A : U)
   ( α : A' → A)
-  ( is-inner-fib-α : is-inner-fibration A' A α)
+  ( is-left-fib-α : is-left-fibration A' A α)
   ( is-segal-A : is-segal A)
   : is-segal A'
   :=
     is-segal-is-local-horn-inclusion A'
       ( is-local-type-domain-right-orthogonal-is-local-type-codomain
         ( 2 × 2) Δ² ( \ ts → Λ ts) A' A α
-        ( is-inner-fib-α)
+        ( is-inner-fibration-is-left-fibration A' A α is-left-fib-α)
         ( is-local-horn-inclusion-is-segal A is-segal-A))
 ```
 
@@ -588,12 +611,11 @@ It immediately follows that if `A` is Segal, then so is `Σ A, C`.
   ( is-covariant-C : is-covariant A C)
   : is-segal A → is-segal (total-type A C)
   :=
-    is-segal-domain-inner-fibration-is-segal-codomain
+    is-segal-domain-left-fibration-is-segal-codomain
       ( total-type A C) A (\ (a,_) → a)
-      ( is-inner-fibration-is-left-fibration (total-type A C) A (\ (a,_) → a)
-          ( is-left-fibration-is-naive-left-fibration
-              ( total-type A C) A (\ (a,_) → a)
-              ( is-naive-left-fibration-is-covariant A C is-covariant-C)))
+        ( is-left-fibration-is-naive-left-fibration
+            ( total-type A C) A (\ (a,_) → a)
+            ( is-naive-left-fibration-is-covariant A C is-covariant-C))
 ```
 
 ### Type theoretic proof

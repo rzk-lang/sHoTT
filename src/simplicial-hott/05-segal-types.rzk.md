@@ -99,7 +99,7 @@ Slices and coslices can also be defined directly as extension types:
 
 #def coslice'
   : U
-  := ( t : Δ¹) → A[t ≡ 0₂ ↦ a]
+  := ( t : Δ¹) → A [t ≡ 0₂ ↦ a]
 
 #def coslice'-coslice
   : coslice A a → coslice'

@@ -26,7 +26,7 @@ variant of type theory with shapes.
 See the list of contributors to this formalisation project at
 [`CONTRIBUTORS.md`](CONTRIBUTORS.md).
 
-## Checking the Formalisations Locally
+## Checking the formalisations locally
 
 It is recommended to use
 [VS Code extension for Rzk](https://rzk-lang.github.io/rzk/v0.6.2/getting-started/install/)

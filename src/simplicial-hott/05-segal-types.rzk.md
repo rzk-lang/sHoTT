@@ -493,7 +493,7 @@ is exactly `#!rzk horn-restriction A`.
                   ( h)))
             ( equiv-horn-restriction A))
           ( horn-restriction A , is-local-horn-inclusion-A)))
-    ( horn A x y z f g)
+      ( horn A x y z f g)
 ```
 
 We have now proven that both notions of Segal types are logically equivalent.
@@ -1773,7 +1773,7 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         ( h^ A h))
 ```
 
-## Products of Segal Types
+## Products of Segal types
 
 This is an additional section which describes morphisms in products of types as
 products of morphisms. It is implicitly stated in Proposition 8.21.

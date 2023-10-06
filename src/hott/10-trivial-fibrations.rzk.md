@@ -1,4 +1,4 @@
-# 10. Trivial Fibrations
+# 10. Trivial fibrations
 
 This is a literate `rzk` file:
 
@@ -230,13 +230,13 @@ Finally, we have:
 #def contractible-fibers-is-equiv-projection
   ( A : U)
   ( B : A → U)
-  ( proj-B-to-A-is-equiv
+  ( is-equiv-total-space-projection
     : is-equiv (Σ (x : A) , B x) A (total-space-projection A B))
   : contractible-fibers A B
   :=
     contractible-fibers-is-half-adjoint-equiv-projection A B
       ( is-half-adjoint-equiv-is-equiv (Σ (x : A) , B x) A
-        ( total-space-projection A B) proj-B-to-A-is-equiv)
+        ( total-space-projection A B) is-equiv-total-space-projection)
 ```
 
 ```rzk title="The main theorem"

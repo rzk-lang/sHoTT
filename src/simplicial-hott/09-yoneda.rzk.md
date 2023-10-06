@@ -596,7 +596,7 @@ equivalence.
         ( contra-yon-evid A is-segal-A a C is-contravariant-C)))
 ```
 
-## Contravariant Naturality
+## Contravariant naturality
 
 The equivalence of the Yoneda lemma is natural in both `#!rzk a : A` and
 `#!rzk C : A → U`.

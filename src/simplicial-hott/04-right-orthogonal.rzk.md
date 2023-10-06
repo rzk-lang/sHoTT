@@ -222,7 +222,7 @@ and relies on (the naive form of) extension extensionality.
   ( ϕ : ψ → TOPE )
   ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ϕ A' A α)
   : is-right-orthogonal-to-shape
-      ( J × I) ( shape-prod J I χ ψ) ( \ (t,s) → χ t ∧ ϕ s) A' A α
+      ( J × I) ( \ (t,s) → χ t ∧ ψ s) ( \ (t,s) → χ t ∧ ϕ s) A' A α
   :=
     \ ( σ' : ( (t,s) : J × I | χ t ∧ ϕ s) → A') →
       (
@@ -323,7 +323,7 @@ The property of having unique extension
 can be pulled back along any right orthogonal map.
 
 ```rzk
-#def has-unique-extensions-right-orthogonal-has-unique-extensions
+#def has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -386,6 +386,26 @@ and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
             ( ψ → A) (ϕ → A) ( \ τ t → τ t)
             ( is-lt-ψ-ϕ-A)
             ( σ))
-
 #end is-local-type
+```
+
+Since the property of having unique extensions passes from the codomain to the domain
+of a right orthogonal map, the same is true for locality of types.
+
+```rzk
+#def is-local-type-domain-right-orthogonal-is-local-type-codomain
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A' A : U)
+  ( α : A' → A)
+  ( is-orth-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  ( is-local-A : is-local-type I ψ ϕ A)
+  : is-local-type I ψ ϕ A'
+  :=
+    is-local-type-has-unique-extensions I ψ ϕ A'
+      ( has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain
+          I ψ ϕ A' A α is-orth-α
+          ( has-unique-extensions-is-local-type I ψ ϕ A is-local-A))
+
 ```

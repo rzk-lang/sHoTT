@@ -1,4 +1,4 @@
-name: Check with latest Rzk
+name: Typecheck with latest Rzk
 
 # Controls when the workflow will run
 on:

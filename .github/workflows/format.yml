@@ -1,4 +1,4 @@
-name: Code Formatting Check
+name: Code formatting check
 
 on:
   pull_request:

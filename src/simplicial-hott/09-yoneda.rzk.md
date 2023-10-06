@@ -400,6 +400,24 @@ Naturality in `#!rzk C` is not automatic but can be proven easily:
         is-natural-in-family-yon-once-pointwise
           A is-segal-A a C D is-covariant-C is-covariant-D ψ u x)
 ```
+We prove the Yoneda embedding.
+
+```rzk tittle="Yoneda embedding "
+#def yoneda-embedding
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  :  hom A a' a → ( (z : A) → hom A a z → hom A a' z)
+  := yon
+      ( A )
+      ( is-segal-A)
+      ( a )
+      ( \ x → hom A a' x )
+      ( is-covariant-representable-is-segal
+          ( A)
+          ( is-segal-A)
+          ( a'))
+```
 
 ## Yoneda for contravariant families
 

@@ -26,10 +26,11 @@ jobs:
 
       - name: Check formatting
         run: |
+          set -x
           FILES=$(prettier --config .prettierrc.json --list-different "**/*.{md,json,yaml,yml}")
           if [ "$FILES" ]; then
             echo "The following files are not formatted correctly:"
             echo "$FILES"
             echo "Please install Prettier locally and format these files."
-            exit 1
+            exit 2
           fi

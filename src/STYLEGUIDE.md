@@ -1,7 +1,9 @@
 # Style guide and design principles
 
 This guide provides a set of design principles and guidelines for the `sHoTT`
-project. Our style and design principles borrows heavily from
+project.
+
+Our style and design principles borrows heavily from
 [`agda-unimath`](https://github.com/UniMath/agda-unimath).
 
 ## The structure of code
@@ -17,7 +19,8 @@ The general format of a definition is as follows:
   ( p : x = y)
   ( q : y = z)
   : (x = z)
-  := idJ (A , y , \ z' q' → (x = z') , p , z , q)
+  :=
+    ind-path A y (\ z' q' → (x = z')) p z q
 ```
 
 - We start with the name, and place every assumption on a new line.
@@ -30,24 +33,23 @@ The general format of a definition is as follows:
   not fit on a single line, we immediately insert a new line after the walrus
   separator and indent the code an extra level (2 spaces).
 
-(Currently just taken from agda-unimath and adapted to Rzk) In Rzk, every
-construction is structured like a tree, where each operation can be seen as a
-branching point. We use indentation levels and parentheses to highlight this
-structure, which makes the code feel more organized and understandable. For
-example, when a definition part extends beyond a line, we introduce line breaks
-at the earliest branching point, clearly displaying the tree structure of the
-definition. This allows the reader to follow the branches of the tree, and to
-visually grasp the scope of each operation and argument. Consider the following
-example about Segal types:
+In the Rzk language, every construction is structured like a tree, where each
+operation can be seen as a branching point. We use indentation levels and
+parentheses to highlight this structure, which makes the code more organized and
+readable. For example, when part of a definition extends beyond a single line,
+we introduce line breaks at the earliest branching point, clearly displaying the
+tree structure of the definition. This allows the reader to follow the branches
+of the tree, and to visually grasp the scope of each operation and argument.
+Consider the following example about Segal types:
 
 ```rzk
 #def is-segal-is-local-horn-inclusion
   ( A : U)
   ( is-local-horn-inclusion-A : is-local-horn-inclusion A)
-  : isSegal A
+  : is-segal A
   :=
     \ x y z f g →
-    projection-equiv-contractible-fibers
+    contractible-fibers-is-equiv-projection
       ( Λ → A)
       ( \ k →
         Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
@@ -57,8 +59,8 @@ example about Segal types:
             ( \ t → k (1₂ , t))
             ( h)))
       ( second
-        ( comp-equiv
-          ( Σ ( k : Λ → A ) ,
+        ( equiv-comp
+          ( Σ ( k : Λ → A) ,
             Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
               ( hom2 A
                 ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
@@ -85,10 +87,10 @@ The root here is the function `projection-equiv-contractible-fibers`. It takes
 four arguments, each starting on a fresh line and is indented an extra level
 from the root. The first argument fits neatly on one line, but the second one is
 too large. In these cases, we add a line break right after the `→`-symbol
-following the lambda-abstraction, which is the earliest branching point in this
-case. The next node is again `Σ`, with two arguments. The first one fits on a
-line, but the second does not, so we add a line break between them. This process
-is continued until the definition is complete.
+following the lambda-abstraction, which we consider the earliest branching point
+in this case. The next node is again `Σ`, with two arguments. The first one fits
+on a line, but the second does not, so we add a line break between them. This
+process is continued until the definition is complete.
 
 Note also that we use parentheses to mark the branches. The extra space after
 the opening parentheses marking a branch is there to visually emphasize the tree
@@ -97,25 +99,38 @@ two-space indentation level increases.
 
 ## Naming conventions
 
-- As a main strategy, we strive to keep a tight connection between names of
-  constructions and their types. Take for instance [...].
-  > - Add example
-  > - prepending assumptions and then conclusion
-  > - See agda-unimath's description
-  > - > We start with the initial assumption, then, working our way to the
-  >   > conclusion, prepending every central assumption to the name, and finally
-  >   > the conclusion. So for instance the name `iso-is-initial-is-segal`
-  >   > should read like we get an iso of something which is initial given that
-  >   > something is Segal. The true reading should then be obvious.
-  >
-  > > The naming conventions are aimed at improving the readability of the code,
-  > > not to ensure the shortest possible names, nor to minimize the amount of
-  > > typing by the implementers of the library.
-- We mainly use lower case names with words separated by hyphens.
-- Capitalized names are reserved for subuniverses and similar collections. When
+Adhering to a good naming convention is essential for keeping the library
+navigable and maintainable, and helps you make progress with your formalization
+goals. Good names provide concise descriptions of an entry's purpose, and help
+making the code in the library readable.
+
+- Entry names aim to concisely describe their mathematical concept, using
+  well-known mathematical vocabulary.
+- While an entry's name reflects its concept, it avoids relying on the details
+  of its formalization. This way, a user is not required to know how something
+  is formalized in order to reference an entry.
+- Even with only minimal knowledge of the conventions, readers should be able to
+  intuitively grasp an entry's purpose from its name.
+- The naming conventions should apply regardless of topic or subfield.
+- For many common kinds of entries, our naming conventions should offer a
+  predictable suggestion of what its name should be.
+- Ultimately, our goal is for these conventions to support clear and
+  maintainable code.
+
+> - Add example
+> - prepending assumptions and then conclusion. General format of names
+>
+> > The naming conventions are aimed at improving the readability of the code,
+> > not to ensure the shortest possible names, nor to minimize the amount of
+> > typing by the implementers of the library.
+
+> - We mainly use lower case names with words separated by hyphens.
+
+- Capitalized names are reserved for subuniverses and similar "namespaces". When
   a construction is made internally to such a collection, we _append_ its name.
-  For instance, the subuniverse of Segal types is called `Segal`, and its
-  internal hom, called `function-type-Segal,` has the following signature:
+  For instance, the subuniverse of Segal types is called `Segal`, and the
+  function type formation in that subuniverse , called `function-type-Segal,`
+  has the following signature:
 
   ```rzk
   #def function-type-Segal
@@ -129,70 +144,78 @@ two-space indentation level increases.
 
 - For technical lemmas or definitions, where the chance they will be reused is
   very low, the specific names do not matter as much. In these cases, one may
-  resort to a simplified naming scheme, like enumeration. Please note, however,
-  that if you find yourself appealing to this convention frequently, that is a
-  sign that your code should be refactored.
+  resort to a simplified naming scheme, like enumeration. Please keep in mind,
+  however, that if you find yourself appealing to this convention frequently,
+  that is a sign that your code should be refactored.
 
-- We use Unicode symbols sparingly and only when they align with established
-  mathematical practice.
+- We use Unicode symbols in names very sparingly and only when they align with
+  established mathematical practice.
 
 ## Use of Unicode characters
 
-In the defined names we use Unicode symbols sparingly and only when they align
-with established mathematical practice.
+In defined names we use Unicode symbols sparingly and only when they align with
+established mathematical practice. For the builtin syntactic features of `rzk`,
+however, we prefer the following Unicode symbols:
 
-For the builtin syntactic features of `rzk` we use the following Unicode
-symbols:
+- `→` should be used instead of `->` (`\to`)
+- `↦` should be used instead of`|->` (`\mapsto`)
+- `≡` should be used instead of `===` (`\equiv`)
+- `≤` should be used instead of `<=` (`\<=`)
+- `∧` should be used instead of `/\` (`\and`)
+- `∨` should be used instead of `\/` (`\or`)
+- `0₂` should be used instead of `0_2` (`0\2`)
+- `1₂` should be used instead of `1_2` (`1\2`)
+- `I × J` should be used instead of `I * J` (`\x` or `\times`)
 
-- `->` should be always replaced with `→` (`\to`)
-- `|->` should be always replaced with `↦` (`\mapsto`)
-- `===` should be always replaced with `≡` (`\equiv`)
-- `<=` should be always replaced with `≤` (`\<=`)
-- `/\` should be always replaced with `∧` (`\and`)
-- `\/` should be always replaced with `∨` (`\or`)
-- `0_2` should be always replaced with `0₂` (`0\2`)
-- `1_2` should be always replaced with `1₂` (`1\2`)
-- `I * J` should be always replaced with `I × J` (`\x` or `\times`)
+!!! info
 
-We use ASCII versions for `TOP` and `BOT` since `⊤` and `⊥` do not read better
-in the code. Same for `first` and `second` (`π₁` and `π₂` are not very
-readable). For the latter a lot of uses for projections should go away by using
-pattern matching (and `let`/`where` in the future).
+    For `first`, `second`, `TOP` and `BOT`, we prefer the ASCII versions as
+    opposed to `π₁`, `π₂`, `⊤` and `⊥`, as we find the latter don't read too
+    well in the code. Please also note that we usually prefer the use of
+    named projections for special Sigma-types when these are defined.
 
-## Use of Comments
+## Use of comments
 
-> We do not explicitly ban code comments, but our other conventions should
-> heavily limit their need.
->
-> - [ ] Literate file format for prose
-> - [ ] Descriptive definition names shouldn't need additional explanation
-> - [ ] Strictly organized code to ease reading and understanding
-> - [ ] Essential information should be carried by code, not only comments
->
-> Still, code annotations may find their uses.
->
-> Where to place literature references?
+Since we are using literate file formats, the need for comments in the code
+should be heavily limited. If you feel the need to comment your code, then
+please consider the following:
 
-- Create and use named projections instead of using the `first` and `second`
-  projections. In many cases, their meaning is not immediately obvious, and so
-  one could be tempted to annotate the code with their meaning using comments.
+- Descriptive names for definitions should make their use self-documenting. If
+  you are finding that you want to explain an application of a definition,
+  consider giving it a better name, or creating an intermediate definition with
+  a name that better describes your current aplication.
+
+  In particular, if a particular family of Sigma types is given a name, we
+  prefer to also create and use named projections instead of `first` and
+  `second`. In many cases, their meaning is not immediately obvious, and so one
+  could be tempted to annotate the code with their meaning using comments.
 
   For instance, instead of writing `first (second is-invertible-f)`, we define a
   named projection `is-section-is-invertible`. This may then be used as
-  `is-section-is-invertible A B f is-invertible-f` in other places. This way,
-  the code becomes self-documenting, and much easier to read.
+  `is-section-is-invertible A B f is-invertible-f` elsewhere. This way, the code
+  becomes self-documenting, and much easier to read.
 
   However, we recognize that in `rzk`, since we do not have the luxury of
   implicit arguments, this may sometimes cause unnecessarily verbose code. In
   such cases, you may revert to using `first` and `second`.
 
-## Adapting and Evolving the Style Guide
+- Can your code be structured in a way that makes it more readable? Are you
+  structuring it according to our conventions, or can our conventions be
+  improved to make it more readable?
 
-This style guide should evolve as Rzk develops and grows. If new features, like
-implicit arguments, `let`-expressions, or `where`-blocks are added to the
-language, or if there is made changes to the syntax of the language, their use
-should be incorporated into this style guide.
+- Can the comments naturally be converted to prose that can be placed outside of
+  the coding environment in the literate file?
 
-At all times, the goal is to have code that is easy to read and navigate, even
-for those who are not the authors. We should also ensure that we maintain a
-consistent style across the entire repository.
+## Literary conventions
+
+- We write in US English.
+- Headers are written using sentence casing, as opposed to title casing.
+
+## Adapting and evolving the style guide
+
+This style guide should evolve as Rzk develops and grows. If new features are
+added to the language or if there is made changes to the syntax of the language,
+their use should be incorporated into this style guide.
+
+Remember, the goal is at all times is to have code that is easy to read,
+navigate and maintain, even for those who are not the original authors.

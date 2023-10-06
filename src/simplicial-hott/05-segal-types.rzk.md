@@ -15,8 +15,8 @@ This is a literate `rzk` file:
   their data.
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
-  `#!rzk total-space-projection` in the proof of Theorem 5.5.
-- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and their
+  `#!rzk total-type-projection` in the proof of Theorem 5.5.
+- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
   subshapes.
 - `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
@@ -414,7 +414,7 @@ witnesses of the equivalence).
                 ( h))))
       ( Λ → A)
       ( equiv-horn-restriction A)
-      ( total-space-projection
+      ( total-type-projection
         ( Λ → A)
         ( \ k →
           Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
@@ -1775,8 +1775,8 @@ The cofibration Λ²₁ → Δ² is inner anodyne
 
 ## Products of Segal Types
 
-This is an additional section which describes morphisms in products of types as products of morphisms.
-It is implicitly stated in Proposition 8.21.
+This is an additional section which describes morphisms in products of types as
+products of morphisms. It is implicitly stated in Proposition 8.21.
 
 ```rzk
 #section morphisms-of-products-is-products-of-morphisms

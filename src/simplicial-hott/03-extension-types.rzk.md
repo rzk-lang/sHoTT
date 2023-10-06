@@ -857,3 +857,22 @@ $\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\r
         ( a)
         ( f))))
 ```
+
+## Proving weak extension extensionality
+
+```rzk
+#def equiv-extension-type
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  : Equiv
+    ( (t : ψ) → A t)
+    ( Σ ( a : (t : ϕ) → A t) , ( (t : ψ) → A t [ϕ t ↦ a t]))
+  :=
+    cofibration-composition
+      I ψ ϕ (\ t → BOT) A (\ t → recBOT)
+
+
+
+```

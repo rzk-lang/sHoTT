@@ -2056,56 +2056,8 @@ are discrete.
 
 In particular, in discrete types identity types are discrete.
 
-```rzk
--- #assume hole : (A : U) → A
--- -- remove
--- #def comp-ap-hom
---   ( A B C : U)
---   ( F : A → B)
---   ( G : B → C)
---   ( x y : A)
---   : comp
---      ( hom A x y)
---      ( hom B (F x) (F y))
---      ( hom C (G (F x)) (G (F y)))
---      ( ap-hom B C G (F x) (F y))
---      ( ap-hom A B F x y)
---     =
---     ap-hom A C (comp A B C G F) x y
---   :=
---     (eq-htpy
---       ( hom A x y)
---       ( \ _ → hom C (G (F x)) (G (F y)))
---       ( comp
---         ( hom A x y) -- problem here
---         ( hom B (F x) (F y))
---         ( hom C (G (F x)) (G (F y)))
---         ( ap-hom B C G (F x) (F y))
---         ( ap-hom A B F x y))
---       ( ap-hom A C (comp G F) x y)) (\ x → refl)
-
--- -- actually, I dont need that ...
--- #def is-equiv-ap-hom-is-equiv
---    ( A B : U)
---    ( F : A → B)
---    ( is-equiv-F : is-equiv A B F)
---    ( x y : A)
---    : is-equiv (hom A x y) (hom B (F x) (F y)) (ap-hom A B F x y)
---    :=
---      is-equiv-has-inverse
---        ( hom A x y)
---        ( hom B (F x) (F y))
---        ( ap-hom A B F x y)
---        ( (ap-hom B A (first (has-inverse-is-equiv A B F is-equiv-F))),
---         (homotopy φ⁻¹ ∘ φ = id), -- use that F is equiv and ap-hom preserve comp
---         (homotopy φ ∘ φ⁻¹ = id)) -- use that F is equiv and ap-hom preserve comp
-
-```
-
 ```rzk title="RS17, Corollary 8.20"
-
 -- define is-equiv-ap-isequiv-f : is equiv f => is equiv ap
-
 #def map-inverse-is-equiv
   ( A B : U)
   ( f : A → B)

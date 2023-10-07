@@ -2010,7 +2010,6 @@ commuting with the contravariant lifts.
 The fibers of a covariant fibration over a Segal type are discrete types.
 
 ```rzk title="RS17, Proposition 8.18"
-
 #def is-discrete-is-covariant-segal
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -2041,7 +2040,6 @@ In a segal type, covariant hom families are covariant,hence representable homs
 are discrete.
 
 ```rzk title="RS17, Corollary 8.19"
-
 #def is-discrete-representable-is-segal
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -2059,67 +2057,168 @@ are discrete.
 In particular, in discrete types identity types are discrete.
 
 ```rzk
-#assume hole : (A : U) → A
+-- #assume hole : (A : U) → A
+-- -- remove
+-- #def comp-ap-hom
+--   ( A B C : U)
+--   ( F : A → B)
+--   ( G : B → C)
+--   ( x y : A)
+--   : comp
+--      ( hom A x y)
+--      ( hom B (F x) (F y))
+--      ( hom C (G (F x)) (G (F y)))
+--      ( ap-hom B C G (F x) (F y))
+--      ( ap-hom A B F x y)
+--     =
+--     ap-hom A C (comp A B C G F) x y
+--   :=
+--     (eq-htpy
+--       ( hom A x y)
+--       ( \ _ → hom C (G (F x)) (G (F y)))
+--       ( comp
+--         ( hom A x y) -- problem here
+--         ( hom B (F x) (F y))
+--         ( hom C (G (F x)) (G (F y)))
+--         ( ap-hom B C G (F x) (F y))
+--         ( ap-hom A B F x y))
+--       ( ap-hom A C (comp G F) x y)) (\ x → refl)
 
-#def comp-ap-hom
-  ( A B C : U)
-  ( F : A → B)
-  ( G : B → C)
-  ( x y : A)
-  : comp
-     ( hom A x y)
-     ( hom B (F x) (F y))
-     ( hom C (G (F x)) (G (F y)))
-     ( ap-hom B C G (F x) (F y))
-     ( ap-hom A B F x y)
-    =
-    ap-hom A C (comp A B C G F) x y
-  :=
-    (eq-htpy
-      ( hom A x y)
-      ( \ _ → hom C (G (F x)) (G (F y)))
-      ( comp
-        ( hom A x y) -- problem here
-        ( hom B (F x) (F y))
-        ( hom C (G (F x)) (G (F y)))
-        ( ap-hom B C G (F x) (F y))
-        ( ap-hom A B F x y))
-      ( ap-hom A C (comp G F) x y)) (\ x → refl)
-
--- actually, I dont need that ...
-#def is-equiv-ap-hom-is-equiv
-   ( A B : U)
-   ( F : A → B)
-   ( is-equiv-F : is-equiv A B F)
-   ( x y : A)
-   : is-equiv (hom A x y) (hom B (F x) (F y)) (ap-hom A B F x y)
-   :=
-     is-equiv-has-inverse
-       ( hom A x y)
-       ( hom B (F x) (F y))
-       ( ap-hom A B F x y)
-       ( (ap-hom B A (first (has-inverse-is-equiv A B F is-equiv-F))),
-        (homotopy φ⁻¹ ∘ φ = id), -- use that F is equiv and ap-hom preserve comp
-        (homotopy φ ∘ φ⁻¹ = id)) -- use that F is equiv and ap-hom preserve comp
-
+-- -- actually, I dont need that ...
+-- #def is-equiv-ap-hom-is-equiv
+--    ( A B : U)
+--    ( F : A → B)
+--    ( is-equiv-F : is-equiv A B F)
+--    ( x y : A)
+--    : is-equiv (hom A x y) (hom B (F x) (F y)) (ap-hom A B F x y)
+--    :=
+--      is-equiv-has-inverse
+--        ( hom A x y)
+--        ( hom B (F x) (F y))
+--        ( ap-hom A B F x y)
+--        ( (ap-hom B A (first (has-inverse-is-equiv A B F is-equiv-F))),
+--         (homotopy φ⁻¹ ∘ φ = id), -- use that F is equiv and ap-hom preserve comp
+--         (homotopy φ ∘ φ⁻¹ = id)) -- use that F is equiv and ap-hom preserve comp
 
 ```
 
 ```rzk title="RS17, Corollary 8.20"
 
+-- define is-equiv-ap-isequiv-f : is equiv f => is equiv ap
 
--- composition ap_{hom-eq}^{-1} o hom-eq^{-1} o ap-hom hom-eq^{-1} with hom-eq is section and retraction
-#def is-discrete-id-type-is-discrete
- ( A : U)
- ( is-discrete-A : is-discrete A)
- ( x y : A)
- : is-discrete (x = y)
- :=
-   \ p q → is-equiv-has-inverse
-             ( p = q)
-             ( hom (hom A x y) p q)
-             ( hom-eq (x = y) p q)
-             ( -- ap_{hom-eq}^{-1} o hom-eq^{-1} o ap-hom hom-eq^{-1}
-               (homotopy)
-               (homotopy))
+#def map-inverse-is-equiv
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : B → A
+  :=
+    map-inverse-has-inverse A B f
+      ( has-inverse-is-equiv A B f is-equiv-f)
+
+#def inverse-hom-eq-id-type
+  ( A : U)
+  ( is-discrete-A : is-discrete A)
+  ( x y : A)
+  ( p q : x = y)
+  : (hom (x = y) p q) → (p = q)
+  :=
+    comp
+      ( hom (x = y) p q)
+      ( (hom-eq A x y p) = (hom-eq A x y q))
+      ( p = q)
+      ( ap-cancel-has-retraction ( x = y) ( hom A x y)
+        ( hom-eq A x y)
+        ( first (is-discrete-A x y))
+        ( p)
+        ( q))
+      ( comp
+        ( hom (x = y) p q)
+        ( hom (hom A x y) (hom-eq A x y p) (hom-eq A x y q))
+        ( (hom-eq A x y p) = (hom-eq A x y q))
+        ( map-inverse-is-equiv
+          ( (hom-eq A x y p) = (hom-eq A x y q))
+          ( hom (hom A x y) (hom-eq A x y p) (hom-eq A x y q))
+          ( hom-eq (hom A x y) (hom-eq A x y p) (hom-eq A x y q))
+          ( (is-discrete-representable-is-segal ( A)
+            ( is-segal-is-discrete extext A is-discrete-A)
+            ( x)
+            ( y))
+            ( hom-eq A x y p)
+            ( hom-eq A x y q)))
+        ( ap-hom ( x = y) ( hom A x y) ( hom-eq A x y) ( p) ( q)))
+
+#def has-retraction-inverse-hom-eq-id-type
+  ( A : U)
+  ( is-discrete-A : is-discrete A)
+  ( x y : A)
+  ( p q : x = y)
+  : has-retraction (p = q) (hom (x = y) p q) (hom-eq (x = y) p q)
+  :=
+    ( inverse-hom-eq-id-type A is-discrete-A x y p q,
+      ( \ α →
+        ind-path ( x = y) ( p)
+          ( \ q' α' →
+            comp ( p = q') ( hom (x = y) p q') ( p = q')
+              ( inverse-hom-eq-id-type A is-discrete-A x y p q')
+              ( hom-eq (x = y) p q')
+              ( α')
+            = α')
+          ( ap
+            ( hom ( hom A x y) ( hom-eq A x y p) ( hom-eq A x y p))
+            ( p = p)
+            ( ap-hom ( x = y) ( hom A x y)
+              ( hom-eq A x y)
+              ( p) ( p)
+              ( id-hom ( x = y) p))
+            ( id-hom ( hom A x y) ( hom-eq A x y p))
+            ( comp
+              ( hom ( hom A x y) ( hom-eq A x y p) ( hom-eq A x y p))
+              ( (hom-eq A x y p) = (hom-eq A x y p))
+              ( p = p)
+              ( ap-cancel-has-retraction ( x = y) ( hom A x y)
+                ( hom-eq A x y)
+                ( first (is-discrete-A x y))
+                ( p)
+                ( p))
+              ( map-inverse-is-equiv
+                ( (hom-eq A x y p) = (hom-eq A x y p))
+                ( hom (hom A x y) (hom-eq A x y p) (hom-eq A x y p))
+                ( hom-eq (hom A x y) (hom-eq A x y p) (hom-eq A x y p))
+                ( (is-discrete-representable-is-segal ( A)
+                    ( is-segal-is-discrete extext A is-discrete-A)
+                    ( x)
+                    ( y))
+                  ( hom-eq A x y p)
+                  ( hom-eq A x y p))))
+             (functors-pres-id extext ( x = y) ( hom A x y)
+               ( hom-eq A x y) ( p)))
+          ( q)
+          ( α)
+      )
+    )
+
+-- #def has-section-inverse-hom-eq-id-type
+--   ( A : U)
+--   ( is-discrete-A : is-discrete A)
+--   ( x y : A)
+--   ( p q : x = y)
+--   : has-section (p = q) (hom (x = y) p q) (hom-eq (x = y) p q)
+--   :=
+--     ( inverse-hom-eq-id-type A is-discrete-A x y p q,
+--     ( -- to fill
+--     ))
+
+-- -- composition ap_{hom-eq}^{-1} o hom-eq^{-1} o ap-hom hom-eq with hom-eq is section and retraction
+-- #def is-discrete-id-type-is-discrete
+--  ( A : U)
+--  ( is-discrete-A : is-discrete A)
+--  ( x y : A)
+--  : is-discrete (x = y)
+--  :=
+--    \ p q →
+--      is-equiv-has-inverse ( p = q) ( hom (x = y) p q)
+--       ( hom-eq (x = y) p q)
+--       ( inverse-hom-eq-id-type A is-discrete-A x y p q),
+--         ( second has-retraction-inverse-hom-eq-id-type,
+--           second has-section-inverse-hom-eq-id-type)
 ```

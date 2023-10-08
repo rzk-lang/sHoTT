@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - ci-format
 
 jobs:
   format:

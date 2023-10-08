@@ -16,9 +16,9 @@ This is a literate `rzk` file:
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk total-space-projection` in the proof of Theorem 5.5.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and their
   subshapes.
-- `4-extension-types.md` — We use the fubini theorem and extension
+- `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
 
 Some of the definitions in this file rely on function extensionality and
@@ -99,7 +99,7 @@ Slices and coslices can also be defined directly as extension types:
 
 #def coslice'
   : U
-  := ( t : Δ¹) → A[t ≡ 0₂ ↦ a]
+  := ( t : Δ¹) → A [t ≡ 0₂ ↦ a]
 
 #def coslice'-coslice
   : coslice A a → coslice'
@@ -349,13 +349,18 @@ The underlying horn of a simplex:
   := \ f t → f t
 ```
 
-This provides an alternate definition of Segal types.
+This provides an alternate definition of Segal types as types which are local
+for the inclusion `Λ ⊂ Δ¹`.
 
 ```rzk
 #def is-local-horn-inclusion
+  : U → U
+  := is-local-type (2 × 2) Δ² (\ t → Λ t)
+
+#def is-local-horn-inclusion-unpacked
   ( A : U)
-  : U
-  := is-equiv (Δ² → A) (Λ → A) (horn-restriction A)
+  : is-local-horn-inclusion A = is-equiv (Δ² → A) (Λ → A) (horn-restriction A)
+  := refl
 ```
 
 Now we prove this definition is equivalent to the original one. Here, we prove
@@ -1605,7 +1610,6 @@ Interchange law
 ## Inner anodyne maps
 
 ```rzk title="RS17, Definition 5.19"
-
 #def is-inner-anodyne
   (I : CUBE)
   (ψ : I → TOPE)
@@ -1771,6 +1775,19 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         ( A)
         ( is-segal-A)
         ( h^ A h))
+```
+
+## Inner fibrations
+
+An inner fibration is a map `α : A' → A` which is right orthogonal
+to `Λ ⊂ Δ²`. This is the relative notion of a Segal type.
+
+```rzk
+#def is-inner-fibration
+  ( A' A : U)
+  ( α : A' → A)
+  : U
+  := is-right-orthogonal-to-shape (2 × 2) Δ² (\ t → Λ t) A' A α
 ```
 
 ## Products of Segal Types

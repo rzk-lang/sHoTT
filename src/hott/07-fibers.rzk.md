@@ -368,7 +368,7 @@ of the fibers of the first function.
   : fib A C (comp A B C g f) c
   := (a, concat C (g (f a)) (g b) c (ap B C (f a) b g p) q)
 
-#def retract-fiber-sum-fiber-comp
+#def is-retract-fiber-sum-fiber-comp
   (c : C)
   ((a, r) : fib A C (comp A B C g f) c)
   : fiber-comp-fiber-sum c (fiber-sum-fiber-comp c (a, r)) = (a, r)
@@ -381,7 +381,7 @@ of the fibers of the first function.
     ( r)
     ( left-unit-concat C (g (f a)) c r)
 
-#def retract-fiber-comp-fiber-sum'
+#def is-retract-fiber-comp-fiber-sum'
   (c : C)
   ((b, q) : fib B C g c)
   : ((a, p) : fib A B f b) →
@@ -404,14 +404,14 @@ of the fibers of the first function.
     ( c)
     ( (b, q))
 
-#def retract-fiber-comp-fiber-sum
+#def is-retract-fiber-comp-fiber-sum
   (c : C)
   ( ((b, q), (a, p)) : Σ ((b, q) : fib B C g c), fib A B f b)
   : fiber-sum-fiber-comp c (fiber-comp-fiber-sum c ((b, q), (a, p))) =
     ((b, q), (a, p))
-  := retract-fiber-comp-fiber-sum' c (b, q) (a, p)
+  := is-retract-fiber-comp-fiber-sum' c (b, q) (a, p)
 
-#def equiv-fiber-comp-fiber-sum
+#def equiv-fiber-sum-fiber-comp
   (c : C)
   : Equiv
     ( fib A C (comp A B C g f) c)
@@ -419,9 +419,9 @@ of the fibers of the first function.
   :=
     ( fiber-sum-fiber-comp c,
       ( ( fiber-comp-fiber-sum c,
-          retract-fiber-sum-fiber-comp c),
+          is-retract-fiber-sum-fiber-comp c),
         ( fiber-comp-fiber-sum c,
-          retract-fiber-comp-fiber-sum c)))
+          is-retract-fiber-comp-fiber-sum c)))
 
 #end fiber-composition
 ```

@@ -8,6 +8,8 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
+
+
 ## Simplices and their subshapes
 
 ### Simplices

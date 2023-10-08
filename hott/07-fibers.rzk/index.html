@@ -632,6 +632,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#fibers-of-projections" class="md-nav__link">
+    Fibers of projections
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fibers-of-composites" class="md-nav__link">
+    Fibers of composites
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1091,6 +1105,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#fibers-of-projections" class="md-nav__link">
+    Fibers of projections
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fibers-of-composites" class="md-nav__link">
+    Fibers of composites
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1355,6 +1383,152 @@ work from the assumption that <code>f</code> is a half adjoint equivalence.</p>
 </span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
 </span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="err">  : iff (is-contr-map A B f) (is-equiv A B f)</span>
 </span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="err">  := (is-equiv-is-contr-map A B f , is-contr-map-is-equiv A B f)</span>
+</span></code></pre></div>
+<h2 id="fibers-of-projections">Fibers of projections<a class="headerlink" href="#fibers-of-projections" title="Permanent link">&para;</a></h2>
+<p>For a family of types <code class="language-rzk highlight"><span class="err">B : A → U</span></code>, the fiber of the projection from
+<code class="language-rzk highlight"><span class="err">total-type A B</span></code> to <code class="language-rzk highlight"><span class="err">A</span></code> over <code class="language-rzk highlight"><span class="err">a : A</span></code> is equivalent to
+<code class="language-rzk highlight"><span class="err">B a</span></code>. While both types deserve the name "fibers" to disambiguate, we
+temporarily refer to the fiber as the "homotopy fiber" and <code class="language-rzk highlight"><span class="err">B a</span></code> as the
+"strict fiber."</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nd">#section</span><span class="n"> strict-vs-homotopy-fiber</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="kr">#variable</span><span class="p"> </span>B<span class="err"> : A → U</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:homotopy-fiber-strict-fiber" id="define:homotopy-fiber-strict-fiber" style="visibility: visible; position: relative; color: inherit">homotopy-fiber-strict-fiber</a></span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="err">  </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="err">  </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a)</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="err">  : fib (total-type A B) A (projection-total-type A B) a</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="err">  := ((a, b), </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:strict-fiber-homotopy-fiber" id="define:strict-fiber-homotopy-fiber" style="visibility: visible; position: relative; color: inherit">strict-fiber-homotopy-fiber</a></span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="err">  </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="err">  (((a&#39;, b&#39;), p) : fib (total-type A B) A (projection-total-type A B) a)</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="err">  : B a</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="err">  := transport A B a&#39; a p b&#39;</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:retract-homotopy-fiber-strict-fiber" id="define:retract-homotopy-fiber-strict-fiber" style="visibility: visible; position: relative; color: inherit">retract-homotopy-fiber-strict-fiber</a></span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="err">  </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="err">  </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a)</span>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="err">  : strict-fiber-homotopy-fiber a (homotopy-fiber-strict-fiber a b) = b</span>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="err">  := </span><span class="s">refl</span>
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:calculation-retract-strict-fiber-homotopy-fiber" id="define:calculation-retract-strict-fiber-homotopy-fiber" style="visibility: visible; position: relative; color: inherit">calculation-retract-strict-fiber-homotopy-fiber</a></span>
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="err">  </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="err">  </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a)</span>
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="err">  : homotopy-fiber-strict-fiber a</span>
+</span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="err">    ( strict-fiber-homotopy-fiber a ((a, b), </span><span class="s">refl</span><span class="err">)) =</span>
+</span><span id="__span-9-29"><a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="err">    ( (a, b), </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-9-30"><a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="err">  := </span><span class="s">refl</span>
+</span><span id="__span-9-31"><a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>
+</span><span id="__span-9-32"><a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:retract-strict-fiber-homotopy-fiber" id="define:retract-strict-fiber-homotopy-fiber" style="visibility: visible; position: relative; color: inherit">retract-strict-fiber-homotopy-fiber</a></span>
+</span><span id="__span-9-33"><a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="err">  </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-9-34"><a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a><span class="err">  (((a&#39;, b&#39;), p) : fib (total-type A B) A (projection-total-type A B) a)</span>
+</span><span id="__span-9-35"><a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a><span class="err">  : homotopy-fiber-strict-fiber a (strict-fiber-homotopy-fiber a ((a&#39;, b&#39;), p))</span>
+</span><span id="__span-9-36"><a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a><span class="err">    = ((a&#39;, b&#39;), p)</span>
+</span><span id="__span-9-37"><a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a><span class="err">  :=</span>
+</span><span id="__span-9-38"><a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a><span class="err">    ind-fib</span>
+</span><span id="__span-9-39"><a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a><span class="err">    ( total-type A B)</span>
+</span><span id="__span-9-40"><a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="err">    ( A)</span>
+</span><span id="__span-9-41"><a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="err">    ( projection-total-type A B)</span>
+</span><span id="__span-9-42"><a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a><span class="err">    ( </span><span class="p">\ </span>a0 <span class="err">((a&#39;&#39;, b&#39;&#39;), p&#39;) →</span>
+</span><span id="__span-9-43"><a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a><span class="err">      homotopy-fiber-strict-fiber a0</span>
+</span><span id="__span-9-44"><a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a><span class="err">      ( strict-fiber-homotopy-fiber a0 ((a&#39;&#39;, b&#39;&#39;), p&#39;)) = ((a&#39;&#39;, b&#39;&#39;), p&#39;))</span>
+</span><span id="__span-9-45"><a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a><span class="err">    ( \ (a&#39;&#39;, b&#39;&#39;) → </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-9-46"><a id="__codelineno-9-46" name="__codelineno-9-46" href="#__codelineno-9-46"></a><span class="err">    ( a)</span>
+</span><span id="__span-9-47"><a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a><span class="err">    ( ((a&#39;, b&#39;), p))</span>
+</span><span id="__span-9-48"><a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a>
+</span><span id="__span-9-49"><a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-homotopy-fiber-strict-fiber" id="define:equiv-homotopy-fiber-strict-fiber" style="visibility: visible; position: relative; color: inherit">equiv-homotopy-fiber-strict-fiber</a></span>
+</span><span id="__span-9-50"><a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a><span class="err">  </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-9-51"><a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a><span class="err">  : Equiv</span>
+</span><span id="__span-9-52"><a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a><span class="err">    ( B a)</span>
+</span><span id="__span-9-53"><a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a><span class="err">    ( fib (total-type A B) A (projection-total-type A B) a)</span>
+</span><span id="__span-9-54"><a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a><span class="err">  :=</span>
+</span><span id="__span-9-55"><a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a><span class="err">    ( homotopy-fiber-strict-fiber a,</span>
+</span><span id="__span-9-56"><a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a><span class="err">      ( ( strict-fiber-homotopy-fiber a,</span>
+</span><span id="__span-9-57"><a id="__codelineno-9-57" name="__codelineno-9-57" href="#__codelineno-9-57"></a><span class="err">          retract-homotopy-fiber-strict-fiber a),</span>
+</span><span id="__span-9-58"><a id="__codelineno-9-58" name="__codelineno-9-58" href="#__codelineno-9-58"></a><span class="err">        ( strict-fiber-homotopy-fiber a,</span>
+</span><span id="__span-9-59"><a id="__codelineno-9-59" name="__codelineno-9-59" href="#__codelineno-9-59"></a><span class="err">          retract-strict-fiber-homotopy-fiber a)))</span>
+</span><span id="__span-9-60"><a id="__codelineno-9-60" name="__codelineno-9-60" href="#__codelineno-9-60"></a>
+</span><span id="__span-9-61"><a id="__codelineno-9-61" name="__codelineno-9-61" href="#__codelineno-9-61"></a><span class="nd">#end</span><span class="n"> strict-vs-homotopy-fiber</span>
+</span></code></pre></div>
+<h2 id="fibers-of-composites">Fibers of composites<a class="headerlink" href="#fibers-of-composites" title="Permanent link">&para;</a></h2>
+<p>The fiber of a composite function is a sum over the fiber of the second function
+of the fibers of the first function.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nd">#section</span><span class="n"> fiber-composition</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="kr">#variables</span><span class="p"> </span>A B C<span class="err"> : U</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="kr">#variable</span><span class="p"> </span>f<span class="err"> : A → B</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="kr">#variable</span><span class="p"> </span>g<span class="err"> : B → C</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:fiber-sum-fiber-comp" id="define:fiber-sum-fiber-comp" style="visibility: visible; position: relative; color: inherit">fiber-sum-fiber-comp</a></span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="err">  </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C)</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="err">  ((a, r) : fib A C (comp A B C g f) c)</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="err">  : ( </span><span class="kt">Σ</span><span class="err"> ((b, q) : fib B C g c), fib A B f b)</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="err">  := ((f a, r), (a, </span><span class="s">refl</span><span class="err">))</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:fiber-comp-fiber-sum" id="define:fiber-comp-fiber-sum" style="visibility: visible; position: relative; color: inherit">fiber-comp-fiber-sum</a></span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="err">  </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C)</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="err">  ( ((b, q), (a, p)) : </span><span class="kt">Σ</span><span class="err"> ((b, q) : fib B C g c), fib A B f b)</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="err">  : fib A C (comp A B C g f) c</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="err">  := (a, concat C (g (f a)) (g b) c (ap B C (f a) b g p) q)</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-retract-fiber-sum-fiber-comp" id="define:is-retract-fiber-sum-fiber-comp" style="visibility: visible; position: relative; color: inherit">is-retract-fiber-sum-fiber-comp</a></span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="err">  </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C)</span>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="err">  ((a, r) : fib A C (comp A B C g f) c)</span>
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="err">  : fiber-comp-fiber-sum c (fiber-sum-fiber-comp c (a, r)) = (a, r)</span>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="err">  :=</span>
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="err">    eq-eq-fiber-Σ</span>
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="err">    ( A)</span>
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="err">    ( </span><span class="p">\ </span>a0 <span class="err">→ (g (f a0)) = c)</span>
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="err">    ( a)</span>
+</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="err">    ( concat C (g (f a)) (g (f a)) c </span><span class="s">refl</span><span class="err"> r)</span>
+</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="err">    ( r)</span>
+</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="err">    ( left-unit-concat C (g (f a)) c r)</span>
+</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>
+</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-retract-fiber-comp-fiber-sum&#39;" id="define:is-retract-fiber-comp-fiber-sum&#39;" style="visibility: visible; position: relative; color: inherit">is-retract-fiber-comp-fiber-sum&#39;</a></span>
+</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="err">  </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C)</span>
+</span><span id="__span-10-34"><a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="err">  ((b, q) : fib B C g c)</span>
+</span><span id="__span-10-35"><a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="err">  : ((a, p) : fib A B f b) →</span>
+</span><span id="__span-10-36"><a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="err">    fiber-sum-fiber-comp c (fiber-comp-fiber-sum c ((b, q), (a, p))) =</span>
+</span><span id="__span-10-37"><a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="err">    ((b, q), (a, p))</span>
+</span><span id="__span-10-38"><a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="err">  :=</span>
+</span><span id="__span-10-39"><a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a><span class="err">    ind-fib B C g</span>
+</span><span id="__span-10-40"><a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="err">    ( </span><span class="p">\ </span>c&#39; <span class="err">(b&#39;, q&#39;) → ((a, p) : fib A B f b&#39;) →</span>
+</span><span id="__span-10-41"><a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a><span class="err">      fiber-sum-fiber-comp c&#39; (fiber-comp-fiber-sum c&#39; ((b&#39;, q&#39;), (a, p))) =</span>
+</span><span id="__span-10-42"><a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a><span class="err">      ((b&#39;, q&#39;), (a, p)))</span>
+</span><span id="__span-10-43"><a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a><span class="err">    ( </span><span class="p">\ </span>b0 <span class="err">(a, p) →</span>
+</span><span id="__span-10-44"><a id="__codelineno-10-44" name="__codelineno-10-44" href="#__codelineno-10-44"></a><span class="err">      ( ind-fib A B f</span>
+</span><span id="__span-10-45"><a id="__codelineno-10-45" name="__codelineno-10-45" href="#__codelineno-10-45"></a><span class="err">        ( </span><span class="p">\</span>b0&#39; <span class="err">(a&#39;, p&#39;) →</span>
+</span><span id="__span-10-46"><a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a><span class="err">          fiber-sum-fiber-comp (g b0&#39;)</span>
+</span><span id="__span-10-47"><a id="__codelineno-10-47" name="__codelineno-10-47" href="#__codelineno-10-47"></a><span class="err">          ( fiber-comp-fiber-sum (g b0&#39;) ((b0&#39;, </span><span class="s">refl</span><span class="err">), (a&#39;, p&#39;))) =</span>
+</span><span id="__span-10-48"><a id="__codelineno-10-48" name="__codelineno-10-48" href="#__codelineno-10-48"></a><span class="err">          ((b0&#39;, </span><span class="s">refl</span><span class="err">), (a&#39;, p&#39;)))</span>
+</span><span id="__span-10-49"><a id="__codelineno-10-49" name="__codelineno-10-49" href="#__codelineno-10-49"></a><span class="err">        ( </span><span class="p">\</span>a0 <span class="err">→ </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-10-50"><a id="__codelineno-10-50" name="__codelineno-10-50" href="#__codelineno-10-50"></a><span class="err">        ( b0)</span>
+</span><span id="__span-10-51"><a id="__codelineno-10-51" name="__codelineno-10-51" href="#__codelineno-10-51"></a><span class="err">        ( (a, p))))</span>
+</span><span id="__span-10-52"><a id="__codelineno-10-52" name="__codelineno-10-52" href="#__codelineno-10-52"></a><span class="err">    ( c)</span>
+</span><span id="__span-10-53"><a id="__codelineno-10-53" name="__codelineno-10-53" href="#__codelineno-10-53"></a><span class="err">    ( (b, q))</span>
+</span><span id="__span-10-54"><a id="__codelineno-10-54" name="__codelineno-10-54" href="#__codelineno-10-54"></a>
+</span><span id="__span-10-55"><a id="__codelineno-10-55" name="__codelineno-10-55" href="#__codelineno-10-55"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-retract-fiber-comp-fiber-sum" id="define:is-retract-fiber-comp-fiber-sum" style="visibility: visible; position: relative; color: inherit">is-retract-fiber-comp-fiber-sum</a></span>
+</span><span id="__span-10-56"><a id="__codelineno-10-56" name="__codelineno-10-56" href="#__codelineno-10-56"></a><span class="err">  </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C)</span>
+</span><span id="__span-10-57"><a id="__codelineno-10-57" name="__codelineno-10-57" href="#__codelineno-10-57"></a><span class="err">  ( ((b, q), (a, p)) : </span><span class="kt">Σ</span><span class="err"> ((b, q) : fib B C g c), fib A B f b)</span>
+</span><span id="__span-10-58"><a id="__codelineno-10-58" name="__codelineno-10-58" href="#__codelineno-10-58"></a><span class="err">  : fiber-sum-fiber-comp c (fiber-comp-fiber-sum c ((b, q), (a, p))) =</span>
+</span><span id="__span-10-59"><a id="__codelineno-10-59" name="__codelineno-10-59" href="#__codelineno-10-59"></a><span class="err">    ((b, q), (a, p))</span>
+</span><span id="__span-10-60"><a id="__codelineno-10-60" name="__codelineno-10-60" href="#__codelineno-10-60"></a><span class="err">  := is-retract-fiber-comp-fiber-sum&#39; c (b, q) (a, p)</span>
+</span><span id="__span-10-61"><a id="__codelineno-10-61" name="__codelineno-10-61" href="#__codelineno-10-61"></a>
+</span><span id="__span-10-62"><a id="__codelineno-10-62" name="__codelineno-10-62" href="#__codelineno-10-62"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-fiber-sum-fiber-comp" id="define:equiv-fiber-sum-fiber-comp" style="visibility: visible; position: relative; color: inherit">equiv-fiber-sum-fiber-comp</a></span>
+</span><span id="__span-10-63"><a id="__codelineno-10-63" name="__codelineno-10-63" href="#__codelineno-10-63"></a><span class="err">  </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C)</span>
+</span><span id="__span-10-64"><a id="__codelineno-10-64" name="__codelineno-10-64" href="#__codelineno-10-64"></a><span class="err">  : Equiv</span>
+</span><span id="__span-10-65"><a id="__codelineno-10-65" name="__codelineno-10-65" href="#__codelineno-10-65"></a><span class="err">    ( fib A C (comp A B C g f) c)</span>
+</span><span id="__span-10-66"><a id="__codelineno-10-66" name="__codelineno-10-66" href="#__codelineno-10-66"></a><span class="err">    ( </span><span class="kt">Σ</span><span class="err"> ((b, q) : fib B C g c), fib A B f b)</span>
+</span><span id="__span-10-67"><a id="__codelineno-10-67" name="__codelineno-10-67" href="#__codelineno-10-67"></a><span class="err">  :=</span>
+</span><span id="__span-10-68"><a id="__codelineno-10-68" name="__codelineno-10-68" href="#__codelineno-10-68"></a><span class="err">    ( fiber-sum-fiber-comp c,</span>
+</span><span id="__span-10-69"><a id="__codelineno-10-69" name="__codelineno-10-69" href="#__codelineno-10-69"></a><span class="err">      ( ( fiber-comp-fiber-sum c,</span>
+</span><span id="__span-10-70"><a id="__codelineno-10-70" name="__codelineno-10-70" href="#__codelineno-10-70"></a><span class="err">          is-retract-fiber-sum-fiber-comp c),</span>
+</span><span id="__span-10-71"><a id="__codelineno-10-71" name="__codelineno-10-71" href="#__codelineno-10-71"></a><span class="err">        ( fiber-comp-fiber-sum c,</span>
+</span><span id="__span-10-72"><a id="__codelineno-10-72" name="__codelineno-10-72" href="#__codelineno-10-72"></a><span class="err">          is-retract-fiber-comp-fiber-sum c)))</span>
+</span><span id="__span-10-73"><a id="__codelineno-10-73" name="__codelineno-10-73" href="#__codelineno-10-73"></a>
+</span><span id="__span-10-74"><a id="__codelineno-10-74" name="__codelineno-10-74" href="#__codelineno-10-74"></a><span class="nd">#end</span><span class="n"> fiber-composition</span>
 </span></code></pre></div>
 
 

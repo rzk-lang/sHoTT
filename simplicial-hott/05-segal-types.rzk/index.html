@@ -1172,7 +1172,7 @@
   their data.</li>
 <li><code>hott/total-space.md</code> — We rely on
   <code class="language-rzk highlight"><span class="err">is-equiv-projection-contractible-fibers</span></code> and
-  <code class="language-rzk highlight"><span class="err">total-space-projection</span></code> in the proof of Theorem 5.5.</li>
+  <code class="language-rzk highlight"><span class="err">projection-total-type</span></code> in the proof of Theorem 5.5.</li>
 <li><code>02-simplicial-type-theory.rzk.md</code> — We rely on definitions of simplicies and their
   subshapes.</li>
 <li><code>03-extension-types.rzk.md</code> — We use the fubini theorem and extension
@@ -1527,7 +1527,7 @@ witnesses of the equivalence).</p>
 </span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="err">                ( h))))</span>
 </span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="err">      ( Λ → A)</span>
 </span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="err">      ( equiv-horn-restriction A)</span>
-</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="err">      ( total-space-projection</span>
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="err">      ( projection-total-type</span>
 </span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="err">        ( Λ → A)</span>
 </span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="err">        </span><span class="p">( </span>\ k →
 </span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>          Σ ( h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))) ,</span>
@@ -2769,8 +2769,8 @@ to <code>Λ ⊂ Δ²</code>. This is the relative notion of a Segal type.</p>
 </span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a><span class="err">  := is-right-orthogonal-to-shape (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) Δ² (</span><span class="p">\ </span>t <span class="err">→ Λ t) A&#39; A α</span>
 </span></code></pre></div>
 <h2 id="products-of-segal-types">Products of Segal Types<a class="headerlink" href="#products-of-segal-types" title="Permanent link">&para;</a></h2>
-<p>This is an additional section which describes morphisms in products of types as products of morphisms.
-It is implicitly stated in Proposition 8.21.</p>
+<p>This is an additional section which describes morphisms in products of types as
+products of morphisms. It is implicitly stated in Proposition 8.21.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="nd">#section</span><span class="n"> morphisms-of-products-is-products-of-morphisms</span>
 </span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="kr">#variables</span><span class="p"> </span>A B<span class="err"> : U</span>
 </span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="kr">#variable</span><span class="p"> </span>p<span class="err"> : ( product A B )</span>

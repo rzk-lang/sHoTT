@@ -24,6 +24,7 @@ jobs:
         uses: creyD/prettier_action@v4.3
         with:
           prettier_options: --write **/*.{md,json,yaml,yml}
+          commit_options: --allow-empty
           # Update the current commit instead of creating a new one. Only works if checkout fetch depth is set to `0`
           same_commit: true
           # Prettify changed files. Only works if checkout fetch depth is set to `0`

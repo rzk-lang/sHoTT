@@ -15,7 +15,7 @@ This is a literate `rzk` file:
   their data.
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
-  `#!rzk total-type-projection` in the proof of Theorem 5.5.
+  `#!rzk projection-total-type` in the proof of Theorem 5.5.
 - `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
   subshapes.
 - `03-extension-types.rzk.md` — We use the fubini theorem and extension
@@ -414,7 +414,7 @@ witnesses of the equivalence).
                 ( h))))
       ( Λ → A)
       ( equiv-horn-restriction A)
-      ( total-type-projection
+      ( projection-total-type
         ( Λ → A)
         ( \ k →
           Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,

@@ -16,7 +16,7 @@ naming the variable `x : A`.
   : U
   := Σ (x : A), B x
 
-#def total-type-projection
+#def projection-total-type
   ( A : U)
   ( B : A → U)
   : (total-type A B) → A

@@ -41,12 +41,12 @@ The following type asserts that the fibers of a type family are contractible.
 #def contractible-fibers-section-htpy uses (contractible-fibers-A-B)
   : homotopy A A
     ( comp A (Σ (x : A) , B x) A
-      ( total-type-projection A B) (contractible-fibers-actual-section))
+      ( projection-total-type A B) (contractible-fibers-actual-section))
     ( identity A)
   := \ x → refl
 
 #def contractible-fibers-section-is-section uses (contractible-fibers-A-B)
-  : has-section (Σ (x : A) , B x) A (total-type-projection A B)
+  : has-section (Σ (x : A) , B x) A (projection-total-type A B)
   := (contractible-fibers-actual-section , contractible-fibers-section-htpy)
 ```
 
@@ -66,7 +66,7 @@ projection, called `#!rzk first` here:
       ( homotopy-contraction (B (first z)) (contractible-fibers-A-B (first z)) (second z))
 
 #def contractible-fibers-retraction uses (contractible-fibers-A-B)
-  : has-retraction (Σ (x : A) , B x) A (total-type-projection A B)
+  : has-retraction (Σ (x : A) , B x) A (projection-total-type A B)
   := (contractible-fibers-actual-section , contractible-fibers-retraction-htpy)
 ```
 
@@ -74,12 +74,12 @@ The first half of our main result:
 
 ```rzk
 #def is-equiv-projection-contractible-fibers uses (contractible-fibers-A-B)
-  : is-equiv (Σ (x : A) , B x) A (total-type-projection A B)
+  : is-equiv (Σ (x : A) , B x) A (projection-total-type A B)
   := (contractible-fibers-retraction , contractible-fibers-section-is-section)
 
 #def equiv-projection-contractible-fibers uses (contractible-fibers-A-B)
   : Equiv (Σ (x : A) , B x) A
-  := (total-type-projection A B , is-equiv-projection-contractible-fibers)
+  := (projection-total-type A B , is-equiv-projection-contractible-fibers)
 
 #end contractible-fibers-data
 ```
@@ -92,7 +92,7 @@ From a projection equivalence, it's not hard to inhabit fibers:
 #def inhabited-fibers-is-equiv-projection
   ( A : U)
   ( B : A → U)
-  ( proj-B-to-A-is-equiv : is-equiv (Σ (x : A) , B x) A (total-type-projection A B))
+  ( proj-B-to-A-is-equiv : is-equiv (Σ (x : A) , B x) A (projection-total-type A B))
   ( a : A)
   : B a
   :=
@@ -108,7 +108,7 @@ contractible; the following proof fails:
 #def is-equiv-projection-implies-contractible-fibers
   ( A : U)
   ( B : A → U)
-  ( proj-B-to-A-is-equiv : is-equiv (Σ (x : A) , B x) A (total-type-projection A B))
+  ( proj-B-to-A-is-equiv : is-equiv (Σ (x : A) , B x) A (projection-total-type A B))
   : contractible-fibers A B
   :=
     ( \ x → (second (first (first proj-B-to-A-is-equiv) x) ,
@@ -122,7 +122,7 @@ contractible; the following proof fails:
 #variable A : U
 #variable B : A → U
 #variable proj-B-to-A-is-half-adjoint-equivalence :
-  is-half-adjoint-equiv (Σ (x : A) , B x) A (total-type-projection A B)
+  is-half-adjoint-equiv (Σ (x : A) , B x) A (projection-total-type A B)
 #variable w : (Σ (x : A) , B x)
 ```
 
@@ -208,7 +208,7 @@ Finally, we have:
   ( A : U)
   ( B : A → U)
   ( proj-B-to-A-is-half-adjoint-equivalence
-    : is-half-adjoint-equiv (Σ (x : A) , B x) A (total-type-projection A B))
+    : is-half-adjoint-equiv (Σ (x : A) , B x) A (projection-total-type A B))
   : contractible-fibers A B
   :=
     \ x →
@@ -223,12 +223,12 @@ Finally, we have:
   ( A : U)
   ( B : A → U)
   ( proj-B-to-A-is-equiv
-    : is-equiv (Σ (x : A) , B x) A (total-type-projection A B))
+    : is-equiv (Σ (x : A) , B x) A (projection-total-type A B))
   : contractible-fibers A B
   :=
     contractible-fibers-is-half-adjoint-equiv-projection A B
       ( is-half-adjoint-equiv-is-equiv (Σ (x : A) , B x) A
-        ( total-type-projection A B) proj-B-to-A-is-equiv)
+        ( projection-total-type A B) proj-B-to-A-is-equiv)
 ```
 
 ```rzk title="The main theorem"
@@ -236,7 +236,7 @@ Finally, we have:
   ( A : U)
   ( B : A → U)
   : iff
-    ( is-equiv (Σ (x : A) , B x) A (total-type-projection A B))
+    ( is-equiv (Σ (x : A) , B x) A (projection-total-type A B))
     ( contractible-fibers A B)
   :=
     ( \ proj-B-to-A-is-equiv →

@@ -289,12 +289,12 @@ temporarily refer to the fiber as the "homotopy fiber" and `#!rzk B a` as the
 #def homotopy-fiber-strict-fiber
   (a : A)
   (b : B a)
-  : fib (total-type A B) A (total-type-projection A B) a
+  : fib (total-type A B) A (projection-total-type A B) a
   := ((a, b), refl)
 
 #def strict-fiber-homotopy-fiber
   (a : A)
-  (((a', b'), p) : fib (total-type A B) A (total-type-projection A B) a)
+  (((a', b'), p) : fib (total-type A B) A (projection-total-type A B) a)
   : B a
   := transport A B a' a p b'
 
@@ -314,14 +314,14 @@ temporarily refer to the fiber as the "homotopy fiber" and `#!rzk B a` as the
 
 #def retract-strict-fiber-homotopy-fiber
   (a : A)
-  (((a', b'), p) : fib (total-type A B) A (total-type-projection A B) a)
+  (((a', b'), p) : fib (total-type A B) A (projection-total-type A B) a)
   : homotopy-fiber-strict-fiber a (strict-fiber-homotopy-fiber a ((a', b'), p))
     = ((a', b'), p)
   :=
     ind-fib
     ( total-type A B)
     ( A)
-    ( total-type-projection A B)
+    ( projection-total-type A B)
     ( \ a0 ((a'', b''), p') →
       homotopy-fiber-strict-fiber a0
       ( strict-fiber-homotopy-fiber a0 ((a'', b''), p')) = ((a'', b''), p'))
@@ -333,7 +333,7 @@ temporarily refer to the fiber as the "homotopy fiber" and `#!rzk B a` as the
   (a : A)
   : Equiv
     ( B a)
-    ( fib (total-type A B) A (total-type-projection A B) a)
+    ( fib (total-type A B) A (projection-total-type A B) a)
   :=
     ( homotopy-fiber-strict-fiber a,
       ( ( strict-fiber-homotopy-fiber a,

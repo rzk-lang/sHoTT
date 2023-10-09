@@ -1,15 +1,13 @@
-name: Code autoformatting
+name: File formatting
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
 jobs:
   format:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -19,12 +17,10 @@ jobs:
           # This is important to fetch the changes to the previous commit
           fetch-depth: 0
 
-      - name: Run Prettier
+      - name: Prettier
         uses: creyD/prettier_action@v4.3
         with:
-          prettier_options: --write **/*.{md,json,yaml,yml}
-          commit_options: --allow-empty
-          # Update the current commit instead of creating a new one. Only works if checkout fetch depth is set to `0`
-          same_commit: true
-          # Prettify changed files. Only works if checkout fetch depth is set to `0`
-          only_changed: true
+          dry: true
+          # Only check changed files. Only works when the checkout action is set to fetch depth '0'
+          only_changed: True
+          prettier_options: --check **/*.{md,json,yaml,yml}

@@ -17,13 +17,12 @@ This is a literate `rzk` file:
 
 ## Extension up to homotopy
 
-For a shape inclusion `ϕ ⊂ ψ` and any type `A`,
-we have the inbuilt extension types `(t : ψ) → A [ϕ t ↦ σ t]`
-(for every `σ : ϕ → A`).
+For a shape inclusion `ϕ ⊂ ψ` and any type `A`, we have the inbuilt extension
+types `(t : ψ) → A [ϕ t ↦ σ t]` (for every `σ : ϕ → A`).
 
-We show that these extension types are equivalent to the fibers
-of the canonical restriction map `(ψ → A) → (ϕ → A)`,
-which we can view as the types  of "extension up to homotopy".
+We show that these extension types are equivalent to the fibers of the canonical
+restriction map `(ψ → A) → (ϕ → A)`, which we can view as the types of
+"extension up to homotopy".
 
 ```rzk
 #section extensions-up-to-homotopy

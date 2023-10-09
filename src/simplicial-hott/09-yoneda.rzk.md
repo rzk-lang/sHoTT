@@ -1160,7 +1160,7 @@ proven, just with an equivalent type in the domain of the evaluation map.
 
 A covariant family is representable if it is fiberweise equivalent to covariant
 homs. In order to check if this is the case, it is not necessary to know if the
-family if covariant or not.
+family is covariant or not.
 
 ```rzk
 #def is-representable-family
@@ -1183,8 +1183,8 @@ give a helper function.
 ```
 
 RS Proposition 9.10 gives an if and only if condition for a covariant family
-$C : A → \mathcal{U}$ to be representable. The condition is that the type
-$\sum_{x : A} C(x)$ has an initial object. For convenience, we give this
+`#!rzk C : A → U` to be representable. The condition is that the type
+`#!rzk Σ (x : A) , C x` has an initial object. For convenience, we give this
 condition a name.
 
 ```rzk

@@ -1155,3 +1155,17 @@ proven, just with an equivalent type in the domain of the evaluation map.
       ( contra-dependent-yoneda-lemma'
           A is-segal-A a C is-contravariant-C)
 ```
+
+## Representable Families
+
+A covariant family is representable if it is fiberweise equivalent to covariant
+homs. In order to check if this is the case, it is not necessary to know if the
+family if covariant or not.
+
+```rzk
+#def is-representable-family
+  ( A : U)
+  ( C : A → U)
+  : U
+  := Σ (a : A) , (x : A) → (Equiv (hom A a x) (C x))
+```

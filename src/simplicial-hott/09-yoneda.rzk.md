@@ -1169,3 +1169,17 @@ family if covariant or not.
   : U
   := Σ (a : A) , (x : A) → (Equiv (hom A a x) (C x))
 ```
+
+RS Proposition 9.10 gives an if and only if condition for a covariant family
+$C : A → \mathcal{U}$ to be representable. The condition is that the type
+$\sum_{x : A} C(x)$ has an initial object. For convenience, we give this
+condition a name.
+
+```rzk
+#def has-initial-tot
+  ( A : U)
+  ( C : A → U)
+  : U
+  := Σ ((a , u) : Σ (x : A) , (C x))
+      , is-initial (Σ (x : A) , (C x)) (a , u)
+```

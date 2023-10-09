@@ -959,6 +959,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#representable-families" class="md-nav__link">
+    Representable Families
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1175,6 +1182,13 @@
         <li class="md-nav__item">
   <a href="#contravariant-dependent-yoneda-lemma" class="md-nav__link">
     Contravariant Dependent Yoneda lemma
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#representable-families" class="md-nav__link">
+    Representable Families
   </a>
   
 </li>
@@ -2203,6 +2217,36 @@ proven, just with an equivalent type in the domain of the evaluation map.</p>
 </span><span id="__span-42-18"><a id="__codelineno-42-18" name="__codelineno-42-18" href="#__codelineno-42-18"></a><span class="err">      ( </span><span class="p">\ </span>s <span class="err">→ s a (id-hom A a))</span>
 </span><span id="__span-42-19"><a id="__codelineno-42-19" name="__codelineno-42-19" href="#__codelineno-42-19"></a><span class="err">      ( contra-dependent-yoneda-lemma&#39;</span>
 </span><span id="__span-42-20"><a id="__codelineno-42-20" name="__codelineno-42-20" href="#__codelineno-42-20"></a><span class="err">          A is-segal-A a C is-contravariant-C)</span>
+</span></code></pre></div>
+<h2 id="representable-families">Representable Families<a class="headerlink" href="#representable-families" title="Permanent link">&para;</a></h2>
+<p>A covariant family is representable if it is fiberweise equivalent to covariant
+homs. In order to check if this is the case, it is not necessary to know if the
+family is covariant or not.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-representable-family" id="define:is-representable-family" style="visibility: visible; position: relative; color: inherit">is-representable-family</a></span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="err">  : U</span>
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a><span class="err">  := </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → (Equiv (hom A a x) (C x))</span>
+</span></code></pre></div>
+<p>The definition makes it slightly awkward to access the actual equivalence, so we
+give a helper function.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-for-is-representable-family" id="define:equiv-for-is-representable-family" style="visibility: visible; position: relative; color: inherit">equiv-for-is-representable-family</a></span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="err">  </span><span class="p">( </span>is-rep-C <span class="p">:</span><span class="err"> is-representable-family A C)</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="err">  : </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → (hom A (</span><span class="s">first</span><span class="err"> is-rep-C) x) → (C x)</span>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a><span class="err">  := </span><span class="p">\ </span>x <span class="err">→ </span><span class="s">first</span><span class="err">((</span><span class="s">second</span><span class="err"> (is-rep-C)) x)</span>
+</span></code></pre></div>
+<p>RS Proposition 9.10 gives an if and only if condition for a covariant family
+<code class="language-rzk highlight"><span class="err">C : A → U</span></code> to be representable. The condition is that the type
+<code class="language-rzk highlight"><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) , C x</span></code> has an initial object. For convenience, we give this
+condition a name.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-initial-tot" id="define:has-initial-tot" style="visibility: visible; position: relative; color: inherit">has-initial-tot</a></span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="err">  : U</span>
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a><span class="err">  := </span><span class="kt">Σ</span><span class="err"> ((a , u) : </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) , (C x))</span>
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a><span class="err">      , is-initial </span><span class="p">(</span>Σ (x <span class="p">:</span><span class="err"> A) , (C x)) (a , u)</span>
 </span></code></pre></div>
 
 

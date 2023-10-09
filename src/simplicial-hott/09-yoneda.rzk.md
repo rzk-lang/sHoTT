@@ -1155,3 +1155,43 @@ proven, just with an equivalent type in the domain of the evaluation map.
       ( contra-dependent-yoneda-lemma'
           A is-segal-A a C is-contravariant-C)
 ```
+
+## Representable Families
+
+A covariant family is representable if it is fiberweise equivalent to covariant
+homs. In order to check if this is the case, it is not necessary to know if the
+family is covariant or not.
+
+```rzk
+#def is-representable-family
+  ( A : U)
+  ( C : A → U)
+  : U
+  := Σ (a : A) , (x : A) → (Equiv (hom A a x) (C x))
+```
+
+The definition makes it slightly awkward to access the actual equivalence, so we
+give a helper function.
+
+```rzk
+#def equiv-for-is-representable-family
+  ( A : U)
+  ( C : A → U)
+  ( is-rep-C : is-representable-family A C)
+  : (x : A) → (hom A (first is-rep-C) x) → (C x)
+  := \ x → first((second (is-rep-C)) x)
+```
+
+RS Proposition 9.10 gives an if and only if condition for a covariant family
+`#!rzk C : A → U` to be representable. The condition is that the type
+`#!rzk Σ (x : A) , C x` has an initial object. For convenience, we give this
+condition a name.
+
+```rzk
+#def has-initial-tot
+  ( A : U)
+  ( C : A → U)
+  : U
+  := Σ ((a , u) : Σ (x : A) , (C x))
+      , is-initial (Σ (x : A) , (C x)) (a , u)
+```

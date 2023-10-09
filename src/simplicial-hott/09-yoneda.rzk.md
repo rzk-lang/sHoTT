@@ -1170,6 +1170,18 @@ family if covariant or not.
   := Σ (a : A) , (x : A) → (Equiv (hom A a x) (C x))
 ```
 
+The definition makes it slightly awkward to access the actual equivalence, so we
+give a helper function.
+
+```rzk
+#def equiv-for-is-representable-family
+  ( A : U)
+  ( C : A → U)
+  ( is-rep-C : is-representable-family A C)
+  : (x : A) → (hom A (first is-rep-C) x) → (C x)
+  := \ x → first((second (is-rep-C)) x)
+```
+
 RS Proposition 9.10 gives an if and only if condition for a covariant family
 $C : A → \mathcal{U}$ to be representable. The condition is that the type
 $\sum_{x : A} C(x)$ has an initial object. For convenience, we give this

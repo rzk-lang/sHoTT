@@ -407,27 +407,35 @@ separate hypothesis.
 #def WeakFunExt : U
   :=
     ( A : U ) → (C : A → U) →
-    (f : (a : A) → is-contr (C a) ) →
+    (is-contr-C : (a : A) → is-contr (C a) ) →
     (is-contr ( (a : A) → C a ))
 
 ```
 
-For future reference we add a variable we can assume.
+Function extensionality implies weak function extensionality.
 
 ```rzk
-#assume weakfunext : WeakFunExt
-```
+#def map-weakfunext
+  (A : U)
+  (C : A → U)
+  (is-contr-C : (a : A) → is-contr (C a))
+  : (a : A) → C a
+  :=
+  \ a → first (is-contr-C a)
 
-Whenever a definition (implicitly) uses function extensionality, we write
-`#!rzk uses (weakfunext)`.
-
-```rzk
-#def call-weakfunext uses (weakfunext)
-  ( A : U )
-  ( C : A → U)
-  ( f : (a : A) → is-contr (C a) )
-  : (is-contr ( (a : A) → C a ))
-  := weakfunext A C f
+#def weakfunext-funext
+  (funext : FunExt)
+  : WeakFunExt
+  :=
+  \ A C is-contr-C →
+  ( map-weakfunext A C is-contr-C ,
+    ( \ g →
+      ( eq-htpy funext
+        ( A)
+        ( C)
+        ( map-weakfunext A C is-contr-C)
+        ( g)
+        ( \ a → second (is-contr-C a) (g a)))))
 ```
 
 ## Singleton induction

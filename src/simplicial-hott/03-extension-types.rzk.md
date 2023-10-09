@@ -15,6 +15,105 @@ This is a literate `rzk` file:
 - the file `hott/4-equivalences.rzk` relies in turn on the previous files in
   `hott/`
 
+## Extension up to homotopy
+
+For a shape inclusion `ϕ ⊂ ψ` and any type `A`,
+we have the inbuilt extension types `(t : ψ) → A [ϕ t ↦ σ t]`
+(for every `σ : ϕ → A`).
+
+We show that these extension types are equivalent to the fibers
+of the canonical restriction map `(ψ → A) → (ϕ → A)`,
+which we can view as the types  of "extension up to homotopy".
+
+```rzk
+#section extensions-up-to-homotopy
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variable A : U
+
+#def extension-type
+  ( σ : ϕ → A)
+  : U
+  :=
+    ( t : ψ) → A [ϕ t ↦ σ t]
+
+#def homotopy-extension-type
+  ( σ : ϕ → A)
+  : U
+  := fib (ψ → A) (ϕ → A) (\ τ t → τ t) (σ)
+
+#def extension-type-weakening-map
+  ( σ : ϕ → A)
+  : extension-type σ → homotopy-extension-type σ
+  :=
+    \ τ → ( τ, refl)
+
+#def extension-type-weakening-section
+  : ( σ : ϕ → A) →
+    ( th : homotopy-extension-type σ) →
+    Σ (τ : extension-type σ), (( τ, refl) =_{homotopy-extension-type σ} th)
+  :=
+    ind-fib (ψ → A) (ϕ → A) (\ τ t → τ t)
+      ( \ σ th →
+          Σ (τ : extension-type σ),
+            ( τ, refl) =_{homotopy-extension-type σ} th)
+      ( \ (τ : ψ → A) → (τ, refl))
+
+#def is-equiv-extension-type-weakening
+  ( σ : ϕ → A)
+  : is-equiv (extension-type σ) (homotopy-extension-type σ)
+      (extension-type-weakening-map σ)
+  :=
+    ( ( \ th → first (extension-type-weakening-section σ th),
+        \ _ → refl),
+      ( \ th → ( first (extension-type-weakening-section σ th)),
+        \ th → ( second (extension-type-weakening-section σ th))))
+
+#def extension-type-weakening
+  ( σ : ϕ → A)
+  : Equiv (extension-type σ) (homotopy-extension-type σ)
+  := ( extension-type-weakening-map σ , is-equiv-extension-type-weakening σ)
+
+#end extensions-up-to-homotopy
+```
+
+This equivalence is functorial in the following sense:
+
+```rzk
+#def extension-type-weakening-functorial
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A' A : U)
+  ( α : A' → A)
+  ( σ' : ϕ → A')
+  : Equiv-of-maps
+      ( extension-type I ψ ϕ A' σ')
+      ( extension-type I ψ ϕ A (\ t → α (σ' t)))
+      ( \ τ' t → α (τ' t))
+      ( homotopy-extension-type I ψ ϕ A' σ')
+      ( homotopy-extension-type I ψ ϕ A (\ t → α (σ' t)))
+      ( \ (τ', p) →
+          ( \ t → α (τ' t),
+            ap (ϕ → A') (ϕ → A)
+               ( \ (t : ϕ) → τ' t)
+               ( \ (t : ϕ) → σ' t)
+               ( \ σ'' t → α (σ'' t))
+               ( p)))
+  :=
+    ( ( ( extension-type-weakening-map I ψ ϕ A' σ'
+        , extension-type-weakening-map I ψ ϕ A (\ t → α (σ' t))
+        )
+      , \ _ → refl
+      )
+    , ( is-equiv-extension-type-weakening I ψ ϕ A' σ'
+      , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α (σ' t))
+      )
+    )
+
+```
+
 ## Commutation of arguments and currying
 
 ```rzk title="RS17, Theorem 4.1"
@@ -162,6 +261,31 @@ The original form.
     ( \ h → (\ t → h t , \ t → h t) ,
       ( ( \ (_f , g) t → g t , \ h → refl) ,
         ( ( \ (_f , g) t → g t , \ h → refl))))
+
+#def cofibration-composition-functorial
+  ( I : CUBE)
+  ( χ : I → TOPE)
+  ( ψ : χ → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A' A : χ → U)
+  ( α : (t : χ) → A' t → A t)
+  ( σ' : (t : ϕ) → A' t)
+  : Equiv-of-maps
+     ( (t : χ) → A' t [ϕ t ↦ σ' t])
+     ( (t : χ) → A t [ϕ t ↦ α t (σ' t)])
+     ( \ τ' t → α t (τ' t))
+     ( Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t]) ,
+        ( (t : χ) → A' t [ψ t ↦ τ' t]))
+     ( Σ ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)]) ,
+        ( (t : χ) → A t [ψ t ↦ τ t]))
+     ( \ (τ', υ') → ( \ t → α t (τ' t), \t → α t (υ' t)))
+  :=
+    ( ( ( \ h → (\ t → h t , \ t → h t) , \ h → (\ t → h t , \ t → h t)),
+        \ _ → refl),
+      ( ( ( \ (_f , g) t → g t , \ h → refl) ,
+          ( ( \ (_f , g) t → g t , \ h → refl))),
+        ( ( \ (_f , g) t → g t , \ h → refl) ,
+          ( ( \ (_f , g) t → g t , \ h → refl)))))
 ```
 
 A reformulated version via tope disjunction instead of inclusion (see
@@ -196,6 +320,31 @@ A reformulated version via tope disjunction instead of inclusion (see
     (\ h t → h t ,
       ( ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl) ,
         ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl)))
+
+#def cofibration-union-functorial
+  ( I : CUBE)
+  ( ϕ ψ : I → TOPE)
+  ( A' A : (t : I | ϕ t ∨ ψ t) → U)
+  ( α : (t : I | ϕ t ∨ ψ t) → A' t → A t)
+  ( τ' : (t : ψ) → A' t)
+  : Equiv-of-maps
+      ( (t : I | ϕ t ∨ ψ t) → A' t [ψ t ↦ τ' t])
+      ( (t : I | ϕ t ∨ ψ t) → A t [ψ t ↦ α t (τ' t)])
+      ( \ υ' t → α t (υ' t))
+      ( (t : ϕ) → A' t [ϕ t ∧ ψ t ↦ τ' t])
+      ( (t : ϕ) → A t [ϕ t ∧ ψ t ↦ α t (τ' t)])
+      ( \ ν' t → α t (ν' t))
+  :=
+     ( ( ( \ υ' t → υ' t
+         , \ υ t → υ t
+         )
+       , \ _ → refl
+       )
+     , ( second (cofibration-union I ϕ ψ A' τ')
+       ,
+         second (cofibration-union I ϕ ψ A ( \ t → α t (τ' t)))
+       )
+     )
 ```
 
 ## Extension extensionality
@@ -352,7 +501,7 @@ cases an extension type to a function type.
       ( ϕ )
       ( A )
       ( \ t y → (ext-projection-temp) t = y)
-      ( a ) -- a
+      ( a )
       ( \t → refl ))
     ( is-contr-ext-based-paths)
 
@@ -549,7 +698,7 @@ If we assume weak extension extensionality, then then homotopy extension
 property follows from a straightforward application of the axiom of choice to
 the point of contraction for weak extension extensionality.
 
-```rzk title="RS17 Proposition 4.10
+```rzk title="RS17 Proposition 4.10"
 #define htpy-ext-property-weakextext
   ( weakextext : WeakExtExt)
   : HtpyExtProperty
@@ -640,7 +789,7 @@ Both directions of this statement will be needed.
           rev
             ( A t )
             ( first (is-contr-fiberwise-A t) )
-            ( a t) --
+            ( a t)
             ( second (is-contr-fiberwise-A t) (a t))
 
 ```
@@ -648,10 +797,10 @@ Both directions of this statement will be needed.
 The below gives us the inhabitant
 $(a', e') : \sum_{\left\langle\prod_{t : I|\psi} A (t) \biggr|^\phi_a\right\rangle} \left\langle \prod_{t: I |\psi} a'(t) = b(t)\biggr|^\phi_e \right\rangle$
 from the first part of the proof of RS Prop 4.11. It amounts to the fact that
-parameterized contractibility, i.e. $A : \{t : I | \psi\} → \mathcal{U}$ such
-that each $A(t)$ is contractible, implies the hypotheses of the homotopy
-extension property are satisfied, and so assuming homotopy extension property,
-we are entitled to the conclusion.
+parameterized contractibility, i.e. `#!rzk A : ψ → U` such that each `A t` is
+contractible, implies the hypotheses of the homotopy extension property are
+satisfied, and so assuming homotopy extension property, we are entitled to the
+conclusion.
 
 ```rzk
 
@@ -679,10 +828,10 @@ we are entitled to the conclusion.
     ( codomain-eq-ext-is-contr I ψ ϕ A a is-contr-fiberwise-A)
 ```
 
-The expression below give us the inhabitant
-$c : \prod_{t: I | \psi} f(t) = a' (t)$ used in the proof of RS Proposition
-4.11. It follows from a more general statement about the contractibility of
-identity types, but it is unclear if that generality is needed.
+The expression below give us the inhabitant `#!rzk c : (t : ψ) → f t = a' t`
+used in the proof of RS Proposition 4.11. It follows from a more general
+statement about the contractibility of identity types, but it is unclear if that
+generality is needed.
 
 ```rzk
 #define RS-4-11-c
@@ -727,7 +876,7 @@ slightly more general statement.
     ( c t )
 ```
 
-Given the `#rzk! a'` produced above, the following gives an inhabitant of
+Given the `#!rzk a'` produced above, the following gives an inhabitant of
 $\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
 
 ```rzk

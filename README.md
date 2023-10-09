@@ -41,6 +41,9 @@ assistant. Then run the following command from the root of this repository:
 rzk typecheck
 ```
 
+Please also have a look at our [style guide](src/STYLEGUIDE.md) before
+submitting your pull request.
+
 # References
 
 1. Emily Riehl & Michael Shulman. A type theory for synthetic ∞-categories.

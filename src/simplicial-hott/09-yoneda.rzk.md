@@ -402,21 +402,76 @@ Naturality in `#!rzk C` is not automatic but can be proven easily:
 ```
 We prove the Yoneda embedding.
 
-```rzk tittle="Yoneda embedding "
+```rzk tittle="Yoneda embedding, Definition 9.3 RS17 "
 #def yoneda-embedding
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
   :  hom A a' a → ( (z : A) → hom A a z → hom A a' z)
-  := yon
-      ( A )
+  :=
+     yon
+     ( A )
+     ( is-segal-A)
+     ( a )
+     ( \ x → hom A a' x )
+     ( is-covariant-representable-is-segal
+        ( A)
+        ( is-segal-A)
+        ( a'))
+```
+```rzk
+#def yoneda-comp uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x) )
+  : ( ( yoneda-embedding A is-segal-A a a' ) ( ( evid A a ( hom A a')) φ)) = φ
+  :=
+     yon-evid
+      ( A)
       ( is-segal-A)
-      ( a )
-      ( \ x → hom A a' x )
+      ( a)
+      ( hom A a')
       ( is-covariant-representable-is-segal
-          ( A)
-          ( is-segal-A)
-          ( a'))
+        ( A)
+        ( is-segal-A)
+        ( a')) φ
+```
+```rzk
+#def is-composition
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x) )
+  : ( x : A ) → ( hom A a x → hom A a' x)
+  := \ x f → comp-is-segal
+              ( A)
+              ( is-segal-A)
+              ( a')
+              ( a)
+              ( x)
+              ( ( evid A a ( hom A a')) φ)
+              ( f )
+```
+```rzk title="Remark 9.4, RS17"
+#def eq-yoneda-embedding-is-composition
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x) )
+  ( x : A)
+  ( f : hom A a x)
+  : ( ( yoneda-embedding A is-segal-A a a' ) ( ( evid A a ( hom A a')) φ))  x f =
+      is-composition A is-segal-A a a' φ x f
+  :=
+     compute-covariant-transport-of-hom-family-is-segal
+      ( A)
+      ( is-segal-A)
+      ( a')
+      ( a)
+      ( x)
+      ( (evid A a ( hom A a')) φ)
+      ( f )
 ```
 
 ## Yoneda for contravariant families

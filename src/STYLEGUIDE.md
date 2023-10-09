@@ -12,7 +12,7 @@ pretty, but they serve to
   conventions.
 - Make the formalization base easier to navigate.
 - Help us maintain the repository.
-- Provide techniques that help you in the formalization process.
+- Provide techniques and habits that help you in the formalization process.
 
 Please note that these conventions will and should change as the project and
 language develops. We acknowledge that our code is not always consistent with
@@ -112,8 +112,9 @@ the tree structure of the definition, and synergizes with our convention to have
 two-space indentation level increases.
 
 What is generally considered the "earliest branching point" will depend on
-context, and we ask that contributors practice common sense when deciding this.
-When in doubt, it is usually better to break lines sooner rather than later.
+context, and we ask that contributors practice common sense when determining
+this. When in doubt, it is usually better to break lines sooner rather than
+later.
 
 ## Other code conventions
 
@@ -143,7 +144,7 @@ When in doubt, it is usually better to break lines sooner rather than later.
 
   By having the multiplication symbol on the start of the line we can
   immediately see that we are multiplying the two long expressions together, as
-  opposed to some other operation.
+  opposed to performing some other operation.
 
   Similarly, we also place function type formation arrows at the start of the
   next line. E.g.
@@ -160,13 +161,14 @@ When in doubt, it is usually better to break lines sooner rather than later.
 
   !!! warning
 
-      This should not be confused with the convention for lambda abstractions,
-      which should be placed at the end of the line instead.
+      This should not be confused with the convention for placement of arrows
+      for lambda abstractions, which should be placed at the end of the line
+      instead.
 
-  When the binary operator/separator is more then a single character wide, e.g.
+  When the binary operator/separator is more than a single character wide, e.g.
   for the walrus separator (`:=`) and identity type formation with explicitly
-  defined underlying type (`=_{...}`), we insert a new line directly after the
-  operator. E.g.
+  passed underlying type (`=_{...}`), we insert a new line directly after the
+  operator as well. I.e.
 
   ```rzk
   ( ( a-term-of-a-type)
@@ -277,7 +279,7 @@ following symbols:
     For `first`, `second`, `TOP` and `BOT`, we prefer the ASCII versions as
     opposed to `π₁`, `π₂`, `⊤` and `⊥`, as we find the latter don't read too
     well in the code. Please also note that we usually prefer the use of
-    named projections for special Sigma-types when these are defined.
+    named projections for special `Σ`-types when these are defined.
 
 ## Use of comments
 
@@ -290,10 +292,10 @@ please consider the following:
   consider giving it a better name, or creating an intermediate definition with
   a name that better describes your current aplication.
 
-  In particular, if some family of Sigma types is given a name, we prefer to
-  also define and use named projections instead of `first` and `second`. In many
-  cases, their meaning is not immediately obvious, and so one could be tempted
-  to annotate the code using comments to explain them.
+  In particular, if some family of `Σ`-types is given a name, we prefer to also
+  define and use named projections for it instead of `first` and `second`. In
+  many cases, their meaning is not immediately obvious, and so one could be
+  tempted to annotate the code using comments to explain them.
 
   For example, instead of writing `first (second is-invertible-f)`, we define a
   named projection `is-section-is-invertible`. This may then be used as

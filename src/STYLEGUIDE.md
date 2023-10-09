@@ -40,9 +40,10 @@ the definition. The general format of a definition is as follows:
 
 - On the next line, the walrus separator (`:=`) is placed, and after it follows
   the actual construction of the definition. If the construction does not fit on
-  a single line, we immediately insert a new line after the walrus separator.
-  Note, in particular, to avoid excessive indentation we do **not** indent the
-  code an extra level in this case.
+  a single line, by which we mean fit within our stipulated 80-character limit,
+  we immediately insert a new line after the walrus separator. Note, in
+  particular, to avoid excessive indentation we do **not** indent the code an
+  extra level in this case.
 
 ### Trees and your constructions
 
@@ -98,22 +99,23 @@ types:
 ```
 
 The root here is the function `projection-equiv-contractible-fibers`. It takes
-four arguments, each starting on a fresh line and is parenthesized. The first
-argument fits neatly on one line, but the second one is too large. In these
-cases, we add a line break right after the `→`-symbol following the
-lambda-abstraction, which we consider the earliest sensible branching point
-here. The next node is again `Σ`, with two arguments. The first one fits on a
-line, but the second does not, so we add a line break between them since `Σ` is
-only one character. This process is continued until the definition is complete.
+four arguments, each starting on a fresh line and is parenthesized. Note that
+its parentheses are indented at the same level as its parent node. The first
+argument fits neatly on one line, but the second one is too large. In this case,
+we add a line break right after the `→`-symbol following the lambda-abstraction,
+which we consider the earliest branching point here. The next node is again `Σ`,
+with two arguments. The first one fits on a line, but the second does not, so we
+add a line break between them since `Σ` is only one character. This process is
+continued until the definition is complete.
 
 Observe also that we use indentation to highlight the branches. The extra space
 after the opening parentheses marking a branch is there to visually emphasize
 the tree structure of the definition, and synergizes with our convention to have
 two-space indentation level increases.
 
-What is generally considered the "earliest branching point" will depend on
-context, and we ask that contributors practice common sense when determining
-this. When in doubt, it is usually better to break lines sooner rather than
+What is generally considered the "earliest sensible branching point" will depend
+on context, and we ask that contributors practice common sense when determining
+this. When in doubt, it is generally better to break lines sooner rather than
 later.
 
 ## Other code conventions
@@ -176,6 +178,15 @@ later.
     ( another-term-of-that-type))
   ```
 
+- We employ an 80-character line length limit. This means that lines of code
+  generally should not be longer than 80 characters. If they exceed this limit,
+  they should be reformatted to fit within the limit by inserting appropriate
+  line breaks. We do make some exceptions to this rule:
+
+  - Names can be longer than the line character limit
+
+- TODO Formatting convention for extension types
+
 ## Naming conventions
 
 Adhering to a good naming convention is essential for keeping the library
@@ -198,38 +209,60 @@ summarized as follows:
 - Ultimately, our goal is for these conventions to support clear and
   maintainable code.
 
-### A naming scheme
+### A general naming scheme
 
-With this in mind
+With the basic purpose in mind, we present an adapted possible general naming
+scheme originally due to Egbert Rijke.
 
-TODO
+The general pattern looks as follows:
 
-- We mainly use lower case names with words separated by hyphens.
+```text
+  [descriptor]-[output-type]-[input-types]-[Namespace]
+```
 
-- Capitalized names are reserved for subuniverses and similar "namespaces". When
-  a construction is made internally to such a collection, we _append_ its name.
-  For instance, the subuniverse of Segal types is called `Segal`, and the
-  function type formation in that subuniverse , called `function-type-Segal,`
-  has the following signature:
+Every part of the pattern is optional. However, their order is fixed. The
+general naming pattern is broken into the following parts:
 
-  ```rzk
+- **\[descriptor\]:** A custom descriptive name part for the entry.
+- **\[output-type\]:** Refers to the concluding type of the entry.
+- **\[input-types\]:** Consists of references to noteworthy input types.
+- **\[Namespace\]:** Refers to an overarching concept, a subuniverse which the
+  construction takes place in, or a general category the entry is about.
+
+In particular, since Rzk does not currently have a suitable namespace mechanism,
+the `[Namespace]` field serves as a reasonable substitute.
+
+Now, let us consider some examples:
+
+- ```rzk
   #def function-type-Segal
     ( A B : Segal)
     : Segal
   ```
 
-- Use meaningful names that accurately represent the concepts applied. For
-  instance, if a concept is known best by a special name, that name should
-  probably be used.
+  This definition uses the pattern `[output-type]-[Namespace]`.
 
-  For instance, the canonical function with type signature
+- `is-segal-is-local-horn-inclusion` uses the pattern
+  `[output-type]-[input-types]`.
+- `is-equiv-identity` uses the pattern `[output-type]`.
+
+The descriptor pattern is by far the most versatile one. It's purpose is to give
+special meaningful descriptions that accurately represent some aspect, or
+precisely the concept in question. For instance, if a concept is known best by a
+special name, that name should probably be used.
+
+- As an example, the canonical function with type signature
 
   ```rzk
   (A → B → C) → (A × B → C)
   ```
 
-  should be called `uncurry`, and not for instance
-  `map-from-product-map-of-maps`.
+  should be called `uncurry`, using the `descriptor`-pattern. It should not, for
+  instance, be called `map-from-product-map-of-maps`.
+
+- Another example is `compute-hom-eq-extension-type-is-discrete`. This uses the
+  pattern `[descriptor]-[output-type]-[input-types]`
+  (`(compute)-(hom)-(eq-extension-type-is-discrete)`).
 
 ### Exceptions and naming practices to avoid
 
@@ -339,6 +372,12 @@ please consider the following:
 
   The `title`-field may also be used to give descriptive headers to sections of
   your code.
+
+- We use the autoformatting tool [Prettier](https://prettier.io/) to format
+  markdown code, and we recommend that you install it or an alternative for use
+  with your editor. Be aware that the formatting rules automated by Prettier are
+  enforced by our CI workflow, so pull requests cannot be merged without the
+  proper markdown formatting.
 
 ## Adapting and evolving the style guide
 

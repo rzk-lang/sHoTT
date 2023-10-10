@@ -400,7 +400,7 @@ Naturality in `#!rzk C` is not automatic but can be proven easily:
         is-natural-in-family-yon-once-pointwise
           A is-segal-A a C D is-covariant-C is-covariant-D ψ u x)
 ```
-We prove the Yoneda embedding.
+##  Yoneda embedding.
 
 ```rzk tittle="Yoneda embedding, Definition 9.3 RS17 "
 #def yoneda-embedding
@@ -484,7 +484,7 @@ Define the action by compostition
   : ( x : A ) → ( hom A a x → hom A a' x)
   := \ x f → comp-is-segal A is-segal-A a' a x ( ( evid A a ( hom A a')) φ) f
 ```
-The Yoneda embedding coincides with ```#!rzk is-composition``` up to homotopy.
+The Yoneda embedding coincides with ```#!rzk is-composition```.
 
 ```rzk
 #def eq-eq-yoneda-embedding-composition
@@ -506,7 +506,7 @@ The Yoneda embedding coincides with ```#!rzk is-composition``` up to homotopy.
       ( (evid A a ( hom A a')) φ)
       ( f )
 ```
-Now we glue the equalities to prove the result as stated in [RS17, Remark 9.4].
+Now we cocatenate the paths to prove the result as stated in [RS17, Remark 9.4].
 
 ```rzk
 #def eq-eq-phi-composition uses (funext)

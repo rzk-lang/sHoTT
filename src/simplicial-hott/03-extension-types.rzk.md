@@ -689,9 +689,8 @@ extension extensionality that we get by extraccting the fiberwise equivalence.
 
 ```rzk title="RS17 Proposition 4.8(i)"
 #define extext-weakextext
-  (weakextext : WeakExtExt)
-  :  ExtExt
-  := \ I ψ ϕ A a f g →
+  : WeakExtExt → ExtExt
+  := \ weakextext I ψ ϕ A a f g →
       extext-weakextext' weakextext I ψ ϕ A a f g
 ```
 

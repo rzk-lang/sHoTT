@@ -430,15 +430,15 @@ fact, sometimes only this weaker form of the axiom is needed.
 #def NaiveExtExt
   : U
   :=
-    ( I : CUBE) →
-    ( ψ : I → TOPE) →
-    ( ϕ : ψ → TOPE) →
-    ( A : ψ → U) →
-    ( a : (t : ϕ) → A t) →
-    ( f : (t : ψ) → A t [ϕ t ↦ a t]) →
-    ( g : (t : ψ) → A t [ϕ t ↦ a t]) →
-    ( (t : ψ) → (f t = g t) [ϕ t ↦ refl]) →
-    ( f = g)
+    ( I : CUBE)
+  → ( ψ : I → TOPE)
+  → ( ϕ : ψ → TOPE)
+  → ( A : ψ → U)
+  → ( a : (t : ϕ) → A t)
+  → ( f : (t : ψ) → A t [ϕ t ↦ a t])
+  → ( g : (t : ψ) → A t [ϕ t ↦ a t])
+  → ( (t : ψ) → (f t = g t) [ϕ t ↦ refl])
+  → ( f = g)
 
 #def naiveextext-extext
   ( extext : ExtExt)
@@ -448,11 +448,14 @@ fact, sometimes only this weaker form of the axiom is needed.
       ( first (first (extext I ψ ϕ A a f g)))
 ```
 
-Naive extension extensionality implies that all extension types in a
-proposition are propositions.
+We show that naive extension extensionality implies weak extension extensionality.
+On the way, we obtain another useful version of extension extensionality,
+stating that all extension types in a proposition are propositions.
 
 ```rzk
-#assume naiveextext : NaiveExtExt
+#section weakextext-naiveextext
+#variable naiveextext : NaiveExtExt
+
 #def is-prop-shape-type-is-locally-prop uses (naiveextext)
   ( I : CUBE)
   ( ϕ : I → TOPE)
@@ -466,7 +469,6 @@ proposition are propositions.
       ( \ t → first ( is-locally-prop-A t (a t) (a' t))))
 
 #def is-prop-extension-type-is-locally-prop uses (naiveextext)
-  ( naiveextext : NaiveExtExt)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -486,11 +488,11 @@ proposition are propositions.
       ( is-prop-shape-type-is-locally-prop I ψ A is-locally-prop-A))
 ```
 
-In a fiberwise contractible family, every extension type is always inhabited.
-This does not use any form of extension extensionality.
+Still using `naiveextext`,
+in a fiberwise contractible family, every extension type is always inhabited.
 
 ```rzk
-#def is-inhabited-extension-type-is-locally-contr
+#def is-inhabited-extension-type-is-locally-contr uses (naiveextext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -499,9 +501,18 @@ This does not use any form of extension extensionality.
   ( a : (t : ϕ) → A t)
   : (t : ψ) → A t [ϕ t ↦ a t]
   :=
-    ( undefined)
+    extension-strictification I ψ ϕ A a
+    ( \ (t : ψ) → first (is-locally-contr-A t)
+    , naiveextext I (\ t → ϕ t) (\ _ → BOT) (\ t → A t) (\ _ → recBOT)
+      ( \ ( t : ϕ) → first (is-locally-contr-A t) )
+      ( \ ( t : ϕ) → a t)
+      ( \ ( t : ϕ) → second (is-locally-contr-A t) (a t)))
+```
 
+We conclude that naive extension extensionality implies
+weak extension extensionality.
 
+```rzk
 #def weakextext-naiveextext uses (naiveextext)
   : WeakExtExt
   :=
@@ -509,12 +520,24 @@ This does not use any form of extension extensionality.
     ( is-contr-is-inhabited-is-prop
       ( (t : ψ) → A t [ϕ t ↦ a t])
       ( is-prop-extension-type-is-locally-prop
-        ( naiveextext)
         ( I) ( ψ) ( ϕ) (A)
         ( \ t → is-prop-is-contr (A t) ( is-locally-contr-A t))
         ( a))
-      ( undefined)
-    )
+      ( is-inhabited-extension-type-is-locally-contr I ψ ϕ A
+        ( is-locally-contr-A) ( a)))
+
+#end weakextext-naiveextext
+```
+
+For convenience we also provide the composite implication
+from extension extensionality to weak extension extensionality:
+
+```rzk
+#def weakextext-extext
+  : ExtExt → WeakExtExt
+  :=
+    comp ExtExt NaiveExtExt WeakExtExt
+    ( weakextext-naiveextext) ( naiveextext-extext)
 ```
 
 ### Weak extension extensionality implies extension extensionality
@@ -749,6 +772,7 @@ arguments below.
   ( f : (t : ψ) → A t [ϕ t ↦ a t])
   : (t : ψ ) → A t
   := f
+
 ```
 
 The homotopy extension property has the following signature. We state this

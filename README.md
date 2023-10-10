@@ -1,6 +1,6 @@
 # Simplicial HoTT and synthetic ∞-categories
 
-[![Check with latest Rzk](https://github.com/rzk-lang/sHoTT/actions/workflows/rzk.yml/badge.svg)](https://github.com/rzk-lang/sHoTT/actions/workflows/rzk.yml)
+[![Typecheck with latest Rzk](https://github.com/rzk-lang/sHoTT/actions/workflows/rzk.yml/badge.svg)](https://github.com/rzk-lang/sHoTT/actions/workflows/rzk.yml)
 [![MkDocs to GitHub Pages](https://github.com/rzk-lang/sHoTT/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/rzk-lang/sHoTT/actions/workflows/mkdocs.yml)
 
 > :information_source: This project originated as a fork of

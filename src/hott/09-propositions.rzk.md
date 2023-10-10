@@ -109,23 +109,6 @@ A type is a proposition when its identity types are contractible.
 
 ## Properties of propositions
 
-If some family `#!rzk B : A → U` is fiberwise a proposition, then the type of
-dependent functions `#!rzk (x : A) → B x` is a proposition.
-
-```rzk
-#def is-prop-fiberwise-prop uses (funext weakfunext)
-  ( A : U)
-  ( B : A → U)
-  ( fiberwise-prop-B : (x : A) → is-prop (B x))
-  : is-prop ((x : A) → B x)
-  :=
-    \ f g →
-    is-contr-equiv-is-contr'
-      ( f = g)
-      ( (x : A) → f x = g x)
-      ( equiv-FunExt funext A B f g)
-      ( weakfunext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
-```
 
 If two propositions are logically equivalent, then they are equivalent:
 
@@ -204,7 +187,59 @@ without explicitly invoking `is-prop-is-contr`.
   := ind-prop A (is-prop-is-contr A is-contr-A)
 ```
 
-## Families of propositions over a propositions
+## Closure properties of propositions
+
+### Retracts and equivalences
+
+Retracts of propositions are propositions:
+
+```rzk
+#def is-prop-is-retract-of-is-prop
+  ( A B : U)
+  ( (f,(g,η)) : is-retract-of A B) -- f : A → B with retraction g
+  ( is-prop-B : is-prop B)
+  : is-prop A
+  :=
+    is-prop-all-elements-equal A
+    ( \ a a' →
+      triple-concat A a (g (f a)) (g (f a')) a'
+      ( rev A (g (f a)) a (η a))
+      ( ap B A (f a) (f a') g ( first (is-prop-B (f a) (f a'))))
+      ( η a'))
+```
+
+In particular, propositions are closed under equivalences:
+
+```rzk
+#def is-prop-Equiv-is-prop
+  ( A B : U)
+  ( (f, (rec-f, _)) : Equiv A B)
+  : is-prop B → is-prop A
+  := is-prop-is-retract-of-is-prop A B (f, rec-f)
+```
+
+### Product types
+
+If some family `#!rzk B : A → U` is fiberwise a proposition, then the type of
+dependent functions `#!rzk (x : A) → B x` is a proposition.
+
+```rzk
+#def is-prop-fiberwise-prop uses (funext weakfunext)
+  ( A : U)
+  ( B : A → U)
+  ( fiberwise-prop-B : (x : A) → is-prop (B x))
+  : is-prop ((x : A) → B x)
+  :=
+    \ f g →
+    is-contr-equiv-is-contr'
+      ( f = g)
+      ( (x : A) → f x = g x)
+      ( equiv-FunExt funext A B f g)
+      ( weakfunext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
+```
+
+
+### Sum types over a propositions
 
 We consider a type family `C : A → U` over a proposition `A`.
 

@@ -442,11 +442,10 @@ fact, sometimes only this weaker form of the axiom is needed.
       ( first (first (extext I ψ ϕ A a f g)))
 ```
 
-Naive extension extensionality implies weak extension extensionality.
+Naive extension extensionality implies that all extension types in a
+proposition are propositions.
 
 ```rzk
-#assume hole : (A : U) → A
-
 #assume naiveextext : NaiveExtExt
 #def is-prop-shape-type-is-locally-prop uses (naiveextext)
   ( I : CUBE)
@@ -474,7 +473,25 @@ Naive extension extensionality implies weak extension extensionality.
     ( is-prop-shape-type-is-locally-prop I (\ t → ϕ t) (\ t → A t)
       ( \ t → is-locally-prop-A t))
     ( \ a → (t : ψ) → A t [ϕ t ↦ a t])
-    ( hole (is-prop (Σ (a : (t : ϕ) → A t), (t : ψ) → A t [ϕ t ↦ a t])))
+    ( is-prop-Equiv-is-prop'
+      ( ( t : ψ) → A t)
+      ( Σ (a : (t : ϕ) → A t), (t : ψ) → A t [ϕ t ↦ a t])
+      ( cofibration-composition I ψ ϕ (\ _ → BOT) (\ t → A t) (\ _ → recBOT))
+      ( is-prop-shape-type-is-locally-prop I ψ A is-locally-prop-A))
+
+#def weakextext-naiveextext uses (naiveextext)
+  : WeakExtExt
+  :=
+    \ I ψ ϕ A is-locally-contr-A a →
+    ( is-contr-is-inhabited-is-prop
+      ( (t : ψ) → A t [ϕ t ↦ a t])
+      ( is-prop-extension-type-is-locally-prop
+        ( naiveextext)
+        ( I) ( ψ) ( ϕ) (A)
+        ( \ t → is-prop-is-contr (A t) ( is-locally-contr-A t))
+        ( a))
+      ( undefined)
+    )
 ```
 
 ### Weak extension extensionality implies extension extensionality

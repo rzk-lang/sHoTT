@@ -63,6 +63,13 @@ A type is a proposition when its identity types are contractible.
   : is-contr-is-inhabited A
   := \ a → (a , all-elements-equal-A a)
 
+#def is-contr-is-inhabited-is-prop
+  ( A : U)
+  ( is-prop-A : is-prop A)
+  : is-contr-is-inhabited A
+  :=
+    \ a → (a, \ b → first (is-prop-A a b))
+
 #def terminal-map-is-emb-is-inhabited-is-contr-is-inhabited
   ( A : U)
   ( c : is-contr-is-inhabited A)
@@ -216,6 +223,12 @@ In particular, propositions are closed under equivalences:
   ( (f, (rec-f, _)) : Equiv A B)
   : is-prop B → is-prop A
   := is-prop-is-retract-of-is-prop A B (f, rec-f)
+
+#def is-prop-Equiv-is-prop'
+  ( A B : U)
+  ( A≃B : Equiv A B)
+  : is-prop A → is-prop B
+  := is-prop-Equiv-is-prop B A (inv-equiv A B A≃B)
 ```
 
 ### Product types

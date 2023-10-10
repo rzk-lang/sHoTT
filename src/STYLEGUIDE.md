@@ -264,6 +264,25 @@ special name, that name should probably be used.
   pattern `[descriptor]-[output-type]-[input-types]`
   (`(compute)-(hom)-(eq-extension-type-is-discrete)`).
 
+### Table of common descriptors
+
+To give a sense of the kind of general descriptors we use, we list some common
+descriptors with examples in the table below.
+
+| Descriptor       | Purpose                                                                                                            | Example                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
+| `coherence`      | Used for proofs of coherence                                                                                       | `coherence-is-half-adjoint-equiv`       |
+| `compute`        | Used for proofs of computation, which may be an identification or an element of any other identity system          | `compute-postwhisker-homotopy-is-segal` |
+| `Eq`             | Used for identity systems on types where `htpy` or `equiv` is not an appropriate descriptor of the identity system |                                         |
+| `eq`             | Used as a descriptor for the identity type                                                                         | `eq-htpy`                               |
+| `equiv`          | Used for equivalences, and also for names of identity systems of universe-like types                               | `equiv-ap-is-equiv`                     |
+| `extensionality` | Used for computations of identity types                                                                            | `extensionality-Σ`                      |
+| `homotopy`       | Used for constructions of homotopies, and also for names of identity systems of function-like types                | `homotopy-section-retraction-is-equiv`  |
+| `is-property`    | Used when `is-prop` is unavailable                                                                                 |                                         |
+| `map`            | Used in two ways: as the functorial action of a type constructor, but also as the underlying map of a morphism     | `map-inverse-has-inverse`               |
+| `type`           | Used for the underlying type of an object                                                                          | `type-Segal`                            |
+| `statement`      | Used for definitions which are statements of things                                                                | `statement-homotopy-interchange-law`    |
+
 ### Exceptions and naming practices to avoid
 
 - We use Unicode symbols in names very sparingly and only when they align with

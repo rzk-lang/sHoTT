@@ -16,8 +16,8 @@ This is a literate `rzk` file:
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk projection-total-type` in the proof of Theorem 5.5.
-- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and their
-  subshapes.
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
 - `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
 
@@ -1546,7 +1546,7 @@ Interchange law
 #variable is-segal-A : is-segal A
 #variables x y z : A
 
-#def homotopy-interchange-law-statement
+#def statement-homotopy-interchange-law
   ( f1 f2 f3 : hom A x y)
   ( h1 h2 h3 : hom A y z)
   ( p : f1 = f2)
@@ -1574,25 +1574,25 @@ Interchange law
   ( q : f2 = f3)
   ( p' : h1 = h2)
   ( q' : h2 = h3)
-  : homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q'
+  : statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p' q'
   := ind-path
     ( hom A x y)
     ( f2)
-    ( \ f3 q -> homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q')
+    ( \ f3 q -> statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p' q')
     ( ind-path
       ( hom A x y)
       ( f1)
-      ( \ f2 p -> homotopy-interchange-law-statement f1 f2 f2 h1 h2 h3
+      ( \ f2 p -> statement-homotopy-interchange-law f1 f2 f2 h1 h2 h3
           p refl p' q')
       ( ind-path
         ( hom A y z)
         ( h2)
-        ( \ h3 q' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h3
+        ( \ h3 q' -> statement-homotopy-interchange-law f1 f1 f1 h1 h2 h3
             refl refl p' q')
         ( ind-path
           ( hom A y z)
           ( h1)
-          ( \ h2 p' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h2
+          ( \ h2 p' -> statement-homotopy-interchange-law f1 f1 f1 h1 h2 h2
               refl refl p' refl)
           ( refl)
           ( h2)
@@ -1779,8 +1779,8 @@ The cofibration Λ²₁ → Δ² is inner anodyne
 
 ## Inner fibrations
 
-An inner fibration is a map `α : A' → A` which is right orthogonal
-to `Λ ⊂ Δ²`. This is the relative notion of a Segal type.
+An inner fibration is a map `α : A' → A` which is right orthogonal to `Λ ⊂ Δ²`.
+This is the relative notion of a Segal type.
 
 ```rzk
 #def is-inner-fibration

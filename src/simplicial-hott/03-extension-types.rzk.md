@@ -414,6 +414,8 @@ We refer to another form as an "extension extensionality" axiom.
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
 ```
 
+### Naive extension extensionality
+
 For readability of code, it is useful to the function that supplies an equality
 between terms of an extension type from a pointwise equality extending refl. In
 fact, sometimes only this weaker form of the axiom is needed.
@@ -439,6 +441,43 @@ fact, sometimes only this weaker form of the axiom is needed.
     \ I ψ ϕ A a f g →
       ( first (first (extext I ψ ϕ A a f g)))
 ```
+
+Naive extension extensionality implies weak extension extensionality.
+
+```rzk
+#assume hole : (A : U) → A
+
+#assume naiveextext : NaiveExtExt
+#def is-prop-shape-type-is-locally-prop uses (naiveextext)
+  ( I : CUBE)
+  ( ϕ : I → TOPE)
+  ( A : ϕ → U)
+  ( is-locally-prop-A : (t : ϕ) → is-prop (A t))
+  : is-prop ((t : ϕ) → A t)
+  :=
+    is-prop-all-elements-equal ((t : ϕ) → A t)
+    ( \ a a' →
+      naiveextext I (\ t → ϕ t) (\ _ → ⊥) (\ t → A t) (\ _ → recBOT) a a'
+      ( \ t → first ( is-locally-prop-A t (a t) (a' t))))
+
+#def is-prop-extension-type-is-locally-prop uses (naiveextext)
+  ( naiveextext : NaiveExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-locally-prop-A : (t : ψ) → is-prop (A t))
+  : ( a : (t : ϕ) → A t) → is-prop ((t : ψ) → A t [ϕ t ↦ a t])
+  :=
+    is-fiberwise-prop-is-prop-total-type-is-prop-base
+    ( ( t : ϕ) → A t)
+    ( is-prop-shape-type-is-locally-prop I (\ t → ϕ t) (\ t → A t)
+      ( \ t → is-locally-prop-A t))
+    ( \ a → (t : ψ) → A t [ϕ t ↦ a t])
+    ( hole (is-prop (Σ (a : (t : ϕ) → A t), (t : ψ) → A t [ϕ t ↦ a t])))
+```
+
+### Weak extension extensionality implies extension extensionality
 
 Weak extension extensionality implies extension extensionality; this is the
 context of RS17 Proposition 4.8 (i). We prove this in a series of lemmas. The
@@ -670,7 +709,6 @@ arguments below.
   ( f : (t : ψ) → A t [ϕ t ↦ a t])
   : (t : ψ ) → A t
   := f
-
 ```
 
 The homotopy extension property has the following signature. We state this

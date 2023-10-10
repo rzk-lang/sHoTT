@@ -507,26 +507,26 @@ in a fiberwise contractible family, every extension type is always inhabited.
       ( \ ( t : ϕ) → first (is-locally-contr-A t) )
       ( \ ( t : ϕ) → a t)
       ( \ ( t : ϕ) → second (is-locally-contr-A t) (a t)))
+
+#end weakextext-naiveextext
 ```
 
 We conclude that naive extension extensionality implies
 weak extension extensionality.
 
 ```rzk
-#def weakextext-naiveextext uses (naiveextext)
-  : WeakExtExt
+#def weakextext-naiveextext
+  : NaiveExtExt → WeakExtExt
   :=
-    \ I ψ ϕ A is-locally-contr-A a →
+    \ naiveextext I ψ ϕ A is-locally-contr-A a →
     ( is-contr-is-inhabited-is-prop
       ( (t : ψ) → A t [ϕ t ↦ a t])
-      ( is-prop-extension-type-is-locally-prop
+      ( is-prop-extension-type-is-locally-prop naiveextext
         ( I) ( ψ) ( ϕ) (A)
         ( \ t → is-prop-is-contr (A t) ( is-locally-contr-A t))
         ( a))
-      ( is-inhabited-extension-type-is-locally-contr I ψ ϕ A
+      ( is-inhabited-extension-type-is-locally-contr naiveextext I ψ ϕ A
         ( is-locally-contr-A) ( a)))
-
-#end weakextext-naiveextext
 ```
 
 For convenience we also provide the composite implication

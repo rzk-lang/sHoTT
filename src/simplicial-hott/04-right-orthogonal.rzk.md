@@ -368,9 +368,9 @@ and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
     is-equiv-is-contr-map (ψ → A) (ϕ → A) ( \ τ t → τ t)
       ( \ ( σ : ϕ → A) →
           is-contr-equiv-is-contr
-            ( extension-type I ψ ϕ ( \ t → A) σ)
-            ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
-            ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
+            ( extension-type I ψ ϕ A σ)
+            ( homotopy-extension-type I ψ ϕ A σ)
+            ( extension-type-weakening I ψ ϕ A σ)
             ( has-ue-ψ-ϕ-A σ))
 
 #def has-unique-extensions-is-local-type
@@ -379,9 +379,9 @@ and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
   :=
     \ σ →
       is-contr-equiv-is-contr'
-        ( extension-type I ψ ϕ ( \ t → A) σ)
-        ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
-        ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
+        ( extension-type I ψ ϕ A σ)
+        ( homotopy-extension-type I ψ ϕ A σ)
+        ( extension-type-weakening I ψ ϕ A σ)
         ( is-contr-map-is-equiv
             ( ψ → A) (ϕ → A) ( \ τ t → τ t)
             ( is-lt-ψ-ϕ-A)

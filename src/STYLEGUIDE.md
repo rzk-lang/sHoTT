@@ -273,7 +273,7 @@ descriptors with examples in the table below.
 | ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
 | `coherence`      | Used for proofs of coherence                                                                                       | `coherence-is-half-adjoint-equiv`       |
 | `compute`        | Used for proofs of computation, which may be an identification or an element of any other identity system          | `compute-postwhisker-homotopy-is-segal` |
-| `Eq`             | Used for identity systems on types where `htpy` or `equiv` is not an appropriate descriptor of the identity system |                                         |
+| `Eq`             | Used for identity systems on types where `htpy` or `equiv` is not an appropriate descriptor of the identity system | `Eq-Σ`                                  |
 | `eq`             | Used as a descriptor for the identity type                                                                         | `eq-htpy`                               |
 | `equiv`          | Used for equivalences, and also for names of identity systems of universe-like types                               | `equiv-ap-is-equiv`                     |
 | `extensionality` | Used for computations of identity types                                                                            | `extensionality-Σ`                      |

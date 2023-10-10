@@ -2241,7 +2241,8 @@ The fibers of a covariant fibration over a Segal type are discrete types.
   ( x : A)
   : is-discrete (C x)
   :=
-    ( \ u v → total-equiv-family-of-equiv
+    ( \ u v →
+    total-equiv-family-of-equiv
       ( C x)
       ( \ v' → (u = v'))
       ( hom (C x) u)
@@ -2253,7 +2254,7 @@ The fibers of a covariant fibration over a Segal type are discrete types.
         ( is-cov-C x x (id-hom A x) u)
         ( total-map
           ( C x)
-          (\ v' → u = v')
+          ( \ v' → u = v')
           ( hom (C x) u)
           ( hom-eq (C x) u)))
       ( v))
@@ -2263,7 +2264,7 @@ In a segal type, covariant hom families are covariant,hence representable homs
 are discrete.
 
 ```rzk title="RS17, Corollary 8.19"
-#def is-discrete-representable-is-segal
+#def is-discrete-hom-is-segal
   ( A : U)
   ( is-segal-A : is-segal A)
   ( x y : A)

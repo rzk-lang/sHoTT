@@ -30,48 +30,54 @@ which we can view as the types  of "extension up to homotopy".
 #variable I : CUBE
 #variable ψ : I → TOPE
 #variable ϕ : ψ → TOPE
-#variable A : U
+#variable A : (t : ψ) → U
 
 #def extension-type
-  ( σ : ϕ → A)
+  ( σ : (t : ϕ) → A t)
   : U
   :=
-    ( t : ψ) → A [ϕ t ↦ σ t]
+    ( t : ψ) → A t [ϕ t ↦ σ t]
 
 #def homotopy-extension-type
-  ( σ : ϕ → A)
+  ( σ : (t : ϕ) → A t)
   : U
-  := fib (ψ → A) (ϕ → A) (\ τ t → τ t) (σ)
+  := fib ((t : ψ) → A t) ((t : ϕ) → A t) (\ τ t → τ t) (σ)
 
 #def extension-type-weakening-map
-  ( σ : ϕ → A)
+  ( σ : (t : ϕ) → A t)
   : extension-type σ → homotopy-extension-type σ
   :=
     \ τ → ( τ, refl)
 
 #def extension-type-weakening-section
-  : ( σ : ϕ → A) →
-    ( th : homotopy-extension-type σ) →
-    Σ (τ : extension-type σ), (( τ, refl) =_{homotopy-extension-type σ} th)
+  : ( σ : (t : ϕ) → A t)
+  → ( th : homotopy-extension-type σ)
+  → Σ (τ : extension-type σ), (( τ, refl) =_{homotopy-extension-type σ} th)
   :=
-    ind-fib (ψ → A) (ϕ → A) (\ τ t → τ t)
+    ind-fib ((t : ψ) → A t) ((t : ϕ) → A t) (\ τ t → τ t)
       ( \ σ th →
           Σ (τ : extension-type σ),
             ( τ, refl) =_{homotopy-extension-type σ} th)
-      ( \ (τ : ψ → A) → (τ, refl))
+      ( \ (τ : (t : ψ) → A t) → (τ, refl))
+
+#def extension-strictification
+  ( σ : (t : ϕ) → A t)
+  : (homotopy-extension-type σ) → (extension-type σ)
+  :=
+    \ th → first (extension-type-weakening-section σ th)
 
 #def is-equiv-extension-type-weakening
-  ( σ : ϕ → A)
+  ( σ : (t : ϕ) → A t)
   : is-equiv (extension-type σ) (homotopy-extension-type σ)
       (extension-type-weakening-map σ)
   :=
-    ( ( \ th → first (extension-type-weakening-section σ th),
+    ( ( extension-strictification σ ,
         \ _ → refl),
-      ( \ th → ( first (extension-type-weakening-section σ th)),
+      ( extension-strictification σ,
         \ th → ( second (extension-type-weakening-section σ th))))
 
 #def extension-type-weakening
-  ( σ : ϕ → A)
+  ( σ : (t : ϕ) → A t)
   : Equiv (extension-type σ) (homotopy-extension-type σ)
   := ( extension-type-weakening-map σ , is-equiv-extension-type-weakening σ)
 
@@ -85,30 +91,30 @@ This equivalence is functorial in the following sense:
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
-  ( A' A : U)
-  ( α : A' → A)
-  ( σ' : ϕ → A')
+  ( A' A : (t : ψ) → U)
+  ( α : (t : ψ) → A' t → A t)
+  ( σ' : (t : ϕ) → A' t)
   : Equiv-of-maps
       ( extension-type I ψ ϕ A' σ')
-      ( extension-type I ψ ϕ A (\ t → α (σ' t)))
-      ( \ τ' t → α (τ' t))
+      ( extension-type I ψ ϕ A (\ t → α t (σ' t)))
+      ( \ τ' t → α t (τ' t))
       ( homotopy-extension-type I ψ ϕ A' σ')
-      ( homotopy-extension-type I ψ ϕ A (\ t → α (σ' t)))
+      ( homotopy-extension-type I ψ ϕ A (\ t → α t (σ' t)))
       ( \ (τ', p) →
-          ( \ t → α (τ' t),
-            ap (ϕ → A') (ϕ → A)
+          ( \ t → α t (τ' t),
+            ap ((t : ϕ) → A' t) ((t : ϕ) → A t)
                ( \ (t : ϕ) → τ' t)
                ( \ (t : ϕ) → σ' t)
-               ( \ σ'' t → α (σ'' t))
+               ( \ σ'' t → α t (σ'' t))
                ( p)))
   :=
     ( ( ( extension-type-weakening-map I ψ ϕ A' σ'
-        , extension-type-weakening-map I ψ ϕ A (\ t → α (σ' t))
+        , extension-type-weakening-map I ψ ϕ A (\ t → α t (σ' t))
         )
       , \ _ → refl
       )
     , ( is-equiv-extension-type-weakening I ψ ϕ A' σ'
-      , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α (σ' t))
+      , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α t (σ' t))
       )
     )
 

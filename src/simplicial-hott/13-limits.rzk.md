@@ -174,7 +174,7 @@ In a Segal type, initial objects are isomorphic.
   :=
     ( first (is-initial-a b) ,
       ( ( first (is-initial-b a) ,
-          eq-is-contr
+          all-elements-equal-is-contr
             ( hom A a a)
             ( is-initial-a a)
             ( comp-is-segal A is-segal-A a b a
@@ -182,7 +182,7 @@ In a Segal type, initial objects are isomorphic.
               ( first (is-initial-b a)))
             ( id-hom A a)) ,
         ( first (is-initial-b a) ,
-          eq-is-contr
+          all-elements-equal-is-contr
             ( hom A b b)
             ( is-initial-b b)
             ( comp-is-segal A is-segal-A b a b
@@ -205,7 +205,7 @@ In a Segal type, final objects are isomorphic.
   :=
     ( first (is-final-b a) ,
       ( ( first (is-final-a b) ,
-          eq-is-contr
+          all-elements-equal-is-contr
             ( hom A a a)
             ( is-final-a a)
             ( comp-is-segal A is-segal-A a b a
@@ -213,7 +213,7 @@ In a Segal type, final objects are isomorphic.
               ( first (is-final-a b)))
             ( id-hom A a)) ,
         ( first (is-final-a b) ,
-          eq-is-contr
+          all-elements-equal-is-contr
             ( hom A b b)
             ( is-final-b b)
             ( comp-is-segal A is-segal-A b a b

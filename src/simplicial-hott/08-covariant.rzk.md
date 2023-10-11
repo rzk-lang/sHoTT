@@ -2214,7 +2214,7 @@ commuting with the contravariant lifts.
       ( A)
       ( \ a → ( b : B ) → (C a b) )
       ( \ x y f g →
-        equiv-with-contractible-codomain-implies-contractible-domain
+        is-contr-equiv-is-contr'
           ( (t : Δ¹) → ((b : B) → C (f t) b) [  t ≡ 0₂ ↦ g ])
           ( (b : B) → (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b])
           ( flip-ext-fun 2 Δ¹ (\ t → t ≡ 0₂) B ( \ t →  C (f t)) ( \ t → g))

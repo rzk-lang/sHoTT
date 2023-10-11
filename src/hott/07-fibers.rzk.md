@@ -117,7 +117,7 @@ Contractible maps are equivalences:
   (a : A)
   : (is-contr-map-data-in-fiber a) =_{fib A B f (f a)} (a , refl)
   :=
-    eq-is-contr
+    all-elements-equal-is-contr
       ( fib A B f (f a))
       ( is-contr-f (f a))
       ( is-contr-map-data-in-fiber a)

@@ -82,7 +82,7 @@ In fact we will show below that this is true for every contractible type.
   :=
     \ x →
       ( is-emb-is-equiv A Unit (terminal-map A)
-        ( contr-implies-terminal-map-is-equiv A (c x)))
+        ( is-equiv-terminal-map-is-contr A (c x)))
 
 #def terminal-map-is-emb-is-contr-is-inhabited
   ( A : U)

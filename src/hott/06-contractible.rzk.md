@@ -129,7 +129,7 @@ A type is contractible if and only if its terminal map is an equivalence.
   : has-section A Unit (terminal-map A)
   := ( constant Unit A (center-contraction A is-contr-A) , \ z → refl)
 
-#def contr-implies-terminal-map-is-equiv
+#def is-equiv-terminal-map-is-contr
   ( A : U)
   ( is-contr-A : is-contr A)
   : is-equiv A Unit (terminal-map A)
@@ -147,7 +147,7 @@ A type is contractible if and only if its terminal map is an equivalence.
   ( A : U)
   : iff (is-contr A) (terminal-map-is-equiv A)
   :=
-    ( ( contr-implies-terminal-map-is-equiv A) ,
+    ( ( is-equiv-terminal-map-is-contr A) ,
       ( is-contr-is-equiv-terminal-map A))
 
 #def equiv-with-contractible-domain-implies-contractible-codomain
@@ -161,7 +161,7 @@ A type is contractible if and only if its terminal map is an equivalence.
         ( equiv-comp B A Unit
           ( inv-equiv A B f)
           ( ( terminal-map A) ,
-            ( contr-implies-terminal-map-is-equiv A is-contr-A)))))
+            ( is-equiv-terminal-map-is-contr A is-contr-A)))))
 
 #def is-contr-path-types-Unit
   ( x y : Unit)
@@ -200,21 +200,21 @@ A retract of contractible types is contractible.
 ```
 
 ```rzk title="If A is a retract of a contractible type it has a term"
-#def is-retract-of-is-contr-isInhabited uses (is-retract-of-A-B)
+#def is-inhabited-is-contr-is-retract-of uses (is-retract-of-A-B)
   ( is-contr-B : is-contr B)
   : A
   := is-retract-of-retraction (center-contraction B is-contr-B)
 ```
 
 ```rzk title="If A is a retract of a contractible type it has a contracting homotopy"
-#def is-retract-of-is-contr-hasHtpy uses (is-retract-of-A-B)
+#def has-homotopy-is-contr-is-retract-of uses (is-retract-of-A-B)
   ( is-contr-B : is-contr B)
   ( a : A)
-  : ( is-retract-of-is-contr-isInhabited is-contr-B) = a
+  : ( is-inhabited-is-contr-is-retract-of is-contr-B) = a
   :=
     concat
       ( A)
-      ( is-retract-of-is-contr-isInhabited is-contr-B)
+      ( is-inhabited-is-contr-is-retract-of is-contr-B)
       ( (comp A B A is-retract-of-retraction is-retract-of-section) a)
       ( a)
       ( ap B A (center-contraction B is-contr-B) (is-retract-of-section a)
@@ -228,8 +228,8 @@ A retract of contractible types is contractible.
   ( is-contr-B : is-contr B)
   : is-contr A
   :=
-    ( is-retract-of-is-contr-isInhabited is-contr-B ,
-      is-retract-of-is-contr-hasHtpy is-contr-B)
+    ( is-inhabited-is-contr-is-retract-of is-contr-B ,
+      has-homotopy-is-contr-is-retract-of is-contr-B)
 ```
 
 ```rzk

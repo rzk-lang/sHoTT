@@ -415,7 +415,7 @@ type, then so is `A'`.
   : is-segal A'
   :=
     is-segal-is-local-horn-inclusion A'
-      ( is-local-type-domain-right-orthogonal-is-local-type-codomain
+      ( is-local-type-right-orthogonal-is-local-type
         ( 2 × 2) Δ² ( \ ts → Λ ts) A' A α
         ( is-inner-fibration-is-left-fibration A' A α is-left-fib-α)
         ( is-local-horn-inclusion-is-segal A is-segal-A))

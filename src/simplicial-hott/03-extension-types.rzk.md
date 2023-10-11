@@ -15,6 +15,111 @@ This is a literate `rzk` file:
 - the file `hott/4-equivalences.rzk` relies in turn on the previous files in
   `hott/`
 
+## Extension up to homotopy
+
+For a shape inclusion `ϕ ⊂ ψ` and any type `A`,
+we have the inbuilt extension types `(t : ψ) → A [ϕ t ↦ σ t]`
+(for every `σ : ϕ → A`).
+
+We show that these extension types are equivalent to the fibers
+of the canonical restriction map `(ψ → A) → (ϕ → A)`,
+which we can view as the types  of "extension up to homotopy".
+
+```rzk
+#section extensions-up-to-homotopy
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variable A : (t : ψ) → U
+
+#def extension-type
+  ( σ : (t : ϕ) → A t)
+  : U
+  :=
+    ( t : ψ) → A t [ϕ t ↦ σ t]
+
+#def homotopy-extension-type
+  ( σ : (t : ϕ) → A t)
+  : U
+  := fib ((t : ψ) → A t) ((t : ϕ) → A t) (\ τ t → τ t) (σ)
+
+#def extension-type-weakening-map
+  ( σ : (t : ϕ) → A t)
+  : extension-type σ → homotopy-extension-type σ
+  :=
+    \ τ → ( τ, refl)
+
+#def extension-type-weakening-section
+  : ( σ : (t : ϕ) → A t)
+  → ( th : homotopy-extension-type σ)
+  → Σ (τ : extension-type σ), (( τ, refl) =_{homotopy-extension-type σ} th)
+  :=
+    ind-fib ((t : ψ) → A t) ((t : ϕ) → A t) (\ τ t → τ t)
+      ( \ σ th →
+          Σ (τ : extension-type σ),
+            ( τ, refl) =_{homotopy-extension-type σ} th)
+      ( \ (τ : (t : ψ) → A t) → (τ, refl))
+
+#def extension-strictification
+  ( σ : (t : ϕ) → A t)
+  : (homotopy-extension-type σ) → (extension-type σ)
+  :=
+    \ th → first (extension-type-weakening-section σ th)
+
+#def is-equiv-extension-type-weakening
+  ( σ : (t : ϕ) → A t)
+  : is-equiv (extension-type σ) (homotopy-extension-type σ)
+      (extension-type-weakening-map σ)
+  :=
+    ( ( extension-strictification σ ,
+        \ _ → refl),
+      ( extension-strictification σ,
+        \ th → ( second (extension-type-weakening-section σ th))))
+
+#def extension-type-weakening
+  ( σ : (t : ϕ) → A t)
+  : Equiv (extension-type σ) (homotopy-extension-type σ)
+  := ( extension-type-weakening-map σ , is-equiv-extension-type-weakening σ)
+
+#end extensions-up-to-homotopy
+```
+
+This equivalence is functorial in the following sense:
+
+```rzk
+#def extension-type-weakening-functorial
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A' A : (t : ψ) → U)
+  ( α : (t : ψ) → A' t → A t)
+  ( σ' : (t : ϕ) → A' t)
+  : Equiv-of-maps
+      ( extension-type I ψ ϕ A' σ')
+      ( extension-type I ψ ϕ A (\ t → α t (σ' t)))
+      ( \ τ' t → α t (τ' t))
+      ( homotopy-extension-type I ψ ϕ A' σ')
+      ( homotopy-extension-type I ψ ϕ A (\ t → α t (σ' t)))
+      ( \ (τ', p) →
+          ( \ t → α t (τ' t),
+            ap ((t : ϕ) → A' t) ((t : ϕ) → A t)
+               ( \ (t : ϕ) → τ' t)
+               ( \ (t : ϕ) → σ' t)
+               ( \ σ'' t → α t (σ'' t))
+               ( p)))
+  :=
+    ( ( ( extension-type-weakening-map I ψ ϕ A' σ'
+        , extension-type-weakening-map I ψ ϕ A (\ t → α t (σ' t))
+        )
+      , \ _ → refl
+      )
+    , ( is-equiv-extension-type-weakening I ψ ϕ A' σ'
+      , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α t (σ' t))
+      )
+    )
+
+```
+
 ## Commutation of arguments and currying
 
 ```rzk title="RS17, Theorem 4.1"
@@ -315,6 +420,8 @@ We refer to another form as an "extension extensionality" axiom.
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
 ```
 
+### Naive extension extensionality
+
 For readability of code, it is useful to the function that supplies an equality
 between terms of an extension type from a pointwise equality extending refl. In
 fact, sometimes only this weaker form of the axiom is needed.
@@ -323,15 +430,15 @@ fact, sometimes only this weaker form of the axiom is needed.
 #def NaiveExtExt
   : U
   :=
-    ( I : CUBE) →
-    ( ψ : I → TOPE) →
-    ( ϕ : ψ → TOPE) →
-    ( A : ψ → U) →
-    ( a : (t : ϕ) → A t) →
-    ( f : (t : ψ) → A t [ϕ t ↦ a t]) →
-    ( g : (t : ψ) → A t [ϕ t ↦ a t]) →
-    ( (t : ψ) → (f t = g t) [ϕ t ↦ refl]) →
-    ( f = g)
+    ( I : CUBE)
+  → ( ψ : I → TOPE)
+  → ( ϕ : ψ → TOPE)
+  → ( A : ψ → U)
+  → ( a : (t : ϕ) → A t)
+  → ( f : (t : ψ) → A t [ϕ t ↦ a t])
+  → ( g : (t : ψ) → A t [ϕ t ↦ a t])
+  → ( (t : ψ) → (f t = g t) [ϕ t ↦ refl])
+  → ( f = g)
 
 #def naiveextext-extext
   ( extext : ExtExt)
@@ -340,6 +447,100 @@ fact, sometimes only this weaker form of the axiom is needed.
     \ I ψ ϕ A a f g →
       ( first (first (extext I ψ ϕ A a f g)))
 ```
+
+We show that naive extension extensionality implies weak extension extensionality.
+On the way, we obtain another useful version of extension extensionality,
+stating that all extension types in a proposition are propositions.
+
+```rzk
+#section weakextext-naiveextext
+#variable naiveextext : NaiveExtExt
+
+#def is-prop-shape-type-is-locally-prop uses (naiveextext)
+  ( I : CUBE)
+  ( ϕ : I → TOPE)
+  ( A : ϕ → U)
+  ( is-locally-prop-A : (t : ϕ) → is-prop (A t))
+  : is-prop ((t : ϕ) → A t)
+  :=
+    is-prop-all-elements-equal ((t : ϕ) → A t)
+    ( \ a a' →
+      naiveextext I (\ t → ϕ t) (\ _ → ⊥) (\ t → A t) (\ _ → recBOT) a a'
+      ( \ t → first ( is-locally-prop-A t (a t) (a' t))))
+
+#def is-prop-extension-type-is-locally-prop uses (naiveextext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-locally-prop-A : (t : ψ) → is-prop (A t))
+  : ( a : (t : ϕ) → A t) → is-prop ((t : ψ) → A t [ϕ t ↦ a t])
+  :=
+    is-fiberwise-prop-is-prop-total-type-is-prop-base
+    ( ( t : ϕ) → A t)
+    ( is-prop-shape-type-is-locally-prop I (\ t → ϕ t) (\ t → A t)
+      ( \ t → is-locally-prop-A t))
+    ( \ a → (t : ψ) → A t [ϕ t ↦ a t])
+    ( is-prop-Equiv-is-prop'
+      ( ( t : ψ) → A t)
+      ( Σ (a : (t : ϕ) → A t), (t : ψ) → A t [ϕ t ↦ a t])
+      ( cofibration-composition I ψ ϕ (\ _ → BOT) (\ t → A t) (\ _ → recBOT))
+      ( is-prop-shape-type-is-locally-prop I ψ A is-locally-prop-A))
+```
+
+Still using `naiveextext`,
+in a fiberwise contractible family, every extension type is always inhabited.
+
+```rzk
+#def is-inhabited-extension-type-is-locally-contr uses (naiveextext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-locally-contr-A : (t : ψ) → is-contr (A t))
+  ( a : (t : ϕ) → A t)
+  : (t : ψ) → A t [ϕ t ↦ a t]
+  :=
+    extension-strictification I ψ ϕ A a
+    ( \ (t : ψ) → first (is-locally-contr-A t)
+    , naiveextext I (\ t → ϕ t) (\ _ → BOT) (\ t → A t) (\ _ → recBOT)
+      ( \ ( t : ϕ) → first (is-locally-contr-A t) )
+      ( \ ( t : ϕ) → a t)
+      ( \ ( t : ϕ) → second (is-locally-contr-A t) (a t)))
+
+#end weakextext-naiveextext
+```
+
+We conclude that naive extension extensionality implies
+weak extension extensionality.
+
+```rzk
+#def weakextext-naiveextext
+  : NaiveExtExt → WeakExtExt
+  :=
+    \ naiveextext I ψ ϕ A is-locally-contr-A a →
+    ( is-contr-is-inhabited-is-prop
+      ( (t : ψ) → A t [ϕ t ↦ a t])
+      ( is-prop-extension-type-is-locally-prop naiveextext
+        ( I) ( ψ) ( ϕ) (A)
+        ( \ t → is-prop-is-contr (A t) ( is-locally-contr-A t))
+        ( a))
+      ( is-inhabited-extension-type-is-locally-contr naiveextext I ψ ϕ A
+        ( is-locally-contr-A) ( a)))
+```
+
+For convenience we also provide the composite implication
+from extension extensionality to weak extension extensionality:
+
+```rzk
+#def weakextext-extext
+  : ExtExt → WeakExtExt
+  :=
+    comp ExtExt NaiveExtExt WeakExtExt
+    ( weakextext-naiveextext) ( naiveextext-extext)
+```
+
+### Weak extension extensionality implies extension extensionality
 
 Weak extension extensionality implies extension extensionality; this is the
 context of RS17 Proposition 4.8 (i). We prove this in a series of lemmas. The
@@ -488,9 +689,8 @@ extension extensionality that we get by extraccting the fiberwise equivalence.
 
 ```rzk title="RS17 Proposition 4.8(i)"
 #define extext-weakextext
-  (weakextext : WeakExtExt)
-  :  ExtExt
-  := \ I ψ ϕ A a f g →
+  : WeakExtExt → ExtExt
+  := \ weakextext I ψ ϕ A a f g →
       extext-weakextext' weakextext I ψ ϕ A a f g
 ```
 

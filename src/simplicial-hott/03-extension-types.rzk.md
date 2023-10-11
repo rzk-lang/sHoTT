@@ -17,13 +17,12 @@ This is a literate `rzk` file:
 
 ## Extension up to homotopy
 
-For a shape inclusion `ϕ ⊂ ψ` and any type `A`,
-we have the inbuilt extension types `(t : ψ) → A [ϕ t ↦ σ t]`
-(for every `σ : ϕ → A`).
+For a shape inclusion `ϕ ⊂ ψ` and any type `A`, we have the inbuilt extension
+types `(t : ψ) → A [ϕ t ↦ σ t]` (for every `σ : ϕ → A`).
 
-We show that these extension types are equivalent to the fibers
-of the canonical restriction map `(ψ → A) → (ϕ → A)`,
-which we can view as the types  of "extension up to homotopy".
+We show that these extension types are equivalent to the fibers of the canonical
+restriction map `(ψ → A) → (ϕ → A)`, which we can view as the types of
+"extension up to homotopy".
 
 ```rzk
 #section extensions-up-to-homotopy
@@ -448,9 +447,10 @@ fact, sometimes only this weaker form of the axiom is needed.
       ( first (first (extext I ψ ϕ A a f g)))
 ```
 
-We show that naive extension extensionality implies weak extension extensionality.
-On the way, we obtain another useful version of extension extensionality,
-stating that all extension types in a proposition are propositions.
+We show that naive extension extensionality implies weak extension
+extensionality. On the way, we obtain another useful version of extension
+extensionality, stating that all extension types in a proposition are
+propositions.
 
 ```rzk
 #section weakextext-naiveextext
@@ -488,8 +488,8 @@ stating that all extension types in a proposition are propositions.
       ( is-prop-shape-type-is-locally-prop I ψ A is-locally-prop-A))
 ```
 
-Still using `naiveextext`,
-in a fiberwise contractible family, every extension type is always inhabited.
+Still using `naiveextext`, in a fiberwise contractible family, every extension
+type is always inhabited.
 
 ```rzk
 #def is-inhabited-extension-type-is-locally-contr uses (naiveextext)
@@ -511,8 +511,8 @@ in a fiberwise contractible family, every extension type is always inhabited.
 #end weakextext-naiveextext
 ```
 
-We conclude that naive extension extensionality implies
-weak extension extensionality.
+We conclude that naive extension extensionality implies weak extension
+extensionality.
 
 ```rzk
 #def weakextext-naiveextext
@@ -529,8 +529,8 @@ weak extension extensionality.
         ( is-locally-contr-A) ( a)))
 ```
 
-For convenience we also provide the composite implication
-from extension extensionality to weak extension extensionality:
+For convenience we also provide the composite implication from extension
+extensionality to weak extension extensionality:
 
 ```rzk
 #def weakextext-extext

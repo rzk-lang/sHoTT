@@ -312,9 +312,13 @@ stability properties of maps right orthogonal to it.
 #variable α' : A'' → A'
 #variable α : A' → A
 
+#variable is-orth-ψ-ϕ-α' : is-right-orthogonal-to-shape I ψ ϕ A'' A' α'
+#variable is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α
+#variable is-orth-ψ-ϕ-αα' : is-right-orthogonal-to-shape I ψ ϕ A'' A
+                            ( comp A'' A' A α α')
+
 #def is-right-orthogonal-comp-to-shape
-  ( is-orth-ψ-ϕ-α' : is-right-orthogonal-to-shape I ψ ϕ A'' A' α')
-  ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  uses (is-orth-ψ-ϕ-α' is-orth-ψ-ϕ-α)
   : is-right-orthogonal-to-shape I ψ ϕ A'' A (comp A'' A' A α α')
   :=
     \ σ'' →
@@ -326,16 +330,13 @@ stability properties of maps right orthogonal to it.
       ( is-orth-ψ-ϕ-α' σ'')
       ( \ τ' t → α (τ' t))
       ( is-orth-ψ-ϕ-α (\ t → α' (σ'' t)))
-
 ```
 
 ### Right cancellation
 
 ```rzk
 #def is-right-orthogonal-right-cancel-to-shape
-  ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
-  ( is-orth-ψ-ϕ-αα' : is-right-orthogonal-to-shape I ψ ϕ A'' A
-                      ( comp A'' A' A α α'))
+  uses (is-orth-ψ-ϕ-α is-orth-ψ-ϕ-αα')
   : is-right-orthogonal-to-shape I ψ ϕ A'' A' α'
   :=
     \ σ'' →
@@ -347,6 +348,22 @@ stability properties of maps right orthogonal to it.
       ( \ τ' t → α (τ' t))
       ( is-orth-ψ-ϕ-α (\ t → α' (σ'' t)))
       ( is-orth-ψ-ϕ-αα' σ'')
+```
+
+### Stability under pullback
+
+Right orthogonal maps are stable under pullback.
+
+```rzk
+#variable B : U
+#variable f : B → A
+
+#def is-right-orthogonal-pullback-to-shape
+  uses (is-orth-ψ-ϕ-α)
+  : is-right-orthogonal-to-shape I ψ ϕ
+    ( fiber-product A B f A' α)
+    ( B) ( first-fiber-product A B f A' α)
+  := undefined
 
 #end right-orthogonal-calculus
 ```

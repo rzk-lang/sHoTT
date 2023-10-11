@@ -75,15 +75,22 @@ in terms of the contractibility of _relative extension types_.
     Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t])
     , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl]
 
+#def relative-extension-type'
+  ( σ' : (t : ϕ) → A' t)
+  ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
+  : U
+  :=
+    fib
+    ( (t : ψ) → A' t [ϕ t ↦ σ' t])
+    ( (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
+    ( \ τ' t → α t (τ' t))
+    ( τ)
+
 #def equiv-relative-extension-type-fib uses (extext)
   ( σ' : (t : ϕ) → A' t)
   ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
   : Equiv
-    ( fib
-      ( (t : ψ) → A' t [ϕ t ↦ σ' t])
-      ( (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
-      ( \ τ' t → α t (τ' t))
-      ( τ))
+    ( relative-extension-type' σ' τ)
     ( relative-extension-type σ' τ)
   :=
     total-equiv-family-equiv
@@ -177,30 +184,7 @@ then also all generalized ones.
 #variables A' A : U
 #variable α : A' → A
 
-
-#def has-contr-relative-extension-types-is-right-orthogonal uses (extext)
-  ( is-orth-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
-  : has-contr-relative-extension-types I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
-  :=
-    \ σ' τ →
-      is-contr-equiv-is-contr
-      ( fib
-        ( (t : ψ) → A' [ϕ t ↦ σ' t])
-        ( (t : ψ) → A [ϕ t ↦ α (σ' t)])
-        ( \ τ' t → α (τ' t))
-        ( τ))
-      ( relative-extension-type I ψ ϕ
-        ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
-      ( equiv-relative-extension-type-fib I ψ ϕ
-        ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
-      ( is-contr-map-is-equiv
-        ( (t : ψ) → A' [ϕ t ↦ σ' t])
-        ( (t : ψ) → A [ϕ t ↦ α (σ' t)])
-        ( \ τ' t → α (τ' t))
-        ( is-orth-α σ')
-        ( τ))
-
-#def is-right-orthogonal-has-contr-relative-extension-types uses (extext)
+#def is-right-orthogonal-to-shape-has-contr-relative-extension-types uses (extext)
   ( are-contr-relext-α
     : has-contr-relative-extension-types I ψ ϕ
       ( \ _ → A') (\ _ → A) (\ _ → α))
@@ -224,6 +208,43 @@ then also all generalized ones.
         ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
       ( are-contr-relext-α σ' τ)
     )
+
+#def has-contr-relative-extension-types-is-right-orthogonal-to-shape uses (extext)
+  ( is-orth-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : has-contr-relative-extension-types I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
+  :=
+    \ σ' τ →
+      is-contr-equiv-is-contr
+      ( fib
+        ( (t : ψ) → A' [ϕ t ↦ σ' t])
+        ( (t : ψ) → A [ϕ t ↦ α (σ' t)])
+        ( \ τ' t → α (τ' t))
+        ( τ))
+      ( relative-extension-type I ψ ϕ
+        ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
+      ( equiv-relative-extension-type-fib I ψ ϕ
+        ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
+      ( is-contr-map-is-equiv
+        ( (t : ψ) → A' [ϕ t ↦ σ' t])
+        ( (t : ψ) → A [ϕ t ↦ α (σ' t)])
+        ( \ τ' t → α (τ' t))
+        ( is-orth-α σ')
+        ( τ))
+
+#def has-contr-general-relative-extension-types-is-right-orthogonal-to-shape
+  uses (extext)
+  ( is-orth-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : ( σ' : (t : ϕ) → A')
+  → ( τ : (t : ψ) → A)
+  → ( h : (t : ϕ) → α (σ' t) = τ t)
+  → is-contr
+    ( general-relative-extension-type
+        I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α) σ' τ h)
+  :=
+    ( has-contr-relative-extension-types-generalize
+        I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α))
+    ( has-contr-relative-extension-types-is-right-orthogonal-to-shape is-orth-α)
+
 
 #end has-contr-relative-extension-types-iff-is-right-orthogonal
 ```
@@ -533,20 +554,19 @@ More precisely: If `α : A' → A` is right orthogonal,
 then so is the second projection
 `relative-product A A' α B f → B` for every `f : B → A`.
 
-To prove this, we show that each relative extension type
+To prove this, we first show that each relative extension type
 of `relative-product A A' α B f → B`,
-is equivalent to a generalized extension type for `A' → A`.
+is a retract of a generalized extension type for `A' → A`.
+Since the latter are all contractible by assumption,
+the same follows for the former.
 
 ```rzk
 #variable B : U
 #variable f : B → A
 
-#section relative-extension-type-pullback
-
-#variable σB' : ϕ → relative-product A A' α B f
-#variable τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)]
-
 #def relative-extension-type-pullback-general-relative-extension-type
+  ( σB' : ϕ → relative-product A A' α B f)
+  ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
   ( (τA', hA)
     : general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
       ( \ t → first-relative-product A A' α B f (σB' t))
@@ -561,6 +581,8 @@ is equivalent to a generalized extension type for `A' → A`.
     , \ t → refl)
 
 #def general-relative-extension-type-relative-extension-type-pullback
+  ( σB' : ϕ → relative-product A A' α B f)
+  ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
   ( (τB', hB)
     : relative-extension-type I ψ ϕ
       ( \ _ → relative-product A A' α B f) ( \ _ → B)
@@ -583,10 +605,101 @@ is equivalent to a generalized extension type for `A' → A`.
         ( τB t)
         ( f) ( hB t)))
 
-#end relative-extension-type-pullback
+#def is-id-rel-ext-type-pb-gen-rel-ext-type-rel-ext-type-pb uses (extext)
+  ( σB' : ϕ → relative-product A A' α B f)
+  ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
+  : ( τhB
+      : relative-extension-type I ψ ϕ
+        ( \ _ → relative-product A A' α B f) ( \ _ → B)
+        ( \ _ → second-relative-product A A' α B f)
+        ( σB') ( τB))
+  → ( relative-extension-type-pullback-general-relative-extension-type σB' τB
+      ( general-relative-extension-type-relative-extension-type-pullback σB' τB τhB)
+    = τhB)
+  :=
+    ind-has-section-equiv
+    ( relative-extension-type' I ψ ϕ
+      ( \ _ → relative-product A A' α B f) ( \ _ → B)
+      ( \ _ → second-relative-product A A' α B f)
+      ( σB') ( τB))
+    ( relative-extension-type I ψ ϕ
+      ( \ _ → relative-product A A' α B f) ( \ _ → B)
+      ( \ _ → second-relative-product A A' α B f)
+      ( σB') ( τB))
+    ( equiv-relative-extension-type-fib I ψ ϕ
+      ( \ _ → relative-product A A' α B f) ( \ _ → B)
+      ( \ _ → second-relative-product A A' α B f)
+      ( σB') ( τB))
+    ( \ τhB →
+      ( relative-extension-type-pullback-general-relative-extension-type σB' τB
+        ( general-relative-extension-type-relative-extension-type-pullback σB' τB τhB)
+      = τhB))
+    ( ind-fib
+      ( (t : ψ) → relative-product A A' α B f [ϕ t ↦ σB' t])
+      ( (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
+      ( \ τB' t → second-relative-product A A' α B f (τB' t))
+      ( \ τB₁ (τB'₁, h₁) →
+        ( relative-extension-type-pullback-general-relative-extension-type σB' τB₁
+          ( general-relative-extension-type-relative-extension-type-pullback σB' τB₁
+            ( τB'₁
+            , ext-htpy-eq I ψ ϕ (\ _ → B)
+              ( \ t → second-relative-product A A' α B f (σB' t))
+              ( \ t → second-relative-product A A' α B f (τB'₁ t))
+              ( τB₁) ( h₁)))
+        = ( τB'₁
+          , ext-htpy-eq I ψ ϕ (\ _ → B)
+            ( \ t → second-relative-product A A' α B f (σB' t))
+            ( \ t → second-relative-product A A' α B f (τB'₁ t))
+            ( τB₁) ( h₁))))
+      ( \ τB' → refl)
+      ( τB))
 
+#def is-retract-of-rel-ext-type-pb-gen-rel-ext-type uses (extext)
+  ( σB' : ϕ → relative-product A A' α B f)
+  ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
+  : is-retract-of
+    ( relative-extension-type I ψ ϕ
+      ( \ _ → relative-product A A' α B f) ( \ _ → B)
+      ( \ _ → second-relative-product A A' α B f)
+      ( σB') ( τB))
+    ( general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
+      ( \ t → first-relative-product A A' α B f (σB' t))
+      ( \ t → f (τB t))
+      ( \ t → homotopy-relative-product A A' α B f (σB' t)))
+  :=
+    ( general-relative-extension-type-relative-extension-type-pullback σB' τB
+    , ( relative-extension-type-pullback-general-relative-extension-type σB' τB
+      , is-id-rel-ext-type-pb-gen-rel-ext-type-rel-ext-type-pb σB' τB))
+```
 
+Then we can deduce that right orthogonal maps are preserved under pullback:
 
+```rzk
+#def is-right-orthoponal-pullback-to-shape uses (extext is-orth-ψ-ϕ-α)
+  : is-right-orthogonal-to-shape I ψ ϕ
+    ( relative-product A A' α B f) ( B)
+    ( second-relative-product A A' α B f)
+  :=
+    is-right-orthogonal-to-shape-has-contr-relative-extension-types I ψ ϕ
+    ( relative-product A A' α B f) ( B)
+    ( second-relative-product A A' α B f)
+    ( \ σB' τB →
+      is-contr-is-retract-of-is-contr
+      ( relative-extension-type I ψ ϕ
+        ( \ _ → relative-product A A' α B f) ( \ _ → B)
+        ( \ _ → second-relative-product A A' α B f)
+        ( σB') ( τB))
+      ( general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
+        ( \ t → first-relative-product A A' α B f (σB' t))
+        ( \ t → f (τB t))
+        ( \ t → homotopy-relative-product A A' α B f (σB' t)))
+      ( is-retract-of-rel-ext-type-pb-gen-rel-ext-type σB' τB)
+      ( has-contr-general-relative-extension-types-is-right-orthogonal-to-shape
+        I ψ ϕ A' A α
+        ( is-orth-ψ-ϕ-α)
+        ( \ t → first-relative-product A A' α B f (σB' t))
+        ( \ t → f (τB t))
+        ( \ t → homotopy-relative-product A A' α B f (σB' t))))
 
 #end right-orthogonal-calculus
 ```

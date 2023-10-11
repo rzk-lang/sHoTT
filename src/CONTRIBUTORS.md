@@ -10,7 +10,7 @@ Formalizations were contributed by the following people (listed alphabetically):
 - [Nikolai Kudasov](https://fizruk.github.io/),
 - [Kenji Maillard](https://github.com/kyoDralliam),
 - [David Martínez Carpena](https://dvmcarpena.com/),
-- [StiéphenPradal](https://stiephenpradal.github.io/),
+- [Stiéphen Pradal](https://stiephenpradal.github.io/),
 - [Nima Rasekh](https://guests.mpim-bonn.mpg.de/rasekh/),
 - [Emily Riehl](https://emilyriehl.github.io/),
 - [Florrie Verity](https://github.com/floverity),

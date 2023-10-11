@@ -461,6 +461,11 @@ Given two maps `B → A` and `C → A`, we can form the relative product over `A
 #def second-relative-product uses (A B β C γ)
   : relative-product → C
   := \ ((_ , c), _) → c
+
+#def homotopy-relative-product uses (A B C)
+  ( (bc, p) : relative-product )
+  : β (first-relative-product (bc,p)) = γ (second-relative-product (bc,p))
+  := p
 ```
 
 This relative product agrees with the fiber product obtained by summing over the
@@ -475,6 +480,21 @@ product of all fibers.
   : fiber-product
   = ( Σ (a : A), (product (fib B A β a) (fib C A γ a)))
   := refl
+
+#def first-fiber-product uses (A B β C γ)
+  : fiber-product → B
+  := \ (_, ((b, _), _ )) → b
+
+#def second-fiber-product uses (A B β C γ)
+  : fiber-product → C
+  := \ (_, (_, (c, _))) → c
+
+#def homotopy-fiber-product uses (A B C)
+  : ( abpcq : fiber-product )
+  → β (first-fiber-product abpcq) = γ (second-fiber-product abpcq)
+  :=
+    \ ( a, ((b, p), (c,q))) →
+      zig-zag-concat A (β b) a (γ c) p q
 
 #def relative-fiber-product uses (B C)
   ( (a, ((b, p), (c,q))) : fiber-product )

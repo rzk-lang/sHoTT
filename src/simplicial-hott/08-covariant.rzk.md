@@ -2227,3 +2227,53 @@ commuting with the contravariant lifts.
              x y f (g b))))
 
 ```
+
+## Discrete fibers
+
+The fibers of a covariant fibration over a Segal type are discrete types.
+
+```rzk title="RS17, Proposition 8.18"
+#def is-discrete-is-covariant-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-cov-C : is-covariant A C)
+  ( x : A)
+  : is-discrete (C x)
+  :=
+    ( \ u v →
+    total-equiv-family-of-equiv
+      ( C x)
+      ( \ v' → (u = v'))
+      ( hom (C x) u)
+      ( hom-eq (C x) u)
+      ( is-equiv-are-contr
+        ( Σ (y : (C x)) , u = y)
+        ( Σ (y : (C x)) , hom (C x) u y)
+        ( is-contr-based-paths (C x) u)
+        ( is-cov-C x x (id-hom A x) u)
+        ( total-map
+          ( C x)
+          ( \ v' → u = v')
+          ( hom (C x) u)
+          ( hom-eq (C x) u)))
+      ( v))
+```
+
+In a segal type, covariant hom families are covariant,hence representable homs
+are discrete.
+
+```rzk title="RS17, Corollary 8.19"
+#def is-discrete-hom-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y : A)
+  : is-discrete (hom A x y)
+  :=
+    is-discrete-is-covariant-segal
+      ( A)
+      ( is-segal-A)
+      ( hom A x)
+      ( is-covariant-representable-is-segal A is-segal-A x)
+      ( y)
+```

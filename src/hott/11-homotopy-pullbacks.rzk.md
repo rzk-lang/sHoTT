@@ -35,8 +35,8 @@ We start by fixing the data of a map between two type families
   := \ (a', c') → (α a', γ a' c')
 ```
 
-We say that such a square is homotopy cartesian
-just if it induces an equivalence componentwise.
+We say that such a square is homotopy cartesian just if it induces an
+equivalence componentwise.
 
 ```rzk
 #def is-homotopy-cartesian uses (A)
@@ -216,8 +216,8 @@ always do this (whether the square is homotopy-cartesian or not).
 
 ### Invariance under pullbacks
 
-We can pullback a homotopy cartesian square over `α : A' → A`
-along any map of maps `β → α` and obtain another homotopy cartesian square.
+We can pullback a homotopy cartesian square over `α : A' → A` along any map of
+maps `β → α` and obtain another homotopy cartesian square.
 
 ```rzk
 #def is-homotopy-cartesian-pullback
@@ -246,16 +246,15 @@ along any map of maps `β → α` and obtain another homotopy cartesian square.
 
 ## Pasting calculus for homotopy cartesian squares
 
-Currently our notion of squares is not symmetric,
-since the vertical maps are given by type families,
-i.e. they are _display maps_,
-while the horizontal maps are arbitrary.
-Therefore we distinquish between the vertical and the horizontal pasting calculus.
+Currently our notion of squares is not symmetric, since the vertical maps are
+given by type families, i.e. they are _display maps_, while the horizontal maps
+are arbitrary. Therefore we distinquish between the vertical and the horizontal
+pasting calculus.
 
 ### Vertical calculus
 
-The following vertical composition and cancellation laws follow easily from
-the corresponding statements about equivalences established above.
+The following vertical composition and cancellation laws follow easily from the
+corresponding statements about equivalences established above.
 
 ```rzk
 #section homotopy-cartesian-vertical-calculus
@@ -463,8 +462,8 @@ Given two maps `B → A` and `C → A`, we can form the relative product over `A
   := \ ((_ , c), _) → c
 ```
 
-This relative product agrees with the fiber product obtained by summing
-over the product of all fibers.
+This relative product agrees with the fiber product obtained by summing over the
+product of all fibers.
 
 ```rzk
 #def fiber-product

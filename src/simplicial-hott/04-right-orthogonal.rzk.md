@@ -280,7 +280,8 @@ and relies on (the naive form of) extension extensionality.
 
 ### Stability under exact pushouts
 
-For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to `α : A' → A`,
+For any two shapes `ϕ, ψ ⊂ I`,
+if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to `α : A' → A`,
 then so is `ψ ⊂ ϕ ∪ ψ`.
 
 ```rzk
@@ -309,15 +310,79 @@ We say that an type `A` has unique extensions for a shape inclusion `ϕ ⊂ ψ`,
 if for each `σ : ϕ → A` the type of `ψ`-extensions is contractible.
 
 ```rzk
+#section has-unique-extensions
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variable A : U
+
 #def has-unique-extensions
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
-  ( A : U)
   : U
   :=
     ( σ : ϕ → A) → is-contr ( (t : ψ) → A [ϕ t ↦ σ t])
 ```
+
+There are a other equivalent characterizations:
+
+We can ask that the canonical restriction map `(ψ → A) → (ϕ → A)` is an
+equivalence.
+
+```rzk
+#def is-local-type
+  : U
+  :=
+    is-equiv (ψ → A) (ϕ → A) ( \ τ t → τ t)
+```
+
+We can ask that the terminal map `A → Unit` is right orthogonal to `ϕ ⊂ ψ`
+
+```rzk
+#def is-right-orthognal-to-shape-terminal-map
+  : U
+  :=
+    is-right-orthogonal-to-shape I ψ ϕ A Unit (terminal-map A)
+```
+
+### Alternative characteriztions: proofs
+
+The equivalence between `is-local-type` and `has-unique-extensions` follows
+straightforwardly from the fact that for every `σ : ϕ → A`
+we have an equivalence between the extension type `(t : ψ) → A [ϕ t ↦ σ t]`
+and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
+
+```rzk
+#def is-local-type-has-unique-extensions
+  ( has-ue-ψ-ϕ-A : has-unique-extensions)
+  : is-local-type
+  :=
+    is-equiv-is-contr-map (ψ → A) (ϕ → A) ( \ τ t → τ t)
+      ( \ ( σ : ϕ → A) →
+          is-contr-equiv-is-contr
+            ( extension-type I ψ ϕ ( \ t → A) σ)
+            ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
+            ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
+            ( has-ue-ψ-ϕ-A σ))
+
+#def has-unique-extensions-is-local-type
+  ( is-lt-ψ-ϕ-A : is-local-type)
+  : has-unique-extensions
+  :=
+    \ σ →
+      is-contr-equiv-is-contr'
+        ( extension-type I ψ ϕ ( \ t → A) σ)
+        ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
+        ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
+        ( is-contr-map-is-equiv
+            ( ψ → A) (ϕ → A) ( \ τ t → τ t)
+            ( is-lt-ψ-ϕ-A)
+            ( σ))
+
+#end has-unique-extensions
+```
+
+
+
+### Stability properties of local types
 
 The property of having unique extension
 can be pulled back along any right orthogonal map.
@@ -340,55 +405,6 @@ can be pulled back along any right orthogonal map.
         ( has-ue-A (\ t → α (σ' t)))
 ```
 
-Alternatively, we can ask that the canonical restriction map `(ψ → A) → (ϕ → A)`
-is an equivalence.
-
-```rzk
-#section is-local-type
-#variable I : CUBE
-#variable ψ : I → TOPE
-#variable ϕ : ψ → TOPE
-#variable A : U
-
-#def is-local-type
-  : U
-  :=
-    is-equiv (ψ → A) (ϕ → A) ( \ τ t → τ t)
-```
-
-This follows straightforwardly from the fact that for every `σ : ϕ → A`
-we have an equivalence between the extension type `(t : ψ) → A [ϕ t ↦ σ t]`
-and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
-
-```rzk
-#def is-local-type-has-unique-extensions
-  ( has-ue-ψ-ϕ-A : has-unique-extensions I ψ ϕ A)
-  : is-local-type
-  :=
-    is-equiv-is-contr-map (ψ → A) (ϕ → A) ( \ τ t → τ t)
-      ( \ ( σ : ϕ → A) →
-          is-contr-equiv-is-contr
-            ( extension-type I ψ ϕ ( \ t → A) σ)
-            ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
-            ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
-            ( has-ue-ψ-ϕ-A σ))
-
-#def has-unique-extensions-is-local-type
-  ( is-lt-ψ-ϕ-A : is-local-type)
-  : has-unique-extensions I ψ ϕ A
-  :=
-    \ σ →
-      is-contr-equiv-is-contr'
-        ( extension-type I ψ ϕ ( \ t → A) σ)
-        ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
-        ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
-        ( is-contr-map-is-equiv
-            ( ψ → A) (ϕ → A) ( \ τ t → τ t)
-            ( is-lt-ψ-ϕ-A)
-            ( σ))
-#end is-local-type
-```
-
 Since the property of having unique extensions passes from the codomain to the domain
 of a right orthogonal map, the same is true for locality of types.
 
@@ -407,5 +423,4 @@ of a right orthogonal map, the same is true for locality of types.
       ( has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain
           I ψ ϕ A' A α is-orth-α
           ( has-unique-extensions-is-local-type I ψ ϕ A is-local-A))
-
 ```

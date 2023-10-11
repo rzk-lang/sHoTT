@@ -511,9 +511,12 @@ A type is contractible if and only if it has singleton induction.
 
 ## Identity types of contractible types
 
-We show that any two paths between the same endpoints in a contractible type are the same.
+We show that any two paths between the same endpoints in a contractible type are
+the same.
 
-In a contractible type any path $p : x = y$ is equal to the path constructed in `all-elements-equal-is-contr`.
+In a contractible type any path $p : x = y$ is equal to the path constructed in
+`all-elements-equal-is-contr`.
+
 ```rzk
 #define path-eq-path-through-center-is-contr
   ( A : U)
@@ -532,7 +535,10 @@ In a contractible type any path $p : x = y$ is equal to the path constructed in 
 
 ```
 
-Finally, in a contractible type any two paths between the same end points are equal. There are many possible proofs of this (e.g. identifying contractible types with the unit type where it is more transparent), but we proceed by gluing together the two identifications to the out and back path.
+Finally, in a contractible type any two paths between the same end points are
+equal. There are many possible proofs of this (e.g. identifying contractible
+types with the unit type where it is more transparent), but we proceed by gluing
+together the two identifications to the out and back path.
 
 ```rzk
 #define all-paths-equal-is-contr

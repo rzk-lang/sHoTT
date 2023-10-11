@@ -25,8 +25,8 @@ A type is a proposition when its identity types are contractible.
   := (a : A) → (b : A) → is-contr (a = b)
 ```
 
-For example, the type `Unit` is a proposition.
-In fact we will show below that this is true for every contractible type.
+For example, the type `Unit` is a proposition. In fact we will show below that
+this is true for every contractible type.
 
 ```rzk
 #def is-prop-Unit
@@ -121,7 +121,6 @@ In fact we will show below that this is true for every contractible type.
 
 ## Properties of propositions
 
-
 If two propositions are logically equivalent, then they are equivalent:
 
 ```rzk
@@ -188,8 +187,8 @@ All parallel paths in a proposition are equal.
     transport A B a x (first (is-prop-A a x)) b
 ```
 
-It is convenient to able to apply this to contractible types
-without explicitly invoking `is-prop-is-contr`.
+It is convenient to able to apply this to contractible types without explicitly
+invoking `is-prop-is-contr`.
 
 ```rzk
 #def ind-prop-is-contr
@@ -256,7 +255,6 @@ dependent functions `#!rzk (x : A) → B x` is a proposition.
       ( weakfunext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
 ```
 
-
 ### Sum types over a propositions
 
 We consider a type family `C : A → U` over a proposition `A`.
@@ -285,8 +283,8 @@ If each `C a` is a proposition, then so is the total type `total-type A C`.
           ( c'))))
 ```
 
-Conversely, if the total type `total-type A C` is a proposition,
-then so is every fiber `C a`.
+Conversely, if the total type `total-type A C` is a proposition, then so is
+every fiber `C a`.
 
 ```rzk
 #def is-fiberwise-prop-is-prop-total-type-is-prop-base uses (is-prop-A)

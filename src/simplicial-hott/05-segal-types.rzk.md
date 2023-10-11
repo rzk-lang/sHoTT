@@ -16,8 +16,8 @@ This is a literate `rzk` file:
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk projection-total-type` in the proof of Theorem 5.5.
-- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and their
-  subshapes.
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
 - `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
 
@@ -1777,8 +1777,8 @@ The cofibration Λ²₁ → Δ² is inner anodyne
 
 ## Inner fibrations
 
-An inner fibration is a map `α : A' → A` which is right orthogonal
-to `Λ ⊂ Δ²`. This is the relative notion of a Segal type.
+An inner fibration is a map `α : A' → A` which is right orthogonal to `Λ ⊂ Δ²`.
+This is the relative notion of a Segal type.
 
 ```rzk
 #def is-inner-fibration

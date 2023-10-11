@@ -31,6 +31,7 @@ under `#!rzk f`.
   : U
   := Σ (b : B), hom ( A → B) f (constant A B b)
 ```
+
 We define a colimit for `#!rzk f : A → B` as an initial cocone under `#!rzk f`.
 
 ```rzk
@@ -50,8 +51,9 @@ We define a limit of `#!rzk f : A → B` as a terminal cone over `#!rzk f`.
   : U
   :=  Σ ( x : cone A B f ) , is-final (cone A B f) x
 ```
-We give a second definition of limits, we eventually want to prove both definitions coincide.
-Define cone as a family.
+
+We give a second definition of limits, we eventually want to prove both
+definitions coincide. Define cone as a family.
 
 ```rzk
 #def cone2
@@ -59,6 +61,7 @@ Define cone as a family.
   : (A → B) → (B) → U
   := \ f → \ b → (hom (A → B) (constant A B b) f)
 ```
+
 ```rzk
 #def constant-nat-trans
   (A B : U)
@@ -86,6 +89,7 @@ Define cone as a family.
               ( constant-nat-trans A B b x k )
               ( α)
 ```
+
 Another definition of limit.
 
 ```rzk
@@ -100,8 +104,8 @@ Another definition of limit.
       → is-equiv (cone2 A B f x) (cone2 A B f b) (cone-precomposition A B is-segal-B f b x k )
 ```
 
-We give a second definition of colimits, we eventually want to prove both definitions coincide.
-Define cocone as a family.
+We give a second definition of colimits, we eventually want to prove both
+definitions coincide. Define cocone as a family.
 
 ```rzk
 #def cocone2
@@ -128,6 +132,7 @@ Define cocone as a family.
               ( α)
               ( constant-nat-trans A B x b k )
 ```
+
 Another definition of colimit.
 
 ```rzk
@@ -141,8 +146,9 @@ Another definition of colimit.
      ( x : B) → ( k : hom B x b)
       → is-equiv (cocone2 A B f x) (cocone2 A B f b) (cocone-postcomposition A B is-segal-B f x b k )
 ```
-The following alternative definition does not require a Segalness condition. When
-`#!rzk is-segal B` then definitions 1 and 3 coincide.
+
+The following alternative definition does not require a Segalness condition.
+When `#!rzk is-segal B` then definitions 1 and 3 coincide.
 
 ```rzk
 #def limit3
@@ -151,6 +157,7 @@ The following alternative definition does not require a Segalness condition. Whe
   : U
   := Σ ( b : B),(x : B) → Equiv (hom B b x ) (cone2 A B f x)
 ```
+
 ```rzk
 #def colimit3
   ( A B : U)

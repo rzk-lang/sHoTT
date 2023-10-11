@@ -303,6 +303,64 @@ then so is `ψ ⊂ ϕ ∪ ψ`.
          ( is-orth-ϕ-ψ∧ϕ ( \ t → τ' t))
 ```
 
+## Stability properties of right orthogonal maps
+
+Now we change perspective. We fix a shape inclusion `ϕ ⊂ ψ` and investigate
+stability properties of maps right orthogonal to it.
+
+```rzk
+#section right-orthogonal-calculus
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+```
+
+### Stability under composition
+
+```rzk
+#variables A'' A' A : U
+#variable α' : A'' → A'
+#variable α : A' → A
+
+#def is-right-orthogonal-comp-to-shape
+  ( is-orth-ψ-ϕ-α' : is-right-orthogonal-to-shape I ψ ϕ A'' A' α')
+  ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : is-right-orthogonal-to-shape I ψ ϕ A'' A (comp A'' A' A α α')
+  :=
+    \ σ'' →
+      is-equiv-comp
+      ( extension-type I ψ ϕ (\ _ → A'') σ'')
+      ( extension-type I ψ ϕ (\ _ → A') (\ t → α' (σ'' t)))
+      ( extension-type I ψ ϕ (\ _ → A) (\ t → α (α' (σ'' t))))
+      ( \ τ'' t → α' (τ'' t))
+      ( is-orth-ψ-ϕ-α' σ'')
+      ( \ τ' t → α (τ' t))
+      ( is-orth-ψ-ϕ-α (\ t → α' (σ'' t)))
+
+```
+
+### Right cancellation
+
+```rzk
+#def is-right-orthogonal-right-cancel-to-shape
+  ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  ( is-orth-ψ-ϕ-αα' : is-right-orthogonal-to-shape I ψ ϕ A'' A
+                      ( comp A'' A' A α α'))
+  : is-right-orthogonal-to-shape I ψ ϕ A'' A' α'
+  :=
+    \ σ'' →
+    is-equiv-right-factor
+      ( extension-type I ψ ϕ (\ _ → A'') σ'')
+      ( extension-type I ψ ϕ (\ _ → A') (\ t → α' (σ'' t)))
+      ( extension-type I ψ ϕ (\ _ → A) (\ t → α (α' (σ'' t))))
+      ( \ τ'' t → α' (τ'' t))
+      ( \ τ' t → α (τ' t))
+      ( is-orth-ψ-ϕ-α (\ t → α' (σ'' t)))
+      ( is-orth-ψ-ϕ-αα' σ'')
+
+#end right-orthogonal-calculus
+```
+
 ## Types with unique extension
 
 We say that an type `A` has unique extensions for a shape inclusion `ϕ ⊂ ψ`,

@@ -48,7 +48,7 @@ This is a literate `rzk` file:
 ```
 
 ```rzk title="A path between any pair of terms in a contractible type"
-#def eq-is-contr uses (is-contr-A)
+#def all-elements-equal-is-contr uses (is-contr-A)
   (x y : A)
   : x = y
   :=
@@ -70,10 +70,9 @@ The prototypical contractible type is the unit type, which is built-in to rzk.
   : C x
   := C-unit
 
-#def is-prop-unit
-  ( x y : Unit)
-  : x = y
-  := refl
+#def is-contr-Unit
+  : is-contr Unit
+  := (unit, \ _ → refl)
 ```
 
 ```rzk title="The terminal projection as a constant map"
@@ -86,24 +85,24 @@ The prototypical contractible type is the unit type, which is built-in to rzk.
 ## Identity types of unit types
 
 ```rzk
-#def terminal-map-of-path-types-of-Unit-has-retr
+#def has-retraction-terminal-map-path-types-Unit
   ( x y : Unit)
   : has-retraction (x = y) Unit (terminal-map (x = y))
   :=
     ( \ a → refl ,
       \ p → ind-path (Unit) (x) (\ y' p' → refl =_{x = y'} p') (refl) (y) (p))
 
-#def terminal-map-of-path-types-of-Unit-has-sec
+#def has-section-terminal-map-path-types-Unit
   ( x y : Unit)
   : has-section (x = y) Unit (terminal-map (x = y))
   := ( \ a → refl , \ a → refl)
 
-#def terminal-map-of-path-types-of-Unit-is-equiv
+#def is-equiv-terminal-map-path-types-Unit
   ( x y : Unit)
   : is-equiv (x = y) Unit (terminal-map (x = y))
   :=
-    ( terminal-map-of-path-types-of-Unit-has-retr x y ,
-      terminal-map-of-path-types-of-Unit-has-sec x y)
+    ( has-retraction-terminal-map-path-types-Unit x y ,
+      has-section-terminal-map-path-types-Unit x y)
 ```
 
 ## Characterization of contractibility
@@ -116,7 +115,7 @@ A type is contractible if and only if its terminal map is an equivalence.
   : U
   := is-equiv A Unit (terminal-map A)
 
-#def contr-implies-terminal-map-is-equiv-retr
+#def has-retraction-terminal-map-is-contr
   ( A : U)
   ( is-contr-A : is-contr A)
   : has-retraction A Unit (terminal-map A)
@@ -124,7 +123,7 @@ A type is contractible if and only if its terminal map is an equivalence.
     ( constant Unit A (center-contraction A is-contr-A) ,
       \ y → (homotopy-contraction A is-contr-A) y)
 
-#def contr-implies-terminal-map-is-equiv-sec
+#def has-section-terminal-map-is-contr
   ( A : U)
   ( is-contr-A : is-contr A)
   : has-section A Unit (terminal-map A)
@@ -135,21 +134,21 @@ A type is contractible if and only if its terminal map is an equivalence.
   ( is-contr-A : is-contr A)
   : is-equiv A Unit (terminal-map A)
   :=
-    ( contr-implies-terminal-map-is-equiv-retr A is-contr-A ,
-      contr-implies-terminal-map-is-equiv-sec A is-contr-A)
+    ( has-retraction-terminal-map-is-contr A is-contr-A ,
+      has-section-terminal-map-is-contr A is-contr-A)
 
-#def terminal-map-is-equiv-implies-contr
+#def is-contr-is-equiv-terminal-map
   ( A : U)
   (e : terminal-map-is-equiv A)
   : is-contr A
   := ( (first (first e)) unit , (second (first e)))
 
-#def contr-iff-terminal-map-is-equiv
+#def is-equiv-terminal-map-iff-is-contr
   ( A : U)
   : iff (is-contr A) (terminal-map-is-equiv A)
   :=
     ( ( contr-implies-terminal-map-is-equiv A) ,
-      ( terminal-map-is-equiv-implies-contr A))
+      ( is-contr-is-equiv-terminal-map A))
 
 #def equiv-with-contractible-domain-implies-contractible-codomain
   ( A B : U)
@@ -157,40 +156,19 @@ A type is contractible if and only if its terminal map is an equivalence.
   ( is-contr-A : is-contr A)
   : is-contr B
   :=
-    ( terminal-map-is-equiv-implies-contr B
+    ( is-contr-is-equiv-terminal-map B
       ( second
         ( equiv-comp B A Unit
           ( inv-equiv A B f)
           ( ( terminal-map A) ,
             ( contr-implies-terminal-map-is-equiv A is-contr-A)))))
 
-#def equiv-with-contractible-codomain-implies-contractible-domain
-  ( A B : U)
-  ( f : Equiv A B)
-  ( is-contr-B : is-contr B)
-  : is-contr A
-  :=
-    ( equiv-with-contractible-domain-implies-contractible-codomain B A
-      ( inv-equiv A B f) is-contr-B)
-
-#def equiv-then-domain-contractible-iff-codomain-contractible
-  ( A B : U)
-  ( f : Equiv A B)
-  : ( iff (is-contr A) (is-contr B))
-  :=
-    ( \ is-contr-A →
-      ( equiv-with-contractible-domain-implies-contractible-codomain
-        A B f is-contr-A) ,
-      \ is-contr-B →
-      ( equiv-with-contractible-codomain-implies-contractible-domain
-        A B f is-contr-B))
-
-#def path-types-of-Unit-are-contractible
+#def is-contr-path-types-Unit
   ( x y : Unit)
   : is-contr (x = y)
   :=
-    ( terminal-map-is-equiv-implies-contr
-      ( x = y) (terminal-map-of-path-types-of-Unit-is-equiv x y))
+    ( is-contr-is-equiv-terminal-map
+      ( x = y) (is-equiv-terminal-map-path-types-Unit x y))
 ```
 
 ## Retracts of contractible types
@@ -271,7 +249,7 @@ A retract of contractible types is contractible.
     ( ( \ b → center-contraction A is-contr-A ,
         \ a → homotopy-contraction A is-contr-A a) ,
       ( \ b → center-contraction A is-contr-A ,
-        \ b → eq-is-contr B is-contr-B
+        \ b → all-elements-equal-is-contr B is-contr-B
                 (f (center-contraction A is-contr-A)) b))
 ```
 
@@ -533,48 +511,46 @@ A type is contractible if and only if it has singleton induction.
 
 ## Identity types of contractible types
 
-We show that any two paths between the same endpoints in a contractible type are the same. 
+We show that any two paths between the same endpoints in a contractible type are the same.
 
-In a contractible type any path $p : x = y$ is equal to the path constructed in `eq-is-contr`. 
+In a contractible type any path $p : x = y$ is equal to the path constructed in `all-elements-equal-is-contr`.
 ```rzk
 #define path-eq-path-through-center-is-contr
   ( A : U)
   ( is-contr-A : is-contr A)
   ( x y : A)
   ( p : x = y)
-  : ((eq-is-contr A is-contr-A x y) = p)
-  := 
+  : ((all-elements-equal-is-contr A is-contr-A x y) = p)
+  :=
     ind-path
     ( A)
     ( x)
-    ( \ y' p' → (eq-is-contr A is-contr-A x y') = p') 
-    ( left-inverse-concat A (center-contraction A is-contr-A) x (homotopy-contraction A is-contr-A x)) 
-    ( y) 
-    ( p) 
+    ( \ y' p' → (all-elements-equal-is-contr A is-contr-A x y') = p')
+    ( left-inverse-concat A (center-contraction A is-contr-A) x (homotopy-contraction A is-contr-A x))
+    ( y)
+    ( p)
 
 ```
 
 Finally, in a contractible type any two paths between the same end points are equal. There are many possible proofs of this (e.g. identifying contractible types with the unit type where it is more transparent), but we proceed by gluing together the two identifications to the out and back path.
 
 ```rzk
-#define all-paths-eq-is-contr 
+#define all-paths-equal-is-contr
  ( A : U)
  ( is-contr-A : is-contr A)
  ( x y : A)
- ( p q : x = y) 
+ ( p q : x = y)
  : (p = q)
- := 
+ :=
   concat
     ( x = y)
     ( p)
-    ( eq-is-contr A is-contr-A x y)
+    ( all-elements-equal-is-contr A is-contr-A x y)
     ( q)
     ( rev
-      (x = y) 
-      ( eq-is-contr A is-contr-A x y)
-      ( p) 
+      (x = y)
+      ( all-elements-equal-is-contr A is-contr-A x y)
+      ( p)
       ( path-eq-path-through-center-is-contr A is-contr-A x y p))
     ( path-eq-path-through-center-is-contr A is-contr-A x y q)
 ```
-
-

@@ -23,10 +23,15 @@ A type is a proposition when its identity types are contractible.
   (A : U)
   : U
   := (a : A) → (b : A) → is-contr (a = b)
+```
 
+For example, the type `Unit` is a proposition.
+In fact we will show below that this is true for every contractible type.
+
+```rzk
 #def is-prop-Unit
   : is-prop Unit
-  := \ x y → (path-types-of-Unit-are-contractible x y)
+  := \ x y → (is-contr-path-types-Unit x y)
 ```
 
 ## Alternative characterizations: definitions
@@ -95,7 +100,7 @@ A type is a proposition when its identity types are contractible.
     \ x y →
       ( is-contr-equiv-is-contr' (x = y) (unit = unit)
         ( (ap A Unit x y (terminal-map A)) , (f x y))
-        ( path-types-of-Unit-are-contractible unit unit))
+        ( is-contr-path-types-Unit unit unit))
 
 #def is-prop-is-contr-is-inhabited
   ( A : U)

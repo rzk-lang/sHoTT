@@ -8,8 +8,9 @@ This is a literate `rzk` file:
 
 ## Homotopy cartesian squares
 
-We start by fixing the data of a map between two type families
-`A' → U` and `A → U`, which we think of as a commutative square
+We start by fixing the data of a map between two type families `A' → U` and
+`A → U`, which we think of as a commutative square
+
 ```
 Σ A' → Σ A
  ↓      ↓

@@ -322,7 +322,7 @@ The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
     ( ( \ υ s → υ (1₂, s) , \ _ → refl),
       ( \ υ s → υ (1₂, s) , \ _ → refl))
 
-#def is-right-orthogonal-to-10-1×Δ¹-is-inner-fibration uses (is-left-fib-α)
+#def is-right-orthogonal-to-10-1×Δ¹-is-left-fibration uses (is-left-fib-α)
   : is-right-orthogonal-to-shape
       ( 2 × 2) (\ ts → right-leg-of-Λ ts) ( \ (_,s) → s ≡ 0₂) A' A α
   :=
@@ -349,13 +349,13 @@ that the pair `left-leg-of-Λ ⊂ Λ` is left orthogonal.
 #def left-leg-of-Λ : Λ → TOPE
   := \ (t, s) → s ≡ 0₂
 
-#def is-right-orthogonal-to-left-leg-of-Λ-Λ-is-inner-fibration uses (is-left-fib-α)
+#def is-right-orthogonal-to-left-leg-of-Λ-Λ-is-left-fibration uses (is-left-fib-α)
   : is-right-orthogonal-to-shape
       ( 2 × 2) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts) A' A α
   :=
     is-right-orthogonal-to-shape-pushout A' A α
       ( 2 × 2) ( \ ts → right-leg-of-Λ ts) (\ ts → left-leg-of-Λ ts)
-      ( is-right-orthogonal-to-10-1×Δ¹-is-inner-fibration)
+      ( is-right-orthogonal-to-10-1×Δ¹-is-left-fibration)
 
 ```
 
@@ -363,7 +363,7 @@ Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the pro
 `Δ¹` with the left orthogonal pair `{0} ⊂ Δ¹`, hence left orthogonal itself.
 
 ```rzk
-#def is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-inner-fibration
+#def is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration
        uses (naiveextext is-left-fib-α)
   : is-right-orthogonal-to-shape
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → left-leg-of-Λ ts) A' A α
@@ -376,15 +376,15 @@ Next, we use the left cancellation of left orthogonal shape inclusions to deduce
 that `Λ ⊂ Δ¹×Δ¹` is left orthogonal to `α : A' → A`.
 
 ```rzk
-#def is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-inner-fibration
+#def is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration
        uses (naiveextext is-left-fib-α)
   : is-right-orthogonal-to-shape
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts) A' A α
   :=
     is-right-orthogonal-to-shape-left-cancel A' A α
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts)
-      ( is-right-orthogonal-to-left-leg-of-Λ-Λ-is-inner-fibration)
-      ( is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-inner-fibration)
+      ( is-right-orthogonal-to-left-leg-of-Λ-Λ-is-left-fibration)
+      ( is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration)
 ```
 
 Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹` to obtain the
@@ -396,7 +396,7 @@ desired left orthogonal shape inclusion `Λ ⊂ Δ²`.
   :=
     is-right-orthogonal-to-shape-right-cancel-retract A' A α
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Δ² ts) ( \ ts → Λ ts)
-      ( is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-inner-fibration)
+      ( is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration)
       ( Δ²-is-functorial-retract-Δ¹×Δ¹)
 
 #end is-inner-fibration-is-left-fibration
@@ -591,9 +591,9 @@ Finally, we deduce the theorem by some straightforward logical bookkeeping.
       is-covariant-is-naive-left-fibration A C)
 ```
 
-## Total space of a covariant family over a Segal type
+## Total type of a covariant family over a Segal type
 
-We prove that the total space of a covariant family over a Segal type is a Segal
+We prove that the total type of a covariant family over a Segal type is a Segal
 type. We split the proof into intermediate steps. Let `A` be a type and a type
 family `#!rzk C : A → U`.
 
@@ -604,7 +604,7 @@ fibration, hence an inner fibration. It immediately follows that if `A` is
 Segal, then so is `Σ A, C`.
 
 ```rzk title="RS17, Theorem 8.8"
-#def is-segal-total-space-covariant-family-is-segal-base uses (naiveextext)
+#def is-segal-total-type-covariant-family-is-segal-base uses (naiveextext)
   ( A : U)
   ( C : A → U)
   ( is-covariant-C : is-covariant A C)
@@ -619,7 +619,7 @@ Segal, then so is `Σ A, C`.
 
 ### Type theoretic proof
 
-We examine the fibers of the horn restriction on the total space of `C`. First
+We examine the fibers of the horn restriction on the total type of `C`. First
 note we have the equivalences:
 
 ```rzk
@@ -1344,7 +1344,7 @@ is covariant as shown above. Transport of an `e : C x` along an arrow
 ```
 
 We show that for each `v : C y`, the map `covariant-uniqueness` is an
-equivalence. This follows from the fact that the total spaces (summed over
+equivalence. This follows from the fact that the total types (summed over
 `v : C y`) of both sides are contractible.
 
 ```rzk title="RS17, Lemma 8.15"

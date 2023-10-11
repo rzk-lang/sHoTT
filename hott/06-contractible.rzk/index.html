@@ -1615,8 +1615,10 @@ separate hypothesis.</p>
 </span><span id="__span-23-86"><a id="__codelineno-23-86" name="__codelineno-23-86" href="#__codelineno-23-86"></a><span class="err">  := ( a , (</span><span class="s">first</span><span class="err"> (f ( </span><span class="p">\ </span>x <span class="err">→ a = x))) (</span><span class="s">refl</span><span class="err">_{a}))</span>
 </span></code></pre></div>
 <h2 id="identity-types-of-contractible-types">Identity types of contractible types<a class="headerlink" href="#identity-types-of-contractible-types" title="Permanent link">&para;</a></h2>
-<p>We show that any two paths between the same endpoints in a contractible type are the same.</p>
-<p>In a contractible type any path <span class="arithmatex">\(p : x = y\)</span> is equal to the path constructed in <code>all-elements-equal-is-contr</code>.
+<p>We show that any two paths between the same endpoints in a contractible type are
+the same.</p>
+<p>In a contractible type any path <span class="arithmatex">\(p : x = y\)</span> is equal to the path constructed in
+<code>all-elements-equal-is-contr</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:path-eq-path-through-center-is-contr" id="define:path-eq-path-through-center-is-contr" style="visibility: visible; position: relative; color: inherit">path-eq-path-through-center-is-contr</a></span>
 </span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="err">  </span><span class="p">( </span>is-contr-A <span class="p">:</span><span class="err"> is-contr A)</span>
@@ -1631,8 +1633,11 @@ separate hypothesis.</p>
 </span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="err">    ( left-inverse-concat A (center-contraction A is-contr-A) x (homotopy-contraction A is-contr-A x))</span>
 </span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="err">    ( y)</span>
 </span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="err">    ( p)</span>
-</span></code></pre></div></p>
-<p>Finally, in a contractible type any two paths between the same end points are equal. There are many possible proofs of this (e.g. identifying contractible types with the unit type where it is more transparent), but we proceed by gluing together the two identifications to the out and back path.</p>
+</span></code></pre></div>
+<p>Finally, in a contractible type any two paths between the same end points are
+equal. There are many possible proofs of this (e.g. identifying contractible
+types with the unit type where it is more transparent), but we proceed by gluing
+together the two identifications to the out and back path.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:all-paths-equal-is-contr" id="define:all-paths-equal-is-contr" style="visibility: visible; position: relative; color: inherit">all-paths-equal-is-contr</a></span>
 </span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="err"> </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="err"> </span><span class="p">( </span>is-contr-A <span class="p">:</span><span class="err"> is-contr A)</span>

@@ -1038,23 +1038,21 @@
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">#assume</span><span class="p"> </span>naiveextext<span class="err"> : NaiveExtExt</span>
 </span></code></pre></div>
 <h2 id="right-orthogonal-maps-with-respect-to-shapes">Right orthogonal maps with respect to shapes<a class="headerlink" href="#right-orthogonal-maps-with-respect-to-shapes" title="Permanent link">&para;</a></h2>
-<p>For every shape inclusion <code>ϕ ⊂ ψ</code>,
-we obtain a fibrancy condition for a map <code>α : A' → A</code>
-in terms of unique extension along <code>ϕ ⊂ ψ</code>.
-This is a relative version of unique extension along <code>ϕ ⊂ ψ</code>.</p>
+<p>For every shape inclusion <code>ϕ ⊂ ψ</code>, we obtain a fibrancy condition for a map
+<code>α : A' → A</code> in terms of unique extension along <code>ϕ ⊂ ψ</code>. This is a relative
+version of unique extension along <code>ϕ ⊂ ψ</code>.</p>
 <p>We say that <code>α : A' → A</code> is <em>right orthogonal</em> to the shape inclusion <code>ϕ ⊂ ψ</code>,
-if the square
+if the square</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>(ψ → A&#39;) → (ψ → A)
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>   ↓          ↓
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>(ϕ → A&#39;) → (ϕ → A)
 </span></code></pre></div>
-is homotopy cartesian.</p>
-<p>Equivalently, we can interpret this orthogonality
-as a cofibrancy condition on the shape inclusion.
-We say that the shape inclusion <code>ϕ ⊂ ψ</code> is <em>left orthogonal</em> to the map <code>α</code>,
-if <code>α : A' → A</code> is right orthogonal to <code>ϕ ⊂ ψ</code>.</p>
+<p>is homotopy cartesian.</p>
+<p>Equivalently, we can interpret this orthogonality as a cofibrancy condition on
+the shape inclusion. We say that the shape inclusion <code>ϕ ⊂ ψ</code> is <em>left
+orthogonal</em> to the map <code>α</code>, if <code>α : A' → A</code> is right orthogonal to <code>ϕ ⊂ ψ</code>.</p>
 <div class="language-rzk highlight"><span class="filename">BW23, Section 3</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-to-shape" id="define:is-right-orthogonal-to-shape" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-to-shape</a></span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE )</span>
@@ -1070,13 +1068,13 @@ if <code>α : A' → A</code> is right orthogonal to <code>ϕ ⊂ ψ</code>.</p>
 </span></code></pre></div>
 <h2 id="stability-properties-of-left-orthogonal-shape-inclusions">Stability properties of left orthogonal shape inclusions<a class="headerlink" href="#stability-properties-of-left-orthogonal-shape-inclusions" title="Permanent link">&para;</a></h2>
 <p>We fix a map <code>α : A' → A</code>.</p>
-<p><div class="language-rzk highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nd">#section</span><span class="n"> left-orthogonal-calculus-1</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nd">#section</span><span class="n"> left-orthogonal-calculus-1</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kr">#variables</span><span class="p"> </span>A&#39; A<span class="err"> : U</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kr">#variable</span><span class="p"> </span>α<span class="err"> : A&#39; → A</span>
 </span></code></pre></div>
-Consider nested shapes <code>ϕ ⊂ χ ⊂ ψ</code>
-and the three possible right orthogonality conditions.</p>
+<p>Consider nested shapes <code>ϕ ⊂ χ ⊂ ψ</code> and the three possible right orthogonality
+conditions.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">#variable</span><span class="p"> </span>I<span class="err"> : CUBE</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kr">#variable</span><span class="p"> </span>ψ<span class="err"> : I → TOPE</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kr">#variable</span><span class="p"> </span>χ<span class="err"> : ψ → TOPE</span>
@@ -1087,17 +1085,16 @@ and the three possible right orthogonality conditions.</p>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="kr">#variable</span><span class="p"> </span>is-orth-ψ-ϕ<span class="err"> : is-right-orthogonal-to-shape I ψ ( </span><span class="p">\ </span>t <span class="err">→ ϕ t) A&#39; A α</span>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="err">  </span><span class="c">-- rzk does not accept these terms after η-reduction</span>
 </span></code></pre></div>
-<p>Using the vertical pasting calculus for homotopy cartesian squares,
-it is not hard to deduce the corresponding composition and cancellation properties
-for left orthogonality of shape inclusion with respect to <code>α : A' → A</code>.</p>
+<p>Using the vertical pasting calculus for homotopy cartesian squares, it is not
+hard to deduce the corresponding composition and cancellation properties for
+left orthogonality of shape inclusion with respect to <code>α : A' → A</code>.</p>
 <h3 id="over-an-intermediate-shape">Σ over an intermediate shape<a class="headerlink" href="#over-an-intermediate-shape" title="Permanent link">&para;</a></h3>
-<p>The only fact that stops some of these laws from being a direct corollary
-is that the <code>Σ</code>-types appearing in the vertical pasting of the relevant squares
-(such as <code>Σ (\ σ : ϕ → A), ( (t : χ) → A [ϕ t ↦ σ t])</code>)
-are not literally equal to the corresponding extension types
-(such as <code>τ → A</code>).
-Therefore we have to occasionally go back or forth along the
-functorial equivalence <code>cofibration-composition-functorial</code>.</p>
+<p>The only fact that stops some of these laws from being a direct corollary is
+that the <code>Σ</code>-types appearing in the vertical pasting of the relevant squares
+(such as <code>Σ (\ σ : ϕ → A), ( (t : χ) → A [ϕ t ↦ σ t])</code>) are not literally equal
+to the corresponding extension types (such as <code>τ → A</code>). Therefore we have to
+occasionally go back or forth along the functorial equivalence
+<code>cofibration-composition-functorial</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape" id="define:is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape" style="visibility: visible; position: relative; color: inherit">is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>is-orth-ψ-ϕ<span class="p">)</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="err">  : is-homotopy-cartesian</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="err">    ( ϕ → A&#39;)</span>
@@ -1173,9 +1170,8 @@ functorial equivalence <code>cofibration-composition-functorial</code>.</p>
 </span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="err">          </span><span class="p">( </span>\ ( t <span class="p">:</span><span class="err"> ϕ) → τ&#39; t)</span>
 </span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="err">          τ&#39;</span>
 </span></code></pre></div>
-<p>If <code>ϕ ⊂ ψ</code> is left orthogonal to <code>α : A' → A</code>
-and <code>χ ⊂ ψ</code> is a (functorial) shape retract,
-then <code>ϕ ⊂ ψ</code> is left orthogonal to <code>α : A' → A</code>.</p>
+<p>If <code>ϕ ⊂ ψ</code> is left orthogonal to <code>α : A' → A</code> and <code>χ ⊂ ψ</code> is a (functorial)
+shape retract, then <code>ϕ ⊂ ψ</code> is left orthogonal to <code>α : A' → A</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-to-shape-right-cancel-retract" id="define:is-right-orthogonal-to-shape-right-cancel-retract" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-to-shape-right-cancel-retract</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>is-orth-ψ-ϕ<span class="p">)</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="err">  </span><span class="p">( </span>is-fretract-ψ-χ <span class="p">:</span><span class="err"> is-functorial-shape-retract I ψ χ)</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="err">  : is-right-orthogonal-to-shape I ( </span><span class="p">\ </span>t <span class="err">→ χ t) ( </span><span class="p">\ </span>t <span class="err">→ ϕ t) A&#39; A α</span>
@@ -1196,10 +1192,10 @@ then <code>ϕ ⊂ ψ</code> is left orthogonal to <code>α : A' → A</code>.</p
 </span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="nd">#end</span><span class="n"> left-orthogonal-calculus-1</span>
 </span></code></pre></div>
 <h3 id="stability-under-exponentiation">Stability under exponentiation<a class="headerlink" href="#stability-under-exponentiation" title="Permanent link">&para;</a></h3>
-<p>If <code>ϕ ⊂ ψ</code> is left orthogonal to <code>α : A' → A</code>
-then so is <code>χ × ϕ ⊂ χ × ψ</code> for every other shape <code>χ</code>.</p>
-<p>The following proof uses a lot of currying and uncurrying
-and relies on (the naive form of) extension extensionality.</p>
+<p>If <code>ϕ ⊂ ψ</code> is left orthogonal to <code>α : A' → A</code> then so is <code>χ × ϕ ⊂ χ × ψ</code> for
+every other shape <code>χ</code>.</p>
+<p>The following proof uses a lot of currying and uncurrying and relies on (the
+naive form of) extension extensionality.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-to-shape-×" id="define:is-right-orthogonal-to-shape-×" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-to-shape-×</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>naiveextext<span class="p">)</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c">-- this should be refactored by introducing cofibration-product-functorial</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
@@ -1267,8 +1263,8 @@ and relies on (the naive form of) extension extensionality.</p>
 </span><span id="__span-10-65"><a id="__codelineno-10-65" name="__codelineno-10-65" href="#__codelineno-10-65"></a><span class="err">      )</span>
 </span></code></pre></div>
 <h3 id="stability-under-exact-pushouts">Stability under exact pushouts<a class="headerlink" href="#stability-under-exact-pushouts" title="Permanent link">&para;</a></h3>
-<p>For any two shapes <code>ϕ, ψ ⊂ I</code>, if <code>ϕ ∩ ψ ⊂ ϕ</code> is left orthogonal to <code>α : A' → A</code>,
-then so is <code>ψ ⊂ ϕ ∪ ψ</code>.</p>
+<p>For any two shapes <code>ϕ, ψ ⊂ I</code>, if <code>ϕ ∩ ψ ⊂ ϕ</code> is left orthogonal to
+<code>α : A' → A</code>, then so is <code>ψ ⊂ ϕ ∪ ψ</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-to-shape-pushout" id="define:is-right-orthogonal-to-shape-pushout" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-to-shape-pushout</a></span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="err">  </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
@@ -1288,8 +1284,8 @@ then so is <code>ψ ⊂ ϕ ∪ ψ</code>.</p>
 </span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="err">         ( is-orth-ϕ-ψ</span><span class="sx">∧</span><span class="err">ϕ ( </span><span class="p">\ </span>t <span class="err">→ τ&#39; t))</span>
 </span></code></pre></div>
 <h2 id="types-with-unique-extension">Types with unique extension<a class="headerlink" href="#types-with-unique-extension" title="Permanent link">&para;</a></h2>
-<p>We say that an type <code>A</code> has unique extensions for a shape inclusion <code>ϕ ⊂ ψ</code>,
-if for each <code>σ : ϕ → A</code> the type of <code>ψ</code>-extensions is contractible.</p>
+<p>We say that an type <code>A</code> has unique extensions for a shape inclusion <code>ϕ ⊂ ψ</code>, if
+for each <code>σ : ϕ → A</code> the type of <code>ψ</code>-extensions is contractible.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions" id="define:has-unique-extensions" style="visibility: visible; position: relative; color: inherit">has-unique-extensions</a></span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
@@ -1299,8 +1295,8 @@ if for each <code>σ : ϕ → A</code> the type of <code>ψ</code>-extensions is
 </span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="err">  :=</span>
 </span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="err">    </span><span class="p">( </span>σ <span class="p">:</span><span class="err"> ϕ → A) → is-contr </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ σ t])</span>
 </span></code></pre></div>
-<p>The property of having unique extension
-can be pulled back along any right orthogonal map.</p>
+<p>The property of having unique extension can be pulled back along any right
+orthogonal map.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain" id="define:has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain</a></span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
@@ -1330,9 +1326,9 @@ is an equivalence.</p>
 </span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="err">  :=</span>
 </span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="err">    is-equiv (ψ → A) (ϕ → A) ( </span><span class="p">\ </span>τ t <span class="err">→ τ t)</span>
 </span></code></pre></div>
-<p>This follows straightforwardly from the fact that for every <code>σ : ϕ → A</code>
-we have an equivalence between the extension type <code>(t : ψ) → A [ϕ t ↦ σ t]</code>
-and the fiber of the restriction map <code>(ψ → A) → (ϕ → A)</code>.</p>
+<p>This follows straightforwardly from the fact that for every <code>σ : ϕ → A</code> we have
+an equivalence between the extension type <code>(t : ψ) → A [ϕ t ↦ σ t]</code> and the
+fiber of the restriction map <code>(ψ → A) → (ϕ → A)</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type-has-unique-extensions" id="define:is-local-type-has-unique-extensions" style="visibility: visible; position: relative; color: inherit">is-local-type-has-unique-extensions</a></span>
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="err">  </span><span class="p">( </span>has-ue-ψ-ϕ-A <span class="p">:</span><span class="err"> has-unique-extensions I ψ ϕ A)</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="err">  : is-local-type</span>
@@ -1360,8 +1356,8 @@ and the fiber of the restriction map <code>(ψ → A) → (ϕ → A)</code>.</p>
 </span><span id="__span-15-25"><a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="err">            ( σ))</span>
 </span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="nd">#end</span><span class="n"> is-local-type</span>
 </span></code></pre></div>
-<p>Since the property of having unique extensions passes from the codomain to the domain
-of a right orthogonal map, the same is true for locality of types.</p>
+<p>Since the property of having unique extensions passes from the codomain to the
+domain of a right orthogonal map, the same is true for locality of types.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type-domain-right-orthogonal-is-local-type-codomain" id="define:is-local-type-domain-right-orthogonal-is-local-type-codomain" style="visibility: visible; position: relative; color: inherit">is-local-type-domain-right-orthogonal-is-local-type-codomain</a></span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>

@@ -1157,12 +1157,11 @@
   <code>hott/</code></li>
 </ul>
 <h2 id="extension-up-to-homotopy">Extension up to homotopy<a class="headerlink" href="#extension-up-to-homotopy" title="Permanent link">&para;</a></h2>
-<p>For a shape inclusion <code>ϕ ⊂ ψ</code> and any type <code>A</code>,
-we have the inbuilt extension types <code>(t : ψ) → A [ϕ t ↦ σ t]</code>
-(for every <code>σ : ϕ → A</code>).</p>
-<p>We show that these extension types are equivalent to the fibers
-of the canonical restriction map <code>(ψ → A) → (ϕ → A)</code>,
-which we can view as the types  of "extension up to homotopy".</p>
+<p>For a shape inclusion <code>ϕ ⊂ ψ</code> and any type <code>A</code>, we have the inbuilt extension
+types <code>(t : ψ) → A [ϕ t ↦ σ t]</code> (for every <code>σ : ϕ → A</code>).</p>
+<p>We show that these extension types are equivalent to the fibers of the canonical
+restriction map <code>(ψ → A) → (ϕ → A)</code>, which we can view as the types of
+"extension up to homotopy".</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nd">#section</span><span class="n"> extensions-up-to-homotopy</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kr">#variable</span><span class="p"> </span>I<span class="err"> : CUBE</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kr">#variable</span><span class="p"> </span>ψ<span class="err"> : I → TOPE</span>
@@ -1548,9 +1547,10 @@ fact, sometimes only this weaker form of the axiom is needed.</p>
 </span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="err">    </span><span class="p">\ </span>I ψ ϕ A a f g <span class="err">→</span>
 </span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="err">      ( </span><span class="s">first</span><span class="err"> (</span><span class="s">first</span><span class="err"> (extext I ψ ϕ A a f g)))</span>
 </span></code></pre></div>
-<p>We show that naive extension extensionality implies weak extension extensionality.
-On the way, we obtain another useful version of extension extensionality,
-stating that all extension types in a proposition are propositions.</p>
+<p>We show that naive extension extensionality implies weak extension
+extensionality. On the way, we obtain another useful version of extension
+extensionality, stating that all extension types in a proposition are
+propositions.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nd">#section</span><span class="n"> weakextext-naiveextext</span>
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kr">#variable</span><span class="p"> </span>naiveextext<span class="err"> : NaiveExtExt</span>
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
@@ -1585,8 +1585,8 @@ stating that all extension types in a proposition are propositions.</p>
 </span><span id="__span-14-32"><a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="err">      ( cofibration-composition I ψ ϕ (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="m">BOT</span><span class="err">) (</span><span class="p">\ </span>t <span class="err">→ A t) (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">recBOT</span><span class="err">))</span>
 </span><span id="__span-14-33"><a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="err">      ( is-prop-shape-type-is-locally-prop I ψ A is-locally-prop-A))</span>
 </span></code></pre></div>
-<p>Still using <code>naiveextext</code>,
-in a fiberwise contractible family, every extension type is always inhabited.</p>
+<p>Still using <code>naiveextext</code>, in a fiberwise contractible family, every extension
+type is always inhabited.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inhabited-extension-type-is-locally-contr" id="define:is-inhabited-extension-type-is-locally-contr" style="visibility: visible; position: relative; color: inherit">is-inhabited-extension-type-is-locally-contr</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>naiveextext<span class="p">)</span>
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
@@ -1605,8 +1605,8 @@ in a fiberwise contractible family, every extension type is always inhabited.</p
 </span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>
 </span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="nd">#end</span><span class="n"> weakextext-naiveextext</span>
 </span></code></pre></div>
-<p>We conclude that naive extension extensionality implies
-weak extension extensionality.</p>
+<p>We conclude that naive extension extensionality implies weak extension
+extensionality.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:weakextext-naiveextext" id="define:weakextext-naiveextext" style="visibility: visible; position: relative; color: inherit">weakextext-naiveextext</a></span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="err">  : NaiveExtExt → WeakExtExt</span>
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="err">  :=</span>
@@ -1620,8 +1620,8 @@ weak extension extensionality.</p>
 </span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="err">      ( is-inhabited-extension-type-is-locally-contr naiveextext I ψ ϕ A</span>
 </span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="err">        ( is-locally-contr-A) ( a)))</span>
 </span></code></pre></div>
-<p>For convenience we also provide the composite implication
-from extension extensionality to weak extension extensionality:</p>
+<p>For convenience we also provide the composite implication from extension
+extensionality to weak extension extensionality:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:weakextext-extext" id="define:weakextext-extext" style="visibility: visible; position: relative; color: inherit">weakextext-extext</a></span>
 </span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="err">  : ExtExt → WeakExtExt</span>
 </span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="err">  :=</span>

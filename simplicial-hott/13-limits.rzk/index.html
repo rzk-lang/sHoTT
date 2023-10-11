@@ -1062,13 +1062,13 @@ over <code class="language-rzk highlight"><span class="err">f</span></code>.</p>
 </span></code></pre></div>
 <p>Given a function <code class="language-rzk highlight"><span class="err">f : A → B</span></code> and <code class="language-rzk highlight"><span class="err">b:B</span></code> we define the type of cocones
 under <code class="language-rzk highlight"><span class="err">f</span></code>.</p>
-<p><div class="language-rzk highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cocone" id="define:cocone" style="visibility: visible; position: relative; color: inherit">cocone</a></span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cocone" id="define:cocone" style="visibility: visible; position: relative; color: inherit">cocone</a></span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U )</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B )</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="err">  : U</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="err">  := </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B), hom ( A → B) f (constant A B b)</span>
 </span></code></pre></div>
-We define a colimit for <code class="language-rzk highlight"><span class="err">f : A → B</span></code> as an initial cocone under <code class="language-rzk highlight"><span class="err">f</span></code>.</p>
+<p>We define a colimit for <code class="language-rzk highlight"><span class="err">f : A → B</span></code> as an initial cocone under <code class="language-rzk highlight"><span class="err">f</span></code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:colimit" id="define:colimit" style="visibility: visible; position: relative; color: inherit">colimit</a></span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U )</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B )</span>
@@ -1076,15 +1076,15 @@ We define a colimit for <code class="language-rzk highlight"><span class="err">f
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="err">  := </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>x <span class="p">:</span><span class="err"> cocone A B f ) , is-initial (cocone A B f) x</span>
 </span></code></pre></div>
 <p>We define a limit of <code class="language-rzk highlight"><span class="err">f : A → B</span></code> as a terminal cone over <code class="language-rzk highlight"><span class="err">f</span></code>.</p>
-<p><div class="language-rzk highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit" id="define:limit" style="visibility: visible; position: relative; color: inherit">limit</a></span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit" id="define:limit" style="visibility: visible; position: relative; color: inherit">limit</a></span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U )</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B )</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="err">  : U</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="err">  :=  </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>x <span class="p">:</span><span class="err"> cone A B f ) , is-final (cone A B f) x</span>
 </span></code></pre></div>
-We give a second definition of limits, we eventually want to prove both definitions coincide.
-Define cone as a family.</p>
-<p><div class="language-rzk highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cone2" id="define:cone2" style="visibility: visible; position: relative; color: inherit">cone2</a></span>
+<p>We give a second definition of limits, we eventually want to prove both
+definitions coincide. Define cone as a family.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cone2" id="define:cone2" style="visibility: visible; position: relative; color: inherit">cone2</a></span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="err">  </span><span class="p">(</span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="err">  : (A → B) → (B) → U</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="err">  := </span><span class="p">\ </span>f <span class="err">→ </span><span class="p">\ </span>b <span class="err">→ (hom (A → B) (constant A B b) f)</span>
@@ -1095,8 +1095,8 @@ Define cone as a family.</p>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="err">  </span><span class="p">( </span>k <span class="p">:</span><span class="err"> hom B x y)</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="err">  : hom (A → B) (constant A B x) (constant A B y)</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="err">  := </span><span class="p">\ </span>t a <span class="err">→ ( constant A ( hom B x y ) k ) a t</span>
-</span></code></pre></div></p>
-<p><div class="language-rzk highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cone-precomposition" id="define:cone-precomposition" style="visibility: visible; position: relative; color: inherit">cone-precomposition</a></span>
+</span></code></pre></div>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cone-precomposition" id="define:cone-precomposition" style="visibility: visible; position: relative; color: inherit">cone-precomposition</a></span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="err">  </span><span class="p">( </span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B )</span>
@@ -1113,7 +1113,7 @@ Define cone as a family.</p>
 </span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="err">              ( constant-nat-trans A B b x k )</span>
 </span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="err">              ( α)</span>
 </span></code></pre></div>
-Another definition of limit.</p>
+<p>Another definition of limit.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit2" id="define:limit2" style="visibility: visible; position: relative; color: inherit">limit2</a></span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="err">  </span><span class="p">( </span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
@@ -1124,14 +1124,14 @@ Another definition of limit.</p>
 </span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="err">     </span><span class="p">( </span>x <span class="p">:</span><span class="err"> B) → </span><span class="p">( </span>k <span class="p">:</span><span class="err"> hom B b x)</span>
 </span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="err">      → is-equiv (cone2 A B f x) (cone2 A B f b) (cone-precomposition A B is-segal-B f b x k )</span>
 </span></code></pre></div>
-<p>We give a second definition of colimits, we eventually want to prove both definitions coincide.
-Define cocone as a family.</p>
+<p>We give a second definition of colimits, we eventually want to prove both
+definitions coincide. Define cocone as a family.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cocone2" id="define:cocone2" style="visibility: visible; position: relative; color: inherit">cocone2</a></span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="err">  </span><span class="p">(</span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="err">  : (A → B) → (B) → U</span>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="err">  := </span><span class="p">\ </span>f <span class="err">→ </span><span class="p">\ </span>b <span class="err">→ (hom (A → B) f (constant A B b))</span>
 </span></code></pre></div>
-<p><div class="language-rzk highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cocone-postcomposition" id="define:cocone-postcomposition" style="visibility: visible; position: relative; color: inherit">cocone-postcomposition</a></span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cocone-postcomposition" id="define:cocone-postcomposition" style="visibility: visible; position: relative; color: inherit">cocone-postcomposition</a></span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="err">  </span><span class="p">( </span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B )</span>
@@ -1148,8 +1148,8 @@ Define cocone as a family.</p>
 </span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="err">              ( α)</span>
 </span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="err">              ( constant-nat-trans A B x b k )</span>
 </span></code></pre></div>
-Another definition of colimit.</p>
-<p><div class="language-rzk highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:colimit2" id="define:colimit2" style="visibility: visible; position: relative; color: inherit">colimit2</a></span>
+<p>Another definition of colimit.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:colimit2" id="define:colimit2" style="visibility: visible; position: relative; color: inherit">colimit2</a></span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="err">  </span><span class="p">( </span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
@@ -1159,9 +1159,9 @@ Another definition of colimit.</p>
 </span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="err">     </span><span class="p">( </span>x <span class="p">:</span><span class="err"> B) → </span><span class="p">( </span>k <span class="p">:</span><span class="err"> hom B x b)</span>
 </span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="err">      → is-equiv (cocone2 A B f x) (cocone2 A B f b) (cocone-postcomposition A B is-segal-B f x b k )</span>
 </span></code></pre></div>
-The following alternative definition does not require a Segalness condition. When
-<code class="language-rzk highlight"><span class="err">is-segal B</span></code> then definitions 1 and 3 coincide.</p>
-<p><div class="language-rzk highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit3" id="define:limit3" style="visibility: visible; position: relative; color: inherit">limit3</a></span>
+<p>The following alternative definition does not require a Segalness condition.
+When <code class="language-rzk highlight"><span class="err">is-segal B</span></code> then definitions 1 and 3 coincide.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit3" id="define:limit3" style="visibility: visible; position: relative; color: inherit">limit3</a></span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="err">  : U</span>
@@ -1172,7 +1172,7 @@ The following alternative definition does not require a Segalness condition. Whe
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="err">  : U</span>
 </span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="err">  := </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>b <span class="p">:</span><span class="err"> B),</span><span class="p">(</span>x <span class="p">:</span><span class="err"> B) → Equiv (hom B x b ) (cocone2 A B f x)</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h2 id="uniqueness-of-initial-and-final-objects">Uniqueness of initial and final objects.<a class="headerlink" href="#uniqueness-of-initial-and-final-objects" title="Permanent link">&para;</a></h2>
 <p>In a Segal type, initial objects are isomorphic.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:iso-initial" id="define:iso-initial" style="visibility: visible; position: relative; color: inherit">iso-initial</a></span>

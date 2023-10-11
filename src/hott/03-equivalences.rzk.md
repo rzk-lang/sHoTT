@@ -24,18 +24,6 @@ This is a literate `rzk` file:
   := Σ (r : B → A) , (homotopy A A (comp A B A r f) (identity A))
 ```
 
-```rzk
-#def ind-has-section
-  ( f : A → B)
-  ( ( sec-f , ε-f) : has-section f)
-  ( C : B → U)
-  ( s : ( a : A) → C ( f a))
-  ( b : B)
-  : C b
-  :=
-    transport B C ( f (sec-f b)) b ( ε-f b) ( s (sec-f b))
-```
-
 We define equivalences to be bi-invertible maps.
 
 ```rzk
@@ -70,9 +58,17 @@ We define equivalences to be bi-invertible maps.
   : B → A
   := first (second is-equiv-f)
 
+#def has-section-is-equiv
+  : has-section A B f
+  := second is-equiv-f
+
 #def retraction-is-equiv uses (f)
   : B → A
   := first (first is-equiv-f)
+
+#def has-retraction-is-equiv
+  : has-retraction A B f
+  := first is-equiv-f
 ```
 
 ```rzk title="The homotopy between the section and retraction of an equivalence"
@@ -214,7 +210,7 @@ The inverse of an invertible map has an inverse.
         first ( second has-inverse-f)))
 ```
 
-## Composing equivalences
+## The type of equivalences
 
 The type of equivalences between types uses `#!rzk is-equiv` rather than
 `#!rzk has-inverse`.
@@ -225,6 +221,34 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
   : U
   := Σ (f : A → B) , (is-equiv A B f)
 ```
+
+## Induction with section
+
+```rzk
+#def ind-has-section
+  ( A B : U)
+  ( f : A → B)
+  ( ( sec-f , ε-f) : has-section A B f)
+  ( C : B → U)
+  ( s : ( a : A) → C ( f a))
+  ( b : B)
+  : C b
+  :=
+    transport B C ( f (sec-f b)) b ( ε-f b) ( s (sec-f b))
+```
+
+It is convenient to have available the special case where `f` is an equivalence.
+
+```rzk
+#def ind-has-section-equiv
+  ( A B : U)
+  ( (f, is-equiv-f) : Equiv A B)
+  : ( C : B → U) → (( a : A) → C ( f a)) → ( b : B) → C b
+  :=
+    ind-has-section A B f (second is-equiv-f)
+```
+
+## Composing equivalences
 
 The data of an equivalence is not symmetric so we promote an equivalence to an
 invertible map to prove symmetry:
@@ -686,6 +710,16 @@ dependent function types.
   ( x y : A)
   : Equiv (x = y) (y = x)
   := (rev A x y , ((rev A y x , rev-rev A x y) , (rev A y x , rev-rev A y x)))
+```
+
+```rzk
+#def ind-rev
+  ( A : U)
+  ( x y : A)
+  ( B : (x = y) → U)
+  : ((p : y = x) → B (rev A y x p)) → ( q : x = y) → B q
+  :=
+    ind-has-section-equiv (y = x) (x = y) (equiv-rev A y x) ( B)
 ```
 
 ## Concatenation with a fixed path is an equivalence

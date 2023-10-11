@@ -48,7 +48,7 @@ restriction map `(ψ → A) → (ϕ → A)`, which we can view as the types of
   :=
     \ τ → ( τ, refl)
 
-#def extension-type-weakening-section
+#def section-extension-type-weakening'
   : ( σ : (t : ϕ) → A t)
   → ( th : homotopy-extension-type σ)
   → Σ (τ : extension-type σ), (( τ, refl) =_{homotopy-extension-type σ} th)
@@ -63,17 +63,24 @@ restriction map `(ψ → A) → (ϕ → A)`, which we can view as the types of
   ( σ : (t : ϕ) → A t)
   : (homotopy-extension-type σ) → (extension-type σ)
   :=
-    \ th → first (extension-type-weakening-section σ th)
+    \ th → first (section-extension-type-weakening' σ th)
+
+#def has-section-extension-type-weakening
+  ( σ : (t : ϕ) → A t)
+  : has-section (extension-type σ) (homotopy-extension-type σ)
+      (extension-type-weakening-map σ)
+  :=
+    ( extension-strictification σ,
+      \ th → ( second (section-extension-type-weakening' σ th)))
+
 
 #def is-equiv-extension-type-weakening
   ( σ : (t : ϕ) → A t)
   : is-equiv (extension-type σ) (homotopy-extension-type σ)
       (extension-type-weakening-map σ)
   :=
-    ( ( extension-strictification σ ,
-        \ _ → refl),
-      ( extension-strictification σ,
-        \ th → ( second (extension-type-weakening-section σ th))))
+    ( ( extension-strictification σ, \ _ → refl)
+    , has-section-extension-type-weakening σ)
 
 #def extension-type-weakening
   ( σ : (t : ϕ) → A t)
@@ -116,7 +123,6 @@ This equivalence is functorial in the following sense:
       , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α t (σ' t))
       )
     )
-
 ```
 
 ## Commutation of arguments and currying
@@ -1056,4 +1062,52 @@ $\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\r
         ( is-contr-fiberwise-A)
         ( a)
         ( f))))
+```
+
+### Pointwise homotopy extension types
+
+Using `ExtExt` we can write the homotopy in the homotopy extension type pointwise.
+
+```rzk
+#section pointwise-homotopy-extension-type
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variable A : ψ → U
+
+#def pointwise-homotopy-extension-type
+  ( σ : (t : ϕ) → A t)
+  : U
+  :=
+    Σ ( τ : (t : ψ) → A t) , ( (t : ϕ) → (τ t =_{ A t} σ t))
+
+#def equiv-pointwise-homotopy-extension-type uses (extext)
+  ( σ : (t : ϕ) → A t)
+  : Equiv
+    ( homotopy-extension-type I ψ ϕ A σ)
+    ( pointwise-homotopy-extension-type σ)
+  :=
+    total-equiv-family-equiv
+    ( (t : ψ) → A t)
+    ( \ τ → (\ t → τ t) =_{ (t : ϕ) → A t} σ)
+    ( \ τ → (t : ϕ) → (τ t = σ t))
+    ( \ τ →
+      equiv-ExtExt extext I (\ t → ϕ t) (\ _ → BOT) (\ t → A t)
+      ( \ _ → recBOT) ( \ t → τ t) ( σ))
+
+#def extension-type-pointwise-weakening uses (extext)
+  ( σ : (t : ϕ) → A t)
+  : Equiv
+    ( extension-type I ψ ϕ A σ)
+    ( pointwise-homotopy-extension-type σ)
+  := equiv-comp
+    ( extension-type I ψ ϕ A σ)
+    ( homotopy-extension-type I ψ ϕ A σ)
+    ( pointwise-homotopy-extension-type σ)
+    ( extension-type-weakening I ψ ϕ A σ)
+    ( equiv-pointwise-homotopy-extension-type σ)
+
+
+#end pointwise-homotopy-extension-type
 ```

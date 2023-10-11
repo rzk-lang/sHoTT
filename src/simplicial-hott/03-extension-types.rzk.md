@@ -945,7 +945,7 @@ generality is needed.
   ( f : (t : ψ ) → A t [ϕ t ↦ a t])
   (is-contr-fiberwise-A : (t : ψ ) → is-contr (A t))
   : (t : ψ ) → f t = (first (htpy-ext-prop-is-fiberwise-contr htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t
-  := \ t → eq-is-contr
+  := \ t → all-elements-equal-is-contr
               ( A t)
               ( is-contr-fiberwise-A t)
               ( f t )
@@ -968,7 +968,7 @@ slightly more general statement.
   ( c : (t : ψ ) → (f t = a' t))
   : (t : ϕ ) → (refl =_{f t = a' t} c t)
   :=  \ t →
-    all-paths-eq-is-contr
+    all-paths-equal-is-contr
     ( A t)
     ( is-fiberwise-contr t)
     ( f t)

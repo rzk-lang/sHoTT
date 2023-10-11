@@ -16,13 +16,13 @@ Some of the definitions in this file rely on naive extension extensionality:
 
 ## Right orthogonal maps with respect to shapes
 
-For every shape inclusion `ϕ ⊂ ψ`,
-we obtain a fibrancy condition for a map `α : A' → A`
-in terms of unique extension along `ϕ ⊂ ψ`.
-This is a relative version of unique extension along `ϕ ⊂ ψ`.
+For every shape inclusion `ϕ ⊂ ψ`, we obtain a fibrancy condition for a map
+`α : A' → A` in terms of unique extension along `ϕ ⊂ ψ`. This is a relative
+version of unique extension along `ϕ ⊂ ψ`.
 
 We say that `α : A' → A` is _right orthogonal_ to the shape inclusion `ϕ ⊂ ψ`,
 if the square
+
 ```
 (ψ → A') → (ψ → A)
 
@@ -30,12 +30,12 @@ if the square
 
 (ϕ → A') → (ϕ → A)
 ```
+
 is homotopy cartesian.
 
-Equivalently, we can interpret this orthogonality
-as a cofibrancy condition on the shape inclusion.
-We say that the shape inclusion `ϕ ⊂ ψ` is _left orthogonal_ to the map `α`,
-if `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
+Equivalently, we can interpret this orthogonality as a cofibrancy condition on
+the shape inclusion. We say that the shape inclusion `ϕ ⊂ ψ` is _left
+orthogonal_ to the map `α`, if `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
 
 ```rzk title="BW23, Section 3"
 #def is-right-orthogonal-to-shape
@@ -62,8 +62,9 @@ We fix a map `α : A' → A`.
 #variables A' A : U
 #variable α : A' → A
 ```
-Consider nested shapes `ϕ ⊂ χ ⊂ ψ`
-and the three possible right orthogonality conditions.
+
+Consider nested shapes `ϕ ⊂ χ ⊂ ψ` and the three possible right orthogonality
+conditions.
 
 ```rzk
 #variable I : CUBE
@@ -77,19 +78,18 @@ and the three possible right orthogonality conditions.
   -- rzk does not accept these terms after η-reduction
 ```
 
-Using the vertical pasting calculus for homotopy cartesian squares,
-it is not hard to deduce the corresponding composition and cancellation properties
-for left orthogonality of shape inclusion with respect to `α : A' → A`.
+Using the vertical pasting calculus for homotopy cartesian squares, it is not
+hard to deduce the corresponding composition and cancellation properties for
+left orthogonality of shape inclusion with respect to `α : A' → A`.
 
 ### Σ over an intermediate shape
 
-The only fact that stops some of these laws from being a direct corollary
-is that the `Σ`-types appearing in the vertical pasting of the relevant squares
-(such as `Σ (\ σ : ϕ → A), ( (t : χ) → A [ϕ t ↦ σ t])`)
-are not literally equal to the corresponding extension types
-(such as `τ → A `).
-Therefore we have to occasionally go back or forth along the
-functorial equivalence `cofibration-composition-functorial`.
+The only fact that stops some of these laws from being a direct corollary is
+that the `Σ`-types appearing in the vertical pasting of the relevant squares
+(such as `Σ (\ σ : ϕ → A), ( (t : χ) → A [ϕ t ↦ σ t])`) are not literally equal
+to the corresponding extension types (such as `τ → A `). Therefore we have to
+occasionally go back or forth along the functorial equivalence
+`cofibration-composition-functorial`.
 
 ```rzk
 #def is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape uses (is-orth-ψ-ϕ)
@@ -177,9 +177,8 @@ If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so i
           τ'
 ```
 
-If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`
-and `χ ⊂ ψ` is a (functorial) shape retract,
-then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
+If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A` and `χ ⊂ ψ` is a (functorial)
+shape retract, then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
 
 ```rzk
 #def is-right-orthogonal-to-shape-right-cancel-retract uses (is-orth-ψ-ϕ)
@@ -204,11 +203,11 @@ then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
 
 ### Stability under exponentiation
 
-If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`
-then so is `χ × ϕ ⊂ χ × ψ` for every other shape `χ`.
+If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A` then so is `χ × ϕ ⊂ χ × ψ` for
+every other shape `χ`.
 
-The following proof uses a lot of currying and uncurrying
-and relies on (the naive form of) extension extensionality.
+The following proof uses a lot of currying and uncurrying and relies on (the
+naive form of) extension extensionality.
 
 ```rzk
 #def is-right-orthogonal-to-shape-× uses (naiveextext)
@@ -280,8 +279,8 @@ and relies on (the naive form of) extension extensionality.
 
 ### Stability under exact pushouts
 
-For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to `α : A' → A`,
-then so is `ψ ⊂ ϕ ∪ ψ`.
+For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to
+`α : A' → A`, then so is `ψ ⊂ ϕ ∪ ψ`.
 
 ```rzk
 #def is-right-orthogonal-to-shape-pushout
@@ -363,8 +362,8 @@ stability properties of maps right orthogonal to it.
 
 ## Types with unique extension
 
-We say that an type `A` has unique extensions for a shape inclusion `ϕ ⊂ ψ`,
-if for each `σ : ϕ → A` the type of `ψ`-extensions is contractible.
+We say that an type `A` has unique extensions for a shape inclusion `ϕ ⊂ ψ`, if
+for each `σ : ϕ → A` the type of `ψ`-extensions is contractible.
 
 ```rzk
 #def has-unique-extensions
@@ -377,8 +376,8 @@ if for each `σ : ϕ → A` the type of `ψ`-extensions is contractible.
     ( σ : ϕ → A) → is-contr ( (t : ψ) → A [ϕ t ↦ σ t])
 ```
 
-The property of having unique extension
-can be pulled back along any right orthogonal map.
+The property of having unique extension can be pulled back along any right
+orthogonal map.
 
 ```rzk
 #def has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain
@@ -414,9 +413,9 @@ is an equivalence.
     is-equiv (ψ → A) (ϕ → A) ( \ τ t → τ t)
 ```
 
-This follows straightforwardly from the fact that for every `σ : ϕ → A`
-we have an equivalence between the extension type `(t : ψ) → A [ϕ t ↦ σ t]`
-and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
+This follows straightforwardly from the fact that for every `σ : ϕ → A` we have
+an equivalence between the extension type `(t : ψ) → A [ϕ t ↦ σ t]` and the
+fiber of the restriction map `(ψ → A) → (ϕ → A)`.
 
 ```rzk
 #def is-local-type-has-unique-extensions
@@ -447,8 +446,8 @@ and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
 #end is-local-type
 ```
 
-Since the property of having unique extensions passes from the codomain to the domain
-of a right orthogonal map, the same is true for locality of types.
+Since the property of having unique extensions passes from the codomain to the
+domain of a right orthogonal map, the same is true for locality of types.
 
 ```rzk
 #def is-local-type-domain-right-orthogonal-is-local-type-codomain

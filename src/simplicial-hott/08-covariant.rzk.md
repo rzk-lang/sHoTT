@@ -224,8 +224,8 @@ As a sanity check we unpack the definition of `is-naive-left-fibration`.
 
 ### Naive left fibrations are left fibrations
 
-A map `α : A' → A` is called a left fibration if it is right orthogonal to the
-shape inclusion `{0} ⊂ Δ¹`.
+A map `α : A' → A` is called a left fibration if it is right orthogonal
+to the shape inclusion `{0} ⊂ Δ¹`.
 
 ```rzk
 #section is-left-fibration
@@ -289,9 +289,9 @@ This notion agrees with that of a naive left fibration.
 Recall that an inner fibration is a map `α : A' → A` which is right orthogonal
 to `Λ ⊂ Δ²`.
 
-We aim to show that every left fibration is an inner fibration. This is a
-sequence of manipulations where we start with the assumption that `{0} ⊂ Δ¹` is
-left orthogonal to `α : A' → A`, i.e.
+We aim to show that every left fibration is an inner fibration.
+This is a sequence of manipulations where we start with the assumption
+that `{0} ⊂ Δ¹` is left orthogonal to `α : A' → A`, i.e.
 
 ```rzk
 #section is-inner-fibration-is-left-fibration
@@ -342,8 +342,8 @@ The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
         ( is-left-fib-α ( \ ( s : 2 | Δ¹ s ∧ s ≡ 0₂) → σ' (1₂,s)))
 ```
 
-Next we use that `Λ` is the pushout of its left leg and its right leg to deduce
-that the pair `left-leg-of-Λ ⊂ Λ` is left orthogonal.
+Next we use that `Λ` is the pushout of its left leg and its right leg
+to deduce that the pair `left-leg-of-Λ ⊂ Λ` is left orthogonal.
 
 ```rzk
 #def left-leg-of-Λ : Λ → TOPE
@@ -359,8 +359,9 @@ that the pair `left-leg-of-Λ ⊂ Λ` is left orthogonal.
 
 ```
 
-Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the product of
-`Δ¹` with the left orthogonal pair `{0} ⊂ Δ¹`, hence left orthogonal itself.
+Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹`
+is the product of `Δ¹` with the left orthogonal pair `{0} ⊂ Δ¹`,
+hence left orthogonal itself.
 
 ```rzk
 #def is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration
@@ -372,8 +373,8 @@ Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the pro
       2 Δ¹ 2 Δ¹ ( \ s → s ≡ 0₂) is-left-fib-α
 ```
 
-Next, we use the left cancellation of left orthogonal shape inclusions to deduce
-that `Λ ⊂ Δ¹×Δ¹` is left orthogonal to `α : A' → A`.
+Next, we use the left cancellation of left orthogonal shape inclusions
+to deduce that `Λ ⊂ Δ¹×Δ¹` is left orthogonal to `α : A' → A`.
 
 ```rzk
 #def is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration
@@ -387,8 +388,8 @@ that `Λ ⊂ Δ¹×Δ¹` is left orthogonal to `α : A' → A`.
       ( is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration)
 ```
 
-Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹` to obtain the
-desired left orthogonal shape inclusion `Λ ⊂ Δ²`.
+Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹`
+to obtain the desired left orthogonal shape inclusion `Λ ⊂ Δ²`.
 
 ```rzk
 #def is-inner-fibration-is-left-fibration uses (naiveextext is-left-fib-α)
@@ -402,9 +403,9 @@ desired left orthogonal shape inclusion `Λ ⊂ Δ²`.
 #end is-inner-fibration-is-left-fibration
 ```
 
-Since the Segal types are precisely the local types with respect to `Λ ⊂ Δ¹`, we
-immediately deduce that in any left fibration `α : A' → A`, if `A` is a Segal
-type, then so is `A'`.
+Since the Segal types are precisely the local types with respect to `Λ ⊂ Δ¹`,
+we immediately deduce that in any left fibration `α : A' → A`,
+if `A` is a Segal type, then so is `A'`.
 
 ```rzk title="Theorem 8.8, categorical version"
 #def is-segal-domain-left-fibration-is-segal-codomain uses (naiveextext)
@@ -599,9 +600,9 @@ family `#!rzk C : A → U`.
 
 ### Category theoretic proof
 
-For every covariant family `C : A → U`, the projection `Σ A, C → A` is an left
-fibration, hence an inner fibration. It immediately follows that if `A` is
-Segal, then so is `Σ A, C`.
+For every covariant family `C : A → U`, the projection `Σ A, C → A`
+is an left fibration, hence an inner fibration.
+It immediately follows that if `A` is Segal, then so is `Σ A, C`.
 
 ```rzk title="RS17, Theorem 8.8"
 #def is-segal-total-type-covariant-family-is-segal-base uses (naiveextext)

@@ -8,9 +8,8 @@ This is a literate `rzk` file:
 
 ## Homotopy cartesian squares
 
-We start by fixing the data of a map between two type families `A' → U` and
-`A → U`, which we think of as a commutative square
-
+We start by fixing the data of a map between two type families
+`A' → U` and `A → U`, which we think of as a commutative square
 ```
 Σ A' → Σ A
  ↓      ↓
@@ -36,8 +35,8 @@ We start by fixing the data of a map between two type families `A' → U` and
   := \ (a', c') → (α a', γ a' c')
 ```
 
-We say that such a square is homotopy cartesian just if it induces an
-equivalence componentwise.
+We say that such a square is homotopy cartesian
+just if it induces an equivalence componentwise.
 
 ```rzk
 #def is-homotopy-cartesian uses (A)
@@ -217,8 +216,8 @@ always do this (whether the square is homotopy-cartesian or not).
 
 ### Invariance under pullbacks
 
-We can pullback a homotopy cartesian square over `α : A' → A` along any map of
-maps `β → α` and obtain another homotopy cartesian square.
+We can pullback a homotopy cartesian square over `α : A' → A`
+along any map of maps `β → α` and obtain another homotopy cartesian square.
 
 ```rzk
 #def is-homotopy-cartesian-pullback
@@ -247,15 +246,16 @@ maps `β → α` and obtain another homotopy cartesian square.
 
 ## Pasting calculus for homotopy cartesian squares
 
-Currently our notion of squares is not symmetric, since the vertical maps are
-given by type families, i.e. they are _display maps_, while the horizontal maps
-are arbitrary. Therefore we distinquish between the vertical and the horizontal
-pasting calculus.
+Currently our notion of squares is not symmetric,
+since the vertical maps are given by type families,
+i.e. they are _display maps_,
+while the horizontal maps are arbitrary.
+Therefore we distinquish between the vertical and the horizontal pasting calculus.
 
 ### Vertical calculus
 
-The following vertical composition and cancellation laws follow easily from the
-corresponding statements about equivalences established above.
+The following vertical composition and cancellation laws follow easily from
+the corresponding statements about equivalences established above.
 
 ```rzk
 #section homotopy-cartesian-vertical-calculus

@@ -106,10 +106,10 @@ occasionally go back or forth along the functorial equivalence
       ( ( t : ψ) → A' [ϕ t ↦ σ' t])
       ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
       ( \ υ' t → α ( υ' t))
-      ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]),
-      ( ( t : ψ) → A' [χ t ↦ τ' t]))
-      ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)]),
-      ( ( t : ψ) → A [χ t ↦ τ t]))
+      ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t])
+        , ( ( t : ψ) → A' [χ t ↦ τ' t]))
+      ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)])
+        , ( ( t : ψ) → A [χ t ↦ τ t]))
       ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
       ( cofibration-composition-functorial I ψ χ ϕ
         ( \ _ → A') ( \ _ → A) ( \ _ → α) σ')
@@ -130,10 +130,10 @@ Left orthogonal shape inclusions are preserved under composition.
         ( ( t : ψ) → A' [ϕ t ↦ σ' t])
         ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
         ( \ υ' t → α ( υ' t))
-        ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]),
-          ( ( t : ψ) → A' [χ t ↦ τ' t]))
-        ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)]),
-          ( ( t : ψ) → A [χ t ↦ τ t]))
+        ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t])
+          , ( ( t : ψ) → A' [χ t ↦ τ' t]))
+        ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)])
+          , ( ( t : ψ) → A [χ t ↦ τ t]))
         ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
         ( cofibration-composition-functorial I ψ χ ϕ
           ( \ _ → A') ( \ _ → A) ( \ _ → α) σ')
@@ -174,7 +174,7 @@ If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so i
           ( is-orth-χ-ϕ )
           (is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape)
           ( \ ( t : ϕ) → τ' t)
-          τ'
+          ( τ')
 ```
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A` and `χ ⊂ ψ` is a (functorial)
@@ -196,7 +196,7 @@ shape retract, then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
       ( \ _ τ' x → α (τ' x) )
       ( \ _ _ υ' x → α (υ' x) )
       ( relativize-is-functorial-shape-retract I ψ χ is-fretract-ψ-χ ϕ A' A α)
-      (is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape)
+      ( is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape)
 
 #end left-orthogonal-calculus-1
 ```
@@ -224,12 +224,10 @@ naive form of) extension extensionality.
       ( J × I) ( \ (t,s) → χ t ∧ ψ s) ( \ (t,s) → χ t ∧ ϕ s) A' A α
   :=
     \ ( σ' : ( (t,s) : J × I | χ t ∧ ϕ s) → A') →
-      (
-        ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t,s))])
+      ( ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t,s))])
             ( t, s) →
           ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
-        ,
-          \ ( τ' : ( (t,s) : J × I | χ t ∧ ψ s) → A' [ϕ s ↦ σ' (t,s)]) →
+        , \ ( τ' : ( (t,s) : J × I | χ t ∧ ψ s) → A' [ϕ s ↦ σ' (t,s)]) →
             naiveextext
               ( J × I) ( \ (t,s) → χ t ∧ ψ s) ( \ (t,s) → χ t ∧ ϕ s)
               ( \ _ → A')
@@ -245,15 +243,11 @@ naive form of) extension extensionality.
                   ( \ s' → τ' (t, s') )
                   ( ( second (first (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                     ( \ s' → τ' (t, s')))
-                  ( s)
-              )
-        )
-      ,
-        ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t,s))])
+                  ( s)))
+      , ( \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t,s))])
             ( t, s) →
           ( first (second (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
-        ,
-          \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t,s))]) →
+        , \ ( τ : ( (t,s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t,s))]) →
             naiveextext
               ( J × I) ( \ (t,s) → χ t ∧ ψ s) ( \ (t,s) → χ t ∧ ϕ s)
               ( \ _ → A)
@@ -267,14 +261,11 @@ naive form of) extension extensionality.
                   ( \ s'' →
                       α ( ( first (second (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                           ( \ s' → τ (t, s'))
-                          (s'')))
+                          ( s'')))
                   ( \ s' → τ (t, s') )
                   ( ( second ( second (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                     ( \ s' → τ (t, s')))
-                  ( s)
-              )
-        )
-      )
+                  ( s))))
 ```
 
 ### Stability under exact pushouts
@@ -372,8 +363,7 @@ for each `σ : ϕ → A` the type of `ψ`-extensions is contractible.
   ( ϕ : ψ → TOPE)
   ( A : U)
   : U
-  :=
-    ( σ : ϕ → A) → is-contr ( (t : ψ) → A [ϕ t ↦ σ t])
+  := ( σ : ϕ → A) → is-contr ( (t : ψ) → A [ϕ t ↦ σ t])
 ```
 
 The property of having unique extension can be pulled back along any right
@@ -424,11 +414,11 @@ fiber of the restriction map `(ψ → A) → (ϕ → A)`.
   :=
     is-equiv-is-contr-map (ψ → A) (ϕ → A) ( \ τ t → τ t)
       ( \ ( σ : ϕ → A) →
-          is-contr-equiv-is-contr
-            ( extension-type I ψ ϕ ( \ t → A) σ)
-            ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
-            ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
-            ( has-ue-ψ-ϕ-A σ))
+        is-contr-equiv-is-contr
+          ( extension-type I ψ ϕ ( \ t → A) σ)
+          ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
+          ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
+          ( has-ue-ψ-ϕ-A σ))
 
 #def has-unique-extensions-is-local-type
   ( is-lt-ψ-ϕ-A : is-local-type)
@@ -443,6 +433,7 @@ fiber of the restriction map `(ψ → A) → (ϕ → A)`.
             ( ψ → A) (ϕ → A) ( \ τ t → τ t)
             ( is-lt-ψ-ϕ-A)
             ( σ))
+
 #end is-local-type
 ```
 

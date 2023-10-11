@@ -1007,6 +1007,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#discrete-fibers" class="md-nav__link">
+    Discrete fibers
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1315,6 +1322,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#discrete-fibers" class="md-nav__link">
+    Discrete fibers
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1517,8 +1531,8 @@ be a left fibration.</p>
 </span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="err">  := </span><span class="s">refl</span>
 </span></code></pre></div>
 <h3 id="naive-left-fibrations-are-left-fibrations">Naive left fibrations are left fibrations<a class="headerlink" href="#naive-left-fibrations-are-left-fibrations" title="Permanent link">&para;</a></h3>
-<p>A map <code>α : A' → A</code> is called a left fibration if it is right orthogonal
-to the shape inclusion <code>{0} ⊂ Δ¹</code>.</p>
+<p>A map <code>α : A' → A</code> is called a left fibration if it is right orthogonal to the
+shape inclusion <code>{0} ⊂ Δ¹</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nd">#section</span><span class="n"> is-left-fibration</span>
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kr">#variables</span><span class="p"> </span>A&#39; A<span class="err"> : U</span>
@@ -1574,9 +1588,9 @@ to the shape inclusion <code>{0} ⊂ Δ¹</code>.</p>
 <h3 id="left-fibrations-are-inner-fibrations">Left fibrations are inner fibrations<a class="headerlink" href="#left-fibrations-are-inner-fibrations" title="Permanent link">&para;</a></h3>
 <p>Recall that an inner fibration is a map <code>α : A' → A</code> which is right orthogonal
 to <code>Λ ⊂ Δ²</code>.</p>
-<p>We aim to show that every left fibration is an inner fibration.
-This is a sequence of manipulations where we start with the assumption
-that <code>{0} ⊂ Δ¹</code> is left orthogonal to <code>α : A' → A</code>, i.e.</p>
+<p>We aim to show that every left fibration is an inner fibration. This is a
+sequence of manipulations where we start with the assumption that <code>{0} ⊂ Δ¹</code> is
+left orthogonal to <code>α : A' → A</code>, i.e.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nd">#section</span><span class="n"> is-inner-fibration-is-left-fibration</span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kr">#variables</span><span class="p"> </span>A&#39; A<span class="err"> : U</span>
@@ -1620,8 +1634,8 @@ that <code>{0} ⊂ Δ¹</code> is left orthogonal to <code>α : A' → A</code>,
 </span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a><span class="err">        )</span>
 </span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a><span class="err">        </span><span class="p">( </span>is-left-fib-α ( \ ( s <span class="p">:</span><span class="err"> </span><span class="kt">2</span><span class="err"> | Δ¹ s </span><span class="sx">∧</span><span class="err"> s </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err">) → σ&#39; (</span><span class="m">1₂</span><span class="err">,s)))</span>
 </span></code></pre></div>
-<p>Next we use that <code>Λ</code> is the pushout of its left leg and its right leg
-to deduce that the pair <code>left-leg-of-Λ ⊂ Λ</code> is left orthogonal.</p>
+<p>Next we use that <code>Λ</code> is the pushout of its left leg and its right leg to deduce
+that the pair <code>left-leg-of-Λ ⊂ Λ</code> is left orthogonal.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:left-leg-of-Λ" id="define:left-leg-of-Λ" style="visibility: visible; position: relative; color: inherit">left-leg-of-Λ</a></span><span class="err"> : Λ → TOPE</span>
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  := \ (t, s) → s </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span>
 </span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
@@ -1633,9 +1647,8 @@ to deduce that the pair <code>left-leg-of-Λ ⊂ Λ</code> is left orthogonal.</
 </span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="err">      ( </span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) ( </span><span class="p">\ </span>ts <span class="err">→ right-leg-of-Λ ts) (</span><span class="p">\ </span>ts <span class="err">→ left-leg-of-Λ ts)</span>
 </span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="err">      ( is-right-orthogonal-to-10-1×Δ¹-is-left-fibration)</span>
 </span></code></pre></div>
-<p>Furthermore, we observe that the pair <code>left-leg-of-Δ ⊂ Δ¹×Δ¹</code>
-is the product of <code>Δ¹</code> with the left orthogonal pair <code>{0} ⊂ Δ¹</code>,
-hence left orthogonal itself.</p>
+<p>Furthermore, we observe that the pair <code>left-leg-of-Δ ⊂ Δ¹×Δ¹</code> is the product of
+<code>Δ¹</code> with the left orthogonal pair <code>{0} ⊂ Δ¹</code>, hence left orthogonal itself.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration" id="define:is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration</a></span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="p">       </span><span class="k">uses</span><span class="p"> (</span>naiveextext is-left-fib-α<span class="p">)</span>
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  : is-right-orthogonal-to-shape</span>
@@ -1644,8 +1657,8 @@ hence left orthogonal itself.</p>
 </span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="err">    is-right-orthogonal-to-shape-× naiveextext A&#39; A α</span>
 </span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="err">      </span><span class="kt">2</span><span class="err"> Δ¹ </span><span class="kt">2</span><span class="err"> Δ¹ ( </span><span class="p">\ </span>s <span class="err">→ s </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err">) is-left-fib-α</span>
 </span></code></pre></div>
-<p>Next, we use the left cancellation of left orthogonal shape inclusions
-to deduce that <code>Λ ⊂ Δ¹×Δ¹</code> is left orthogonal to <code>α : A' → A</code>.</p>
+<p>Next, we use the left cancellation of left orthogonal shape inclusions to deduce
+that <code>Λ ⊂ Δ¹×Δ¹</code> is left orthogonal to <code>α : A' → A</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration" id="define:is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration</a></span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="p">       </span><span class="k">uses</span><span class="p"> (</span>naiveextext is-left-fib-α<span class="p">)</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="err">  : is-right-orthogonal-to-shape</span>
@@ -1656,8 +1669,8 @@ to deduce that <code>Λ ⊂ Δ¹×Δ¹</code> is left orthogonal to <code>α : A
 </span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="err">      ( is-right-orthogonal-to-left-leg-of-Λ-Λ-is-left-fibration)</span>
 </span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="err">      ( is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration)</span>
 </span></code></pre></div>
-<p>Finally, we right cancel the functorial retract <code>Δ² ⊂ Δ¹×Δ¹</code>
-to obtain the desired left orthogonal shape inclusion <code>Λ ⊂ Δ²</code>.</p>
+<p>Finally, we right cancel the functorial retract <code>Δ² ⊂ Δ¹×Δ¹</code> to obtain the
+desired left orthogonal shape inclusion <code>Λ ⊂ Δ²</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-fibration-is-left-fibration" id="define:is-inner-fibration-is-left-fibration" style="visibility: visible; position: relative; color: inherit">is-inner-fibration-is-left-fibration</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>naiveextext is-left-fib-α<span class="p">)</span>
 </span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="err">  : is-inner-fibration A&#39; A α</span>
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="err">  :=</span>
@@ -1668,9 +1681,9 @@ to obtain the desired left orthogonal shape inclusion <code>Λ ⊂ Δ²</code>.<
 </span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
 </span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="nd">#end</span><span class="n"> is-inner-fibration-is-left-fibration</span>
 </span></code></pre></div>
-<p>Since the Segal types are precisely the local types with respect to <code>Λ ⊂ Δ¹</code>,
-we immediately deduce that in any left fibration <code>α : A' → A</code>,
-if <code>A</code> is a Segal type, then so is <code>A'</code>.</p>
+<p>Since the Segal types are precisely the local types with respect to <code>Λ ⊂ Δ¹</code>, we
+immediately deduce that in any left fibration <code>α : A' → A</code>, if <code>A</code> is a Segal
+type, then so is <code>A'</code>.</p>
 <div class="language-rzk highlight"><span class="filename">Theorem 8.8, categorical version</span><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-domain-left-fibration-is-segal-codomain" id="define:is-segal-domain-left-fibration-is-segal-codomain" style="visibility: visible; position: relative; color: inherit">is-segal-domain-left-fibration-is-segal-codomain</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>naiveextext<span class="p">)</span>
 </span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="err">  </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
@@ -1837,9 +1850,9 @@ the desired equivalence.</p>
 type. We split the proof into intermediate steps. Let <code>A</code> be a type and a type
 family <code class="language-rzk highlight"><span class="err">C : A → U</span></code>.</p>
 <h3 id="category-theoretic-proof">Category theoretic proof<a class="headerlink" href="#category-theoretic-proof" title="Permanent link">&para;</a></h3>
-<p>For every covariant family <code>C : A → U</code>, the projection <code>Σ A, C → A</code>
-is an left fibration, hence an inner fibration.
-It immediately follows that if <code>A</code> is Segal, then so is <code>Σ A, C</code>.</p>
+<p>For every covariant family <code>C : A → U</code>, the projection <code>Σ A, C → A</code> is an left
+fibration, hence an inner fibration. It immediately follows that if <code>A</code> is
+Segal, then so is <code>Σ A, C</code>.</p>
 <div class="language-rzk highlight"><span class="filename">RS17, Theorem 8.8</span><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-total-type-covariant-family-is-segal-base" id="define:is-segal-total-type-covariant-family-is-segal-base" style="visibility: visible; position: relative; color: inherit">is-segal-total-type-covariant-family-is-segal-base</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>naiveextext<span class="p">)</span>
 </span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
@@ -3332,6 +3345,49 @@ commuting with the contravariant lifts.</p>
 </span><span id="__span-70-20"><a id="__codelineno-70-20" name="__codelineno-70-20" href="#__codelineno-70-20"></a><span class="err">                ( </span><span class="p">\ </span>a  <span class="err">→ (C a b))</span>
 </span><span id="__span-70-21"><a id="__codelineno-70-21" name="__codelineno-70-21" href="#__codelineno-70-21"></a><span class="err">                ( is-locally-covariant b))</span>
 </span><span id="__span-70-22"><a id="__codelineno-70-22" name="__codelineno-70-22" href="#__codelineno-70-22"></a><span class="err">             x y f (g b))))</span>
+</span></code></pre></div>
+<h2 id="discrete-fibers">Discrete fibers<a class="headerlink" href="#discrete-fibers" title="Permanent link">&para;</a></h2>
+<p>The fibers of a covariant fibration over a Segal type are discrete types.</p>
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.18</span><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-discrete-is-covariant-segal" id="define:is-discrete-is-covariant-segal" style="visibility: visible; position: relative; color: inherit">is-discrete-is-covariant-segal</a></span>
+</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-71-3"><a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a><span class="err">  </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
+</span><span id="__span-71-4"><a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-71-5"><a id="__codelineno-71-5" name="__codelineno-71-5" href="#__codelineno-71-5"></a><span class="err">  </span><span class="p">( </span>is-cov-C <span class="p">:</span><span class="err"> is-covariant A C)</span>
+</span><span id="__span-71-6"><a id="__codelineno-71-6" name="__codelineno-71-6" href="#__codelineno-71-6"></a><span class="err">  </span><span class="p">( </span>x <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-71-7"><a id="__codelineno-71-7" name="__codelineno-71-7" href="#__codelineno-71-7"></a><span class="err">  : is-discrete (C x)</span>
+</span><span id="__span-71-8"><a id="__codelineno-71-8" name="__codelineno-71-8" href="#__codelineno-71-8"></a><span class="err">  :=</span>
+</span><span id="__span-71-9"><a id="__codelineno-71-9" name="__codelineno-71-9" href="#__codelineno-71-9"></a><span class="err">    ( </span><span class="p">\ </span>u v <span class="err">→</span>
+</span><span id="__span-71-10"><a id="__codelineno-71-10" name="__codelineno-71-10" href="#__codelineno-71-10"></a><span class="err">    total-equiv-family-of-equiv</span>
+</span><span id="__span-71-11"><a id="__codelineno-71-11" name="__codelineno-71-11" href="#__codelineno-71-11"></a><span class="err">      ( C x)</span>
+</span><span id="__span-71-12"><a id="__codelineno-71-12" name="__codelineno-71-12" href="#__codelineno-71-12"></a><span class="err">      ( </span><span class="p">\ </span>v&#39; <span class="err">→ (u = v&#39;))</span>
+</span><span id="__span-71-13"><a id="__codelineno-71-13" name="__codelineno-71-13" href="#__codelineno-71-13"></a><span class="err">      ( hom (C x) u)</span>
+</span><span id="__span-71-14"><a id="__codelineno-71-14" name="__codelineno-71-14" href="#__codelineno-71-14"></a><span class="err">      ( hom-eq (C x) u)</span>
+</span><span id="__span-71-15"><a id="__codelineno-71-15" name="__codelineno-71-15" href="#__codelineno-71-15"></a><span class="err">      </span><span class="p">( </span>is-equiv-are-contr
+</span><span id="__span-71-16"><a id="__codelineno-71-16" name="__codelineno-71-16" href="#__codelineno-71-16"></a>        ( Σ (y <span class="p">:</span><span class="err"> (C x)) , u = y)</span>
+</span><span id="__span-71-17"><a id="__codelineno-71-17" name="__codelineno-71-17" href="#__codelineno-71-17"></a><span class="err">        </span><span class="p">( </span>Σ (y <span class="p">:</span><span class="err"> (C x)) , hom (C x) u y)</span>
+</span><span id="__span-71-18"><a id="__codelineno-71-18" name="__codelineno-71-18" href="#__codelineno-71-18"></a><span class="err">        ( is-contr-based-paths (C x) u)</span>
+</span><span id="__span-71-19"><a id="__codelineno-71-19" name="__codelineno-71-19" href="#__codelineno-71-19"></a><span class="err">        ( is-cov-C x x (id-hom A x) u)</span>
+</span><span id="__span-71-20"><a id="__codelineno-71-20" name="__codelineno-71-20" href="#__codelineno-71-20"></a><span class="err">        ( total-map</span>
+</span><span id="__span-71-21"><a id="__codelineno-71-21" name="__codelineno-71-21" href="#__codelineno-71-21"></a><span class="err">          ( C x)</span>
+</span><span id="__span-71-22"><a id="__codelineno-71-22" name="__codelineno-71-22" href="#__codelineno-71-22"></a><span class="err">          ( </span><span class="p">\ </span>v&#39; <span class="err">→ u = v&#39;)</span>
+</span><span id="__span-71-23"><a id="__codelineno-71-23" name="__codelineno-71-23" href="#__codelineno-71-23"></a><span class="err">          ( hom (C x) u)</span>
+</span><span id="__span-71-24"><a id="__codelineno-71-24" name="__codelineno-71-24" href="#__codelineno-71-24"></a><span class="err">          ( hom-eq (C x) u)))</span>
+</span><span id="__span-71-25"><a id="__codelineno-71-25" name="__codelineno-71-25" href="#__codelineno-71-25"></a><span class="err">      ( v))</span>
+</span></code></pre></div>
+<p>In a segal type, covariant hom families are covariant,hence representable homs
+are discrete.</p>
+<div class="language-rzk highlight"><span class="filename">RS17, Corollary 8.19</span><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-discrete-hom-is-segal" id="define:is-discrete-hom-is-segal" style="visibility: visible; position: relative; color: inherit">is-discrete-hom-is-segal</a></span>
+</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-72-3"><a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a><span class="err">  </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
+</span><span id="__span-72-4"><a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-72-5"><a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a><span class="err">  : is-discrete (hom A x y)</span>
+</span><span id="__span-72-6"><a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a><span class="err">  :=</span>
+</span><span id="__span-72-7"><a id="__codelineno-72-7" name="__codelineno-72-7" href="#__codelineno-72-7"></a><span class="err">    is-discrete-is-covariant-segal</span>
+</span><span id="__span-72-8"><a id="__codelineno-72-8" name="__codelineno-72-8" href="#__codelineno-72-8"></a><span class="err">      ( A)</span>
+</span><span id="__span-72-9"><a id="__codelineno-72-9" name="__codelineno-72-9" href="#__codelineno-72-9"></a><span class="err">      ( is-segal-A)</span>
+</span><span id="__span-72-10"><a id="__codelineno-72-10" name="__codelineno-72-10" href="#__codelineno-72-10"></a><span class="err">      ( hom A x)</span>
+</span><span id="__span-72-11"><a id="__codelineno-72-11" name="__codelineno-72-11" href="#__codelineno-72-11"></a><span class="err">      ( is-covariant-representable-is-segal A is-segal-A x)</span>
+</span><span id="__span-72-12"><a id="__codelineno-72-12" name="__codelineno-72-12" href="#__codelineno-72-12"></a><span class="err">      ( y)</span>
 </span></code></pre></div>
 
 

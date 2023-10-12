@@ -1111,3 +1111,143 @@ Using `ExtExt` we can write the homotopy in the homotopy extension type pointwis
 
 #end pointwise-homotopy-extension-type
 ```
+
+## Relative extension types
+
+Given a map `α : A' → A`, there is also a notion of relative extension types.
+
+```rzk
+#section relative-extension-types
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variables A' A : ψ → U
+#variable α : (t : ψ) → A' t → A t
+#variable σ' : (t : ϕ) → A' t
+#variable τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)]
+
+#def relative-extension-type
+  : U
+  :=
+    Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t])
+    , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl]
+
+#def relative-extension-type'
+  : U
+  :=
+    fib
+    ( (t : ψ) → A' t [ϕ t ↦ σ' t])
+    ( (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
+    ( \ τ' t → α t (τ' t))
+    ( τ)
+
+#def equiv-relative-extension-type-fib uses (extext)
+  : Equiv
+    ( relative-extension-type')
+    ( relative-extension-type)
+  :=
+    total-equiv-family-equiv
+    ( (t : ψ) → A' t [ϕ t ↦ σ' t])
+    ( \ τ' → (\ t → α t (τ' t)) =_{ (t : ψ) → A t [ϕ t ↦ α t (σ' t)]} τ)
+    ( \ τ' → (t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl])
+    ( \ τ' →
+      equiv-ExtExt extext I ψ ϕ A (\ t → α t (σ' t))
+        ( \ t → α t (τ' t)) ( τ))
+#end relative-extension-types
+```
+
+### Generalized relative extension types
+
+We will also need to allow more general relative extension types,
+where we start with a `τ : ψ → A` that does not strictly restrict to
+`\ t → α (σ' t)`.
+
+```rzk
+#section general-extension-types
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variables A' A : ψ → U
+#variable α : (t : ψ) → A' t → A t
+
+#def general-relative-extension-type
+  ( σ' : (t : ϕ) → A' t)
+  ( τ : (t : ψ) → A t)
+  ( h : (t : ϕ) → α t (σ' t) = τ t)
+  : U
+  :=
+    Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t])
+    , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ h t]
+```
+
+If all ordinary relative extension types are contractible,
+then also all generalized ones.
+
+```rzk
+#def has-contr-relative-extension-types
+  : U
+  :=
+    ( σ' : (t : ϕ) → A' t)
+  → ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
+  → ( is-contr (relative-extension-type I ψ ϕ A' A α σ' τ))
+
+#def has-contr-general-relative-extension-types
+  : U
+  :=
+    ( σ' : (t : ϕ) → A' t)
+  → ( τ : (t : ψ) → A t)
+  → ( h : (t : ϕ) → α t (σ' t) = τ t)
+  → ( is-contr ( general-relative-extension-type σ' τ h))
+
+#def has-contr-relative-extension-types-generalize' uses (extext)
+  ( has-contr-relext-α : has-contr-relative-extension-types)
+  ( σ' : (t : ϕ) → A' t)
+  ( τ : (t : ψ) → A t)
+  ( h : (t : ϕ) → α t (σ' t) = τ t)
+  : is-contr
+    ( general-relative-extension-type σ' τ
+      ( \ t → rev (A t) (τ t) (α t (σ' t)) (rev (A t) (α t (σ' t)) (τ t) (h t))))
+  :=
+    ind-has-section-equiv
+    ( extension-type I ψ ϕ A (\ t → α t (σ' t)))
+    ( pointwise-homotopy-extension-type I ψ ϕ A (\ t → α t (σ' t)))
+    ( extension-type-pointwise-weakening I ψ ϕ A (\ t → α t (σ' t)))
+    ( \ (τ̂ , ĥ) →
+      is-contr
+      ( general-relative-extension-type σ' τ̂
+        ( \ t → rev (A t) (τ̂ t) (α t (σ' t)) (ĥ t))))
+    ( \ τ → has-contr-relext-α σ' τ)
+    ( τ , \ t → (rev (A t) (α t (σ' t)) (τ t) (h t)))
+
+#def has-contr-relative-extension-types-generalize uses (extext)
+  ( has-contr-relext-α : has-contr-relative-extension-types)
+  : has-contr-general-relative-extension-types
+  :=
+  \ σ' τ h →
+    transport
+    ( (t : ϕ) → α t (σ' t) = τ t)
+    ( \ ĥ → is-contr ( general-relative-extension-type σ' τ ĥ))
+    ( \ t → rev (A t) (τ t) (α t (σ' t)) (rev (A t) (α t (σ' t)) (τ t) (h t)))
+    ( h)
+    ( naiveextext-extext extext
+      ( I) (\ t → ϕ t) (\ _ → BOT) (\ t → α t (σ' t ) = τ t) (\ _ → recBOT)
+      ( \ t → rev (A t) (τ t) (α t (σ' t)) (rev (A t) (α t (σ' t)) (τ t) (h t)))
+      ( h)
+      ( \ t → rev-rev (A t) (α t (σ' t)) (τ t) (h t)))
+    ( has-contr-relative-extension-types-generalize'
+         has-contr-relext-α σ' τ h)
+```
+
+The converse is of course trivial.
+
+```rzk
+#def has-contr-relative-extension-types-specialize
+  ( has-contr-gen-relext-α : has-contr-general-relative-extension-types)
+  :  has-contr-relative-extension-types
+  :=
+    \ σ' τ → has-contr-gen-relext-α σ' τ (\ _ → refl)
+
+#end general-extension-types
+```

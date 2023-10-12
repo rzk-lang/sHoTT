@@ -53,127 +53,11 @@ orthogonal_ to the map `α`, if `α : A' → A` is right orthogonal to `ϕ ⊂ �
       ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
 ```
 
-## Relative extension types
+## Contractible relative extension types
 
 Using `ExtExt`, we can characterize right orthogonal maps
-in terms of the contractibility of _relative extension types_.
-
-```rzk
-#section relative-extension-types
-
-#variable I : CUBE
-#variable ψ : I → TOPE
-#variable ϕ : ψ → TOPE
-#variables A' A : ψ → U
-#variable α : (t : ψ) → A' t → A t
-
-#def relative-extension-type
-  ( σ' : (t : ϕ) → A' t)
-  ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
-  : U
-  :=
-    Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t])
-    , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl]
-
-#def relative-extension-type'
-  ( σ' : (t : ϕ) → A' t)
-  ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
-  : U
-  :=
-    fib
-    ( (t : ψ) → A' t [ϕ t ↦ σ' t])
-    ( (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
-    ( \ τ' t → α t (τ' t))
-    ( τ)
-
-#def equiv-relative-extension-type-fib uses (extext)
-  ( σ' : (t : ϕ) → A' t)
-  ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
-  : Equiv
-    ( relative-extension-type' σ' τ)
-    ( relative-extension-type σ' τ)
-  :=
-    total-equiv-family-equiv
-    ( (t : ψ) → A' t [ϕ t ↦ σ' t])
-    ( \ τ' → (\ t → α t (τ' t)) =_{ (t : ψ) → A t [ϕ t ↦ α t (σ' t)]} τ)
-    ( \ τ' → (t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl])
-    ( \ τ' →
-      equiv-ExtExt extext I ψ ϕ A (\ t → α t (σ' t))
-        ( \ t → α t (τ' t)) ( τ))
-
-#def has-contr-relative-extension-types
-  : U
-  :=
-    ( σ' : (t : ϕ) → A' t)
-  → ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
-  → ( is-contr (relative-extension-type σ' τ))
-```
-
-### Generalized relative extension types
-
-We will also need to allow more general relative extension types,
-where we start with a `τ : ψ → A` that does not strictly restrict to
-`\ t → α (σ' t)`.
-
-```rzk
-#def general-relative-extension-type
-  ( σ' : (t : ϕ) → A' t)
-  ( τ : (t : ψ) → A t)
-  ( h : (t : ϕ) → α t (σ' t) = τ t)
-  : U
-  :=
-    Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t])
-    , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ h t]
-```
-
-If all ordinary relative extension types are contractible,
-then also all generalized ones.
-
-```rzk
-#def has-contr-relative-extension-types-generalize' uses (extext)
-  ( has-contr-relext-α : has-contr-relative-extension-types)
-  ( σ' : (t : ϕ) → A' t)
-  ( τ : (t : ψ) → A t)
-  ( h : (t : ϕ) → α t (σ' t) = τ t)
-  : is-contr
-    ( general-relative-extension-type σ' τ
-      ( \ t → rev (A t) (τ t) (α t (σ' t)) (rev (A t) (α t (σ' t)) (τ t) (h t))))
-  :=
-    ind-has-section-equiv
-    ( extension-type I ψ ϕ A (\ t → α t (σ' t)))
-    ( pointwise-homotopy-extension-type I ψ ϕ A (\ t → α t (σ' t)))
-    ( extension-type-pointwise-weakening extext I ψ ϕ A (\ t → α t (σ' t)))
-    ( \ (τ̂ , ĥ) →
-      is-contr
-      ( general-relative-extension-type σ' τ̂
-        ( \ t → rev (A t) (τ̂ t) (α t (σ' t)) (ĥ t))))
-    ( \ τ → has-contr-relext-α σ' τ)
-    ( τ , \ t → (rev (A t) (α t (σ' t)) (τ t) (h t)))
-
-#def has-contr-relative-extension-types-generalize uses (extext)
-  ( has-contr-relext-α : has-contr-relative-extension-types)
-  ( σ' : (t : ϕ) → A' t)
-  ( τ : (t : ψ) → A t)
-  ( h : (t : ϕ) → α t (σ' t) = τ t)
-  : is-contr ( general-relative-extension-type σ' τ h)
-  :=
-    transport
-    ( (t : ϕ) → α t (σ' t) = τ t)
-    ( \ ĥ → is-contr ( general-relative-extension-type σ' τ ĥ))
-    ( \ t → rev (A t) (τ t) (α t (σ' t)) (rev (A t) (α t (σ' t)) (τ t) (h t)))
-    ( h)
-    ( naiveextext-extext extext
-      ( I) (\ t → ϕ t) (\ _ → BOT) (\ t → α t (σ' t ) = τ t) (\ _ → recBOT)
-      ( \ t → rev (A t) (τ t) (α t (σ' t)) (rev (A t) (α t (σ' t)) (τ t) (h t)))
-      ( h)
-      ( \ t → rev-rev (A t) (α t (σ' t)) (τ t) (h t)))
-    ( has-contr-relative-extension-types-generalize'
-         has-contr-relext-α σ' τ h)
-
-#end relative-extension-types
-```
-
-### Characterization of right orthogonality
+in terms of the contractibility of relative extension types
+or, equivalently, generalized extension types.
 
 ```rzk
 #section has-contr-relative-extension-types-iff-is-right-orthogonal
@@ -204,7 +88,7 @@ then also all generalized ones.
         ( τ))
       ( relative-extension-type I ψ ϕ
         ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
-      ( equiv-relative-extension-type-fib I ψ ϕ
+      ( equiv-relative-extension-type-fib extext I ψ ϕ
         ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
       ( are-contr-relext-α σ' τ)
     )
@@ -222,7 +106,7 @@ then also all generalized ones.
         ( τ))
       ( relative-extension-type I ψ ϕ
         ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
-      ( equiv-relative-extension-type-fib I ψ ϕ
+      ( equiv-relative-extension-type-fib extext I ψ ϕ
         ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
       ( is-contr-map-is-equiv
         ( (t : ψ) → A' [ϕ t ↦ σ' t])
@@ -234,17 +118,12 @@ then also all generalized ones.
 #def has-contr-general-relative-extension-types-is-right-orthogonal-to-shape
   uses (extext)
   ( is-orth-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
-  : ( σ' : (t : ϕ) → A')
-  → ( τ : (t : ψ) → A)
-  → ( h : (t : ϕ) → α (σ' t) = τ t)
-  → is-contr
-    ( general-relative-extension-type
-        I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α) σ' τ h)
+  : has-contr-general-relative-extension-types I ψ ϕ
+      ( \ _ → A') (\ _ → A) (\ _ → α)
   :=
-    ( has-contr-relative-extension-types-generalize
-        I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α))
+    has-contr-relative-extension-types-generalize extext I ψ ϕ
+      ( \ _ → A') (\ _ → A) (\ _ → α)
     ( has-contr-relative-extension-types-is-right-orthogonal-to-shape is-orth-α)
-
 
 #end has-contr-relative-extension-types-iff-is-right-orthogonal
 ```
@@ -272,7 +151,6 @@ conditions.
 #variable is-orth-χ-ϕ : is-right-orthogonal-to-shape
                           I ( \ t → χ t) ( \ t → ϕ t) A' A α
 #variable is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
-  -- rzk does not accept these terms after η-reduction
 ```
 
 Using the vertical pasting calculus for homotopy cartesian squares, it is not
@@ -626,7 +504,7 @@ the same follows for the former.
       ( \ _ → relative-product A A' α B f) ( \ _ → B)
       ( \ _ → second-relative-product A A' α B f)
       ( σB') ( τB))
-    ( equiv-relative-extension-type-fib I ψ ϕ
+    ( equiv-relative-extension-type-fib extext I ψ ϕ
       ( \ _ → relative-product A A' α B f) ( \ _ → B)
       ( \ _ → second-relative-product A A' α B f)
       ( σB') ( τB))

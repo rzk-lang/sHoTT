@@ -542,3 +542,29 @@ product of all fibers.
 
 #end relative-product
 ```
+
+### Fiber product with singleton type
+
+The relative product of `β : B → A` with a map `Unit → A` corresponding to
+`a : A` is nothing but the fiber `fib B A β a`.
+
+```rzk
+#def compute-relative-product-singleton
+  ( A B : U)
+  ( β : B → A)
+  ( a : A)
+  : Equiv-of-maps
+    ( fib B A β a) (Unit) (\ _ → unit)
+    ( relative-product A B β Unit (\ unit → a))
+    ( Unit) ( second-relative-product A B β Unit (\ unit → a))
+  :=
+    ( ( ( ( \ (b , p) → ((b , unit) , p))
+        , ( identity Unit))
+      , \ _ → refl)
+    , ( ( ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl))
+        , ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl)))
+      , is-equiv-identity Unit))
+
+```

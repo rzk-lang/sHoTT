@@ -400,7 +400,7 @@ Naturality in `#!rzk C` is not automatic but can be proven easily:
         is-natural-in-family-yon-once-pointwise
           A is-segal-A a C D is-covariant-C is-covariant-D ψ u x)
 ```
-We prove the Yoneda embedding.
+##  Yoneda embedding.
 
 ```rzk tittle="Yoneda embedding, Definition 9.3 RS17 "
 #def yoneda-embedding
@@ -414,13 +414,10 @@ We prove the Yoneda embedding.
      ( is-segal-A)
      ( a )
      ( \ x → hom A a' x )
-     ( is-covariant-representable-is-segal
-        ( A)
-        ( is-segal-A)
-        ( a'))
+     ( is-covariant-representable-is-segal A is-segal-A a')
 ```
 ```rzk
-#def yoneda-comp uses (funext)
+#def yoneda-phi uses (funext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -432,11 +429,52 @@ We prove the Yoneda embedding.
       ( is-segal-A)
       ( a)
       ( hom A a')
-      ( is-covariant-representable-is-segal
-        ( A)
-        ( is-segal-A)
-        ( a')) φ
+      ( is-covariant-representable-is-segal A is-segal-A a') φ
+
+#def htpy-yoneda-phi uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x) )
+  : (x : A) → ( ( yoneda-embedding A is-segal-A a a' ) ( ( evid A a ( hom A a')) φ )) x = φ x
+  := htpy-eq
+    ( A )
+    ( \ x → ( hom A a x → hom A a' x) )
+    ( ( yoneda-embedding A is-segal-A a a' ) ( ( evid A a ( hom A a')) φ ))
+    ( φ)
+    ( yoneda-phi A is-segal-A a a' φ )
+
+#def htpy-eq-yoneda-phi uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x) )
+  ( x : A)
+  : ( f : hom A a x) → ( ( yoneda-embedding A is-segal-A a a' ) ( ( evid A a ( hom A a')) φ )) x f = φ x f
+  := htpy-eq
+      ( hom A a x)
+      ( \ z → hom A a' x)
+      ( ( ( yoneda-embedding A is-segal-A a a' ) ( ( evid A a ( hom A a')) φ )) x)
+      ( φ x)
+      ( htpy-yoneda-phi A is-segal-A a a' φ x)
+
+#def eq-eq-phi-yoneda uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x) )
+  ( x : A)
+  ( f : hom A a x)
+  : φ x f = ( ( yoneda-embedding A is-segal-A a a' ) ( ( evid A a ( hom A a')) φ )) x f
+  :=
+     rev
+      ( hom A a' x)
+      ( ( ( yoneda-embedding A is-segal-A a a' ) ( ( evid A a ( hom A a')) φ )) x f)
+      ( φ x f)
+      ( htpy-eq-yoneda-phi A is-segal-A a a' φ x f)
 ```
+Define the action by compostition
+
 ```rzk
 #def is-composition
   ( A : U)
@@ -444,17 +482,12 @@ We prove the Yoneda embedding.
   ( a a' : A)
   ( φ : ( x : A) → ( hom A a x → hom A a' x) )
   : ( x : A ) → ( hom A a x → hom A a' x)
-  := \ x f → comp-is-segal
-              ( A)
-              ( is-segal-A)
-              ( a')
-              ( a)
-              ( x)
-              ( ( evid A a ( hom A a')) φ)
-              ( f )
+  := \ x f → comp-is-segal A is-segal-A a' a x ( ( evid A a ( hom A a')) φ) f
 ```
-```rzk title="Remark 9.4, RS17"
-#def eq-yoneda-embedding-is-composition
+The Yoneda embedding coincides with ```#!rzk is-composition```.
+
+```rzk
+#def eq-eq-yoneda-embedding-composition
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -472,6 +505,56 @@ We prove the Yoneda embedding.
       ( x)
       ( (evid A a ( hom A a')) φ)
       ( f )
+```
+Now we cocatenate the paths to prove the result as stated in [RS17, Remark 9.4].
+
+```rzk
+#def eq-eq-phi-composition uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x) )
+  ( x : A)
+  ( f : hom A a x)
+  : (φ x) f = (is-composition A is-segal-A a a' φ x) f
+  :=
+     concat
+      ( hom A a' x)
+      ( φ x f)
+      ( ( ( yoneda-embedding A is-segal-A a a' ) ( ( evid A a ( hom A a')) φ )) x f)
+      ( is-composition A is-segal-A a a' φ x f)
+      ( eq-eq-phi-yoneda A is-segal-A a a' φ x f)
+      ( eq-eq-yoneda-embedding-composition A is-segal-A a a' φ x f )
+
+#def eq-htpy-phi-composition
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x) )
+  ( x : A)
+  : φ x = is-composition A is-segal-A a a' φ x
+  :=
+      eq-htpy
+        ( funext)
+        ( hom A a x)
+        ( \ z → hom A a' x)
+        ( φ x)
+        ( is-composition A is-segal-A a a' φ x)
+        ( \ f → eq-eq-phi-composition A is-segal-A a a' φ x f)
+
+#def htpy-htpy-phi-composition
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x) )
+  : φ = is-composition A is-segal-A a a' φ
+  := eq-htpy
+      ( funext)
+      ( A)
+      ( \ x → ( hom A a x → hom A a' x))
+      ( φ)
+      ( is-composition A is-segal-A a a' φ)
+      ( \ x → eq-htpy-phi-composition A is-segal-A a a' φ x )
 ```
 
 ## Yoneda for contravariant families

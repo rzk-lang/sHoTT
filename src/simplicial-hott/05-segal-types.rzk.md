@@ -245,8 +245,8 @@ type.
   ( A : U)
   : is-equiv (arr A) (fibered-arr A) (fibered-arr-free-arr A)
   :=
-    ( ( \ (_ , (_ , f)) → f , \ _ → refl)
-    , ( \ (_ , (_ , f)) → f , \ _ → refl))
+    ( ( (\ (_ , (_ , f)) → f) , (\ _ → refl))
+    , ( (\ (_ , (_ , f)) → f) , (\ _ → refl)))
 
 #def equiv-fibered-arr-free-arr
   ( A : U)
@@ -272,8 +272,8 @@ And the corresponding uncurried version.
   ( A : U)
   : is-equiv (arr A) (fibered-arr' A) (fibered-arr-free-arr' A)
   :=
-    ( ( \ ((_ , _) , σ) → σ , \ _ → refl)
-    , ( \ ((_ , _) , σ) → σ , \ _ → refl))
+    ( ( (\ ((_ , _) , σ) → σ) , (\ _ → refl))
+    , ( (\ ((_ , _) , σ) → σ) , (\ _ → refl)))
 ```
 
 ## The Segal condition

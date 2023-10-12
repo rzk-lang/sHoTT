@@ -41,8 +41,56 @@ This is a literate `rzk` file:
 Homotopy composition is defined in diagrammatic order like `#!rzk concat` but
 unlike composition.
 
+The following is the unit for compositions of homotopies.
+
+```rzk
+#def refl-htpy
+  (f : A → B)
+  : homotopy f f
+  := \ x → refl
+```
+
 ```rzk
 #end homotopies
+```
+
+There is also a dependent version of homotopy.
+
+```rzk
+#def dependent-homotopy
+  ( A : U)
+  ( B : A → U)
+  (f g : (a : A) → B a)
+  : U
+  := (a : A) → (f a = g a)
+```
+
+## Some path algebra for homotopies
+
+This section contains some lemmas on the groupoidal structure of homotopies.
+
+Given a homotopy between two homotopies $C : H \sim K$ this produces a homotopy
+$K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
+
+```rzk
+#def htpy-cancel-left
+ (A B : U)
+ (f g : A → B)
+ (H K : homotopy A B f g)
+ (C : dependent-homotopy A (\ a → f a = g a) H K)
+ : dependent-homotopy
+    A
+    (\ b → g b = g b)
+    (\ x → concat B (g x) (f x) (g x) (rev B (f x) (g x) (K x)) (H x))
+    (refl-htpy A B g)
+  := \ x →
+      cancel-left-path
+      (B)
+      (f x)
+      (g x)
+      (H x)
+      (K x)
+      (C x)
 ```
 
 ## Whiskering homotopies

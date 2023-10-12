@@ -380,6 +380,19 @@ The following needs to be outside the previous section because of the usage of
           ( concat-concat' A x y z q r)))
 ```
 
+A special case of this is sometimes useful
+
+```rzk
+#def cancel-left-path
+  (A : U)
+  (x y : A)
+  (p q : x = y)
+  : (p = q) → ( concat A y x y (rev A x y q) p) = refl
+  := \ α →
+      triangle-rotation A x y y p q refl α
+
+```
+
 ### Concatenation with a path and its reversal
 
 ```rzk

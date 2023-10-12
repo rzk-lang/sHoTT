@@ -345,9 +345,9 @@ We can ask that the terminal map `A → Unit` is right orthogonal to `ϕ ⊂ ψ`
 ### Proof of first alternative characterization
 
 The equivalence between `is-local-type` and `has-unique-extensions` follows
-straightforwardly from the fact that for every `σ : ϕ → A`
-we have an equivalence between the extension type `(t : ψ) → A [ϕ t ↦ σ t]`
-and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
+straightforwardly from the fact that for every `σ : ϕ → A` we have an
+equivalence between the extension type `(t : ψ) → A [ϕ t ↦ σ t]` and the fiber
+of the restriction map `(ψ → A) → (ϕ → A)`.
 
 ```rzk
 #def is-local-type-has-unique-extensions
@@ -379,7 +379,6 @@ and the fiber of the restriction map `(ψ → A) → (ϕ → A)`.
 #end has-unique-extensions
 ```
 
-
 ### Properties of local types / unique extension types
 
 We fix a shape inclusion `ϕ ⊂ ψ`.
@@ -391,8 +390,8 @@ We fix a shape inclusion `ϕ ⊂ ψ`.
 #variable ϕ : ψ → TOPE
 ```
 
-Every map between types with unique extensions / local types
-is right orthogonal.
+Every map between types with unique extensions / local types is right
+orthogonal.
 
 ```rzk
 #def is-right-orthogonal-have-unique-extensions
@@ -422,8 +421,8 @@ is right orthogonal.
     ( has-unique-extensions-is-local-type I ψ ϕ A is-lt-ψ-ϕ-A)
 ```
 
-Conversely, the property of having unique extension
-can be pulled back along any right orthogonal map.
+Conversely, the property of having unique extension can be pulled back along any
+right orthogonal map.
 
 ```rzk
 #def has-unique-extensions-right-orthogonal-has-unique-extensions
@@ -452,8 +451,8 @@ can be pulled back along any right orthogonal map.
           ( has-unique-extensions-is-local-type I ψ ϕ A is-local-A))
 ```
 
-Weak extension extensionality says that every contractible type
-has unique extensions for every shape inclusion `ϕ ⊂ ψ`.
+Weak extension extensionality says that every contractible type has unique
+extensions for every shape inclusion `ϕ ⊂ ψ`.
 
 ```rzk
 #def has-unique-extensions-is-contr uses (weakextext)
@@ -474,9 +473,8 @@ has unique extensions for every shape inclusion `ϕ ⊂ ψ`.
 ### Proof of second alternative characterization
 
 Next we prove the logical equivalence between `has-unique-extensions` and
-`is-right-orthogonal-to-shape-terminal-map`.
-This follows directly from the fact that `Unit` has unique extensions
-(using `weakextext : WeakExtExt`).
+`is-right-orthogonal-to-shape-terminal-map`. This follows directly from the fact
+that `Unit` has unique extensions (using `weakextext : WeakExtExt`).
 
 ```rzk
 #section is-right-orthogonal-to-shape-terminal-map

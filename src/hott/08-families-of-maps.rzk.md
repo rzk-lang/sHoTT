@@ -341,7 +341,7 @@ The canonical map from a type to its the free path type is an equivalence.
   : free-paths A → A
   := \ ((a,_), _) → a
 
-#def is-equiv-free-paths
+#def is-equiv-constant-free-path
   ( A : U)
   : is-equiv A (free-paths A) (constant-free-path A)
   :=

@@ -409,6 +409,29 @@ from composition and cancelling laws for equivalences.
     ( ihc (f' a''))
     ( ihc'' a'')
 
+```
+
+We can cancel the left homotopy cartesian square if its lower map
+`f' : A'' → A'` has a section.
+
+```rzk
+#def is-homotopy-cartesian-left-cancel-with-lower-section
+  ( has-section-f' : has-section A'' A' f')
+  ( ihc' : is-homotopy-cartesian A'' C'' A' C' f' F')
+  ( ihc'' : is-homotopy-cartesian A'' C'' A C
+              ( comp A'' A' A f f')
+              ( \ a'' →
+                comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+                  (F (f' a'')) (F' a'')))
+  : is-homotopy-cartesian A' C' A C f F
+  :=
+    ind-has-section A'' A' f' has-section-f'
+    ( \ a' → is-equiv (C' a') (C (f a')) (F a'))
+    ( \ a'' →
+      is-equiv-left-factor (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+      ( F' a'') (ihc' a'')
+      ( F (f' a'')) ( ihc'' a''))
+
 #end homotopy-cartesian-horizontal-calculus
 ```
 

@@ -387,7 +387,7 @@ stability properties of maps right orthogonal to it.
 Every equivalence `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
 
 ```rzk
-#def is-right-orthogonal-to-shape-is-equiv uses (extext)
+#def is-right-orthogonal-is-equiv-to-shape uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( is-equiv-α : is-equiv A' A α)
@@ -463,13 +463,36 @@ Right orthogonality is closed under homotopy.
   :=
     \ σ'' →
     is-equiv-right-factor
-      ( extension-type I ψ ϕ (\ _ → A'') σ'')
-      ( extension-type I ψ ϕ (\ _ → A') (\ t → α' (σ'' t)))
-      ( extension-type I ψ ϕ (\ _ → A) (\ t → α (α' (σ'' t))))
-      ( \ τ'' t → α' (τ'' t))
-      ( \ τ' t → α (τ' t))
-      ( is-orth-ψ-ϕ-α (\ t → α' (σ'' t)))
-      ( is-orth-ψ-ϕ-αα' σ'')
+     ( extension-type I ψ ϕ (\ _ → A'') σ'')
+     ( extension-type I ψ ϕ (\ _ → A') (\ t → α' (σ'' t)))
+     ( extension-type I ψ ϕ (\ _ → A) (\ t → α (α' (σ'' t))))
+     ( \ τ'' t → α' (τ'' t))
+     ( \ τ' t → α (τ' t))
+     ( is-orth-ψ-ϕ-α (\ t → α' (σ'' t)))
+     ( is-orth-ψ-ϕ-αα' σ'')
+```
+
+### Left cancellation with section (weak version)
+
+This should hold even without assuming `is-orth-ψ-ϕ-α'`.
+
+```rzk
+#def is-right-orthogonal-weak-left-cancel-with-section-to-shape
+      uses (naiveextext is-orth-ψ-ϕ-α' is-orth-ψ-ϕ-αα')
+  ( has-section-α' : has-section A'' A' α')
+  : is-right-orthogonal-to-shape I ψ ϕ A' A α
+  :=
+    is-homotopy-cartesian-left-cancel-with-lower-section
+        ( ϕ → A'' ) ( \ σ'' → (t : ψ) → A'' [ϕ t ↦ σ'' t])
+        ( ϕ → A' ) ( \ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
+        ( ϕ → A ) ( \ σ → (t : ψ) → A [ϕ t ↦ σ t])
+        ( \ σ'' t → α' (σ'' t)) ( \ _ τ'' x → α' (τ'' x) )
+        ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
+    ( has-section-extension-has-section-family naiveextext I (\ t → ϕ t)
+          ( \ _ → A'') (\ _ → A') (\ _ → α')
+      ( \ _ → has-section-α'))
+    ( is-orth-ψ-ϕ-α')
+    ( is-orth-ψ-ϕ-αα')
 ```
 
 ### Stability under pullback
@@ -625,6 +648,55 @@ Then we can deduce that right orthogonal maps are preserved under pullback:
         ( \ t → homotopy-relative-product A A' α B f (σB' t))))
 
 #end right-orthogonal-calculus
+```
+
+### Right orthogonal maps are closed under equivalence
+
+If two maps `α : A' → A` and `β : B' → B` are equivalent,
+then if one is right orthogonal to `ϕ ⊂ ψ`, then so is the other.
+
+```rzk
+#section is-right-orthogonal-equiv-to-shape
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variables A' A : U
+#variable α : A' → A
+#variables B' B : U
+#variable β : B' → B
+
+#def is-right-orthogonal-equiv-to-shape uses (funext extext)
+  ( (((s', s), η), (is-equiv-s', is-equiv-s)) : Equiv-of-maps A' A α B' B β)
+  ( is-orth-ψ-ϕ-β : is-right-orthogonal-to-shape I ψ ϕ B' B β)
+  : is-right-orthogonal-to-shape I ψ ϕ A' A α
+  :=
+    is-right-orthogonal-right-cancel-to-shape I ψ ϕ A' A B α s
+    ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A B s is-equiv-s)
+    ( is-right-orthogonal-homotopy-to-shape I ψ ϕ A' B
+      ( \ a' → β (s' a')) ( \ a' → s (α a')) ( η)
+      ( is-right-orthogonal-comp-to-shape I ψ ϕ A' B' B s' β
+        ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A' B' s' is-equiv-s')
+        ( is-orth-ψ-ϕ-β)))
+
+#def is-right-orthogonal-equiv-to-shape'
+  uses (funext extext naiveextext)
+  ( (((s', s), η), (is-equiv-s', is-equiv-s)) : Equiv-of-maps A' A α B' B β)
+  ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : is-right-orthogonal-to-shape I ψ ϕ B' B β
+  :=
+    is-right-orthogonal-weak-left-cancel-with-section-to-shape
+          I ψ ϕ A' B' B s' β
+    ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A' B' s' is-equiv-s')
+    ( is-right-orthogonal-homotopy-to-shape I ψ ϕ A' B
+      ( \ a' → s (α a')) ( \ a' → β (s' a'))
+      ( rev-homotopy A' B ( \ a' → β (s' a')) ( \ a' → s (α a')) ( η))
+      ( is-right-orthogonal-comp-to-shape I ψ ϕ A' A B α s
+        ( is-orth-ψ-ϕ-α)
+        ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A B s is-equiv-s)))
+    ( second is-equiv-s')
+
+#end is-right-orthogonal-equiv-to-shape
 ```
 
 ## Types with unique extension

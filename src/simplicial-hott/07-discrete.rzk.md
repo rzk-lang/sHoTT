@@ -44,6 +44,110 @@ identity types.
   := (x : A) → (y : A) → is-equiv (x = y) (hom A x y) (hom-eq A x y)
 ```
 
+## Alternative definitions
+
+One can characterize discrete types in various other equivalent:
+
+```rzk
+#section discrete-types-alternative
+
+#variable A : U
+
+#def is-Δ¹-local
+  : U
+  := is-equiv A (Δ¹ → A) (\ a _ → a)
+```
+
+```rzk
+#def is-left-local
+  : U
+  := is-local-type 2 Δ¹ (\ t → t ≡ 0₂) A
+
+#def is-right-local
+  : U
+  := is-local-type 2 Δ¹ (\ t → t ≡ 1₂) A
+```
+
+### Alternative definitions : proofs
+
+First ot all, note that we have two section-retraction pairs
+
+```rzk
+#def is-section-retraction-0-Δ¹-0
+  : is-section-retraction-pair
+    ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 0₂) → A)
+    ( \ a _ → a) (\ τ t → τ t)
+  :=
+    ( ( \ σ → σ 0₂ , \ _ → refl)
+    , ( \ σ → σ 0₂ , \ _ → refl))
+
+#def is-section-retraction-1-Δ¹-1
+  : is-section-retraction-pair
+    ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 1₂) → A)
+    ( \ a _ → a) (\ τ t → τ t)
+  :=
+    ( ( \ σ → σ 1₂ , \ _ → refl)
+    , ( \ σ → σ 1₂ , \ _ → refl))
+```
+
+From this it follows that the three alternative definitions are all equivalent
+to each other.
+
+```rzk
+#def is-left-local-is-Δ¹-local
+  : is-Δ¹-local → is-left-local
+  :=
+    is-equiv-retraction-is-equiv-section-is-section-retraction-pair
+      ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 0₂) → A)
+      ( \ a _ → a) (\ τ t → τ t)
+    ( is-section-retraction-0-Δ¹-0)
+
+#def is-Δ¹-local-is-left-local
+  : is-left-local → is-Δ¹-local
+  :=
+    is-equiv-section-is-equiv-retraction-is-section-retraction-pair
+      ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 0₂) → A)
+      ( \ a _ → a) (\ τ t → τ t)
+    ( is-section-retraction-0-Δ¹-0)
+
+#def is-right-local-is-Δ¹-local
+  : is-Δ¹-local → is-right-local
+  :=
+    is-equiv-retraction-is-equiv-section-is-section-retraction-pair
+      ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 1₂) → A)
+      ( \ a _ → a) (\ τ t → τ t)
+    ( is-section-retraction-1-Δ¹-1)
+
+#def is-Δ¹-local-is-right-local
+  : is-right-local → is-Δ¹-local
+  :=
+    is-equiv-section-is-equiv-retraction-is-section-retraction-pair
+      ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 1₂) → A)
+      ( \ a _ → a) (\ τ t → τ t)
+    ( is-section-retraction-1-Δ¹-1)
+```
+
+Next, we aim to compare the original `is-discrete` with `is-Δ¹-local`.
+
+To do this, we note that we have an equivalence of maps between
+`A → (Δ¹ → A)` and the total map of the family
+`\ (a, b) → hom-eq a b : a = b → hom A a b` .
+
+```rzk
+#def map-of-maps-total-map-hom-eq-const-Δ¹
+  : map-of-maps
+    ( A) ( Δ¹ → A) (\ a _ → a)
+    ( Σ ( (a,b) : product A A) , a = b)
+    ( Σ ( (a,b) : product A A) , hom A a b)
+    ( \ ((a,b), p) → ((a,b), hom-eq A a b p))
+  :=
+    ( ( \ a → ((a,a), refl)
+      , \ σ → ((σ 0₂, σ 1₂), σ))
+    , \ _ → refl)
+
+#end discrete-types-alternative
+```
+
 ## Families of discrete types
 
 By function extensionality, the dependent function type associated to a family

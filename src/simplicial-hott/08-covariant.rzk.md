@@ -593,12 +593,6 @@ Finally, we deduce the theorem by some straightforward logical bookkeeping.
 
 ## Total type of a covariant family over a Segal type
 
-We prove that the total type of a covariant family over a Segal type is a Segal
-type. We split the proof into intermediate steps. Let `A` be a type and a type
-family `#!rzk C : A → U`.
-
-### Category theoretic proof
-
 For every covariant family `C : A → U`, the projection `Σ A, C → A` is an left
 fibration, hence an inner fibration. It immediately follows that if `A` is
 Segal, then so is `Σ A, C`.
@@ -615,63 +609,6 @@ Segal, then so is `Σ A, C`.
         ( is-left-fibration-is-naive-left-fibration
             ( total-type A C) A (\ (a,_) → a)
             ( is-naive-left-fibration-is-covariant A C is-covariant-C))
-```
-
-### Type theoretic proof
-
-We examine the fibers of the horn restriction on the total type of `C`. First
-note we have the equivalences:
-
-```rzk
-#def apply-4-3
-  ( A : U )
-  ( C : A → U )
-  : Equiv
-    ( Λ → (Σ ( a : A ), C a ) )
-    ( Σ ( f : Λ → A ), ( t : Λ ) → ( C ( f t ) ) )
-  :=
-    axiom-choice ( 2 × 2 ) Λ ( \ t → BOT ) ( \ t → A )
-    ( \ t a → C a ) ( \ t → recBOT ) ( \ t → recBOT )
-
-#def apply-4-3-again
-  ( A : U )
-  ( C : A → U )
-  : Equiv
-    ( Δ² → (Σ ( a : A ), C a ) )
-    ( Σ ( f : Δ² → A ), ( t : Δ² ) → ( C ( f t ) ) )
-  :=
-    axiom-choice ( 2 × 2 ) Δ² ( \ t → BOT ) ( \ t → A )
-    ( \ t a → C a ) ( \ t → recBOT ) ( \ t → recBOT )
-```
-
-We show that the induced map between this types is an equivalence. First we
-exhibit the map:
-
-```rzk
-#def total-inner-horn-restriction
-  ( A : U )
-  ( C : A → U )
-  : ( Σ ( f : Δ² → A ), ( t : Δ² ) → ( C ( f t ) ) ) →
-    ( Σ ( g : Λ → A ), ( t : Λ ) → ( C ( g t ) ) )
-  := \ ( f, μ ) → ( \ t → f t , \ t → μ t)
-```
-
-Next we compute the fibers of this map by showing the equivalence as claimed in
-the proof of Theorem 8.8 in RS17. The following maps will be packed into some
-`#!rzk Equiv`.
-
-```rzk
-#def map-to-total-inner-horn-restriction-fiber
-  ( A : U )
-  ( C : A → U )
-  ( (g , φ) : ( Σ ( k : Λ → A ), ( t : Λ ) → C ( k t ) ) )
-  : ( Σ (h : (t : Δ²) → A [ Λ t ↦ g t ] ) ,
-      (( t : Δ² ) → C (h t) [ Λ t ↦ φ t])) →
-    ( fib ( Σ ( l : Δ² → A ), ( t : Δ² ) → ( C ( l t ) ))
-          ( Σ ( k : Λ → A ), ( t : Λ ) → ( C ( k t ) ))
-          ( total-inner-horn-restriction A C )
-          ( g,  φ) )
-  := \ ( f,μ ) → ( ( \ t → f t, \ t → μ t  ), refl )
 ```
 
 ## Representable covariant families

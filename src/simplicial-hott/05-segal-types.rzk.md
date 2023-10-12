@@ -686,7 +686,6 @@ then $(x : X) → A x$ is a Segal type.
 
 In particular, the arrow type of a Segal type is Segal.
 
-
 ```rzk title="RS17, Corollary 5.6(ii), special case for locality at the horn inclusion"
 #def is-local-horn-inclusion-arr uses (extext)
   ( A : U)

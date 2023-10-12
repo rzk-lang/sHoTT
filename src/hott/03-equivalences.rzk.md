@@ -233,8 +233,7 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
   ( s : (a : A) → C (f a))
   ( b : B)
   : C b
-  :=
-    transport B C (f (sec-f b)) b (ε-f b) (s (sec-f b))
+  := transport B C (f (sec-f b)) b (ε-f b) (s (sec-f b))
 ```
 
 It is convenient to have available the special case where `f` is an equivalence.
@@ -244,8 +243,7 @@ It is convenient to have available the special case where `f` is an equivalence.
   ( A B : U)
   ( (f, is-equiv-f) : Equiv A B)
   : ( C : B → U) → ((a : A) → C (f a)) → (b : B) → C b
-  :=
-    ind-has-section A B f (second is-equiv-f)
+  := ind-has-section A B f (second is-equiv-f)
 ```
 
 ## Composing equivalences

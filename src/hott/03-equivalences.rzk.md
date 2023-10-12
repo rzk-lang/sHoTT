@@ -230,11 +230,11 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
   ( f : A → B)
   ( ( sec-f , ε-f) : has-section A B f)
   ( C : B → U)
-  ( s : ( a : A) → C ( f a))
+  ( s : (a : A) → C (f a))
   ( b : B)
   : C b
   :=
-    transport B C ( f (sec-f b)) b ( ε-f b) ( s (sec-f b))
+    transport B C (f (sec-f b)) b (ε-f b) (s (sec-f b))
 ```
 
 It is convenient to have available the special case where `f` is an equivalence.
@@ -243,7 +243,7 @@ It is convenient to have available the special case where `f` is an equivalence.
 #def ind-has-section-equiv
   ( A B : U)
   ( (f, is-equiv-f) : Equiv A B)
-  : ( C : B → U) → (( a : A) → C ( f a)) → ( b : B) → C b
+  : ( C : B → U) → ((a : A) → C (f a)) → (b : B) → C b
   :=
     ind-has-section A B f (second is-equiv-f)
 ```
@@ -428,7 +428,7 @@ retraction the first map is an equivalence, and dually.
     ( ( comp C A B f retr-gf ,
         ind-has-section A B f has-section-f
           ( \ b → f (retr-gf (g b)) = b)
-          ( \ a → ap A B (retr-gf (g ( f a))) a f (η-gf a))
+          ( \ a → ap A B (retr-gf (g (f a))) a f (η-gf a))
       ) ,
       ( comp C A B f sec-gf, ε-gf)
     )

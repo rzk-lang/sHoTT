@@ -137,14 +137,14 @@ and the total map of the family `\ (a, b) → hom-eq a b : a = b → hom A a b` 
   : Equiv-of-maps
     ( A) ( Δ¹ → A)
     ( \ a _ → a)
-    ( free-paths A) ( free-arrows A)
+    ( free-paths A) ( fibered-arr' A)
     ( \ ((a,b), p) → ((a,b), hom-eq A a b p))
   :=
   ( ( ( constant-free-path A
-      , free-arrow A)
+      , fibered-arr-free-arr' A)
     , \ _ → refl)
   , ( is-equiv-constant-free-path A
-    , is-equiv-free-arrow A))
+    , is-equiv-fibered-arr-free-arr' A))
 ```
 
 The rest is just logical bookkeeping using that equivalences are preserved under
@@ -156,7 +156,7 @@ equivalences of maps and when passing to/from total types.
   : is-Δ¹-local
   :=
     is-equiv-Equiv-is-equiv ( A) ( Δ¹ → A) ( \ a _ → a)
-      ( free-paths A) ( free-arrows A)
+      ( free-paths A) ( fibered-arr' A)
       ( \ ((a,b), p) → ((a,b), hom-eq A a b p))
     ( equiv-of-maps-total-map-hom-eq-const-Δ¹)
     ( family-of-equiv-total-equiv
@@ -173,7 +173,7 @@ equivalences of maps and when passing to/from total types.
         ( \ (a,b) → hom A a b)
       ( \ (a,b) → hom-eq A a b)
       ( is-equiv-Equiv-is-equiv' ( A) ( Δ¹ → A) ( \ a _ → a)
-          ( free-paths A) ( free-arrows A)
+          ( free-paths A) ( fibered-arr' A)
           ( \ ((a,b), p) → ((a,b), hom-eq A a b p))
         ( equiv-of-maps-total-map-hom-eq-const-Δ¹)
         (is-Δ¹-local-A)))
@@ -375,50 +375,40 @@ Discrete types are automatically Segal types.
         ( ( \ σ t s → (second (second σ)) (t , s)) , (\ σ → refl))))
 ```
 
-The equivalence underlying `#!rzk equiv-arr-Σ-hom`:
-
 ```rzk
-#def fibered-arr-free-arr
-  : (arr A) → (Σ (u : A) , (Σ (v : A) , hom A u v))
-  := \ k → (k 0₂ , (k 1₂ , k))
-
-#def is-equiv-fibered-arr-free-arr
-  : is-equiv (arr A) (Σ (u : A) , (Σ (v : A) , hom A u v)) (fibered-arr-free-arr)
-  := is-equiv-arr-Σ-hom A
-
 #def is-equiv-ap-fibered-arr-free-arr uses (w x y z)
   : is-equiv
       ( f =_{Δ¹ → A} g)
-      ( fibered-arr-free-arr f = fibered-arr-free-arr g)
+      ( fibered-arr-free-arr A f = fibered-arr-free-arr A g)
       ( ap
         ( arr A)
         ( Σ (u : A) , (Σ (v : A) , (hom A u v)))
         ( f)
         ( g)
-        ( fibered-arr-free-arr))
+        ( fibered-arr-free-arr A))
   :=
     is-emb-is-equiv
       ( arr A)
       ( Σ (u : A) , (Σ (v : A) , (hom A u v)))
-      ( fibered-arr-free-arr)
-      ( is-equiv-fibered-arr-free-arr)
+      ( fibered-arr-free-arr A)
+      ( is-equiv-fibered-arr-free-arr A)
       ( f)
       ( g)
 
 #def equiv-eq-fibered-arr-eq-free-arr uses (w x y z)
-  : Equiv (f =_{Δ¹ → A} g) (fibered-arr-free-arr f = fibered-arr-free-arr g)
+  : Equiv (f =_{Δ¹ → A} g) (fibered-arr-free-arr A f = fibered-arr-free-arr A g)
   :=
     equiv-ap-is-equiv
       ( arr A)
       ( Σ (u : A) , (Σ (v : A) , (hom A u v)))
-      ( fibered-arr-free-arr)
-      ( is-equiv-fibered-arr-free-arr)
+      ( fibered-arr-free-arr A)
+      ( is-equiv-fibered-arr-free-arr A)
       ( f)
       ( g)
 
 #def equiv-sigma-over-product-hom-eq
   : Equiv
-      ( fibered-arr-free-arr f = fibered-arr-free-arr g)
+      ( fibered-arr-free-arr A f = fibered-arr-free-arr A g)
       ( Σ ( p : x = z) ,
           ( Σ ( q : y = w) ,
               ( product-transport A A (hom A) x z y w p q f = g)))
@@ -426,8 +416,8 @@ The equivalence underlying `#!rzk equiv-arr-Σ-hom`:
     extensionality-Σ-over-product
       ( A) (A)
       ( hom A)
-      ( fibered-arr-free-arr f)
-      ( fibered-arr-free-arr g)
+      ( fibered-arr-free-arr A f)
+      ( fibered-arr-free-arr A g)
 
 #def equiv-square-sigma-over-product uses (extext is-discrete-A)
   : Equiv
@@ -456,7 +446,7 @@ The equivalence underlying `#!rzk equiv-arr-Σ-hom`:
                     (Δ¹ t) ∧ (s ≡ 1₂) ↦ k t])))
       ( equiv-comp
         ( f =_{Δ¹ → A} g)
-        ( fibered-arr-free-arr f = fibered-arr-free-arr g)
+        ( fibered-arr-free-arr A f = fibered-arr-free-arr A g)
         ( Σ ( p : x = z) ,
             ( Σ ( q : y = w) ,
                 ( product-transport A A (hom A) x z y w p q f = g)))

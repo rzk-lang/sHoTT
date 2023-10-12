@@ -763,8 +763,8 @@ equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
               ( \ t → second (second (second (famequiv t))) (b t))))))
 ```
 
-Similarly, a fiberwise section of a map `(t : ψ) → A t → B t` induces a
-section on extension types
+Similarly, a fiberwise section of a map `(t : ψ) → A t → B t` induces a section
+on extension types
 
 ```rzk
 #def has-section-extension-has-section-family uses (naiveextext)

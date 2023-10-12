@@ -8,8 +8,8 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-Some of the definitions in this file rely on extension extensionality
-or function extensionality:
+Some of the definitions in this file rely on extension extensionality or
+function extensionality:
 
 ```rzk
 #assume naiveextext : NaiveExtExt
@@ -652,8 +652,8 @@ Then we can deduce that right orthogonal maps are preserved under pullback:
 
 ### Right orthogonal maps are closed under equivalence
 
-If two maps `α : A' → A` and `β : B' → B` are equivalent,
-then if one is right orthogonal to `ϕ ⊂ ψ`, then so is the other.
+If two maps `α : A' → A` and `β : B' → B` are equivalent, then if one is right
+orthogonal to `ϕ ⊂ ψ`, then so is the other.
 
 ```rzk
 #section is-right-orthogonal-equiv-to-shape

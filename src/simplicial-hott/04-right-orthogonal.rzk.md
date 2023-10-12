@@ -41,7 +41,7 @@ orthogonal_ to the map `α`, if `α : A' → A` is right orthogonal to `ϕ ⊂ �
 ```rzk title="BW23, Section 3"
 #def is-right-orthogonal-to-shape
   ( I : CUBE)
-  ( ψ : I → TOPE )
+  ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
   ( A' A : U)
   ( α : A' → A)
@@ -55,9 +55,9 @@ orthogonal_ to the map `α`, if `α : A' → A` is right orthogonal to `ϕ ⊂ �
 
 ## Contractible relative extension types
 
-Using `ExtExt`, we can characterize right orthogonal maps
-in terms of the contractibility of relative extension types
-or, equivalently, generalized extension types.
+Using `ExtExt`, we can characterize right orthogonal maps in terms of the
+contractibility of relative extension types or, equivalently, generalized
+extension types.
 
 ```rzk
 #section has-contr-relative-extension-types-iff-is-right-orthogonal
@@ -427,16 +427,14 @@ stability properties of maps right orthogonal to it.
 
 ### Stability under pullback
 
-Right orthogonal maps are stable under pullback.
-More precisely: If `α : A' → A` is right orthogonal,
-then so is the second projection
+Right orthogonal maps are stable under pullback. More precisely: If `α : A' → A`
+is right orthogonal, then so is the second projection
 `relative-product A A' α B f → B` for every `f : B → A`.
 
-To prove this, we first show that each relative extension type
-of `relative-product A A' α B f → B`,
-is a retract of a generalized extension type for `A' → A`.
-Since the latter are all contractible by assumption,
-the same follows for the former.
+To prove this, we first show that each relative extension type of
+`relative-product A A' α B f → B`, is a retract of a generalized extension type
+for `A' → A`. Since the latter are all contractible by assumption, the same
+follows for the former.
 
 ```rzk
 #variable B : U

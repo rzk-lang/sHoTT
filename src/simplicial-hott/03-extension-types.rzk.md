@@ -1066,7 +1066,8 @@ $\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\r
 
 ### Pointwise homotopy extension types
 
-Using `ExtExt` we can write the homotopy in the homotopy extension type pointwise.
+Using `ExtExt` we can write the homotopy in the homotopy extension type
+pointwise.
 
 ```rzk
 #section pointwise-homotopy-extension-type
@@ -1159,9 +1160,8 @@ Given a map `α : A' → A`, there is also a notion of relative extension types.
 
 ### Generalized relative extension types
 
-We will also need to allow more general relative extension types,
-where we start with a `τ : ψ → A` that does not strictly restrict to
-`\ t → α (σ' t)`.
+We will also need to allow more general relative extension types, where we start
+with a `τ : ψ → A` that does not strictly restrict to `\ t → α (σ' t)`.
 
 ```rzk
 #section general-extension-types
@@ -1182,8 +1182,8 @@ where we start with a `τ : ψ → A` that does not strictly restrict to
     , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ h t]
 ```
 
-If all ordinary relative extension types are contractible,
-then also all generalized ones.
+If all ordinary relative extension types are contractible, then also all
+generalized ones.
 
 ```rzk
 #def has-contr-relative-extension-types

@@ -218,11 +218,11 @@ Extension types are also used to define the type of commutative triangles:
 
 ## Free arrow types
 
-A free arrow in `A` can be described as a triple consisting of two endpoints
-and the arrow between them.
-This is essentially a special case of `cofibration-composition`, but invoking it
-would require passing through the identification `(product A A) ≃ (∂Δ¹ → A)`.
-Hence it is faster to just show it directly.
+A free arrow in `A` can be described as a triple consisting of two endpoints and
+the arrow between them. This is essentially a special case of
+`cofibration-composition`, but invoking it would require passing through the
+identification `(product A A) ≃ (∂Δ¹ → A)`. Hence it is faster to just show it
+directly.
 
 ```rzk
 #def free-arrows

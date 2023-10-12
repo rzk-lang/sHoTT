@@ -8,11 +8,13 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-Some of the definitions in this file rely on extension extensionality:
+Some of the definitions in this file rely on extension extensionality
+or function extensionality:
 
 ```rzk
 #assume naiveextext : NaiveExtExt
 #assume extext : ExtExt
+#assume funext : FunExt
 ```
 
 ## Right orthogonal maps with respect to shapes
@@ -378,6 +380,51 @@ stability properties of maps right orthogonal to it.
 #variable I : CUBE
 #variable ψ : I → TOPE
 #variable ϕ : ψ → TOPE
+```
+
+### Equivalences are right orthogonal
+
+Every equivalence `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
+
+```rzk
+#def is-right-orthogonal-to-shape-is-equiv uses (extext)
+  ( A' A : U)
+  ( α : A' → A)
+  ( is-equiv-α : is-equiv A' A α)
+  : is-right-orthogonal-to-shape I ψ ϕ A' A α
+  :=
+    is-homotopy-cartesian-is-horizontal-equiv
+      ( ϕ → A') (\ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
+      ( ϕ → A) (\ σ → (t : ψ) → A [ϕ t ↦ σ t])
+      ( \ σ' t → α (σ' t))
+      ( \ _ τ' t → α (τ' t))
+      ( second
+        ( equiv-extension-equiv-family extext I ( \ t → ϕ t)
+          ( \ _ → A') ( \ _ → A) ( \ _ → (α , is-equiv-α))))
+     ( is-equiv-Equiv-is-equiv'
+         ( ψ → A') ( ψ → A) ( \ τ' t → α (τ' t))
+         ( Σ (σ' : ϕ → A') , (t : ψ) → A' [ϕ t ↦ σ' t])
+         ( Σ (σ : ϕ → A) , (t : ψ) → A [ϕ t ↦ σ t])
+         ( \ (σ' , τ') → ( \ t → α (σ' t) , \ t → α (τ' t)))
+       ( cofibration-composition-functorial I ψ ϕ ( \ _ → BOT)
+           ( \ _ → A') ( \ _ → A) ( \ _ → α) ( \ _ → recBOT))
+       ( second
+         ( equiv-extension-equiv-family extext I ( \ t → ψ t)
+           ( \ _ → A') ( \ _ → A) ( \ _ → (α , is-equiv-α)))))
+```
+
+Right orthogonality is closed under homotopy.
+
+```rzk
+#def is-right-orthogonal-homotopy-to-shape uses (funext)
+  ( A' A : U)
+  ( α β : A' → A)
+  ( h : homotopy A' A α β)
+  : is-right-orthogonal-to-shape I ψ ϕ A' A α
+  → is-right-orthogonal-to-shape I ψ ϕ A' A β
+  :=
+    transport (A' → A) ( is-right-orthogonal-to-shape I ψ ϕ A' A) α β
+    ( first (first (funext A' (\ _ → A) α β)) h)
 ```
 
 ### Stability under composition

@@ -237,8 +237,6 @@ Discrete types are automatically Segal types.
         ( ( \ σ t s → (second (second σ)) (t , s)) , (\ σ → refl))))
 ```
 
-The equivalence underlying `#!rzk equiv-arr-Σ-hom`:
-
 ```rzk
 #def is-equiv-ap-fibered-arr-free-arr uses (w x y z)
   : is-equiv

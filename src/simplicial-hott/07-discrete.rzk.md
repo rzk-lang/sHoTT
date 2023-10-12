@@ -240,47 +240,39 @@ Discrete types are automatically Segal types.
 The equivalence underlying `#!rzk equiv-arr-Σ-hom`:
 
 ```rzk
-#def fibered-arr-free-arr
-  : (arr A) → (Σ (u : A) , (Σ (v : A) , hom A u v))
-  := \ k → (k 0₂ , (k 1₂ , k))
-
-#def is-equiv-fibered-arr-free-arr
-  : is-equiv (arr A) (Σ (u : A) , (Σ (v : A) , hom A u v)) (fibered-arr-free-arr)
-  := is-equiv-arr-Σ-hom A
-
 #def is-equiv-ap-fibered-arr-free-arr uses (w x y z)
   : is-equiv
       ( f =_{Δ¹ → A} g)
-      ( fibered-arr-free-arr f = fibered-arr-free-arr g)
+      ( fibered-arr-free-arr A f = fibered-arr-free-arr A g)
       ( ap
         ( arr A)
         ( Σ (u : A) , (Σ (v : A) , (hom A u v)))
         ( f)
         ( g)
-        ( fibered-arr-free-arr))
+        ( fibered-arr-free-arr A))
   :=
     is-emb-is-equiv
       ( arr A)
       ( Σ (u : A) , (Σ (v : A) , (hom A u v)))
-      ( fibered-arr-free-arr)
-      ( is-equiv-fibered-arr-free-arr)
+      ( fibered-arr-free-arr A)
+      ( is-equiv-fibered-arr-free-arr A)
       ( f)
       ( g)
 
 #def equiv-eq-fibered-arr-eq-free-arr uses (w x y z)
-  : Equiv (f =_{Δ¹ → A} g) (fibered-arr-free-arr f = fibered-arr-free-arr g)
+  : Equiv (f =_{Δ¹ → A} g) (fibered-arr-free-arr A f = fibered-arr-free-arr A g)
   :=
     equiv-ap-is-equiv
       ( arr A)
       ( Σ (u : A) , (Σ (v : A) , (hom A u v)))
-      ( fibered-arr-free-arr)
-      ( is-equiv-fibered-arr-free-arr)
+      ( fibered-arr-free-arr A)
+      ( is-equiv-fibered-arr-free-arr A)
       ( f)
       ( g)
 
 #def equiv-sigma-over-product-hom-eq
   : Equiv
-      ( fibered-arr-free-arr f = fibered-arr-free-arr g)
+      ( fibered-arr-free-arr A f = fibered-arr-free-arr A g)
       ( Σ ( p : x = z) ,
           ( Σ ( q : y = w) ,
               ( product-transport A A (hom A) x z y w p q f = g)))
@@ -288,8 +280,8 @@ The equivalence underlying `#!rzk equiv-arr-Σ-hom`:
     extensionality-Σ-over-product
       ( A) (A)
       ( hom A)
-      ( fibered-arr-free-arr f)
-      ( fibered-arr-free-arr g)
+      ( fibered-arr-free-arr A f)
+      ( fibered-arr-free-arr A g)
 
 #def equiv-square-sigma-over-product uses (extext is-discrete-A)
   : Equiv
@@ -318,7 +310,7 @@ The equivalence underlying `#!rzk equiv-arr-Σ-hom`:
                     (Δ¹ t) ∧ (s ≡ 1₂) ↦ k t])))
       ( equiv-comp
         ( f =_{Δ¹ → A} g)
-        ( fibered-arr-free-arr f = fibered-arr-free-arr g)
+        ( fibered-arr-free-arr A f = fibered-arr-free-arr A g)
         ( Σ ( p : x = z) ,
             ( Σ ( q : y = w) ,
                 ( product-transport A A (hom A) x z y w p q f = g)))

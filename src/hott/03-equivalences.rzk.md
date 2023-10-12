@@ -533,6 +533,50 @@ The retraction associated with an equivalence is an equivalence.
       ( is-equiv-section-is-equiv A B f is-equiv-f)
 ```
 
+## Section-retraction pairs
+
+A pair of maps `s : A' → B` and `r : B → A` is a section-retraction pair
+if the composite `A' → A` is an equivalence.
+
+```rzk
+#section is-section-retraction-pair
+
+#variables A' B A : U
+#variable s : A' → B
+#variable r : B → A
+
+
+#def is-section-retraction-pair
+  : U
+  := is-equiv A' A (comp A' B A r s)
+```
+
+In a section-retraction pair, if one of `s : A' → B` and `r : B → A`
+is an equivalence, then so is the other.
+
+This is just a rephrasing of `is-equiv-left-factor` and `is-equiv-right-factor`.
+
+```rzk
+#variable is-sec-rec-pair : is-section-retraction-pair
+
+#def is-equiv-section-is-equiv-retraction-is-section-retraction-pair
+  ( is-equiv-r : is-equiv B A r)
+  : is-equiv A' B s
+  :=
+    is-equiv-right-factor A' B A s r
+    ( is-equiv-r) ( is-sec-rec-pair)
+
+#def is-equiv-retraction-is-equiv-section-is-section-retraction-pair
+  ( is-equiv-s : is-equiv A' B s)
+  : is-equiv B A r
+  :=
+    is-equiv-left-factor A' B A
+    ( s) ( is-equiv-s)
+    ( r) ( is-sec-rec-pair)
+
+#end is-section-retraction-pair
+```
+
 ## Function extensionality
 
 By path induction, an identification between functions defines a homotopy.

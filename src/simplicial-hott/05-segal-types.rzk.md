@@ -216,6 +216,36 @@ Extension types are also used to define the type of commutative triangles:
         t₂ ≡ t₁ ↦ h t₂]   -- the diagonal is exactly `h`
 ```
 
+## Free arrow types
+
+A free arrow in `A` can be described as a triple consisting of two endpoints
+and the arrow between them.
+This is essentially a special case of `cofibration-composition`, but invoking it
+would require passing through the identification `(product A A) ≃ (∂Δ¹ → A)`.
+Hence it is faster to just show it directly.
+
+```rzk
+#def free-arrows
+  ( A : U)
+  : U
+  :=
+    Σ ((a,b) : product A A), hom A a b
+
+#def free-arrow
+  ( A : U)
+  : ( Δ¹ → A) → free-arrows A
+  := \ σ → ((σ 0₂, σ 1₂), σ)
+
+#def is-equiv-free-arrow
+  ( A : U)
+  : is-equiv (Δ¹ → A) (free-arrows A) (free-arrow A)
+  :=
+    ( ( \ ((_,_), σ) → σ
+      , \ _ → refl)
+    , ( \ ((_,_), σ) → σ
+      , \ _ → refl))
+```
+
 ## The Segal condition
 
 A type is **Segal** if every composable pair of arrows has a unique composite.

@@ -965,3 +965,67 @@ The following is the same as above but with alternating arguments.
       ( r)
       ( H)
 ```
+
+The function below represents a somewhat special situation, which nevertheless
+arises when dealing with certain naturality diagrams. One has a commutative
+square and a path that cancels that top path. Then the type below witnesses the
+equivalence between the right side of the square and a particular zig-zag of
+paths.
+
+```rzk
+#def eq-top-cancel-commutative-square
+  (A : U)
+  (v w y z : A)
+  (p : v = w)
+  (q : w = v)
+  (s : w = y)
+  (r : v = z)
+  (t : y = z)
+  (H : (concat A w v z q r) = (concat A w y z s t))
+  (H' : (concat A v w v p q) = refl)
+  : r = (concat A v w z p (concat A w y z s t))
+  :=
+    (concat
+    (v = z)
+    ( r )
+    ( concat A v v z refl r)
+    ( concat A v w z p (concat A w y z s t) )
+    (rev
+      (v = z)
+      (concat  A v v z refl r )
+      ( r )
+      (left-unit-concat A v z r))
+    (concat
+     ( v = z)
+     ( concat A v v z refl r)
+     ( concat A v v z (concat A v w v p q) r )
+     ( concat A v w z p (concat A w y z s t ))
+     (rev
+      ( v = z )
+      (concat A v v z  (concat A v w v p q) r )
+      (concat A v v z refl r)
+      ( concat-eq-left
+        ( A)
+        ( v)
+        ( v)
+        ( z)
+        ( concat A v w v p q )
+        ( refl )
+        ( H')
+        ( r) ))
+     ( concat
+       ( v = z)
+       ( concat A v v z (concat A v w v p q) r)
+       ( concat A v w z p (concat A w v z q r)  )
+       ( concat A v w z p (concat A w y z s t))
+       ( associative-concat A v w v z p q r)
+       ( concat-eq-right
+        ( A )
+        ( v )
+        ( w)
+        ( z)
+        ( p)
+        ( concat A w v z q r)
+        ( concat A w y z s t)
+        ( H)))))
+```

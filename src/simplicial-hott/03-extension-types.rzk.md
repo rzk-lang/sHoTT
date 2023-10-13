@@ -48,7 +48,7 @@ restriction map `(ψ → A) → (ϕ → A)`, which we can view as the types of
   :=
     \ τ → ( τ, refl)
 
-#def extension-type-weakening-section
+#def section-extension-type-weakening'
   : ( σ : (t : ϕ) → A t)
   → ( th : homotopy-extension-type σ)
   → Σ (τ : extension-type σ), (( τ, refl) =_{homotopy-extension-type σ} th)
@@ -63,17 +63,24 @@ restriction map `(ψ → A) → (ϕ → A)`, which we can view as the types of
   ( σ : (t : ϕ) → A t)
   : (homotopy-extension-type σ) → (extension-type σ)
   :=
-    \ th → first (extension-type-weakening-section σ th)
+    \ th → first (section-extension-type-weakening' σ th)
+
+#def has-section-extension-type-weakening
+  ( σ : (t : ϕ) → A t)
+  : has-section (extension-type σ) (homotopy-extension-type σ)
+      (extension-type-weakening-map σ)
+  :=
+    ( extension-strictification σ
+    , \ th → ( second (section-extension-type-weakening' σ th)))
+
 
 #def is-equiv-extension-type-weakening
   ( σ : (t : ϕ) → A t)
   : is-equiv (extension-type σ) (homotopy-extension-type σ)
       (extension-type-weakening-map σ)
   :=
-    ( ( extension-strictification σ ,
-        \ _ → refl),
-      ( extension-strictification σ,
-        \ th → ( second (extension-type-weakening-section σ th))))
+    ( ( extension-strictification σ, \ _ → refl)
+    , has-section-extension-type-weakening σ)
 
 #def extension-type-weakening
   ( σ : (t : ϕ) → A t)
@@ -113,10 +120,7 @@ This equivalence is functorial in the following sense:
       , \ _ → refl
       )
     , ( is-equiv-extension-type-weakening I ψ ϕ A' σ'
-      , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α t (σ' t))
-      )
-    )
-
+      , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α t (σ' t))))
 ```
 
 ## Commutation of arguments and currying
@@ -700,6 +704,7 @@ We now assume extension extensionality and derive a few consequences.
 
 ```rzk
 #assume extext : ExtExt
+#assume naiveextext : NaiveExtExt
 ```
 
 In particular, extension extensionality implies that homotopies give rise to
@@ -717,6 +722,8 @@ retraction to `#!rzk ext-htpy-eq`.
   : ((t : ψ) → (f t = g t) [ϕ t ↦ refl]) → (f = g)
   := first (first (extext I ψ ϕ A a f g))
 ```
+
+### Functoriality properties of extension types
 
 By extension extensionality, fiberwise equivalences of extension types define
 equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
@@ -755,6 +762,28 @@ equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
               ( b)
               ( \ t → second (second (second (famequiv t))) (b t))))))
 ```
+
+Similarly, a fiberwise section of a map `(t : ψ) → A t → B t` induces a section
+on extension types
+
+```rzk
+#def has-section-extension-has-section-family uses (naiveextext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A B : ψ → U)
+  ( f : ( t : ψ) → A t → B t)
+  ( has-fiberwise-section-f : (t : ψ) → has-section (A t ) (B t) (f t))
+  : has-section ((t : ψ) → A t) ((t : ψ) → B t) ( \ a t → f t (a t))
+  :=
+    ( ( \ b t → first (has-fiberwise-section-f t) (b t))
+    , \ b →
+      ( naiveextext I ψ (\ _ → BOT) B (\ _ → recBOT)
+        ( \ t → f t (first (has-fiberwise-section-f t) (b t)))
+        ( \ t → b t)
+        ( \ t → second (has-fiberwise-section-f t) (b t))))
+```
+
+### Homotopy extension property
 
 We have a homotopy extension property.
 
@@ -1056,4 +1085,192 @@ $\left \langle_{t : I |\psi} f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\r
         ( is-contr-fiberwise-A)
         ( a)
         ( f))))
+```
+
+### Pointwise homotopy extension types
+
+Using `ExtExt` we can write the homotopy in the homotopy extension type
+pointwise.
+
+```rzk
+#section pointwise-homotopy-extension-type
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variable A : ψ → U
+
+#def pointwise-homotopy-extension-type
+  ( σ : (t : ϕ) → A t)
+  : U
+  :=
+    Σ ( τ : (t : ψ) → A t) , ( (t : ϕ) → (τ t =_{ A t} σ t))
+
+#def equiv-pointwise-homotopy-extension-type uses (extext)
+  ( σ : (t : ϕ) → A t)
+  : Equiv
+    ( homotopy-extension-type I ψ ϕ A σ)
+    ( pointwise-homotopy-extension-type σ)
+  :=
+    total-equiv-family-equiv
+    ( (t : ψ) → A t)
+    ( \ τ → (\ t → τ t) =_{ (t : ϕ) → A t} σ)
+    ( \ τ → (t : ϕ) → (τ t = σ t))
+    ( \ τ →
+      equiv-ExtExt extext I (\ t → ϕ t) (\ _ → BOT) (\ t → A t)
+      ( \ _ → recBOT) (\ t → τ t) σ)
+
+#def extension-type-pointwise-weakening uses (extext)
+  ( σ : (t : ϕ) → A t)
+  : Equiv
+    ( extension-type I ψ ϕ A σ)
+    ( pointwise-homotopy-extension-type σ)
+  := equiv-comp
+    ( extension-type I ψ ϕ A σ)
+    ( homotopy-extension-type I ψ ϕ A σ)
+    ( pointwise-homotopy-extension-type σ)
+    ( extension-type-weakening I ψ ϕ A σ)
+    ( equiv-pointwise-homotopy-extension-type σ)
+
+
+#end pointwise-homotopy-extension-type
+```
+
+## Relative extension types
+
+Given a map `α : A' → A`, there is also a notion of relative extension types.
+
+```rzk
+#section relative-extension-types
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variables A' A : ψ → U
+#variable α : (t : ψ) → A' t → A t
+#variable σ' : (t : ϕ) → A' t
+#variable τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)]
+
+#def relative-extension-type
+  : U
+  :=
+    Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t])
+    , ( ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl])
+
+#def relative-extension-type'
+  : U
+  :=
+    fib
+    ( (t : ψ) → A' t [ϕ t ↦ σ' t])
+    ( (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
+    ( \ τ' t → α t (τ' t))
+    ( τ)
+
+#def equiv-relative-extension-type-fib uses (extext)
+  : Equiv
+    ( relative-extension-type')
+    ( relative-extension-type)
+  :=
+    total-equiv-family-equiv
+    ( (t : ψ) → A' t [ϕ t ↦ σ' t])
+    ( \ τ' → (\ t → α t (τ' t)) =_{ (t : ψ) → A t [ϕ t ↦ α t (σ' t)]} τ)
+    ( \ τ' → (t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl])
+    ( \ τ' →
+      equiv-ExtExt extext I ψ ϕ A (\ t → α t (σ' t))
+        ( \ t → α t (τ' t)) ( τ))
+#end relative-extension-types
+```
+
+### Generalized relative extension types
+
+We will also need to allow more general relative extension types, where we start
+with a `τ : ψ → A` that does not strictly restrict to `\ t → α (σ' t)`.
+
+```rzk
+#section general-extension-types
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variables A' A : ψ → U
+#variable α : (t : ψ) → A' t → A t
+
+#def general-relative-extension-type
+  ( σ' : (t : ϕ) → A' t)
+  ( τ : (t : ψ) → A t)
+  ( h : (t : ϕ) → α t (σ' t) = τ t)
+  : U
+  :=
+    Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t])
+    , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ h t]
+```
+
+If all ordinary relative extension types are contractible, then all generalized
+extension types are also contractible.
+
+```rzk
+#def has-contr-relative-extension-types
+  : U
+  :=
+  ( ( σ' : (t : ϕ) → A' t)
+  → ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
+  → ( is-contr (relative-extension-type I ψ ϕ A' A α σ' τ)))
+
+#def has-contr-general-relative-extension-types
+  : U
+  :=
+  ( ( σ' : (t : ϕ) → A' t)
+  → ( τ : (t : ψ) → A t)
+  → ( h : (t : ϕ) → α t (σ' t) = τ t)
+  → ( is-contr ( general-relative-extension-type σ' τ h)))
+
+#def has-contr-relative-extension-types-generalize' uses (extext)
+  ( has-contr-relext-α : has-contr-relative-extension-types)
+  ( σ' : (t : ϕ) → A' t)
+  ( τ : (t : ψ) → A t)
+  ( h : (t : ϕ) → α t (σ' t) = τ t)
+  : is-contr
+    ( general-relative-extension-type σ' τ
+      ( \ t → rev (A t) (τ t) (α t (σ' t)) (rev (A t) (α t (σ' t)) (τ t) (h t))))
+  :=
+    ind-has-section-equiv
+    ( extension-type I ψ ϕ A (\ t → α t (σ' t)))
+    ( pointwise-homotopy-extension-type I ψ ϕ A (\ t → α t (σ' t)))
+    ( extension-type-pointwise-weakening I ψ ϕ A (\ t → α t (σ' t)))
+    ( \ (τ̂ , ĥ) →
+      is-contr
+      ( general-relative-extension-type σ' τ̂
+        ( \ t → rev (A t) (τ̂ t) (α t (σ' t)) (ĥ t))))
+    ( \ τ → has-contr-relext-α σ' τ)
+    ( τ , \ t → (rev (A t) (α t (σ' t)) (τ t) (h t)))
+
+#def has-contr-relative-extension-types-generalize uses (extext)
+  ( has-contr-relext-α : has-contr-relative-extension-types)
+  : has-contr-general-relative-extension-types
+  :=
+  \ σ' τ h →
+    transport
+    ( (t : ϕ) → α t (σ' t) = τ t)
+    ( \ ĥ → is-contr ( general-relative-extension-type σ' τ ĥ))
+    ( \ t → rev (A t) (τ t) (α t (σ' t)) (rev (A t) (α t (σ' t)) (τ t) (h t)))
+    ( h)
+    ( naiveextext-extext extext
+      ( I) (\ t → ϕ t) (\ _ → BOT) (\ t → α t (σ' t ) = τ t) (\ _ → recBOT)
+      ( \ t → rev (A t) (τ t) (α t (σ' t)) (rev (A t) (α t (σ' t)) (τ t) (h t)))
+      ( h)
+      ( \ t → rev-rev (A t) (α t (σ' t)) (τ t) (h t)))
+    ( has-contr-relative-extension-types-generalize'
+         has-contr-relext-α σ' τ h)
+```
+
+The converse is of course trivial.
+
+```rzk
+#def has-contr-relative-extension-types-specialize
+  ( has-contr-gen-relext-α : has-contr-general-relative-extension-types)
+  :  has-contr-relative-extension-types
+  :=
+    \ σ' τ → has-contr-gen-relext-α σ' τ (\ _ → refl)
+
+#end general-extension-types
 ```

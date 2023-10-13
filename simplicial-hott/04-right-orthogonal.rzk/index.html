@@ -1004,6 +1004,33 @@
     Types with unique extension
   </a>
   
+    <nav class="md-nav" aria-label="Types with unique extension">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proof-of-first-alternative-characterization" class="md-nav__link">
+    Proof of first alternative characterization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties-of-local-types-unique-extension-types" class="md-nav__link">
+    Properties of local types / unique extension types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proof-of-second-alternative-characterization" class="md-nav__link">
+    Proof of second alternative characterization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1034,8 +1061,9 @@
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nd">#lang</span><span class="p"> </span><span class="s">rzk-1</span>
 </span></code></pre></div>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
-<p>Some of the definitions in this file rely on naive extension extensionality:</p>
+<p>Some of the definitions in this file rely on extension extensionality:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">#assume</span><span class="p"> </span>naiveextext<span class="err"> : NaiveExtExt</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kr">#assume</span><span class="p"> </span>weakextext<span class="err"> : WeakExtExt</span>
 </span></code></pre></div>
 <h2 id="right-orthogonal-maps-with-respect-to-shapes">Right orthogonal maps with respect to shapes<a class="headerlink" href="#right-orthogonal-maps-with-respect-to-shapes" title="Permanent link">&para;</a></h2>
 <p>For every shape inclusion <code>ϕ ⊂ ψ</code>, we obtain a fibrancy condition for a map
@@ -1286,51 +1314,38 @@ naive form of) extension extensionality.</p>
 <h2 id="types-with-unique-extension">Types with unique extension<a class="headerlink" href="#types-with-unique-extension" title="Permanent link">&para;</a></h2>
 <p>We say that an type <code>A</code> has unique extensions for a shape inclusion <code>ϕ ⊂ ψ</code>, if
 for each <code>σ : ϕ → A</code> the type of <code>ψ</code>-extensions is contractible.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions" id="define:has-unique-extensions" style="visibility: visible; position: relative; color: inherit">has-unique-extensions</a></span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="err">  : U</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="err">  :=</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="err">    </span><span class="p">( </span>σ <span class="p">:</span><span class="err"> ϕ → A) → is-contr </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ σ t])</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nd">#section</span><span class="n"> has-unique-extensions</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kr">#variable</span><span class="p"> </span>I<span class="err"> : CUBE</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kr">#variable</span><span class="p"> </span>ψ<span class="err"> : I → TOPE</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="kr">#variable</span><span class="p"> </span>ϕ<span class="err"> : ψ → TOPE</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions" id="define:has-unique-extensions" style="visibility: visible; position: relative; color: inherit">has-unique-extensions</a></span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="err">  : U</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="err">  :=</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="err">    </span><span class="p">( </span>σ <span class="p">:</span><span class="err"> ϕ → A) → is-contr </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ σ t])</span>
 </span></code></pre></div>
-<p>The property of having unique extension can be pulled back along any right
-orthogonal map.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain" id="define:has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain</a></span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="err">  </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="err">  </span><span class="p">( </span>is-orth-ψ-ϕ-α <span class="p">:</span><span class="err"> is-right-orthogonal-to-shape I ψ ϕ A&#39; A α)</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="err">  : has-unique-extensions I ψ ϕ A → has-unique-extensions I ψ ϕ A&#39;</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="err">  :=</span>
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="err">    </span><span class="p">\ </span>has-ue-A <span class="p">( </span>σ&#39; <span class="p">:</span><span class="err"> ϕ → A&#39;) →</span>
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="err">      is-contr-equiv-is-contr&#39;</span>
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="err">        </span><span class="p">( </span>( t <span class="p">:</span><span class="err"> ψ) → A&#39; [ϕ t ↦ σ&#39; t])</span>
-</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="err">        </span><span class="p">( </span>( t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ α (σ&#39; t)])</span>
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="err">        ( </span><span class="p">\ </span>τ&#39; t <span class="err">→ α (τ&#39; t) , is-orth-ψ-ϕ-α σ&#39;)</span>
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="err">        ( has-ue-A (</span><span class="p">\ </span>t <span class="err">→ α (σ&#39; t)))</span>
+<p>There are other equivalent characterizations which we shall prove below:</p>
+<p>We can ask that the canonical restriction map <code>(ψ → A) → (ϕ → A)</code> is an
+equivalence.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type" id="define:is-local-type" style="visibility: visible; position: relative; color: inherit">is-local-type</a></span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  : U</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  :=</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="err">    is-equiv (ψ → A) (ϕ → A) ( </span><span class="p">\ </span>τ t <span class="err">→ τ t)</span>
 </span></code></pre></div>
-<p>Alternatively, we can ask that the canonical restriction map <code>(ψ → A) → (ϕ → A)</code>
-is an equivalence.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nd">#section</span><span class="n"> is-local-type</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kr">#variable</span><span class="p"> </span>I<span class="err"> : CUBE</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kr">#variable</span><span class="p"> </span>ψ<span class="err"> : I → TOPE</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="kr">#variable</span><span class="p"> </span>ϕ<span class="err"> : ψ → TOPE</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type" id="define:is-local-type" style="visibility: visible; position: relative; color: inherit">is-local-type</a></span>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="err">  : U</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="err">  :=</span>
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="err">    is-equiv (ψ → A) (ϕ → A) ( </span><span class="p">\ </span>τ t <span class="err">→ τ t)</span>
+<p>We can ask that the terminal map <code>A → Unit</code> is right orthogonal to <code>ϕ ⊂ ψ</code></p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-to-shape-terminal-map" id="define:is-right-orthogonal-to-shape-terminal-map" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-to-shape-terminal-map</a></span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="err">  : U</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="err">  :=</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="err">    is-right-orthogonal-to-shape I ψ ϕ A Unit (terminal-map A)</span>
 </span></code></pre></div>
-<p>This follows straightforwardly from the fact that for every <code>σ : ϕ → A</code> we have
-an equivalence between the extension type <code>(t : ψ) → A [ϕ t ↦ σ t]</code> and the
-fiber of the restriction map <code>(ψ → A) → (ϕ → A)</code>.</p>
+<h3 id="proof-of-first-alternative-characterization">Proof of first alternative characterization<a class="headerlink" href="#proof-of-first-alternative-characterization" title="Permanent link">&para;</a></h3>
+<p>The equivalence between <code>is-local-type</code> and <code>has-unique-extensions</code> follows
+straightforwardly from the fact that for every <code>σ : ϕ → A</code> we have an
+equivalence between the extension type <code>(t : ψ) → A [ϕ t ↦ σ t]</code> and the fiber
+of the restriction map <code>(ψ → A) → (ϕ → A)</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type-has-unique-extensions" id="define:is-local-type-has-unique-extensions" style="visibility: visible; position: relative; color: inherit">is-local-type-has-unique-extensions</a></span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="err">  </span><span class="p">( </span>has-ue-ψ-ϕ-A <span class="p">:</span><span class="err"> has-unique-extensions I ψ ϕ A)</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="err">  </span><span class="p">( </span>has-ue-ψ-ϕ-A <span class="p">:</span><span class="err"> has-unique-extensions)</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="err">  : is-local-type</span>
 </span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="err">  :=</span>
 </span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="err">    is-equiv-is-contr-map (ψ → A) (ϕ → A) ( </span><span class="p">\ </span>τ t <span class="err">→ τ t)</span>
@@ -1343,7 +1358,7 @@ fiber of the restriction map <code>(ψ → A) → (ϕ → A)</code>.</p>
 </span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>
 </span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-is-local-type" id="define:has-unique-extensions-is-local-type" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-is-local-type</a></span>
 </span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="err">  </span><span class="p">( </span>is-lt-ψ-ϕ-A <span class="p">:</span><span class="err"> is-local-type)</span>
-</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="err">  : has-unique-extensions I ψ ϕ A</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="err">  : has-unique-extensions</span>
 </span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="err">  :=</span>
 </span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="err">    </span><span class="p">\ </span>σ <span class="err">→</span>
 </span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="err">      is-contr-equiv-is-contr&#39;</span>
@@ -1354,24 +1369,134 @@ fiber of the restriction map <code>(ψ → A) → (ϕ → A)</code>.</p>
 </span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="err">            ( ψ → A) (ϕ → A) ( </span><span class="p">\ </span>τ t <span class="err">→ τ t)</span>
 </span><span id="__span-15-24"><a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="err">            ( is-lt-ψ-ϕ-A)</span>
 </span><span id="__span-15-25"><a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="err">            ( σ))</span>
-</span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="nd">#end</span><span class="n"> is-local-type</span>
+</span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>
+</span><span id="__span-15-27"><a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="nd">#end</span><span class="n"> has-unique-extensions</span>
 </span></code></pre></div>
-<p>Since the property of having unique extensions passes from the codomain to the
-domain of a right orthogonal map, the same is true for locality of types.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type-domain-right-orthogonal-is-local-type-codomain" id="define:is-local-type-domain-right-orthogonal-is-local-type-codomain" style="visibility: visible; position: relative; color: inherit">is-local-type-domain-right-orthogonal-is-local-type-codomain</a></span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="err">  </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="err">  </span><span class="p">( </span>is-orth-α <span class="p">:</span><span class="err"> is-right-orthogonal-to-shape I ψ ϕ A&#39; A α)</span>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="err">  </span><span class="p">( </span>is-local-A <span class="p">:</span><span class="err"> is-local-type I ψ ϕ A)</span>
-</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="err">  : is-local-type I ψ ϕ A&#39;</span>
-</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="err">  :=</span>
-</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="err">    is-local-type-has-unique-extensions I ψ ϕ A&#39;</span>
-</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="err">      ( has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain</span>
-</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="err">          I ψ ϕ A&#39; A α is-orth-α</span>
-</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="err">          ( has-unique-extensions-is-local-type I ψ ϕ A is-local-A))</span>
+<h3 id="properties-of-local-types-unique-extension-types">Properties of local types / unique extension types<a class="headerlink" href="#properties-of-local-types-unique-extension-types" title="Permanent link">&para;</a></h3>
+<p>We fix a shape inclusion <code>ϕ ⊂ ψ</code>.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nd">#section</span><span class="n"> stability-properties-local-types</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kr">#variable</span><span class="p"> </span>I<span class="err"> : CUBE</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kr">#variable</span><span class="p"> </span>ψ<span class="err"> : I → TOPE</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="kr">#variable</span><span class="p"> </span>ϕ<span class="err"> : ψ → TOPE</span>
+</span></code></pre></div>
+<p>Every map between types with unique extensions / local types is right
+orthogonal.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-have-unique-extensions" id="define:is-right-orthogonal-have-unique-extensions" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-have-unique-extensions</a></span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="err">  </span><span class="p">( </span>has-ue-ψ-ϕ-A&#39; <span class="p">:</span><span class="err"> has-unique-extensions I ψ ϕ A&#39;)</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="err">  </span><span class="p">( </span>has-ue-ψ-ϕ-A <span class="p">:</span><span class="err"> has-unique-extensions I ψ ϕ A)</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="err">  </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="err">  : is-right-orthogonal-to-shape I ψ ϕ A&#39; A α</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="err">  :=</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="err">    </span><span class="p">\ </span>σ <span class="err">→</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="err">      is-equiv-are-contr</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="err">      ( extension-type I ψ ϕ (</span><span class="p">\ </span>_ <span class="err">→ A&#39;) (σ))</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="err">      ( extension-type I ψ ϕ (</span><span class="p">\ </span>_ <span class="err">→ A) (</span><span class="p">\ </span>t <span class="err">→ α (σ t)))</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="err">      ( has-ue-ψ-ϕ-A&#39; σ)</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="err">      ( has-ue-ψ-ϕ-A (</span><span class="p">\ </span>t <span class="err">→ α (σ t)))</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="err">      ( </span><span class="p">\ </span>τ t <span class="err">→ α (τ t))</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-are-local-types" id="define:is-right-orthogonal-are-local-types" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-are-local-types</a></span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="err">  </span><span class="p">( </span>is-lt-ψ-ϕ-A&#39; <span class="p">:</span><span class="err"> is-local-type I ψ ϕ A&#39;)</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="err">  </span><span class="p">( </span>is-lt-ψ-ϕ-A <span class="p">:</span><span class="err"> is-local-type I ψ ϕ A)</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="err">  : </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="err">  → is-right-orthogonal-to-shape I ψ ϕ A&#39; A α</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="err">  :=</span>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="err">    is-right-orthogonal-have-unique-extensions A&#39; A</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="err">    ( has-unique-extensions-is-local-type I ψ ϕ A&#39; is-lt-ψ-ϕ-A&#39;)</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="err">    ( has-unique-extensions-is-local-type I ψ ϕ A is-lt-ψ-ϕ-A)</span>
+</span></code></pre></div>
+<p>Conversely, the property of having unique extension can be pulled back along any
+right orthogonal map.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-right-orthogonal-has-unique-extensions" id="define:has-unique-extensions-right-orthogonal-has-unique-extensions" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-right-orthogonal-has-unique-extensions</a></span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="err">  </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="err">  </span><span class="p">( </span>is-orth-ψ-ϕ-α <span class="p">:</span><span class="err"> is-right-orthogonal-to-shape I ψ ϕ A&#39; A α)</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="err">  : has-unique-extensions I ψ ϕ A → has-unique-extensions I ψ ϕ A&#39;</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="err">  :=</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="err">    </span><span class="p">\ </span>has-ue-A <span class="p">( </span>σ&#39; <span class="p">:</span><span class="err"> ϕ → A&#39;) →</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="err">      is-contr-equiv-is-contr&#39;</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="err">        </span><span class="p">( </span>( t <span class="p">:</span><span class="err"> ψ) → A&#39; [ϕ t ↦ σ&#39; t])</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="err">        </span><span class="p">( </span>( t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ α (σ&#39; t)])</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="err">        ( </span><span class="p">\ </span>τ&#39; t <span class="err">→ α (τ&#39; t) , is-orth-ψ-ϕ-α σ&#39;)</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="err">        ( has-ue-A (</span><span class="p">\ </span>t <span class="err">→ α (σ&#39; t)))</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type-right-orthogonal-is-local-type" id="define:is-local-type-right-orthogonal-is-local-type" style="visibility: visible; position: relative; color: inherit">is-local-type-right-orthogonal-is-local-type</a></span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="err">  </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="err">  </span><span class="p">( </span>is-orth-α <span class="p">:</span><span class="err"> is-right-orthogonal-to-shape I ψ ϕ A&#39; A α)</span>
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="err">  </span><span class="p">( </span>is-local-A <span class="p">:</span><span class="err"> is-local-type I ψ ϕ A)</span>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="err">  : is-local-type I ψ ϕ A&#39;</span>
+</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="err">  :=</span>
+</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="err">    is-local-type-has-unique-extensions I ψ ϕ A&#39;</span>
+</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="err">      ( has-unique-extensions-right-orthogonal-has-unique-extensions</span>
+</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="err">          ( A&#39;) ( A) ( α) ( is-orth-α)</span>
+</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="err">          ( has-unique-extensions-is-local-type I ψ ϕ A is-local-A))</span>
+</span></code></pre></div>
+<p>Weak extension extensionality says that every contractible type has unique
+extensions for every shape inclusion <code>ϕ ⊂ ψ</code>.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-is-contr" id="define:has-unique-extensions-is-contr" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-is-contr</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  </span><span class="p">( </span>is-contr-C <span class="p">:</span><span class="err"> is-contr C)</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="err">  : has-unique-extensions I ψ ϕ C</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="err">  :=</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="err">    weakextext I ψ ϕ</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="err">    ( </span><span class="p">\ </span>_ <span class="err">→ C) ( </span><span class="p">\ </span>_ <span class="err">→ is-contr-C)</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-Unit" id="define:has-unique-extensions-Unit" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-Unit</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="err">  : has-unique-extensions I ψ ϕ Unit</span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="err">  := has-unique-extensions-is-contr Unit is-contr-</span><span class="kt">Unit</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="nd">#end</span><span class="n"> stability-properties-local-types</span>
+</span></code></pre></div>
+<h3 id="proof-of-second-alternative-characterization">Proof of second alternative characterization<a class="headerlink" href="#proof-of-second-alternative-characterization" title="Permanent link">&para;</a></h3>
+<p>Next we prove the logical equivalence between <code>has-unique-extensions</code> and
+<code>is-right-orthogonal-to-shape-terminal-map</code>. This follows directly from the fact
+that <code>Unit</code> has unique extensions (using <code>weakextext : WeakExtExt</code>).</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nd">#section</span><span class="n"> is-right-orthogonal-to-shape-terminal-map</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="kr">#variable</span><span class="p"> </span>I<span class="err"> : CUBE</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="kr">#variable</span><span class="p"> </span>ψ<span class="err"> : I → TOPE</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="kr">#variable</span><span class="p"> </span>ϕ<span class="err"> : ψ → TOPE</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-is-right-orthogonal-to-shape-terminal-map" id="define:has-unique-extensions-is-right-orthogonal-to-shape-terminal-map" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-is-right-orthogonal-to-shape-terminal-map</a></span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="err">  </span><span class="p">( </span>is-orth-ψ-ϕ-tm-A <span class="p">:</span><span class="err"> is-right-orthogonal-to-shape-terminal-map I ψ ϕ A)</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="err">  : has-unique-extensions I ψ ϕ A</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="err">  :=</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="err">    has-unique-extensions-right-orthogonal-has-unique-extensions</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="err">      I ψ ϕ A Unit (terminal-map A)</span>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="err">    ( is-orth-ψ-ϕ-tm-A)</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="err">    ( has-unique-extensions-</span><span class="kt">Unit</span><span class="err"> I ψ ϕ)</span>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-to-shape-terminal-map-has-unique-extensions" id="define:is-right-orthogonal-to-shape-terminal-map-has-unique-extensions" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-to-shape-terminal-map-has-unique-extensions</a></span>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="err">  </span><span class="p">( </span>has-ue-ψ-ϕ-A <span class="p">:</span><span class="err"> has-unique-extensions I ψ ϕ A)</span>
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="err">  : is-right-orthogonal-to-shape-terminal-map I ψ ϕ A</span>
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="err">  :=</span>
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="err">    is-right-orthogonal-have-unique-extensions I ψ ϕ A Unit</span>
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="err">    ( has-ue-ψ-ϕ-A) ( has-unique-extensions-</span><span class="kt">Unit</span><span class="err"> I ψ ϕ)</span>
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="err">    ( terminal-map A)</span>
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-to-shape-terminal-map-is-local-type" id="define:is-right-orthogonal-to-shape-terminal-map-is-local-type" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-to-shape-terminal-map-is-local-type</a></span>
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="err">  </span><span class="p">( </span>is-lt-ψ-ϕ-A <span class="p">:</span><span class="err"> is-local-type I ψ ϕ A)</span>
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a><span class="err">  : is-right-orthogonal-to-shape-terminal-map I ψ ϕ A</span>
+</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a><span class="err">  :=</span>
+</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a><span class="err">    is-right-orthogonal-to-shape-terminal-map-has-unique-extensions</span>
+</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a><span class="err">    ( has-unique-extensions-is-local-type I ψ ϕ A is-lt-ψ-ϕ-A)</span>
+</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a>
+</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type-is-right-orthogonal-to-shape-terminal-map" id="define:is-local-type-is-right-orthogonal-to-shape-terminal-map" style="visibility: visible; position: relative; color: inherit">is-local-type-is-right-orthogonal-to-shape-terminal-map</a></span>
+</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a><span class="err">  </span><span class="p">( </span>is-orth-ψ-ϕ-tm-A <span class="p">:</span><span class="err"> is-right-orthogonal-to-shape-terminal-map I ψ ϕ A)</span>
+</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a><span class="err">  : is-local-type I ψ ϕ A</span>
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a><span class="err">  :=</span>
+</span><span id="__span-20-39"><a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a><span class="err">    is-local-type-has-unique-extensions I ψ ϕ A</span>
+</span><span id="__span-20-40"><a id="__codelineno-20-40" name="__codelineno-20-40" href="#__codelineno-20-40"></a><span class="err">    ( has-unique-extensions-is-right-orthogonal-to-shape-terminal-map</span>
+</span><span id="__span-20-41"><a id="__codelineno-20-41" name="__codelineno-20-41" href="#__codelineno-20-41"></a><span class="err">      ( is-orth-ψ-ϕ-tm-A))</span>
+</span><span id="__span-20-42"><a id="__codelineno-20-42" name="__codelineno-20-42" href="#__codelineno-20-42"></a>
+</span><span id="__span-20-43"><a id="__codelineno-20-43" name="__codelineno-20-43" href="#__codelineno-20-43"></a><span class="nd">#end</span><span class="n"> is-right-orthogonal-to-shape-terminal-map</span>
 </span></code></pre></div>
 
 

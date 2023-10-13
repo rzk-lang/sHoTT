@@ -494,6 +494,7 @@ Define the action by precompostition.
   : ( x : A ) → ( hom A a x → hom A a' x)
   := \ x f → comp-is-segal A is-segal-A a' a x ( ( evid A a ( hom A a')) φ) f
 ```
+
 The Yoneda embedding coincides with `#!rzk precomposition-evid-is-segal`.
 
 ```rzk

@@ -421,8 +421,8 @@ retraction the first map is an equivalence, and dually.
   ( ( ( retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
   : is-equiv B C g
   :=
-    ( ( comp C A B f retr-gf ,
-        ind-has-section A B f has-section-f
+    ( ( comp C A B f retr-gf
+      , ind-has-section A B f has-section-f
           ( \ b → f (retr-gf (g b)) = b)
           ( \ a → ap A B (retr-gf (g (f a))) a f (η-gf a)))
     , ( comp C A B f sec-gf, ε-gf))

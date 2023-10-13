@@ -90,8 +90,7 @@ extension types.
         ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
       ( equiv-relative-extension-type-fib extext I ψ ϕ
         ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
-      ( are-contr-relext-α σ' τ)
-    )
+      ( are-contr-relext-α σ' τ))
 
 #def has-contr-relative-extension-types-is-right-orthogonal-to-shape uses (extext)
   ( is-orth-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)

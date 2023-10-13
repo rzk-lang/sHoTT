@@ -216,6 +216,66 @@ Extension types are also used to define the type of commutative triangles:
         t₂ ≡ t₁ ↦ h t₂]   -- the diagonal is exactly `h`
 ```
 
+## Arrow types
+
+We define the arrow type:
+
+```rzk
+#def arr
+  ( A : U)
+  : U
+  := Δ¹ → A
+```
+
+For later convenience we give an alternative characterizations of the arrow
+type.
+
+```rzk
+#def fibered-arr
+  ( A : U)
+  : U
+  := Σ (x : A) , (Σ (y : A) , hom A x y)
+
+#def fibered-arr-free-arr
+  ( A : U)
+  : arr A → fibered-arr A
+  := \ k → (k 0₂ , (k 1₂ , k))
+
+#def is-equiv-fibered-arr-free-arr
+  ( A : U)
+  : is-equiv (arr A) (fibered-arr A) (fibered-arr-free-arr A)
+  :=
+    ( ( (\ (_ , (_ , f)) → f) , (\ _ → refl))
+    , ( (\ (_ , (_ , f)) → f) , (\ _ → refl)))
+
+#def equiv-fibered-arr-free-arr
+  ( A : U)
+  : Equiv (arr A) (fibered-arr A)
+  := (fibered-arr-free-arr A , is-equiv-fibered-arr-free-arr A)
+```
+
+And the corresponding uncurried version.
+
+```rzk
+#def fibered-arr'
+  ( A : U)
+  : U
+  :=
+    Σ ((a,b) : product A A), hom A a b
+
+#def fibered-arr-free-arr'
+  ( A : U)
+  : arr A → fibered-arr' A
+  := \ σ → ((σ 0₂ , σ 1₂) , σ)
+
+#def is-equiv-fibered-arr-free-arr'
+  ( A : U)
+  : is-equiv (arr A) (fibered-arr' A) (fibered-arr-free-arr' A)
+  :=
+    ( ( (\ ((_ , _) , σ) → σ) , (\ _ → refl))
+    , ( (\ ((_ , _) , σ) → σ) , (\ _ → refl)))
+```
+
 ## The Segal condition
 
 A type is **Segal** if every composable pair of arrows has a unique composite.
@@ -624,36 +684,7 @@ then $(x : X) → A x$ is a Segal type.
         ( \ s → is-local-horn-inclusion-is-segal (A s)(fiberwise-is-segal-A s)))
 ```
 
-In particular, the arrow type of a Segal type is Segal. First, we define the
-arrow type:
-
-```rzk
-#def arr
-  ( A : U)
-  : U
-  := Δ¹ → A
-```
-
-For later use, an equivalent characterization of the arrow type.
-
-```rzk
-#def arr-Σ-hom
-  ( A : U)
-  : ( arr A) → (Σ (x : A) , (Σ (y : A) , hom A x y))
-  := \ f → (f 0₂ , (f 1₂ , f))
-
-#def is-equiv-arr-Σ-hom
-  ( A : U)
-  : is-equiv (arr A) (Σ (x : A) , (Σ (y : A) , hom A x y)) (arr-Σ-hom A)
-  :=
-    ( ( \ (x , (y , f)) → f , \ f → refl) ,
-      ( \ (x , (y , f)) → f , \ xyf → refl))
-
-#def equiv-arr-Σ-hom
-  ( A : U)
-  : Equiv (arr A) (Σ (x : A) , (Σ (y : A) , hom A x y))
-  := ( arr-Σ-hom A , is-equiv-arr-Σ-hom A)
-```
+In particular, the arrow type of a Segal type is Segal.
 
 ```rzk title="RS17, Corollary 5.6(ii), special case for locality at the horn inclusion"
 #def is-local-horn-inclusion-arr uses (extext)
@@ -912,17 +943,16 @@ The `#!rzk witness-square-comp-is-segal` as an arrow in the arrow type:
   ( g : hom A x y)
   ( h : hom A y z)
   : hom2 (arr A) f g h
-      (arr-in-arr-is-segal A is-segal-A w x y f g)
-      (arr-in-arr-is-segal A is-segal-A x y z g h)
-      (comp-is-segal (arr A) (is-segal-arr A is-segal-A)
-      f g h
-      (arr-in-arr-is-segal A is-segal-A w x y f g)
-      (arr-in-arr-is-segal A is-segal-A x y z g h))
+      ( arr-in-arr-is-segal A is-segal-A w x y f g)
+      ( arr-in-arr-is-segal A is-segal-A x y z g h)
+      ( comp-is-segal (arr A) (is-segal-arr A is-segal-A) f g h
+        ( arr-in-arr-is-segal A is-segal-A w x y f g)
+        ( arr-in-arr-is-segal A is-segal-A x y z g h))
   :=
     witness-comp-is-segal
       ( arr A)
       ( is-segal-arr A is-segal-A)
-      f g h
+      ( f) ( g) ( h)
       ( arr-in-arr-is-segal A is-segal-A w x y f g)
       ( arr-in-arr-is-segal A is-segal-A x y z g h)
 ```

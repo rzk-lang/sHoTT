@@ -13,6 +13,7 @@ Some of the definitions in this file rely on extension extensionality:
 ```rzk
 #assume naiveextext : NaiveExtExt
 #assume extext : ExtExt
+#assume weakextext : WeakExtExt
 ```
 
 ## Right orthogonal maps with respect to shapes
@@ -585,59 +586,48 @@ We say that an type `A` has unique extensions for a shape inclusion `ϕ ⊂ ψ`,
 for each `σ : ϕ → A` the type of `ψ`-extensions is contractible.
 
 ```rzk
-#def has-unique-extensions
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
-  ( A : U)
-  : U
-  := ( σ : ϕ → A) → is-contr ( (t : ψ) → A [ϕ t ↦ σ t])
-```
-
-The property of having unique extension can be pulled back along any right
-orthogonal map.
-
-```rzk
-#def has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
-  ( A' A : U)
-  ( α : A' → A)
-  ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
-  : has-unique-extensions I ψ ϕ A → has-unique-extensions I ψ ϕ A'
-  :=
-    \ has-ue-A ( σ' : ϕ → A') →
-      is-contr-equiv-is-contr'
-        ( ( t : ψ) → A' [ϕ t ↦ σ' t])
-        ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
-        ( \ τ' t → α (τ' t) , is-orth-ψ-ϕ-α σ')
-        ( has-ue-A (\ t → α (σ' t)))
-```
-
-Alternatively, we can ask that the canonical restriction map `(ψ → A) → (ϕ → A)`
-is an equivalence.
-
-```rzk
-#section is-local-type
+#section has-unique-extensions
 #variable I : CUBE
 #variable ψ : I → TOPE
 #variable ϕ : ψ → TOPE
 #variable A : U
 
+#def has-unique-extensions
+  : U
+  := ( σ : ϕ → A) → is-contr ( (t : ψ) → A [ϕ t ↦ σ t])
+```
+
+There are other equivalent characterizations which we shall prove below:
+
+We can ask that the canonical restriction map `(ψ → A) → (ϕ → A)` is an
+equivalence.
+
+```rzk
 #def is-local-type
   : U
   :=
     is-equiv (ψ → A) (ϕ → A) ( \ τ t → τ t)
 ```
 
-This follows straightforwardly from the fact that for every `σ : ϕ → A` we have
-an equivalence between the extension type `(t : ψ) → A [ϕ t ↦ σ t]` and the
-fiber of the restriction map `(ψ → A) → (ϕ → A)`.
+We can ask that the terminal map `A → Unit` is right orthogonal to `ϕ ⊂ ψ`
+
+```rzk
+#def is-right-orthogonal-to-shape-terminal-map
+  : U
+  :=
+    is-right-orthogonal-to-shape I ψ ϕ A Unit (terminal-map A)
+```
+
+### Proof of first alternative characterization
+
+The equivalence between `is-local-type` and `has-unique-extensions` follows
+straightforwardly from the fact that for every `σ : ϕ → A` we have an
+equivalence between the extension type `(t : ψ) → A [ϕ t ↦ σ t]` and the fiber
+of the restriction map `(ψ → A) → (ϕ → A)`.
 
 ```rzk
 #def is-local-type-has-unique-extensions
-  ( has-ue-ψ-ϕ-A : has-unique-extensions I ψ ϕ A)
+  ( has-ue-ψ-ϕ-A : has-unique-extensions)
   : is-local-type
   :=
     is-equiv-is-contr-map (ψ → A) (ϕ → A) ( \ τ t → τ t)
@@ -650,7 +640,7 @@ fiber of the restriction map `(ψ → A) → (ϕ → A)`.
 
 #def has-unique-extensions-is-local-type
   ( is-lt-ψ-ϕ-A : is-local-type)
-  : has-unique-extensions I ψ ϕ A
+  : has-unique-extensions
   :=
     \ σ →
       is-contr-equiv-is-contr'
@@ -662,17 +652,69 @@ fiber of the restriction map `(ψ → A) → (ϕ → A)`.
             ( is-lt-ψ-ϕ-A)
             ( σ))
 
-#end is-local-type
+#end has-unique-extensions
 ```
 
-Since the property of having unique extensions passes from the codomain to the
-domain of a right orthogonal map, the same is true for locality of types.
+### Properties of local types / unique extension types
+
+We fix a shape inclusion `ϕ ⊂ ψ`.
 
 ```rzk
-#def is-local-type-domain-right-orthogonal-is-local-type-codomain
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
+#section stability-properties-local-types
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+```
+
+Every map between types with unique extensions / local types is right
+orthogonal.
+
+```rzk
+#def is-right-orthogonal-have-unique-extensions
+  ( A' A : U)
+  ( has-ue-ψ-ϕ-A' : has-unique-extensions I ψ ϕ A')
+  ( has-ue-ψ-ϕ-A : has-unique-extensions I ψ ϕ A)
+  ( α : A' → A)
+  : is-right-orthogonal-to-shape I ψ ϕ A' A α
+  :=
+    \ σ →
+      is-equiv-are-contr
+      ( extension-type I ψ ϕ (\ _ → A') (σ))
+      ( extension-type I ψ ϕ (\ _ → A) (\ t → α (σ t)))
+      ( has-ue-ψ-ϕ-A' σ)
+      ( has-ue-ψ-ϕ-A (\ t → α (σ t)))
+      ( \ τ t → α (τ t))
+
+#def is-right-orthogonal-are-local-types
+  ( A' A : U)
+  ( is-lt-ψ-ϕ-A' : is-local-type I ψ ϕ A')
+  ( is-lt-ψ-ϕ-A : is-local-type I ψ ϕ A)
+  : ( α : A' → A)
+  → is-right-orthogonal-to-shape I ψ ϕ A' A α
+  :=
+    is-right-orthogonal-have-unique-extensions A' A
+    ( has-unique-extensions-is-local-type I ψ ϕ A' is-lt-ψ-ϕ-A')
+    ( has-unique-extensions-is-local-type I ψ ϕ A is-lt-ψ-ϕ-A)
+```
+
+Conversely, the property of having unique extension can be pulled back along any
+right orthogonal map.
+
+```rzk
+#def has-unique-extensions-right-orthogonal-has-unique-extensions
+  ( A' A : U)
+  ( α : A' → A)
+  ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : has-unique-extensions I ψ ϕ A → has-unique-extensions I ψ ϕ A'
+  :=
+    \ has-ue-A ( σ' : ϕ → A') →
+      is-contr-equiv-is-contr'
+        ( ( t : ψ) → A' [ϕ t ↦ σ' t])
+        ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
+        ( \ τ' t → α (τ' t) , is-orth-ψ-ϕ-α σ')
+        ( has-ue-A (\ t → α (σ' t)))
+
+#def is-local-type-right-orthogonal-is-local-type
   ( A' A : U)
   ( α : A' → A)
   ( is-orth-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
@@ -680,8 +722,78 @@ domain of a right orthogonal map, the same is true for locality of types.
   : is-local-type I ψ ϕ A'
   :=
     is-local-type-has-unique-extensions I ψ ϕ A'
-      ( has-unique-extensions-domain-right-orthogonal-has-unique-extensions-codomain
-          I ψ ϕ A' A α is-orth-α
+      ( has-unique-extensions-right-orthogonal-has-unique-extensions
+          ( A') ( A) ( α) ( is-orth-α)
           ( has-unique-extensions-is-local-type I ψ ϕ A is-local-A))
+```
 
+Weak extension extensionality says that every contractible type has unique
+extensions for every shape inclusion `ϕ ⊂ ψ`.
+
+```rzk
+#def has-unique-extensions-is-contr uses (weakextext)
+  ( C : U)
+  ( is-contr-C : is-contr C)
+  : has-unique-extensions I ψ ϕ C
+  :=
+    weakextext I ψ ϕ
+    ( \ _ → C) ( \ _ → is-contr-C)
+
+#def has-unique-extensions-Unit uses (weakextext)
+  : has-unique-extensions I ψ ϕ Unit
+  := has-unique-extensions-is-contr Unit is-contr-Unit
+
+#end stability-properties-local-types
+```
+
+### Proof of second alternative characterization
+
+Next we prove the logical equivalence between `has-unique-extensions` and
+`is-right-orthogonal-to-shape-terminal-map`. This follows directly from the fact
+that `Unit` has unique extensions (using `weakextext : WeakExtExt`).
+
+```rzk
+#section is-right-orthogonal-to-shape-terminal-map
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variable A : U
+
+#def has-unique-extensions-is-right-orthogonal-to-shape-terminal-map
+  uses (weakextext)
+  ( is-orth-ψ-ϕ-tm-A : is-right-orthogonal-to-shape-terminal-map I ψ ϕ A)
+  : has-unique-extensions I ψ ϕ A
+  :=
+    has-unique-extensions-right-orthogonal-has-unique-extensions
+      I ψ ϕ A Unit (terminal-map A)
+    ( is-orth-ψ-ϕ-tm-A)
+    ( has-unique-extensions-Unit I ψ ϕ)
+
+#def is-right-orthogonal-to-shape-terminal-map-has-unique-extensions
+  uses (weakextext)
+  ( has-ue-ψ-ϕ-A : has-unique-extensions I ψ ϕ A)
+  : is-right-orthogonal-to-shape-terminal-map I ψ ϕ A
+  :=
+    is-right-orthogonal-have-unique-extensions I ψ ϕ A Unit
+    ( has-ue-ψ-ϕ-A) ( has-unique-extensions-Unit I ψ ϕ)
+    ( terminal-map A)
+
+#def is-right-orthogonal-to-shape-terminal-map-is-local-type
+  uses (weakextext)
+  ( is-lt-ψ-ϕ-A : is-local-type I ψ ϕ A)
+  : is-right-orthogonal-to-shape-terminal-map I ψ ϕ A
+  :=
+    is-right-orthogonal-to-shape-terminal-map-has-unique-extensions
+    ( has-unique-extensions-is-local-type I ψ ϕ A is-lt-ψ-ϕ-A)
+
+#def is-local-type-is-right-orthogonal-to-shape-terminal-map
+  uses (weakextext)
+  ( is-orth-ψ-ϕ-tm-A : is-right-orthogonal-to-shape-terminal-map I ψ ϕ A)
+  : is-local-type I ψ ϕ A
+  :=
+    is-local-type-has-unique-extensions I ψ ϕ A
+    ( has-unique-extensions-is-right-orthogonal-to-shape-terminal-map
+      ( is-orth-ψ-ϕ-tm-A))
+
+#end is-right-orthogonal-to-shape-terminal-map
 ```

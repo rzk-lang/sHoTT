@@ -123,7 +123,7 @@ extension types.
   :=
     has-contr-relative-extension-types-generalize extext I ψ ϕ
       ( \ _ → A') (\ _ → A) (\ _ → α)
-    ( has-contr-relative-extension-types-is-right-orthogonal-to-shape is-orth-α)
+      ( has-contr-relative-extension-types-is-right-orthogonal-to-shape is-orth-α)
 
 #end has-contr-relative-extension-types-iff-is-right-orthogonal
 ```

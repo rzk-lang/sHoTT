@@ -535,8 +535,8 @@ The retraction associated with an equivalence is an equivalence.
 
 ## Section-retraction pairs
 
-A pair of maps `s : A' → B` and `r : B → A` is a **section-retraction pair** if the
-composite `A' → A` is an equivalence.
+A pair of maps `s : A' → B` and `r : B → A` is a **section-retraction pair** if
+the composite `A' → A` is an equivalence.
 
 ```rzk
 #section is-section-retraction-pair

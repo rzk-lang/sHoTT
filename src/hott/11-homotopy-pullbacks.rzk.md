@@ -431,6 +431,27 @@ We can cancel the left homotopy cartesian square if its lower map
       is-equiv-left-factor (C'' a'') (C' (f' a'')) (C (f (f' a'')))
       ( F' a'') (ihc' a'')
       ( F (f' a'')) ( ihc'' a''))
+```
+
+In fact, it suffices to assume that the left square has horizontal sections.
+
+```rzk
+#def is-homotopy-cartesian-left-cancel-with-section
+  ( has-section-f' : has-section A'' A' f')
+  ( has-sections-F' : (a'' : A'') → has-section (C'' a'') (C' (f' a'')) (F' a''))
+  ( ihc'' : is-homotopy-cartesian A'' C'' A C
+              ( comp A'' A' A f f')
+              ( \ a'' →
+                comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+                  (F (f' a'')) (F' a'')))
+  : is-homotopy-cartesian A' C' A C f F
+  :=
+    ind-has-section A'' A' f' has-section-f'
+    ( \ a' → is-equiv (C' a') (C (f a')) (F a'))
+    ( \ a'' →
+      is-equiv-left-cancel (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+      ( F' a'') ( has-sections-F' a'')
+      ( F (f' a'')) ( ihc'' a''))
 
 #end homotopy-cartesian-horizontal-calculus
 ```

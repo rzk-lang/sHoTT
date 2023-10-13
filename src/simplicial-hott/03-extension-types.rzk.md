@@ -725,6 +725,8 @@ retraction to `#!rzk ext-htpy-eq`.
   := first (first (extext I ψ ϕ A a f g))
 ```
 
+### Functoriality properties of extension types
+
 By extension extensionality, fiberwise equivalences of extension types define
 equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
 
@@ -782,6 +784,8 @@ on extension types
         ( \ t → b t)
         ( \ t → second (has-fiberwise-section-f t) (b t))))
 ```
+
+### Homotopy extension property
 
 We have a homotopy extension property.
 

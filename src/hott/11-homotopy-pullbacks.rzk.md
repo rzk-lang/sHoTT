@@ -439,7 +439,8 @@ Given two type families `B C : A → U`, we can form their **fiberwise product**
   := \ (_,c) → c
 ```
 
-Given two maps `B → A` and `C → A`, we can form the **relative product** over `A`.
+Given two maps `B → A` and `C → A`, we can form the **relative product** over
+`A`.
 
 ```rzk
 #section relative-product

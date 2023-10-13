@@ -535,8 +535,8 @@ The retraction associated with an equivalence is an equivalence.
 
 ## Section-retraction pairs
 
-A pair of maps `s : A → B` and `r : B → A'` is a
-**section-retraction pair** if the composite `A → A'` is an equivalence.
+A pair of maps `s : A → B` and `r : B → A'` is a **section-retraction pair** if
+the composite `A → A'` is an equivalence.
 
 ```rzk
 #def is-section-retraction-pair
@@ -547,9 +547,8 @@ A pair of maps `s : A → B` and `r : B → A'` is a
   := is-equiv A A' (comp A B A' r s)
 ```
 
-When we have such a section-retraction pair `(s, r)`,
-we say that `r` is an **external retraction** of `s`
-and `s` is an **external section** of `r`.
+When we have such a section-retraction pair `(s, r)`, we say that `r` is an
+**external retraction** of `s` and `s` is an **external section** of `r`.
 
 ```rzk
 #def has-external-retraction
@@ -569,14 +568,13 @@ and `s` is an **external section** of `r`.
     , ( is-section-retraction-pair A B A' s r)
 ```
 
-Note that exactly like `has-section` and `has-retraction`
-these are not _properties_ of `s` or `r`, but structure.
+Note that exactly like `has-section` and `has-retraction` these are not
+_properties_ of `s` or `r`, but structure.
 
-Without univalence, we cannot yet show that the types
-`has-external-retraction` and `has-retraction`
-(and their section counterparts, respectively)
-are equivalent, so we content ourselves in showing that there is a
-logical biimplication between them.
+Without univalence, we cannot yet show that the types `has-external-retraction`
+and `has-retraction` (and their section counterparts, respectively) are
+equivalent, so we content ourselves in showing that there is a logical
+biimplication between them.
 
 ```rzk
 #def has-retraction-externalize
@@ -616,18 +614,16 @@ logical biimplication between them.
   := ( comp A' A B s sec-rs , ε-rs)
 ```
 
-A consequence of the above is that in a section-retraction pair `(s, r)`,
-the map `s` is a section and the map `r` is a retraction.
-Note that not every composable pair `(s, r)` of such maps is a
-section-retraction pair;
-they have to (up to composition with an equivalence)
-be section and retraction _of each other_.
+A consequence of the above is that in a section-retraction pair `(s, r)`, the
+map `s` is a section and the map `r` is a retraction. Note that not every
+composable pair `(s, r)` of such maps is a section-retraction pair; they have to
+(up to composition with an equivalence) be section and retraction _of each
+other_.
 
 In a section-retraction pair, if one of `s : A → B` and `r : B → A'` is an
 equivalence, then so is the other.
 
-This is just a rephrasing of `is-equiv-left-factor`
-and `is-equiv-right-factor`.
+This is just a rephrasing of `is-equiv-left-factor` and `is-equiv-right-factor`.
 
 ```rzk
 #section is-equiv-is-section-retraction-pair
@@ -658,8 +654,8 @@ and `is-equiv-right-factor`.
 
 ## Retracts
 
-We say that a type `A` is a retract of a type `B` if we have a map
-`s : A → B` which has a retraction.
+We say that a type `A` is a retract of a type `B` if we have a map `s : A → B`
+which has a retraction.
 
 ```rzk title="The type of proofs that A is a retract of B"
 #def is-retract-of
@@ -686,8 +682,8 @@ We say that a type `A` is a retract of a type `B` if we have a map
   := η
 ```
 
-Section-retraction pairs `A → B → A'` are a convenient way to exhibit
-both `A` and `A'` as retracts of `B`.
+Section-retraction pairs `A → B → A'` are a convenient way to exhibit both `A`
+and `A'` as retracts of `B`.
 
 ```rzk
 #def is-retract-of-left-section-retraction-pair

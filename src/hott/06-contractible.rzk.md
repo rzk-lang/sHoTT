@@ -175,7 +175,6 @@ A type is contractible if and only if its terminal map is an equivalence.
 
 A retract of contractible types is contractible.
 
-
 ```rzk title="If A is a retract of a contractible type it has a term"
 #section is-contr-is-retract-of-is-contr
 
@@ -225,6 +224,7 @@ A retract of contractible types is contractible.
 ```
 
 ```rzk
+
 ```
 
 ## Functions between contractible types

@@ -411,3 +411,161 @@ from composition and cancelling laws for equivalences.
 
 #end homotopy-cartesian-horizontal-calculus
 ```
+
+## Fiber products
+
+Given two type families `B C : A → U`, we can form their **fiberwise product**.
+
+```rzk
+#def fiberwise-product
+  ( A : U)
+  ( B C : A → U)
+  : A → U
+  :=
+    \ a → product (B a) (C a)
+
+#def first-fiberwise-product
+  ( A : U)
+  ( B C : A → U)
+  ( a : A)
+  : fiberwise-product A B C a → B a
+  := \ (b,_) → b
+
+#def second-fiberwise-product
+  ( A : U)
+  ( B C : A → U)
+  ( a : A)
+  : fiberwise-product A B C a → C a
+  := \ (_,c) → c
+```
+
+Given two maps `B → A` and `C → A`, we can form the **relative product** over
+`A`.
+
+```rzk
+#section relative-product
+
+#variable A : U
+#variable B : U
+#variable β : B → A
+#variable C : U
+#variable γ : C → A
+
+#def relative-product
+  : U
+  := Σ ( (b, c) : product B C) , (β b = γ c)
+
+#def first-relative-product uses (A B β C γ)
+  : relative-product → B
+  := \ ((b , _), _) → b
+
+#def second-relative-product uses (A B β C γ)
+  : relative-product → C
+  := \ ((_ , c), _) → c
+
+#def homotopy-relative-product uses (A B C)
+  ( (bc, p) : relative-product )
+  : β (first-relative-product (bc,p)) = γ (second-relative-product (bc,p))
+  := p
+```
+
+This relative product agrees with the fiber product obtained by summing over the
+product of all fibers.
+
+```rzk
+#def fiber-product
+  : U
+  := total-type A (fiberwise-product A (fib B A β) (fib C A γ))
+
+#def unpack-fiber-product
+  : fiber-product
+  = ( Σ (a : A), (product (fib B A β a) (fib C A γ a)))
+  := refl
+
+#def first-fiber-product uses (A B β C γ)
+  : fiber-product → B
+  := \ (_, ((b, _), _ )) → b
+
+#def second-fiber-product uses (A B β C γ)
+  : fiber-product → C
+  := \ (_, (_, (c, _))) → c
+
+#def homotopy-fiber-product uses (A B C)
+  : ( abpcq : fiber-product )
+  → β (first-fiber-product abpcq) = γ (second-fiber-product abpcq)
+  :=
+    \ ( a, ((b, p), (c,q))) →
+      zig-zag-concat A (β b) a (γ c) p q
+
+#def relative-fiber-product uses (B C)
+  ( (a, ((b, p), (c,q))) : fiber-product )
+  : relative-product
+  := ( ( b , c) , zig-zag-concat A (β b) a (γ c) p q)
+
+#def fiber-relative-product uses ( A B β C)
+  ( ((b,c), e) : relative-product)
+  : fiber-product
+  := ( γ c , ( (b , e) , (c , refl)))
+
+#def is-id-relative-fiber-relative-product
+  ( bce : relative-product)
+  : relative-fiber-product (fiber-relative-product bce) = bce
+  := refl
+
+#def is-id-fiber-relative-fiber-product
+  : ( abpcq : fiber-product)
+  → ( fiber-relative-product (relative-fiber-product abpcq)) = abpcq
+  :=
+  \ (a', (bq', cq')) →
+    ind-fib C A γ
+    ( \ a cq →
+      ( ( bq : fib B A β a)
+      → ( fiber-relative-product (relative-fiber-product (a, (bq, cq)))
+        = ( a, (bq, cq)))))
+    ( \ c bq → refl)
+    ( a')
+    ( cq')
+    ( bq')
+
+#def is-equiv-relative-fiber-product uses (A B β C γ)
+  : is-equiv fiber-product relative-product relative-fiber-product
+  :=
+    ( ( fiber-relative-product
+      , is-id-fiber-relative-fiber-product)
+    , ( fiber-relative-product
+      , is-id-relative-fiber-relative-product))
+
+#def equiv-relative-product-fiber-product uses (A B β C γ)
+  : Equiv fiber-product relative-product
+  :=
+    ( relative-fiber-product
+    , is-equiv-relative-fiber-product)
+
+#end relative-product
+```
+
+### Fiber product with singleton type
+
+The relative product of `β : B → A` with a map `Unit → A` corresponding to
+`a : A` is nothing but the fiber `fib B A β a`.
+
+```rzk
+#def compute-relative-product-singleton
+  ( A B : U)
+  ( β : B → A)
+  ( a : A)
+  : Equiv-of-maps
+    ( fib B A β a) (Unit) (\ _ → unit)
+    ( relative-product A B β Unit (\ unit → a))
+    ( Unit) ( second-relative-product A B β Unit (\ unit → a))
+  :=
+    ( ( ( ( \ (b , p) → ((b , unit) , p))
+        , ( identity Unit))
+      , \ _ → refl)
+    , ( ( ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl))
+        , ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl)))
+      , is-equiv-identity Unit))
+
+```

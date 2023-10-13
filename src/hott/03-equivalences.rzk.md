@@ -535,46 +535,177 @@ The retraction associated with an equivalence is an equivalence.
 
 ## Section-retraction pairs
 
-A pair of maps `s : A' → B` and `r : B → A` is a **section-retraction pair** if
-the composite `A' → A` is an equivalence.
+A pair of maps `s : A → B` and `r : B → A'` is a **section-retraction pair** if
+the composite `A → A'` is an equivalence.
 
 ```rzk
-#section is-section-retraction-pair
-
-#variables A' B A : U
-#variable s : A' → B
-#variable r : B → A
-
-
 #def is-section-retraction-pair
+  ( A B A' : U)
+  ( s : A → B)
+  ( r : B → A')
   : U
-  := is-equiv A' A (comp A' B A r s)
+  := is-equiv A A' (comp A B A' r s)
 ```
 
-In a section-retraction pair, if one of `s : A' → B` and `r : B → A` is an
+When we have such a section-retraction pair `(s, r)`, we say that `r` is an
+**external retraction** of `s` and `s` is an **external section** of `r`.
+
+```rzk
+#def has-external-retraction
+  ( A B : U)
+  ( s : A → B)
+  : U
+  :=
+    Σ ((A', r) : ( Σ (A' : U) , B → A'))
+    , ( is-section-retraction-pair A B A' s r)
+
+#def has-external-section
+  ( B A' : U)
+  ( r : B → A')
+  : U
+  :=
+    Σ ((A, s) : ( Σ (A : U) , A → B))
+    , ( is-section-retraction-pair A B A' s r)
+```
+
+Note that exactly like `has-section` and `has-retraction` these are not
+_properties_ of `s` or `r`, but structure.
+
+Without univalence, we cannot yet show that the types `has-external-retraction`
+and `has-retraction` (and their section counterparts, respectively) are
+equivalent, so we content ourselves in showing that there is a logical
+biimplication between them.
+
+```rzk
+#def has-retraction-externalize
+  ( A B : U)
+  ( s : A → B)
+  ( (r , η) : has-retraction A B s)
+  : has-external-retraction A B s
+  :=
+    ( ( A , r)
+    , is-equiv-homotopy A A (\ a → r (s (a))) (identity A)
+      ( η) ( is-equiv-identity A))
+
+#def has-section-externalize
+  ( B A' : U)
+  ( r : B → A')
+  ( (s , ε) : has-section B A' r)
+  : has-external-section B A' r
+  :=
+    ( ( A' , s)
+    , is-equiv-homotopy A' A' (\ a' → r (s (a'))) (identity A')
+      ( ε) ( is-equiv-identity A'))
+
+#def has-retraction-internalize
+  ( A B : U)
+  ( s : A → B)
+  ( ((A' , r) , ( (rec-rs , η-rs) , _))
+    : has-external-retraction A B s)
+  : has-retraction A B s
+  := ( comp B A' A rec-rs r , η-rs)
+
+#def has-section-internalize
+  ( B A' : U)
+  ( r : B → A')
+  ( ((A , s) , (_ , (sec-rs , ε-rs)))
+    : has-external-section B A' r)
+  : has-section B A' r
+  := ( comp A' A B s sec-rs , ε-rs)
+```
+
+A consequence of the above is that in a section-retraction pair `(s, r)`, the
+map `s` is a section and the map `r` is a retraction. Note that not every
+composable pair `(s, r)` of such maps is a section-retraction pair; they have to
+(up to composition with an equivalence) be section and retraction _of each
+other_.
+
+In a section-retraction pair, if one of `s : A → B` and `r : B → A'` is an
 equivalence, then so is the other.
 
 This is just a rephrasing of `is-equiv-left-factor` and `is-equiv-right-factor`.
 
 ```rzk
-#variable is-sec-rec-pair : is-section-retraction-pair
+#section is-equiv-is-section-retraction-pair
+
+#variables A B A' : U
+#variable s : A → B
+#variable r : B → A'
+
+#variable is-sec-rec-pair : is-section-retraction-pair A B A' s r
 
 #def is-equiv-section-is-equiv-retraction-is-section-retraction-pair
-  ( is-equiv-r : is-equiv B A r)
-  : is-equiv A' B s
+  ( is-equiv-r : is-equiv B A' r)
+  : is-equiv A B s
   :=
-    is-equiv-right-factor A' B A s r
+    is-equiv-right-factor A B A' s r
     ( is-equiv-r) ( is-sec-rec-pair)
 
 #def is-equiv-retraction-is-equiv-section-is-section-retraction-pair
-  ( is-equiv-s : is-equiv A' B s)
-  : is-equiv B A r
+  ( is-equiv-s : is-equiv A B s)
+  : is-equiv B A' r
   :=
-    is-equiv-left-factor A' B A
+    is-equiv-left-factor A B A'
     ( s) ( is-equiv-s)
     ( r) ( is-sec-rec-pair)
 
-#end is-section-retraction-pair
+#end is-equiv-is-section-retraction-pair
+```
+
+## Retracts
+
+We say that a type `A` is a retract of a type `B` if we have a map `s : A → B`
+which has a retraction.
+
+```rzk title="The type of proofs that A is a retract of B"
+#def is-retract-of
+  ( A B : U)
+  : U
+  := Σ ( s : A → B) , has-retraction A B s
+
+#def section-is-retract-of
+  ( A B : U)
+  ( (s , (_ , _)) : is-retract-of A B)
+  : A → B
+  := s
+
+#def retraction-is-retract-of
+  ( A B : U)
+  ( (_ , (r , _)) : is-retract-of A B)
+  : B → A
+  := r
+
+#def homotopy-is-retract-of
+  ( A B : U)
+  ( (s , (r , η)) : is-retract-of A B)
+  : homotopy A A ( \ a → r ( s a)) ( identity A)
+  := η
+```
+
+Section-retraction pairs `A → B → A'` are a convenient way to exhibit both `A`
+and `A'` as retracts of `B`.
+
+```rzk
+#def is-retract-of-left-section-retraction-pair
+  ( A B A' : U)
+  ( s : A → B)
+  ( r : B → A')
+  ( is-sr-pair-sr : is-section-retraction-pair A B A' s r)
+  : is-retract-of A B
+  :=
+    ( ( s)
+    , ( has-retraction-internalize A B s ((A' , r) , is-sr-pair-sr)))
+
+#def is-retract-of-right-section-retraction-pair
+  ( A B A' : U)
+  ( s : A → B)
+  ( r : B → A')
+  ( is-sr-pair-sr : is-section-retraction-pair A B A' s r)
+  : is-retract-of A' B
+  :=
+    ( first ( has-section-internalize B A' r ((A , s) , is-sr-pair-sr))
+    , ( r
+      , second ( has-section-internalize B A' r ((A , s) , is-sr-pair-sr))))
 ```
 
 ## Function extensionality

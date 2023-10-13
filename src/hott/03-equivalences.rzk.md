@@ -24,18 +24,6 @@ This is a literate `rzk` file:
   := Σ (r : B → A) , (homotopy A A (comp A B A r f) (identity A))
 ```
 
-```rzk
-#def ind-has-section
-  ( f : A → B)
-  ( ( sec-f , ε-f) : has-section f)
-  ( C : B → U)
-  ( s : ( a : A) → C ( f a))
-  ( b : B)
-  : C b
-  :=
-    transport B C ( f (sec-f b)) b ( ε-f b) ( s (sec-f b))
-```
-
 We define equivalences to be bi-invertible maps.
 
 ```rzk
@@ -70,9 +58,17 @@ We define equivalences to be bi-invertible maps.
   : B → A
   := first (second is-equiv-f)
 
+#def has-section-is-equiv
+  : has-section A B f
+  := second is-equiv-f
+
 #def retraction-is-equiv uses (f)
   : B → A
   := first (first is-equiv-f)
+
+#def has-retraction-is-equiv
+  : has-retraction A B f
+  := first is-equiv-f
 ```
 
 ```rzk title="The homotopy between the section and retraction of an equivalence"
@@ -214,7 +210,7 @@ The inverse of an invertible map has an inverse.
         first ( second has-inverse-f)))
 ```
 
-## Composing equivalences
+## The type of equivalences
 
 The type of equivalences between types uses `#!rzk is-equiv` rather than
 `#!rzk has-inverse`.
@@ -225,6 +221,32 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
   : U
   := Σ (f : A → B) , (is-equiv A B f)
 ```
+
+## Induction with section
+
+```rzk
+#def ind-has-section
+  ( A B : U)
+  ( f : A → B)
+  ( ( sec-f , ε-f) : has-section A B f)
+  ( C : B → U)
+  ( s : (a : A) → C (f a))
+  ( b : B)
+  : C b
+  := transport B C (f (sec-f b)) b (ε-f b) (s (sec-f b))
+```
+
+It is convenient to have available the special case where `f` is an equivalence.
+
+```rzk
+#def ind-has-section-equiv
+  ( A B : U)
+  ( (f, is-equiv-f) : Equiv A B)
+  : ( C : B → U) → ((a : A) → C (f a)) → (b : B) → C b
+  := ind-has-section A B f (second is-equiv-f)
+```
+
+## Composing equivalences
 
 The data of an equivalence is not symmetric so we promote an equivalence to an
 invertible map to prove symmetry:
@@ -382,14 +404,12 @@ retraction the first map is an equivalence, and dually.
   ( ( (retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
   : is-equiv A B f
   :=
-    ( ( comp B C A retr-gf g, η-gf) ,
-      ( comp B C A sec-gf g ,
-        \ b →
+    ( ( comp B C A retr-gf g, η-gf)
+    , ( comp B C A sec-gf g
+      , \ b →
             ap-cancel-has-retraction B C g
             has-retraction-g (f (sec-gf (g b))) b
-            ( ε-gf (g b))
-      )
-    )
+            ( ε-gf (g b))))
 ```
 
 ```rzk title="Left cancellation of equivalence property in diagrammatic order"
@@ -401,13 +421,11 @@ retraction the first map is an equivalence, and dually.
   ( ( ( retr-gf, η-gf), (sec-gf, ε-gf)) : is-equiv A C (comp A B C g f))
   : is-equiv B C g
   :=
-    ( ( comp C A B f retr-gf ,
-        ind-has-section A B f has-section-f
+    ( ( comp C A B f retr-gf
+      , ind-has-section A B f has-section-f
           ( \ b → f (retr-gf (g b)) = b)
-          ( \ a → ap A B (retr-gf (g ( f a))) a f (η-gf a))
-      ) ,
-      ( comp C A B f sec-gf, ε-gf)
-    )
+          ( \ a → ap A B (retr-gf (g (f a))) a f (η-gf a)))
+    , ( comp C A B f sec-gf, ε-gf))
 ```
 
 We typically apply the cancelation property in a setting where the composite and
@@ -474,16 +492,16 @@ If a map is homotopic to an equivalence it is an equivalence.
   ( is-equiv-g : is-equiv A B g)
   : is-equiv A B f
   :=
-    ( ( ( first (first is-equiv-g)) ,
-        ( \ a →
+    ( ( ( first (first is-equiv-g))
+      , ( \ a →
           concat A
             ( first (first is-equiv-g) (f a))
             ( first (first is-equiv-g) (g a))
             ( a)
             ( ap B A (f a) (g a) (first (first is-equiv-g)) (H a))
-            ( second (first is-equiv-g) a))) ,
-      ( ( first (second is-equiv-g)) ,
-        ( \ b →
+            ( second (first is-equiv-g) a)))
+    , ( ( first (second is-equiv-g))
+      , ( \ b →
           concat B
             ( f (first (second is-equiv-g) b))
             ( g (first (second is-equiv-g) b))
@@ -786,8 +804,8 @@ dependent function types.
   ( famisequiv : (x : X) → is-equiv (A x) (B x) (f x))
   : is-equiv ((x : X) → A x) ((x : X) → B x) ( \ a x → f x (a x))
   :=
-    ( ( ( \ b x → first (first (famisequiv x)) (b x)) ,
-        ( \ a →
+    ( ( ( \ b x → first (first (famisequiv x)) (b x))
+      , ( \ a →
            eq-htpy
             X A
            ( \ x →
@@ -795,13 +813,12 @@ dependent function types.
                 ( first (famisequiv x))
                 ( f x (a x)))
             ( a)
-            ( \ x → second (first (famisequiv x)) (a x)))) ,
-      ( ( \ b x → first (second (famisequiv x)) (b x)) ,
-        ( \ b →
+            ( \ x → second (first (famisequiv x)) (a x))))
+    , ( ( \ b x → first (second (famisequiv x)) (b x))
+      , ( \ b →
             eq-htpy
             X B
-            ( \ x →
-               f x (first (second (famisequiv x)) (b x)))
+            ( \ x → f x (first (second (famisequiv x)) (b x)))
             ( b)
             ( \ x → second (second (famisequiv x)) (b x)))))
 ```
@@ -813,8 +830,8 @@ dependent function types.
   ( famequiv : (x : X) → Equiv (A x) (B x))
   : Equiv ((x : X) → A x) ((x : X) → B x)
   :=
-    ( ( \ a x → (first (famequiv x)) (a x)) ,
-      ( is-equiv-function-is-equiv-family
+    ( ( \ a x → (first (famequiv x)) (a x))
+    , ( is-equiv-function-is-equiv-family
         ( X)
         ( A)
         ( B)
@@ -863,6 +880,16 @@ dependent function types.
   := (rev A x y , ((rev A y x , rev-rev A x y) , (rev A y x , rev-rev A y x)))
 ```
 
+```rzk
+#def ind-rev
+  ( A : U)
+  ( x y : A)
+  ( B : (x = y) → U)
+  : ((p : y = x) → B (rev A y x p)) → ( q : x = y) → B q
+  :=
+    ind-has-section-equiv (y = x) (x = y) (equiv-rev A y x) ( B)
+```
+
 ## Concatenation with a fixed path is an equivalence
 
 ```rzk
@@ -872,20 +899,20 @@ dependent function types.
   ( p : x = y)
   : Equiv (y = z) (x = z)
   :=
-    ( concat A x y z p,
-      ( ( concat A y x z (rev A x y p), retraction-preconcat A x y z p),
-        ( concat A y x z (rev A x y p), section-preconcat A x y z p)))
+    ( concat A x y z p
+    , ( ( concat A y x z (rev A x y p), retraction-preconcat A x y z p)
+      , ( concat A y x z (rev A x y p), section-preconcat A x y z p)))
 
 #def equiv-postconcat
   ( A : U)
   ( x y z : A)
   ( q : y = z) : Equiv (x = y) (x = z)
   :=
-    ( \ p → concat A x y z p q,
-      ( ( \ r → concat A x z y r (rev A y z q),
-          retraction-postconcat A x y z q),
-        ( \ r → concat A x z y r (rev A y z q),
-          section-postconcat A x y z q)))
+    ( \ p → concat A x y z p q
+    , ( ( \ r → concat A x z y r (rev A y z q)
+        , retraction-postconcat A x y z q)
+      , ( \ r → concat A x z y r (rev A y z q)
+        , section-postconcat A x y z q)))
 ```
 
 ## Transport along a path is an equivalence
@@ -911,8 +938,8 @@ dependent function types.
   ( β : B' → B)
   : U
   :=
-    Σ ( ( s',s) : product ( A' → B' ) ( A → B)),
-      ( ( a' : A') → β ( s' a') = s ( α a'))
+    Σ ( ( s',s) : product ( A' → B' ) ( A → B))
+    , ( ( a' : A') → β ( s' a') = s ( α a'))
 
 #def Equiv-of-maps
   ( A' A : U)
@@ -921,11 +948,10 @@ dependent function types.
   ( β : B' → B)
   : U
   :=
-    Σ ( ((s', s), _) : map-of-maps A' A α B' B β),
-      ( product
-          ( is-equiv A' B' s')
-          ( is-equiv A B s)
-      )
+    Σ ( ((s', s), _) : map-of-maps A' A α B' B β)
+    , ( product
+        ( is-equiv A' B' s')
+        ( is-equiv A B s))
 
 #def is-equiv-equiv-is-equiv
   ( A' A : U)
@@ -940,11 +966,10 @@ dependent function types.
   :=
     is-equiv-right-factor A' A B α s is-equiv-s
       ( is-equiv-rev-homotopy A' B
-          ( comp A' B' B β s')
-          ( comp A' A B s α)
-          ( η )
-          ( is-equiv-comp A' B' B s' is-equiv-s' β is-equiv-β)
-      )
+        ( comp A' B' B β s')
+        ( comp A' A B s α)
+        ( η )
+        ( is-equiv-comp A' B' B s' is-equiv-s' β is-equiv-β))
 
 #def is-equiv-Equiv-is-equiv
   ( A' A : U)
@@ -953,8 +978,7 @@ dependent function types.
   ( β : B' → B)
   ( ( S, (is-equiv-s',is-equiv-s)) : Equiv-of-maps A' A α B' B β )
   : is-equiv B' B β → is-equiv A' A α
-  :=
-    is-equiv-equiv-is-equiv A' A α B' B β S is-equiv-s' is-equiv-s
+  := is-equiv-equiv-is-equiv A' A α B' B β S is-equiv-s' is-equiv-s
 
 #def is-equiv-equiv-is-equiv'
   ( A' A : U)
@@ -972,8 +996,7 @@ dependent function types.
         ( comp A' B' B β s')
         ( comp A' A B s α)
         ( η)
-        ( is-equiv-comp A' A B α is-equiv-α s is-equiv-s)
-      )
+        ( is-equiv-comp A' A B α is-equiv-α s is-equiv-s))
 
 #def is-equiv-Equiv-is-equiv'
   ( A' A : U)
@@ -982,6 +1005,5 @@ dependent function types.
   ( β : B' → B)
   ( ( S, (is-equiv-s',is-equiv-s)) : Equiv-of-maps A' A α B' B β )
   : is-equiv A' A α → is-equiv B' B β
-  :=
-    is-equiv-equiv-is-equiv' A' A α B' B β S is-equiv-s' is-equiv-s
+  := is-equiv-equiv-is-equiv' A' A α B' B β S is-equiv-s' is-equiv-s
 ```

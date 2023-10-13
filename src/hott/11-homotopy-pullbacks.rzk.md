@@ -414,7 +414,7 @@ from composition and cancelling laws for equivalences.
 
 ## Fiber products
 
-Given two type families `B C : A → U`, we can form their fiberwise product.
+Given two type families `B C : A → U`, we can form their **fiberwise product**.
 
 ```rzk
 #def fiberwise-product
@@ -439,7 +439,7 @@ Given two type families `B C : A → U`, we can form their fiberwise product.
   := \ (_,c) → c
 ```
 
-Given two maps `B → A` and `C → A`, we can form the relative product over `A`.
+Given two maps `B → A` and `C → A`, we can form the **relative product** over `A`.
 
 ```rzk
 #section relative-product
@@ -452,7 +452,7 @@ Given two maps `B → A` and `C → A`, we can form the relative product over `A
 
 #def relative-product
   : U
-  := Σ ( (b, c) : product B C) , β b = γ c
+  := Σ ( (b, c) : product B C) , (β b = γ c)
 
 #def first-relative-product uses (A B β C γ)
   : relative-product → B
@@ -476,7 +476,7 @@ product of all fibers.
   : U
   := total-type A (fiberwise-product A (fib B A β) (fib C A γ))
 
-#def fiber-product-unpacked
+#def unpack-fiber-product
   : fiber-product
   = ( Σ (a : A), (product (fib B A β a) (fib C A γ a)))
   := refl

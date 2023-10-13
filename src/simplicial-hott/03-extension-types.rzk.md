@@ -704,6 +704,7 @@ We now assume extension extensionality and derive a few consequences.
 
 ```rzk
 #assume extext : ExtExt
+#assume naiveextext : NaiveExtExt
 ```
 
 In particular, extension extensionality implies that homotopies give rise to
@@ -721,6 +722,8 @@ retraction to `#!rzk ext-htpy-eq`.
   : ((t : ψ) → (f t = g t) [ϕ t ↦ refl]) → (f = g)
   := first (first (extext I ψ ϕ A a f g))
 ```
+
+### Functoriality properties of extension types
 
 By extension extensionality, fiberwise equivalences of extension types define
 equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
@@ -759,6 +762,28 @@ equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
               ( b)
               ( \ t → second (second (second (famequiv t))) (b t))))))
 ```
+
+Similarly, a fiberwise section of a map `(t : ψ) → A t → B t` induces a section
+on extension types
+
+```rzk
+#def has-section-extension-has-section-family uses (naiveextext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A B : ψ → U)
+  ( f : ( t : ψ) → A t → B t)
+  ( has-fiberwise-section-f : (t : ψ) → has-section (A t ) (B t) (f t))
+  : has-section ((t : ψ) → A t) ((t : ψ) → B t) ( \ a t → f t (a t))
+  :=
+    ( ( \ b t → first (has-fiberwise-section-f t) (b t))
+    , \ b →
+      ( naiveextext I ψ (\ _ → BOT) B (\ _ → recBOT)
+        ( \ t → f t (first (has-fiberwise-section-f t) (b t)))
+        ( \ t → b t)
+        ( \ t → second (has-fiberwise-section-f t) (b t))))
+```
+
+### Homotopy extension property
 
 We have a homotopy extension property.
 

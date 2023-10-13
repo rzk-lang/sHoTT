@@ -1180,8 +1180,8 @@ with a `τ : ψ → A` that does not strictly restrict to `\ t → α (σ' t)`.
     , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ h t]
 ```
 
-If all ordinary relative extension types are contractible, then all
-generalized extension types are also contractible.
+If all ordinary relative extension types are contractible, then all generalized
+extension types are also contractible.
 
 ```rzk
 #def has-contr-relative-extension-types

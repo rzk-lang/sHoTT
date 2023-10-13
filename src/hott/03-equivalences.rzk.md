@@ -539,17 +539,30 @@ A pair of maps `s : A' → B` and `r : B → A` is a section-retraction pair if 
 composite `A' → A` is an equivalence.
 
 ```rzk
-#section is-section-retraction-pair
-
-#variables A' B A : U
-#variable s : A' → B
-#variable r : B → A
 
 
 #def is-section-retraction-pair
+  ( A' B A : U)
+  ( s : A' → B)
+  ( r : B → A)
   : U
   := is-equiv A' A (comp A' B A r s)
 ```
+
+We say that `s : A' → B` has a weak retraction if it can be completed to a
+section retraction pair.
+Note that like `has-section`, this is not a property but structure.
+
+```rzk
+#def has-weak-retraction
+  ( A' B : U)
+  ( s : A' → B)
+  : U
+  :=
+    Σ ( Σ (A : U) , r : B → A)
+    , ( is-section-retraction-pair A' B A s r)
+```
+
 
 In a section-retraction pair, if one of `s : A' → B` and `r : B → A` is an
 equivalence, then so is the other.
@@ -557,7 +570,13 @@ equivalence, then so is the other.
 This is just a rephrasing of `is-equiv-left-factor` and `is-equiv-right-factor`.
 
 ```rzk
-#variable is-sec-rec-pair : is-section-retraction-pair
+#section is-equiv-is-section-retraction-pair
+
+#variables A' B A : U
+#variable s : A' → B
+#variable r : B → A
+
+#variable is-sec-rec-pair : is-section-retraction-pair A' B A s r
 
 #def is-equiv-section-is-equiv-retraction-is-section-retraction-pair
   ( is-equiv-r : is-equiv B A r)
@@ -574,7 +593,7 @@ This is just a rephrasing of `is-equiv-left-factor` and `is-equiv-right-factor`.
     ( s) ( is-equiv-s)
     ( r) ( is-sec-rec-pair)
 
-#end is-section-retraction-pair
+#end is-equiv-is-section-retraction-pair
 ```
 
 ## Function extensionality

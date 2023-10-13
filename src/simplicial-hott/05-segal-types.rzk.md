@@ -238,7 +238,7 @@ type.
 
 #def fibered-arr-free-arr
   ( A : U)
-  : (arr A) → (fibered-arr A)
+  : arr A → fibered-arr A
   := \ k → (k 0₂ , (k 1₂ , k))
 
 #def is-equiv-fibered-arr-free-arr
@@ -251,7 +251,7 @@ type.
 #def equiv-fibered-arr-free-arr
   ( A : U)
   : Equiv (arr A) (fibered-arr A)
-  := ( fibered-arr-free-arr A , is-equiv-fibered-arr-free-arr A)
+  := (fibered-arr-free-arr A , is-equiv-fibered-arr-free-arr A)
 ```
 
 And the corresponding uncurried version.
@@ -266,7 +266,7 @@ And the corresponding uncurried version.
 #def fibered-arr-free-arr'
   ( A : U)
   : arr A → fibered-arr' A
-  := \ σ → ((σ 0₂, σ 1₂), σ)
+  := \ σ → ((σ 0₂ , σ 1₂) , σ)
 
 #def is-equiv-fibered-arr-free-arr'
   ( A : U)

@@ -318,35 +318,35 @@ The canonical map from a type to its the free path type is an equivalence.
 #def free-paths
   ( A : U)
   : U
-  := Σ ( (x, y) : product A A) , (x = y)
+  := Σ ( (x , y) : product A A) , (x = y)
 
 #def constant-free-path
   ( A : U)
   ( a : A)
   : free-paths A
-  := ((a,a), refl)
+  := ((a , a) , refl)
 
 #def is-constant-free-path
   ( A : U)
-  ( ((a,y), p) : free-paths A)
+  ( ((a , y) , p) : free-paths A)
   : constant-free-path A a = ((a,y), p)
   :=
     ind-path A a
-    ( \ x p' →  constant-free-path A a = ((a,x), p'))
+    ( \ x p' →  constant-free-path A a = ((a , x) , p'))
     ( refl)
     ( y) ( p)
 
 #def start-free-path
   ( A : U)
   : free-paths A → A
-  := \ ((a,_), _) → a
+  := \ ((a , _) , _) → a
 
 #def is-equiv-constant-free-path
   ( A : U)
   : is-equiv A (free-paths A) (constant-free-path A)
   :=
-    ( ( start-free-path A, \ _ → refl)
-    , ( start-free-path A, is-constant-free-path A))
+    ( ( start-free-path A , \ _ → refl)
+    , ( start-free-path A , is-constant-free-path A))
 ```
 
 ## Pullback of a type family

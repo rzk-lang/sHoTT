@@ -175,39 +175,23 @@ A type is contractible if and only if its terminal map is an equivalence.
 
 A retract of contractible types is contractible.
 
-```rzk title="The type of proofs that A is a retract of B"
-#def is-retract-of
-  ( A B : U)
-  : U
-  := Σ ( s : A → B) , has-retraction A B s
-
-#section retraction-data
-
-#variables A B : U
-#variable is-retract-of-A-B : is-retract-of A B
-
-#def section-is-retract-of
-  : A → B
-  := first is-retract-of-A-B
-
-#def retraction-is-retract-of
-  : B → A
-  := first (second is-retract-of-A-B)
-
-#def homotopy-is-retract-of
-  : homotopy A A (comp A B A retraction-is-retract-of section-is-retract-of) (identity A)
-  := second (second is-retract-of-A-B)
-```
 
 ```rzk title="If A is a retract of a contractible type it has a term"
-#def is-inhabited-is-contr-is-retract-of uses (is-retract-of-A-B)
+#section is-contr-is-retract-of-is-contr
+
+#variables A B : U
+#variable is-retr-of-A-B : is-retract-of A B
+
+#def is-inhabited-is-contr-is-retract-of uses (is-retr-of-A-B)
   ( is-contr-B : is-contr B)
   : A
-  := retraction-is-retract-of (center-contraction B is-contr-B)
+  :=
+    retraction-is-retract-of A B is-retr-of-A-B
+    ( center-contraction B is-contr-B)
 ```
 
 ```rzk title="If A is a retract of a contractible type it has a contracting homotopy"
-#def has-homotopy-is-contr-is-retract-of uses (is-retract-of-A-B)
+#def has-homotopy-is-contr-is-retract-of uses (is-retr-of-A-B)
   ( is-contr-B : is-contr B)
   ( a : A)
   : ( is-inhabited-is-contr-is-retract-of is-contr-B) = a
@@ -215,25 +199,32 @@ A retract of contractible types is contractible.
     concat
       ( A)
       ( is-inhabited-is-contr-is-retract-of is-contr-B)
-      ( (comp A B A retraction-is-retract-of section-is-retract-of) a)
+      ( comp A B A
+        ( retraction-is-retract-of A B is-retr-of-A-B)
+        ( section-is-retract-of A B is-retr-of-A-B)
+        ( a))
       ( a)
-      ( ap B A (center-contraction B is-contr-B) (section-is-retract-of a)
-        ( retraction-is-retract-of)
-        ( homotopy-contraction B is-contr-B (section-is-retract-of a)))
-      ( homotopy-is-retract-of a)
+      ( ap B A
+        ( center-contraction B is-contr-B)
+        ( section-is-retract-of A B is-retr-of-A-B a)
+        ( retraction-is-retract-of A B is-retr-of-A-B)
+        ( homotopy-contraction B is-contr-B
+          ( section-is-retract-of A B is-retr-of-A-B a)))
+      ( homotopy-is-retract-of A B is-retr-of-A-B a)
 ```
 
 ```rzk title="If A is a retract of a contractible type it is contractible"
-#def is-contr-is-retract-of-is-contr uses (is-retract-of-A-B)
+#def is-contr-is-retract-of-is-contr uses (is-retr-of-A-B)
   ( is-contr-B : is-contr B)
   : is-contr A
   :=
     ( is-inhabited-is-contr-is-retract-of is-contr-B ,
       has-homotopy-is-contr-is-retract-of is-contr-B)
+
+#end is-contr-is-retract-of-is-contr
 ```
 
 ```rzk
-#end retraction-data
 ```
 
 ## Functions between contractible types

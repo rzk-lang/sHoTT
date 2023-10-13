@@ -287,7 +287,9 @@ equivalence.
   := (family-of-equiv-total-equiv A B C f , total-equiv-family-of-equiv A B C f)
 ```
 
-## Endpoint based path spaces
+## Path spaces
+
+### Based path spaces
 
 ```rzk title="An equivalence between the based path spaces"
 #def equiv-based-paths
@@ -306,6 +308,45 @@ equivalence.
     is-contr-equiv-is-contr' (Σ (x : A) , x = a) (Σ (x : A) , a = x)
       ( equiv-based-paths A a)
       ( is-contr-based-paths A a)
+```
+
+### Free path spaces
+
+The canonical map from a type to its the free path type is an equivalence.
+
+```rzk
+#def free-paths
+  ( A : U)
+  : U
+  := Σ ( (x , y) : product A A) , (x = y)
+
+#def constant-free-path
+  ( A : U)
+  ( a : A)
+  : free-paths A
+  := ((a , a) , refl)
+
+#def is-constant-free-path
+  ( A : U)
+  ( ((a , y) , p) : free-paths A)
+  : constant-free-path A a = ((a,y), p)
+  :=
+    ind-path A a
+    ( \ x p' →  constant-free-path A a = ((a , x) , p'))
+    ( refl)
+    ( y) ( p)
+
+#def start-free-path
+  ( A : U)
+  : free-paths A → A
+  := \ ((a , _) , _) → a
+
+#def is-equiv-constant-free-path
+  ( A : U)
+  : is-equiv A (free-paths A) (constant-free-path A)
+  :=
+    ( ( start-free-path A , \ _ → refl)
+    , ( start-free-path A , is-constant-free-path A))
 ```
 
 ## Pullback of a type family

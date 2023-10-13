@@ -458,7 +458,7 @@ In fact, it suffices to assume that the left square has horizontal sections.
 
 ## Fiber products
 
-Given two type families `B C : A → U`, we can form their fiberwise product.
+Given two type families `B C : A → U`, we can form their **fiberwise product**.
 
 ```rzk
 #def fiberwise-product
@@ -483,7 +483,8 @@ Given two type families `B C : A → U`, we can form their fiberwise product.
   := \ (_,c) → c
 ```
 
-Given two maps `B → A` and `C → A`, we can form the relative product over `A`.
+Given two maps `B → A` and `C → A`, we can form the **relative product** over
+`A`.
 
 ```rzk
 #section relative-product
@@ -496,7 +497,7 @@ Given two maps `B → A` and `C → A`, we can form the relative product over `A
 
 #def relative-product
   : U
-  := Σ ( (b, c) : product B C) , β b = γ c
+  := Σ ( (b, c) : product B C) , (β b = γ c)
 
 #def first-relative-product uses (A B β C γ)
   : relative-product → B
@@ -520,7 +521,7 @@ product of all fibers.
   : U
   := total-type A (fiberwise-product A (fib B A β) (fib C A γ))
 
-#def fiber-product-unpacked
+#def unpack-fiber-product
   : fiber-product
   = ( Σ (a : A), (product (fib B A β a) (fib C A γ a)))
   := refl
@@ -585,4 +586,30 @@ product of all fibers.
     , is-equiv-relative-fiber-product)
 
 #end relative-product
+```
+
+### Fiber product with singleton type
+
+The relative product of `β : B → A` with a map `Unit → A` corresponding to
+`a : A` is nothing but the fiber `fib B A β a`.
+
+```rzk
+#def compute-relative-product-singleton
+  ( A B : U)
+  ( β : B → A)
+  ( a : A)
+  : Equiv-of-maps
+    ( fib B A β a) (Unit) (\ _ → unit)
+    ( relative-product A B β Unit (\ unit → a))
+    ( Unit) ( second-relative-product A B β Unit (\ unit → a))
+  :=
+    ( ( ( ( \ (b , p) → ((b , unit) , p))
+        , ( identity Unit))
+      , \ _ → refl)
+    , ( ( ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl))
+        , ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl)))
+      , is-equiv-identity Unit))
+
 ```

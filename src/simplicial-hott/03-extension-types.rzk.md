@@ -70,8 +70,8 @@ restriction map `(ψ → A) → (ϕ → A)`, which we can view as the types of
   : has-section (extension-type σ) (homotopy-extension-type σ)
       (extension-type-weakening-map σ)
   :=
-    ( extension-strictification σ,
-      \ th → ( second (section-extension-type-weakening' σ th)))
+    ( extension-strictification σ
+    , \ th → ( second (section-extension-type-weakening' σ th)))
 
 
 #def is-equiv-extension-type-weakening
@@ -120,9 +120,7 @@ This equivalence is functorial in the following sense:
       , \ _ → refl
       )
     , ( is-equiv-extension-type-weakening I ψ ϕ A' σ'
-      , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α t (σ' t))
-      )
-    )
+      , is-equiv-extension-type-weakening I ψ ϕ A (\ t → α t (σ' t))))
 ```
 
 ## Commutation of arguments and currying
@@ -1120,7 +1118,7 @@ pointwise.
     ( \ τ → (t : ϕ) → (τ t = σ t))
     ( \ τ →
       equiv-ExtExt extext I (\ t → ϕ t) (\ _ → BOT) (\ t → A t)
-      ( \ _ → recBOT) ( \ t → τ t) ( σ))
+      ( \ _ → recBOT) (\ t → τ t) σ)
 
 #def extension-type-pointwise-weakening uses (extext)
   ( σ : (t : ϕ) → A t)
@@ -1157,7 +1155,7 @@ Given a map `α : A' → A`, there is also a notion of relative extension types.
   : U
   :=
     Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t])
-    , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl]
+    , ( ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl])
 
 #def relative-extension-type'
   : U
@@ -1207,24 +1205,24 @@ with a `τ : ψ → A` that does not strictly restrict to `\ t → α (σ' t)`.
     , ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ h t]
 ```
 
-If all ordinary relative extension types are contractible, then also all
-generalized ones.
+If all ordinary relative extension types are contractible, then all generalized
+extension types are also contractible.
 
 ```rzk
 #def has-contr-relative-extension-types
   : U
   :=
-    ( σ' : (t : ϕ) → A' t)
+  ( ( σ' : (t : ϕ) → A' t)
   → ( τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
-  → ( is-contr (relative-extension-type I ψ ϕ A' A α σ' τ))
+  → ( is-contr (relative-extension-type I ψ ϕ A' A α σ' τ)))
 
 #def has-contr-general-relative-extension-types
   : U
   :=
-    ( σ' : (t : ϕ) → A' t)
+  ( ( σ' : (t : ϕ) → A' t)
   → ( τ : (t : ψ) → A t)
   → ( h : (t : ϕ) → α t (σ' t) = τ t)
-  → ( is-contr ( general-relative-extension-type σ' τ h))
+  → ( is-contr ( general-relative-extension-type σ' τ h)))
 
 #def has-contr-relative-extension-types-generalize' uses (extext)
   ( has-contr-relext-α : has-contr-relative-extension-types)

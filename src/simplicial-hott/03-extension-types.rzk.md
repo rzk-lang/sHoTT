@@ -1219,8 +1219,8 @@ The converse is of course trivial.
 
 For simplicity, we only consider extesions of `#!rzk BOT`.
 
-For each map `f : A → B` and each shape inclusion `ϕ ⊂ ψ`,
-we have a commutative square.
+For each map `f : A → B` and each shape inclusion `ϕ ⊂ ψ`, we have a commutative
+square.
 
 ```
 (ψ → A') → (ψ → A)

@@ -820,12 +820,12 @@ the point of contraction for weak extension extensionality.
         ( \ t → ( a t , e t) )))
 ```
 
-For completeness, we give a short direct proof that
-extension extensionality also implies the homotopy extension property
-without passing through weak extension extensionality.
+For completeness, we give a short direct proof that extension extensionality
+also implies the homotopy extension property without passing through weak
+extension extensionality.
 
 ```rzk
-#def htpy-ext-prop-naive-extext
+#def htpy-ext-prop-extext
   ( extext : ExtExt)
   : HtpyExtProperty
   :=
@@ -847,10 +847,10 @@ without passing through weak extension extensionality.
 
 ### Homotopy extension property and NaiveExtExt imply WeakExtExt
 
-This section contains the original proof of RS17, Proposition 4.11
-stating that NaiveExtExt and HptyExtProperty jointly imply WeakExtExt.
-In light of `weakextext-naiveextext`, this is now redundant.
-We keep it around since some intermediate statements might still be useful.
+This section contains the original proof of RS17, Proposition 4.11 stating that
+NaiveExtExt and HptyExtProperty jointly imply WeakExtExt. In light of
+`weakextext-naiveextext`, this is now redundant. We keep it around since some
+intermediate statements might still be useful.
 
 In an extension type of a dependent type that is pointwise contractible, then we
 have an inhabitant of the extension type witnessing the contraction, at every
@@ -1020,7 +1020,7 @@ f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
         ( is-contr-fiberwise-A ))))
 ```
 
-```rzk  title="RS17, Proposition 4.11"
+```rzk title="RS17, Proposition 4.11"
 #define weak-extext-naiveextext-htpy-ext-property
  ( naiveextext : NaiveExtExt)
  ( htpy-ext-prop : HtpyExtProperty)

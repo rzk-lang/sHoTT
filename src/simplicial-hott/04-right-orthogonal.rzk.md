@@ -982,3 +982,24 @@ with the maps `a : Unit → A` from the unit type.
       ( is-right-orthogonal-pullback-to-shape I ψ ϕ A' A α
         ( is-orth-ψ-ϕ-α) ( Unit) (\ unit → a)))
 ```
+
+Corollary:
+Given two types  `A'` and `A` with unique extensions w.r.t. `ϕ ⊂ ψ`,
+every fiber of every map `α : A' → A` also has unique extensions.
+
+```rzk
+#def has-fiberwise-unique-extensions-have-unique-extensions
+  uses (extext weakextext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A' A : U)
+  ( α : A' → A)
+  ( has-ue-ψ-ϕ-A' : has-unique-extensions I ψ ϕ A')
+  ( has-ue-ψ-ϕ-A : has-unique-extensions I ψ ϕ A)
+  : (a : A) → has-unique-extensions I ψ ϕ (fib A' A α a)
+  :=
+    has-fiberwise-unique-extensions-is-right-orthogonal-to-shape I ψ ϕ A' A α
+    ( is-right-orthogonal-have-unique-extensions I ψ ϕ A' A
+      ( has-ue-ψ-ϕ-A') ( has-ue-ψ-ϕ-A) ( α))
+```

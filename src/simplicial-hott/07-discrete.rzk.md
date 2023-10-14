@@ -44,6 +44,144 @@ identity types.
   := (x : A) → (y : A) → is-equiv (x = y) (hom A x y) (hom-eq A x y)
 ```
 
+## Alternative definitions
+
+One can characterize discrete types in various other equivalent:
+
+```rzk
+#section discrete-types-alternative
+
+#variable A : U
+
+#def is-Δ¹-local
+  : U
+  := is-equiv A (Δ¹ → A) (\ a _ → a)
+```
+
+```rzk
+#def is-left-local
+  : U
+  := is-local-type 2 Δ¹ (\ t → t ≡ 0₂) A
+
+#def is-right-local
+  : U
+  := is-local-type 2 Δ¹ (\ t → t ≡ 1₂) A
+```
+
+### Alternative definitions : proofs
+
+First ot all, note that we have two section-retraction pairs
+
+```rzk
+#def is-section-retraction-0-Δ¹-0
+  : is-section-retraction-pair
+    ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 0₂) → A)
+    ( \ a _ → a) (\ τ t → τ t)
+  :=
+    ( ( \ σ → σ 0₂ , \ _ → refl)
+    , ( \ σ → σ 0₂ , \ _ → refl))
+
+#def is-section-retraction-1-Δ¹-1
+  : is-section-retraction-pair
+    ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 1₂) → A)
+    ( \ a _ → a) (\ τ t → τ t)
+  :=
+    ( ( \ σ → σ 1₂ , \ _ → refl)
+    , ( \ σ → σ 1₂ , \ _ → refl))
+```
+
+From this it follows that the three alternative definitions are all equivalent
+to each other.
+
+```rzk
+#def is-left-local-is-Δ¹-local
+  : is-Δ¹-local → is-left-local
+  :=
+    is-equiv-retraction-is-equiv-section-is-section-retraction-pair
+      ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 0₂) → A)
+      ( \ a _ → a) (\ τ t → τ t)
+    ( is-section-retraction-0-Δ¹-0)
+
+#def is-Δ¹-local-is-left-local
+  : is-left-local → is-Δ¹-local
+  :=
+    is-equiv-section-is-equiv-retraction-is-section-retraction-pair
+      ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 0₂) → A)
+      ( \ a _ → a) (\ τ t → τ t)
+    ( is-section-retraction-0-Δ¹-0)
+
+#def is-right-local-is-Δ¹-local
+  : is-Δ¹-local → is-right-local
+  :=
+    is-equiv-retraction-is-equiv-section-is-section-retraction-pair
+      ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 1₂) → A)
+      ( \ a _ → a) (\ τ t → τ t)
+    ( is-section-retraction-1-Δ¹-1)
+
+#def is-Δ¹-local-is-right-local
+  : is-right-local → is-Δ¹-local
+  :=
+    is-equiv-section-is-equiv-retraction-is-section-retraction-pair
+      ( A) ( Δ¹ → A) ( (t : 2 | Δ¹ t ∧ t ≡ 1₂) → A)
+      ( \ a _ → a) (\ τ t → τ t)
+    ( is-section-retraction-1-Δ¹-1)
+```
+
+Next, we aim to compare the original `is-discrete` with `is-Δ¹-local`.
+
+To do this, we note that we have an equivalence of maps between `A → (Δ¹ → A)`
+and the total map of the family `\ (a, b) → hom-eq a b : a = b → hom A a b` .
+
+```rzk
+#def equiv-of-maps-total-map-hom-eq-const-Δ¹
+  : Equiv-of-maps
+    ( A) ( Δ¹ → A)
+    ( \ a _ → a)
+    ( free-paths A) ( fibered-arr' A)
+    ( \ ((a,b), p) → ((a,b), hom-eq A a b p))
+  :=
+  ( ( ( constant-free-path A
+      , fibered-arr-free-arr' A)
+    , \ _ → refl)
+  , ( is-equiv-constant-free-path A
+    , is-equiv-fibered-arr-free-arr' A))
+```
+
+The rest is just logical bookkeeping using that equivalences are preserved under
+equivalences of maps and when passing to/from total types.
+
+```rzk
+#def is-Δ¹-local-is-discrete
+  ( is-discrete-A : is-discrete A)
+  : is-Δ¹-local
+  :=
+    is-equiv-Equiv-is-equiv ( A) ( Δ¹ → A) ( \ a _ → a)
+      ( free-paths A) ( fibered-arr' A)
+      ( \ ((a,b), p) → ((a,b), hom-eq A a b p))
+    ( equiv-of-maps-total-map-hom-eq-const-Δ¹)
+    ( family-of-equiv-total-equiv
+        ( product A A) ( \ (a,b) → a = b) ( \ (a,b) → hom A a b)
+      ( \ (a,b) → hom-eq A a b)
+      ( \ (a,b) → is-discrete-A a b))
+
+#def is-discrete-is-Δ¹-local
+  ( is-Δ¹-local-A : is-Δ¹-local)
+  : is-discrete A
+  :=
+  \ a b →
+    ( total-equiv-family-of-equiv ( product A A) ( \ (a,b) → a = b)
+        ( \ (a,b) → hom A a b)
+      ( \ (a,b) → hom-eq A a b)
+      ( is-equiv-Equiv-is-equiv' ( A) ( Δ¹ → A) ( \ a _ → a)
+          ( free-paths A) ( fibered-arr' A)
+          ( \ ((a,b), p) → ((a,b), hom-eq A a b p))
+        ( equiv-of-maps-total-map-hom-eq-const-Δ¹)
+        (is-Δ¹-local-A)))
+    ( a, b)
+
+#end discrete-types-alternative
+```
+
 ## Families of discrete types
 
 By function extensionality, the dependent function type associated to a family

@@ -1896,7 +1896,7 @@ Segal type. This is an instance of a general statement about types with unique
 extensions for the shape inclusion `Λ ⊂ Δ²`.
 
 ```rzk
-#def is-fiberwise-segal-are-segal
+#def is-fiberwise-segal-are-segal uses (extext weakextext)
   ( A B : U)
   ( f : A → B)
   ( is-segal-A : is-segal A)

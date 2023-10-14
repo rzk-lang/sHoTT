@@ -590,26 +590,35 @@ product of all fibers.
 
 ### Fiber product with singleton type
 
-The relative product of `β : B → A` with a map `Unit → A` corresponding to
-`a : A` is nothing but the fiber `fib B A β a`.
+The relative product of `f : B → A` with a map `Unit → A` corresponding to
+`a : A` is nothing but the fiber `fib B A f a`.
 
 ```rzk
-#def compute-relative-product-singleton
-  ( A B : U)
-  ( β : B → A)
+#def compute-pullback-to-Unit
+  ( B A : U)
+  ( f : B → A)
+  ( a : A)
+  : Equiv (fib B A f a) (relative-product A B f Unit (\ unit → a))
+  :=
+    ( ( \ (b , p) → ((b , unit) , p))
+    , ( ( ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl))
+        , ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl)))))
+
+#def compute-map-pullback-to-Unit
+  ( B A : U)
+  ( f : B → A)
   ( a : A)
   : Equiv-of-maps
-    ( fib B A β a) (Unit) (\ _ → unit)
-    ( relative-product A B β Unit (\ unit → a))
-    ( Unit) ( second-relative-product A B β Unit (\ unit → a))
+    ( fib B A f a) (Unit) (\ _ → unit)
+    ( relative-product A B f Unit (\ unit → a))
+    ( Unit) ( second-relative-product A B f Unit (\ unit → a))
   :=
     ( ( ( ( \ (b , p) → ((b , unit) , p))
         , ( identity Unit))
       , \ _ → refl)
-    , ( ( ( ( \ ((b , unit) , p) → (b, p))
-          , ( \ _ → refl))
-        , ( ( \ ((b , unit) , p) → (b, p))
-          , ( \ _ → refl)))
+    , ( second (compute-pullback-to-Unit B A f a)
       , is-equiv-identity Unit))
 
 ```

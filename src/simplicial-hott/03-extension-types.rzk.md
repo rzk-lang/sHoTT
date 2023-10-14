@@ -723,66 +723,6 @@ retraction to `#!rzk ext-htpy-eq`.
   := first (first (extext I ψ ϕ A a f g))
 ```
 
-### Functoriality properties of extension types
-
-By extension extensionality, fiberwise equivalences of extension types define
-equivalences of extension types. For simplicity, we extend from `#!rzk BOT`.
-
-```rzk
-#def equiv-extension-equiv-family uses (extext)
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( A B : ψ → U)
-  ( famequiv : (t : ψ) → (Equiv (A t) (B t)))
-  : Equiv ((t : ψ) → A t) ((t : ψ) → B t)
-  :=
-    ( ( \ a t → (first (famequiv t)) (a t)) ,
-      ( ( ( \ b t → (first (first (second (famequiv t)))) (b t)) ,
-          ( \ a →
-            eq-ext-htpy
-              ( I)
-              ( ψ)
-              ( \ t → BOT)
-              ( A)
-              ( \ u → recBOT)
-              ( \ t →
-                first (first (second (famequiv t))) (first (famequiv t) (a t)))
-              ( a)
-              ( \ t → second (first (second (famequiv t))) (a t)))) ,
-        ( ( \ b t → first (second (second (famequiv t))) (b t)) ,
-          ( \ b →
-            eq-ext-htpy
-              ( I)
-              ( ψ)
-              ( \ t → BOT)
-              ( B)
-              ( \ u → recBOT)
-              ( \ t →
-                first (famequiv t) (first (second (second (famequiv t))) (b t)))
-              ( b)
-              ( \ t → second (second (second (famequiv t))) (b t))))))
-```
-
-Similarly, a fiberwise section of a map `(t : ψ) → A t → B t` induces a section
-on extension types
-
-```rzk
-#def has-section-extension-has-section-family uses (naiveextext)
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( A B : ψ → U)
-  ( f : ( t : ψ) → A t → B t)
-  ( has-fiberwise-section-f : (t : ψ) → has-section (A t ) (B t) (f t))
-  : has-section ((t : ψ) → A t) ((t : ψ) → B t) ( \ a t → f t (a t))
-  :=
-    ( ( \ b t → first (has-fiberwise-section-f t) (b t))
-    , \ b →
-      ( naiveextext I ψ (\ _ → BOT) B (\ _ → recBOT)
-        ( \ t → f t (first (has-fiberwise-section-f t) (b t)))
-        ( \ t → b t)
-        ( \ t → second (has-fiberwise-section-f t) (b t))))
-```
-
 ### Homotopy extension property
 
 We have a homotopy extension property.
@@ -1273,4 +1213,127 @@ The converse is of course trivial.
     \ σ' τ → has-contr-gen-relext-α σ' τ (\ _ → refl)
 
 #end general-extension-types
+```
+
+## Functoriality of extension types
+
+For simplicity, we only consider extesions of `#!rzk BOT`.
+
+For each map `f : A → B` and each shape inclusion `ϕ ⊂ ψ`,
+we have a commutative square.
+
+```
+(ψ → A') → (ψ → A)
+
+   ↓          ↓
+
+(ϕ → A') → (ϕ → A)
+```
+
+We can view it as a map of maps either vertically or horizontally.
+
+```rzk
+#def map-of-restriction-maps
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( f : (t : ψ) → A t → B t)
+  : map-of-maps
+    ( (t : ψ) → A t) ( (t : ϕ) → A t)  (\ a t → a t)
+    ( (t : ψ) → B t) ( (t : ϕ) → B t)  (\ b t → b t)
+  :=
+    ( ( ( \ a t → f t (a t))
+      , ( \ a t → f t (a t)))
+    , \ _ → refl)
+
+#def map-of-map-extension-type
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( f : (t : ψ) → A t → B t)
+  : map-of-maps
+    ( (t : ψ) → A t) ( (t : ψ) → B t) (\ a t → f t (a t))
+    ( (t : ϕ) → A t) ( (t : ϕ) → B t) (\ a t → f t (a t))
+  :=
+    ( ( ( \ a t → a t)
+      , ( \ b t → b t))
+    , \ _ → refl)
+```
+
+It follows from extension extensionality that if `f : A → B` is an equivalence,
+then so is the map of maps `map-of-restriction-maps`.
+
+```rzk
+#def is-equiv-extension-is-equiv-family uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A B : ψ → U)
+  ( f : (t : ψ) → (A t) → (B t))
+  ( is-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  : is-equiv ((t : ψ) → A t) ((t : ψ) → B t) ( \ a t → f t (a t))
+  :=  ( ( ( \ b t → (first (first (is-equiv-f t))) (b t))
+        , ( \ a →
+            eq-ext-htpy I ψ ( \ t → BOT)
+              ( A)
+              ( \ u → recBOT)
+              ( \ t → first (first (is-equiv-f t)) (f t (a t)))
+              ( a)
+              ( \ t → second (first (is-equiv-f t)) (a t))))
+      , ( ( \ b t → first (second (is-equiv-f t)) (b t))
+        , ( \ b →
+            eq-ext-htpy I ψ ( \ t → BOT)
+              ( B)
+              ( \ u → recBOT)
+              ( \ t → f t (first (second (is-equiv-f t)) (b t)))
+              ( b)
+              ( \ t → second (second (is-equiv-f t)) (b t)))))
+
+#def equiv-extension-equiv-family uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A B : ψ → U)
+  ( famequiv : (t : ψ) → (Equiv (A t) (B t)))
+  : Equiv ((t : ψ) → A t) ((t : ψ) → B t)
+  :=
+    ( ( \ a t → first ( famequiv t) (a t))
+    , is-equiv-extension-is-equiv-family I ψ A B
+      ( \ t → first (famequiv t))
+      ( \ t → second (famequiv t)))
+
+#def equiv-of-restriction-maps-equiv-family uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( famequiv : (t : ψ) → (Equiv (A t) (B t)))
+  : Equiv-of-maps
+    ( (t : ψ) → A t) ( (t : ϕ) → A t)  (\ a t → a t)
+    ( (t : ψ) → B t) ( (t : ϕ) → B t)  (\ b t → b t)
+  :=
+    ( map-of-restriction-maps I ψ ϕ A B (\ t → first (famequiv t))
+    , ( second (equiv-extension-equiv-family I ψ A B famequiv)
+      , second ( equiv-extension-equiv-family I
+                 (\ t → ϕ t) (\ t → A t) (\ t → B t) (\ t → famequiv t))))
+```
+
+Similarly, a fiberwise section of a map `(t : ψ) → A t → B t` induces a section
+on extension types.
+
+```rzk
+#def has-section-extension-has-section-family uses (naiveextext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A B : ψ → U)
+  ( f : ( t : ψ) → A t → B t)
+  ( has-fiberwise-section-f : (t : ψ) → has-section (A t ) (B t) (f t))
+  : has-section ((t : ψ) → A t) ((t : ψ) → B t) ( \ a t → f t (a t))
+  :=
+    ( ( \ b t → first (has-fiberwise-section-f t) (b t))
+    , \ b →
+      ( naiveextext I ψ (\ _ → BOT) B (\ _ → recBOT)
+        ( \ t → f t (first (has-fiberwise-section-f t) (b t)))
+        ( \ t → b t)
+        ( \ t → second (has-fiberwise-section-f t) (b t))))
 ```

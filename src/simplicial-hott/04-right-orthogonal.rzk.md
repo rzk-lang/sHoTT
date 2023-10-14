@@ -24,8 +24,8 @@ For every shape inclusion `ϕ ⊂ ψ`, we obtain a fibrancy condition for a map
 `α : A' → A` in terms of unique extension along `ϕ ⊂ ψ`. This is a relative
 version of unique extension along `ϕ ⊂ ψ`.
 
-We say that `α : A' → A` is **right orthogonal** to the shape inclusion
-`ϕ ⊂ ψ`, if the square
+We say that `α : A' → A` is **right orthogonal** to the shape inclusion `ϕ ⊂ ψ`,
+if the square
 
 ```
 (ψ → A') → (ψ → A)
@@ -38,9 +38,8 @@ We say that `α : A' → A` is **right orthogonal** to the shape inclusion
 is homotopy cartesian.
 
 Equivalently, we can interpret this orthogonality as a cofibrancy condition on
-the shape inclusion. We say that the shape inclusion `ϕ ⊂ ψ` is
-**left orthogonal** to the map `α`,
-if `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
+the shape inclusion. We say that the shape inclusion `ϕ ⊂ ψ` is **left
+orthogonal** to the map `α`, if `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
 
 ```rzk title="BW23, Section 3"
 #def is-right-orthogonal-to-shape
@@ -893,8 +892,8 @@ Unique extension types are closed under equivalence.
 ### Unique extension types are types with right orthogonal terminal map
 
 Next we prove the logical equivalence between `has-unique-extensions` and
-`is-right-orthogonal-terminal-map`. This follows directly from the fact
-that `Unit` has unique extensions (using `weakextext : WeakExtExt`).
+`is-right-orthogonal-terminal-map`. This follows directly from the fact that
+`Unit` has unique extensions (using `weakextext : WeakExtExt`).
 
 ```rzk
 #section is-right-orthogonal-terminal-map
@@ -955,11 +954,10 @@ that `Unit` has unique extensions (using `weakextext : WeakExtExt`).
 
 ## Fibers of right orthogonal maps
 
-Let `α : A' → A` be right orthogonal to `ϕ ⊂ ψ`.
-Then every fiber of `α` has unique extensions along `ϕ ⊂ ψ`.
-This follows immediately since the fibers of `α`
-are just the relative products of `α : A' → A`
-with the maps `a : Unit → A` from the unit type.
+Let `α : A' → A` be right orthogonal to `ϕ ⊂ ψ`. Then every fiber of `α` has
+unique extensions along `ϕ ⊂ ψ`. This follows immediately since the fibers of
+`α` are just the relative products of `α : A' → A` with the maps `a : Unit → A`
+from the unit type.
 
 ```rzk
 #def has-fiberwise-unique-extensions-is-right-orthogonal-to-shape
@@ -983,8 +981,7 @@ with the maps `a : Unit → A` from the unit type.
         ( is-orth-ψ-ϕ-α) ( Unit) (\ unit → a)))
 ```
 
-Corollary:
-Given two types  `A'` and `A` with unique extensions w.r.t. `ϕ ⊂ ψ`,
+Corollary: Given two types `A'` and `A` with unique extensions w.r.t. `ϕ ⊂ ψ`,
 every fiber of every map `α : A' → A` also has unique extensions.
 
 ```rzk

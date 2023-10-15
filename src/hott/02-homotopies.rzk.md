@@ -57,7 +57,7 @@ The following is the unit for compositions of homotopies.
 There is also a dependent version of homotopy.
 
 ```rzk
-#def dependent-homotopy
+#def dhomotopy
   ( A : U)
   ( B : A → U)
   (f g : (a : A) → B a)
@@ -77,8 +77,8 @@ $K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
   (A B : U)
   (f g : A → B)
   (H K : homotopy A B f g)
-  (C : dependent-homotopy A (\ a → f a = g a) H K)
-  : dependent-homotopy
+  (C : dhomotopy A (\ a → f a = g a) H K)
+  : dhomotopy
     A
     (\ b → g b = g b)
     (\ x → concat B (g x) (f x) (g x) (rev B (f x) (g x) (K x)) (H x))

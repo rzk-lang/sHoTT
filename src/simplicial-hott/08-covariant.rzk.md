@@ -368,7 +368,7 @@ Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the pro
   : is-right-orthogonal-to-shape
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → left-leg-of-Λ ts) A' A α
   :=
-    is-right-orthogonal-to-shape-× naiveextext A' A α
+    is-right-orthogonal-to-shape-product naiveextext A' A α
       2 Δ¹ 2 Δ¹ ( \ s → s ≡ 0₂) is-left-fib-α
 ```
 

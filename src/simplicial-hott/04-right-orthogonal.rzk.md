@@ -283,12 +283,11 @@ shape retract, then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A` then so is `χ × ϕ ⊂ χ × ψ` for
 every other shape `χ`.
 
-The following proof uses a lot of currying and uncurrying and relies on (the
-naive form of) extension extensionality.
+The following proof uses a lot of currying and uncurrying and relies extension
+extensionality.
 
 ```rzk
-#def is-right-orthogonal-to-shape-× uses (naiveextext)
--- this should be refactored by introducing cofibration-product-functorial
+#def is-right-orthogonal-to-shape-product uses (naiveextext)
   ( A' A : U)
   ( α : A' → A)
   ( J : CUBE)
@@ -368,6 +367,44 @@ For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to
          ( \ ν' t → α (ν' t))
          ( cofibration-union-functorial I ϕ ψ (\ _ → A') (\ _ → A) (\ _ → α) τ')
          ( is-orth-ϕ-ψ∧ϕ ( \ t → τ' t))
+```
+
+### Pushout products
+
+Combining the stability under pushouts and crossing with a shape, we get
+stability under pushout products.
+
+```rzk
+#def is-right-orthogonal-to-shape-pushout-product uses (naiveextext)
+  ( A' A : U)
+  ( α : A' → A)
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : is-right-orthogonal-to-shape (J × I)
+    ( \ (t,s) → χ t ∧ ψ s)
+    ( \ (t,s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
+    ( A') ( A) ( α)
+  :=
+    is-right-orthogonal-to-shape-left-cancel A' A α (J × I)
+    ( \ (t,s) → χ t ∧ ψ s)
+    ( \ (t,s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
+    ( \ (t,s) → χ t ∧ ϕ s)
+    ( is-right-orthogonal-to-shape-pushout A' A α (J × I)
+      ( \ (t,s) → ζ t ∧ ψ s)
+      ( \ (t,s) → χ t ∧ ϕ s)
+      ( is-right-orthogonal-to-shape-product A' A α
+        ( J) ( \ t → ζ t)
+        ( I) ( ψ) ( ϕ)
+        (is-orth-ψ-ϕ)))
+    ( is-right-orthogonal-to-shape-product A' A α
+      ( J) ( χ)
+      ( I) ( ψ) ( ϕ)
+      ( is-orth-ψ-ϕ))
 ```
 
 ## Stability properties of right orthogonal maps

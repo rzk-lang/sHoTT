@@ -807,6 +807,9 @@ have equivalent identity types by showing that equivalences are embeddings.
 
 ## Some further useful coherences
 
+We prove some further coherences from half-adjoint equivalences. Some of the
+lemmas below resemble lemmas from the section on embeddings.
+
 For a half-adjoint equivalence $f$ with inverse $g$ and coherence
 $G ⋅ f ∼ \text{ap}_f ⋅ H$ we show
 
@@ -878,12 +881,25 @@ reversals.
     ( ((coherence-is-half-adjoint-equiv A B f is-hae) a)))
 ```
 
-Let $f : A → B$ be an equivalence between $A$ and $B$. We prove the somewhat
-delicate statement that
+Let $f : A → B$ be an equivalence between $A$ and $B$. We prove that
 
 $$
-q = \text{ap}_f (H^-1 (a)) ⋅ \text{ap}_{f ∘ g} (q) ⋅ G (b)
+\text{ap}_f (H^-1 (a)) ⋅ \text{ap}_{f ∘ g} (q) ⋅ G (b) = q
 $$
+
+This expresses a relatively natural statement that if we start with
+$q: f (a) = b$, apply $g$ to get $\text{ap}_g (q) : g (f (a)) = g(b)$,
+precompose with $H (a)$ to get
+
+$$
+a = g(f(a)) = g(b)
+$$
+
+apply $g$ and then postcompose with $G : f (g (b)) = b$, the resulting path
+$f(a) = b$ is equal to $q$.
+
+An alternate proof could use `triple-concat-eq-first` and
+`triple-concat-nat-htpy`. The proofs do not end up much shorter.
 
 ```rzk
 #def id-conjugate-is-hae-ap-ap-is-hae
@@ -893,8 +909,7 @@ $$
   ( b : B)
   ( q : (f a) = b)
   (is-hae : is-half-adjoint-equiv A B f)
-  : q =
-    (concat ( B)
+  :(concat ( B)
     ( f a)
     ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (b)))
     ( b )
@@ -912,12 +927,10 @@ $$
       ( ap ( B) ( B) ( f a) ( b)
         ( \z → (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))
         ( q)))
-    ( ( section-htpy-is-half-adjoint-equiv A B f is-hae) (b)))
+    ( ( section-htpy-is-half-adjoint-equiv A B f is-hae) (b))) = q
   :=
   concat
   ((f a) = b)
-  ( q) -- start
-  ((ap B B (f a) b (identity B) q)) -- middle
   ((concat ( B)
     ( f a)
     ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (b)))
@@ -936,18 +949,15 @@ $$
       ( ap ( B) ( B) ( f a) ( b)
         ( \z → (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))
         ( q)))
-    ( ( section-htpy-is-half-adjoint-equiv A B f is-hae) (b))) ) -- end
-  (rev
-    (f a = b)
-    ( ap B B (f a) b (identity B) q)
-    ( q)
-    (ap-id B (f a) b q ))-- path 1
-  (eq-top-cancel-commutative-square'
+    ( ( section-htpy-is-half-adjoint-equiv A B f is-hae) (b))) )
+  ((ap B B (f a) b (identity B) q))
+  ( q)
+  (rev-eq-top-cancel-commutative-square'
     ( B)
     (f a)
-    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))) --w
-    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae)  b)) --y
-    ( b) -- z
+    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))
+    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae)  b))
+    ( b)
     (ap ( A) ( B)
       ( a)
       ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
@@ -956,12 +966,12 @@ $$
         ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
         ( a)
         ( (retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))
-    ((section-htpy-is-half-adjoint-equiv A B f is-hae) (f a))  -- q
+    ((section-htpy-is-half-adjoint-equiv A B f is-hae) (f a))
     (ap ( B) ( B) ( f a) ( b)
       (\z → (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))
       ( q))-- s
-    ( ap B B (f a) b (identity B) q )       --- r
-    ( (section-htpy-is-half-adjoint-equiv A B f is-hae) b)   --- t
+    ( ap B B (f a) b (identity B) q )
+    ( (section-htpy-is-half-adjoint-equiv A B f is-hae) b)
     (rev-nat-htpy ( B) ( B)
       ( \ x → f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (x)))
       ( identity B)
@@ -970,4 +980,5 @@ $$
       ( b)
       ( q))
     ( ap-rev-retr-htpy-concat-sec-htpy-is-refl-is-hae A B f a b q is-hae))
+  (ap-id B (f a) b q )
 ```

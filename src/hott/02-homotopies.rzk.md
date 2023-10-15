@@ -67,7 +67,7 @@ There is also a dependent version of homotopy.
 
 ## Some path algebra for homotopies
 
-This section contains some lemmas on the groupoidal structure of homotopies.
+In this section we prove some lemmas on the groupoidal structure of homotopies.
 
 Given a homotopy between two homotopies $C : H \sim K$ this produces a homotopy
 $K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
@@ -84,7 +84,7 @@ $K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
     (\ x → concat B (g x) (f x) (g x) (rev B (f x) (g x) (K x)) (H x))
     (refl-htpy A B g)
   := \ x →
-      cancel-left-path (B) (f x) (g x) (H x) (K x) (C x)
+      cancel-left-path B (f x) (g x) (H x) (K x) (C x)
 ```
 
 ## Whiskering homotopies
@@ -155,7 +155,7 @@ $K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
       ( p)
 ```
 
-It is sometimes useful to have this reverse
+It is sometimes useful to have this in inverse form.
 
 ```rzk
 #def rev-nat-htpy

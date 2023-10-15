@@ -388,8 +388,7 @@ A special case of this is sometimes useful
   (x y : A)
   (p q : x = y)
   : (p = q) → ( concat A y x y (rev A x y q) p) = refl
-  := \ α →
-      triangle-rotation A x y y p q refl α
+  := triangle-rotation A x y y p q refl
 
 ```
 
@@ -1072,41 +1071,41 @@ triple compostion for ease of use in a later proof.
   :=
     (concat
       (v = z)
-      ( r )
+      ( r)
       ( concat A v v z refl r)
-      ( concat A v w z p (concat A w y z s t) )
+      ( concat A v w z p (concat A w y z s t))
       (rev
         (v = z)
-        (concat  A v v z refl r )
+        (concat  A v v z refl r)
         ( r )
         (left-unit-concat A v z r))
       (concat
         ( v = z)
         ( concat A v v z refl r)
-        ( concat A v v z (concat A v w v p q) r )
+        ( concat A v v z (concat A v w v p q) r)
         ( concat A v w z p (concat A w y z s t ))
         (rev
           ( v = z )
-          (concat A v v z  (concat A v w v p q) r )
+          (concat A v v z  (concat A v w v p q) r)
           (concat A v v z refl r)
           ( concat-eq-left
             ( A)
             ( v)
             ( v)
             ( z)
-            ( concat A v w v p q )
+            ( concat A v w v p q)
             ( refl )
             ( H')
             ( r) ))
         ( concat
           ( v = z)
           ( concat A v v z (concat A v w v p q) r)
-          ( concat A v w z p (concat A w v z q r)  )
+          ( concat A v w z p (concat A w v z q r))
           ( concat A v w z p (concat A w y z s t))
           ( associative-concat A v w v z p q r)
           ( concat-eq-right
-            ( A )
-            ( v )
+            ( A)
+            ( v)
             ( w)
             ( z)
             ( p)
@@ -1115,17 +1114,19 @@ triple compostion for ease of use in a later proof.
             ( H)))))
 ```
 
+It is also convenient to have a a version with the opposite associativity.
+
 ```rzk
 #def eq-top-cancel-commutative-square'
-  (A : U)
-  (v w y z : A)
-  (p : v = w)
-  (q : w = v)
-  (s : w = y)
-  (r : v = z)
-  (t : y = z)
-  (H : (concat A w v z q r) = (concat A w y z s t))
-  (H' : (concat A v w v p q) = refl)
+  ( A : U)
+  ( v w y z : A)
+  ( p : v = w)
+  ( q : w = v)
+  ( s : w = y)
+  ( r : v = z)
+  ( t : y = z)
+  ( H : (concat A w v z q r) = (concat A w y z s t))
+  ( H' : (concat A v w v p q) = refl)
   : r = ( concat A v y z (concat A v w y p s) t)
   :=
     (concat
@@ -1177,6 +1178,28 @@ triple compostion for ease of use in a later proof.
               ( concat A w y z s t)
               ( H)))))
       ( rev-associative-concat A v w y z p s t))
+```
+
+And a reversed version.
+
+```rzk
+#def rev-eq-top-cancel-commutative-square'
+  ( A : U)
+  ( v w y z : A)
+  ( p : v = w)
+  ( q : w = v)
+  ( s : w = y)
+  ( r : v = z)
+  ( t : y = z)
+  ( H : (concat A w v z q r) = (concat A w y z s t))
+  ( H' : (concat A v w v p q) = refl)
+  : ( concat A v y z (concat A v w y p s) t) = r
+  :=
+    rev
+      ( v = z)
+      ( r)
+      ( concat A v y z (concat A v w y p s) t)
+      ( eq-top-cancel-commutative-square' A v w y z p q s r t H H')
 ```
 
 <?xml version='1.0' encoding='UTF-8'?>

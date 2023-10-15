@@ -804,3 +804,170 @@ have equivalent identity types by showing that equivalences are embeddings.
   : Equiv (x = y) (f x = f y)
   := (ap A B x y f , is-emb-is-equiv A B f is-equiv-f x y)
 ```
+
+## Some further useful coherences
+
+For a half-adjoint equivalence $f$ with inverse $g$ and coherence
+$G ⋅ f ∼ \text{ap}_f ⋅ H$ we show
+
+$$
+\text{ap}_f (H^{-1} a) ⋅ G (f a) = \texttt{refl}_{f (a)}.
+$$
+
+This is a consequence of cancelling the coherence on the left, and then applying
+the equality $\text{ap}_f (H^{-1} a) = (\text{ap}_f (H a))^{-1}$. It is
+cumbersome to state and prove only becaues of data revtrieval and the number of
+reversals.
+
+```rzk
+#def ap-rev-retr-htpy-concat-sec-htpy-is-refl-is-hae
+  (A B : U)
+  (f : A → B)
+  (a : A)
+  (b : B)
+  (q : (f a) = b)
+  (is-hae : is-half-adjoint-equiv A B f)
+  : (concat ( B)
+      ( f a)
+      ( f ((map-inverse-is-half-adjoint-equiv  A B f is-hae) (f a )))
+      ( f a)
+      (ap ( A) ( B)
+        ( a)
+        (((map-inverse-is-half-adjoint-equiv A B f is-hae) ( f a)))
+        ( f)
+        ( rev ( A)
+          ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
+          ( a)
+          ((retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))
+      ( (section-htpy-is-half-adjoint-equiv A B f is-hae) (f a)))
+      = refl
+  :=
+  htpy-id-cancel-left-concat-left-eq
+  ( B)
+  (f a)
+  ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))
+  ( ap ( A) ( B)
+    ( a)
+    ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
+    ( f)
+    (rev ( A)
+      (((map-inverse-is-half-adjoint-equiv A B f is-hae) ( f a)))
+      ( a)
+      ( (retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))
+  ( rev ( B)
+    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))
+    ( f a)
+    ( ap ( A) ( B)
+      ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
+      ( a)
+      ( f)
+      (( retraction-htpy-is-half-adjoint-equiv A B f is-hae) a) ))
+  ( ap-rev ( A) ( B)
+    (((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))
+    ( a)
+    ( f)
+    ( ( retraction-htpy-is-half-adjoint-equiv A B f is-hae) a))
+  ( (section-htpy-is-half-adjoint-equiv A B f is-hae) (f a))
+  ( cancel-left-path
+    ( B)
+    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))
+    ( f a)
+    ( (section-htpy-is-half-adjoint-equiv A B f is-hae) (f a))
+    ( ( ap A B ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)) a f
+        (( retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))
+    ( ((coherence-is-half-adjoint-equiv A B f is-hae) a)))
+```
+
+Let $f : A → B$ be an equivalence between $A$ and $B$. We prove the somewhat
+delicate statement that
+
+$$
+q = \text{ap}_f (H^-1 (a)) ⋅ \text{ap}_{f ∘ g} (q) ⋅ G (b)
+$$
+
+```rzk
+#def id-conjugate-is-hae-ap-ap-is-hae
+  ( A B : U)
+  ( f : A → B)
+  ( a : A)
+  ( b : B)
+  ( q : (f a) = b)
+  (is-hae : is-half-adjoint-equiv A B f)
+  : q =
+    (concat ( B)
+    ( f a)
+    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (b)))
+    ( b )
+    (concat ( B)
+      ( f a)
+      ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))
+      ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) b))
+      ( ap ( A) ( B) ( a)
+        ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
+        ( f)
+        (rev ( A)
+          ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
+          ( a)
+          ( (retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))
+      ( ap ( B) ( B) ( f a) ( b)
+        ( \z → (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))
+        ( q)))
+    ( ( section-htpy-is-half-adjoint-equiv A B f is-hae) (b)))
+  :=
+  concat
+  ((f a) = b)
+  ( q) -- start
+  ((ap B B (f a) b (identity B) q)) -- middle
+  ((concat ( B)
+    ( f a)
+    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (b)))
+    ( b )
+    (concat ( B)
+      ( f a)
+      ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))
+      ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) b))
+      ( ap ( A) ( B) ( a)
+        ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
+        ( f)
+        (rev ( A)
+          ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
+          ( a)
+          ( (retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))
+      ( ap ( B) ( B) ( f a) ( b)
+        ( \z → (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))
+        ( q)))
+    ( ( section-htpy-is-half-adjoint-equiv A B f is-hae) (b))) ) -- end
+  (rev
+    (f a = b)
+    ( ap B B (f a) b (identity B) q)
+    ( q)
+    (ap-id B (f a) b q ))-- path 1
+  (eq-top-cancel-commutative-square'
+    ( B)
+    (f a)
+    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))) --w
+    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae)  b)) --y
+    ( b) -- z
+    (ap ( A) ( B)
+      ( a)
+      ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
+      ( f)
+      ( rev ( A)
+        ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))
+        ( a)
+        ( (retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))
+    ((section-htpy-is-half-adjoint-equiv A B f is-hae) (f a))  -- q
+    (ap ( B) ( B) ( f a) ( b)
+      (\z → (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))
+      ( q))-- s
+    ( ap B B (f a) b (identity B) q )       --- r
+    ( (section-htpy-is-half-adjoint-equiv A B f is-hae) b)   --- t
+    (rev-nat-htpy ( B) ( B)
+      ( \ x → f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (x)))
+      ( identity B)
+      ( section-htpy-is-half-adjoint-equiv A B f is-hae)
+      ( f a)
+      ( b)
+      ( q))
+    ( ap-rev-retr-htpy-concat-sec-htpy-is-refl-is-hae A B f a b q is-hae))
+```

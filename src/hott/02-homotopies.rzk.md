@@ -74,23 +74,17 @@ $K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
 
 ```rzk
 #def htpy-cancel-left
- (A B : U)
- (f g : A → B)
- (H K : homotopy A B f g)
- (C : dependent-homotopy A (\ a → f a = g a) H K)
- : dependent-homotopy
+  (A B : U)
+  (f g : A → B)
+  (H K : homotopy A B f g)
+  (C : dependent-homotopy A (\ a → f a = g a) H K)
+  : dependent-homotopy
     A
     (\ b → g b = g b)
     (\ x → concat B (g x) (f x) (g x) (rev B (f x) (g x) (K x)) (H x))
     (refl-htpy A B g)
   := \ x →
-      cancel-left-path
-      (B)
-      (f x)
-      (g x)
-      (H x)
-      (K x)
-      (C x)
+      cancel-left-path (B) (f x) (g x) (H x) (K x) (C x)
 ```
 
 ## Whiskering homotopies
@@ -159,6 +153,24 @@ $K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
       ( left-unit-concat B (f x) (g x) (H x))
       ( y)
       ( p)
+```
+
+It is sometimes useful to have this reverse
+
+```rzk
+#def rev-nat-htpy
+  ( A B : U)
+  ( f g : A → B)
+  ( H : homotopy A B f g)
+  ( x y : A)
+  ( p : x = y)
+  : ( concat B (f x) (g x) (g y) (H x) (ap A B x y g p)) =
+    ( concat B (f x) (f y) (g y) (ap A B x y f p) (H y))
+  := rev
+      ( f x = g y)
+      ( concat B (f x) (f y) (g y) (ap A B x y f p) (H y))
+      ( concat B (f x) (g x) (g y) (H x) (ap A B x y g p))
+      ( nat-htpy A B f g H x y p)
 ```
 
 ```rzk title="Naturality in another form"

@@ -747,7 +747,7 @@ extensionality. The following is statement the as proved in RS17.
         ( f = g)
         ( (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
         ( ext-htpy-eq I ψ ϕ A a f g))
-  := total-equiv-family-of-equiv
+  := is-equiv-fiberwise-is-equiv-total
       ( (t : ψ ) → A t [ϕ t ↦ a t] )
       ( \ g → (f = g) )
       ( \ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
@@ -761,8 +761,7 @@ extension extensionality that we get by extracting the fiberwise equivalence.
 ```rzk title="RS17 Proposition 4.8(i)"
 #define extext-weakextext
   : WeakExtExt → ExtExt
-  := \ weakextext I ψ ϕ A a f g →
-      extext-weakextext' weakextext I ψ ϕ A a f g
+  := extext-weakextext'
 ```
 
 ## Homotopy extension property
@@ -1079,7 +1078,7 @@ pointwise.
     ( homotopy-extension-type I ψ ϕ A σ)
     ( pointwise-homotopy-extension-type σ)
   :=
-    total-equiv-family-equiv
+    total-equiv-family-of-equiv
     ( (t : ψ) → A t)
     ( \ τ → (\ t → τ t) =_{ (t : ϕ) → A t} σ)
     ( \ τ → (t : ϕ) → (τ t = σ t))
@@ -1139,7 +1138,7 @@ Given a map `α : A' → A`, there is also a notion of relative extension types.
     ( relative-extension-type')
     ( relative-extension-type)
   :=
-    total-equiv-family-equiv
+    total-equiv-family-of-equiv
     ( (t : ψ) → A' t [ϕ t ↦ σ' t])
     ( \ τ' → (\ t → α t (τ' t)) =_{ (t : ψ) → A t [ϕ t ↦ α t (σ' t)]} τ)
     ( \ τ' → (t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl])

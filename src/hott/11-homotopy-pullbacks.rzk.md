@@ -81,18 +81,13 @@ cartesian square, then so is the upper one `Σαγ : Σ C' → Σ C`.
         ( Σ (a' : A'), C (α a'))
         ( total-type A C)
         ( total-map A' C' (\ a' → C (α a')) γ)
-        ( family-of-equiv-total-equiv
-          ( A' )
-          ( C' )
+        ( is-equiv-total-is-equiv-fiberwise A' C'
           ( \ a' → C (α a') )
           ( γ)
           ( \ a' → is-hc-α-γ a'))
         ( \ (a', c) → (α a', c) )
         ( second
-          ( total-equiv-pullback-is-equiv
-            ( A')
-            ( A )
-            ( α )
+          ( equiv-total-pullback-is-equiv A' A α
             ( is-equiv-α )
             ( C ))))
 ```
@@ -108,15 +103,15 @@ square is homotopy-cartesian.
   )
   : is-homotopy-cartesian
   :=
-    total-equiv-family-of-equiv
-        A' C' ( \ x → C (α x) ) γ    -- use x instead of a' to avoid shadowing
+    is-equiv-fiberwise-is-equiv-total
+        A' C' ( \ x → C (α x) ) γ
         ( is-equiv-right-factor
             ( total-type A' C')
             ( Σ (x : A'), C (α x))
             ( total-type A C)
             ( total-map A' C' (\ x → C (α x)) γ)
             ( \ (x, c) → (α x, c) )
-            ( second ( total-equiv-pullback-is-equiv A' A α is-equiv-α C))
+            ( second ( equiv-total-pullback-is-equiv A' A α is-equiv-α C))
             ( is-equiv-homotopy
                 ( total-type A' C')
                 ( total-type A C )

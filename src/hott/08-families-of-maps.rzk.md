@@ -237,7 +237,7 @@ implication could be proven similarly.
         ( totalequiv))
       ( a))
 
-#def family-of-equivs-is-equiv-total
+#def family-of-equiv-is-equiv-total
   ( A : U)
   ( B C : A → U)
   ( f : (a : A) → (B a) → (C a))

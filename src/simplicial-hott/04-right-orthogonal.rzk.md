@@ -278,17 +278,57 @@ shape retract, then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
 #end left-orthogonal-calculus-1
 ```
 
+### Transposition
+
+Inside a product of cube `I × J`, we can interchange the two factors without
+affecting left orthogonality.
+
+```rzk
+#def is-right-orthogonal-to-shape-transpose
+  ( A' A : U)
+  ( α : A' → A)
+  ( I J : CUBE)
+  ( ψ : (I × J) → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape (I × J)
+    ( \ (s , t) → ψ (s , t))
+    ( \ (s , t) → ϕ (s , t))
+    ( A') ( A) ( α))
+  : is-right-orthogonal-to-shape (J × I)
+    ( \ (t , s) → ψ (s , t))
+    ( \ (t , s) → ϕ (s , t))
+    ( A') (A) (α)
+  :=
+    \ σ' →
+    is-equiv-Equiv-is-equiv
+    ( ( (t , s) : J × I | ψ (s , t)) → A' [ϕ (s , t) ↦ σ' (t , s)])
+    ( ( (t , s) : J × I | ψ (s , t)) → A [ϕ (s , t) ↦ α (σ' (t , s))])
+    ( \ τ' ts → α (τ' ts))
+    ( ((s , t) : I × J | ψ (s , t)) → A' [ϕ (s , t) ↦ σ' (t , s)])
+    ( ((s , t) : I × J | ψ (s , t)) → A [ϕ (s , t) ↦ α (σ' (t , s))])
+    ( \ τ' st → α (τ' st))
+    ( ( ( ( \ v (x , y) → v (y , x))
+        , ( \ v (x , y) → v (y , x))
+        )
+      , ( \ _ → refl)
+      )
+    , ( ( ( ( \ v (x , y) → v (y , x)) , ( \ _ → refl))
+        , ( ( \ v (x , y) → v (y , x)) , ( \ _ → refl)))
+      , ( ( ( \ v (x , y) → v (y , x)) , ( \ _ → refl))
+        , ( ( \ v (x , y) → v (y , x)) , ( \ _ → refl)))))
+    ( is-orth-ψ-ϕ (\ (s , t) → σ' (t , s)))
+```
+
 ### Stability under exponentiation
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A` then so is `χ × ϕ ⊂ χ × ψ` for
 every other shape `χ`.
 
-The following proof uses a lot of currying and uncurrying and relies on (the
-naive form of) extension extensionality.
+The following proof uses a lot of currying and uncurrying and relies extension
+extensionality.
 
 ```rzk
-#def is-right-orthogonal-to-shape-× uses (naiveextext)
--- this should be refactored by introducing cofibration-product-functorial
+#def is-right-orthogonal-to-shape-product uses (naiveextext)
   ( A' A : U)
   ( α : A' → A)
   ( J : CUBE)
@@ -343,6 +383,23 @@ naive form of) extension extensionality.
                   ( ( second ( second (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
                     ( \ s' → τ (t, s')))
                   ( s))))
+
+#def is-right-orthogonal-to-shape-product' uses (naiveextext)
+  ( A' A : U)
+  ( α : A' → A)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : is-right-orthogonal-to-shape
+      ( I × J) ( \ (s , t) → ψ s ∧ χ t) ( \ (s , t) → ϕ s ∧ χ t) A' A α
+  :=
+    is-right-orthogonal-to-shape-transpose A' A α J I
+    ( \ (t , s) → χ t ∧ ψ s)
+    ( \ (t , s) → χ t ∧ ϕ s)
+    ( is-right-orthogonal-to-shape-product A' A α J χ I ψ ϕ is-orth-ψ-ϕ)
 ```
 
 ### Stability under exact pushouts
@@ -368,6 +425,61 @@ For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to
          ( \ ν' t → α (ν' t))
          ( cofibration-union-functorial I ϕ ψ (\ _ → A') (\ _ → A) (\ _ → α) τ')
          ( is-orth-ϕ-ψ∧ϕ ( \ t → τ' t))
+```
+
+### Pushout products
+
+Combining the stability under pushouts and crossing with a shape, we get
+stability under pushout products.
+
+```rzk
+#def is-right-orthogonal-to-shape-pushout-product uses (naiveextext)
+  ( A' A : U)
+  ( α : A' → A)
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : is-right-orthogonal-to-shape (J × I)
+    ( \ (t,s) → χ t ∧ ψ s)
+    ( \ (t,s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
+    ( A') ( A) ( α)
+  :=
+    is-right-orthogonal-to-shape-left-cancel A' A α (J × I)
+    ( \ (t,s) → χ t ∧ ψ s)
+    ( \ (t,s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
+    ( \ (t,s) → χ t ∧ ϕ s)
+    ( is-right-orthogonal-to-shape-pushout A' A α (J × I)
+      ( \ (t,s) → ζ t ∧ ψ s)
+      ( \ (t,s) → χ t ∧ ϕ s)
+      ( is-right-orthogonal-to-shape-product A' A α J ( \ t → ζ t) I ψ ϕ
+        (is-orth-ψ-ϕ)))
+    ( is-right-orthogonal-to-shape-product A' A α J χ I ψ ϕ
+      ( is-orth-ψ-ϕ))
+
+#def is-right-orthogonal-to-shape-pushout-product' uses (naiveextext)
+  ( A' A : U)
+  ( α : A' → A)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  : is-right-orthogonal-to-shape (I × J)
+    ( \ (s , t) → ψ s ∧ χ t)
+    ( \ (s , t) → (ϕ s ∧ χ t) ∨ (ψ s ∧ ζ t))
+    ( A') ( A) ( α)
+  :=
+    is-right-orthogonal-to-shape-transpose A' A α J I
+    ( \ (t,s) → χ t ∧ ψ s)
+    ( \ (t,s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
+    ( is-right-orthogonal-to-shape-pushout-product A' A α J χ ζ I ψ ϕ
+      ( is-orth-ψ-ϕ))
 ```
 
 ## Anodyne shape inclusions
@@ -448,8 +560,41 @@ of being anodyne.
     ( is-right-orthogonal-to-shape-right-cancel-retract A' A α I ψ χ ϕ
       ( f A' A α x) ( r))
 
+#def is-anodyne-pushout-product-for-shape uses (naiveextext)
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  : is-anodyne-for-shape I ψ ϕ
+  → is-anodyne-for-shape (J × I)
+    ( \ (t,s) → χ t ∧ ψ s)
+    ( \ (t,s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
+  :=
+    \ f A' A α x →
+    ( is-right-orthogonal-to-shape-pushout-product A' A α J χ ζ I ψ ϕ
+      ( f A' A α x))
+
+#def is-anodyne-pushout-product-for-shape' uses (naiveextext)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  : is-anodyne-for-shape I ψ ϕ
+  → is-anodyne-for-shape (I × J)
+    ( \ (s , t) → ψ s ∧ χ t)
+    ( \ (s , t) → (ϕ s ∧ χ t) ∨ (ψ s ∧ ζ t))
+  :=
+    \ f A' A α x →
+    ( is-right-orthogonal-to-shape-pushout-product' A' A α I ψ ϕ J χ ζ
+      ( f A' A α x))
+
 #end anodyne
 ```
+
 
 ## Stability properties of right orthogonal maps
 

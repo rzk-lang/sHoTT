@@ -1232,7 +1232,7 @@ equivalences of maps and when passing to/from total types.</p>
 </span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="err">      ( free-paths A) ( fibered-arr&#39; A)</span>
 </span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="err">      ( \ ((a,b), p) → ((a,b), hom-eq A a b p))</span>
 </span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="err">    ( equiv-of-maps-total-map-hom-eq-const-Δ¹)</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="err">    ( family-of-equiv-total-equiv</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="err">    ( is-equiv-total-is-equiv-fiberwise</span>
 </span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="err">        ( product A A) ( \ (a,b) → a = b) ( \ (a,b) → hom A a b)</span>
 </span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="err">      ( \ (a,b) → hom-eq A a b)</span>
 </span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="err">      ( \ (a,b) → is-discrete-A a b))</span>
@@ -1242,7 +1242,7 @@ equivalences of maps and when passing to/from total types.</p>
 </span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="err">  : is-discrete A</span>
 </span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="err">  :=</span>
 </span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="err">  </span><span class="p">\ </span>a b <span class="err">→</span>
-</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="err">    ( total-equiv-family-of-equiv ( product A A) ( \ (a,b) → a = b)</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="err">    ( is-equiv-fiberwise-is-equiv-total ( product A A) ( \ (a,b) → a = b)</span>
 </span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="err">        ( \ (a,b) → hom A a b)</span>
 </span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="err">      ( \ (a,b) → hom-eq A a b)</span>
 </span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="err">      ( is-equiv-Equiv-is-equiv&#39; ( A) ( Δ¹ → A) ( </span><span class="p">\ </span>a _ <span class="err">→ a)</span>
@@ -1798,7 +1798,7 @@ now.</p>
 </span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="err">      ( fibered-map-square-sigma-over-product</span>
 </span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="err">          A x y x y f </span><span class="s">refl</span><span class="err"> </span><span class="s">refl</span><span class="err">))</span>
 </span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="err">  :=</span>
-</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="err">    family-of-equiv-total-equiv</span>
+</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="err">    is-equiv-total-is-equiv-fiberwise</span>
 </span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="err">      ( hom A x y)</span>
 </span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="err">      ( </span><span class="p">\ </span>g <span class="err">→ f = g)</span>
 </span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="err">      ( </span><span class="p">\ </span>g <span class="err">→</span>

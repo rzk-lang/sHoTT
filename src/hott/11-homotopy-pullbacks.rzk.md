@@ -81,7 +81,7 @@ cartesian square, then so is the upper one `Σαγ : Σ C' → Σ C`.
         ( Σ (a' : A'), C (α a'))
         ( total-type A C)
         ( total-map A' C' (\ a' → C (α a')) γ)
-        ( family-of-equiv-total-equiv
+        ( is-equiv-total-are-equiv-family
           ( A' )
           ( C' )
           ( \ a' → C (α a') )

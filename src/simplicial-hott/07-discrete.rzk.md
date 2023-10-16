@@ -159,7 +159,7 @@ equivalences of maps and when passing to/from total types.
       ( free-paths A) ( fibered-arr' A)
       ( \ ((a,b), p) → ((a,b), hom-eq A a b p))
     ( equiv-of-maps-total-map-hom-eq-const-Δ¹)
-    ( is-equiv-total-are-equiv-family
+    ( is-equiv-total-is-equiv-fiberwise
         ( product A A) ( \ (a,b) → a = b) ( \ (a,b) → hom A a b)
       ( \ (a,b) → hom-eq A a b)
       ( \ (a,b) → is-discrete-A a b))
@@ -169,7 +169,7 @@ equivalences of maps and when passing to/from total types.
   : is-discrete A
   :=
   \ a b →
-    ( are-equiv-family-is-equiv-total ( product A A) ( \ (a,b) → a = b)
+    ( is-equiv-fiberwise-is-equiv-total ( product A A) ( \ (a,b) → a = b)
         ( \ (a,b) → hom A a b)
       ( \ (a,b) → hom-eq A a b)
       ( is-equiv-Equiv-is-equiv' ( A) ( Δ¹ → A) ( \ a _ → a)
@@ -753,7 +753,7 @@ The previous calculations allow us to establish a family of equivalences:
       ( fibered-map-square-sigma-over-product
           A x y x y f refl refl))
   :=
-    is-equiv-total-are-equiv-family
+    is-equiv-total-is-equiv-fiberwise
       ( hom A x y)
       ( \ g → f = g)
       ( \ g →

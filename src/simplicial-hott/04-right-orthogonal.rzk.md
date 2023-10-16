@@ -370,6 +370,87 @@ For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to
          ( is-orth-ϕ-ψ∧ϕ ( \ t → τ' t))
 ```
 
+## Anodyne shape inclusions
+
+Fix a shape inclusion `ϕ ⊂ ψ`. We say that another shape inclusion `χ ⊂ ζ` is
+**anodyne for** `ϕ ⊂ ψ`, is every map that is right orthogonal to `ϕ ⊂ ψ` is
+also right orthogonal to `χ ⊂ ζ`.
+
+```rzk
+#section anodyne
+
+#variable I₀ : CUBE
+#variable ψ₀ : I₀ → TOPE
+#variable ϕ₀ : ψ₀ → TOPE
+
+
+#def is-anodyne-for-shape
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  : U
+  :=
+    ( ( A' : U) → (A : U) → (α : A' → A)
+    → is-right-orthogonal-to-shape I₀ ψ₀ ϕ₀ A' A α
+    → is-right-orthogonal-to-shape I ψ ϕ A' A α)
+```
+
+Of course every shape inclusion is anodyne for itself.
+
+```rzk
+#def is-anodyne-for-self
+  : is-anodyne-for-shape I₀ ψ₀ ϕ₀
+  := \ _ _ _ x → x
+```
+
+All the stability properties above can be seen as implications between conditions
+of being anodyne.
+
+```rzk
+#def is-anodyne-comp-for-shape
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( χ : ψ → TOPE)
+  ( ϕ : χ → TOPE)
+  : is-anodyne-for-shape I ψ χ
+  → is-anodyne-for-shape I (\ t → χ t) (\ t → ϕ t)
+  → is-anodyne-for-shape I ψ (\ t → ϕ t)
+  :=
+    \ f g A' A α x →
+    ( is-right-orthogonal-to-shape-comp A' A α I ψ χ ϕ
+      ( f A' A α x)
+      ( g A' A α x))
+
+#def is-anodyne-left-cancel-for-shape
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( χ : ψ → TOPE)
+  ( ϕ : χ → TOPE)
+  : is-anodyne-for-shape I (\ t → χ t) (\ t → ϕ t)
+  → is-anodyne-for-shape I ψ (\ t → ϕ t)
+  → is-anodyne-for-shape I ψ χ
+  :=
+    \ f g A' A α x →
+    ( is-right-orthogonal-to-shape-left-cancel A' A α I ψ χ ϕ
+      ( f A' A α x)
+      ( g A' A α x))
+
+#def is-anodyne-right-cancel-retract-for-shape
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( χ : ψ → TOPE)
+  ( ϕ : χ → TOPE)
+  : is-functorial-shape-retract I ψ χ
+  → is-anodyne-for-shape I ψ (\ t → ϕ t)
+  → is-anodyne-for-shape I (\ t → χ t) (\ t → ϕ t)
+  :=
+    \ r f A' A α x →
+    ( is-right-orthogonal-to-shape-right-cancel-retract A' A α I ψ χ ϕ
+      ( f A' A α x) ( r))
+
+#end anodyne
+```
+
 ## Stability properties of right orthogonal maps
 
 Now we change perspective. We fix a shape inclusion `ϕ ⊂ ψ` and investigate

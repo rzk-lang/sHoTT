@@ -586,6 +586,13 @@ equivalence of total spaces.
 
 ## Fundamental theorem of identity types
 
+The fundamental theorem of identity types concerns the following question: Given
+a type family `B : A → U`, when is `B` equivalent to `\ x → a x` for some
+`a : A`?
+
+We start by fixing `a : A` and investigating when a map of families
+`x : A → (a = x) → B x` is a (fiberwise) equivalence.
+
 ```rzk
 #section fundamental-thm-id-types
 
@@ -653,9 +660,9 @@ fundamental theorem:
 #end fundamental-thm-id-types
 ```
 
-One can summarize the fundamental theorem of identity types as follows: A type
-family `B : A → U` is equivalent to the family of based paths at a point if and
-only if its total space is contractible.
+We can now answer the original question. A type family `B : A → U` is equivalent
+to the family of based paths at a point if and only if its total space is
+contractible.
 
 ```rzk
 #def map-from-paths-inhabited-total

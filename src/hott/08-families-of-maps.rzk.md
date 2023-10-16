@@ -223,41 +223,38 @@ implication could be proven similarly.
       ( equiv-total-map-fiber A B C f (a , c))
       ( totalcontrmap (a , c))
 
-#def total-equiv-family-of-equiv
+#def are-equiv-family-is-equiv-total
   ( A : U)
   ( B C : A → U)
   ( f : (a : A) → (B a) → (C a))
-  ( totalequiv : is-equiv
-                ( Σ (x : A) , B x)
-                ( Σ (x : A) , C x)
-                ( total-map A B C f))
+  ( totalequiv
+    : is-equiv (total-type A B) (total-type A C) ( total-map A B C f))
   (a : A)
   : is-equiv (B a) (C a) (f a)
   :=
     is-equiv-is-contr-map (B a) (C a) (f a)
     ( is-contr-map-total-are-contr-map-family A B C f
       ( is-contr-map-is-equiv
-        ( Σ (x : A) , B x) (Σ (x : A) , C x)
-        ( total-map A B C f) totalequiv) a)
+        ( total-type A B) (total-type A C) (total-map A B C f)
+        ( totalequiv))
+      ( a))
 
-#def family-equiv-total-equiv
+#def family-of-equivs-is-equiv-total
   ( A : U)
   ( B C : A → U)
   ( f : (a : A) → (B a) → (C a))
-  ( totalequiv : is-equiv
-                ( Σ (x : A) , B x)
-                ( Σ (x : A) , C x)
-                ( total-map A B C f))
+  ( totalequiv
+    : is-equiv (total-type A B) (total-type A C) ( total-map A B C f))
   ( a : A)
   : Equiv (B a) (C a)
-  := ( f a , total-equiv-family-of-equiv A B C f totalequiv a)
+  := ( f a , are-equiv-family-is-equiv-total A B C f totalequiv a)
 ```
 
 In summary, a family of maps is an equivalence iff the map on total spaces is an
 equivalence.
 
 ```rzk
-#def total-equiv-iff-family-of-equiv
+#def is-equiv-total-iff-are-equiv-family
   ( A : U)
   ( B C : A → U)
   ( f : (a : A) → (B a) → (C a))
@@ -265,7 +262,9 @@ equivalence.
       ( (a : A) → is-equiv (B a) (C a) (f a))
       ( is-equiv (Σ (x : A) , B x) (Σ (x : A) , C x)
         ( total-map A B C f))
-  := (is-equiv-total-are-equiv-family A B C f , total-equiv-family-of-equiv A B C f)
+  :=
+    ( is-equiv-total-are-equiv-family A B C f
+    , are-equiv-family-is-equiv-total A B C f)
 ```
 
 ## Path spaces
@@ -615,7 +614,7 @@ equivalence of total spaces.
     ( (x : A) → (is-equiv (a = x) (B x) (f x)))
   :=
     ( \ is-contr-Σ-A-B x →
-      total-equiv-family-of-equiv A
+      are-equiv-family-is-equiv-total A
         ( \ x' → (a = x'))
         ( B)
         ( f)
@@ -742,11 +741,11 @@ types over a product type.
   ( b0 : B)
   : is-equiv (C a0 b0) (C' (f a0) (g b0)) (h a0 b0)
   :=
-    total-equiv-family-of-equiv B
+    are-equiv-family-is-equiv-total B
       ( \ b → C a0 b)
       ( \ b → C' (f a0) (g b))
       ( \ b c → h a0 b c)
-      ( total-equiv-family-of-equiv
+      ( are-equiv-family-is-equiv-total
         ( A)
         ( \ a → (Σ (b : B) , C a b))
         ( \ a → (Σ (b : B) , C' (f a) (g b)))

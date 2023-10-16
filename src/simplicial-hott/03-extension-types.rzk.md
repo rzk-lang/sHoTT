@@ -680,7 +680,7 @@ extensionality. The following is statement the as proved in RS17.
         ( f = g)
         ( (t : ψ ) → (f t = g t) [ϕ t ↦ refl])
         ( ext-htpy-eq I ψ ϕ A a f g)
-  := total-equiv-family-of-equiv
+  := are-equiv-family-is-equiv-total
       ( (t : ψ ) → A t [ϕ t ↦ a t] )
       ( \ g → (f = g) )
       ( \ g → (t : ψ ) → (f t = g t) [ϕ t ↦ refl])

@@ -1233,7 +1233,7 @@ arrow.
   : Equiv (f = h) (hom2 A x x y (id-hom A x) f h)
   :=
     ( ( map-hom2-homotopy A x y f h) ,
-      ( total-equiv-family-of-equiv
+      ( are-equiv-family-is-equiv-total
         ( hom A x y)
         ( \ k → (f = k))
         ( \ k → (hom2 A x x y (id-hom A x) f k))
@@ -1295,7 +1295,7 @@ A dual notion of homotopy can be defined similarly.
   : Equiv (f = h) (hom2 A x y y f (id-hom A y) h)
   :=
     ( ( map-hom2-homotopy' A x y f h) ,
-      ( total-equiv-family-of-equiv
+      ( are-equiv-family-is-equiv-total
         ( hom A x y)
         ( \ k → (f = k))
         ( \ k → (hom2 A x y y f (id-hom A y) k))
@@ -1366,7 +1366,7 @@ the data provided by a commutative triangle with that boundary.
   : Equiv ((comp-is-segal A is-segal-A x y z f g) = k) (hom2 A x y z f g k)
   :=
     ( ( map-hom2-eq-is-segal A is-segal-A x y z f g k) ,
-      ( total-equiv-family-of-equiv
+      ( are-equiv-family-is-equiv-total
         ( hom A x z)
         ( \ m → (comp-is-segal A is-segal-A x y z f g) = m)
         ( hom2 A x y z f g)

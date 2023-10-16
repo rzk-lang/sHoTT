@@ -108,7 +108,7 @@ square is homotopy-cartesian.
   )
   : is-homotopy-cartesian
   :=
-    total-equiv-family-of-equiv
+    are-equiv-family-is-equiv-total
         A' C' ( \ x → C (α x) ) γ    -- use x instead of a' to avoid shadowing
         ( is-equiv-right-factor
             ( total-type A' C')

@@ -169,7 +169,7 @@ equivalences of maps and when passing to/from total types.
   : is-discrete A
   :=
   \ a b →
-    ( total-equiv-family-of-equiv ( product A A) ( \ (a,b) → a = b)
+    ( are-equiv-family-is-equiv-total ( product A A) ( \ (a,b) → a = b)
         ( \ (a,b) → hom A a b)
       ( \ (a,b) → hom-eq A a b)
       ( is-equiv-Equiv-is-equiv' ( A) ( Δ¹ → A) ( \ a _ → a)

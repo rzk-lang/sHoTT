@@ -1326,7 +1326,7 @@ equivalence. This follows from the fact that the total types (summed over
       (covariant-uniqueness-curried A x y f C is-covariant-C u v)
   :=
 
-    total-equiv-family-of-equiv
+    are-equiv-family-is-equiv-total
       (C y)
       (dhom A x y f C u)
       (\ v' → covariant-transport A x y f C is-covariant-C u = v')
@@ -1500,7 +1500,7 @@ domain are equivalent:
     ( (t : Δ¹) → B (f t) [t ≡ 0₂ ↦ i])
     ( (t : Δ¹) → C (f t) [t ≡ 0₂ ↦ (first (equiv-BC x)) i])
   :=
-    family-equiv-total-equiv
+    family-of-equivs-is-equiv-total
     ( B x)
     ( \ ii → ((t : Δ¹) → B (f t) [t ≡ 0₂ ↦ ii]))
     ( \ ii → ((t : Δ¹) → C (f t) [t ≡ 0₂ ↦ (first (equiv-BC x)) ii]))
@@ -2179,7 +2179,7 @@ The fibers of a covariant fibration over a Segal type are discrete types.
   : is-discrete (C x)
   :=
     ( \ u v →
-    total-equiv-family-of-equiv
+    are-equiv-family-is-equiv-total
       ( C x)
       ( \ v' → (u = v'))
       ( hom (C x) u)

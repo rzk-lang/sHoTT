@@ -142,7 +142,7 @@ always do this (whether the square is homotopy-cartesian or not).
   :=
     (first ĉ', first-path-Σ A C (temp-uBDx-Σαγ ĉ') ĉ q̂)
 
-#def temp-uBDx-helper-type uses (γ C')
+#def temp-uBDx-helper-IkCK-type uses (γ C')
   ( ((s', s) , η) : has-section-family-over-map)
   ( a : A )
   ( (a', p) : fib A' A α a )
@@ -151,14 +151,14 @@ always do this (whether the square is homotopy-cartesian or not).
     Σ ( q̂ : temp-uBDx-Σαγ (a', s' a') = (a, s a)),
         ( induced-map-on-fibers-Σ (a, s a) ((a', s' a'), q̂) = (a', p))
 
-#def temp-uBDx-helper uses (γ C')
+#def temp-uBDx-helper-IkCK uses (γ C')
   ( ((s', s) , η) : has-section-family-over-map)
   : ( a : A) →
     ( (a', p) : fib A' A α a ) →
-    temp-uBDx-helper-type ((s',s), η) a (a', p)
+    temp-uBDx-helper-IkCK-type ((s',s), η) a (a', p)
   :=
     ind-fib A' A α
-    ( temp-uBDx-helper-type ((s',s), η))
+    ( temp-uBDx-helper-IkCK-type ((s',s), η))
     ( \ a' →
       ( eq-pair A C (α a', γ a' (s' a')) (α a', s (α a')) ( refl, η a' ) ,
         eq-pair
@@ -185,9 +185,9 @@ always do this (whether the square is homotopy-cartesian or not).
         ( \ (a', c') → (α a', γ a' c'))
         ( a, s a)))
   :=
-    ( \ (a', p) → ( (a', s' a'), first (temp-uBDx-helper ((s',s),η) a (a',p))),
+    ( \ (a', p) → ( (a', s' a'), first (temp-uBDx-helper-IkCK ((s',s),η) a (a',p))),
       ( induced-map-on-fibers-Σ (a, s a) ,
-        \ (a', p) → second (temp-uBDx-helper ((s',s),η) a (a',p))))
+        \ (a', p) → second (temp-uBDx-helper-IkCK ((s',s),η) a (a',p))))
 
 #def push-down-equiv-with-section uses (γ)
   ( ((s',s),η) : has-section-family-over-map)
@@ -502,6 +502,10 @@ Given two maps `B → A` and `C → A`, we can form the **relative product** ove
   : relative-product → C
   := \ ((_ , c), _) → c
 
+#def projection-relative-product uses (A B β C)
+  : relative-product → A
+  := \ ((_ , c) , _) → γ c
+
 #def homotopy-relative-product uses (A B C)
   ( (bc, p) : relative-product )
   : β (first-relative-product (bc,p)) = γ (second-relative-product (bc,p))
@@ -529,6 +533,10 @@ product of all fibers.
   : fiber-product → C
   := \ (_, (_, (c, _))) → c
 
+#def projection-fiber-product uses (A B β C γ)
+  : fiber-product → A
+  := \ (a, (_, (_, _))) → a
+
 #def homotopy-fiber-product uses (A B C)
   : ( abpcq : fiber-product )
   → β (first-fiber-product abpcq) = γ (second-fiber-product abpcq)
@@ -545,6 +553,17 @@ product of all fibers.
   ( ((b,c), e) : relative-product)
   : fiber-product
   := ( γ c , ( (b , e) , (c , refl)))
+
+#def compatible-projection-fiber-relative-product uses (A B β C γ)
+  ( x : relative-product)
+  : projection-relative-product x = projection-fiber-product (fiber-relative-product x)
+  := refl
+
+#def compatible-projection-relative-fiber-product uses (A B β C γ)
+  ( abpcq : fiber-product)
+  : ( projection-relative-product (relative-fiber-product abpcq)
+    = projection-fiber-product abpcq)
+  := second (second (second abpcq)) -- evaluates to q
 
 #def is-id-relative-fiber-relative-product
   ( bce : relative-product)
@@ -615,5 +634,206 @@ The relative product of `f : B → A` with a map `Unit → A` corresponding to
       , \ _ → refl)
     , ( second (compute-pullback-to-Unit B A f a)
       , is-equiv-identity Unit))
+```
 
+### Total fibers of a square
+
+We consider a commutative square
+
+```
+T → B
+↓   ↓
+C → A
+```
+
+given by the following data:
+
+```rzk
+#section fibers-comm-square
+
+-- the data of a comm square
+#variable A : U
+#variable B : U
+#variable β : B → A
+#variable C : U
+#variable γ : C → A
+#variable T : U
+#variable β' : T → B
+#variable γ' : T → C
+#variable η : (t : T) → β (β' t) = γ (γ' t)
+```
+
+We define the canonical **gap map** from `T` to the relative product over `A`.
+The fibers of this gap map are called the **total-fibers** of the commutative
+square.
+
+```rzk
+#def gap-map-comm-square
+  : T → relative-product A B β C γ
+  := \ t → ((β' t , γ' t) , η t)
+
+#def tot-fib-comm-square uses (β' γ' η)
+  ( bcp : relative-product A B β C γ)
+  : U
+  := fib T (relative-product A B β C γ) gap-map-comm-square bcp
+-- t , ((β' t , γ' t) , η t) = ((b , c) , p)
+```
+
+We aim to show that one can compute these total fibers of the commutative square
+in two steps: first, one takes the fibers in the vertical direction and obtains
+an induced map `fib T C γ c → fib B A β (γ c)`; second, one takes the fibers of
+these maps.
+
+We define the induced maps on fibers the resulting fibers between fibers.
+
+```rzk
+#def map-vertical-fibs-comm-square
+  ( c : C)
+  : fib T C γ' c → fib B A β (γ c)
+  := \ (t , q) →
+     ( (β' t)
+     , ( concat A (β (β' t)) (γ (γ' t)) (γ c)
+         (η t) (ap C A (γ' t) c γ q)))
+
+#def fib-vertical-fibs-comm-square uses (β' γ' η)
+  ( c : C)
+  ( bp : fib B A β (γ c))
+  : U
+  := fib (fib T C γ' c) (fib B A β (γ c))
+     ( map-vertical-fibs-comm-square c)
+     ( bp)
+-- (t, q : γ' t = c) , (β' t, concat (η t) (ap γ q)) = (b, p : β b = γ c)
+```
+
+Then we use a helper term to construct a comparison map from the total fibers to
+the fiber fibers.
+
+```rzk
+-- We append the random suffix IkCK to terms
+-- that are only meant to be used locally in this section
+
+#def helper-IkCK uses (β' η)
+  ( ((b , c) , p) : relative-product A B β C γ)
+  ( t : T)
+  : U
+  := Σ ( q : γ' t = c) , map-vertical-fibs-comm-square c (t , q) = (b , p)
+
+#def fib-vertical-fibs-helper-IkCK uses (β' γ' η)
+  ( ((b , c) , p) : relative-product A B β C γ)
+  ( t : T)
+  ( (q , e) : helper-IkCK ((b,c),p) t)
+  : fib-vertical-fibs-comm-square c (b,p)
+  := ((t , q) , e)
+
+
+#def fib-vertical-fibs-tot-fib-comm-square uses (η β' γ')
+  : ( ((b,c),p) : relative-product A B β C γ)
+  → ( (t , h) : tot-fib-comm-square ((b,c),p))
+  → fib-vertical-fibs-comm-square c (b,p)
+  :=
+    ( fib-vertical-fibs-helper-IkCK ((b,c),p) t)
+    ( ind-fib T (relative-product A B β C γ)
+      ( gap-map-comm-square)
+      ( \ bcp' (t, h') → helper-IkCK bcp' t)
+      ( \ t → (refl, refl))
+      ( ((b,c),p))
+      ( t , h))
+```
+
+Note that we could have defined this comparison map without the helper by a
+direct fiber induction, but this would leave it with worse definitional
+computation properties on which the rest of our construction relies.
+
+```rzk
+#def fib-vertical-fibs-tot-fib-comm-square' uses (η β' γ')
+-- worse computation than fib-vertical-fibs-tot-fib-comm-square
+  : ( ((b,c),p) : relative-product A B β C γ)
+  → ( (t , h) : tot-fib-comm-square ((b,c),p))
+  → fib-vertical-fibs-comm-square c (b,p)
+  :=
+  ind-fib T (relative-product A B β C γ) (gap-map-comm-square)
+  ( \ ((b,c),p) _ → fib-vertical-fibs-comm-square c (b,p))
+  ( \ t → ((t , refl) , refl))
+```
+
+Finally, we show that these comparison maps are equivalences by summing over all
+of them. Indeed, by applications of `is-equiv-domain-sum-of-fibers`, the total
+sum of each is just equivalent to `T`.
+
+```rzk
+#def is-equiv-projection-fib-vertical-fibs-comm-square uses (η β')
+  : is-equiv
+    ( Σ (((b,c),p) : relative-product A B β C γ)
+      , fib-vertical-fibs-comm-square c (b,p))
+    ( T)
+    ( \ (_ , ((t , _) , _)) → t)
+  :=
+    is-equiv-triple-comp
+    ( Σ (((b,c),p) : relative-product A B β C γ)
+      , fib-vertical-fibs-comm-square c (b,p))
+    ( Σ ( c : C)
+      , ( Σ (bp : fib B A β (γ c))
+          , fib-vertical-fibs-comm-square c bp))
+    ( Σ (c : C) , fib T C γ' c)
+    ( T)
+    ( \ (((b , c) , p) , tqe) → (c , ((b , p) , tqe)))
+    ( ( \ (c , ((b , p) , tqe)) → (((b , c) , p) , tqe) , \ _ → refl)
+    , ( \ (c , ((b , p) , tqe)) → (((b , c) , p) , tqe) , \ _ → refl))
+    ( \ (c , (_ , (tq , _))) → (c , tq))
+    ( is-equiv-total-is-equiv-fiberwise C
+      ( \ c → Σ (bp : fib B A β (γ c)) , fib-vertical-fibs-comm-square c bp)
+      ( \ c → fib T C γ' c)
+      ( \ c (_ , (tq , _)) → tq)
+      ( \ c →
+        is-equiv-domain-sum-of-fibers
+        ( fib T C γ' c) (fib B A β (γ c))
+        ( map-vertical-fibs-comm-square c)))
+    ( \ (_ , (t , _)) → t)
+    ( is-equiv-domain-sum-of-fibers T C γ')
+
+#def is-equiv-fib-vertical-fibs-tot-fib-comm-square uses (η β' γ')
+  : (((b,c),p) : relative-product A B β C γ)
+  → is-equiv
+    ( tot-fib-comm-square ((b,c),p))
+    ( fib-vertical-fibs-comm-square c (b,p))
+    ( fib-vertical-fibs-tot-fib-comm-square ((b,c),p))
+  :=
+    is-equiv-fiberwise-is-equiv-total
+    ( relative-product A B β C γ)
+    ( \ bcp → tot-fib-comm-square bcp)
+    ( \ ((b,c),p) → fib-vertical-fibs-comm-square c (b,p))
+    ( \ bcp → fib-vertical-fibs-tot-fib-comm-square bcp)
+    ( is-equiv-right-factor
+      ( Σ (bcp : relative-product A B β C γ)
+        , tot-fib-comm-square bcp)
+      ( Σ (((b,c),p) : relative-product A B β C γ)
+        , fib-vertical-fibs-comm-square c (b,p))
+      ( T)
+      ( total-map
+        ( relative-product A B β C γ)
+        ( \ bcp → tot-fib-comm-square bcp)
+        ( \ ((b,c),p) → fib-vertical-fibs-comm-square c (b,p))
+        ( \ bcp → fib-vertical-fibs-tot-fib-comm-square bcp))
+      ( \ (_ , ((t , _) , _)) → t)
+      ( is-equiv-projection-fib-vertical-fibs-comm-square)
+      ( is-equiv-domain-sum-of-fibers
+        ( T) ( relative-product A B β C γ)
+        ( gap-map-comm-square)))
+```
+
+We summarize the result as the following equivalence:
+
+```rzk
+#def equiv-fib-vertical-fibs-tot-fib-comm-square uses (A B C β γ T β' γ' η)
+  ( b : B)
+  ( c : C)
+  ( p : β b = γ c)
+  : Equiv
+    ( tot-fib-comm-square ((b , c) , p))
+    ( fib-vertical-fibs-comm-square c (b , p))
+  :=
+    ( fib-vertical-fibs-tot-fib-comm-square ((b , c) , p)
+    , is-equiv-fib-vertical-fibs-tot-fib-comm-square ((b , c) , p))
+
+#end fibers-comm-square
 ```

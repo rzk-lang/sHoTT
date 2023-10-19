@@ -251,10 +251,9 @@ For any map `#!rzk f : A → B` the domain `#!rzk A` is equivalent to the sum of
 the fibers.
 
 ```rzk
-
-#def equiv-domain-sum-of-fibers
-  (A B : U)
-  (f : A → B)
+#def equiv-sum-of-fibers-domain
+  ( A B : U)
+  ( f : A → B)
   : Equiv A (Σ (b : B), fib A B f b)
   :=
     equiv-left-cancel
@@ -266,6 +265,19 @@ the fibers.
       ( \ a → Σ (b : B), f a = b)
       ( \ a → is-contr-based-paths B (f a)))
     ( fubini-Σ A B (\ a b → f a = b))
+```
+
+The inverse map is just the canonical projection to `A`.
+
+```rzk
+#def is-equiv-domain-sum-of-fibers
+  ( A B : U)
+  ( f : A → B)
+  : is-equiv (Σ (b : B), fib A B f b) A ( \ (_ , (a , _)) → a)
+  :=
+    second
+    ( inv-equiv A (Σ (b : B) , fib A B f b)
+      ( equiv-sum-of-fibers-domain A B f))
 ```
 
 ## Equivalence between fibers in equivalent domains

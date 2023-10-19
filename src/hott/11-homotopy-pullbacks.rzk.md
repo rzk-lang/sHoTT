@@ -142,7 +142,7 @@ always do this (whether the square is homotopy-cartesian or not).
   :=
     (first ĉ', first-path-Σ A C (temp-uBDx-Σαγ ĉ') ĉ q̂)
 
-#def temp-uBDx-helper-IkCK-type uses (γ C')
+#def temp-uBDx-helper-type uses (γ C')
   ( ((s', s) , η) : has-section-family-over-map)
   ( a : A )
   ( (a', p) : fib A' A α a )
@@ -151,14 +151,14 @@ always do this (whether the square is homotopy-cartesian or not).
     Σ ( q̂ : temp-uBDx-Σαγ (a', s' a') = (a, s a)),
         ( induced-map-on-fibers-Σ (a, s a) ((a', s' a'), q̂) = (a', p))
 
-#def temp-uBDx-helper-IkCK uses (γ C')
+#def temp-uBDx-helper uses (γ C')
   ( ((s', s) , η) : has-section-family-over-map)
   : ( a : A) →
     ( (a', p) : fib A' A α a ) →
-    temp-uBDx-helper-IkCK-type ((s',s), η) a (a', p)
+    temp-uBDx-helper-type ((s',s), η) a (a', p)
   :=
     ind-fib A' A α
-    ( temp-uBDx-helper-IkCK-type ((s',s), η))
+    ( temp-uBDx-helper-type ((s',s), η))
     ( \ a' →
       ( eq-pair A C (α a', γ a' (s' a')) (α a', s (α a')) ( refl, η a' ) ,
         eq-pair
@@ -185,9 +185,9 @@ always do this (whether the square is homotopy-cartesian or not).
         ( \ (a', c') → (α a', γ a' c'))
         ( a, s a)))
   :=
-    ( \ (a', p) → ( (a', s' a'), first (temp-uBDx-helper-IkCK ((s',s),η) a (a',p))),
+    ( \ (a', p) → ( (a', s' a'), first (temp-uBDx-helper ((s',s),η) a (a',p))),
       ( induced-map-on-fibers-Σ (a, s a) ,
-        \ (a', p) → second (temp-uBDx-helper-IkCK ((s',s),η) a (a',p))))
+        \ (a', p) → second (temp-uBDx-helper ((s',s),η) a (a',p))))
 
 #def push-down-equiv-with-section uses (γ)
   ( ((s',s),η) : has-section-family-over-map)

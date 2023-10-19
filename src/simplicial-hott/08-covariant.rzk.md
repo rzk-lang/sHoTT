@@ -1434,7 +1434,7 @@ domain are equivalent:
 #def equiv-total-dhom-equiv uses (A x y)
   : Equiv ( (t : Δ¹) → B (f t)) ((t : Δ¹) → C (f t))
   :=
-    equiv-extensions-BOT-equiv-family
+    equiv-extensions-BOT-equiv
       ( extext)
       ( 2)
       ( Δ¹)

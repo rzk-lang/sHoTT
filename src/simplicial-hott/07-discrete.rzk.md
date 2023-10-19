@@ -251,7 +251,7 @@ of discrete types is discrete.
 ```
 
 By extension extensionality, an extension type into a family of discrete types
-is discrete. Since `#!rzk equiv-extensions-BOT-equiv-family` considers total
+is discrete. Since `#!rzk equiv-extensions-BOT-equiv` considers total
 extension types only, extending from `#!rzk BOT`, that's all we prove here for
 now.
 
@@ -270,7 +270,7 @@ now.
       ( (t : ψ) → hom (A t) (f t) (g t))
       ( hom ((t : ψ) → A t) f g)
       ( equiv-ExtExt extext I ψ (\ _ → BOT) A (\ _ → recBOT) f g)
-      ( equiv-extensions-BOT-equiv-family
+      ( equiv-extensions-BOT-equiv
         ( extext)
         ( I)
         ( ψ)

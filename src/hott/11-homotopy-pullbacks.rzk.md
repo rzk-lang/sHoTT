@@ -725,11 +725,10 @@ the fiber fibers.
   : fib-vertical-fibs-comm-square c (b,p)
   := ((t , q) , e)
 
-
 #def fib-vertical-fibs-tot-fib-comm-square uses (η β' γ')
-  : ( ((b,c),p) : relative-product A B β C γ)
-  → ( (t , h) : tot-fib-comm-square ((b,c),p))
-  → fib-vertical-fibs-comm-square c (b,p)
+  ( ((b,c),p) : relative-product A B β C γ)
+  ( (t , h) : tot-fib-comm-square ((b,c),p))
+  : fib-vertical-fibs-comm-square c (b,p)
   :=
     ( fib-vertical-fibs-helper-IkCK ((b,c),p) t)
     ( ind-fib T (relative-product A B β C γ)
@@ -740,25 +739,23 @@ the fiber fibers.
       ( t , h))
 ```
 
-Note that we could have defined this comparison map without the helper by a
-direct fiber induction, but this would leave it with worse definitional
-computation properties on which the rest of our construction relies.
+We could have defined this comparison map without the helper by a direct fiber
+induction, but in this case it would not commute definitionally with the
+canonical projection to `T`.
 
 ```rzk
-#def fib-vertical-fibs-tot-fib-comm-square' uses (η β' γ')
--- worse computation than fib-vertical-fibs-tot-fib-comm-square
-  : ( ((b,c),p) : relative-product A B β C γ)
-  → ( (t , h) : tot-fib-comm-square ((b,c),p))
-  → fib-vertical-fibs-comm-square c (b,p)
-  :=
-  ind-fib T (relative-product A B β C γ) (gap-map-comm-square)
-  ( \ ((b,c),p) _ → fib-vertical-fibs-comm-square c (b,p))
-  ( \ t → ((t , refl) , refl))
+#def compute-fib-vertical-fibs-tot-fib-comm-square uses (η β' γ')
+  ( bcp : relative-product A B β C γ)
+  ( (t , h) : tot-fib-comm-square bcp)
+  :
+  ( first (first (fib-vertical-fibs-tot-fib-comm-square bcp (t , h)))
+  = t)
+  := refl
 ```
 
 Finally, we show that these comparison maps are equivalences by summing over all
 of them. Indeed, by applications of `is-equiv-domain-sum-of-fibers`, the total
-sum of each is just equivalent to `T`.
+type on each side is just equivalent to `T`.
 
 ```rzk
 #def is-equiv-projection-fib-vertical-fibs-comm-square uses (η β')

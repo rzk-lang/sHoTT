@@ -654,7 +654,7 @@ then $(x : X) → A x$ is a Segal type.
           ( \ t s → A s)
           ( \ u → recBOT)))
       ( \ h s t → h s t) -- second equivalence
-      ( second (equiv-extension-equiv-family extext I ψ
+      ( second (equiv-extensions-BOT-equiv-family extext I ψ
         ( \ s → Δ² → A s)
         ( \ s → Λ → A s)
         ( \ s → (horn-restriction (A s) , fiberwise-is-segal-A s))))

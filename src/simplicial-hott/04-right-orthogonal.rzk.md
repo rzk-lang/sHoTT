@@ -399,7 +399,7 @@ Every equivalence `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
       ( \ σ' t → α (σ' t))
       ( \ _ τ' t → α (τ' t))
       ( second
-        ( equiv-extension-equiv-family extext I ( \ t → ϕ t)
+        ( equiv-extensions-BOT-equiv-family extext I ( \ t → ϕ t)
           ( \ _ → A') ( \ _ → A) ( \ _ → (α , is-equiv-α))))
      ( is-equiv-Equiv-is-equiv'
          ( ψ → A') ( ψ → A) ( \ τ' t → α (τ' t))
@@ -409,7 +409,7 @@ Every equivalence `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
        ( cofibration-composition-functorial I ψ ϕ ( \ _ → BOT)
            ( \ _ → A') ( \ _ → A) ( \ _ → α) ( \ _ → recBOT))
        ( second
-         ( equiv-extension-equiv-family extext I ( \ t → ψ t)
+         ( equiv-extensions-BOT-equiv-family extext I ( \ t → ψ t)
            ( \ _ → A') ( \ _ → A) ( \ _ → (α , is-equiv-α)))))
 ```
 
@@ -488,12 +488,15 @@ This should hold even without assuming `is-orth-ψ-ϕ-α'`.
         ( ϕ → A ) ( \ σ → (t : ψ) → A [ϕ t ↦ σ t])
         ( \ σ'' t → α' (σ'' t)) ( \ _ τ'' x → α' (τ'' x) )
         ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
-    ( has-section-extension-has-section-family naiveextext I (\ t → ϕ t)
+    ( has-section-extensions-BOT-has-section-family naiveextext I (\ t → ϕ t)
           ( \ _ → A'') (\ _ → A') (\ _ → α')
       ( \ _ → has-section-α'))
     ( is-orth-ψ-ϕ-α')
     ( is-orth-ψ-ϕ-αα')
 ```
+
+
+
 
 ### Stability under pullback
 

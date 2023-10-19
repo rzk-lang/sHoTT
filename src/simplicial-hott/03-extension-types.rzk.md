@@ -1484,3 +1484,51 @@ First we treat the case of extensions from `BOT`.
         ( \ t → b t)
         ( \ t → second (has-section-f t) (b t))))
 ```
+
+There is also a version for general extensions, but it is a little less pleasant
+to state.
+
+```rzk
+#section has-section-extensions-has-section
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variables B A : ψ → U
+#variable r : (t : ψ) → B t → A t
+
+#variable has-section-r : (t : ψ) → has-section (B t) (A t) (r t)
+
+#def s-uSdw uses (r)
+  : (t : ψ) → A t → B t
+  := \ t → first (has-section-r t)
+
+#def ε-uSdw uses (B)
+  ( t : ψ)
+  ( a : A t)
+  : r t (s-uSdw t a) = a
+  := second (has-section-r t) a
+
+#def has-section-extensions-has-section
+  uses (extext has-section-r)
+  ( a : (t : ϕ) → A t)
+  : has-section
+    ( (t : ψ) → B t [ϕ t ↦ s-uSdw t (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t (s-uSdw t (a t))])
+    ( \ b t → r t (b t))
+  :=
+    has-section-internalize
+    ( (t : ψ) → B t [ϕ t ↦ s-uSdw t (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t (s-uSdw t (a t))])
+    ( \ b t → r t (b t))
+    ( ( ( (t : ψ) → A t [ϕ t ↦ a t])
+      , \ a' t → s-uSdw t (a' t))
+    , ( is-equiv-extensions-is-equiv I ψ ϕ A A
+        ( \ t x → r t (s-uSdw t (x)))
+        ( \ t →
+           is-equiv-retraction-section (A t) (B t)
+           ( s-uSdw t) (r t) (ε-uSdw t))
+        ( a)))
+
+#end has-section-extensions-has-section
+```

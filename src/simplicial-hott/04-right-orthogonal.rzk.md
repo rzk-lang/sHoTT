@@ -456,6 +456,8 @@ Right orthogonality is closed under homotopy.
 
 ### Right cancellation
 
+One can always cancel right orthogonal maps from the right.
+
 ```rzk
 #def is-right-orthogonal-right-cancel-to-shape
   uses (is-orth-ψ-ϕ-α is-orth-ψ-ϕ-αα')
@@ -474,24 +476,27 @@ Right orthogonality is closed under homotopy.
 
 ### Left cancellation with section (weak version)
 
-This should hold even without assuming `is-orth-ψ-ϕ-α'`.
+If the map `α' : A'' → A'` has a section, then we can also cancel it from the
+right (whether it is right orthogonal or not.)
 
 ```rzk
-#def is-right-orthogonal-weak-left-cancel-with-section-to-shape
-      uses (naiveextext is-orth-ψ-ϕ-α' is-orth-ψ-ϕ-αα')
+#def is-right-orthogonal-left-cancel-with-section-to-shape
+      uses (extext is-orth-ψ-ϕ-αα')
   ( has-section-α' : has-section A'' A' α')
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=
-    is-homotopy-cartesian-left-cancel-with-lower-section
+    is-homotopy-cartesian-left-cancel-with-section'
         ( ϕ → A'' ) ( \ σ'' → (t : ψ) → A'' [ϕ t ↦ σ'' t])
         ( ϕ → A' ) ( \ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
         ( ϕ → A ) ( \ σ → (t : ψ) → A [ϕ t ↦ σ t])
         ( \ σ'' t → α' (σ'' t)) ( \ _ τ'' x → α' (τ'' x) )
         ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
-    ( has-section-extensions-BOT-has-section naiveextext I (\ t → ϕ t)
+    ( has-section-extensions-BOT-has-section extext I (\ t → ϕ t)
           ( \ _ → A'') (\ _ → A') (\ _ → α')
       ( \ _ → has-section-α'))
-    ( is-orth-ψ-ϕ-α')
+    ( has-section-extensions-has-section extext I ψ ϕ
+          ( \ _ → A'') (\ _ → A') (\ _ → α')
+      ( \ _ → has-section-α'))
     ( is-orth-ψ-ϕ-αα')
 ```
 
@@ -680,14 +685,13 @@ orthogonal to `ϕ ⊂ ψ`, then so is the other.
         ( is-orth-ψ-ϕ-β)))
 
 #def is-right-orthogonal-equiv-to-shape'
-  uses (funext extext naiveextext)
+  uses (funext extext)
   ( (((s', s), η), (is-equiv-s', is-equiv-s)) : Equiv-of-maps A' A α B' B β)
   ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
   : is-right-orthogonal-to-shape I ψ ϕ B' B β
   :=
-    is-right-orthogonal-weak-left-cancel-with-section-to-shape
+    is-right-orthogonal-left-cancel-with-section-to-shape
           I ψ ϕ A' B' B s' β
-    ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A' B' s' is-equiv-s')
     ( is-right-orthogonal-homotopy-to-shape I ψ ϕ A' B
       ( \ a' → s (α a')) ( \ a' → β (s' a'))
       ( rev-homotopy A' B ( \ a' → β (s' a')) ( \ a' → s (α a')) ( η))

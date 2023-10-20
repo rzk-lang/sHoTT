@@ -704,7 +704,6 @@ We now assume extension extensionality and derive a few consequences.
 
 ```rzk
 #assume extext : ExtExt
-#assume naiveextext : NaiveExtExt
 ```
 
 In particular, extension extensionality implies that homotopies give rise to
@@ -740,7 +739,6 @@ arguments below.
   ( f : (t : ψ) → A t [ϕ t ↦ a t])
   : (t : ψ ) → A t
   := f
-
 ```
 
 The homotopy extension property has the following signature. We state this
@@ -1510,7 +1508,7 @@ types.
 The following special case of extensions from `BOT` is also useful.
 
 ```rzk
-#def has-section-extensions-BOT-has-section uses (naiveextext)
+#def has-section-extensions-BOT-has-section uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( A B : ψ → U)
@@ -1520,7 +1518,7 @@ The following special case of extensions from `BOT` is also useful.
   :=
     ( ( \ b t → first (has-section-f t) (b t))
     , \ b →
-      ( naiveextext I ψ (\ _ → BOT) B (\ _ → recBOT)
+      ( naiveextext-extext extext I ψ (\ _ → BOT) B (\ _ → recBOT)
         ( \ t → f t (first (has-section-f t) (b t)))
         ( \ t → b t)
         ( \ t → second (has-section-f t) (b t))))

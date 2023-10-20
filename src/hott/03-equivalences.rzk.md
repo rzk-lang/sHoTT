@@ -224,9 +224,9 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
 
 ## Induction with section
 
-We have two variants of induction with section that say that if `f : A → B`
-has a section, it suffices to prove statements about `b : B` by doing so terms
-of the form `f a`.
+We have two variants of induction with section that say that if `f : A → B` has
+a section, it suffices to prove statements about `b : B` by doing so terms of
+the form `f a`.
 
 ```rzk
 #def ind-has-section

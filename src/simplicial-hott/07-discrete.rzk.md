@@ -251,9 +251,8 @@ of discrete types is discrete.
 ```
 
 By extension extensionality, an extension type into a family of discrete types
-is discrete. Since `#!rzk equiv-extensions-BOT-equiv` considers total
-extension types only, extending from `#!rzk BOT`, that's all we prove here for
-now.
+is discrete. Since `#!rzk equiv-extensions-BOT-equiv` considers total extension
+types only, extending from `#!rzk BOT`, that's all we prove here for now.
 
 ```rzk
 #def equiv-hom-eq-extension-type-is-discrete uses (extext)

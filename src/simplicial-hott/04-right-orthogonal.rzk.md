@@ -728,8 +728,7 @@ equivalence.
 ```rzk
 #def is-local-type
   : U
-  :=
-    is-equiv (ψ → A) (ϕ → A) ( \ τ t → τ t)
+  := is-equiv (ψ → A) (ϕ → A) ( \ τ t → τ t)
 ```
 
 We can ask that the terminal map `A → Unit` is right orthogonal to `ϕ ⊂ ψ`.
@@ -737,8 +736,7 @@ We can ask that the terminal map `A → Unit` is right orthogonal to `ϕ ⊂ ψ`
 ```rzk
 #def is-right-orthogonal-terminal-map
   : U
-  :=
-    is-right-orthogonal-to-shape I ψ ϕ A Unit (terminal-map A)
+  := is-right-orthogonal-to-shape I ψ ϕ A Unit (terminal-map A)
 ```
 
 ### Unique extensions types are local types

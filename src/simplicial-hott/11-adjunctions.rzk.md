@@ -10,6 +10,7 @@ Some of the definitions in this file rely on function extensionality:
 
 ```rzk
 #assume funext : FunExt
+#assume extext : ExtExt
 ```
 
 ## Transposing adjunctions
@@ -1307,4 +1308,213 @@ The calculation for the other triangle identity is dual.
     ( equiv-component-comp-segal-comp-ladj-triangle)
 
 #end triangle-identities
+```
+
+## Adjunctions between Rezk types
+
+Given a functor `#!rzk u : B → A` from a Rezk type to a Segal type, we show that
+the type given by functors `#!rzk f : A → B` and unit transformations that
+induce a transposing equivalence is a proposition. This data is nearly the data
+of `#!rzk is-transposing-right-adj A B u`
+
+```rzk
+#section all-unit-arrows-equal-is-rezk-is-segal
+
+#variables A B : U
+#variable is-segal-A : is-segal A
+#variable is-rezk-B : is-rezk B
+#variable u : B → A
+#variable a : A
+#variables fa fa' : B
+#variable ηa : hom A a (u fa)
+#variable ηa' : hom A a (u fa')
+
+#def ηa-transposition
+  ( b : B)
+  ( k : hom B fa b)
+  : (hom A a (u b))
+  := comp-is-segal A is-segal-A a (u fa) (u b) ηa (ap-hom B A u fa b k)
+
+#def ηa'-transposition
+  ( b : B)
+  ( k : hom B fa' b)
+  : (hom A a (u b))
+  := comp-is-segal A is-segal-A a (u fa') (u b) ηa' (ap-hom B A u fa' b k)
+
+#variable ω : (b : B) → is-equiv (hom B fa b) (hom A a (u b)) (ηa-transposition b)
+
+#variable ω' : (b : B) → is-equiv (hom B fa' b) (hom A a (u b)) (ηa'-transposition b)
+
+#def to-left-adjoint-components-is-rezk-is-segal uses (A is-segal-A u a ηa)
+  : hom B fa fa'
+  :=
+    ( section-is-equiv  (hom B fa fa') (hom A a (u fa'))
+      ( ηa-transposition fa') (ω fa'))
+    ( ηa')
+
+#def triangle-to-left-adjoint-components-is-rezk-is-segal
+  : comp-is-segal A is-segal-A a (u fa) (u fa')
+    ( ηa)
+    ( ap-hom B A u fa fa'
+      ( to-left-adjoint-components-is-rezk-is-segal)) =
+    ( ηa')
+  :=
+    ( second
+      ( has-section-is-equiv (hom B fa fa') (hom A a (u fa'))
+        ( ηa-transposition fa') (ω fa')))
+    ( ηa')
+
+#def from-left-adjoint-components-is-rezk-is-segal uses (A is-segal-A u a ηa')
+  : hom B fa' fa
+  :=
+    ( section-is-equiv (hom B fa' fa) (hom A a (u fa))
+      ( ηa'-transposition fa) (ω' fa))
+    ( ηa)
+
+#def triangle-from-left-adjoint-components-is-rezk-is-segal
+  : comp-is-segal A is-segal-A a (u fa') (u fa)
+    ( ηa')
+    ( ap-hom B A u fa' fa
+      ( from-left-adjoint-components-is-rezk-is-segal)) =
+    ( ηa)
+  :=
+    ( second
+      ( has-section-is-equiv (hom B fa' fa) (hom A a (u fa))
+        ( ηa'-transposition fa) (ω' fa)))
+    ( ηa)
+
+#def ηa-automorphism uses (extext ω ω')
+  : comp-is-segal A is-segal-A a (u fa) (u fa)
+    ( ηa)
+    ( ap-hom B A u fa fa
+      ( comp-is-segal B (first is-rezk-B) fa fa' fa
+        ( to-left-adjoint-components-is-rezk-is-segal)
+        ( from-left-adjoint-components-is-rezk-is-segal))) = ηa
+  :=
+    quadruple-concat (hom A a (u fa))
+    ( comp-is-segal A is-segal-A a (u fa) (u fa)
+      ( ηa)
+      ( ap-hom B A u fa fa
+        ( comp-is-segal B (first is-rezk-B) fa fa' fa
+          ( to-left-adjoint-components-is-rezk-is-segal)
+          ( from-left-adjoint-components-is-rezk-is-segal))))
+    ( comp-is-segal A is-segal-A a (u fa) (u fa)
+      ( ηa)
+      ( comp-is-segal A is-segal-A (u fa) (u fa') (u fa)
+        ( ap-hom B A u fa fa'
+          ( to-left-adjoint-components-is-rezk-is-segal))
+        ( ap-hom B A u fa' fa
+          ( from-left-adjoint-components-is-rezk-is-segal))))
+    ( comp-is-segal A is-segal-A a (u fa') (u fa)
+      ( comp-is-segal A is-segal-A a (u fa) (u fa')
+        ( ηa)
+        ( ap-hom B A u fa fa'
+          ( to-left-adjoint-components-is-rezk-is-segal)))
+      ( ap-hom B A u fa' fa
+        ( from-left-adjoint-components-is-rezk-is-segal)))
+    ( comp-is-segal A is-segal-A a (u fa') (u fa)
+      ( ηa')
+      ( ap-hom B A u fa' fa
+        ( from-left-adjoint-components-is-rezk-is-segal)))
+    ( ηa)
+    ( prewhisker-homotopy-is-segal A is-segal-A a (u fa) (u fa)
+      ( ηa)
+      ( ap-hom B A u fa fa
+        ( comp-is-segal B (first is-rezk-B) fa fa' fa
+          ( to-left-adjoint-components-is-rezk-is-segal)
+          ( from-left-adjoint-components-is-rezk-is-segal)))
+      ( comp-is-segal A is-segal-A (u fa) (u fa') (u fa)
+        ( ap-hom B A u fa fa'
+          ( to-left-adjoint-components-is-rezk-is-segal))
+        ( ap-hom B A u fa' fa
+          ( from-left-adjoint-components-is-rezk-is-segal)))
+      ( rev-functors-pres-comp B A (first is-rezk-B) is-segal-A
+        ( u) fa fa' fa
+        ( to-left-adjoint-components-is-rezk-is-segal)
+        ( from-left-adjoint-components-is-rezk-is-segal)))
+    ( rev-associative-is-segal extext A is-segal-A a (u fa) (u fa') (u fa)
+      ( ηa)
+      ( ap-hom B A u fa fa'
+        ( to-left-adjoint-components-is-rezk-is-segal))
+      ( ap-hom B A u fa' fa
+        ( from-left-adjoint-components-is-rezk-is-segal)))
+    ( postwhisker-homotopy-is-segal (A) (is-segal-A) (a) (u fa') (u fa)
+      ( comp-is-segal A is-segal-A a (u fa) (u fa')
+        ( ηa)
+        ( ap-hom B A u fa fa'
+          ( to-left-adjoint-components-is-rezk-is-segal)))
+      ( ηa')
+      ( ap-hom B A u fa' fa
+        ( from-left-adjoint-components-is-rezk-is-segal))
+      ( triangle-to-left-adjoint-components-is-rezk-is-segal))
+    ( triangle-from-left-adjoint-components-is-rezk-is-segal)
+
+#def ηa'-automorphism uses (extext ω ω')
+  : comp-is-segal A is-segal-A a (u fa') (u fa')
+    ( ηa')
+    ( ap-hom B A u fa' fa'
+      ( comp-is-segal B (first is-rezk-B) fa' fa fa'
+        ( from-left-adjoint-components-is-rezk-is-segal)
+        ( to-left-adjoint-components-is-rezk-is-segal))) = ηa'
+  :=
+    quadruple-concat (hom A a (u fa'))
+    ( comp-is-segal A is-segal-A a (u fa') (u fa')
+      ( ηa')
+      ( ap-hom B A u fa' fa'
+        ( comp-is-segal B (first is-rezk-B) fa' fa fa'
+          ( from-left-adjoint-components-is-rezk-is-segal)
+          ( to-left-adjoint-components-is-rezk-is-segal))))
+    ( comp-is-segal A is-segal-A a (u fa') (u fa')
+      ( ηa')
+      ( comp-is-segal A is-segal-A (u fa') (u fa) (u fa')
+        ( ap-hom B A u fa' fa
+          ( from-left-adjoint-components-is-rezk-is-segal))
+        ( ap-hom B A u fa fa'
+          ( to-left-adjoint-components-is-rezk-is-segal))))
+    ( comp-is-segal A is-segal-A a (u fa) (u fa')
+      ( comp-is-segal A is-segal-A a (u fa') (u fa)
+        ( ηa')
+        ( ap-hom B A u fa' fa
+          ( from-left-adjoint-components-is-rezk-is-segal)))
+      ( ap-hom B A u fa fa'
+        ( to-left-adjoint-components-is-rezk-is-segal)))
+    ( comp-is-segal A is-segal-A a (u fa) (u fa')
+      ( ηa)
+      ( ap-hom B A u fa fa'
+        ( to-left-adjoint-components-is-rezk-is-segal)))
+    ( ηa')
+    ( prewhisker-homotopy-is-segal A is-segal-A a (u fa') (u fa')
+      ( ηa')
+      ( ap-hom B A u fa' fa'
+        ( comp-is-segal B (first is-rezk-B) fa' fa fa'
+          ( from-left-adjoint-components-is-rezk-is-segal)
+          ( to-left-adjoint-components-is-rezk-is-segal)))
+      ( comp-is-segal A is-segal-A (u fa') (u fa) (u fa')
+        ( ap-hom B A u fa' fa
+          ( from-left-adjoint-components-is-rezk-is-segal))
+        ( ap-hom B A u fa fa'
+          ( to-left-adjoint-components-is-rezk-is-segal)))
+      ( rev-functors-pres-comp B A (first is-rezk-B) is-segal-A
+        ( u) fa' fa fa'
+        ( from-left-adjoint-components-is-rezk-is-segal)
+        ( to-left-adjoint-components-is-rezk-is-segal)))
+    ( rev-associative-is-segal extext A is-segal-A a
+      ( u fa') (u fa) (u fa')
+      ( ηa')
+      ( ap-hom B A u fa' fa
+        ( from-left-adjoint-components-is-rezk-is-segal))
+      ( ap-hom B A u fa fa'
+        ( to-left-adjoint-components-is-rezk-is-segal)))
+    ( postwhisker-homotopy-is-segal (A) (is-segal-A) (a) (u fa) (u fa')
+      ( comp-is-segal A is-segal-A a (u fa') (u fa)
+        ( ηa')
+        ( ap-hom B A u fa' fa
+          ( from-left-adjoint-components-is-rezk-is-segal)))
+      ( ηa)
+      ( ap-hom B A u fa fa'
+        ( to-left-adjoint-components-is-rezk-is-segal))
+      ( triangle-from-left-adjoint-components-is-rezk-is-segal))
+    ( triangle-to-left-adjoint-components-is-rezk-is-segal)
+
+#end all-unit-arrows-equal-is-rezk-is-segal
 ```

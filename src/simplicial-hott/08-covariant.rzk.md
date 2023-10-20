@@ -2197,7 +2197,7 @@ The fibers of a covariant fibration over a Segal type are discrete types.
       ( v))
 ```
 
-In a segal type, covariant hom families are covariant,hence representable homs
+In a Segal type, covariant hom families are covariant, hence representable homs
 are discrete.
 
 ```rzk title="RS17, Corollary 8.19"

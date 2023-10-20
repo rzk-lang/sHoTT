@@ -1386,41 +1386,32 @@ induced map on extension types. We reduce this to the case of equivalences by
 working with external retractions.
 
 ```rzk
-#section has-retraction-extensions-has-retraction
+#section section-retraction-extensions
 
 #variable I : CUBE
 #variable ψ : I → TOPE
 #variable ϕ : ψ → TOPE
 #variables A B : ψ → U
+
 #variable s : (t : ψ) → A t → B t
+#variable r : (t : ψ) → B t → A t
+#variable η : (t : ψ) → (a : A t) → r t (s t a) = a
 
-#variable has-retraction-s : (t : ψ) → has-retraction (A t) (B t) (s t)
-
-#def A'-uSdw
-  : ψ → U
+#def is-sec-rec-extensions-sec-rec uses (extext)
+  ( a : (t : ϕ) → A t)
+  : is-section-retraction-pair
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t(s t(a t))])
+    ( \ a' t → s t (a' t))
+    ( \ b' t → r t (b' t))
   :=
-  \ t →
-    first
-    ( first
-      ( has-retraction-externalize (A t) (B t) (s t) (has-retraction-s t)))
+    is-equiv-extensions-is-equiv I ψ ϕ A A
+    ( \ t a₀ → r t (s t (a₀)))
+    ( \ t → is-equiv-retraction-section (A t) (B t) (s t) (r t) (η t))
+    ( a)
 
-#def r-uSdw
-  (t : ψ)
-  : B t → A'-uSdw t
-  :=
-    second
-    ( first
-      ( has-retraction-externalize (A t) (B t) (s t) (has-retraction-s t)))
-
-#def is-sec-rec-s-r-uSdw
-  (t : ψ)
-  : is-section-retraction-pair (A t) (B t) (A'-uSdw t) (s t) (r-uSdw t)
-  :=
-    second
-    ( has-retraction-externalize (A t) (B t) (s t) (has-retraction-s t))
-
-#def has-retraction-extensions-has-retraction
-  uses (extext has-retraction-s)
+#def has-retraction-extensions-has-retraction' uses (extext η)
   ( a : (t : ϕ) → A t)
   : has-retraction
     ( (t : ψ) → A t [ϕ t ↦ a t])
@@ -1431,14 +1422,67 @@ working with external retractions.
     ( (t : ψ) → A t [ϕ t ↦ a t])
     ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
     ( \ a' t → s t (a' t))
-    ( ( (t : ψ) → A'-uSdw t [ϕ t ↦ r-uSdw t (s t (a t))]
-      , \ b' t → r-uSdw t (b' t))
-    , ( is-equiv-extensions-is-equiv I ψ ϕ A A'-uSdw
-        ( \ t a₀ → r-uSdw t (s t (a₀)))
-        ( \ t → is-sec-rec-s-r-uSdw t)
-        ( a)))
+    ( ( (t : ψ) → A t [ϕ t ↦ r t (s t (a t))]
+      , \ b' t → r t (b' t))
+    , is-sec-rec-extensions-sec-rec a)
 
-#end has-retraction-extensions-has-retraction
+#def has-section-extensions-has-section' uses (extext η)
+  ( a : (t : ϕ) → A t)
+  : has-section
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t (s t (a t))])
+    ( \ b t → r t (b t))
+  :=
+    has-section-internalize
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t (s t (a t))])
+    ( \ b' t → r t (b' t))
+    ( ( ( (t : ψ) → A t [ϕ t ↦ a t])
+      , ( \ a' t → s t (a' t)))
+    , is-sec-rec-extensions-sec-rec a)
+
+#end section-retraction-extensions
+```
+
+It is convenient to have uncurried versions.
+
+```rzk
+#def has-retraction-extensions-has-retraction uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( s : (t : ψ) → A t → B t)
+  ( has-retraction-s : (t : ψ) → has-retraction (A t) (B t) (s t))
+  ( a : (t : ϕ) → A t)
+  : has-retraction
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( \ a' t → s t (a' t))
+  :=
+    has-retraction-extensions-has-retraction' I ψ ϕ A B s
+    ( \ t → first (has-retraction-s t))
+    ( \ t → second (has-retraction-s t))
+    ( a)
+
+#def has-section-extensions-has-section uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( B A : ψ → U)
+  ( r : (t : ψ) → B t → A t)
+  ( has-section-r : (t : ψ) → has-section (B t) (A t) (r t))
+  ( a : (t : ϕ) → A t)
+  : has-section
+    ( (t : ψ) → B t [ϕ t ↦ (first (has-section-r t)) (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t (first (has-section-r t) (a t))])
+    ( \ b t → r t (b t))
+  :=
+    has-section-extensions-has-section' I ψ ϕ A B
+    ( \ t → first (has-section-r t))
+    ( r)
+    ( \ t → second (has-section-r t))
+    ( a)
 ```
 
 We summarize by saying that retracts of types induce retracts of extension
@@ -1463,10 +1507,7 @@ types.
       ( a)))
 ```
 
-Similarly, a fiberwise section of a map `(t : ψ) → A t → B t` induces a section
-on extension types.
-
-First we treat the case of extensions from `BOT`.
+The following special case of extensions from `BOT` is also useful.
 
 ```rzk
 #def has-section-extensions-BOT-has-section uses (naiveextext)
@@ -1483,52 +1524,4 @@ First we treat the case of extensions from `BOT`.
         ( \ t → f t (first (has-section-f t) (b t)))
         ( \ t → b t)
         ( \ t → second (has-section-f t) (b t))))
-```
-
-There is also a version for general extensions, but it is a little less pleasant
-to state.
-
-```rzk
-#section has-section-extensions-has-section
-
-#variable I : CUBE
-#variable ψ : I → TOPE
-#variable ϕ : ψ → TOPE
-#variables B A : ψ → U
-#variable r : (t : ψ) → B t → A t
-
-#variable has-section-r : (t : ψ) → has-section (B t) (A t) (r t)
-
-#def s-uSdw uses (r)
-  : (t : ψ) → A t → B t
-  := \ t → first (has-section-r t)
-
-#def ε-uSdw uses (B)
-  ( t : ψ)
-  ( a : A t)
-  : r t (s-uSdw t a) = a
-  := second (has-section-r t) a
-
-#def has-section-extensions-has-section
-  uses (extext has-section-r)
-  ( a : (t : ϕ) → A t)
-  : has-section
-    ( (t : ψ) → B t [ϕ t ↦ s-uSdw t (a t)])
-    ( (t : ψ) → A t [ϕ t ↦ r t (s-uSdw t (a t))])
-    ( \ b t → r t (b t))
-  :=
-    has-section-internalize
-    ( (t : ψ) → B t [ϕ t ↦ s-uSdw t (a t)])
-    ( (t : ψ) → A t [ϕ t ↦ r t (s-uSdw t (a t))])
-    ( \ b t → r t (b t))
-    ( ( ( (t : ψ) → A t [ϕ t ↦ a t])
-      , \ a' t → s-uSdw t (a' t))
-    , ( is-equiv-extensions-is-equiv I ψ ϕ A A
-        ( \ t x → r t (s-uSdw t (x)))
-        ( \ t →
-           is-equiv-retraction-section (A t) (B t)
-           ( s-uSdw t) (r t) (ε-uSdw t))
-        ( a)))
-
-#end has-section-extensions-has-section
 ```

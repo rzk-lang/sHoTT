@@ -1600,40 +1600,7 @@ of `#!rzk is-transposing-right-adj A B u`
       ( from-left-adjoint-components-is-rezk-is-segal,
         eq-id-to-from-left-adjoint-components-is-rezk-is-segal)))
 
-#def rev-lem-10-7-application uses (extext ηa' ω ω')
-  : transport B ( \ b → hom A a (u b)) fa fa'
-    ( all-left-adjoint-components-equal-is-rezk-is-segal) ηa =
-    covariant-transport B fa fa'
-    ( first
-      ( iso-eq B (first is-rezk-B) fa fa'
-        ( all-left-adjoint-components-equal-is-rezk-is-segal)))
-    ( \ b → hom A a (u b))
-    ( is-covariant-substitution-is-covariant A B (hom A a)
-      ( is-covariant-representable-is-segal A is-segal-A a) u)
-    ( ηa)
-  :=
-    rev (hom A a (u fa'))
-    ( covariant-transport B fa fa'
-      ( first
-        ( iso-eq B (first is-rezk-B) fa fa'
-          ( all-left-adjoint-components-equal-is-rezk-is-segal)))
-      ( \ b → hom A a (u b))
-      ( is-covariant-substitution-is-covariant A B (hom A a)
-        ( is-covariant-representable-is-segal A is-segal-A a) u)
-      ( ηa))
-    ( transport B ( \ b → hom A a (u b)) fa fa'
-      ( all-left-adjoint-components-equal-is-rezk-is-segal) ηa)
-    ( compute-covariant-transport-of-hom-family-iso-eq-is-segal B
-      ( first is-rezk-B)
-      ( \ b → hom A a (u b))
-      ( is-covariant-substitution-is-covariant A B (hom A a)
-        ( is-covariant-representable-is-segal A is-segal-A a) u)
-      ( fa)
-      ( fa')
-      ( all-left-adjoint-components-equal-is-rezk-is-segal)
-      ( ηa))
-
-#def iso-eq-iso-is-rezk-application uses (extext A is-segal-A u a ηa ηa' ω ω')
+#def iso-eq-iso-to-left-adjoint-components-is-rezk uses (extext A is-segal-A u a ηa ηa' ω ω')
   : first (iso-eq B (first is-rezk-B) fa fa'
     ( all-left-adjoint-components-equal-is-rezk-is-segal))
   = to-left-adjoint-components-is-rezk-is-segal
@@ -1645,17 +1612,11 @@ of `#!rzk is-transposing-right-adj A B u`
         ( from-left-adjoint-components-is-rezk-is-segal,
           eq-id-to-from-left-adjoint-components-is-rezk-is-segal)))
 
-#def rev-lem-10-7-application' uses (extext ηa' ω ω')
+#def compute-transport-all-left-adjoint-components-equal-is-rezk-is-segal uses (extext ηa' ω ω')
   : transport B ( \ b → hom A a (u b)) fa fa'
-    ( all-left-adjoint-components-equal-is-rezk-is-segal) ηa =
-    covariant-transport B fa fa'
-    ( to-left-adjoint-components-is-rezk-is-segal)
-    ( \ b → hom A a (u b))
-    ( is-covariant-substitution-is-covariant A B (hom A a)
-      ( is-covariant-representable-is-segal A is-segal-A a) u)
-    ( ηa)
+    ( all-left-adjoint-components-equal-is-rezk-is-segal) ηa = ηa'
   :=
-    concat (hom A a (u fa'))
+    quintuple-concat (hom A a (u fa'))
     ( transport B ( \ b → hom A a (u b)) fa fa'
       ( all-left-adjoint-components-equal-is-rezk-is-segal) ηa)
     ( covariant-transport B fa fa'
@@ -1672,53 +1633,57 @@ of `#!rzk is-transposing-right-adj A B u`
       ( is-covariant-substitution-is-covariant A B (hom A a)
         ( is-covariant-representable-is-segal A is-segal-A a) u)
       ( ηa))
-    ( rev-lem-10-7-application)
+    ( covariant-transport A (u fa) (u fa')
+      ( ap-hom B A u fa fa' to-left-adjoint-components-is-rezk-is-segal)
+      ( hom A a)
+      ( is-covariant-representable-is-segal A is-segal-A a)
+      ( ηa))
+    ( comp-is-segal A is-segal-A a (u fa) (u fa') ηa
+      ( ap-hom B A u fa fa' to-left-adjoint-components-is-rezk-is-segal))
+    ( ( ηa'))
+    ( rev (hom A a (u fa'))
+      ( covariant-transport B fa fa'
+        ( first
+          ( iso-eq B (first is-rezk-B) fa fa'
+            ( all-left-adjoint-components-equal-is-rezk-is-segal)))
+        ( \ b → hom A a (u b))
+        ( is-covariant-substitution-is-covariant A B (hom A a)
+          ( is-covariant-representable-is-segal A is-segal-A a) u)
+        ( ηa))
+      ( transport B ( \ b → hom A a (u b)) fa fa'
+        ( all-left-adjoint-components-equal-is-rezk-is-segal) ηa)
+      ( compute-covariant-transport-of-hom-family-iso-eq-is-segal B
+        ( first is-rezk-B)
+        ( \ b → hom A a (u b))
+        ( is-covariant-substitution-is-covariant A B (hom A a)
+          ( is-covariant-representable-is-segal A is-segal-A a) u)
+        ( fa)
+        ( fa')
+        ( all-left-adjoint-components-equal-is-rezk-is-segal)
+        ( ηa)))
     ( ap (hom B fa fa') (hom A a (u fa'))
       ( first (iso-eq B (first is-rezk-B) fa fa'
         ( all-left-adjoint-components-equal-is-rezk-is-segal)))
       ( to-left-adjoint-components-is-rezk-is-segal)
       ( ηa-transposition fa')
-      ( iso-eq-iso-is-rezk-application))
+      ( iso-eq-iso-to-left-adjoint-components-is-rezk))
+    ( compute-covariant-transport-of-hom-family-is-segal A is-segal-A
+      ( a) (u fa) (u fa') ( ηa)
+      ( ap-hom B A u fa fa' to-left-adjoint-components-is-rezk-is-segal))
+    ( compute-covariant-transport-of-substitution A B (hom A a)
+      ( is-covariant-representable-is-segal A is-segal-A a) u
+      ( fa) ( fa')
+      ( to-left-adjoint-components-is-rezk-is-segal)
+      ( ηa))
+    ( triangle-to-left-adjoint-components-is-rezk-is-segal)
 
-#def compute-covariant-transport-of-substitution-application uses (ηa' ω)
-  : covariant-transport B fa fa'
-    ( to-left-adjoint-components-is-rezk-is-segal)
-    ( \ b → hom A a (u b))
-    ( is-covariant-substitution-is-covariant A B (hom A a)
-      ( is-covariant-representable-is-segal A is-segal-A a) u)
-    ( ηa) =
-    covariant-transport A (u fa) (u fa')
-    ( ap-hom B A u fa fa' to-left-adjoint-components-is-rezk-is-segal)
-    ( hom A a)
-    ( is-covariant-representable-is-segal A is-segal-A a)
-    ( ηa)
+#def all-unit-components-equal-is-rezk-is-segal uses (extext A is-segal-A u a ω ω')
+  : (fa, ηa) =_{Σ (b : B), hom A a (u b)} (fa', ηa')
   :=
-    compute-covariant-transport-of-substitution A B (hom A a)
-    ( is-covariant-representable-is-segal A is-segal-A a) u
-    ( fa) ( fa')
-    ( to-left-adjoint-components-is-rezk-is-segal)
-    ( ηa)
-
-#def compute-covariant-transport-of-hom-family-is-segal-application uses (ηa' ω)
-  : covariant-transport A (u fa) (u fa')
-    ( ap-hom B A u fa fa' to-left-adjoint-components-is-rezk-is-segal)
-    ( hom A a) (is-covariant-representable-is-segal A is-segal-A a)
-    ( ηa) =
-    comp-is-segal A is-segal-A a (u fa) (u fa') ηa
-    ( ap-hom B A u fa fa' to-left-adjoint-components-is-rezk-is-segal)
-  :=
-    compute-covariant-transport-of-hom-family-is-segal A is-segal-A
-    ( a) (u fa) (u fa') ( ηa)
-    ( ap-hom B A u fa fa' to-left-adjoint-components-is-rezk-is-segal)
-
-
-#def lem-10-8-application uses (extext a ηa ηa' ω ω')
-  : ( ap-hom B A u fa fa' (first (iso-eq B (first is-rezk-B) fa fa'
-      ( all-left-adjoint-components-equal-is-rezk-is-segal)))) =
-    ( first ( iso-eq A is-segal-A (u fa) (u fa') (ap B A fa fa' u all-left-adjoint-components-equal-is-rezk-is-segal)))
-  :=
-    compute-ap-hom-of-iso-eq B A (first is-rezk-B) is-segal-A u fa fa'
+    path-of-pairs-pair-of-paths B (\ b → hom A a (u b)) ( fa) ( fa')
     ( all-left-adjoint-components-equal-is-rezk-is-segal)
+    ( ηa) ( ηa')
+    compute-transport-all-left-adjoint-components-equal-is-rezk-is-segal
 
 #end all-unit-arrows-equal-is-rezk-is-segal
 ```

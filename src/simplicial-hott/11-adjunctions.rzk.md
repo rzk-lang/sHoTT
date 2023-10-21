@@ -1516,5 +1516,89 @@ of `#!rzk is-transposing-right-adj A B u`
       ( triangle-from-left-adjoint-components-is-rezk-is-segal))
     ( triangle-to-left-adjoint-components-is-rezk-is-segal)
 
+#def eq-id-from-to-left-adjoint-components-is-rezk-is-segal uses (extext ηa' ω ω')
+  : ( comp-is-segal B (first is-rezk-B) fa fa' fa
+        ( to-left-adjoint-components-is-rezk-is-segal)
+        ( from-left-adjoint-components-is-rezk-is-segal)) =
+    ( id-hom B fa)
+  :=
+    inv-ap-is-emb
+    ( hom B fa fa)
+    ( hom A a (u fa))
+    ( ηa-transposition fa)
+    ( is-emb-is-equiv
+      ( hom B fa fa)
+      ( hom A a (u fa))
+      ( ηa-transposition fa)
+      ( ω fa))
+    ( comp-is-segal B (first is-rezk-B) fa fa' fa
+        ( to-left-adjoint-components-is-rezk-is-segal)
+        ( from-left-adjoint-components-is-rezk-is-segal))
+    ( id-hom B fa)
+    ( zig-zag-concat (hom A a (u fa))
+      ( ηa-transposition fa
+        ( comp-is-segal B (first is-rezk-B) fa fa' fa
+          ( to-left-adjoint-components-is-rezk-is-segal)
+          ( from-left-adjoint-components-is-rezk-is-segal)))
+      ( ηa)
+      ( ηa-transposition fa (id-hom B fa))
+      ( ηa-automorphism)
+      ( concat (hom A a (u fa))
+        ( ηa-transposition fa (id-hom B fa))
+        ( comp-is-segal A is-segal-A a (u fa) (u fa) ηa (id-hom A (u fa)))
+        ( ηa)
+        ( prewhisker-homotopy-is-segal A is-segal-A a (u fa) (u fa) ηa
+          ( ap-hom B A u fa fa (id-hom B fa))
+          ( id-hom A (u fa))
+          (functors-pres-id extext B A u fa))
+        ( comp-id-is-segal A is-segal-A a (u fa) ηa)))
+
+#def eq-id-to-from-left-adjoint-components-is-rezk-is-segal uses (extext ηa ω ω')
+  : ( comp-is-segal B (first is-rezk-B) fa' fa fa'
+        ( from-left-adjoint-components-is-rezk-is-segal)
+        ( to-left-adjoint-components-is-rezk-is-segal)) =
+    ( id-hom B fa')
+  :=
+    inv-ap-is-emb
+    ( hom B fa' fa')
+    ( hom A a (u fa'))
+    ( ηa'-transposition fa')
+    ( is-emb-is-equiv
+      ( hom B fa' fa')
+      ( hom A a (u fa'))
+      ( ηa'-transposition fa')
+      ( ω' fa'))
+    ( comp-is-segal B (first is-rezk-B) fa' fa fa'
+        ( from-left-adjoint-components-is-rezk-is-segal)
+        ( to-left-adjoint-components-is-rezk-is-segal))
+    ( id-hom B fa')
+    ( zig-zag-concat (hom A a (u fa'))
+      ( ηa'-transposition fa'
+        ( comp-is-segal B (first is-rezk-B) fa' fa fa'
+          ( from-left-adjoint-components-is-rezk-is-segal)
+          ( to-left-adjoint-components-is-rezk-is-segal)))
+      ( ηa')
+      ( ηa'-transposition fa' (id-hom B fa'))
+      ( ηa'-automorphism)
+      ( concat (hom A a (u fa'))
+        ( ηa'-transposition fa' (id-hom B fa'))
+        ( comp-is-segal A is-segal-A a (u fa') (u fa') ηa' (id-hom A (u fa')))
+        ( ηa')
+        ( prewhisker-homotopy-is-segal A is-segal-A a (u fa') (u fa') ηa'
+          ( ap-hom B A u fa' fa' (id-hom B fa'))
+          ( id-hom A (u fa'))
+          (functors-pres-id extext B A u fa'))
+        ( comp-id-is-segal A is-segal-A a (u fa') ηa')))
+
+#def all-left-adjoint-components-eq-is-rezk-is-segal
+  : fa = fa'
+  :=
+    eq-iso-is-rezk B is-rezk-B fa fa'
+    ( to-left-adjoint-components-is-rezk-is-segal,
+      (( from-left-adjoint-components-is-rezk-is-segal,
+        eq-id-from-to-left-adjoint-components-is-rezk-is-segal),
+      ( from-left-adjoint-components-is-rezk-is-segal,
+        eq-id-to-from-left-adjoint-components-is-rezk-is-segal)))
+
 #end all-unit-arrows-equal-is-rezk-is-segal
 ```

@@ -1335,6 +1335,25 @@ equivalence. This follows from the fact that the total types (summed over
       v
 ```
 
+We compute covariant transport of a substitution.
+
+```rzk
+#def compute-covariant-transport-of-substitution
+  ( A B : U)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( g : B → A)
+  ( x y : B)
+  ( f : hom B x y)
+  ( u : C (g x))
+  : covariant-transport B x y f (\ b → C (g b))
+    ( is-covariant-substitution-is-covariant A B C is-covariant-C g) u
+    =
+    covariant-transport A (g x) (g y) (ap-hom B A g x y f) C
+    ( is-covariant-C) u
+  := refl
+```
+
 ## Covariant functoriality
 
 The covariant transport operation defines a covariantly functorial action of

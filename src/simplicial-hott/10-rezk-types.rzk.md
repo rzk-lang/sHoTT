@@ -754,6 +754,24 @@ The inverse to `#!rzk iso-eq` for a Rezk type.
     section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
     ( iso-eq A (first is-rezk-A) x y)
     ( ( second is-rezk-A) x y)
+
+#def iso-eq-iso-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x y : A)
+  ( (e, is-iso-e) : Iso A (first is-rezk-A) x y)
+  : first (iso-eq A (first is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y (e, is-iso-e))) = e
+  :=
+    first-path-Σ
+    ( hom A x y)
+    ( is-iso-arrow A (first is-rezk-A) x y)
+    ( iso-eq A (first is-rezk-A) x y
+      ( eq-iso-is-rezk A is-rezk-A x y (e, is-iso-e)))
+    ( (e, is-iso-e))
+    ( ( second
+      ( has-section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
+        ( iso-eq A (first is-rezk-A) x y)
+        ( ( second is-rezk-A) x y))) (e, is-iso-e))
 ```
 
 The following results show how `#!rzk iso-eq` mediates between the

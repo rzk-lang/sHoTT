@@ -1088,9 +1088,9 @@ of `#!rzk is-transposing-right-adj A B u`
 ```rzk
 #section all-unit-arrows-equal-is-rezk-is-segal
 
-#variables A B : U
-#variable is-segal-A : is-segal A
+#variables B A : U
 #variable is-rezk-B : is-rezk B
+#variable is-segal-A : is-segal A
 #variable u : B → A
 #variable a : A
 #variables fa fa' : B
@@ -1440,4 +1440,166 @@ of `#!rzk is-transposing-right-adj A B u`
   ( compute-transport-all-left-adjoint-components-equal-is-rezk-is-segal)
 
 #end all-unit-arrows-equal-is-rezk-is-segal
+
+#def is-transposing-unit
+  ( B A : U)
+  ( is-segal-A : is-segal A)
+  ( u : B → A)
+  ( f : A → B)
+  ( η : nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+  : U
+  :=
+  ( a : A) → (b : B)
+  → is-equiv (hom B (f a) b) (hom A a (u b))
+    ( \ k →
+      comp-is-segal A is-segal-A a (u (f a)) (u b)
+      ( \ t → η t a)
+      ( ap-hom B A u (f a) b k))
+
+#def is-transposing-unit-components
+  ( B A : U)
+  ( is-segal-A : is-segal A)
+  ( u : B → A)
+  ( f : A → B)
+  ( η : nat-trans-components A (\ _ → A) (identity A) (comp A B A u f))
+  : U
+  :=
+  ( a : A) → (b : B)
+  → is-equiv (hom B (f a) b) (hom A a (u b))
+    ( \ k →
+      comp-is-segal A is-segal-A a (u (f a)) (u b)
+      ( η a)
+      ( ap-hom B A u (f a) b k))
+
+#def equiv-transposing-unit-transposing-unit-components
+  ( B A : U)
+  ( is-segal-A : is-segal A)
+  ( u : B → A)
+  : Equiv
+    ( Σ (f : A → B)
+      , Σ ( η : nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+        , is-transposing-unit B A is-segal-A u f η)
+    ( Σ (f : A → B)
+      , Σ ( η : nat-trans-components A (\ _ → A) (identity A) (comp A B A u f))
+        , is-transposing-unit-components B A is-segal-A u f η)
+  :=
+  total-equiv-family-of-equiv
+  ( A → B)
+  ( \ f →
+    Σ ( η : nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+    , is-transposing-unit B A is-segal-A u f η)
+  ( \ f →
+    Σ ( η : nat-trans-components A (\ _ → A) (identity A) (comp A B A u f))
+        , is-transposing-unit-components B A is-segal-A u f η)
+  ( \ f →
+    equiv-total-pullback-is-equiv
+    ( nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+    ( nat-trans-components A (\ _ → A) (identity A) (comp A B A u f))
+    ( ev-components-nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+    ( is-equiv-ev-components-nat-trans A (\ _ → A)
+      ( identity A) (comp A B A u f))
+    ( \ η → is-transposing-unit-components B A is-segal-A u f η))
+
+#def equiv-choice-transposing-unit-components
+  ( B A : U)
+  ( is-segal-A : is-segal A)
+  ( u : B → A)
+  : Equiv
+    ( Σ (f : A → B)
+      , Σ ( η : nat-trans-components A (\ _ → A) (identity A) (comp A B A u f))
+        , is-transposing-unit-components B A is-segal-A u f η)
+    ( (a : A)
+      → Σ (fa : B)
+        , Σ ( ηa : hom A a (u fa))
+          , ( b : B)
+            → is-equiv (hom B fa b) (hom A a (u b))
+              ( \ k →
+                comp-is-segal A is-segal-A a (u fa) (u b)
+                ( ηa) (ap-hom B A u fa b k)))
+  :=
+  equiv-comp
+  ( Σ (f : A → B)
+    , Σ ( η : nat-trans-components A (\ _ → A) (identity A) (comp A B A u f))
+      , is-transposing-unit-components B A is-segal-A u f η)
+  ( Σ (f : A → B)
+    , (a : A) →
+      Σ ( ηa : hom A a (u (f a)))
+      , ( b : B)
+        → is-equiv (hom B (f a) b) (hom A a (u b))
+          ( \ k →
+            comp-is-segal A is-segal-A a (u (f a)) (u b)
+            ( ηa) (ap-hom B A u (f a) b k)))
+  ( ( a : A)
+      → Σ (fa : B)
+        , Σ ( ηa : hom A a (u fa))
+          , ( b : B)
+            → is-equiv (hom B fa b) (hom A a (u b))
+              ( \ k →
+                comp-is-segal A is-segal-A a (u fa) (u b)
+                ( ηa) (ap-hom B A u fa b k)))
+  ( total-equiv-family-of-equiv
+    ( A → B)
+    ( \ f →
+      Σ ( η : nat-trans-components A (\ _ → A) (identity A) (comp A B A u f))
+          , is-transposing-unit-components B A is-segal-A u f η)
+    ( \ f →
+      (a : A)
+        → Σ ( ηa : hom A a (u (f a)))
+          , ( b : B)
+            → is-equiv (hom B (f a) b) (hom A a (u b))
+              ( \ k →
+                comp-is-segal A is-segal-A a (u (f a)) (u b)
+                ( ηa)
+                ( ap-hom B A u (f a) b k)))
+    ( \ f →
+      inv-equiv-choice A ( \ a → hom A a (u (f a)))
+      ( \ a ηa →
+        ( b : B)
+          → is-equiv (hom B (f a) b) (hom A a (u b))
+            ( \ k →
+              comp-is-segal A is-segal-A a (u (f a)) (u b)
+              ( ηa) (ap-hom B A u (f a) b k)))))
+  ( inv-equiv-choice A ( \ _ → B)
+    ( \ a fa →
+      Σ ( ηa : hom A a (u fa))
+          , ( b : B)
+            → is-equiv (hom B fa b) (hom A a (u b))
+              ( \ k →
+                comp-is-segal A is-segal-A a (u fa) (u b)
+                ( ηa) (ap-hom B A u fa b k))))
+
+#def equiv-choice-transposing-unit
+  ( B A : U)
+  ( is-segal-A : is-segal A)
+  ( u : B → A)
+  : Equiv
+    ( Σ (f : A → B)
+      , Σ ( η : nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+        , is-transposing-unit B A is-segal-A u f η)
+    ( (a : A)
+      → Σ (fa : B)
+        , Σ ( ηa : hom A a (u fa))
+          , ( b : B)
+            → is-equiv (hom B fa b) (hom A a (u b))
+              ( \ k →
+                comp-is-segal A is-segal-A a (u fa) (u b)
+                ( ηa) (ap-hom B A u fa b k)))
+  :=
+  equiv-comp
+  ( Σ (f : A → B)
+    , Σ ( η : nat-trans A (\ _ → A) (identity A) (comp A B A u f))
+      , is-transposing-unit B A is-segal-A u f η)
+  ( Σ (f : A → B)
+    , Σ ( η : nat-trans-components A (\ _ → A) (identity A) (comp A B A u f))
+      , is-transposing-unit-components B A is-segal-A u f η)
+  ( (a : A)
+    → Σ (fa : B)
+      , Σ ( ηa : hom A a (u fa))
+        , ( b : B)
+          → is-equiv (hom B fa b) (hom A a (u b))
+            ( \ k →
+              comp-is-segal A is-segal-A a (u fa) (u b)
+              ( ηa) (ap-hom B A u fa b k)))
+  ( equiv-transposing-unit-transposing-unit-components B A is-segal-A u)
+  ( equiv-choice-transposing-unit-components B A is-segal-A u)
 ```

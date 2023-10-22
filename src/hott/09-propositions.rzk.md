@@ -23,10 +23,15 @@ A type is a proposition when its identity types are contractible.
   (A : U)
   : U
   := (a : A) → (b : A) → is-contr (a = b)
+```
 
+For example, the type `Unit` is a proposition. In fact we will show below that
+this is true for every contractible type.
+
+```rzk
 #def is-prop-Unit
   : is-prop Unit
-  := \ x y → (path-types-of-Unit-are-contractible x y)
+  := \ x y → (is-contr-path-types-Unit x y)
 ```
 
 ## Alternative characterizations: definitions
@@ -77,7 +82,7 @@ A type is a proposition when its identity types are contractible.
   :=
     \ x →
       ( is-emb-is-equiv A Unit (terminal-map A)
-        ( contr-implies-terminal-map-is-equiv A (c x)))
+        ( is-equiv-terminal-map-is-contr A (c x)))
 
 #def terminal-map-is-emb-is-contr-is-inhabited
   ( A : U)
@@ -95,7 +100,7 @@ A type is a proposition when its identity types are contractible.
     \ x y →
       ( is-contr-equiv-is-contr' (x = y) (unit = unit)
         ( (ap A Unit x y (terminal-map A)) , (f x y))
-        ( path-types-of-Unit-are-contractible unit unit))
+        ( is-contr-path-types-Unit unit unit))
 
 #def is-prop-is-contr-is-inhabited
   ( A : U)
@@ -115,7 +120,6 @@ A type is a proposition when its identity types are contractible.
 ```
 
 ## Properties of propositions
-
 
 If two propositions are logically equivalent, then they are equivalent:
 
@@ -183,8 +187,8 @@ All parallel paths in a proposition are equal.
     transport A B a x (first (is-prop-A a x)) b
 ```
 
-It is convenient to able to apply this to contractible types
-without explicitly invoking `is-prop-is-contr`.
+It is convenient to able to apply this to contractible types without explicitly
+invoking `is-prop-is-contr`.
 
 ```rzk
 #def ind-prop-is-contr
@@ -251,7 +255,6 @@ dependent functions `#!rzk (x : A) → B x` is a proposition.
       ( weakfunext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
 ```
 
-
 ### Sum types over a propositions
 
 We consider a type family `C : A → U` over a proposition `A`.
@@ -280,8 +283,8 @@ If each `C a` is a proposition, then so is the total type `total-type A C`.
           ( c'))))
 ```
 
-Conversely, if the total type `total-type A C` is a proposition,
-then so is every fiber `C a`.
+Conversely, if the total type `total-type A C` is a proposition, then so is
+every fiber `C a`.
 
 ```rzk
 #def is-fiberwise-prop-is-prop-total-type-is-prop-base uses (is-prop-A)

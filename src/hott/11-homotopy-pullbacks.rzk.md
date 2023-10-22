@@ -8,8 +8,9 @@ This is a literate `rzk` file:
 
 ## Homotopy cartesian squares
 
-We start by fixing the data of a map between two type families
-`A' → U` and `A → U`, which we think of as a commutative square
+We start by fixing the data of a map between two type families `A' → U` and
+`A → U`, which we think of as a commutative square
+
 ```
 Σ A' → Σ A
  ↓      ↓
@@ -35,8 +36,8 @@ We start by fixing the data of a map between two type families
   := \ (a', c') → (α a', γ a' c')
 ```
 
-We say that such a square is homotopy cartesian
-just if it induces an equivalence componentwise.
+We say that such a square is homotopy cartesian just if it induces an
+equivalence componentwise.
 
 ```rzk
 #def is-homotopy-cartesian uses (A)
@@ -80,18 +81,13 @@ cartesian square, then so is the upper one `Σαγ : Σ C' → Σ C`.
         ( Σ (a' : A'), C (α a'))
         ( total-type A C)
         ( total-map A' C' (\ a' → C (α a')) γ)
-        ( family-of-equiv-total-equiv
-          ( A' )
-          ( C' )
+        ( is-equiv-total-is-equiv-fiberwise A' C'
           ( \ a' → C (α a') )
           ( γ)
           ( \ a' → is-hc-α-γ a'))
         ( \ (a', c) → (α a', c) )
         ( second
-          ( total-equiv-pullback-is-equiv
-            ( A')
-            ( A )
-            ( α )
+          ( equiv-total-pullback-is-equiv A' A α
             ( is-equiv-α )
             ( C ))))
 ```
@@ -107,15 +103,15 @@ square is homotopy-cartesian.
   )
   : is-homotopy-cartesian
   :=
-    total-equiv-family-of-equiv
-        A' C' ( \ x → C (α x) ) γ    -- use x instead of a' to avoid shadowing
+    is-equiv-fiberwise-is-equiv-total
+        A' C' ( \ x → C (α x) ) γ
         ( is-equiv-right-factor
             ( total-type A' C')
             ( Σ (x : A'), C (α x))
             ( total-type A C)
             ( total-map A' C' (\ x → C (α x)) γ)
             ( \ (x, c) → (α x, c) )
-            ( second ( total-equiv-pullback-is-equiv A' A α is-equiv-α C))
+            ( second ( equiv-total-pullback-is-equiv A' A α is-equiv-α C))
             ( is-equiv-homotopy
                 ( total-type A' C')
                 ( total-type A C )
@@ -216,8 +212,8 @@ always do this (whether the square is homotopy-cartesian or not).
 
 ### Invariance under pullbacks
 
-We can pullback a homotopy cartesian square over `α : A' → A`
-along any map of maps `β → α` and obtain another homotopy cartesian square.
+We can pullback a homotopy cartesian square over `α : A' → A` along any map of
+maps `β → α` and obtain another homotopy cartesian square.
 
 ```rzk
 #def is-homotopy-cartesian-pullback
@@ -246,16 +242,15 @@ along any map of maps `β → α` and obtain another homotopy cartesian square.
 
 ## Pasting calculus for homotopy cartesian squares
 
-Currently our notion of squares is not symmetric,
-since the vertical maps are given by type families,
-i.e. they are _display maps_,
-while the horizontal maps are arbitrary.
-Therefore we distinquish between the vertical and the horizontal pasting calculus.
+Currently our notion of squares is not symmetric, since the vertical maps are
+given by type families, i.e. they are _display maps_, while the horizontal maps
+are arbitrary. Therefore we distinquish between the vertical and the horizontal
+pasting calculus.
 
 ### Vertical calculus
 
-The following vertical composition and cancellation laws follow easily from
-the corresponding statements about equivalences established above.
+The following vertical composition and cancellation laws follow easily from the
+corresponding statements about equivalences established above.
 
 ```rzk
 #section homotopy-cartesian-vertical-calculus
@@ -409,5 +404,216 @@ from composition and cancelling laws for equivalences.
     ( ihc (f' a''))
     ( ihc'' a'')
 
+```
+
+We can cancel the left homotopy cartesian square if its lower map
+`f' : A'' → A'` has a section.
+
+```rzk
+#def is-homotopy-cartesian-left-cancel-with-lower-section
+  ( has-section-f' : has-section A'' A' f')
+  ( ihc' : is-homotopy-cartesian A'' C'' A' C' f' F')
+  ( ihc'' : is-homotopy-cartesian A'' C'' A C
+              ( comp A'' A' A f f')
+              ( \ a'' →
+                comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+                  (F (f' a'')) (F' a'')))
+  : is-homotopy-cartesian A' C' A C f F
+  :=
+    ind-has-section A'' A' f' has-section-f'
+    ( \ a' → is-equiv (C' a') (C (f a')) (F a'))
+    ( \ a'' →
+      is-equiv-left-factor (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+      ( F' a'') (ihc' a'')
+      ( F (f' a'')) ( ihc'' a''))
+```
+
+In fact, it suffices to assume that the left square has horizontal sections.
+
+```rzk
+#def is-homotopy-cartesian-left-cancel-with-section
+  ( has-section-f' : has-section A'' A' f')
+  ( has-sections-F' : (a'' : A'') → has-section (C'' a'') (C' (f' a'')) (F' a''))
+  ( ihc'' : is-homotopy-cartesian A'' C'' A C
+              ( comp A'' A' A f f')
+              ( \ a'' →
+                comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+                  (F (f' a'')) (F' a'')))
+  : is-homotopy-cartesian A' C' A C f F
+  :=
+    ind-has-section A'' A' f' has-section-f'
+    ( \ a' → is-equiv (C' a') (C (f a')) (F a'))
+    ( \ a'' →
+      is-equiv-left-cancel (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+      ( F' a'') ( has-sections-F' a'')
+      ( F (f' a'')) ( ihc'' a''))
+
 #end homotopy-cartesian-horizontal-calculus
+```
+
+## Fiber products
+
+Given two type families `B C : A → U`, we can form their **fiberwise product**.
+
+```rzk
+#def fiberwise-product
+  ( A : U)
+  ( B C : A → U)
+  : A → U
+  :=
+    \ a → product (B a) (C a)
+
+#def first-fiberwise-product
+  ( A : U)
+  ( B C : A → U)
+  ( a : A)
+  : fiberwise-product A B C a → B a
+  := \ (b,_) → b
+
+#def second-fiberwise-product
+  ( A : U)
+  ( B C : A → U)
+  ( a : A)
+  : fiberwise-product A B C a → C a
+  := \ (_,c) → c
+```
+
+Given two maps `B → A` and `C → A`, we can form the **relative product** over
+`A`.
+
+```rzk
+#section relative-product
+
+#variable A : U
+#variable B : U
+#variable β : B → A
+#variable C : U
+#variable γ : C → A
+
+#def relative-product
+  : U
+  := Σ ( (b, c) : product B C) , (β b = γ c)
+
+#def first-relative-product uses (A B β C γ)
+  : relative-product → B
+  := \ ((b , _), _) → b
+
+#def second-relative-product uses (A B β C γ)
+  : relative-product → C
+  := \ ((_ , c), _) → c
+
+#def homotopy-relative-product uses (A B C)
+  ( (bc, p) : relative-product )
+  : β (first-relative-product (bc,p)) = γ (second-relative-product (bc,p))
+  := p
+```
+
+This relative product agrees with the fiber product obtained by summing over the
+product of all fibers.
+
+```rzk
+#def fiber-product
+  : U
+  := total-type A (fiberwise-product A (fib B A β) (fib C A γ))
+
+#def unpack-fiber-product
+  : fiber-product
+  = ( Σ (a : A), (product (fib B A β a) (fib C A γ a)))
+  := refl
+
+#def first-fiber-product uses (A B β C γ)
+  : fiber-product → B
+  := \ (_, ((b, _), _ )) → b
+
+#def second-fiber-product uses (A B β C γ)
+  : fiber-product → C
+  := \ (_, (_, (c, _))) → c
+
+#def homotopy-fiber-product uses (A B C)
+  : ( abpcq : fiber-product )
+  → β (first-fiber-product abpcq) = γ (second-fiber-product abpcq)
+  :=
+    \ ( a, ((b, p), (c,q))) →
+      zig-zag-concat A (β b) a (γ c) p q
+
+#def relative-fiber-product uses (B C)
+  ( (a, ((b, p), (c,q))) : fiber-product )
+  : relative-product
+  := ( ( b , c) , zig-zag-concat A (β b) a (γ c) p q)
+
+#def fiber-relative-product uses ( A B β C)
+  ( ((b,c), e) : relative-product)
+  : fiber-product
+  := ( γ c , ( (b , e) , (c , refl)))
+
+#def is-id-relative-fiber-relative-product
+  ( bce : relative-product)
+  : relative-fiber-product (fiber-relative-product bce) = bce
+  := refl
+
+#def is-id-fiber-relative-fiber-product
+  : ( abpcq : fiber-product)
+  → ( fiber-relative-product (relative-fiber-product abpcq)) = abpcq
+  :=
+  \ (a', (bq', cq')) →
+    ind-fib C A γ
+    ( \ a cq →
+      ( ( bq : fib B A β a)
+      → ( fiber-relative-product (relative-fiber-product (a, (bq, cq)))
+        = ( a, (bq, cq)))))
+    ( \ c bq → refl)
+    ( a')
+    ( cq')
+    ( bq')
+
+#def is-equiv-relative-fiber-product uses (A B β C γ)
+  : is-equiv fiber-product relative-product relative-fiber-product
+  :=
+    ( ( fiber-relative-product
+      , is-id-fiber-relative-fiber-product)
+    , ( fiber-relative-product
+      , is-id-relative-fiber-relative-product))
+
+#def equiv-relative-product-fiber-product uses (A B β C γ)
+  : Equiv fiber-product relative-product
+  :=
+    ( relative-fiber-product
+    , is-equiv-relative-fiber-product)
+
+#end relative-product
+```
+
+### Fiber product with singleton type
+
+The relative product of `f : B → A` with a map `Unit → A` corresponding to
+`a : A` is nothing but the fiber `fib B A f a`.
+
+```rzk
+#def compute-pullback-to-Unit
+  ( B A : U)
+  ( f : B → A)
+  ( a : A)
+  : Equiv (fib B A f a) (relative-product A B f Unit (\ unit → a))
+  :=
+    ( ( \ (b , p) → ((b , unit) , p))
+    , ( ( ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl))
+        , ( ( \ ((b , unit) , p) → (b, p))
+          , ( \ _ → refl)))))
+
+#def compute-map-pullback-to-Unit
+  ( B A : U)
+  ( f : B → A)
+  ( a : A)
+  : Equiv-of-maps
+    ( fib B A f a) (Unit) (\ _ → unit)
+    ( relative-product A B f Unit (\ unit → a))
+    ( Unit) ( second-relative-product A B f Unit (\ unit → a))
+  :=
+    ( ( ( ( \ (b , p) → ((b , unit) , p))
+        , ( identity Unit))
+      , \ _ → refl)
+    , ( second (compute-pullback-to-Unit B A f a)
+      , is-equiv-identity Unit))
+
 ```

@@ -62,7 +62,7 @@ pointwise equal.
   ( x : A)
   : ( ap-hom A B F x x (id-hom A x)) = (id-hom B (F x))
   :=
-    eq-ext-htpy
+    naiveextext-extext
       ( extext)
       ( 2)
       ( Δ¹)

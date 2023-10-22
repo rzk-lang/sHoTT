@@ -268,6 +268,27 @@ the fibers.
     ( fubini-Σ A B (\ a b → f a = b))
 ```
 
+The inverse of this equivalence is given (definitionally!) by the projection
+`\ (_ , (a , _)) → a`.
+
+```rzk
+#def compute-left-inverse-equiv-domain-sum-of-fibers
+  ( A B : U)
+  ( f : A → B)
+  ( (b , (a , p)) : (Σ (b : B) , fib A B f b))
+  : ( first (first ( second (equiv-domain-sum-of-fibers A B f))) (b , (a , p))
+    = a)
+  := refl
+
+#def compute-right-inverse-equiv-domain-sum-of-fibers
+  ( A B : U)
+  ( f : A → B)
+  ( (b , (a , p)) : (Σ (b : B) , fib A B f b))
+  : ( first (second ( second (equiv-domain-sum-of-fibers A B f))) (b , (a , p))
+    = a)
+  := refl
+```
+
 ## Equivalence between fibers in equivalent domains
 
 As an application of the main theorem, we show that precomposing with an

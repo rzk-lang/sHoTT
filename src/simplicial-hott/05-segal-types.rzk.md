@@ -1504,7 +1504,7 @@ As a special case of the above:
   :=
     ( \ _ → unit ,
       \ k →
-      eq-ext-htpy extext
+      naiveextext-extext extext
         ( 2 × 2) Δ² (\ _ → BOT)
         ( \ _ → Unit) (\ _ → recBOT)
         ( \ _ → unit) k

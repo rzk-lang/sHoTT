@@ -283,8 +283,8 @@ If each `C a` is a proposition, then so is the total type `total-type A C`.
           ( c'))))
 ```
 
-Conversely, if the total type `total-type A C` is a proposition, then so is
-every fiber `C a`.
+Conversely, if the total type `#!rzk total-type A C` is a proposition, then so
+is every fiber `#!rzk C a`.
 
 ```rzk
 #def is-fiberwise-prop-is-prop-total-type-is-prop-base uses (is-prop-A)
@@ -306,3 +306,87 @@ every fiber `C a`.
 
 #end families-over-propositions
 ```
+
+## Propositions and embeddings
+
+A map `#!rzk f : A → B` is an embedding if and only if its fibers are
+propositions.
+
+```rzk
+#def is-contr-image-based-paths-is-emb
+  ( A B : U)
+  ( f : A → B)
+  ( is-emb-f : is-emb A B f)
+  ( x : A)
+  : is-contr (Σ (y : A) , f x = f y)
+  :=
+  is-contr-total-are-equiv-from-paths A x
+  ( \ y → f x = f y)
+  ( \ y → ap A B x y f)
+  ( \ y → is-emb-f x y)
+
+#def is-contr-image-endpoint-based-paths-is-emb
+  ( A B : U)
+  ( f : A → B)
+  ( is-emb-f : is-emb A B f)
+  ( y : A)
+  : is-contr (Σ (x : A) , f x = f y)
+  :=
+    is-contr-equiv-is-contr'
+    ( Σ (x : A) , f x = f y)
+    ( Σ (x : A) , f y = f x)
+    ( total-equiv-family-of-equiv A (\ x → f x = f y) (\ x → f y = f x)
+      ( \ x → equiv-rev B (f x) (f y)))
+    ( is-contr-image-based-paths-is-emb A B f is-emb-f y)
+
+#def is-contr-fib-over-image-is-emb
+  ( A B : U)
+  ( f : A → B)
+  ( is-emb-f : is-emb A B f)
+  ( y : A)
+  : is-contr (fib A B f (f y))
+  := is-contr-image-endpoint-based-paths-is-emb A B f is-emb-f y
+
+#def is-contr-is-inhabited-fib-is-emb
+  ( A B : U)
+  ( f : A → B)
+  ( is-emb-f : is-emb A B f)
+  : ( b : B) → is-contr-is-inhabited (fib A B f b)
+  :=
+  ind-fib A B f
+  ( \ b p → is-contr (fib A B f b))
+  ( \ a → is-contr-fib-over-image-is-emb A B f is-emb-f a)
+
+#def is-prop-fib-is-emb
+  ( A B : U)
+  ( f : A → B)
+  ( is-emb-f : is-emb A B f)
+  ( b : B)
+  : is-prop (fib A B f b)
+  :=
+  is-prop-is-contr-is-inhabited (fib A B f b)
+  ( is-contr-is-inhabited-fib-is-emb A B f is-emb-f b)
+
+```
+
+## Subtypes
+
+A family of propositions `#!rzk P : A → U` over a type `#!rzk A` may be thought
+of as a predicate.
+
+```rzk
+#def is-predicate
+  ( A : U)
+  ( P : A → U)
+  : U
+  := (a : A) → is-prop (P a)
+```
+
+When `#!rzk P` is a predicate on `#!rzk A` then `#!rzk total-type A P` is
+referred to a subtype of `#!rzk A`.
+
+#def is-emb-subtype-projection ( A : U) ( P : A → U) ( is-predicate-P :
+is-predicate A P) : is-emb (total-type A P) A (projection-total-type A P) := \ a
+→ equiv-with-contractible-domain-implies-contractible-codomain ( P a) ( fib
+(total-type A P) A (projection-total-type A P) a) (
+equiv-homotopy-fiber-strict-fiber A P a) ( is-predicate-P a)

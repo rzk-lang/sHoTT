@@ -732,6 +732,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#applications" class="md-nav__link">
+    Applications
+  </a>
+  
+    <nav class="md-nav" aria-label="Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maps-induced-on-fibers" class="md-nav__link">
+    Maps induced on fibers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1122,6 +1142,26 @@
           <li class="md-nav__item">
   <a href="#fiber-product-with-singleton-type" class="md-nav__link">
     Fiber product with singleton type
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applications" class="md-nav__link">
+    Applications
+  </a>
+  
+    <nav class="md-nav" aria-label="Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maps-induced-on-fibers" class="md-nav__link">
+    Maps induced on fibers
   </a>
   
 </li>
@@ -1713,6 +1753,110 @@ product of all fibers.</p>
 </span><span id="__span-15-24"><a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="err">      , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">)</span>
 </span><span id="__span-15-25"><a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="err">    , ( </span><span class="s">second</span><span class="err"> (compute-pullback-to-</span><span class="kt">Unit</span><span class="err"> B A f a)</span>
 </span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="err">      , is-equiv-identity Unit))</span>
+</span></code></pre></div>
+<h2 id="applications">Applications<a class="headerlink" href="#applications" title="Permanent link">&para;</a></h2>
+<h3 id="maps-induced-on-fibers">Maps induced on fibers<a class="headerlink" href="#maps-induced-on-fibers" title="Permanent link">&para;</a></h3>
+<p>As an application of <code class="language-rzk highlight"><span class="err">is-homotopy-cartesian-is-horizontal-equiv</span></code>, we show
+that an equivalence of maps induces an equivalence of fibers at each base point.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nd">#section</span><span class="n"> is-equiv-map-of-fibers-is-equiv-map-of-maps</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kr">#variables</span><span class="p"> </span>A&#39; A<span class="err"> : U</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kr">#variable</span><span class="p"> </span>α<span class="err"> : A&#39; → A</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="kr">#variables</span><span class="p"> </span>B&#39; B<span class="err"> : U</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="kr">#variable</span><span class="p"> </span>β<span class="err"> : B&#39; → B</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="kr">#variable</span><span class="p"> </span>map-of-maps-α-β<span class="err"> : map-of-maps A&#39; A α B&#39; B β</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c">-- To avoid polluting the global namespace, we add a random suffix to</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="c">-- identifiers that are only supposed to be used in this section.</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:s&#39;-c4XT" id="define:s&#39;-c4XT" style="visibility: visible; position: relative; color: inherit">s&#39;-c4XT</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A α B β<span class="p">)</span><span class="err"> : A&#39; → B&#39; := </span><span class="s">first</span><span class="err"> (</span><span class="s">first</span><span class="err"> map-of-maps-α-β)</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:s-c4XT" id="define:s-c4XT" style="visibility: visible; position: relative; color: inherit">s-c4XT</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A&#39; α B&#39; β<span class="p">)</span><span class="err"> : A → B := </span><span class="s">second</span><span class="err"> (</span><span class="s">first</span><span class="err"> map-of-maps-α-β)</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:map-of-fibers-map-of-maps" id="define:map-of-fibers-map-of-maps" style="visibility: visible; position: relative; color: inherit">map-of-fibers-map-of-maps</a></span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="err">  ( (a&#39;, p) : fib A&#39; A α a)</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="err">  : fib B&#39; B β (s-c4XT a)</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="err">  :=</span>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="err">  ( s&#39;-c4XT a&#39;</span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="err">  , ( concat B (β (s&#39;-c4XT a&#39;)) (s-c4XT (α a&#39;)) (s-c4XT a))</span>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="err">    ( </span><span class="s">second</span><span class="err">  map-of-maps-α-β a&#39;)</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="err">    ( ap A B (α a&#39;) a s-c4XT p))</span>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:map-of-sums-of-fibers-map-of-maps" id="define:map-of-sums-of-fibers-map-of-maps" style="visibility: visible; position: relative; color: inherit">map-of-sums-of-fibers-map-of-maps</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>map-of-maps-α-β<span class="p">)</span>
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="err">  ( (a, u) : </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A), fib A&#39; A α a)</span>
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="err">  : </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B), fib B&#39; B β b</span>
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="err">  := (s-c4XT a, map-of-fibers-map-of-maps a u)</span>
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>
+</span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:sums-of-fibers-to-domains-map-of-maps" id="define:sums-of-fibers-to-domains-map-of-maps" style="visibility: visible; position: relative; color: inherit">sums-of-fibers-to-domains-map-of-maps</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>map-of-maps-α-β<span class="p">)</span>
+</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="err">  : map-of-maps</span>
+</span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a><span class="err">    </span><span class="p">( </span>Σ (a <span class="p">:</span><span class="err"> A), fib A&#39; A α a)</span>
+</span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="err">    </span><span class="p">( </span>Σ (b <span class="p">:</span><span class="err"> B), fib B&#39; B β b)</span>
+</span><span id="__span-16-32"><a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="err">    ( map-of-sums-of-fibers-map-of-maps)</span>
+</span><span id="__span-16-33"><a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a><span class="err">    ( A&#39;)</span>
+</span><span id="__span-16-34"><a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a><span class="err">    ( B&#39;)</span>
+</span><span id="__span-16-35"><a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a><span class="err">    ( s&#39;-c4XT)</span>
+</span><span id="__span-16-36"><a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a><span class="err">  :=</span>
+</span><span id="__span-16-37"><a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a><span class="err">  ((( \ (_, (a&#39;, _)) → a&#39;), ( \ (_, (b&#39;, _)) → b&#39;)), \ (a, u) → </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-16-38"><a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a>
+</span><span id="__span-16-39"><a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a><span class="kr">#variable</span><span class="p"> </span>is-equiv-s&#39;<span class="err"> : is-equiv A&#39; B&#39; s&#39;-c4XT</span>
+</span><span id="__span-16-40"><a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a>
+</span><span id="__span-16-41"><a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-map-of-sums-of-fibers-is-equiv-map-of-domains" id="define:is-equiv-map-of-sums-of-fibers-is-equiv-map-of-domains" style="visibility: visible; position: relative; color: inherit">is-equiv-map-of-sums-of-fibers-is-equiv-map-of-domains</a></span>
+</span><span id="__span-16-42"><a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>map-of-maps-α-β is-equiv-s&#39;<span class="p">)</span>
+</span><span id="__span-16-43"><a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="err">  : is-equiv</span>
+</span><span id="__span-16-44"><a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a><span class="err">    </span><span class="p">( </span>Σ (a <span class="p">:</span><span class="err"> A), fib A&#39; A α a)</span>
+</span><span id="__span-16-45"><a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a><span class="err">    </span><span class="p">( </span>Σ (b <span class="p">:</span><span class="err"> B), fib B&#39; B β b)</span>
+</span><span id="__span-16-46"><a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a><span class="err">    ( map-of-sums-of-fibers-map-of-maps)</span>
+</span><span id="__span-16-47"><a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a><span class="err">  :=</span>
+</span><span id="__span-16-48"><a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a><span class="err">  is-equiv-equiv-is-equiv</span>
+</span><span id="__span-16-49"><a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a><span class="err">  </span><span class="p">( </span>Σ (a <span class="p">:</span><span class="err"> A), fib A&#39; A α a)</span>
+</span><span id="__span-16-50"><a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a><span class="err">  </span><span class="p">( </span>Σ (b <span class="p">:</span><span class="err"> B), fib B&#39; B β b)</span>
+</span><span id="__span-16-51"><a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a><span class="err">  ( map-of-sums-of-fibers-map-of-maps)</span>
+</span><span id="__span-16-52"><a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a><span class="err">  ( A&#39;)</span>
+</span><span id="__span-16-53"><a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a><span class="err">  ( B&#39;)</span>
+</span><span id="__span-16-54"><a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a><span class="err">  ( s&#39;-c4XT)</span>
+</span><span id="__span-16-55"><a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a><span class="err">  ( sums-of-fibers-to-domains-map-of-maps)</span>
+</span><span id="__span-16-56"><a id="__codelineno-16-56" name="__codelineno-16-56" href="#__codelineno-16-56"></a><span class="err">  </span><span class="p">( </span>second
+</span><span id="__span-16-57"><a id="__codelineno-16-57" name="__codelineno-16-57" href="#__codelineno-16-57"></a>    ( ( inv-equiv A&#39; (Σ (a <span class="p">:</span><span class="err"> A), fib A&#39; A α a))</span>
+</span><span id="__span-16-58"><a id="__codelineno-16-58" name="__codelineno-16-58" href="#__codelineno-16-58"></a><span class="err">      ( equiv-domain-sum-of-fibers A&#39; A α)))</span>
+</span><span id="__span-16-59"><a id="__codelineno-16-59" name="__codelineno-16-59" href="#__codelineno-16-59"></a><span class="err">  </span><span class="p">( </span>second
+</span><span id="__span-16-60"><a id="__codelineno-16-60" name="__codelineno-16-60" href="#__codelineno-16-60"></a>    ( ( inv-equiv B&#39; (Σ (b <span class="p">:</span><span class="err"> B), fib B&#39; B β b))</span>
+</span><span id="__span-16-61"><a id="__codelineno-16-61" name="__codelineno-16-61" href="#__codelineno-16-61"></a><span class="err">      ( equiv-domain-sum-of-fibers B&#39; B β)))</span>
+</span><span id="__span-16-62"><a id="__codelineno-16-62" name="__codelineno-16-62" href="#__codelineno-16-62"></a><span class="err">  ( is-equiv-s&#39;)</span>
+</span><span id="__span-16-63"><a id="__codelineno-16-63" name="__codelineno-16-63" href="#__codelineno-16-63"></a>
+</span><span id="__span-16-64"><a id="__codelineno-16-64" name="__codelineno-16-64" href="#__codelineno-16-64"></a><span class="kr">#variable</span><span class="p"> </span>is-equiv-s<span class="err"> : is-equiv A B s-c4XT</span>
+</span><span id="__span-16-65"><a id="__codelineno-16-65" name="__codelineno-16-65" href="#__codelineno-16-65"></a>
+</span><span id="__span-16-66"><a id="__codelineno-16-66" name="__codelineno-16-66" href="#__codelineno-16-66"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-map-of-fibers-is-equiv-map-of-maps" id="define:is-equiv-map-of-fibers-is-equiv-map-of-maps" style="visibility: visible; position: relative; color: inherit">is-equiv-map-of-fibers-is-equiv-map-of-maps</a></span>
+</span><span id="__span-16-67"><a id="__codelineno-16-67" name="__codelineno-16-67" href="#__codelineno-16-67"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>map-of-maps-α-β  is-equiv-s is-equiv-s&#39;<span class="p">)</span>
+</span><span id="__span-16-68"><a id="__codelineno-16-68" name="__codelineno-16-68" href="#__codelineno-16-68"></a><span class="err">  : </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-16-69"><a id="__codelineno-16-69" name="__codelineno-16-69" href="#__codelineno-16-69"></a><span class="err">  → is-equiv</span>
+</span><span id="__span-16-70"><a id="__codelineno-16-70" name="__codelineno-16-70" href="#__codelineno-16-70"></a><span class="err">    ( fib A&#39; A α a)</span>
+</span><span id="__span-16-71"><a id="__codelineno-16-71" name="__codelineno-16-71" href="#__codelineno-16-71"></a><span class="err">    ( fib B&#39; B β (s-c4XT a))</span>
+</span><span id="__span-16-72"><a id="__codelineno-16-72" name="__codelineno-16-72" href="#__codelineno-16-72"></a><span class="err">    ( map-of-fibers-map-of-maps a)</span>
+</span><span id="__span-16-73"><a id="__codelineno-16-73" name="__codelineno-16-73" href="#__codelineno-16-73"></a><span class="err">  :=</span>
+</span><span id="__span-16-74"><a id="__codelineno-16-74" name="__codelineno-16-74" href="#__codelineno-16-74"></a><span class="err">  is-homotopy-cartesian-is-horizontal-equiv</span>
+</span><span id="__span-16-75"><a id="__codelineno-16-75" name="__codelineno-16-75" href="#__codelineno-16-75"></a><span class="err">  ( A)</span>
+</span><span id="__span-16-76"><a id="__codelineno-16-76" name="__codelineno-16-76" href="#__codelineno-16-76"></a><span class="err">  ( fib A&#39; A α)</span>
+</span><span id="__span-16-77"><a id="__codelineno-16-77" name="__codelineno-16-77" href="#__codelineno-16-77"></a><span class="err">  ( B)</span>
+</span><span id="__span-16-78"><a id="__codelineno-16-78" name="__codelineno-16-78" href="#__codelineno-16-78"></a><span class="err">  ( fib B&#39; B β)</span>
+</span><span id="__span-16-79"><a id="__codelineno-16-79" name="__codelineno-16-79" href="#__codelineno-16-79"></a><span class="err">  ( s-c4XT)</span>
+</span><span id="__span-16-80"><a id="__codelineno-16-80" name="__codelineno-16-80" href="#__codelineno-16-80"></a><span class="err">  ( map-of-fibers-map-of-maps)</span>
+</span><span id="__span-16-81"><a id="__codelineno-16-81" name="__codelineno-16-81" href="#__codelineno-16-81"></a><span class="err">  ( is-equiv-s)</span>
+</span><span id="__span-16-82"><a id="__codelineno-16-82" name="__codelineno-16-82" href="#__codelineno-16-82"></a><span class="err">  ( is-equiv-map-of-sums-of-fibers-is-equiv-map-of-domains)</span>
+</span><span id="__span-16-83"><a id="__codelineno-16-83" name="__codelineno-16-83" href="#__codelineno-16-83"></a>
+</span><span id="__span-16-84"><a id="__codelineno-16-84" name="__codelineno-16-84" href="#__codelineno-16-84"></a><span class="nd">#end</span><span class="n"> is-equiv-map-of-fibers-is-equiv-map-of-maps</span>
+</span><span id="__span-16-85"><a id="__codelineno-16-85" name="__codelineno-16-85" href="#__codelineno-16-85"></a>
+</span><span id="__span-16-86"><a id="__codelineno-16-86" name="__codelineno-16-86" href="#__codelineno-16-86"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:Equiv-of-fibers-Equiv-of-maps" id="define:Equiv-of-fibers-Equiv-of-maps" style="visibility: visible; position: relative; color: inherit">Equiv-of-fibers-Equiv-of-maps</a></span>
+</span><span id="__span-16-87"><a id="__codelineno-16-87" name="__codelineno-16-87" href="#__codelineno-16-87"></a><span class="err">  </span><span class="p">( </span>A&#39; A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-16-88"><a id="__codelineno-16-88" name="__codelineno-16-88" href="#__codelineno-16-88"></a><span class="err">  </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
+</span><span id="__span-16-89"><a id="__codelineno-16-89" name="__codelineno-16-89" href="#__codelineno-16-89"></a><span class="err">  </span><span class="p">( </span>B&#39; B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-16-90"><a id="__codelineno-16-90" name="__codelineno-16-90" href="#__codelineno-16-90"></a><span class="err">  </span><span class="p">( </span>β <span class="p">:</span><span class="err"> B&#39; → B)</span>
+</span><span id="__span-16-91"><a id="__codelineno-16-91" name="__codelineno-16-91" href="#__codelineno-16-91"></a><span class="err">  ( (((s&#39;, s), η), (is-equiv-s, is-equiv-s&#39;)) : Equiv-of-maps A&#39; A α B&#39; B β)</span>
+</span><span id="__span-16-92"><a id="__codelineno-16-92" name="__codelineno-16-92" href="#__codelineno-16-92"></a><span class="err">  </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-16-93"><a id="__codelineno-16-93" name="__codelineno-16-93" href="#__codelineno-16-93"></a><span class="err">  : Equiv (fib A&#39; A α a) (fib B&#39; B β (s a))</span>
+</span><span id="__span-16-94"><a id="__codelineno-16-94" name="__codelineno-16-94" href="#__codelineno-16-94"></a><span class="err">  :=</span>
+</span><span id="__span-16-95"><a id="__codelineno-16-95" name="__codelineno-16-95" href="#__codelineno-16-95"></a><span class="err">  ( map-of-fibers-map-of-maps A&#39; A α B&#39; B β ((s&#39;, s), η) a</span>
+</span><span id="__span-16-96"><a id="__codelineno-16-96" name="__codelineno-16-96" href="#__codelineno-16-96"></a><span class="err">  , ( is-equiv-map-of-fibers-is-equiv-map-of-maps A&#39; A α B&#39; B β ((s&#39;, s), η))</span>
+</span><span id="__span-16-97"><a id="__codelineno-16-97" name="__codelineno-16-97" href="#__codelineno-16-97"></a><span class="err">    ( is-equiv-s)</span>
+</span><span id="__span-16-98"><a id="__codelineno-16-98" name="__codelineno-16-98" href="#__codelineno-16-98"></a><span class="err">    ( is-equiv-s&#39;)</span>
+</span><span id="__span-16-99"><a id="__codelineno-16-99" name="__codelineno-16-99" href="#__codelineno-16-99"></a><span class="err">    ( a))</span>
 </span></code></pre></div>
 
 

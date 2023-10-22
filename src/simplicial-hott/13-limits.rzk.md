@@ -82,15 +82,17 @@ definitions coincide. Define cone as a family.
   ( b x : B )
   ( k : hom B b x)
   : ( family-cone A B f x) →  ( family-cone A B f b)
-  := \ α → vertical-comp-nat-trans
-              ( A)
-              ( \ a → B)
-              ( \ a → is-segal-B)
-              ( constant A B b)
-              ( constant A B x)
-              ( f)
-              ( constant-nat-trans A B b x k)
-              ( α)
+  :=
+  \ α
+  → vertical-comp-nat-trans
+    ( A)
+    ( \ _ → B)
+    ( \ _ → is-segal-B)
+    ( constant A B b)
+    ( constant A B x)
+    ( f)
+    ( constant-nat-trans A B b x k)
+    ( α)
 ```
 
 Another definition of limit.
@@ -102,9 +104,9 @@ Another definition of limit.
   ( f : A → B)
   : U
   := Σ (b : B),
-     Σ ( c : family-cone A B f b)
-     , ( x : B) → ( k : hom B b x)
-     → is-equiv
+  Σ ( c : family-cone A B f b)
+    , ( x : B) → ( k : hom B b x)
+      → is-equiv
         ( family-cone A B f x)
         ( family-cone A B f b)
         ( cone-precomposition A B is-segal-B f b x k)
@@ -126,15 +128,17 @@ definitions coincide. Define cocone as a family.
   ( x b : B)
   ( k : hom B x b)
   : ( family-cocone A B f x) → ( family-cocone A B f b)
-  := \ α → vertical-comp-nat-trans
-              ( A)
-              ( \ a → B)
-              ( \ a → is-segal-B)
-              ( f)
-              ( constant A B x)
-              ( constant A B b)
-              ( α)
-              ( constant-nat-trans A B x b k )
+  :=
+  \ α
+  → vertical-comp-nat-trans
+    ( A)
+    ( \ _ → B)
+    ( \ _ → is-segal-B)
+    ( f)
+    ( constant A B x)
+    ( constant A B b)
+    ( α)
+    ( constant-nat-trans A B x b k )
 ```
 
 Another definition of colimit.
@@ -146,12 +150,12 @@ Another definition of colimit.
   ( f : A → B)
   : U
   := Σ (b : B),
-     Σ ( c : family-cocone A B f b)
-     , ( x : B) → ( k : hom B x b)
-     → is-equiv
-        ( family-cocone A B f x)
-        ( family-cocone A B f b)
-        ( cocone-postcomposition A B is-segal-B f x b k)
+  Σ ( c : family-cocone A B f b)
+    , ( x : B) → ( k : hom B x b)
+    → is-equiv
+      ( family-cocone A B f x)
+      ( family-cocone A B f b)
+      ( cocone-postcomposition A B is-segal-B f x b k)
 ```
 
 The following alternative definition does not require a Segalness condition.
@@ -245,18 +249,18 @@ The type of cocones of a function with codomain a Segal type is a Segal type.
   : is-covariant B ( \ b → family-cocone A B f b)
   :=
     is-covariant-substitution-is-covariant
-      ( A → B)
-      ( B)
-      ( hom ( A → B) f)
-      ( is-covariant-representable-is-segal
-          ( A → B)
-          ( is-segal-function-type
-            ( funext)
-            ( A)
-            ( \ _ → B)
-            ( \ _ → is-segal-B))
-          ( f))
-      ( \ b → constant A B b)
+    ( A → B)
+    ( B)
+    ( hom ( A → B) f)
+    ( is-covariant-representable-is-segal
+        ( A → B)
+        ( is-segal-function-type
+          ( funext)
+          ( A)
+          ( \ _ → B)
+          ( \ _ → is-segal-B))
+        ( f))
+    ( \ b → constant A B b)
 
 #def is-segal-cocone-is-segal uses (funext)
   ( A B : U)
@@ -265,15 +269,15 @@ The type of cocones of a function with codomain a Segal type is a Segal type.
   : is-segal ( cocone A B f)
   :=
     is-segal-total-type-covariant-family-is-segal-base
-      ( naiveextext)
+    ( naiveextext)
+    ( B)
+    ( family-cocone A B f)
+    ( is-covariant-family-cone-is-segal
+      ( A)
       ( B)
-      ( family-cocone A B f)
-      ( is-covariant-family-cone-is-segal
-          ( A)
-          ( B)
-          ( is-segal-B)
-          ( f))
       ( is-segal-B)
+      ( f))
+    ( is-segal-B)
 ```
 
 Colimits are unique up to isomorphism.
@@ -285,16 +289,16 @@ Colimits are unique up to isomorphism.
   ( f : A → B)
   ( x y : colimit A B f)
   : Iso
-      ( cocone A B f)
-      ( is-segal-cocone-is-segal A B is-segal-B f)
-      ( first x)
-      ( first y)
+    ( cocone A B f)
+    ( is-segal-cocone-is-segal A B is-segal-B f)
+    ( first x)
+    ( first y)
   :=
     iso-initial
-      ( cocone A B f)
-      ( is-segal-cocone-is-segal A B is-segal-B f)
-      ( first x)
-      ( first y)
-      ( second x)
-      ( second y)
+    ( cocone A B f)
+    ( is-segal-cocone-is-segal A B is-segal-B f)
+    ( first x)
+    ( first y)
+    ( second x)
+    ( second y)
 ```

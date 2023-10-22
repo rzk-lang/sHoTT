@@ -662,7 +662,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
       ( Σ ( α' : nat-trans-components X A f g) ,
         ( x : X) → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) (α' x))
       ( (x : X) → Iso (A x) (is-segal-A x) (f x) (g x))
-      ( total-equiv-family-equiv
+      ( total-equiv-family-of-equiv
         ( nat-trans X A f g)
         ( \ α →
           ( is-iso-arrow
@@ -674,7 +674,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
           ( is-iso-arrow (A x) (is-segal-A x) (f x) (g x)
             ( ev-components-nat-trans X A f g α x)))
         ( \ α → equiv-is-iso-pointwise-is-iso X A is-segal-A f g α))
-      ( total-equiv-pullback-is-equiv
+      ( equiv-total-pullback-is-equiv
         ( nat-trans X A f g)
         ( nat-trans-components X A f g)
         ( ev-components-nat-trans X A f g)

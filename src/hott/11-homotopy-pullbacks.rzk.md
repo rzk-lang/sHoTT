@@ -621,8 +621,8 @@ The relative product of `f : B → A` with a map `Unit → A` corresponding to
 ## Functoriality of fibers
 
 We have an assignment that to each `α : A' → A` and each `a : A` assigns the
-fiber `fib A' A α a`.
-We now investigate the functoriality properties of this assignment.
+fiber `fib A' A α a`. We now investigate the functoriality properties of this
+assignment.
 
 Every map of maps induces a map of fibers.
 

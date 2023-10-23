@@ -618,12 +618,13 @@ The relative product of `f : B → A` with a map `Unit → A` corresponding to
 
 ```
 
-## Applications
+## Functoriality of fibers
 
-### Maps induced on fibers
+We have an assignment that to each `α : A' → A` and each `a : A` assigns the
+fiber `fib A' A α a`.
+We now investigate the functoriality properties of this assignment.
 
-As an application of `#!rzk is-homotopy-cartesian-is-horizontal-equiv`, we show
-that an equivalence of maps induces an equivalence of fibers at each base point.
+Every map of maps induces a map of fibers.
 
 ```rzk
 #section is-equiv-map-of-fibers-is-equiv-map-of-maps
@@ -647,7 +648,14 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
   , ( concat B (β (s'-c4XT a')) (s-c4XT (α a')) (s-c4XT a))
     ( second  map-of-maps-α-β a')
     ( ap A B (α a') a s-c4XT p))
+```
 
+### Equivalences induce equivalences on fibers
+
+As an application of `#!rzk is-homotopy-cartesian-is-horizontal-equiv`, we show
+that an equivalence of maps induces an equivalence of fibers at each base point.
+
+```rzk
 #def map-of-sums-of-fibers-map-of-maps uses (map-of-maps-α-β)
   ( (a, u) : Σ (a : A), fib A' A α a)
   : Σ (b : B), fib B' B β b
@@ -727,8 +735,9 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
     ( a))
 ```
 
-We also show that the map induced on fibers is respects composition up to
-homotopy.
+### Composition induces composition on fibers
+
+The map induced on fibers respects composition up to homotopy.
 
 ```rzk
 #def comp-map-of-maps
@@ -781,10 +790,9 @@ homotopy.
     ( \ a' → refl)
 ```
 
-### Retracts of equivalences are equivalences
+### Retracts induce retracts on fibers
 
-We show that if a map `α` is a retract of an equivalence `β`,
-then `α` is itself an equivalence.
+Every retract of types induces a retract on fibers.
 
 ```rzk
 #def is-section-retraction-pair-Map
@@ -814,20 +822,16 @@ then `α` is itself an equivalence.
     Σ (S : map-Map α β)
     , has-external-retract-Map α β S
 
-#def is-equiv-is-retract-of-is-equiv
+#def is-retract-of-fibers-is-external-retract-of-Map
   ( A' A : U)
   ( α : A' → A)
   ( B' B : U)
   ( β : B' → B)
   ( ( ((s',s),ηs) , ( ( ((C',C),γ) , ((r',r),ηr)) , ( is-s-r' , is-s-r)))
     : is-external-retract-of-Map ((A',A),α) ((B',B),β))
-  ( is-equiv-β : is-equiv B' B β)
-  : is-equiv A' A α
+  ( a : A)
+  : is-retract-of (fib A' A α a) (fib B' B β (s a))
   :=
-  is-equiv-is-contr-map A' A α
-  ( \ a →
-    is-contr-is-retract-of-is-contr
-    ( fib A' A α a) (fib B' B β (s a))
     ( ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) a)
     , ( has-retraction-internalize
         ( fib A' A α a) (fib B' B β (s a))
@@ -850,5 +854,29 @@ then `α` is itself an equivalence.
               ( is-s-r')
               ( is-s-r)
               ( a))))))
+```
+
+### Equivalences are closed under retracts
+
+As an immediate corollary we obtain that equivalences are closed under retracts.
+
+```rzk
+#def is-equiv-is-retract-of-is-equiv
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( (((s',s),ηs) , has-ext-retr-S)
+    : is-external-retract-of-Map ((A',A),α) ((B',B),β))
+  ( is-equiv-β : is-equiv B' B β)
+  : is-equiv A' A α
+  :=
+  is-equiv-is-contr-map A' A α
+  ( \ a →
+    is-contr-is-retract-of-is-contr
+    ( fib A' A α a) (fib B' B β (s a))
+    ( is-retract-of-fibers-is-external-retract-of-Map A' A α B' B β
+      ( ((s',s),ηs) , has-ext-retr-S)
+      ( a))
     ( is-contr-map-is-equiv B' B β is-equiv-β (s a)))
 ```

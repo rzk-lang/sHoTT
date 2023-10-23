@@ -227,6 +227,10 @@ later.
     ...
   ```
 
+- If you find that the separation between the type signature of a definition and
+  its construction is not visually clear, we permit the insertion of an
+  additional line break after the walrus separator (`:=`).
+
 ## Naming conventions
 
 Adhering to a good naming convention is essential for keeping the library

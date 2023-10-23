@@ -834,3 +834,112 @@ We summarize the result as the following equivalence:
 
 #end fibers-comm-square
 ```
+
+## Applications
+
+### Maps induced on fibers
+
+As an application of `#!rzk is-homotopy-cartesian-is-horizontal-equiv`, we show
+that an equivalence of maps induces an equivalence of fibers at each base point.
+
+```rzk
+#section is-equiv-map-of-fibers-is-equiv-map-of-maps
+#variables A' A : U
+#variable α : A' → A
+#variables B' B : U
+#variable β : B' → B
+#variable map-of-maps-α-β : map-of-maps A' A α B' B β
+
+-- To avoid polluting the global namespace, we add a random suffix to
+-- identifiers that are only supposed to be used in this section.
+#def s'-c4XT uses (A α B β) : A' → B' := first (first map-of-maps-α-β)
+#def s-c4XT uses (A' α B' β) : A → B := second (first map-of-maps-α-β)
+
+#def map-of-fibers-map-of-maps
+  ( a : A)
+  ( (a', p) : fib A' A α a)
+  : fib B' B β (s-c4XT a)
+  :=
+  ( s'-c4XT a'
+  , ( concat B (β (s'-c4XT a')) (s-c4XT (α a')) (s-c4XT a))
+    ( second  map-of-maps-α-β a')
+    ( ap A B (α a') a s-c4XT p))
+
+#def map-of-sums-of-fibers-map-of-maps uses (map-of-maps-α-β)
+  ( (a, u) : Σ (a : A), fib A' A α a)
+  : Σ (b : B), fib B' B β b
+  := (s-c4XT a, map-of-fibers-map-of-maps a u)
+
+#def sums-of-fibers-to-domains-map-of-maps uses (map-of-maps-α-β)
+  : map-of-maps
+    ( Σ (a : A), fib A' A α a)
+    ( Σ (b : B), fib B' B β b)
+    ( map-of-sums-of-fibers-map-of-maps)
+    ( A')
+    ( B')
+    ( s'-c4XT)
+  :=
+  ((( \ (_, (a', _)) → a'), ( \ (_, (b', _)) → b')), \ (a, u) → refl)
+
+#variable is-equiv-s' : is-equiv A' B' s'-c4XT
+
+#def is-equiv-map-of-sums-of-fibers-is-equiv-map-of-domains
+  uses (map-of-maps-α-β is-equiv-s')
+  : is-equiv
+    ( Σ (a : A), fib A' A α a)
+    ( Σ (b : B), fib B' B β b)
+    ( map-of-sums-of-fibers-map-of-maps)
+  :=
+  is-equiv-equiv-is-equiv
+  ( Σ (a : A), fib A' A α a)
+  ( Σ (b : B), fib B' B β b)
+  ( map-of-sums-of-fibers-map-of-maps)
+  ( A')
+  ( B')
+  ( s'-c4XT)
+  ( sums-of-fibers-to-domains-map-of-maps)
+  ( second
+    ( ( inv-equiv A' (Σ (a : A), fib A' A α a))
+      ( equiv-domain-sum-of-fibers A' A α)))
+  ( second
+    ( ( inv-equiv B' (Σ (b : B), fib B' B β b))
+      ( equiv-domain-sum-of-fibers B' B β)))
+  ( is-equiv-s')
+
+#variable is-equiv-s : is-equiv A B s-c4XT
+
+#def is-equiv-map-of-fibers-is-equiv-map-of-maps
+  uses (map-of-maps-α-β  is-equiv-s is-equiv-s')
+  : (a : A)
+  → is-equiv
+    ( fib A' A α a)
+    ( fib B' B β (s-c4XT a))
+    ( map-of-fibers-map-of-maps a)
+  :=
+  is-homotopy-cartesian-is-horizontal-equiv
+  ( A)
+  ( fib A' A α)
+  ( B)
+  ( fib B' B β)
+  ( s-c4XT)
+  ( map-of-fibers-map-of-maps)
+  ( is-equiv-s)
+  ( is-equiv-map-of-sums-of-fibers-is-equiv-map-of-domains)
+
+#end is-equiv-map-of-fibers-is-equiv-map-of-maps
+
+#def Equiv-of-fibers-Equiv-of-maps
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( (((s', s), η), (is-equiv-s, is-equiv-s')) : Equiv-of-maps A' A α B' B β)
+  (a : A)
+  : Equiv (fib A' A α a) (fib B' B β (s a))
+  :=
+  ( map-of-fibers-map-of-maps A' A α B' B β ((s', s), η) a
+  , ( is-equiv-map-of-fibers-is-equiv-map-of-maps A' A α B' B β ((s', s), η))
+    ( is-equiv-s)
+    ( is-equiv-s')
+    ( a))
+```

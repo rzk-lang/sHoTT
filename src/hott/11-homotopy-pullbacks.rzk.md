@@ -726,3 +726,129 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
     ( is-equiv-s')
     ( a))
 ```
+
+We also show that the map induced on fibers is respects composition up to
+homotopy.
+
+```rzk
+#def comp-map-of-maps
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( C' C : U)
+  ( γ : C' → C)
+  ( ((t',t),ηt) : map-of-maps B' B β C' C γ)
+  ( ((s',s),ηs) : map-of-maps A' A α B' B β)
+  : map-of-maps A' A α C' C γ
+  :=
+  ( ( comp A' B' C' t' s'
+    , comp A B C t s)
+  , ( \ a' →
+      concat C (γ (t' (s' a'))) (t (β (s' a'))) (t (s (α a')))
+      ( ηt (s' a'))
+      ( ap B C (β (s' a')) (s (α a')) t (ηs a'))))
+
+#def comp-map-of-fibers-comp-map-of-maps
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( C' C : U)
+  ( γ : C' → C)
+  ( ((t',t),ηt) : map-of-maps B' B β C' C γ)
+  ( ((s',s),ηs) : map-of-maps A' A α B' B β)
+  : ( a : A)
+  → homotopy (fib A' A α a) (fib C' C γ (t (s a)))
+    ( comp ( fib A' A α a) (fib B' B β (s a)) (fib C' C γ (t (s a)))
+      ( map-of-fibers-map-of-maps B' B β C' C γ ((t',t),ηt) ( s a))
+      ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) ( a)))
+    ( map-of-fibers-map-of-maps A' A α C' C γ
+      ( comp-map-of-maps A' A α B' B β C' C γ
+        ((t',t),ηt) ((s',s),ηs))
+      (a))
+  :=
+    ind-fib A' A α
+    ( \ a a'p →
+      ( ( map-of-fibers-map-of-maps B' B β C' C γ ((t',t),ηt) (s a))
+        ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) a
+          ( a'p))
+      =_{ fib C' C γ (t (s a))}
+        ( map-of-fibers-map-of-maps A' A α C' C γ
+          ( comp-map-of-maps A' A α B' B β C' C γ
+            ((t',t),ηt) ((s',s),ηs))
+          ( a) (a'p))))
+    ( \ a' → refl)
+```
+
+### Retracts of equivalences are equivalences
+
+We show that if a map `α` is a retract of an equivalence `β`,
+then `α` is itself an equivalence.
+
+```rzk
+#def is-section-retraction-pair-Map
+  ( ((A',A),α) : Map)
+  ( ((B',B),β) : Map)
+  ( ((C',C),γ) : Map)
+  ( ((s',s),_) : map-Map ((A',A),α) ((B',B),β))
+  ( ((t',t),_) : map-Map ((B',B),β) ((C',C),γ))
+  : U
+  :=
+    product
+    ( is-section-retraction-pair A' B' C' s' t')
+    ( is-section-retraction-pair A B C s t)
+
+#def has-external-retract-Map
+  ( α β : Map)
+  ( S : map-Map α β)
+  : U
+  :=
+    Σ ((γ , T) : ( Σ (γ : Map) , (map-Map β γ)))
+    , ( is-section-retraction-pair-Map α β γ S T)
+
+#def is-external-retract-of-Map
+  ( α β : Map)
+  : U
+  :=
+    Σ (S : map-Map α β)
+    , has-external-retract-Map α β S
+
+#def is-equiv-is-retract-of-is-equiv
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ( ((s',s),ηs) , ( ( ((C',C),γ) , ((r',r),ηr)) , ( is-s-r' , is-s-r)))
+    : is-external-retract-of-Map ((A',A),α) ((B',B),β))
+  ( is-equiv-β : is-equiv B' B β)
+  : is-equiv A' A α
+  :=
+  is-equiv-is-contr-map A' A α
+  ( \ a →
+    is-contr-is-retract-of-is-contr
+    ( fib A' A α a) (fib B' B β (s a))
+    ( ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) a)
+    , ( has-retraction-internalize
+        ( fib A' A α a) (fib B' B β (s a))
+        ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) a)
+        ( ( fib C' C γ (r (s a))
+          , map-of-fibers-map-of-maps B' B β C' C γ ((r',r),ηr) (s a))
+        , ( is-equiv-homotopy (fib A' A α a) (fib C' C γ (r (s a)))
+                ( comp ( fib A' A α a) (fib B' B β (s a)) (fib C' C γ (r (s a)))
+                  ( map-of-fibers-map-of-maps B' B β C' C γ ((r',r),ηr) ( s a))
+                  ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) ( a)))
+                ( map-of-fibers-map-of-maps A' A α C' C γ
+                  ( comp-map-of-maps A' A α B' B β C' C γ
+                    ( (r',r),ηr) ((s',s),ηs))
+                  (a))
+            ( comp-map-of-fibers-comp-map-of-maps A' A α B' B β C' C γ
+              ( (r',r),ηr) ((s',s),ηs)
+              ( a))
+            ( is-equiv-map-of-fibers-is-equiv-map-of-maps A' A α C' C γ
+              ( comp-map-of-maps A' A α B' B β C' C γ ((r',r),ηr) ((s',s),ηs))
+              ( is-s-r')
+              ( is-s-r)
+              ( a))))))
+    ( is-contr-map-is-equiv B' B β is-equiv-β (s a)))
+```

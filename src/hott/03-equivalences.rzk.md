@@ -941,6 +941,12 @@ dependent function types.
     Σ ( ( s',s) : product ( A' → B' ) ( A → B))
     , ( ( a' : A') → β ( s' a') = s ( α a'))
 
+#def map-Map
+  ( ((A',A),α) : Map)
+  ( ((B',B),β) : Map)
+  : U
+  := map-of-maps A' A α B' B β
+
 #def Equiv-of-maps
   ( A' A : U)
   ( α : A' → A)

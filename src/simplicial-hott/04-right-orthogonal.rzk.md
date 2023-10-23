@@ -762,7 +762,7 @@ Then we can deduce that right orthogonal maps are preserved under pullback:
 #end right-orthogonal-calculus
 ```
 
-### Right orthogonal maps are closed under equivalence
+### Stability under equivalence
 
 If two maps `α : A' → A` and `β : B' → B` are equivalent, then if one is right
 orthogonal to `ϕ ⊂ ψ`, then so is the other.

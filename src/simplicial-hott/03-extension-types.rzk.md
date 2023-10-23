@@ -1049,7 +1049,6 @@ We now assume extension extensionality and derive a few consequences.
 
 ```rzk
 #assume extext : ExtExt
-#assume naiveextext : NaiveExtExt
 ```
 
 ### Pointwise homotopy extension types

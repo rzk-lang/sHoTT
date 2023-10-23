@@ -114,10 +114,22 @@ after the opening parentheses marking a branch is there to visually emphasize
 the tree structure of the definition, and synergizes with our convention to have
 two-space indentation level increases.
 
-What is generally considered the "earliest sensible branching point" will depend
-on context, and we ask that contributors practice common sense when determining
-this. When in doubt, it is generally better to break lines sooner rather than
-later.
+What is generally considered the "earliest _sensible_ branching point" will
+depend on context, and we ask that contributors practice common sense when
+determining this. For instance, it may be sensible to group some arguments
+together on a line. Already in our example above we wrote
+
+```rzk
+  hom2 A
+  ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
+  ( \ t → k (t , 0₂))
+  ( \ t → k (1₂ , t))
+  ( h)
+```
+
+visually grouping together `hom2` and `A`, and again the next three arguments,
+emphasizing their connection to eachother. When in doubt, it is generally better
+to break lines sooner rather than later.
 
 ## Other code conventions
 

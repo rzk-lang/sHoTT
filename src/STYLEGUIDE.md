@@ -185,8 +185,6 @@ later.
 
   - Names can be longer than the line character limit
 
-- TODO Formatting convention for extension types
-
 ## Naming conventions
 
 Adhering to a good naming convention is essential for keeping the library
@@ -246,7 +244,7 @@ Now, let us consider some examples:
   `[output-type]-[input-types]`.
 - `is-equiv-identity` uses the pattern `[output-type]`.
 
-The descriptor pattern is by far the most versatile one. It's purpose is to give
+The descriptor pattern is by far the most versatile one. Its purpose is to give
 special meaningful descriptions that accurately represent some aspect, or
 precisely the concept in question. For instance, if a concept is known best by a
 special name, that name should probably be used.
@@ -264,24 +262,77 @@ special name, that name should probably be used.
   pattern `[descriptor]-[output-type]-[input-types]`
   (`(compute)-(hom)-(eq-extension-type-is-discrete)`).
 
+### Conclusions first!
+
+One of the most noteworthy aspects of our general naming scheme is that
+conclusions always end up at the start of the name. This has the benefit that
+the most important aspect of a definition is what is mentioned first in its
+name. Although it can take a little while to get used to this scheme as
+everything is written in the opposite order you may be used to, it offers the
+following central benefit: the name summarizes the entry's meaning efficiently,
+even if only part of it is read. This means that when a reader is scanning the
+application of a definition in a larger proof, they can get an overview by only
+scanning the first few words at each branching point/line.
+
+Hence, if you are at a loss for naming a definition, we offer you the following
+simplified naming scheme: start with the first important assumption in your
+definition statement, and to it, _prepend_ every subsequent important assumption
+that is made. Finally, prepend the concluding type.
+
+- For example, consider an entry with the following signature
+
+  ```rzk
+  #def ?????
+    ( A B : U)
+    ( is-prop-A : is-prop A)
+    ( is-prop-B : is-prop B)
+    ( (f , g) : iff A B)
+    : is-equiv A B f
+    := ...
+  ```
+
+  applying the scheme we get
+
+  1. `is-prop`, noting the assumption that `A` is a proposition. Remember, we do
+     not include variable names in the entry's name.
+  2. `is-prop-is-prop`, noting the assumption that `B` is a proposition.
+  3. `iff-is-prop-is-prop`, noting the assumption that we have a logical
+     equivalence between `A` and `B`.
+  4. `is-equiv-iff-is-prop-is-prop`, finally prepending the concluding type.
+
+  Hence our final definition will be
+
+  ```rzk
+  #def is-equiv-iff-is-prop-is-prop
+    ( A B : U)
+    ( is-prop-A : is-prop A)
+    ( is-prop-B : is-prop B)
+    ( (f , g) : iff A B)
+    : is-equiv A B f
+    := ...
+  ```
+
+  Observe how it is immediately clear what the elements that go into the entry
+  are, in which order they go, and what you get out if applying it!
+
 ### Table of common descriptors
 
 To give a sense of the kind of general descriptors we use, we list some common
 descriptors with examples in the table below.
 
-| Descriptor       | Purpose                                                                                                            | Example                                 |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
-| `coherence`      | Used for proofs of coherence                                                                                       | `coherence-is-half-adjoint-equiv`       |
-| `compute`        | Used for proofs of computation, which may be an identification or an element of any other identity system          | `compute-postwhisker-homotopy-is-segal` |
-| `Eq`             | Used for identity systems on types where `htpy` or `equiv` is not an appropriate descriptor of the identity system | `Eq-Σ`                                  |
-| `eq`             | Used as a descriptor for the identity type                                                                         | `eq-htpy`                               |
-| `equiv`          | Used for equivalences, and also for names of identity systems of universe-like types                               | `equiv-ap-is-equiv`                     |
-| `extensionality` | Used for computations of identity types                                                                            | `extensionality-Σ`                      |
-| `homotopy`       | Used for constructions of homotopies, and also for names of identity systems of function-like types                | `homotopy-section-retraction-is-equiv`  |
-| `is-property`    | Used when `is-prop` is unavailable                                                                                 |                                         |
-| `map`            | Used in two ways: as the functorial action of a type constructor, but also as the underlying map of a morphism     | `map-inverse-has-inverse`               |
-| `type`           | Used for the underlying type of an object                                                                          | `type-Segal`                            |
-| `statement`      | Used for definitions which are statements of things                                                                | `statement-homotopy-interchange-law`    |
+| Descriptor           | Purpose                                                                                                             | Example                                 |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| `coherence`          | Used for proofs of coherence.                                                                                       | `coherence-is-half-adjoint-equiv`       |
+| `compute`            | Used for proofs of computation, which may be an identification or an element of any other identity system.          | `compute-postwhisker-homotopy-is-segal` |
+| `Eq`                 | Used for identity systems on types where `htpy` or `equiv` is not an appropriate descriptor of the identity system. | `Eq-Σ`                                  |
+| `eq`                 | Used as a descriptor for the identity type.                                                                         | `eq-htpy`                               |
+| `equiv`              | Used for equivalences, and also for names of identity systems of universe-like types.                               | `equiv-ap-is-equiv`                     |
+| `extensionality`     | Used for computations of identity types.                                                                            | `extensionality-Σ`                      |
+| `homotopy` or `htpy` | Used for constructions of homotopies, and also for names of identity systems of function-like types.                | `homotopy-section-retraction-is-equiv`  |
+| `is-property`        | Used when `is-prop` is unavailable.                                                                                 | `is-property-is-contr`                  |
+| `map`                | Used in two ways: as the functorial action of a type constructor, but also as the underlying map of a morphism.     | `map-inverse-has-inverse`               |
+| `type`               | Used for the underlying type of an object.                                                                          | `type-Segal`                            |
+| `statement`          | Used for definitions which are statements of things.                                                                | `statement-homotopy-interchange-law`    |
 
 ### Exceptions and naming practices to avoid
 

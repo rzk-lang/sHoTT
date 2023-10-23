@@ -417,7 +417,7 @@ for the inclusion `Λ ⊂ Δ¹`.
   : U → U
   := is-local-type (2 × 2) Δ² (\ t → Λ t)
 
-#def is-local-horn-inclusion-unpacked
+#def unpack-is-local-horn-inclusion
   ( A : U)
   : is-local-horn-inclusion A = is-equiv (Δ² → A) (Λ → A) (horn-restriction A)
   := refl
@@ -568,6 +568,28 @@ We have now proven that both notions of Segal types are logically equivalent.
   ( A : U)
   : iff (is-segal A) (is-local-horn-inclusion A)
   := (is-local-horn-inclusion-is-segal A , is-segal-is-local-horn-inclusion A)
+```
+
+Similarly, Segal types are characterized by having unique extensions along
+`Λ ⊂ Δ²`.
+
+```rzk
+#def is-segal-has-unique-inner-extensions
+  ( A : U)
+  ( has-inner-ue-A : has-unique-extensions (2 × 2) (Δ²) (\ t → Λ t) A)
+  : is-segal A
+  :=
+    is-segal-is-local-horn-inclusion A
+    ( is-local-type-has-unique-extensions (2 × 2) (Δ²) (\ t → Λ t) A
+      has-inner-ue-A)
+
+#def has-unique-inner-extensions-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  : has-unique-extensions (2 × 2) (Δ²) (\ t → Λ t) A
+  :=
+    has-unique-extensions-is-local-type (2 × 2) (Δ²) (\ t → Λ t) A
+    ( is-local-horn-inclusion-is-segal A is-segal-A)
 ```
 
 ## Segal function and extension types
@@ -1490,7 +1512,7 @@ As a special case of the above:
   :=
     ( \ _ → unit ,
       \ k →
-      eq-ext-htpy extext
+      naiveextext-extext extext
         ( 2 × 2) Δ² (\ _ → BOT)
         ( \ _ → Unit) (\ _ → recBOT)
         ( \ _ → unit) k
@@ -1865,4 +1887,28 @@ products of morphisms. It is implicitly stated in Proposition 8.21.
           ( morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id ) ) ) )
 
 #end morphisms-of-products-is-products-of-morphisms
+```
+
+## Fibers of maps between Segal types
+
+For any map `f : A → B` between Segal types, each fiber `fib A B f b` is again a
+Segal type. This is an instance of a general statement about types with unique
+extensions for the shape inclusion `Λ ⊂ Δ²`.
+
+```rzk
+#def is-fiberwise-segal-are-segal uses (extext weakextext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-segal-A : is-segal A)
+  ( is-segal-B : is-segal B)
+  ( b : B)
+  : is-segal (fib A B f b)
+  :=
+    is-segal-has-unique-inner-extensions (fib A B f b)
+    ( has-fiberwise-unique-extensions-have-unique-extensions
+      extext weakextext
+      ( 2 × 2) (Δ²) (\ t → Λ t) A B f
+      ( has-unique-inner-extensions-is-segal A is-segal-A)
+      ( has-unique-inner-extensions-is-segal B is-segal-B)
+      ( b))
 ```

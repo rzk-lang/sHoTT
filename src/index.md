@@ -15,7 +15,7 @@ results from the following papers:
 - "[Limits and colimits of synthetic ∞-categories](https://arxiv.org/abs/2202.12386)"
   [^3]
 
-This formalization project follows the philosophy layed out in the article
+This formalization project follows the philosophy laid out in the article
 "[Could ∞-category theory be taught to undergraduates?](https://www.ams.org/journals/notices/202305/noti2692/noti2692.html)"
 [^4].
 

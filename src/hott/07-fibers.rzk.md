@@ -17,6 +17,13 @@ The homotopy fiber of a map is the following type:
   ( b : B)
   : U
   := Σ (a : A) , (f a) = b
+
+#def rev-fib
+  ( A B : U)
+  ( f : A → B)
+  ( b : B)
+  : U
+  := Σ (a : A) , b = (f a)
 ```
 
 We calculate the transport of `#!rzk (a , q) : fib b` along `#!rzk p : a = a'`:
@@ -62,6 +69,17 @@ of the form `#!rzk (a, refl : f a = f a) : fib A B f`.
   : C b (a, q)
   :=
     ind-path B (f a) (\ b p → C b (a, p)) (s a) b q
+
+#def ind-rev-fib
+  ( A B : U)
+  ( f : A → B)
+  ( C : (b : B) → rev-fib A B f b → U)
+  ( s : (a : A) → C (f a) (a, refl))
+  ( b : B)
+  ( (a, q) : rev-fib A B f b)
+  : C b (a, q)
+  :=
+    ind-path-end B (f a) (\ b p → C b (a, p)) (s a) b q
 
 #def ind-fib-computation
   ( A B : U)
@@ -117,7 +135,7 @@ Contractible maps are equivalences:
   (a : A)
   : (is-contr-map-data-in-fiber a) =_{fib A B f (f a)} (a , refl)
   :=
-    eq-is-contr
+    all-elements-equal-is-contr
       ( fib A B f (f a))
       ( is-contr-f (f a))
       ( is-contr-map-data-in-fiber a)

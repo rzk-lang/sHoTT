@@ -225,8 +225,8 @@ As a sanity check we unpack the definition of `is-naive-left-fibration`.
 
 ### Naive left fibrations are left fibrations
 
-A map `α : A' → A` is called a left fibration if it is right orthogonal
-to the shape inclusion `{0} ⊂ Δ¹`.
+A map `α : A' → A` is called a left fibration if it is right orthogonal to the
+shape inclusion `{0} ⊂ Δ¹`.
 
 ```rzk
 #section is-left-fibration
@@ -290,9 +290,9 @@ This notion agrees with that of a naive left fibration.
 Recall that an inner fibration is a map `α : A' → A` which is right orthogonal
 to `Λ ⊂ Δ²`.
 
-We aim to show that every left fibration is an inner fibration.
-This is a sequence of manipulations where we start with the assumption
-that `{0} ⊂ Δ¹` is left orthogonal to `α : A' → A`, i.e.
+We aim to show that every left fibration is an inner fibration. This is a
+sequence of manipulations where we start with the assumption that `{0} ⊂ Δ¹` is
+left orthogonal to `α : A' → A`, i.e.
 
 ```rzk
 #section is-inner-fibration-is-left-fibration
@@ -323,7 +323,7 @@ The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
     ( ( \ υ s → υ (1₂, s) , \ _ → refl),
       ( \ υ s → υ (1₂, s) , \ _ → refl))
 
-#def is-right-orthogonal-to-10-1×Δ¹-is-inner-fibration uses (is-left-fib-α)
+#def is-right-orthogonal-to-10-1×Δ¹-is-left-fibration uses (is-left-fib-α)
   : is-right-orthogonal-to-shape
       ( 2 × 2) (\ ts → right-leg-of-Λ ts) ( \ (_,s) → s ≡ 0₂) A' A α
   :=
@@ -343,54 +343,53 @@ The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
         ( is-left-fib-α ( \ ( s : 2 | Δ¹ s ∧ s ≡ 0₂) → σ' (1₂,s)))
 ```
 
-Next we use that `Λ` is the pushout of its left leg and its right leg
-to deduce that the pair `left-leg-of-Λ ⊂ Λ` is left orthogonal.
+Next we use that `Λ` is the pushout of its left leg and its right leg to deduce
+that the pair `left-leg-of-Λ ⊂ Λ` is left orthogonal.
 
 ```rzk
 #def left-leg-of-Λ : Λ → TOPE
   := \ (t, s) → s ≡ 0₂
 
-#def is-right-orthogonal-to-left-leg-of-Λ-Λ-is-inner-fibration uses (is-left-fib-α)
+#def is-right-orthogonal-to-left-leg-of-Λ-Λ-is-left-fibration uses (is-left-fib-α)
   : is-right-orthogonal-to-shape
       ( 2 × 2) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts) A' A α
   :=
     is-right-orthogonal-to-shape-pushout A' A α
       ( 2 × 2) ( \ ts → right-leg-of-Λ ts) (\ ts → left-leg-of-Λ ts)
-      ( is-right-orthogonal-to-10-1×Δ¹-is-inner-fibration)
+      ( is-right-orthogonal-to-10-1×Δ¹-is-left-fibration)
 
 ```
 
-Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹`
-is the product of `Δ¹` with the left orthogonal pair `{0} ⊂ Δ¹`,
-hence left orthogonal itself.
+Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the product of
+`Δ¹` with the left orthogonal pair `{0} ⊂ Δ¹`, hence left orthogonal itself.
 
 ```rzk
-#def is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-inner-fibration
+#def is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration
        uses (naiveextext is-left-fib-α)
   : is-right-orthogonal-to-shape
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → left-leg-of-Λ ts) A' A α
   :=
-    is-right-orthogonal-to-shape-× naiveextext A' A α
+    is-right-orthogonal-to-shape-product naiveextext A' A α
       2 Δ¹ 2 Δ¹ ( \ s → s ≡ 0₂) is-left-fib-α
 ```
 
-Next, we use the left cancellation of left orthogonal shape inclusions
-to deduce that `Λ ⊂ Δ¹×Δ¹` is left orthogonal to `α : A' → A`.
+Next, we use the left cancellation of left orthogonal shape inclusions to deduce
+that `Λ ⊂ Δ¹×Δ¹` is left orthogonal to `α : A' → A`.
 
 ```rzk
-#def is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-inner-fibration
+#def is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration
        uses (naiveextext is-left-fib-α)
   : is-right-orthogonal-to-shape
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts) A' A α
   :=
     is-right-orthogonal-to-shape-left-cancel A' A α
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts)
-      ( is-right-orthogonal-to-left-leg-of-Λ-Λ-is-inner-fibration)
-      ( is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-inner-fibration)
+      ( is-right-orthogonal-to-left-leg-of-Λ-Λ-is-left-fibration)
+      ( is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration)
 ```
 
-Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹`
-to obtain the desired left orthogonal shape inclusion `Λ ⊂ Δ²`.
+Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹` to obtain the
+desired left orthogonal shape inclusion `Λ ⊂ Δ²`.
 
 ```rzk
 #def is-inner-fibration-is-left-fibration uses (naiveextext is-left-fib-α)
@@ -398,15 +397,15 @@ to obtain the desired left orthogonal shape inclusion `Λ ⊂ Δ²`.
   :=
     is-right-orthogonal-to-shape-right-cancel-retract A' A α
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Δ² ts) ( \ ts → Λ ts)
-      ( is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-inner-fibration)
+      ( is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration)
       ( Δ²-is-functorial-retract-Δ¹×Δ¹)
 
 #end is-inner-fibration-is-left-fibration
 ```
 
-Since the Segal types are precisely the local types with respect to `Λ ⊂ Δ¹`,
-we immediately deduce that in any left fibration `α : A' → A`,
-if `A` is a Segal type, then so is `A'`.
+Since the Segal types are precisely the local types with respect to `Λ ⊂ Δ¹`, we
+immediately deduce that in any left fibration `α : A' → A`, if `A` is a Segal
+type, then so is `A'`.
 
 ```rzk title="Theorem 8.8, categorical version"
 #def is-segal-domain-left-fibration-is-segal-codomain uses (naiveextext)
@@ -417,7 +416,7 @@ if `A` is a Segal type, then so is `A'`.
   : is-segal A'
   :=
     is-segal-is-local-horn-inclusion A'
-      ( is-local-type-domain-right-orthogonal-is-local-type-codomain
+      ( is-local-type-right-orthogonal-is-local-type
         ( 2 × 2) Δ² ( \ ts → Λ ts) A' A α
         ( is-inner-fibration-is-left-fibration A' A α is-left-fib-α)
         ( is-local-horn-inclusion-is-segal A is-segal-A))
@@ -593,20 +592,14 @@ Finally, we deduce the theorem by some straightforward logical bookkeeping.
       is-covariant-is-naive-left-fibration A C)
 ```
 
-## Total space of a covariant family over a Segal type
+## Total type of a covariant family over a Segal type
 
-We prove that the total space of a covariant family over a Segal type is a Segal
-type. We split the proof into intermediate steps. Let `A` be a type and a type
-family `#!rzk C : A → U`.
-
-### Category theoretic proof
-
-For every covariant family `C : A → U`, the projection `Σ A, C → A`
-is an left fibration, hence an inner fibration.
-It immediately follows that if `A` is Segal, then so is `Σ A, C`.
+For every covariant family `C : A → U`, the projection `Σ A, C → A` is an left
+fibration, hence an inner fibration. It immediately follows that if `A` is
+Segal, then so is `Σ A, C`.
 
 ```rzk title="RS17, Theorem 8.8"
-#def is-segal-total-space-covariant-family-is-segal-base uses (naiveextext)
+#def is-segal-total-type-covariant-family-is-segal-base uses (naiveextext)
   ( A : U)
   ( C : A → U)
   ( is-covariant-C : is-covariant A C)
@@ -617,63 +610,6 @@ It immediately follows that if `A` is Segal, then so is `Σ A, C`.
         ( is-left-fibration-is-naive-left-fibration
             ( total-type A C) A (\ (a,_) → a)
             ( is-naive-left-fibration-is-covariant A C is-covariant-C))
-```
-
-### Type theoretic proof
-
-We examine the fibers of the horn restriction on the total space of `C`. First
-note we have the equivalences:
-
-```rzk
-#def apply-4-3
-  ( A : U )
-  ( C : A → U )
-  : Equiv
-    ( Λ → (Σ ( a : A ), C a ) )
-    ( Σ ( f : Λ → A ), ( t : Λ ) → ( C ( f t ) ) )
-  :=
-    axiom-choice ( 2 × 2 ) Λ ( \ t → BOT ) ( \ t → A )
-    ( \ t a → C a ) ( \ t → recBOT ) ( \ t → recBOT )
-
-#def apply-4-3-again
-  ( A : U )
-  ( C : A → U )
-  : Equiv
-    ( Δ² → (Σ ( a : A ), C a ) )
-    ( Σ ( f : Δ² → A ), ( t : Δ² ) → ( C ( f t ) ) )
-  :=
-    axiom-choice ( 2 × 2 ) Δ² ( \ t → BOT ) ( \ t → A )
-    ( \ t a → C a ) ( \ t → recBOT ) ( \ t → recBOT )
-```
-
-We show that the induced map between this types is an equivalence. First we
-exhibit the map:
-
-```rzk
-#def total-inner-horn-restriction
-  ( A : U )
-  ( C : A → U )
-  : ( Σ ( f : Δ² → A ), ( t : Δ² ) → ( C ( f t ) ) ) →
-    ( Σ ( g : Λ → A ), ( t : Λ ) → ( C ( g t ) ) )
-  := \ ( f, μ ) → ( \ t → f t , \ t → μ t)
-```
-
-Next we compute the fibers of this map by showing the equivalence as claimed in
-the proof of Theorem 8.8 in RS17. The following maps will be packed into some
-`#!rzk Equiv`.
-
-```rzk
-#def map-to-total-inner-horn-restriction-fiber
-  ( A : U )
-  ( C : A → U )
-  ( (g , φ) : ( Σ ( k : Λ → A ), ( t : Λ ) → C ( k t ) ) )
-  : ( Σ (h : (t : Δ²) → A [ Λ t ↦ g t ] ) ,
-      (( t : Δ² ) → C (h t) [ Λ t ↦ φ t])) →
-    ( fib ( Σ ( l : Δ² → A ), ( t : Δ² ) → ( C ( l t ) ))
-          ( Σ ( k : Λ → A ), ( t : Λ ) → ( C ( k t ) ))
-          ( total-inner-horn-restriction A C )
-          ( g,  φ) )
-  := \ ( f,μ ) → ( ( \ t → f t, \ t → μ t  ), refl )
 ```
 
 ## Representable covariant families
@@ -745,7 +681,7 @@ By uncurrying (RS 4.2) we have an equivalence:
               (Δ¹ t) ∧ (s ≡ 0₂) ↦ a ,
               (Δ¹ t) ∧ (s ≡ 1₂) ↦ f t]))
   :=
-    total-equiv-family-equiv
+    total-equiv-family-of-equiv
       ( hom A a y)
       ( \ v → dhom-representable A a x y f u v)
       ( \ v →
@@ -828,7 +764,7 @@ By uncurrying (RS 4.2) we have an equivalence:
         ( Σ ( d : hom A a y) ,
             ( product (hom2 A a x y u f d) (hom2 A a a y (id-hom A a) v d))))
   :=
-    total-equiv-family-equiv
+    total-equiv-family-of-equiv
     ( hom A a y)
     ( \ v →
       ( ( (t , s) : Δ¹×Δ¹) →
@@ -893,7 +829,7 @@ By uncurrying (RS 4.2) we have an equivalence:
         ( Σ ( v : hom A a y) ,
             ( product (hom2 A a x y u f d) (hom2 A a a y (id-hom A a) v d))))
     ( representable-dhom-from-hom2 A a x y f u)
-    ( total-equiv-family-equiv
+    ( total-equiv-family-of-equiv
       ( hom A a y)
       ( \ d →
         ( product
@@ -932,7 +868,7 @@ Now we introduce the hypothesis that A is Segal type.
           ( hom2 A a x y u f d)
           ( Σ (v : hom A a y) , hom2 A a a y (id-hom A a) v d)))
     ( representable-dhom-from-hom2-dist A a x y f u)
-    ( total-equiv-family-equiv
+    ( total-equiv-family-of-equiv
       ( hom A a y)
       ( \ d → product (hom2 A a x y u f d) (Σ (v : hom A a y) , (v = d)))
       ( \ d →
@@ -940,12 +876,12 @@ Now we introduce the hypothesis that A is Segal type.
           ( hom2 A a x y u f d)
           ( Σ (v : hom A a y) , hom2 A a a y (id-hom A a) v d)))
       ( \ d →
-        ( total-equiv-family-equiv
+        ( total-equiv-family-of-equiv
           ( hom2 A a x y u f d)
           ( \ α → (Σ (v : hom A a y) , (v = d)))
           ( \ α → (Σ (v : hom A a y) , hom2 A a a y (id-hom A a) v d))
           ( \ α →
-            ( total-equiv-family-equiv
+            ( total-equiv-family-of-equiv
               ( hom A a y)
               ( \ v → (v = d))
               ( \ v → hom2 A a a y (id-hom A a) v d)
@@ -983,7 +919,7 @@ Now we introduce the hypothesis that A is Segal type.
       ( product (hom2 A a x y u f d) (Σ (v : hom A a y) , (v = d))))
     ( Σ (d : hom A a y) , (hom2 A a x y u f d))
     ( representable-dhom-from-path-space-is-segal A is-segal-A a x y f u)
-    ( total-equiv-family-equiv
+    ( total-equiv-family-of-equiv
       ( hom A a y)
       ( \ d → product (hom2 A a x y u f d) (Σ (v : hom A a y) , (v = d)))
       ( \ d → hom2 A a x y u f d)
@@ -1148,7 +1084,7 @@ types as follows.
               (Δ¹ t) ∧ (s ≡ 0₂) ↦ a ,
               (Δ¹ t) ∧ (s ≡ 1₂) ↦ f t]))
   :=
-    total-equiv-pullback-is-equiv
+    equiv-total-pullback-is-equiv
     ( ( (t , s) : ∂□) →
       A [ (t ≡ 0₂) ∧ (Δ¹ s) ↦ u s ,
           (Δ¹ t) ∧ (s ≡ 0₂) ↦ a ,
@@ -1346,7 +1282,7 @@ is covariant as shown above. Transport of an `e : C x` along an arrow
 ```
 
 We show that for each `v : C y`, the map `covariant-uniqueness` is an
-equivalence. This follows from the fact that the total spaces (summed over
+equivalence. This follows from the fact that the total types (summed over
 `v : C y`) of both sides are contractible.
 
 ```rzk title="RS17, Lemma 8.15"
@@ -1391,7 +1327,7 @@ equivalence. This follows from the fact that the total spaces (summed over
       (covariant-uniqueness-curried A x y f C is-covariant-C u v)
   :=
 
-    total-equiv-family-of-equiv
+    is-equiv-fiberwise-is-equiv-total
       (C y)
       (dhom A x y f C u)
       (\ v' → covariant-transport A x y f C is-covariant-C u = v')
@@ -1529,7 +1465,7 @@ domain are equivalent:
     ( Σ (i : B x) , ((t : Δ¹) → C (f t) [t ≡ 0₂ ↦ (first (equiv-BC x)) i]))
     ( Σ (u : C x) , ((t : Δ¹) → C (f t) [t ≡ 0₂ ↦ u]))
   :=
-    total-equiv-pullback-is-equiv
+    equiv-total-pullback-is-equiv
       ( B x)
       ( C x)
       ( first (equiv-BC x))
@@ -1565,7 +1501,7 @@ domain are equivalent:
     ( (t : Δ¹) → B (f t) [t ≡ 0₂ ↦ i])
     ( (t : Δ¹) → C (f t) [t ≡ 0₂ ↦ (first (equiv-BC x)) i])
   :=
-    family-equiv-total-equiv
+    family-of-equiv-is-equiv-total
     ( B x)
     ( \ ii → ((t : Δ¹) → B (f t) [t ≡ 0₂ ↦ ii]))
     ( \ ii → ((t : Δ¹) → C (f t) [t ≡ 0₂ ↦ (first (equiv-BC x)) ii]))
@@ -1797,7 +1733,7 @@ By uncurrying (RS 4.2) we have an equivalence:
               (Δ¹ t) ∧ (s ≡ 0₂) ↦ f t ,
               (Δ¹ t) ∧ (s ≡ 1₂) ↦ a]))
   :=
-    total-equiv-family-equiv
+    total-equiv-family-of-equiv
     ( hom A x a)
     ( \ u → dhom-contra-representable A a x y f u v)
     ( \ u →
@@ -1824,7 +1760,7 @@ By uncurrying (RS 4.2) we have an equivalence:
       (Σ (d : hom A x a) ,
         product (hom2 A x a a u (id-hom A a) d) (hom2 A x y a f v d)))
   :=
-    total-equiv-family-equiv (hom A x a)
+    total-equiv-family-of-equiv (hom A x a)
     ( \ u →
       ( ( (t , s) : Δ¹×Δ¹) →
         A [ (t ≡ 0₂) ∧ (Δ¹ s) ↦ u s ,
@@ -1886,14 +1822,14 @@ By uncurrying (RS 4.2) we have an equivalence:
           ( Σ ( u : hom A x a) ,
               ( product (hom2 A x y a f v d) (hom2 A x a a u (id-hom A a) d))))
       ( representable-dhom-to-hom2 A a x y f v)
-      ( total-equiv-family-equiv (hom A x a)
+      ( total-equiv-family-of-equiv (hom A x a)
         (\ d →
           Σ ( u : hom A x a) ,
             ( product (hom2 A x a a u (id-hom A a) d) (hom2 A x y a f v d)))
         ( \ d →
           Σ ( u : hom A x a) ,
             ( product (hom2 A x y a f v d) (hom2 A x a a u (id-hom A a) d)))
-        ( \ d → total-equiv-family-equiv (hom A x a)
+        ( \ d → total-equiv-family-of-equiv (hom A x a)
           ( \ u → product (hom2 A x a a u (id-hom A a) d) (hom2 A x y a f v d))
           ( \ u → product (hom2 A x y a f v d) (hom2 A x a a u (id-hom A a) d))
           ( \ u →
@@ -1923,7 +1859,7 @@ By uncurrying (RS 4.2) we have an equivalence:
           ( hom2 A x y a f v d)
           ( hom2 A x a a u (id-hom A a) d)))
     ( representable-dhom-to-hom2-swap A a x y f v)
-    ( total-equiv-family-equiv (hom A x a)
+    ( total-equiv-family-of-equiv (hom A x a)
       ( \ d →
         ( product
           ( hom2 A x y a f v d)
@@ -1961,19 +1897,19 @@ Now we introduce the hypothesis that A is Segal type.
           ( hom2 A x y a f v d)
           ( Σ (u : hom A x a) , (hom2 A x a a u (id-hom A a) d))))
     ( representable-dhom-to-hom2-dist A a x y f v)
-    ( total-equiv-family-equiv (hom A x a)
+    ( total-equiv-family-of-equiv (hom A x a)
       ( \ d → product (hom2 A x y a f v d) (Σ (u : hom A x a) , (u = d)))
       ( \ d →
         product
           ( hom2 A x y a f v d)
           ( Σ (u : hom A x a) , hom2 A x a a u (id-hom A a) d))
       ( \ d →
-        total-equiv-family-equiv
+        total-equiv-family-of-equiv
           ( hom2 A x y a f v d)
           ( \ α → (Σ (u : hom A x a) , (u = d)))
           ( \ α → (Σ (u : hom A x a) , hom2 A x a a u (id-hom A a) d))
           ( \ α →
-          ( total-equiv-family-equiv
+          ( total-equiv-family-of-equiv
             ( hom A x a)
             ( \ u → (u = d))
             ( \ u → hom2 A x a a u (id-hom A a) d)
@@ -1995,7 +1931,7 @@ Now we introduce the hypothesis that A is Segal type.
         ( product (hom2 A x y a f v d) (Σ (u : hom A x a) , (u = d))))
     ( Σ (d : hom A x a) , (hom2 A x y a f v d))
     ( representable-dhom-to-path-space-is-segal A is-segal-A a x y f v)
-    ( total-equiv-family-equiv
+    ( total-equiv-family-of-equiv
       ( hom A x a)
       ( \ d → product (hom2 A x y a f v d) (Σ (u : hom A x a) , (u = d)))
       ( \ d → hom2 A x y a f v d)
@@ -2215,7 +2151,7 @@ commuting with the contravariant lifts.
       ( A)
       ( \ a → ( b : B ) → (C a b) )
       ( \ x y f g →
-        equiv-with-contractible-codomain-implies-contractible-domain
+        is-contr-equiv-is-contr'
           ( (t : Δ¹) → ((b : B) → C (f t) b) [  t ≡ 0₂ ↦ g ])
           ( (b : B) → (t : Δ¹) → C (f t) b [ t ≡ 0₂ ↦ g b])
           ( flip-ext-fun 2 Δ¹ (\ t → t ≡ 0₂) B ( \ t →  C (f t)) ( \ t → g))
@@ -2228,4 +2164,54 @@ commuting with the contravariant lifts.
                 ( is-locally-covariant b))
              x y f (g b))))
 
+```
+
+## Discrete fibers
+
+The fibers of a covariant fibration over a Segal type are discrete types.
+
+```rzk title="RS17, Proposition 8.18"
+#def is-discrete-is-covariant-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-cov-C : is-covariant A C)
+  ( x : A)
+  : is-discrete (C x)
+  :=
+    ( \ u v →
+    is-equiv-fiberwise-is-equiv-total
+      ( C x)
+      ( \ v' → (u = v'))
+      ( hom (C x) u)
+      ( hom-eq (C x) u)
+      ( is-equiv-are-contr
+        ( Σ (y : (C x)) , u = y)
+        ( Σ (y : (C x)) , hom (C x) u y)
+        ( is-contr-based-paths (C x) u)
+        ( is-cov-C x x (id-hom A x) u)
+        ( total-map
+          ( C x)
+          ( \ v' → u = v')
+          ( hom (C x) u)
+          ( hom-eq (C x) u)))
+      ( v))
+```
+
+In a segal type, covariant hom families are covariant,hence representable homs
+are discrete.
+
+```rzk title="RS17, Corollary 8.19"
+#def is-discrete-hom-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y : A)
+  : is-discrete (hom A x y)
+  :=
+    is-discrete-is-covariant-segal
+      ( A)
+      ( is-segal-A)
+      ( hom A x)
+      ( is-covariant-representable-is-segal A is-segal-A x)
+      ( y)
 ```

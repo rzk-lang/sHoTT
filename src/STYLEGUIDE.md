@@ -120,6 +120,15 @@ later.
 
 ## Other code conventions
 
+- We employ an 80-character line length limit. This means that lines of code
+  generally should not be longer than 80 characters. If they exceed this limit,
+  they should be reformatted to fit within the limit by inserting appropriate
+  line breaks.
+
+  !!! info
+
+      Names can be longer than the line character limit.
+
 - We place binary operators/separators at the beginning of a line rather than
   the end. When they are a single character wide, this aligns very well with our
   parenthization and indentation rules. Consider for instance the following
@@ -178,12 +187,44 @@ later.
     ( another-term-of-that-type))
   ```
 
-- We employ an 80-character line length limit. This means that lines of code
-  generally should not be longer than 80 characters. If they exceed this limit,
-  they should be reformatted to fit within the limit by inserting appropriate
-  line breaks. We do make some exceptions to this rule:
+- The `uses`-keyword and the accompanying list of variables is placed on their
+  own lines.
 
-  - Names can be longer than the line character limit
+  In the base case, write
+
+  ```rzk
+  #define my-name
+    uses (my-variable-1 my-variable-2 ...)
+    ( A : U)
+    ...
+  ```
+
+  If the variable list (`(my-variable-1 my-variable-2 ...)`) does not fit on the
+  first line together with `uses`, insert a line break directly after `uses` and
+  write:
+
+  ```rzk
+  #define my-name
+    uses
+      ( my-variable-1 my-variable-2 ...)
+    ( A : U)
+    ...
+  ```
+
+  If the list still does not fit on a single line, start insert line breaks
+  between variables. Here, there is some room for common sense in where the line
+  breaks should be inserted, allowing for certain variable names to be grouped
+  together:
+
+  ```rzk
+  #define my-name
+    uses
+      ( my-variable-1
+        my-variable-2
+        ...)
+    ( A : U)
+    ...
+  ```
 
 ## Naming conventions
 

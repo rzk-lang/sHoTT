@@ -21,9 +21,9 @@ clean.
 
 ## The structure of code
 
-We enforce strict formatting rules. This formatting allows the type of the
-defined term to be easily readable, and aids in understanding the structure of
-the definition. The general format of a definition is as follows:
+We enforce strict formatting rules. These rules facilitate better readability of
+the code and aids in understanding the structure of every. The general format of
+a definition is as follows:
 
 ```rzk
 #def concat
@@ -42,10 +42,10 @@ the definition. The general format of a definition is as follows:
   the actual construction of the definition. If the construction does not fit on
   a single line, by which we mean fit within our stipulated 80-character limit,
   we immediately insert a new line after the walrus separator. Note, in
-  particular, to avoid excessive indentation we do **not** indent the code an
-  extra level in this case.
+  particular, to avoid excessive indentation we do not indent the code an extra
+  level in this particular case.
 
-### Trees and your constructions
+### The tree structure of constructions
 
 In the Rzk language, every construction is structured like a tree, where each
 operation can be seen as a branching point. We use indentation and
@@ -98,15 +98,16 @@ types:
   ( horn A x y z f g)
 ```
 
-The root here is the function `projection-equiv-contractible-fibers`. It takes
-four arguments, each starting on a fresh line and is parenthesized. Note that
-its parentheses are indented at the same level as its parent node. The first
-argument fits neatly on one line, but the second one is too large. In this case,
-we add a line break right after the `→`-symbol following the lambda-abstraction,
-which we consider the earliest branching point here. The next node is again `Σ`,
-with two arguments. The first one fits on a line, but the second does not, so we
-add a line break between them since `Σ` is only one character. This process is
-continued until the definition is complete.
+The root in this instance is the function
+`projection-equiv-contractible-fibers`. It takes four arguments, each starting
+on a fresh line and is parenthesized. Note that its parentheses are indented at
+the same level as its parent node. The first argument fits neatly on one line,
+but the second one is too large. In this case, we add a line break right after
+the `→`-symbol following the lambda-abstraction, which we consider the earliest
+branching point in this case. The next node is again `Σ`, with two arguments.
+The first one fits on a line, but the second does not, so we add a line break
+between them since `Σ` is only one character. This process is continued until
+the definition is complete.
 
 Observe also that we use indentation to highlight the branches. The extra space
 after the opening parentheses marking a branch is there to visually emphasize
@@ -305,13 +306,13 @@ special name, that name should probably be used.
 
 ### Conclusions first!
 
-One of the most noteworthy aspects of our general naming scheme is that
-conclusions always end up at the start of the name. This has the benefit that
-the most important aspect of a definition is what is mentioned first in its
-name. Although it can take a little while to get used to this scheme as
-everything is written in the opposite order you may be used to, it offers the
-following central benefit: the name summarizes the entry's meaning efficiently,
-even if only part of it is read. This means that when a reader is scanning the
+The most noteworthy aspect of our general naming scheme is that conclusions
+always end up at the start of the name. This has the benefit that the most
+important aspect of a definition is what is mentioned first in its name.
+Although it can take a little while to get used to this scheme as everything is
+written in the opposite order you may be used to, it offers the following
+central benefit: the name summarizes the entry's meaning efficiently, even if
+only part of it is read. This means that when a reader is scanning the
 application of a definition in a larger proof, they can get an overview by only
 scanning the first few words at each branching point/line.
 
@@ -334,8 +335,8 @@ that is made. Finally, prepend the concluding type.
 
   applying the scheme we get
 
-  1. `is-prop`, noting the assumption that `A` is a proposition. Remember, we do
-     not include variable names in the entry's name.
+  1. `is-prop`, noting the assumption that `A` is a proposition. We do not
+     include variable names in the entry's name.
   2. `is-prop-is-prop`, noting the assumption that `B` is a proposition.
   3. `iff-is-prop-is-prop`, noting the assumption that we have a logical
      equivalence between `A` and `B`.
@@ -500,7 +501,7 @@ original authors.
 
 ## References
 
-Our style guide and design principles borrows heavily from
+Our style guide and design principles borrow heavily from
 [`agda-unimath`](https://github.com/UniMath/agda-unimath). If you are looking
 for more inspiration, have a look at:
 

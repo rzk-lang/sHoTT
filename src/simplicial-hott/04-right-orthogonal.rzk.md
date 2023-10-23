@@ -505,24 +505,8 @@ Every equivalence `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
   ( is-equiv-α : is-equiv A' A α)
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=
-    is-homotopy-cartesian-is-horizontal-equiv
-      ( ϕ → A') (\ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
-      ( ϕ → A) (\ σ → (t : ψ) → A [ϕ t ↦ σ t])
-      ( \ σ' t → α (σ' t))
-      ( \ _ τ' t → α (τ' t))
-      ( second
-        ( equiv-extensions-BOT-equiv extext I ( \ t → ϕ t)
-          ( \ _ → A') ( \ _ → A) ( \ _ → (α , is-equiv-α))))
-     ( is-equiv-Equiv-is-equiv'
-         ( ψ → A') ( ψ → A) ( \ τ' t → α (τ' t))
-         ( Σ (σ' : ϕ → A') , (t : ψ) → A' [ϕ t ↦ σ' t])
-         ( Σ (σ : ϕ → A) , (t : ψ) → A [ϕ t ↦ σ t])
-         ( \ (σ' , τ') → ( \ t → α (σ' t) , \ t → α (τ' t)))
-       ( cofibration-composition-functorial I ψ ϕ ( \ _ → BOT)
-           ( \ _ → A') ( \ _ → A) ( \ _ → α) ( \ _ → recBOT))
-       ( second
-         ( equiv-extensions-BOT-equiv extext I ( \ t → ψ t)
-           ( \ _ → A') ( \ _ → A) ( \ _ → (α , is-equiv-α)))))
+    is-equiv-extensions-is-equiv extext I ψ ϕ
+    ( \ _ → A') ( \  _ → A) ( \ _ → α) ( \ _ → is-equiv-α)
 ```
 
 Right orthogonality is closed under homotopy.
@@ -586,14 +570,14 @@ One can always cancel right orthogonal maps from the right.
      ( is-orth-ψ-ϕ-αα' σ'')
 ```
 
-### Left cancellation with section (weak version)
+### Left cancellation with section
 
 If the map `α' : A'' → A'` has a section, then we can also cancel it from the
 right (whether it is right orthogonal or not.)
 
 ```rzk
 #def is-right-orthogonal-left-cancel-with-section-to-shape
-      uses (extext is-orth-ψ-ϕ-αα')
+  uses (extext is-orth-ψ-ϕ-αα')
   ( has-section-α' : has-section A'' A' α')
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=

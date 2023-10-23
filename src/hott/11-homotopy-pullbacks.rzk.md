@@ -900,10 +900,10 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
   ( sums-of-fibers-to-domains-map-of-maps)
   ( second
     ( ( inv-equiv A' (Σ (a : A), fib A' A α a))
-      ( equiv-domain-sum-of-fibers A' A α)))
+      ( equiv-sum-of-fibers-domain A' A α)))
   ( second
     ( ( inv-equiv B' (Σ (b : B), fib B' B β b))
-      ( equiv-domain-sum-of-fibers B' B β)))
+      ( equiv-sum-of-fibers-domain B' B β)))
   ( is-equiv-s')
 
 #variable is-equiv-s : is-equiv A B s-c4XT

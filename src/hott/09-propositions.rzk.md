@@ -444,40 +444,9 @@ The subtype projection embedding reflects identifications.
   ( A : U)
   ( P : A → U)
   ( is-predicate-P : is-predicate A P)
-  ( (a, p) (b, q) : total-type A P)
-  : (a = b) → (a, p) =_{total-type A P} (b, q)
-  :=
-  inv-ap-is-emb (total-type A P) A (projection-total-type A P)
-  ( is-emb-subtype-projection A P is-predicate-P) ((a, p)) ((b, q))
-
-#def subtype-eq-reflection-okay
-  ( A : U)
-  ( P : A → U)
-  ( is-predicate-P : is-predicate A P)
-  ( ap bq : total-type A P)
-  : ((projection-total-type A P ap) = (projection-total-type A P bq))
-    → ap =_{total-type A P} bq
-  :=
-  inv-ap-is-emb (total-type A P) A (projection-total-type A P)
-  ( is-emb-subtype-projection A P is-predicate-P) ap bq
-
-#def subtype-eq-reflection-fails
-  ( A : U)
-  ( P : A → U)
-  ( is-predicate-P : is-predicate A P)
-  : ( (a, p) (b, q) : total-type A P)
+  : ( (a, p) : total-type A P)
+    → ( (b, q) : total-type A P)
     → (a = b) → (a, p) =_{total-type A P} (b, q)
-  :=
-  inv-ap-is-emb (total-type A P) A (projection-total-type A P)
-  ( is-emb-subtype-projection A P is-predicate-P)
-
-#def subtype-eq-reflection-fails-also
-  ( A : U)
-  ( P : A → U)
-  ( is-predicate-P : is-predicate A P)
-  : ( ap bq : total-type A P)
-    → ((projection-total-type A P ap) = (projection-total-type A P bq))
-    → ap =_{total-type A P} bq
   :=
   inv-ap-is-emb (total-type A P) A (projection-total-type A P)
   ( is-emb-subtype-projection A P is-predicate-P)

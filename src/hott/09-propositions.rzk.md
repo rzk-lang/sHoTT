@@ -367,6 +367,44 @@ propositions.
   is-prop-is-contr-is-inhabited (fib A B f b)
   ( is-contr-is-inhabited-fib-is-emb A B f is-emb-f b)
 
+#def is-contr-image-based-paths-is-contr-is-inhabited-fib
+  ( A B : U)
+  ( f : A → B)
+  ( is-contr-is-inhabited-fib-f : (b : B) → is-contr-is-inhabited (fib A B f b))
+  ( x : A)
+  : is-contr (Σ (y : A) , f x = f y)
+  :=
+  is-contr-equiv-is-contr'
+  ( Σ (y : A) , f x = f y)
+  ( Σ (y : A) , f y = f x)
+  ( total-equiv-family-of-equiv A (\ y → f x = f y) (\ y → f y = f x)
+    ( \ y → equiv-rev B (f x) (f y)))
+  ( is-contr-is-inhabited-fib-f (f x) ((x, refl)))
+
+#def is-emb-is-contr-is-inhabited-fib
+  ( A B : U)
+  ( f : A → B)
+  ( is-contr-is-inhabited-fib-f : (b : B) → is-contr-is-inhabited (fib A B f b))
+  : is-emb A B f
+  :=
+  \ x y →
+  are-equiv-from-paths-is-contr-total A x (\ z → f x = f z)(\ z → ap A B x z f)
+  ( is-contr-image-based-paths-is-contr-is-inhabited-fib A B f is-contr-is-inhabited-fib-f x) y
+
+#def is-emb-is-prop-fib
+  ( A B : U)
+  ( f : A → B)
+  ( is-prop-fib-f : (b : B) → is-prop (fib A B f b))
+  : is-emb A B f
+  :=
+  is-emb-is-contr-is-inhabited-fib A B f
+  ( \ b → is-contr-is-inhabited-is-prop (fib A B f b) (is-prop-fib-f b))
+
+#def is-emb-iff-is-prop-fib
+  ( A B : U)
+  ( f : A → B)
+  : iff (is-emb A B f) ((b : B) → is-prop (fib A B f b))
+  := (is-prop-fib-is-emb A B f, is-emb-is-prop-fib A B f)
 ```
 
 ## Subtypes
@@ -385,8 +423,62 @@ of as a predicate.
 When `#!rzk P` is a predicate on `#!rzk A` then `#!rzk total-type A P` is
 referred to a subtype of `#!rzk A`.
 
-#def is-emb-subtype-projection ( A : U) ( P : A → U) ( is-predicate-P :
-is-predicate A P) : is-emb (total-type A P) A (projection-total-type A P) := \ a
-→ equiv-with-contractible-domain-implies-contractible-codomain ( P a) ( fib
-(total-type A P) A (projection-total-type A P) a) (
-equiv-homotopy-fiber-strict-fiber A P a) ( is-predicate-P a)
+```rzk
+#def is-emb-subtype-projection
+  ( A : U)
+  ( P : A → U)
+  ( is-predicate-P : is-predicate A P)
+  : is-emb (total-type A P) A (projection-total-type A P)
+  :=
+  is-emb-is-prop-fib (total-type A P) A (projection-total-type A P)
+  ( \ a →
+    is-prop-Equiv-is-prop'
+    ( P a) ( fib (total-type A P) A (projection-total-type A P) a)
+    ( equiv-homotopy-fiber-strict-fiber A P a) (is-predicate-P a))
+```
+
+The subtype projection embedding reflects identifications.
+
+```rzk
+#def subtype-eq-reflection
+  ( A : U)
+  ( P : A → U)
+  ( is-predicate-P : is-predicate A P)
+  ( (a, p) (b, q) : total-type A P)
+  : (a = b) → (a, p) =_{total-type A P} (b, q)
+  :=
+  inv-ap-is-emb (total-type A P) A (projection-total-type A P)
+  ( is-emb-subtype-projection A P is-predicate-P) ((a, p)) ((b, q))
+
+#def subtype-eq-reflection-okay
+  ( A : U)
+  ( P : A → U)
+  ( is-predicate-P : is-predicate A P)
+  ( ap bq : total-type A P)
+  : ((projection-total-type A P ap) = (projection-total-type A P bq))
+    → ap =_{total-type A P} bq
+  :=
+  inv-ap-is-emb (total-type A P) A (projection-total-type A P)
+  ( is-emb-subtype-projection A P is-predicate-P) ap bq
+
+#def subtype-eq-reflection-fails
+  ( A : U)
+  ( P : A → U)
+  ( is-predicate-P : is-predicate A P)
+  : ( (a, p) (b, q) : total-type A P)
+    → (a = b) → (a, p) =_{total-type A P} (b, q)
+  :=
+  inv-ap-is-emb (total-type A P) A (projection-total-type A P)
+  ( is-emb-subtype-projection A P is-predicate-P)
+
+#def subtype-eq-reflection-fails-also
+  ( A : U)
+  ( P : A → U)
+  ( is-predicate-P : is-predicate A P)
+  : ( ap bq : total-type A P)
+    → ((projection-total-type A P ap) = (projection-total-type A P bq))
+    → ap =_{total-type A P} bq
+  :=
+  inv-ap-is-emb (total-type A P) A (projection-total-type A P)
+  ( is-emb-subtype-projection A P is-predicate-P)
+```

@@ -94,8 +94,8 @@ a given starting point in the fiber.
 
 ## Cocartesian family
 
-A family over cocartesian if it is isoinner and any arrow in
-the has a cocartesian lift, given a point in the fiber over the domain.
+A family over cocartesian if it is isoinner and any arrow in the has a
+cocartesian lift, given a point in the fiber over the domain.
 
 ```rzk title="BW23, Definition 5.2.1"
 #def has-cocartesian-lifts

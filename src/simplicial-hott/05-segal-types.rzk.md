@@ -16,8 +16,8 @@ This is a literate `rzk` file:
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk projection-total-type` in the proof of Theorem 5.5.
-- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and their
-  subshapes.
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
 - `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
 
@@ -216,6 +216,66 @@ Extension types are also used to define the type of commutative triangles:
         t₂ ≡ t₁ ↦ h t₂]   -- the diagonal is exactly `h`
 ```
 
+## Arrow types
+
+We define the arrow type:
+
+```rzk
+#def arr
+  ( A : U)
+  : U
+  := Δ¹ → A
+```
+
+For later convenience we give an alternative characterizations of the arrow
+type.
+
+```rzk
+#def fibered-arr
+  ( A : U)
+  : U
+  := Σ (x : A) , (Σ (y : A) , hom A x y)
+
+#def fibered-arr-free-arr
+  ( A : U)
+  : arr A → fibered-arr A
+  := \ k → (k 0₂ , (k 1₂ , k))
+
+#def is-equiv-fibered-arr-free-arr
+  ( A : U)
+  : is-equiv (arr A) (fibered-arr A) (fibered-arr-free-arr A)
+  :=
+    ( ( (\ (_ , (_ , f)) → f) , (\ _ → refl))
+    , ( (\ (_ , (_ , f)) → f) , (\ _ → refl)))
+
+#def equiv-fibered-arr-free-arr
+  ( A : U)
+  : Equiv (arr A) (fibered-arr A)
+  := (fibered-arr-free-arr A , is-equiv-fibered-arr-free-arr A)
+```
+
+And the corresponding uncurried version.
+
+```rzk
+#def fibered-arr'
+  ( A : U)
+  : U
+  :=
+    Σ ((a,b) : product A A), hom A a b
+
+#def fibered-arr-free-arr'
+  ( A : U)
+  : arr A → fibered-arr' A
+  := \ σ → ((σ 0₂ , σ 1₂) , σ)
+
+#def is-equiv-fibered-arr-free-arr'
+  ( A : U)
+  : is-equiv (arr A) (fibered-arr' A) (fibered-arr-free-arr' A)
+  :=
+    ( ( (\ ((_ , _) , σ) → σ) , (\ _ → refl))
+    , ( (\ ((_ , _) , σ) → σ) , (\ _ → refl)))
+```
+
 ## The Segal condition
 
 A type is **Segal** if every composable pair of arrows has a unique composite.
@@ -357,7 +417,7 @@ for the inclusion `Λ ⊂ Δ¹`.
   : U → U
   := is-local-type (2 × 2) Δ² (\ t → Λ t)
 
-#def is-local-horn-inclusion-unpacked
+#def unpack-is-local-horn-inclusion
   ( A : U)
   : is-local-horn-inclusion A = is-equiv (Δ² → A) (Λ → A) (horn-restriction A)
   := refl
@@ -510,6 +570,28 @@ We have now proven that both notions of Segal types are logically equivalent.
   := (is-local-horn-inclusion-is-segal A , is-segal-is-local-horn-inclusion A)
 ```
 
+Similarly, Segal types are characterized by having unique extensions along
+`Λ ⊂ Δ²`.
+
+```rzk
+#def is-segal-has-unique-inner-extensions
+  ( A : U)
+  ( has-inner-ue-A : has-unique-extensions (2 × 2) (Δ²) (\ t → Λ t) A)
+  : is-segal A
+  :=
+    is-segal-is-local-horn-inclusion A
+    ( is-local-type-has-unique-extensions (2 × 2) (Δ²) (\ t → Λ t) A
+      has-inner-ue-A)
+
+#def has-unique-inner-extensions-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  : has-unique-extensions (2 × 2) (Δ²) (\ t → Λ t) A
+  :=
+    has-unique-extensions-is-local-type (2 × 2) (Δ²) (\ t → Λ t) A
+    ( is-local-horn-inclusion-is-segal A is-segal-A)
+```
+
 ## Segal function and extension types
 
 Using the new characterization of Segal types, we can show that the type of
@@ -624,36 +706,7 @@ then $(x : X) → A x$ is a Segal type.
         ( \ s → is-local-horn-inclusion-is-segal (A s)(fiberwise-is-segal-A s)))
 ```
 
-In particular, the arrow type of a Segal type is Segal. First, we define the
-arrow type:
-
-```rzk
-#def arr
-  ( A : U)
-  : U
-  := Δ¹ → A
-```
-
-For later use, an equivalent characterization of the arrow type.
-
-```rzk
-#def arr-Σ-hom
-  ( A : U)
-  : ( arr A) → (Σ (x : A) , (Σ (y : A) , hom A x y))
-  := \ f → (f 0₂ , (f 1₂ , f))
-
-#def is-equiv-arr-Σ-hom
-  ( A : U)
-  : is-equiv (arr A) (Σ (x : A) , (Σ (y : A) , hom A x y)) (arr-Σ-hom A)
-  :=
-    ( ( \ (x , (y , f)) → f , \ f → refl) ,
-      ( \ (x , (y , f)) → f , \ xyf → refl))
-
-#def equiv-arr-Σ-hom
-  ( A : U)
-  : Equiv (arr A) (Σ (x : A) , (Σ (y : A) , hom A x y))
-  := ( arr-Σ-hom A , is-equiv-arr-Σ-hom A)
-```
+In particular, the arrow type of a Segal type is Segal.
 
 ```rzk title="RS17, Corollary 5.6(ii), special case for locality at the horn inclusion"
 #def is-local-horn-inclusion-arr uses (extext)
@@ -912,17 +965,16 @@ The `#!rzk witness-square-comp-is-segal` as an arrow in the arrow type:
   ( g : hom A x y)
   ( h : hom A y z)
   : hom2 (arr A) f g h
-      (arr-in-arr-is-segal A is-segal-A w x y f g)
-      (arr-in-arr-is-segal A is-segal-A x y z g h)
-      (comp-is-segal (arr A) (is-segal-arr A is-segal-A)
-      f g h
-      (arr-in-arr-is-segal A is-segal-A w x y f g)
-      (arr-in-arr-is-segal A is-segal-A x y z g h))
+      ( arr-in-arr-is-segal A is-segal-A w x y f g)
+      ( arr-in-arr-is-segal A is-segal-A x y z g h)
+      ( comp-is-segal (arr A) (is-segal-arr A is-segal-A) f g h
+        ( arr-in-arr-is-segal A is-segal-A w x y f g)
+        ( arr-in-arr-is-segal A is-segal-A x y z g h))
   :=
     witness-comp-is-segal
       ( arr A)
       ( is-segal-arr A is-segal-A)
-      f g h
+      ( f) ( g) ( h)
       ( arr-in-arr-is-segal A is-segal-A w x y f g)
       ( arr-in-arr-is-segal A is-segal-A x y z g h)
 ```
@@ -1203,7 +1255,7 @@ arrow.
   : Equiv (f = h) (hom2 A x x y (id-hom A x) f h)
   :=
     ( ( map-hom2-homotopy A x y f h) ,
-      ( total-equiv-family-of-equiv
+      ( is-equiv-fiberwise-is-equiv-total
         ( hom A x y)
         ( \ k → (f = k))
         ( \ k → (hom2 A x x y (id-hom A x) f k))
@@ -1265,7 +1317,7 @@ A dual notion of homotopy can be defined similarly.
   : Equiv (f = h) (hom2 A x y y f (id-hom A y) h)
   :=
     ( ( map-hom2-homotopy' A x y f h) ,
-      ( total-equiv-family-of-equiv
+      ( is-equiv-fiberwise-is-equiv-total
         ( hom A x y)
         ( \ k → (f = k))
         ( \ k → (hom2 A x y y f (id-hom A y) k))
@@ -1336,7 +1388,7 @@ the data provided by a commutative triangle with that boundary.
   : Equiv ((comp-is-segal A is-segal-A x y z f g) = k) (hom2 A x y z f g k)
   :=
     ( ( map-hom2-eq-is-segal A is-segal-A x y z f g k) ,
-      ( total-equiv-family-of-equiv
+      ( is-equiv-fiberwise-is-equiv-total
         ( hom A x z)
         ( \ m → (comp-is-segal A is-segal-A x y z f g) = m)
         ( hom2 A x y z f g)
@@ -1455,14 +1507,12 @@ As a special case of the above:
 
 #section is-segal-Unit
 
-#def is-contr-Unit : is-contr Unit := (unit , \ _ → refl)
-
 #def is-contr-Δ²→Unit uses (extext)
   : is-contr (Δ² → Unit)
   :=
     ( \ _ → unit ,
       \ k →
-      eq-ext-htpy extext
+      naiveextext-extext extext
         ( 2 × 2) Δ² (\ _ → BOT)
         ( \ _ → Unit) (\ _ → recBOT)
         ( \ _ → unit) k
@@ -1624,7 +1674,7 @@ The cofibration Λ²₁ → Δ² is inner anodyne
 #def is-inner-anodyne-Λ²₁
   : is-inner-anodyne (2 × 2) Δ² Λ²₁
   := \ A is-segal-A h' →
-    equiv-with-contractible-domain-implies-contractible-codomain
+    is-contr-equiv-is-contr
       ( Σ (h : hom A (h' (0₂,0₂)) (h' (1₂,1₂))) ,
           (hom2 A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
           (\ t → h' (t,0₂)) (\ s → h' (1₂,s)) h))
@@ -1648,7 +1698,7 @@ The cofibration Λ²₁ → Δ² is inner anodyne
       (\ (t,s) → ψ t ∧ ζ s)
       (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
   := \ A is-segal-A h →
-    equiv-with-contractible-codomain-implies-contractible-domain
+    is-contr-equiv-is-contr'
       (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
       ( (s : ζ) → ((t : ψ) → A[ Φ t ↦ h (t,s)])[ χ s ↦ \ t → h (t, s)])
       (uncurry-opcurry I J ψ Φ ζ χ (\ s t → A) h)
@@ -1671,7 +1721,7 @@ The cofibration Λ²₁ → Δ² is inner anodyne
       (\ (t,s) → ψ t ∧ ζ s)
       (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
   := \ A is-segal-A h →
-    equiv-with-contractible-domain-implies-contractible-codomain
+    is-contr-equiv-is-contr
       ( (t : ψ) → ((s : ζ) → A[ χ s ↦ h (t,s)])[ Φ t ↦ \ s → h (t, s)])
       (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
       (curry-uncurry I J ψ Φ ζ χ (\ s t → A) h)
@@ -1779,8 +1829,8 @@ The cofibration Λ²₁ → Δ² is inner anodyne
 
 ## Inner fibrations
 
-An inner fibration is a map `α : A' → A` which is right orthogonal
-to `Λ ⊂ Δ²`. This is the relative notion of a Segal type.
+An inner fibration is a map `α : A' → A` which is right orthogonal to `Λ ⊂ Δ²`.
+This is the relative notion of a Segal type.
 
 ```rzk
 #def is-inner-fibration
@@ -1837,4 +1887,28 @@ products of morphisms. It is implicitly stated in Proposition 8.21.
           ( morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id ) ) ) )
 
 #end morphisms-of-products-is-products-of-morphisms
+```
+
+## Fibers of maps between Segal types
+
+For any map `f : A → B` between Segal types, each fiber `fib A B f b` is again a
+Segal type. This is an instance of a general statement about types with unique
+extensions for the shape inclusion `Λ ⊂ Δ²`.
+
+```rzk
+#def is-fiberwise-segal-are-segal uses (extext weakextext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-segal-A : is-segal A)
+  ( is-segal-B : is-segal B)
+  ( b : B)
+  : is-segal (fib A B f b)
+  :=
+    is-segal-has-unique-inner-extensions (fib A B f b)
+    ( has-fiberwise-unique-extensions-have-unique-extensions
+      extext weakextext
+      ( 2 × 2) (Δ²) (\ t → Λ t) A B f
+      ( has-unique-inner-extensions-is-segal A is-segal-A)
+      ( has-unique-inner-extensions-is-segal B is-segal-B)
+      ( b))
 ```

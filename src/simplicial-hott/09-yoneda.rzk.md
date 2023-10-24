@@ -401,6 +401,176 @@ Naturality in `#!rzk C` is not automatic but can be proven easily:
           A is-segal-A a C D is-covariant-C is-covariant-D ψ u x)
 ```
 
+## Yoneda embedding.
+
+```rzk title="Yoneda embedding. RS17, Definition 9.3"
+#def yoneda-embedding
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  :  hom A a' a → (z : A) → hom A a z → hom A a' z
+  :=
+     yon
+     ( A)
+     ( is-segal-A)
+     ( a)
+     ( hom A a')
+     ( is-covariant-representable-is-segal A is-segal-A a')
+
+#def compute-yoneda-embedding-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  : ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ) = φ
+  :=
+     yon-evid
+      ( A)
+      ( is-segal-A)
+      ( a)
+      ( hom A a')
+      ( is-covariant-representable-is-segal A is-segal-A a') φ
+
+#def htpy-compute-yoneda-embedding-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  : (x : A)
+    → ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ)) x
+    = φ x
+  :=
+     htpy-eq
+      ( A)
+      ( \ x → ( hom A a x → hom A a' x))
+      ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ ))
+      ( φ)
+      ( compute-yoneda-embedding-evid A is-segal-A a a' φ)
+
+#def htpy-yoneda-embedding-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  : ( f : hom A a x)
+    → ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ)) x f
+    = φ x f
+  :=
+     htpy-eq
+      ( hom A a x)
+      ( \ z → hom A a' x)
+      ( ( ( yoneda-embedding A is-segal-A a a')
+          ( ( evid A a ( hom A a')) φ )) x)
+      ( φ x)
+      ( htpy-compute-yoneda-embedding-evid A is-segal-A a a' φ x)
+
+#def rev-compute-htpy-yoneda-embedding-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  ( f : hom A a x)
+  : φ x f
+    = ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ)) x f
+  :=
+     rev
+      ( hom A a' x)
+      ( ( ( yoneda-embedding A is-segal-A a a')
+          ( ( evid A a ( hom A a')) φ )) x f)
+      ( φ x f)
+      ( htpy-yoneda-embedding-evid A is-segal-A a a' φ x f)
+```
+
+Define the action by precompostition.
+
+```rzk
+#def precomposition-evid-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  : ( x : A ) → ( hom A a x → hom A a' x)
+  := \ x f → comp-is-segal A is-segal-A a' a x ( ( evid A a ( hom A a')) φ) f
+```
+
+The Yoneda embedding coincides with `#!rzk precomposition-evid-is-segal`.
+
+```rzk
+#def eq-yoneda-embedding-precomposition-evid
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  ( f : hom A a x)
+  : ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ)) x f
+    = precomposition-evid-is-segal A is-segal-A a a' φ x f
+  :=
+     compute-covariant-transport-of-hom-family-is-segal
+      ( A)
+      ( is-segal-A)
+      ( a')
+      ( a)
+      ( x)
+      ( (evid A a ( hom A a')) φ)
+      ( f )
+```
+
+Now we cocatenate the paths to prove the result as stated.
+
+```rzk
+#def eq-compute-precomposition-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  ( f : hom A a x)
+  : (φ x) f = (precomposition-evid-is-segal A is-segal-A a a' φ x) f
+  :=
+     concat
+      ( hom A a' x)
+      ( φ x f)
+      ( ( ( yoneda-embedding A is-segal-A a a')
+          ( ( evid A a ( hom A a')) φ )) x f)
+      ( precomposition-evid-is-segal A is-segal-A a a' φ x f)
+      ( rev-compute-htpy-yoneda-embedding-evid A is-segal-A a a' φ x f)
+      ( eq-yoneda-embedding-precomposition-evid A is-segal-A a a' φ x f)
+
+#def eq-htpy-precomposition-evid
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  : φ x = precomposition-evid-is-segal A is-segal-A a a' φ x
+  :=
+     eq-htpy
+      ( funext)
+      ( hom A a x)
+      ( \ z → hom A a' x)
+      ( φ x)
+      ( precomposition-evid-is-segal A is-segal-A a a' φ x)
+      ( \ f → eq-compute-precomposition-evid A is-segal-A a a' φ x f)
+
+#def eq-precomposition-evid-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  : φ = precomposition-evid-is-segal A is-segal-A a a' φ
+  :=
+     eq-htpy
+      ( funext)
+      ( A)
+      ( \ x → ( hom A a x → hom A a' x))
+      ( φ)
+      ( precomposition-evid-is-segal A is-segal-A a a' φ)
+      ( \ x → eq-htpy-precomposition-evid A is-segal-A a a' φ x)
+```
+
 ## Yoneda for contravariant families
 
 Dually, the Yoneda lemma for contravariant type families characterizes natural
@@ -1154,4 +1324,44 @@ proven, just with an equivalent type in the domain of the evaluation map.
       ( \ s → s a (id-hom A a))
       ( contra-dependent-yoneda-lemma'
           A is-segal-A a C is-contravariant-C)
+```
+
+## Representable Families
+
+A covariant family is representable if it is fiberweise equivalent to covariant
+homs. In order to check if this is the case, it is not necessary to know if the
+family is covariant or not.
+
+```rzk
+#def is-representable-family
+  ( A : U)
+  ( C : A → U)
+  : U
+  := Σ (a : A) , (x : A) → (Equiv (hom A a x) (C x))
+```
+
+The definition makes it slightly awkward to access the actual equivalence, so we
+give a helper function.
+
+```rzk
+#def equiv-for-is-representable-family
+  ( A : U)
+  ( C : A → U)
+  ( is-rep-C : is-representable-family A C)
+  : (x : A) → (hom A (first is-rep-C) x) → (C x)
+  := \ x → first((second (is-rep-C)) x)
+```
+
+RS Proposition 9.10 gives an if and only if condition for a covariant family
+`#!rzk C : A → U` to be representable. The condition is that the type
+`#!rzk Σ (x : A) , C x` has an initial object. For convenience, we give this
+condition a name.
+
+```rzk
+#def has-initial-tot
+  ( A : U)
+  ( C : A → U)
+  : U
+  := Σ ((a , u) : Σ (x : A) , (C x))
+      , is-initial (Σ (x : A) , (C x)) (a , u)
 ```

@@ -267,3 +267,49 @@ the fibers.
       ( \ a → is-contr-based-paths B (f a)))
     ( fubini-Σ A B (\ a b → f a = b))
 ```
+
+The inverse of this equivalence is given (definitionally!) by the projection
+`\ (_ , (a , _)) → a`.
+
+```rzk
+#def compute-left-inverse-equiv-domain-sum-of-fibers
+  ( A B : U)
+  ( f : A → B)
+  ( (b , (a , p)) : (Σ (b : B) , fib A B f b))
+  : ( first (first ( second (equiv-domain-sum-of-fibers A B f))) (b , (a , p))
+    = a)
+  := refl
+
+#def compute-right-inverse-equiv-domain-sum-of-fibers
+  ( A B : U)
+  ( f : A → B)
+  ( (b , (a , p)) : (Σ (b : B) , fib A B f b))
+  : ( first (second ( second (equiv-domain-sum-of-fibers A B f))) (b , (a , p))
+    = a)
+  := refl
+```
+
+## Equivalence between fibers in equivalent domains
+
+As an application of the main theorem, we show that precomposing with an
+equivalence preserves fibers up to equivalence.
+
+```rzk
+#def equiv-fibers-equiv-domains
+  ( A B C : U)
+  ( f : A → B)
+  ( g : B → C)
+  ( is-equiv-f : is-equiv A B f)
+  ( c : C)
+  : Equiv (fib A C (comp A B C g f) c) (fib B C g c)
+  :=
+  equiv-comp
+  ( fib A C ( comp A B C g f) c)
+  ( Σ ((b, _) : fib B C g c), fib A B f b)
+  ( fib B C g c)
+  ( equiv-fiber-sum-fiber-comp A B C f g c)
+  ( ( projection-total-type (fib B C g c) (\ (b, _) → fib A B f b))
+    , second
+      ( projection-theorem (fib B C g c) (\ (b, _) → fib A B f b))
+      ( \ (b, _) → (is-contr-map-is-equiv A B f is-equiv-f) b))
+```

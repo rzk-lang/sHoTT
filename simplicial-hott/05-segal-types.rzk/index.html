@@ -860,7 +860,7 @@
       
         <li class="md-nav__item">
   <a href="#products-of-segal-types" class="md-nav__link">
-    Products of Segal Types
+    Products of Segal types
   </a>
   
 </li>
@@ -1153,7 +1153,7 @@
       
         <li class="md-nav__item">
   <a href="#products-of-segal-types" class="md-nav__link">
-    Products of Segal Types
+    Products of Segal types
   </a>
   
 </li>
@@ -1195,9 +1195,9 @@
 </span></code></pre></div>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>hott/1-paths.md</code> - We require basic path algebra.</li>
-<li><code>hott/2-contractible.md</code> - We require the notion of contractible types and
-  their data.</li>
+<li><code>hott/01-paths.rzk.md</code> - We require basic path algebra.</li>
+<li><code>hott/02-contractible.rzk.md</code> - We require the notion of contractible types
+  and their data.</li>
 <li><code>hott/total-space.md</code> — We rely on
   <code class="language-rzk highlight"><span class="err">is-equiv-projection-contractible-fibers</span></code> and
   <code class="language-rzk highlight"><span class="err">projection-total-type</span></code> in the proof of Theorem 5.5.</li>
@@ -1677,7 +1677,7 @@ is exactly <code class="language-rzk highlight"><span class="err">horn-restricti
 </span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a><span class="err">                  ( h)))</span>
 </span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a><span class="err">            ( equiv-horn-restriction A))</span>
 </span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a><span class="err">          ( horn-restriction A , is-local-horn-inclusion-A)))</span>
-</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a><span class="err">    ( horn A x y z f g)</span>
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a><span class="err">      ( horn A x y z f g)</span>
 </span></code></pre></div>
 <p>We have now proven that both notions of Segal types are logically equivalent.</p>
 <div class="language-rzk highlight"><span class="filename">RS17, Theorem 5.5</span><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-iff-is-local-horn-inclusion" id="define:is-segal-iff-is-local-horn-inclusion" style="visibility: visible; position: relative; color: inherit">is-segal-iff-is-local-horn-inclusion</a></span>
@@ -2611,7 +2611,7 @@ composition:</p>
 </span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="kr">#variable</span><span class="p"> </span>is-segal-A<span class="err"> : is-segal A</span>
 </span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="kr">#variables</span><span class="p"> </span>x y z<span class="err"> : A</span>
 </span><span id="__span-53-6"><a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a>
-</span><span id="__span-53-7"><a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:homotopy-interchange-law-statement" id="define:homotopy-interchange-law-statement" style="visibility: visible; position: relative; color: inherit">homotopy-interchange-law-statement</a></span>
+</span><span id="__span-53-7"><a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:statement-homotopy-interchange-law" id="define:statement-homotopy-interchange-law" style="visibility: visible; position: relative; color: inherit">statement-homotopy-interchange-law</a></span>
 </span><span id="__span-53-8"><a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a><span class="err">  </span><span class="p">( </span>f1 f2 f3 <span class="p">:</span><span class="err"> hom A x y)</span>
 </span><span id="__span-53-9"><a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="err">  </span><span class="p">( </span>h1 h2 h3 <span class="p">:</span><span class="err"> hom A y z)</span>
 </span><span id="__span-53-10"><a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> f1 = f2)</span>
@@ -2637,25 +2637,25 @@ composition:</p>
 </span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> f2 = f3)</span>
 </span><span id="__span-54-6"><a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a><span class="err">  </span><span class="p">( </span>p&#39; <span class="p">:</span><span class="err"> h1 = h2)</span>
 </span><span id="__span-54-7"><a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a><span class="err">  </span><span class="p">( </span>q&#39; <span class="p">:</span><span class="err"> h2 = h3)</span>
-</span><span id="__span-54-8"><a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a><span class="err">  : homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p&#39; q&#39;</span>
+</span><span id="__span-54-8"><a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a><span class="err">  : statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p&#39; q&#39;</span>
 </span><span id="__span-54-9"><a id="__codelineno-54-9" name="__codelineno-54-9" href="#__codelineno-54-9"></a><span class="err">  := ind-path</span>
 </span><span id="__span-54-10"><a id="__codelineno-54-10" name="__codelineno-54-10" href="#__codelineno-54-10"></a><span class="err">    ( hom A x y)</span>
 </span><span id="__span-54-11"><a id="__codelineno-54-11" name="__codelineno-54-11" href="#__codelineno-54-11"></a><span class="err">    ( f2)</span>
-</span><span id="__span-54-12"><a id="__codelineno-54-12" name="__codelineno-54-12" href="#__codelineno-54-12"></a><span class="err">    ( </span><span class="p">\ </span>f3 q <span class="err">-&gt; homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p&#39; q&#39;)</span>
+</span><span id="__span-54-12"><a id="__codelineno-54-12" name="__codelineno-54-12" href="#__codelineno-54-12"></a><span class="err">    ( </span><span class="p">\ </span>f3 q <span class="err">-&gt; statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p&#39; q&#39;)</span>
 </span><span id="__span-54-13"><a id="__codelineno-54-13" name="__codelineno-54-13" href="#__codelineno-54-13"></a><span class="err">    ( ind-path</span>
 </span><span id="__span-54-14"><a id="__codelineno-54-14" name="__codelineno-54-14" href="#__codelineno-54-14"></a><span class="err">      ( hom A x y)</span>
 </span><span id="__span-54-15"><a id="__codelineno-54-15" name="__codelineno-54-15" href="#__codelineno-54-15"></a><span class="err">      ( f1)</span>
-</span><span id="__span-54-16"><a id="__codelineno-54-16" name="__codelineno-54-16" href="#__codelineno-54-16"></a><span class="err">      ( </span><span class="p">\ </span>f2 p <span class="err">-&gt; homotopy-interchange-law-statement f1 f2 f2 h1 h2 h3</span>
+</span><span id="__span-54-16"><a id="__codelineno-54-16" name="__codelineno-54-16" href="#__codelineno-54-16"></a><span class="err">      ( </span><span class="p">\ </span>f2 p <span class="err">-&gt; statement-homotopy-interchange-law f1 f2 f2 h1 h2 h3</span>
 </span><span id="__span-54-17"><a id="__codelineno-54-17" name="__codelineno-54-17" href="#__codelineno-54-17"></a><span class="err">          p </span><span class="s">refl</span><span class="err"> p&#39; q&#39;)</span>
 </span><span id="__span-54-18"><a id="__codelineno-54-18" name="__codelineno-54-18" href="#__codelineno-54-18"></a><span class="err">      ( ind-path</span>
 </span><span id="__span-54-19"><a id="__codelineno-54-19" name="__codelineno-54-19" href="#__codelineno-54-19"></a><span class="err">        ( hom A y z)</span>
 </span><span id="__span-54-20"><a id="__codelineno-54-20" name="__codelineno-54-20" href="#__codelineno-54-20"></a><span class="err">        ( h2)</span>
-</span><span id="__span-54-21"><a id="__codelineno-54-21" name="__codelineno-54-21" href="#__codelineno-54-21"></a><span class="err">        ( </span><span class="p">\ </span>h3 q&#39; <span class="err">-&gt; homotopy-interchange-law-statement f1 f1 f1 h1 h2 h3</span>
+</span><span id="__span-54-21"><a id="__codelineno-54-21" name="__codelineno-54-21" href="#__codelineno-54-21"></a><span class="err">        ( </span><span class="p">\ </span>h3 q&#39; <span class="err">-&gt; statement-homotopy-interchange-law f1 f1 f1 h1 h2 h3</span>
 </span><span id="__span-54-22"><a id="__codelineno-54-22" name="__codelineno-54-22" href="#__codelineno-54-22"></a><span class="err">            </span><span class="s">refl</span><span class="err"> </span><span class="s">refl</span><span class="err"> p&#39; q&#39;)</span>
 </span><span id="__span-54-23"><a id="__codelineno-54-23" name="__codelineno-54-23" href="#__codelineno-54-23"></a><span class="err">        ( ind-path</span>
 </span><span id="__span-54-24"><a id="__codelineno-54-24" name="__codelineno-54-24" href="#__codelineno-54-24"></a><span class="err">          ( hom A y z)</span>
 </span><span id="__span-54-25"><a id="__codelineno-54-25" name="__codelineno-54-25" href="#__codelineno-54-25"></a><span class="err">          ( h1)</span>
-</span><span id="__span-54-26"><a id="__codelineno-54-26" name="__codelineno-54-26" href="#__codelineno-54-26"></a><span class="err">          ( </span><span class="p">\ </span>h2 p&#39; <span class="err">-&gt; homotopy-interchange-law-statement f1 f1 f1 h1 h2 h2</span>
+</span><span id="__span-54-26"><a id="__codelineno-54-26" name="__codelineno-54-26" href="#__codelineno-54-26"></a><span class="err">          ( </span><span class="p">\ </span>h2 p&#39; <span class="err">-&gt; statement-homotopy-interchange-law f1 f1 f1 h1 h2 h2</span>
 </span><span id="__span-54-27"><a id="__codelineno-54-27" name="__codelineno-54-27" href="#__codelineno-54-27"></a><span class="err">              </span><span class="s">refl</span><span class="err"> </span><span class="s">refl</span><span class="err"> p&#39; </span><span class="s">refl</span><span class="err">)</span>
 </span><span id="__span-54-28"><a id="__codelineno-54-28" name="__codelineno-54-28" href="#__codelineno-54-28"></a><span class="err">          ( </span><span class="s">refl</span><span class="err">)</span>
 </span><span id="__span-54-29"><a id="__codelineno-54-29" name="__codelineno-54-29" href="#__codelineno-54-29"></a><span class="err">          ( h2)</span>
@@ -2838,7 +2838,7 @@ This is the relative notion of a Segal type.</p>
 </span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="err">  : U</span>
 </span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a><span class="err">  := is-right-orthogonal-to-shape (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) Δ² (</span><span class="p">\ </span>t <span class="err">→ Λ t) A&#39; A α</span>
 </span></code></pre></div>
-<h2 id="products-of-segal-types">Products of Segal Types<a class="headerlink" href="#products-of-segal-types" title="Permanent link">&para;</a></h2>
+<h2 id="products-of-segal-types">Products of Segal types<a class="headerlink" href="#products-of-segal-types" title="Permanent link">&para;</a></h2>
 <p>This is an additional section which describes morphisms in products of types as
 products of morphisms. It is implicitly stated in Proposition 8.21.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="nd">#section</span><span class="n"> morphisms-of-products-is-products-of-morphisms</span>

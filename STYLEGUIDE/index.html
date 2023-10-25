@@ -360,12 +360,66 @@
     The structure of code
   </a>
   
+    <nav class="md-nav" aria-label="The structure of code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-tree-structure-of-constructions" class="md-nav__link">
+    The tree structure of constructions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-code-conventions" class="md-nav__link">
+    Other code conventions
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
   <a href="#naming-conventions" class="md-nav__link">
     Naming conventions
   </a>
+  
+    <nav class="md-nav" aria-label="Naming conventions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-general-naming-scheme" class="md-nav__link">
+    A general naming scheme
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conclusions-first" class="md-nav__link">
+    Conclusions first!
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table-of-common-descriptors" class="md-nav__link">
+    Table of common descriptors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions-and-naming-practices-to-avoid" class="md-nav__link">
+    Exceptions and naming practices to avoid
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -378,14 +432,28 @@
       
         <li class="md-nav__item">
   <a href="#use-of-comments" class="md-nav__link">
-    Use of Comments
+    Use of comments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literary-conventions" class="md-nav__link">
+    Literary conventions
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#adapting-and-evolving-the-style-guide" class="md-nav__link">
-    Adapting and Evolving the Style Guide
+    Adapting and evolving the style guide
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
   </a>
   
 </li>
@@ -1023,12 +1091,66 @@
     The structure of code
   </a>
   
+    <nav class="md-nav" aria-label="The structure of code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-tree-structure-of-constructions" class="md-nav__link">
+    The tree structure of constructions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-code-conventions" class="md-nav__link">
+    Other code conventions
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
   <a href="#naming-conventions" class="md-nav__link">
     Naming conventions
   </a>
+  
+    <nav class="md-nav" aria-label="Naming conventions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-general-naming-scheme" class="md-nav__link">
+    A general naming scheme
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conclusions-first" class="md-nav__link">
+    Conclusions first!
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table-of-common-descriptors" class="md-nav__link">
+    Table of common descriptors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions-and-naming-practices-to-avoid" class="md-nav__link">
+    Exceptions and naming practices to avoid
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1041,14 +1163,28 @@
       
         <li class="md-nav__item">
   <a href="#use-of-comments" class="md-nav__link">
-    Use of Comments
+    Use of comments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literary-conventions" class="md-nav__link">
+    Literary conventions
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#adapting-and-evolving-the-style-guide" class="md-nav__link">
-    Adapting and Evolving the Style Guide
+    Adapting and evolving the style guide
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
   </a>
   
 </li>
@@ -1077,19 +1213,32 @@
 
 
 <h1 id="style-guide-and-design-principles">Style guide and design principles<a class="headerlink" href="#style-guide-and-design-principles" title="Permanent link">&para;</a></h1>
-<p>This guide provides a set of design principles and guidelines for the <code>sHoTT</code>
-project. Our style and design principles borrows heavily from
-<a href="https://github.com/UniMath/agda-unimath"><code>agda-unimath</code></a>.</p>
+<p>The <code>sHoTT</code> project is an evolving community effort, and your participation is
+most welcomed! However, to make the library as useful as possible for everyone,
+we ask that everyone comply to a common set of style guidelines.</p>
+<p>Good style conventions don't just serve to homogenize code and make things look
+pretty, but they serve to</p>
+<ul>
+<li>Elucidate the structure of proofs and definitions through proper formatting.</li>
+<li>Effectively summarize definitions and arguments through good naming
+  conventions.</li>
+<li>Make the formalization base easier to navigate.</li>
+<li>Help us maintain the repository.</li>
+<li>Provide techniques and habits that help you in the formalization process.</li>
+</ul>
+<p>Please note that these conventions will and should change as the project and
+language develops. We acknowledge that our code is not always consistent with
+our conventions, and appreciate your help keeping the library compliant and
+clean.</p>
 <h2 id="the-structure-of-code">The structure of code<a class="headerlink" href="#the-structure-of-code" title="Permanent link">&para;</a></h2>
-<p>We enforce strict formatting rules. This formatting allows the type of the
-defined term to be easily readable, and aids in understanding the structure of
-the definition.</p>
-<p>The general format of a definition is as follows:</p>
+<p>We enforce strict formatting rules. These rules facilitate better readability of
+the code and aids in understanding the structure of every. The general format of
+a definition is as follows:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:concat" id="define:concat" style="visibility: visible; position: relative; color: inherit">concat</a></span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="err">  : (x = z)</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="err">  := </span><span class="s">idJ</span><span class="err"> (A , y , </span><span class="p">\ </span>z&#39; q&#39; <span class="err">→ (x = z&#39;) , p , z , q)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="err">  := ind-path A y (</span><span class="p">\ </span>z&#39; q&#39; <span class="err">→ (x = z&#39;)) p z q</span>
 </span></code></pre></div>
 <ul>
 <li>
@@ -1100,178 +1249,494 @@ the definition.</p>
   a colon (<code>:</code>).</p>
 </li>
 <li>
-<p>Then, on the next line, the walrus separator (<code>:=</code>) is placed, and after it
-  follows the actual construction of the definition. If the construction does
-  not fit on a single line, we immediately insert a new line after the walrus
-  separator and indent the code an extra level (2 spaces).</p>
+<p>On the next line, the walrus separator (<code>:=</code>) is placed, and after it follows
+  the actual construction of the definition. If the construction does not fit on
+  a single line, by which we mean fit within our stipulated 80-character limit,
+  we immediately insert a new line after the walrus separator. Note, in
+  particular, to avoid excessive indentation we do not indent the code an extra
+  level in this particular case.</p>
 </li>
 </ul>
-<p>(Currently just taken from agda-unimath and adapted to Rzk) In Rzk, every
-construction is structured like a tree, where each operation can be seen as a
-branching point. We use indentation levels and parentheses to highlight this
-structure, which makes the code feel more organized and understandable. For
-example, when a definition part extends beyond a line, we introduce line breaks
-at the earliest branching point, clearly displaying the tree structure of the
-definition. This allows the reader to follow the branches of the tree, and to
-visually grasp the scope of each operation and argument. Consider the following
-example about Segal types:</p>
+<h3 id="the-tree-structure-of-constructions">The tree structure of constructions<a class="headerlink" href="#the-tree-structure-of-constructions" title="Permanent link">&para;</a></h3>
+<p>In the Rzk language, every construction is structured like a tree, where each
+operation can be seen as a branching point. We use indentation and
+parenthization conventions to highlight this structure, which makes the code
+more organized and readable. For example, when part of a definition extends
+beyond a single line, we introduce line breaks at the earliest sensible
+branching point, clearly displaying the tree structure of the definition. This
+allows the reader to follow the branches of the tree, and to visually grasp the
+scope of each operation and argument. Consider the following example about Segal
+types:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-is-local-horn-inclusion" id="define:is-segal-is-local-horn-inclusion" style="visibility: visible; position: relative; color: inherit">is-segal-is-local-horn-inclusion</a></span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="err">  </span><span class="p">( </span>is-local-horn-inclusion-A <span class="p">:</span><span class="err"> is-local-horn-inclusion A)</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="err">  : isSegal A</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="err">  : is-segal A</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="err">  :=</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="err">    </span><span class="p">\ </span>x y z f g <span class="err">→</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="err">    projection-equiv-contractible-fibers</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="err">      ( Λ → A)</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="err">      </span><span class="p">( </span>\ k →
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        Σ ( h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))) ,</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="err">          ( hom2 A</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="err">            ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="err">            ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="err">            ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="err">            ( h)))</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="err">      </span><span class="p">( </span>second
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        ( comp-equiv
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>          ( Σ ( k <span class="p">:</span><span class="err"> Λ → A ) ,</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="err">            </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))) ,</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="err">              ( hom2 A</span>
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="err">                ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="err">                ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="err">                ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="err">                ( h)))</span>
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="err">          ( Δ² → A)</span>
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="err">          ( Λ  → A)</span>
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="err">          ( inv-equiv</span>
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="err">            ( Δ² → A)</span>
-</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="err">            </span><span class="p">( </span>Σ ( k <span class="p">:</span><span class="err"> Λ → A) ,</span>
-</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="err">              </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))) ,</span>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="err">                ( hom2 A</span>
-</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="err">                  ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="err">                  ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
-</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="err">                  ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
-</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="err">                  ( h)))</span>
-</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="err">            ( equiv-horn-restriction A))</span>
-</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="err">          ( horn-restriction A , is-local-horn-inclusion-A)))</span>
-</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="err">      ( horn A x y z f g)</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="err">  </span><span class="p">\ </span>x y z f g <span class="err">→</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="err">  contractible-fibers-is-equiv-projection</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="err">  ( Λ → A)</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="err">  </span><span class="p">( </span>\ k →
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    Σ ( h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">)))</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="err">    , ( hom2 A</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="err">        ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="err">        ( h)))</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="err">  </span><span class="p">( </span>second
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    ( equiv-comp
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>      ( Σ ( k <span class="p">:</span><span class="err"> Λ → A)</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="err">        , </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">)))</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="err">          , ( hom2 A</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="err">              ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="err">              ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="err">              ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="err">              ( h)))</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="err">      ( Δ² → A)</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="err">      ( Λ  → A)</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="err">      ( inv-equiv</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="err">        ( Δ² → A)</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="err">        </span><span class="p">( </span>Σ ( k <span class="p">:</span><span class="err"> Λ → A)</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="err">          , </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">)))</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="err">            , ( hom2 A</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="err">                ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="err">                ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="err">                ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="err">                ( h)))</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="err">        ( equiv-horn-restriction A))</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="err">      ( horn-restriction A , is-local-horn-inclusion-A)))</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="err">  ( horn A x y z f g)</span>
 </span></code></pre></div>
-<p>The root here is the function <code>projection-equiv-contractible-fibers</code>. It takes
-four arguments, each starting on a fresh line and is indented an extra level
-from the root. The first argument fits neatly on one line, but the second one is
-too large. In these cases, we add a line break right after the <code>→</code>-symbol
-following the lambda-abstraction, which is the earliest branching point in this
-case. The next node is again <code>Σ</code>, with two arguments. The first one fits on a
-line, but the second does not, so we add a line break between them. This process
-is continued until the definition is complete.</p>
-<p>Note also that we use parentheses to mark the branches. The extra space after
-the opening parentheses marking a branch is there to visually emphasize the tree
-structure of the definition, and synergizes with our convention to have
+<p>The root in this instance is the function
+<code>projection-equiv-contractible-fibers</code>. It takes four arguments, each starting
+on a fresh line and is parenthesized. Note that its parentheses are indented at
+the same level as its parent node. The first argument fits neatly on one line,
+but the second one is too large. In this case, we add a line break right after
+the <code>→</code>-symbol following the lambda-abstraction, which we consider the earliest
+branching point in this case. The next node is again <code>Σ</code>, with two arguments.
+The first one fits on a line, but the second does not, so we add a line break
+between them since <code>Σ</code> is only one character. This process is continued until
+the definition is complete.</p>
+<p>Observe also that we use indentation to highlight the branches. The extra space
+after the opening parentheses marking a branch is there to visually emphasize
+the tree structure of the definition, and synergizes with our convention to have
 two-space indentation level increases.</p>
-<h2 id="naming-conventions">Naming conventions<a class="headerlink" href="#naming-conventions" title="Permanent link">&para;</a></h2>
+<p>What is generally considered the "earliest <em>sensible</em> branching point" will
+depend on context, and we ask that contributors practice common sense when
+determining this. For instance, it may be sensible to group some arguments
+together on a line. Already in our example above we wrote</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="err">  hom2 A</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="err">  ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="err">  ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="err">  ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="err">  ( h)</span>
+</span></code></pre></div>
+<p>visually grouping together <code>hom2</code> and <code>A</code>, and again the next three arguments,
+emphasizing their connection to eachother. When in doubt, it is generally better
+to break lines sooner rather than later.</p>
+<h2 id="other-code-conventions">Other code conventions<a class="headerlink" href="#other-code-conventions" title="Permanent link">&para;</a></h2>
 <ul>
-<li>As a main strategy, we strive to keep a tight connection between names of
-  constructions and their types. Take for instance [...].<blockquote>
+<li>We employ an 80-character line length limit. This means that lines of code
+  generally should not be longer than 80 characters. If they exceed this limit,
+  they should be reformatted to fit within the limit by inserting appropriate
+  line breaks.</li>
+</ul>
+<p>!!! info</p>
+<div class="language-text highlight"><pre><span></span><code>  Names can be longer than the line character limit.
+</code></pre></div>
 <ul>
-<li>Add example</li>
-<li>prepending assumptions and then conclusion</li>
-<li>See agda-unimath's description</li>
-<li>
-<blockquote>
-<p>We start with the initial assumption, then, working our way to the
-conclusion, prepending every central assumption to the name, and finally
-the conclusion. So for instance the name <code>iso-is-initial-is-segal</code>
-should read like we get an iso of something which is initial given that
-something is Segal. The true reading should then be obvious.</p>
-</blockquote>
-</li>
+<li>We place binary operators/separators at the beginning of a line rather than
+  the end. When they are a single character wide, this aligns very well with our
+  parenthization and indentation rules. Consider for instance the following
+  sample code:</li>
 </ul>
-<blockquote>
-<p>The naming conventions are aimed at improving the readability of the code,
-not to ensure the shortest possible names, nor to minimize the amount of
-typing by the implementers of the library.</p>
-</blockquote>
-</blockquote>
-</li>
-<li>We mainly use lower case names with words separated by hyphens.</li>
-<li>Capitalized names are reserved for subuniverses and similar collections. When
-  a construction is made internally to such a collection, we <em>append</em> its name.
-  For instance, the subuniverse of Segal types is called <code>Segal</code>, and its
-  internal hom, called <code>function-type-Segal,</code> has the following signature:</li>
-</ul>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:function-type-Segal" id="define:function-type-Segal" style="visibility: visible; position: relative; color: inherit">function-type-Segal</a></span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> Segal)</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="err">  : Segal</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="err">( moderately-long-name-of-a-function-A</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="err">  ( a-very-complicated-term-with-a-very-long-name-or-description-B</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="err">  , another-long-and-complicated-expression-for-another-term-C))</span>
+</span></code></pre></div>
+<p>Our indentation convention has the beautiful feature that we can determine the
+  structure of the code simply by scanning the left edge of the code block. The
+  placement of the comma separator in the example above complements this neatly,
+  since we can immediately see that <code>function-A</code> is applied to the pair
+  <code>(term-B , term-C)</code> by scanning the left edge of the code.</p>
+<p>Similarly, consider also</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="err">( ( a-long-and-complicated-arithmetic-expression-involving-many-operations)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="err">* ( another-complicated-and-long-expression-with-symbols-and-numbers))</span>
+</span></code></pre></div>
+<p>By having the multiplication symbol on the start of the line we can
+  immediately see that we are multiplying the two long expressions together, as
+  opposed to performing some other operation.</p>
+<p>Similarly, we also place function type formation arrows at the start of the
+  next line. E.g.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:function" id="define:function" style="visibility: visible; position: relative; color: inherit">function</a></span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="err">  </span><span class="p">( </span>parameter-1 <span class="p">:</span><span class="err"> type-1)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="err">  </span><span class="p">( </span>parameter-2 <span class="p">:</span><span class="err"> type-2)</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="err">  : type-with-a-name-3</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="err">  → type-with-a-longer-name-4</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="err">  → short-type-5</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="err">  := undefined</span>
+</span></code></pre></div>
+<p>!!! warning</p>
+<div class="language-text highlight"><pre><span></span><code>  This should not be confused with the convention for placement of arrows
+  for lambda abstractions, which should be placed at the end of the line
+  instead.
+</code></pre></div>
+<p>When the binary operator/separator is more than a single character wide, e.g.
+  for the walrus separator (<code>:=</code>) and identity type formation with explicitly
+  passed underlying type (<code>=_{...}</code>), we insert a new line directly after the
+  operator as well. I.e.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="err">( ( a-term-of-a-type)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="err">=_{ the-name-of-the-type}</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="err">  ( another-term-of-that-type))</span>
 </span></code></pre></div>
 <ul>
+<li>The <code>uses</code>-keyword and the accompanying list of variables is placed on their
+  own lines.</li>
+</ul>
+<p>In the base case, write</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:my-name" id="define:my-name" style="visibility: visible; position: relative; color: inherit">my-name</a></span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="err">  uses (my-variable-1 my-variable-2 ...)</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="err">  ...</span>
+</span></code></pre></div>
+<p>If the variable list (<code>(my-variable-1 my-variable-2 ...)</code>) does not fit on the
+  first line together with <code>uses</code>, insert a line break directly after <code>uses</code> and
+  write:</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:my-name" id="define:my-name" style="visibility: visible; position: relative; color: inherit">my-name</a></span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="err">  uses</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="err">    ( my-variable-1 my-variable-2 ...)</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="err">  ...</span>
+</span></code></pre></div>
+<p>If the list still does not fit on a single line, start insert line breaks
+  between variables. Here, there is some room for common sense in where the line
+  breaks should be inserted, allowing for certain variable names to be grouped
+  together:</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:my-name" id="define:my-name" style="visibility: visible; position: relative; color: inherit">my-name</a></span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="err">  uses</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="err">    ( my-variable-1</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="err">      my-variable-2</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="err">      ...)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="err">  ...</span>
+</span></code></pre></div>
+<ul>
+<li>If you find that the separation between the type signature of a definition and
+  its construction is not visually clear, we permit the insertion of an
+  additional line break after the walrus separator (<code>:=</code>).</li>
+</ul>
+<h2 id="naming-conventions">Naming conventions<a class="headerlink" href="#naming-conventions" title="Permanent link">&para;</a></h2>
+<p>Adhering to a good naming convention is essential for keeping the library
+navigable and maintainable, and helps you make progress with your formalization
+goals. Good names provide concise descriptions of an entry's purpose, and help
+making the code in the library readable. The intent of our conventions can be
+summarized as follows:</p>
+<ul>
+<li>Entry names aim to concisely describe their mathematical concept, using
+  well-known mathematical vocabulary.</li>
+<li>While an entry's name reflects its concept, it avoids relying on the details
+  of its formalization. This way, a user is not required to know how something
+  is formalized in order to reference an entry.</li>
+<li>Even with only minimal knowledge of the conventions, readers should be able to
+  intuitively grasp an entry's purpose from its name.</li>
+<li>The naming conventions should apply regardless of topic or subfield.</li>
+<li>For many common kinds of entries, our naming conventions should offer a
+  predictable suggestion of what its name should be.</li>
+<li>In this way, our conventions should help generate names for definitions.</li>
+<li>Ultimately, our goal is for these conventions to support clear and
+  maintainable code.</li>
+</ul>
+<h3 id="a-general-naming-scheme">A general naming scheme<a class="headerlink" href="#a-general-naming-scheme" title="Permanent link">&para;</a></h3>
+<p>With the basic purpose in mind, we present an adapted possible general naming
+scheme originally due to Egbert Rijke.</p>
+<p>The general pattern looks as follows:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>  [descriptor]-[output-type]-[input-types]-[Namespace]
+</span></code></pre></div>
+<p>Every part of the pattern is optional. However, their order is fixed. The
+general naming pattern is broken into the following parts:</p>
+<ul>
+<li><strong><script type="math/tex; mode=display">descriptor</script>:</strong> A custom descriptive name part for the entry.</li>
+<li><strong><script type="math/tex; mode=display">output-type</script>:</strong> Refers to the concluding type of the entry.</li>
+<li><strong><script type="math/tex; mode=display">input-types</script>:</strong> Consists of references to noteworthy input types.</li>
+<li><strong><script type="math/tex; mode=display">Namespace</script>:</strong> Refers to an overarching concept, a subuniverse which the
+  construction takes place in, or a general category the entry is about.</li>
+</ul>
+<p>In particular, since Rzk does not currently have a suitable namespace mechanism,
+the <code>[Namespace]</code> field serves as a reasonable substitute.</p>
+<p>Now, let us consider some examples:</p>
+<ul>
+<li><code>rzk
+  #def function-type-Segal
+    ( A B : Segal)
+    : Segal</code></li>
+</ul>
+<p>This definition uses the pattern <code>[output-type]-[Namespace]</code>.</p>
+<ul>
+<li><code>is-segal-is-local-horn-inclusion</code> uses the pattern
+  <code>[output-type]-[input-types]</code>.</li>
+<li><code>is-equiv-identity</code> uses the pattern <code>[output-type]</code>.</li>
+</ul>
+<p>The descriptor pattern is by far the most versatile one. Its purpose is to give
+special meaningful descriptions that accurately represent some aspect, or
+precisely the concept in question. For instance, if a concept is known best by a
+special name, that name should probably be used.</p>
+<ul>
+<li>As an example, the canonical function with type signature</li>
+</ul>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="err">(A → B → C) → (A × B → C)</span>
+</span></code></pre></div>
+<p>should be called <code>uncurry</code>, using the <code>descriptor</code>-pattern. It should not, for
+  instance, be called <code>map-from-product-map-of-maps</code>.</p>
+<ul>
+<li>Another example is <code>compute-hom-eq-extension-type-is-discrete</code>. This uses the
+  pattern <code>[descriptor]-[output-type]-[input-types]</code>
+  (<code>(compute)-(hom)-(eq-extension-type-is-discrete)</code>).</li>
+</ul>
+<h3 id="conclusions-first">Conclusions first!<a class="headerlink" href="#conclusions-first" title="Permanent link">&para;</a></h3>
+<p>The most noteworthy aspect of our general naming scheme is that conclusions
+always end up at the start of the name. This has the benefit that the most
+important aspect of a definition is what is mentioned first in its name.
+Although it can take a little while to get used to this scheme as everything is
+written in the opposite order you may be used to, it offers the following
+central benefit: the name summarizes the entry's meaning efficiently, even if
+only part of it is read. This means that when a reader is scanning the
+application of a definition in a larger proof, they can get an overview by only
+scanning the first few words at each branching point/line.</p>
+<p>Hence, if you are at a loss for naming a definition, we offer you the following
+simplified naming scheme: start with the first important assumption in your
+definition statement, and to it, <em>prepend</em> every subsequent important assumption
+that is made. Finally, prepend the concluding type.</p>
+<ul>
+<li>For example, consider an entry with the following signature</li>
+</ul>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="err">#def ?????</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="err">  </span><span class="p">( </span>is-prop-A <span class="p">:</span><span class="err"> is-prop A)</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="err">  </span><span class="p">( </span>is-prop-B <span class="p">:</span><span class="err"> is-prop B)</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="err">  ( (f , g) : iff A B)</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="err">  : is-equiv A B f</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="err">  := ...</span>
+</span></code></pre></div>
+<p>applying the scheme we get</p>
+<ol>
+<li><code>is-prop</code>, noting the assumption that <code>A</code> is a proposition. We do not
+     include variable names in the entry's name.</li>
+<li><code>is-prop-is-prop</code>, noting the assumption that <code>B</code> is a proposition.</li>
+<li><code>iff-is-prop-is-prop</code>, noting the assumption that we have a logical
+     equivalence between <code>A</code> and <code>B</code>.</li>
+<li><code>is-equiv-iff-is-prop-is-prop</code>, finally prepending the concluding type.</li>
+</ol>
+<p>Hence our final definition will be</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-iff-is-prop-is-prop" id="define:is-equiv-iff-is-prop-is-prop" style="visibility: visible; position: relative; color: inherit">is-equiv-iff-is-prop-is-prop</a></span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  </span><span class="p">( </span>is-prop-A <span class="p">:</span><span class="err"> is-prop A)</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="err">  </span><span class="p">( </span>is-prop-B <span class="p">:</span><span class="err"> is-prop B)</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="err">  ( (f , g) : iff A B)</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="err">  : is-equiv A B f</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="err">  := ...</span>
+</span></code></pre></div>
+<p>Observe how it is immediately clear what the elements that go into the entry
+  are, in which order they go, and what you get out if applying it!</p>
+<h3 id="table-of-common-descriptors">Table of common descriptors<a class="headerlink" href="#table-of-common-descriptors" title="Permanent link">&para;</a></h3>
+<p>To give a sense of the kind of general descriptors we use, we list some common
+descriptors with examples in the table below.</p>
+<table>
+<thead>
+<tr>
+<th>Descriptor</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>coherence</code></td>
+<td>Used for proofs of coherence.</td>
+<td><code>coherence-is-half-adjoint-equiv</code></td>
+</tr>
+<tr>
+<td><code>compute</code></td>
+<td>Used for proofs of computation, which may be an identification or an element of any other identity system.</td>
+<td><code>compute-postwhisker-homotopy-is-segal</code></td>
+</tr>
+<tr>
+<td><code>Eq</code></td>
+<td>Used for identity systems on types where <code>htpy</code> or <code>equiv</code> is not an appropriate descriptor of the identity system.</td>
+<td><code>Eq-Σ</code></td>
+</tr>
+<tr>
+<td><code>eq</code></td>
+<td>Used as a descriptor for the identity type.</td>
+<td><code>eq-htpy</code></td>
+</tr>
+<tr>
+<td><code>equiv</code></td>
+<td>Used for equivalences, and also for names of identity systems of universe-like types.</td>
+<td><code>equiv-ap-is-equiv</code></td>
+</tr>
+<tr>
+<td><code>extensionality</code></td>
+<td>Used for computations of identity types.</td>
+<td><code>extensionality-Σ</code></td>
+</tr>
+<tr>
+<td><code>homotopy</code> or <code>htpy</code></td>
+<td>Used for constructions of homotopies, and also for names of identity systems of function-like types.</td>
+<td><code>homotopy-section-retraction-is-equiv</code></td>
+</tr>
+<tr>
+<td><code>is-property</code></td>
+<td>Used when <code>is-prop</code> is unavailable.</td>
+<td><code>is-property-is-contr</code></td>
+</tr>
+<tr>
+<td><code>map</code></td>
+<td>Used in two ways: as the functorial action of a type constructor, but also as the underlying map of a morphism.</td>
+<td><code>map-inverse-has-inverse</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Used for the underlying type of an object.</td>
+<td><code>type-Segal</code></td>
+</tr>
+<tr>
+<td><code>statement</code></td>
+<td>Used for definitions which are statements of things.</td>
+<td><code>statement-homotopy-interchange-law</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="exceptions-and-naming-practices-to-avoid">Exceptions and naming practices to avoid<a class="headerlink" href="#exceptions-and-naming-practices-to-avoid" title="Permanent link">&para;</a></h3>
+<ul>
 <li>
-<p>Use meaningful names that accurately represent the concepts applied. For
-  example, if a concept is known best by a special name, that name should
-  probably be used.</p>
+<p>We use Unicode symbols in names very sparingly and only when they align with
+  established mathematical practice. See the next section for more elaboration.</p>
+</li>
+<li>
+<p>We never refer to variables in definition names. The only instance we allow
+  this is when that variable is available at every possible invoking site. For
+  instance, we can name the argument of <code>is-segal-is-local-horn-inclusion</code> of
+  type <code>is-local-horn-inclusion A</code> as <code>is-local-horn-inclusion-A</code>, since
+  anywhere it can be invoked, the name <code>A</code> is also in scope. However, we would
+  never name <code>is-segal-is-local-horn-inclusion</code> as
+  <code>is-segal-A-is-local-horn-inclusion</code>.</p>
 </li>
 <li>
 <p>For technical lemmas or definitions, where the chance they will be reused is
-  very low, the specific names do not matter as much. In these cases, one may
-  resort to a simplified naming scheme, like enumeration. Please note, however,
-  that if you find yourself appealing to this convention frequently, that is a
-  sign that your code should be refactored.</p>
+  very low, the specific names do not matter as much. In these cases, you may
+  resort to a simplified naming scheme, like enumeration. Please keep in mind,
+  however, that if you find yourself appealing to this convention frequently,
+  that is a sign that your code should be refactored.</p>
+</li>
+</ul>
+<p>In closing, we note that the naming conventions are aimed at improving the
+readability of the code, not to ensure the shortest possible names, nor to
+minimize the amount of typing by the implementers of the library.</p>
+<h2 id="use-of-unicode-characters">Use of Unicode characters<a class="headerlink" href="#use-of-unicode-characters" title="Permanent link">&para;</a></h2>
+<p>Although using Unicode characters in definition names is entirely permissible,
+we recommend practicing restraint to maintain readability. For instance,
+although products of shapes can be formed with the <code>×</code> binary operator, we
+prefer to refer to it as <code>product</code> in names.</p>
+<p>When it comes to using builtin syntactic features of <code>rzk</code>, however, we use the
+following symbols:</p>
+<ul>
+<li><code>→</code> should be used over <code>-&gt;</code> (<code>\to</code>)</li>
+<li><code>↦</code> should be used over <code>|-&gt;</code> (<code>\mapsto</code>)</li>
+<li><code>≡</code> should be used over <code>===</code> (<code>\equiv</code>)</li>
+<li><code>≤</code> should be used over <code>&lt;=</code> (<code>\&lt;=</code>)</li>
+<li><code>∧</code> should be used over <code>/\</code> (<code>\and</code>)</li>
+<li><code>∨</code> should be used over <code>\/</code> (<code>\or</code>)</li>
+<li><code>0₂</code> should be used over <code>0_2</code> (<code>0\2</code>)</li>
+<li><code>1₂</code> should be used over <code>1_2</code> (<code>1\2</code>)</li>
+<li><code>I × J</code> should be used over <code>I * J</code> (<code>\x</code> or <code>\times</code>)</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>For <code>first</code>, <code>second</code>, <code>TOP</code> and <code>BOT</code>, we prefer the ASCII versions as
+opposed to <code>π₁</code>, <code>π₂</code>, <code>⊤</code> and <code>⊥</code>, as we find the latter don't read too
+well in the code. Please also note that we usually prefer the use of
+named projections for special <code>Σ</code>-types when these are defined.</p>
+</div>
+<h2 id="use-of-comments">Use of comments<a class="headerlink" href="#use-of-comments" title="Permanent link">&para;</a></h2>
+<p>Since we are using literate file formats, the need for comments in the code
+should be heavily limited. If you feel the need to comment your code, then
+please consider the following:</p>
+<ul>
+<li>Descriptive names for definitions should make their use self-documenting. If
+  you are finding that you want to explain an application of a definition,
+  consider giving it a better name, or creating an intermediate definition with
+  a name that better describes your current aplication.</li>
+</ul>
+<p>In particular, if some family of <code>Σ</code>-types is given a name, we prefer to also
+  define and use named projections for it instead of <code>first</code> and <code>second</code>. In
+  many cases, their meaning is not immediately obvious, and so one could be
+  tempted to annotate the code using comments to explain them.</p>
+<p>For example, instead of writing <code>first (second is-invertible-f)</code>, we define a
+  named projection <code>is-section-is-invertible</code>. This may then be used as
+  <code>is-section-is-invertible A B f is-invertible-f</code> elsewhere. This way, the code
+  becomes self-documenting.</p>
+<p>However, we recognize that in Rzk, since we do not have the luxury of implicit
+  arguments, this may sometimes cause overly verbose code. In such cases, you
+  may revert to using <code>first</code> and <code>second</code>.</p>
+<ul>
+<li>
+<p>Can your code be structured in a way that makes it more readable? Are you
+  structuring it according to our conventions, or can our conventions be
+  improved to make it more readable?</p>
 </li>
 <li>
-<p>We use Unicode symbols sparingly and only when they align with established
-  mathematical practice.</p>
+<p>Can the comments naturally be converted to prose that can be placed outside of
+  the coding environment in the literate file?</p>
 </li>
 </ul>
-<h2 id="use-of-unicode-characters">Use of Unicode characters<a class="headerlink" href="#use-of-unicode-characters" title="Permanent link">&para;</a></h2>
-<p>In the defined names we use Unicode symbols sparingly and only when they align
-with established mathematical practice.</p>
-<p>For the builtin syntactic features of <code>rzk</code> we use the following Unicode
-symbols:</p>
+<h2 id="literary-conventions">Literary conventions<a class="headerlink" href="#literary-conventions" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>-&gt;</code> should be always replaced with <code>→</code> (<code>\to</code>)</li>
-<li><code>|-&gt;</code> should be always replaced with <code>↦</code> (<code>\mapsto</code>)</li>
-<li><code>===</code> should be always replaced with <code>≡</code> (<code>\equiv</code>)</li>
-<li><code>&lt;=</code> should be always replaced with <code>≤</code> (<code>\&lt;=</code>)</li>
-<li><code>/\</code> should be always replaced with <code>∧</code> (<code>\and</code>)</li>
-<li><code>\/</code> should be always replaced with <code>∨</code> (<code>\or</code>)</li>
-<li><code>0_2</code> should be always replaced with <code>0₂</code> (<code>0\2</code>)</li>
-<li><code>1_2</code> should be always replaced with <code>1₂</code> (<code>1\2</code>)</li>
-<li><code>I * J</code> should be always replaced with <code>I × J</code> (<code>\x</code> or <code>\times</code>)</li>
+<li>
+<p>For consistency, we prefer to write in US English.</p>
+</li>
+<li>
+<p>Headers are written using sentence casing, as opposed to title casing.</p>
+</li>
+<li>
+<p>If the contents of a code block in some sense captures a section of an
+  external source, the <code>title</code>-field may be used to reference that section.</p>
+</li>
 </ul>
-<p>We use ASCII versions for <code>TOP</code> and <code>BOT</code> since <code>⊤</code> and <code>⊥</code> do not read better
-in the code. Same for <code>first</code> and <code>second</code> (<code>π₁</code> and <code>π₂</code> are not very
-readable). For the latter a lot of uses for projections should go away by using
-pattern matching (and <code>let</code>/<code>where</code> in the future).</p>
-<h2 id="use-of-comments">Use of Comments<a class="headerlink" href="#use-of-comments" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>We do not explicitly ban code comments, but our other conventions should
-heavily limit their need.</p>
+<p>For example:</p>
+<div class="language-md highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="sb">```rzk</span><span class="w"> </span>title=&quot;RS17, Definition 10.6&quot;
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-rezk" id="define:is-rezk" style="visibility: visible; position: relative; color: inherit">is-rezk</a></span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="err">  : U</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="err">  :=</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="err">  </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="err">  , </span><span class="p">( </span>(x <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="err">    → </span><span class="p">(</span>y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="err">    → is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y))</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="sb">```</span>
+</span></code></pre></div>
+<p>The <code>title</code>-field may also be used to give descriptive headers to sections of
+  your code.</p>
 <ul>
-<li>[ ] Literate file format for prose</li>
-<li>[ ] Descriptive definition names shouldn't need additional explanation</li>
-<li>[ ] Strictly organized code to ease reading and understanding</li>
-<li>[ ] Essential information should be carried by code, not only comments</li>
+<li>We use the autoformatting tool <a href="https://prettier.io/">Prettier</a> to format
+  markdown code, and we recommend that you install it or an alternative for use
+  with your editor. Be aware that the formatting rules automated by Prettier are
+  enforced by our CI workflow, so pull requests cannot be merged without the
+  proper markdown formatting.</li>
 </ul>
-<p>Still, code annotations may find their uses.</p>
-<p>Where to place literature references?</p>
-</blockquote>
+<h2 id="adapting-and-evolving-the-style-guide">Adapting and evolving the style guide<a class="headerlink" href="#adapting-and-evolving-the-style-guide" title="Permanent link">&para;</a></h2>
+<p>As mentioned in the introduction, we reiterate that this style guide will
+necessarily evolve as we learn to use Rzk in new and better ways, and as the
+language itself develops. Remember, the goal is at all times is to have code
+that is easy to read, navigate and maintain, even for those who are not the
+original authors.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p>Our style guide and design principles borrow heavily from
+<a href="https://github.com/UniMath/agda-unimath"><code>agda-unimath</code></a>. If you are looking
+for more inspiration, have a look at:</p>
 <ul>
-<li>Create and use named projections instead of using the <code>first</code> and <code>second</code>
-  projections. In many cases, their meaning is not immediately obvious, and so
-  one could be tempted to annotate the code with their meaning using comments.</li>
+<li><a href="https://unimath.github.io/agda-unimath/DESIGN-PRINCIPLES.html#design-philosophy-of-agda-unimath">The design philosophy of <code>agda-unimath</code></a></li>
+<li><a href="https://unimath.github.io/agda-unimath/CODINGSTYLE.html">The <code>agda-unimath</code> library style guide</a></li>
+<li><a href="https://unimath.github.io/agda-unimath/NAMING-CONVENTIONS.html">Naming conventions for <code>agda-unimath</code></a></li>
 </ul>
-<p>For instance, instead of writing <code>first (second is-invertible-f)</code>, we define a
-  named projection <code>is-section-is-invertible</code>. This may then be used as
-  <code>is-section-is-invertible A B f is-invertible-f</code> in other places. This way,
-  the code becomes self-documenting, and much easier to read.</p>
-<p>However, we recognize that in <code>rzk</code>, since we do not have the luxury of
-  implicit arguments, this may sometimes cause unnecessarily verbose code. In
-  such cases, you may revert to using <code>first</code> and <code>second</code>.</p>
-<h2 id="adapting-and-evolving-the-style-guide">Adapting and Evolving the Style Guide<a class="headerlink" href="#adapting-and-evolving-the-style-guide" title="Permanent link">&para;</a></h2>
-<p>This style guide should evolve as Rzk develops and grows. If new features, like
-implicit arguments, <code>let</code>-expressions, or <code>where</code>-blocks are added to the
-language, or if there is made changes to the syntax of the language, their use
-should be incorporated into this style guide.</p>
-<p>At all times, the goal is to have code that is easy to read and navigate, even
-for those who are not the authors. We should also ensure that we maintain a
-consistent style across the entire repository.</p>
 
 
 

@@ -166,11 +166,12 @@ It is sometimes useful to have this in inverse form.
   ( p : x = y)
   : ( concat B (f x) (g x) (g y) (H x) (ap A B x y g p)) =
     ( concat B (f x) (f y) (g y) (ap A B x y f p) (H y))
-  := rev
-      ( f x = g y)
-      ( concat B (f x) (f y) (g y) (ap A B x y f p) (H y))
-      ( concat B (f x) (g x) (g y) (H x) (ap A B x y g p))
-      ( nat-htpy A B f g H x y p)
+  :=
+  rev
+  ( f x = g y)
+  ( concat B (f x) (f y) (g y) (ap A B x y f p) (H y))
+  ( concat B (f x) (g x) (g y) (H x) (ap A B x y g p))
+  ( nat-htpy A B f g H x y p)
 ```
 
 ```rzk title="Naturality in another form"

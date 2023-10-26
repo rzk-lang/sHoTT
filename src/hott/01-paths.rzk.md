@@ -1194,11 +1194,11 @@ And a reversed version.
   ( H' : (concat A v w v p q) = refl)
   : ( concat A v y z (concat A v w y p s) t) = r
   :=
-    rev
-      ( v = z)
-      ( r)
-      ( concat A v y z (concat A v w y p s) t)
-      ( eq-top-cancel-commutative-square' A v w y z p q s r t H H')
+  rev
+  ( v = z)
+  ( r)
+  ( concat A v y z (concat A v w y p s) t)
+  ( eq-top-cancel-commutative-square' A v w y z p q s r t H H')
 ```
 
 <?xml version='1.0' encoding='UTF-8'?>

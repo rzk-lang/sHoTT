@@ -969,7 +969,7 @@ An alternate proof could use `triple-concat-eq-first` and
     ((section-htpy-is-half-adjoint-equiv A B f is-hae) (f a))
     (ap ( B) ( B) ( f a) ( b)
       (\z → (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))
-      ( q))-- s
+      ( q))
     ( ap B B (f a) b (identity B) q )
     ( (section-htpy-is-half-adjoint-equiv A B f is-hae) b)
     (rev-nat-htpy ( B) ( B)

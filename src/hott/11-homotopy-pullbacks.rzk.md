@@ -448,6 +448,27 @@ In fact, it suffices to assume that the left square has horizontal sections.
       ( F' a'') ( has-sections-F' a'')
       ( F (f' a'')) ( ihc'' a''))
 
+#def is-homotopy-cartesian-left-cancel-with-section'
+  ( (sec-f' , ε-f') : has-section A'' A' f')
+  ( has-sections-F'
+    : (a' : A')
+    → has-section (C'' (sec-f' a')) (C' (f' (sec-f' a'))) (F' (sec-f' a')))
+  ( ihc''
+    : is-homotopy-cartesian A'' C'' A C
+      ( comp A'' A' A f f')
+      ( \ a'' →
+        comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+        ( F (f' a'')) (F' a'')))
+  : is-homotopy-cartesian A' C' A C f F
+  :=
+    ind-has-section' A'' A' f' (sec-f', ε-f')
+    ( \ a' → is-equiv (C' a') (C (f a')) (F a'))
+    ( \ a' →
+      is-equiv-left-cancel
+      ( C'' (sec-f' a')) (C' (f' (sec-f' a'))) (C (f (f' (sec-f' a'))))
+      ( F' (sec-f' a')) ( has-sections-F' a')
+      ( F (f' (sec-f' a'))) ( ihc'' (sec-f' a')))
+
 #end homotopy-cartesian-horizontal-calculus
 ```
 

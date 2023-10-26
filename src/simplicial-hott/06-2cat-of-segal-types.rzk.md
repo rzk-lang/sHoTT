@@ -21,6 +21,7 @@ extension extensionality:
 ```rzk
 #assume funext : FunExt
 #assume extext : ExtExt
+#assume weakextext : WeakExtExt
 ```
 
 ## Functors
@@ -101,6 +102,59 @@ Preservation of composition requires the Segal hypothesis.
       ( ap-hom2 A B F x y z f g
         ( comp-is-segal A is-segal-A x y z f g)
         ( witness-comp-is-segal A is-segal-A x y z f g))
+```
+
+The action on morphisms commute with transport.
+
+```rzk
+
+#def ap-hom-naturality
+  ( A B C : U)
+  ( f g : A → B)
+  ( h k : B → C)
+  ( p : f = g)
+  ( q : h = k)
+  ( x y : A)
+  : comp (hom B (f x) (f y)) (hom B (g x) (g y)) (hom C (k (g x)) (k (g y)))
+      ( ap-hom B C k (g x) (g y))
+      ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g p)
+    =
+    comp (hom B (f x) (f y)) (hom C (h (f x)) (h (f y))) (hom C (k (g x)) (k (g y)))
+      ( transport (A → C) (\ f' → hom C (f' x) (f' y))
+        ( comp A B C h f)
+        ( comp A B C k g)
+        ( comp-homotopic-maps A B C f g h k p q))
+      ( ap-hom B C h (f x) (f y))
+  :=
+    ind-path (A → B) f
+      ( \ g' p' →
+        comp (hom B (f x) (f y)) (hom B (g' x) (g' y)) (hom C (k (g' x)) (k (g' y)))
+          ( ap-hom B C k (g' x) (g' y))
+          ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g' p')
+        =
+        comp (hom B (f x) (f y)) (hom C (h (f x)) (h (f y))) (hom C (k (g' x)) (k (g' y)))
+          ( transport (A → C) (\ f' → hom C (f' x) (f' y))
+            ( comp A B C h f)
+            ( comp A B C k g')
+            ( comp-homotopic-maps A B C f g' h k p' q))
+          ( ap-hom B C h (f x) (f y)))
+      ( ind-path (B → C) h
+          ( \ k' q' →
+            comp (hom B (f x) (f y)) (hom B (f x) (f y)) (hom C (k' (f x)) (k' (f y)))
+              ( ap-hom B C k' (f x) (f y))
+              ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f f refl)
+            =
+            comp (hom B (f x) (f y)) (hom C (h (f x)) (h (f y))) (hom C (k' (f x)) (k' (f y)))
+              ( transport (A → C) (\ f' → hom C (f' x) (f' y))
+                ( comp A B C h f)
+                ( comp A B C k' f)
+                ( comp-homotopic-maps A B C f f h k' refl q'))
+              ( ap-hom B C h (f x) (f y)))
+            ( refl)
+          ( k)
+          ( q))
+      ( g)
+      ( p)
 ```
 
 ## Natural transformations
@@ -415,4 +469,291 @@ the "Gray interchanger" built from two commutative triangles.
     ( postwhisker-nat-trans A B C f g g' η)
     ( horizontal-comp-nat-trans A B C f g f' g' η η')
   := \ (t, s) a → η' t (η s a)
+```
+
+## Equivalences are fully faithful
+
+```rzk
+
+#def postcomp-Π-ext
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ) → (A t → B t))
+  : ((t : ψ) → A t [ϕ t ↦ a t]) → ((t : ψ) → B t [ϕ t ↦ f t (a t)])
+  := ( \ α t → f t (α t))
+
+#def fiber-postcomp-Π-ext -- already defined as relative extension type in 03-extension-types
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ) → (A t → B t))
+  ( β : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  : U
+  :=
+    fib
+      ( (t : ψ) → A t [ϕ t ↦ a t])
+      ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+      ( postcomp-Π-ext I ψ ϕ A B a f)
+      ( β)
+
+#def fiber-family-ext
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ) → (A t → B t))
+  ( β : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  : U
+  :=
+    (t : ψ) → fib (A t) (B t) (f t) (β t) [ϕ t ↦ (a t, refl)]
+
+#def is-contr-fiber-family-ext-contr-fib
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ) → (A t → B t))
+  ( β : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  : is-contr (fiber-family-ext I ψ ϕ A B a f β)
+  :=
+    weakextext I ψ ϕ
+      ( \ t → fib (A t) (B t) (f t) (β t))
+      ( \ t → is-contr-map-is-equiv (A t) (B t) (f t) (family-equiv-f t) (β t))
+      ( \ t → (a t, refl))
+
+
+
+#def equiv-fiber-postcomp-Π-ext-fiber-family-ext
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ) → (A t → B t))
+  ( β : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  : Equiv
+    ( fiber-postcomp-Π-ext I ψ ϕ A B a f β)
+    ( fiber-family-ext I ψ ϕ A B a f β)
+  :=
+    equiv-comp
+      ( fiber-postcomp-Π-ext I ψ ϕ A B a f β)
+      ( relative-extension-type I ψ ϕ A B f a β)
+      ( fiber-family-ext I ψ ϕ A B a f β)
+      ( equiv-relative-extension-type-fib extext I ψ ϕ A B f a β)
+      ( inv-equiv-axiom-choice I ψ ϕ A (\ t x → f t x = β t) a (\ t → refl))
+
+
+#def fiber-ap-hom
+  ( A B : U)
+  ( x y : A)
+  ( f : A → B)
+  ( β : hom B (f x) (f y))
+  : U
+  :=
+    fib
+      ( hom A x y)
+      ( hom B (f x) (f y))
+      ( ap-hom A B f x y)
+      ( β)
+
+-- --useless
+-- #def fiber-ap-hom-postcomp
+--   ( A B : U)
+--   ( x y : A)
+--   ( f : A → B)
+--   ( β : hom B (f x) (f y))
+--   : U
+--   :=
+--     fiber-postcomp-Π-ext 2 Δ¹ ∂Δ¹ (\ t → A) (\ t → B)
+--       ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+--       ( \ t → f)
+--       ( β)
+
+-- --useless
+-- #def equiv-fib-ap-hom-fib-post-comp-hom
+--   ( A B : U)
+--   ( x y : A)
+--   ( f : A → B)
+--   ( β : hom B (f x) (f y))
+--   : Equiv
+--     ( fiber-ap-hom A B x y f β)
+--     ( fiber-ap-hom-postcomp A B x y f β)
+--   := ( \ x' → x',
+--        ( (\ x' → x', (\ x' → refl)),
+--          (\ x' → x', (\ x' → refl))))
+
+
+#def is-contr-fiber-ap-hom-is-equiv uses (weakextext extext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( x y : A)
+  ( β : hom B (f x) (f y))
+  : is-contr (fiber-ap-hom A B x y f β)
+  :=
+    is-contr-equiv-is-contr'
+      ( fiber-ap-hom A B x y f β)
+      ( fiber-family-ext 2 Δ¹ ∂Δ¹ (\ t → A) (\ t → B)
+        ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+        ( \ t → f)
+        ( β))
+      ( equiv-fiber-postcomp-Π-ext-fiber-family-ext 2 Δ¹ ∂Δ¹ (\ t → A) (\ t → B)
+        ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+        ( \ t → f)
+        ( β))
+      ( is-contr-fiber-family-ext-contr-fib 2 Δ¹ ∂Δ¹ (\ t → A) (\ t → B)
+        ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+        ( \ t → f)
+        ( β)
+        ( \t → is-equiv-f))
+
+
+#def is-equiv-ap-hom-is-equiv uses (weakextext extext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( x y : A)
+  : is-equiv (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
+  :=
+    is-equiv-is-contr-map (hom A x y) (hom B (f x) (f y))
+      (ap-hom A B f x y)
+      ( \ β → is-contr-fiber-ap-hom-is-equiv A B f is-equiv-f x y β)
+
+
+-- #def coherence-hae-is-equiv
+--   ( A B : U)
+--   ( f : A → B)
+--   ( is-equiv-f : is-equiv A B f)
+--   : (\ (x' : A) → ( π₂ (π₂ is-equiv-f)) (f x'))
+--     =
+--     ap A B
+--       ( comp A B A (π₁ (π₁ is-equiv-f)) f)
+--       ( identity A)
+--       ( \ x' → comp A A B f x')
+--       ( left-cancel-is-equiv A B f is-equiv-f)
+--   :=
+--     eq-htpy A (\ x' → triple-comp A B A B f (π₁ (π₁ is-equiv-f)) f x')
+--       ( comp A B ((y' : B) → (comp B A B f (π₁ (π₁ is-equiv-f)) y') = y')
+--         ( π₂ (π₂ is-equiv-f))
+--         ( f))
+--       ( ap A B
+--         (comp A B A (π₁ (π₁ is-equiv-f)) f)
+--         (identity A)
+--         ((π₂ (π₁ is-equiv-f))))
+--       ( coherence-is-half-adjoint-equiv A B f
+--         ( is-half-adjoint-equiv-is-equiv A B f is-equiv-f))
+
+
+
+#def inv-ap-hom-equiv uses (funext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( x y : A)
+  : (hom B (f x) (f y)) → (hom A x y)
+  :=
+    comp
+      ( hom B (f x) (f y))
+      ( hom A ((π₁ (π₁ is-equiv-f)) (f x)) ((π₁ (π₁ is-equiv-f))(f y)))
+      ( hom A x y)
+      ( transport (A → A) (\ g' → (hom A (g' x) (g' y)))
+        ( comp A B A (π₁ (π₁ is-equiv-f)) f)
+        ( identity A)
+        ( left-cancel-is-equiv funext A B f is-equiv-f))
+      ( ap-hom B A (π₁ (π₁ is-equiv-f)) (f x) (f y))
+
+
+#def has-retraction-ap-hom-equiv uses (funext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( x y : A)
+  : has-retraction (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
+  :=
+    ( inv-ap-hom-equiv A B f is-equiv-f x y
+    , \ α →
+      apd (A → A) (\ g' → (hom A (g' x) (g' y)))
+        ( comp A B A (π₁ (π₁ is-equiv-f)) f)
+        ( identity A)
+        ( \ g' → ap-hom A A g' x y α)
+        ( left-cancel-is-equiv funext A B f is-equiv-f))
+
+
+
+-- #def has-section-ap-hom-equiv uses (funext)
+--   ( A B : U)
+--   ( f : A → B)
+--   ( is-equiv-f : is-equiv A B f)
+--   ( x y : A)
+--   : has-retraction (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
+--   :=
+--     ( inv-ap-hom-equiv A B f is-equiv-f x y
+--     , \ α →
+--       concat (hom B (f x) (f y))
+--         ( comp (hom B (f x) (f y)) (hom A x y) (hom B (f x) (f y))
+--           ( ap-hom A B f x y)
+--           ( inv-ap-hom-equiv A B f is-equiv-f x y)
+--           ( α))
+--         ( transport (A → A) (\ g' → hom A (g x) (g y))
+--           ( triple-comp A B A B f (π₁ (π₁ is-equiv-f)) f)
+--           ( f)
+--           ( ap A B
+--             ( comp A B A (π₁ (π₁ is-equiv-f)) f)
+--             ( identity A)
+--             ( f)
+--             ( left-cancel-is-equiv A B f is-equiv-f))
+--           ( α))
+--         ( α)
+--         ( ap-hom-naturality A A A B -- path 1
+--           ( comp A B A (π₁ (π₁ is-equiv-f)) f)
+--           ( identity A)
+--           ( f)
+--           ( f)
+--           ( left-cancel-is-equiv A B f is-equiv-f)
+--           ( refl)
+--           ( x)
+--           ( y))
+
+--           )
+
+
+      -- triple-concat (hom B (f x) (f y))
+      --   ( comp (hom B (f x) (f y)) (hom A x y) (hom B (f x) (f y))
+      --     ( ap-hom A B f x y)
+      --     ( inv-ap-hom-equiv A B f is-equiv-f x y)
+      --     ( α))
+      --   ( transport (A → A) (\ g' → hom A (g x) (g y))
+      --     ( triple-comp A B A B f (π₁ (π₁ is-equiv-f)) f)
+      --     ( f)
+      --     ( ap A B
+      --       ( comp A B A (π₁ (π₁ is-equiv-f)) f)
+      --       ( identity A)
+      --       ( f)
+      --       ( left-cancel-is-equiv A B f is-equiv-f))
+      --     ( α))
+      --   ( transport)
+      --   ( α)
+
+
+
+
+
+
+
+  -- : ( α : hom A x y) →
+  --     ( comp (hom B (f x) (f y)) (hom A x y) (hom B (f x) (f y))
+  --       ( ap-hom A B f x y)
+  --       ( inv-ap-hom-equiv A B f is-equiv-f x y)
+  --       ( α)
+  --     = α)
+  -- :=
+
 ```

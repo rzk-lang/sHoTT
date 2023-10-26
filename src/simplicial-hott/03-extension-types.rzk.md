@@ -331,6 +331,25 @@ For each of these we provide a corresponding functorial instance
       ( ( \ g → (\ t → (first (g t)) , \ t → second (g t)))
       , ( ( \ (f , h) t → (f t , h t) , \ _ → refl)
         , ( \ (f , h) t → (f t , h t) , \ _ → refl)))
+
+#def inv-equiv-axiom-choice
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( X : ψ → U)
+  ( Y : (t : ψ) → (x : X t) → U)
+  ( a : (t : ϕ) → X t)
+  ( b : (t : ϕ) → Y t (a t))
+  : Equiv
+    ( Σ ( f : ((t : ψ) → X t [ϕ t ↦ a t]))
+      , ( (t : ψ) → Y t (f t) [ϕ t ↦ b t]))
+    ( (t : ψ) → (Σ (x : X t) , Y t x) [ϕ t ↦ (a t , b t)])
+  :=
+    inv-equiv
+      ( (t : ψ) → (Σ (x : X t) , Y t x) [ϕ t ↦ (a t , b t)])
+      ( Σ ( f : ((t : ψ) → X t [ϕ t ↦ a t]))
+      , ( (t : ψ) → Y t (f t) [ϕ t ↦ b t]))
+      ( axiom-choice I ψ ϕ X Y a b)
 ```
 
 ## Composites and unions of cofibrations

@@ -81,7 +81,7 @@ of the form `#!rzk (a, refl : f a = f a) : fib A B f`.
   :=
     ind-path-end B (f a) (\ b p → C b (a, p)) (s a) b q
 
-#def ind-fib-computation
+#def compute-ind-fib
   ( A B : U)
   ( f : A → B)
   ( C : (b : B) → fib A B f b → U)

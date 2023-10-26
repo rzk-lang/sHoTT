@@ -1050,8 +1050,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#left-cancellation-with-section-weak-version" class="md-nav__link">
-    Left cancellation with section (weak version)
+  <a href="#left-cancellation-with-section" class="md-nav__link">
+    Left cancellation with section
   </a>
   
 </li>
@@ -1577,24 +1577,8 @@ stability properties of maps right orthogonal to it.</p>
 </span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="err">  </span><span class="p">( </span>is-equiv-α <span class="p">:</span><span class="err"> is-equiv A&#39; A α)</span>
 </span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="err">  : is-right-orthogonal-to-shape I ψ ϕ A&#39; A α</span>
 </span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="err">  :=</span>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="err">    is-homotopy-cartesian-is-horizontal-equiv</span>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="err">      ( ϕ → A&#39;) </span><span class="p">(</span>\ σ&#39; → (t <span class="p">:</span><span class="err"> ψ) → A&#39; [ϕ t ↦ σ&#39; t])</span>
-</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="err">      ( ϕ → A) </span><span class="p">(</span>\ σ → (t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ σ t])</span>
-</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="err">      ( </span><span class="p">\ </span>σ&#39; t <span class="err">→ α (σ&#39; t))</span>
-</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="err">      ( </span><span class="p">\ </span>_ τ&#39; t <span class="err">→ α (τ&#39; t))</span>
-</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="err">      ( </span><span class="s">second</span>
-</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="err">        ( equiv-extension-equiv-family extext I ( </span><span class="p">\ </span>t <span class="err">→ ϕ t)</span>
-</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="err">          ( </span><span class="p">\ </span>_ <span class="err">→ A&#39;) ( </span><span class="p">\ </span>_ <span class="err">→ A) ( </span><span class="p">\ </span>_ <span class="err">→ (α , is-equiv-α))))</span>
-</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="err">     ( is-equiv-Equiv-is-equiv&#39;</span>
-</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="err">         ( ψ → A&#39;) ( ψ → A) ( </span><span class="p">\ </span>τ&#39; t <span class="err">→ α (τ&#39; t))</span>
-</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="err">         </span><span class="p">( </span>Σ (σ&#39; <span class="p">:</span><span class="err"> ϕ → A&#39;) , </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → A&#39; [ϕ t ↦ σ&#39; t])</span>
-</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="err">         </span><span class="p">( </span>Σ (σ <span class="p">:</span><span class="err"> ϕ → A) , </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ σ t])</span>
-</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="err">         ( \ (σ&#39; , τ&#39;) → ( </span><span class="p">\ </span>t <span class="err">→ α (σ&#39; t) , </span><span class="p">\ </span>t <span class="err">→ α (τ&#39; t)))</span>
-</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="err">       ( cofibration-composition-functorial I ψ ϕ ( </span><span class="p">\ </span>_ <span class="err">→ </span><span class="m">BOT</span><span class="err">)</span>
-</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="err">           ( </span><span class="p">\ </span>_ <span class="err">→ A&#39;) ( </span><span class="p">\ </span>_ <span class="err">→ A) ( </span><span class="p">\ </span>_ <span class="err">→ α) ( </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">recBOT</span><span class="err">))</span>
-</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="err">       ( </span><span class="s">second</span>
-</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="err">         ( equiv-extension-equiv-family extext I ( </span><span class="p">\ </span>t <span class="err">→ ψ t)</span>
-</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="err">           ( </span><span class="p">\ </span>_ <span class="err">→ A&#39;) ( </span><span class="p">\ </span>_ <span class="err">→ A) ( </span><span class="p">\ </span>_ <span class="err">→ (α , is-equiv-α)))))</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="err">    is-equiv-extensions-is-equiv extext I ψ ϕ</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="err">    ( </span><span class="p">\ </span>_ <span class="err">→ A&#39;) ( </span><span class="p">\  </span>_ <span class="err">→ A) ( </span><span class="p">\ </span>_ <span class="err">→ α) ( </span><span class="p">\ </span>_ <span class="err">→ is-equiv-α)</span>
 </span></code></pre></div>
 <p>Right orthogonality is closed under homotopy.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-homotopy-to-shape" id="define:is-right-orthogonal-homotopy-to-shape" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-homotopy-to-shape</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
@@ -1632,6 +1616,7 @@ stability properties of maps right orthogonal to it.</p>
 </span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="err">      ( is-orth-ψ-ϕ-α (</span><span class="p">\ </span>t <span class="err">→ α&#39; (σ&#39;&#39; t)))</span>
 </span></code></pre></div>
 <h3 id="right-cancellation">Right cancellation<a class="headerlink" href="#right-cancellation" title="Permanent link">&para;</a></h3>
+<p>One can always cancel right orthogonal maps from the right.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-right-cancel-to-shape" id="define:is-right-orthogonal-right-cancel-to-shape" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-right-cancel-to-shape</a></span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>is-orth-ψ-ϕ-α is-orth-ψ-ϕ-αα&#39;<span class="p">)</span>
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  : is-right-orthogonal-to-shape I ψ ϕ A&#39;&#39; A&#39; α&#39;</span>
@@ -1646,24 +1631,27 @@ stability properties of maps right orthogonal to it.</p>
 </span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="err">     ( is-orth-ψ-ϕ-α (</span><span class="p">\ </span>t <span class="err">→ α&#39; (σ&#39;&#39; t)))</span>
 </span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="err">     ( is-orth-ψ-ϕ-αα&#39; σ&#39;&#39;)</span>
 </span></code></pre></div>
-<h3 id="left-cancellation-with-section-weak-version">Left cancellation with section (weak version)<a class="headerlink" href="#left-cancellation-with-section-weak-version" title="Permanent link">&para;</a></h3>
-<p>This should hold even without assuming <code>is-orth-ψ-ϕ-α'</code>.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-weak-left-cancel-with-section-to-shape" id="define:is-right-orthogonal-weak-left-cancel-with-section-to-shape" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-weak-left-cancel-with-section-to-shape</a></span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="p">      </span><span class="k">uses</span><span class="p"> (</span>naiveextext is-orth-ψ-ϕ-α&#39; is-orth-ψ-ϕ-αα&#39;<span class="p">)</span>
+<h3 id="left-cancellation-with-section">Left cancellation with section<a class="headerlink" href="#left-cancellation-with-section" title="Permanent link">&para;</a></h3>
+<p>If the map <code>α' : A'' → A'</code> has a section, then we can also cancel it from the
+right (whether it is right orthogonal or not.)</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-left-cancel-with-section-to-shape" id="define:is-right-orthogonal-left-cancel-with-section-to-shape" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-left-cancel-with-section-to-shape</a></span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext is-orth-ψ-ϕ-αα&#39;<span class="p">)</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="err">  </span><span class="p">( </span>has-section-α&#39; <span class="p">:</span><span class="err"> has-section A&#39;&#39; A&#39; α&#39;)</span>
 </span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="err">  : is-right-orthogonal-to-shape I ψ ϕ A&#39; A α</span>
 </span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="err">  :=</span>
-</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="err">    is-homotopy-cartesian-left-cancel-with-lower-section</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="err">    is-homotopy-cartesian-left-cancel-with-section&#39;</span>
 </span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="err">        ( ϕ → A&#39;&#39; ) </span><span class="p">( </span>\ σ&#39;&#39; → (t <span class="p">:</span><span class="err"> ψ) → A&#39;&#39; [ϕ t ↦ σ&#39;&#39; t])</span>
 </span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="err">        ( ϕ → A&#39; ) </span><span class="p">( </span>\ σ&#39; → (t <span class="p">:</span><span class="err"> ψ) → A&#39; [ϕ t ↦ σ&#39; t])</span>
 </span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="err">        ( ϕ → A ) </span><span class="p">( </span>\ σ → (t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ σ t])</span>
 </span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="err">        ( </span><span class="p">\ </span>σ&#39;&#39; t <span class="err">→ α&#39; (σ&#39;&#39; t)) ( </span><span class="p">\ </span>_ τ&#39;&#39; x <span class="err">→ α&#39; (τ&#39;&#39; x) )</span>
 </span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="err">        ( </span><span class="p">\ </span>σ&#39; t <span class="err">→ α (σ&#39; t)) ( </span><span class="p">\ </span>_ τ&#39; x <span class="err">→ α (τ&#39; x) )</span>
-</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="err">    ( has-section-extension-has-section-family naiveextext I (</span><span class="p">\ </span>t <span class="err">→ ϕ t)</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="err">    ( has-section-extensions-BOT-has-section extext I (</span><span class="p">\ </span>t <span class="err">→ ϕ t)</span>
 </span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="err">          ( </span><span class="p">\ </span>_ <span class="err">→ A&#39;&#39;) (</span><span class="p">\ </span>_ <span class="err">→ A&#39;) (</span><span class="p">\ </span>_ <span class="err">→ α&#39;)</span>
 </span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="err">      ( </span><span class="p">\ </span>_ <span class="err">→ has-section-α&#39;))</span>
-</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="err">    ( is-orth-ψ-ϕ-α&#39;)</span>
-</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="err">    ( is-orth-ψ-ϕ-αα&#39;)</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="err">    ( has-section-extensions-has-section extext I ψ ϕ</span>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="err">          ( </span><span class="p">\ </span>_ <span class="err">→ A&#39;&#39;) (</span><span class="p">\ </span>_ <span class="err">→ A&#39;) (</span><span class="p">\ </span>_ <span class="err">→ α&#39;)</span>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="err">      ( </span><span class="p">\ </span>_ <span class="err">→ has-section-α&#39;))</span>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="err">    ( is-orth-ψ-ϕ-αα&#39;)</span>
 </span></code></pre></div>
 <h3 id="stability-under-pullback">Stability under pullback<a class="headerlink" href="#stability-under-pullback" title="Permanent link">&para;</a></h3>
 <p>Right orthogonal maps are stable under pullback. More precisely: If <code>α : A' → A</code>
@@ -1839,23 +1827,22 @@ orthogonal to <code>ϕ ⊂ ψ</code>, then so is the other.</p>
 </span><span id="__span-23-22"><a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a><span class="err">        ( is-orth-ψ-ϕ-β)))</span>
 </span><span id="__span-23-23"><a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a>
 </span><span id="__span-23-24"><a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-equiv-to-shape&#39;" id="define:is-right-orthogonal-equiv-to-shape&#39;" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-equiv-to-shape&#39;</a></span>
-</span><span id="__span-23-25"><a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>funext extext naiveextext<span class="p">)</span>
+</span><span id="__span-23-25"><a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>funext extext<span class="p">)</span>
 </span><span id="__span-23-26"><a id="__codelineno-23-26" name="__codelineno-23-26" href="#__codelineno-23-26"></a><span class="err">  ( (((s&#39;, s), η), (is-equiv-s&#39;, is-equiv-s)) : Equiv-of-maps A&#39; A α B&#39; B β)</span>
 </span><span id="__span-23-27"><a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a><span class="err">  </span><span class="p">( </span>is-orth-ψ-ϕ-α <span class="p">:</span><span class="err"> is-right-orthogonal-to-shape I ψ ϕ A&#39; A α)</span>
 </span><span id="__span-23-28"><a id="__codelineno-23-28" name="__codelineno-23-28" href="#__codelineno-23-28"></a><span class="err">  : is-right-orthogonal-to-shape I ψ ϕ B&#39; B β</span>
 </span><span id="__span-23-29"><a id="__codelineno-23-29" name="__codelineno-23-29" href="#__codelineno-23-29"></a><span class="err">  :=</span>
-</span><span id="__span-23-30"><a id="__codelineno-23-30" name="__codelineno-23-30" href="#__codelineno-23-30"></a><span class="err">    is-right-orthogonal-weak-left-cancel-with-section-to-shape</span>
+</span><span id="__span-23-30"><a id="__codelineno-23-30" name="__codelineno-23-30" href="#__codelineno-23-30"></a><span class="err">    is-right-orthogonal-left-cancel-with-section-to-shape</span>
 </span><span id="__span-23-31"><a id="__codelineno-23-31" name="__codelineno-23-31" href="#__codelineno-23-31"></a><span class="err">          I ψ ϕ A&#39; B&#39; B s&#39; β</span>
-</span><span id="__span-23-32"><a id="__codelineno-23-32" name="__codelineno-23-32" href="#__codelineno-23-32"></a><span class="err">    ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A&#39; B&#39; s&#39; is-equiv-s&#39;)</span>
-</span><span id="__span-23-33"><a id="__codelineno-23-33" name="__codelineno-23-33" href="#__codelineno-23-33"></a><span class="err">    ( is-right-orthogonal-homotopy-to-shape I ψ ϕ A&#39; B</span>
-</span><span id="__span-23-34"><a id="__codelineno-23-34" name="__codelineno-23-34" href="#__codelineno-23-34"></a><span class="err">      ( </span><span class="p">\ </span>a&#39; <span class="err">→ s (α a&#39;)) ( </span><span class="p">\ </span>a&#39; <span class="err">→ β (s&#39; a&#39;))</span>
-</span><span id="__span-23-35"><a id="__codelineno-23-35" name="__codelineno-23-35" href="#__codelineno-23-35"></a><span class="err">      ( rev-homotopy A&#39; B ( </span><span class="p">\ </span>a&#39; <span class="err">→ β (s&#39; a&#39;)) ( </span><span class="p">\ </span>a&#39; <span class="err">→ s (α a&#39;)) ( η))</span>
-</span><span id="__span-23-36"><a id="__codelineno-23-36" name="__codelineno-23-36" href="#__codelineno-23-36"></a><span class="err">      ( is-right-orthogonal-comp-to-shape I ψ ϕ A&#39; A B α s</span>
-</span><span id="__span-23-37"><a id="__codelineno-23-37" name="__codelineno-23-37" href="#__codelineno-23-37"></a><span class="err">        ( is-orth-ψ-ϕ-α)</span>
-</span><span id="__span-23-38"><a id="__codelineno-23-38" name="__codelineno-23-38" href="#__codelineno-23-38"></a><span class="err">        ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A B s is-equiv-s)))</span>
-</span><span id="__span-23-39"><a id="__codelineno-23-39" name="__codelineno-23-39" href="#__codelineno-23-39"></a><span class="err">    ( </span><span class="s">second</span><span class="err"> is-equiv-s&#39;)</span>
-</span><span id="__span-23-40"><a id="__codelineno-23-40" name="__codelineno-23-40" href="#__codelineno-23-40"></a>
-</span><span id="__span-23-41"><a id="__codelineno-23-41" name="__codelineno-23-41" href="#__codelineno-23-41"></a><span class="nd">#end</span><span class="n"> is-right-orthogonal-equiv-to-shape</span>
+</span><span id="__span-23-32"><a id="__codelineno-23-32" name="__codelineno-23-32" href="#__codelineno-23-32"></a><span class="err">    ( is-right-orthogonal-homotopy-to-shape I ψ ϕ A&#39; B</span>
+</span><span id="__span-23-33"><a id="__codelineno-23-33" name="__codelineno-23-33" href="#__codelineno-23-33"></a><span class="err">      ( </span><span class="p">\ </span>a&#39; <span class="err">→ s (α a&#39;)) ( </span><span class="p">\ </span>a&#39; <span class="err">→ β (s&#39; a&#39;))</span>
+</span><span id="__span-23-34"><a id="__codelineno-23-34" name="__codelineno-23-34" href="#__codelineno-23-34"></a><span class="err">      ( rev-homotopy A&#39; B ( </span><span class="p">\ </span>a&#39; <span class="err">→ β (s&#39; a&#39;)) ( </span><span class="p">\ </span>a&#39; <span class="err">→ s (α a&#39;)) ( η))</span>
+</span><span id="__span-23-35"><a id="__codelineno-23-35" name="__codelineno-23-35" href="#__codelineno-23-35"></a><span class="err">      ( is-right-orthogonal-comp-to-shape I ψ ϕ A&#39; A B α s</span>
+</span><span id="__span-23-36"><a id="__codelineno-23-36" name="__codelineno-23-36" href="#__codelineno-23-36"></a><span class="err">        ( is-orth-ψ-ϕ-α)</span>
+</span><span id="__span-23-37"><a id="__codelineno-23-37" name="__codelineno-23-37" href="#__codelineno-23-37"></a><span class="err">        ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A B s is-equiv-s)))</span>
+</span><span id="__span-23-38"><a id="__codelineno-23-38" name="__codelineno-23-38" href="#__codelineno-23-38"></a><span class="err">    ( </span><span class="s">second</span><span class="err"> is-equiv-s&#39;)</span>
+</span><span id="__span-23-39"><a id="__codelineno-23-39" name="__codelineno-23-39" href="#__codelineno-23-39"></a>
+</span><span id="__span-23-40"><a id="__codelineno-23-40" name="__codelineno-23-40" href="#__codelineno-23-40"></a><span class="nd">#end</span><span class="n"> is-right-orthogonal-equiv-to-shape</span>
 </span></code></pre></div>
 <h2 id="types-with-unique-extension">Types with unique extension<a class="headerlink" href="#types-with-unique-extension" title="Permanent link">&para;</a></h2>
 <p>We say that an type <code>A</code> has unique extensions for a shape inclusion <code>ϕ ⊂ ψ</code>, if
@@ -1875,14 +1862,12 @@ for each <code>σ : ϕ → A</code> the type of <code>ψ</code>-extensions is co
 equivalence.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type" id="define:is-local-type" style="visibility: visible; position: relative; color: inherit">is-local-type</a></span>
 </span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="err">  : U</span>
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="err">  :=</span>
-</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="err">    is-equiv (ψ → A) (ϕ → A) ( </span><span class="p">\ </span>τ t <span class="err">→ τ t)</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="err">  := is-equiv (ψ → A) (ϕ → A) ( </span><span class="p">\ </span>τ t <span class="err">→ τ t)</span>
 </span></code></pre></div>
 <p>We can ask that the terminal map <code>A → Unit</code> is right orthogonal to <code>ϕ ⊂ ψ</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-terminal-map" id="define:is-right-orthogonal-terminal-map" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-terminal-map</a></span>
 </span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="err">  : U</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="err">  :=</span>
-</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="err">    is-right-orthogonal-to-shape I ψ ϕ A Unit (terminal-map A)</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="err">  := is-right-orthogonal-to-shape I ψ ϕ A Unit (terminal-map A)</span>
 </span></code></pre></div>
 <h3 id="unique-extensions-types-are-local-types">Unique extensions types are local types<a class="headerlink" href="#unique-extensions-types-are-local-types" title="Permanent link">&para;</a></h3>
 <p>The equivalence between <code>is-local-type</code> and <code>has-unique-extensions</code> follows
@@ -2002,7 +1987,7 @@ extensions for every shape inclusion <code>ϕ ⊂ ψ</code>.</p>
 </span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="err">    is-equiv-Equiv-is-equiv</span>
 </span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="err">      ( ψ → A&#39;) ( ϕ → A&#39;) ( </span><span class="p">\ </span>τ&#39; t <span class="err">→ τ&#39; t)</span>
 </span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="err">      ( ψ → A)  ( ϕ → A)  ( </span><span class="p">\ </span>τ t <span class="err">→ τ t)</span>
-</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="err">      ( equiv-of-restriction-maps-equiv-family extext I ψ ϕ</span>
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="err">      ( equiv-of-restriction-maps-equiv extext I ψ ϕ</span>
 </span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="err">        ( </span><span class="p">\ </span>_ <span class="err">→ A&#39;) ( </span><span class="p">\ </span>_ <span class="err">→ A) ( </span><span class="p">\ </span>_ <span class="err">→ A&#39;≃A))</span>
 </span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>
 </span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-equiv-has-unique-extensions" id="define:has-unique-extensions-equiv-has-unique-extensions" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-equiv-has-unique-extensions</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>

@@ -868,6 +868,26 @@
     Functoriality of extension types
   </a>
   
+    <nav class="md-nav" aria-label="Functoriality of extension types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equivalences-induce-equivalences-of-extension-types" class="md-nav__link">
+    Equivalences induce equivalences of extension types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retracts-induce-retracts-of-extension-types" class="md-nav__link">
+    Retracts induce retracts of extension types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1238,6 +1258,26 @@
   <a href="#functoriality-of-extension-types" class="md-nav__link">
     Functoriality of extension types
   </a>
+  
+    <nav class="md-nav" aria-label="Functoriality of extension types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equivalences-induce-equivalences-of-extension-types" class="md-nav__link">
+    Equivalences induce equivalences of extension types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retracts-induce-retracts-of-extension-types" class="md-nav__link">
+    Retracts induce retracts of extension types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1981,7 +2021,7 @@ extensionality.</p>
 </span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a><span class="err">    → </span><span class="p">( </span>b <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → A t)</span>
 </span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a><span class="err">    → </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
 </span><span id="__span-24-23"><a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a><span class="err">    → </span><span class="p">( </span>e <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → a t = b t)</span>
-</span><span id="__span-24-24"><a id="__codelineno-24-24" name="__codelineno-24-24" href="#__codelineno-24-24"></a><span class="err">    → ( instance-HtpyExtProperty I ψ ϕ A b a e ))</span>
+</span><span id="__span-24-24"><a id="__codelineno-24-24" name="__codelineno-24-24" href="#__codelineno-24-24"></a><span class="err">    → ( instance-HtpyExtProperty I ψ ϕ A b a e))</span>
 </span></code></pre></div>
 <p>If we assume weak extension extensionality, then then homotopy extension
 property follows from a straightforward application of the axiom of choice to
@@ -2207,7 +2247,6 @@ f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle\)</span></p>
 <h2 id="applications-of-extension-extensionality">Applications of extension extensionality<a class="headerlink" href="#applications-of-extension-extensionality" title="Permanent link">&para;</a></h2>
 <p>We now assume extension extensionality and derive a few consequences.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="kr">#assume</span><span class="p"> </span>extext<span class="err"> : ExtExt</span>
-</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="kr">#assume</span><span class="p"> </span>naiveextext<span class="err"> : NaiveExtExt</span>
 </span></code></pre></div>
 <h3 id="pointwise-homotopy-extension-types">Pointwise homotopy extension types<a class="headerlink" href="#pointwise-homotopy-extension-types" title="Permanent link">&para;</a></h3>
 <p>Using <code>ExtExt</code> we can write the homotopy in the homotopy extension type
@@ -2383,7 +2422,9 @@ extension types are also contractible.</p>
 </span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="nd">#end</span><span class="n"> general-extension-types</span>
 </span></code></pre></div>
 <h2 id="functoriality-of-extension-types">Functoriality of extension types<a class="headerlink" href="#functoriality-of-extension-types" title="Permanent link">&para;</a></h2>
-<p>For simplicity, we only consider extesions of <code class="language-rzk highlight"><span class="err">BOT</span></code>.</p>
+<p>We aim to show that special properties of a map of types <code>f : A → B</code>, such as
+being an equivalence or having a retraction carry over to the induced map on
+extension types.</p>
 <p>For each map <code>f : A → B</code> and each shape inclusion <code>ϕ ⊂ ψ</code>, we have a commutative
 square.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>(ψ → A&#39;) → (ψ → A)
@@ -2421,9 +2462,11 @@ square.</p>
 </span><span id="__span-40-26"><a id="__codelineno-40-26" name="__codelineno-40-26" href="#__codelineno-40-26"></a><span class="err">      , ( </span><span class="p">\ </span>b t <span class="err">→ b t))</span>
 </span><span id="__span-40-27"><a id="__codelineno-40-27" name="__codelineno-40-27" href="#__codelineno-40-27"></a><span class="err">    , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">)</span>
 </span></code></pre></div>
+<h3 id="equivalences-induce-equivalences-of-extension-types">Equivalences induce equivalences of extension types<a class="headerlink" href="#equivalences-induce-equivalences-of-extension-types" title="Permanent link">&para;</a></h3>
+<p>We start by treating the case of extensions from the empty shape <code>BOT</code>.</p>
 <p>It follows from extension extensionality that if <code>f : A → B</code> is an equivalence,
 then so is the map of maps <code>map-of-restriction-maps</code>.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-extension-is-equiv-family" id="define:is-equiv-extension-is-equiv-family" style="visibility: visible; position: relative; color: inherit">is-equiv-extension-is-equiv-family</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-extensions-BOT-is-equiv" id="define:is-equiv-extensions-BOT-is-equiv" style="visibility: visible; position: relative; color: inherit">is-equiv-extensions-BOT-is-equiv</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
 </span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> ψ → U)</span>
@@ -2447,7 +2490,7 @@ then so is the map of maps <code>map-of-restriction-maps</code>.</p>
 </span><span id="__span-41-22"><a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a><span class="err">              ( b)</span>
 </span><span id="__span-41-23"><a id="__codelineno-41-23" name="__codelineno-41-23" href="#__codelineno-41-23"></a><span class="err">              ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">second</span><span class="err"> (</span><span class="s">second</span><span class="err"> (is-equiv-f t)) (b t)))))</span>
 </span><span id="__span-41-24"><a id="__codelineno-41-24" name="__codelineno-41-24" href="#__codelineno-41-24"></a>
-</span><span id="__span-41-25"><a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-extension-equiv-family" id="define:equiv-extension-equiv-family" style="visibility: visible; position: relative; color: inherit">equiv-extension-equiv-family</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-41-25"><a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-extensions-BOT-equiv" id="define:equiv-extensions-BOT-equiv" style="visibility: visible; position: relative; color: inherit">equiv-extensions-BOT-equiv</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-41-26"><a id="__codelineno-41-26" name="__codelineno-41-26" href="#__codelineno-41-26"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-41-27"><a id="__codelineno-41-27" name="__codelineno-41-27" href="#__codelineno-41-27"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
 </span><span id="__span-41-28"><a id="__codelineno-41-28" name="__codelineno-41-28" href="#__codelineno-41-28"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> ψ → U)</span>
@@ -2455,11 +2498,11 @@ then so is the map of maps <code>map-of-restriction-maps</code>.</p>
 </span><span id="__span-41-30"><a id="__codelineno-41-30" name="__codelineno-41-30" href="#__codelineno-41-30"></a><span class="err">  : Equiv </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → A t) </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → B t)</span>
 </span><span id="__span-41-31"><a id="__codelineno-41-31" name="__codelineno-41-31" href="#__codelineno-41-31"></a><span class="err">  :=</span>
 </span><span id="__span-41-32"><a id="__codelineno-41-32" name="__codelineno-41-32" href="#__codelineno-41-32"></a><span class="err">    ( ( </span><span class="p">\ </span>a t <span class="err">→ </span><span class="s">first</span><span class="err"> ( famequiv t) (a t))</span>
-</span><span id="__span-41-33"><a id="__codelineno-41-33" name="__codelineno-41-33" href="#__codelineno-41-33"></a><span class="err">    , is-equiv-extension-is-equiv-family I ψ A B</span>
+</span><span id="__span-41-33"><a id="__codelineno-41-33" name="__codelineno-41-33" href="#__codelineno-41-33"></a><span class="err">    , is-equiv-extensions-BOT-is-equiv I ψ A B</span>
 </span><span id="__span-41-34"><a id="__codelineno-41-34" name="__codelineno-41-34" href="#__codelineno-41-34"></a><span class="err">      ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">first</span><span class="err"> (famequiv t))</span>
 </span><span id="__span-41-35"><a id="__codelineno-41-35" name="__codelineno-41-35" href="#__codelineno-41-35"></a><span class="err">      ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">second</span><span class="err"> (famequiv t)))</span>
 </span><span id="__span-41-36"><a id="__codelineno-41-36" name="__codelineno-41-36" href="#__codelineno-41-36"></a>
-</span><span id="__span-41-37"><a id="__codelineno-41-37" name="__codelineno-41-37" href="#__codelineno-41-37"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-of-restriction-maps-equiv-family" id="define:equiv-of-restriction-maps-equiv-family" style="visibility: visible; position: relative; color: inherit">equiv-of-restriction-maps-equiv-family</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-41-37"><a id="__codelineno-41-37" name="__codelineno-41-37" href="#__codelineno-41-37"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-of-restriction-maps-equiv" id="define:equiv-of-restriction-maps-equiv" style="visibility: visible; position: relative; color: inherit">equiv-of-restriction-maps-equiv</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-41-38"><a id="__codelineno-41-38" name="__codelineno-41-38" href="#__codelineno-41-38"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-41-39"><a id="__codelineno-41-39" name="__codelineno-41-39" href="#__codelineno-41-39"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
 </span><span id="__span-41-40"><a id="__codelineno-41-40" name="__codelineno-41-40" href="#__codelineno-41-40"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
@@ -2470,26 +2513,195 @@ then so is the map of maps <code>map-of-restriction-maps</code>.</p>
 </span><span id="__span-41-45"><a id="__codelineno-41-45" name="__codelineno-41-45" href="#__codelineno-41-45"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t) </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ϕ) → B t)  (</span><span class="p">\ </span>b t <span class="err">→ b t)</span>
 </span><span id="__span-41-46"><a id="__codelineno-41-46" name="__codelineno-41-46" href="#__codelineno-41-46"></a><span class="err">  :=</span>
 </span><span id="__span-41-47"><a id="__codelineno-41-47" name="__codelineno-41-47" href="#__codelineno-41-47"></a><span class="err">    ( map-of-restriction-maps I ψ ϕ A B (</span><span class="p">\ </span>t <span class="err">→ </span><span class="s">first</span><span class="err"> (famequiv t))</span>
-</span><span id="__span-41-48"><a id="__codelineno-41-48" name="__codelineno-41-48" href="#__codelineno-41-48"></a><span class="err">    , ( </span><span class="s">second</span><span class="err"> (equiv-extension-equiv-family I ψ A B famequiv)</span>
-</span><span id="__span-41-49"><a id="__codelineno-41-49" name="__codelineno-41-49" href="#__codelineno-41-49"></a><span class="err">      , </span><span class="s">second</span><span class="err"> ( equiv-extension-equiv-family I</span>
+</span><span id="__span-41-48"><a id="__codelineno-41-48" name="__codelineno-41-48" href="#__codelineno-41-48"></a><span class="err">    , ( </span><span class="s">second</span><span class="err"> (equiv-extensions-BOT-equiv I ψ A B famequiv)</span>
+</span><span id="__span-41-49"><a id="__codelineno-41-49" name="__codelineno-41-49" href="#__codelineno-41-49"></a><span class="err">      , </span><span class="s">second</span><span class="err"> ( equiv-extensions-BOT-equiv I</span>
 </span><span id="__span-41-50"><a id="__codelineno-41-50" name="__codelineno-41-50" href="#__codelineno-41-50"></a><span class="err">                 (</span><span class="p">\ </span>t <span class="err">→ ϕ t) (</span><span class="p">\ </span>t <span class="err">→ A t) (</span><span class="p">\ </span>t <span class="err">→ B t) (</span><span class="p">\ </span>t <span class="err">→ famequiv t))))</span>
 </span></code></pre></div>
-<p>Similarly, a fiberwise section of a map <code>(t : ψ) → A t → B t</code> induces a section
-on extension types.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-section-extension-has-section-family" id="define:has-section-extension-has-section-family" style="visibility: visible; position: relative; color: inherit">has-section-extension-has-section-family</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>naiveextext<span class="p">)</span>
+<p>Now we use the result for extensions of <code>BOT</code> to bootstrap to arbitrary
+extensions. We show that an equivalence <code>f : A → B</code> induces an equivalence of
+all extension types, not just those extended from <code>BOT</code>.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-extensions-is-equiv" id="define:is-equiv-extensions-is-equiv" style="visibility: visible; position: relative; color: inherit">is-equiv-extensions-is-equiv</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
-</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> ψ → U)</span>
-</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">( </span>t <span class="p">:</span><span class="err"> ψ) → A t → B t)</span>
-</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="err">  </span><span class="p">( </span>has-fiberwise-section-f <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → has-section (A t ) (B t) (f t))</span>
-</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="err">  : has-section </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → A t) </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → B t) ( </span><span class="p">\ </span>a t <span class="err">→ f t (a t))</span>
-</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="err">  :=</span>
-</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a><span class="err">    ( ( </span><span class="p">\ </span>b t <span class="err">→ </span><span class="s">first</span><span class="err"> (has-fiberwise-section-f t) (b t))</span>
-</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a><span class="err">    , </span><span class="p">\ </span>b <span class="err">→</span>
-</span><span id="__span-42-11"><a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a><span class="err">      ( naiveextext I ψ (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="m">BOT</span><span class="err">) B (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">recBOT</span><span class="err">)</span>
-</span><span id="__span-42-12"><a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ f t (</span><span class="s">first</span><span class="err"> (has-fiberwise-section-f t) (b t)))</span>
-</span><span id="__span-42-13"><a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ b t)</span>
-</span><span id="__span-42-14"><a id="__codelineno-42-14" name="__codelineno-42-14" href="#__codelineno-42-14"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">second</span><span class="err"> (has-fiberwise-section-f t) (b t))))</span>
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> ψ → U)</span>
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → A t → B t)</span>
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="err">  </span><span class="p">( </span>is-equiv-f <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → is-equiv (A t) (B t) (f t))</span>
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="err">  : </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
+</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a><span class="err">  → is-equiv</span>
+</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t])</span>
+</span><span id="__span-42-11"><a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ f t (a t)])</span>
+</span><span id="__span-42-12"><a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a><span class="err">    ( </span><span class="p">\ </span>a&#39; t <span class="err">→ f t (a&#39; t))</span>
+</span><span id="__span-42-13"><a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a><span class="err">  :=</span>
+</span><span id="__span-42-14"><a id="__codelineno-42-14" name="__codelineno-42-14" href="#__codelineno-42-14"></a><span class="err">    is-homotopy-cartesian-is-horizontal-equiv</span>
+</span><span id="__span-42-15"><a id="__codelineno-42-15" name="__codelineno-42-15" href="#__codelineno-42-15"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
+</span><span id="__span-42-16"><a id="__codelineno-42-16" name="__codelineno-42-16" href="#__codelineno-42-16"></a><span class="err">    </span><span class="p">( </span>\ a → (t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t])</span>
+</span><span id="__span-42-17"><a id="__codelineno-42-17" name="__codelineno-42-17" href="#__codelineno-42-17"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ϕ) → B t)</span>
+</span><span id="__span-42-18"><a id="__codelineno-42-18" name="__codelineno-42-18" href="#__codelineno-42-18"></a><span class="err">    </span><span class="p">( </span>\ b → (t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ b t])</span>
+</span><span id="__span-42-19"><a id="__codelineno-42-19" name="__codelineno-42-19" href="#__codelineno-42-19"></a><span class="err">    ( </span><span class="p">\ </span>a t <span class="err">→ f t (a t))</span>
+</span><span id="__span-42-20"><a id="__codelineno-42-20" name="__codelineno-42-20" href="#__codelineno-42-20"></a><span class="err">    ( </span><span class="p">\ </span>_ a&#39; t <span class="err">→ f t (a&#39; t))</span>
+</span><span id="__span-42-21"><a id="__codelineno-42-21" name="__codelineno-42-21" href="#__codelineno-42-21"></a><span class="err">    ( is-equiv-extensions-BOT-is-equiv</span>
+</span><span id="__span-42-22"><a id="__codelineno-42-22" name="__codelineno-42-22" href="#__codelineno-42-22"></a><span class="err">      ( I) (</span><span class="p">\ </span>t <span class="err">→ ϕ t) (</span><span class="p">\ </span>t <span class="err">→ A t) (</span><span class="p">\ </span>t <span class="err">→ B t) ( </span><span class="p">\ </span>t <span class="err">→ f t)</span>
+</span><span id="__span-42-23"><a id="__codelineno-42-23" name="__codelineno-42-23" href="#__codelineno-42-23"></a><span class="err">      </span><span class="p">( </span>\ (t <span class="p">:</span><span class="err"> ϕ) → is-equiv-f t))</span>
+</span><span id="__span-42-24"><a id="__codelineno-42-24" name="__codelineno-42-24" href="#__codelineno-42-24"></a><span class="err">    </span><span class="p">( </span>is-equiv-Equiv-is-equiv&#39;
+</span><span id="__span-42-25"><a id="__codelineno-42-25" name="__codelineno-42-25" href="#__codelineno-42-25"></a>        ( (t <span class="p">:</span><span class="err"> ψ) → A t) </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → B t) (</span><span class="p">\ </span>a&#39; t <span class="err">→ f t (a&#39; t))</span>
+</span><span id="__span-42-26"><a id="__codelineno-42-26" name="__codelineno-42-26" href="#__codelineno-42-26"></a><span class="err">        </span><span class="p">( </span>Σ (a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t) , </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t]))</span>
+</span><span id="__span-42-27"><a id="__codelineno-42-27" name="__codelineno-42-27" href="#__codelineno-42-27"></a><span class="err">        </span><span class="p">( </span>Σ (b <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → B t) , </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ b t]))</span>
+</span><span id="__span-42-28"><a id="__codelineno-42-28" name="__codelineno-42-28" href="#__codelineno-42-28"></a><span class="err">        ( \ (a , a&#39;) → ( </span><span class="p">\ </span>t <span class="err">→ f t (a t) , </span><span class="p">\ </span>t <span class="err">→ f t (a&#39; t)))</span>
+</span><span id="__span-42-29"><a id="__codelineno-42-29" name="__codelineno-42-29" href="#__codelineno-42-29"></a><span class="err">      ( cofibration-composition-functorial</span>
+</span><span id="__span-42-30"><a id="__codelineno-42-30" name="__codelineno-42-30" href="#__codelineno-42-30"></a><span class="err">        I ψ ϕ (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="m">BOT</span><span class="err">) A B f (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">recBOT</span><span class="err">))</span>
+</span><span id="__span-42-31"><a id="__codelineno-42-31" name="__codelineno-42-31" href="#__codelineno-42-31"></a><span class="err">      ( is-equiv-extensions-BOT-is-equiv I ψ A B f is-equiv-f))</span>
+</span><span id="__span-42-32"><a id="__codelineno-42-32" name="__codelineno-42-32" href="#__codelineno-42-32"></a>
+</span><span id="__span-42-33"><a id="__codelineno-42-33" name="__codelineno-42-33" href="#__codelineno-42-33"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-extensions-equiv" id="define:equiv-extensions-equiv" style="visibility: visible; position: relative; color: inherit">equiv-extensions-equiv</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-42-34"><a id="__codelineno-42-34" name="__codelineno-42-34" href="#__codelineno-42-34"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-42-35"><a id="__codelineno-42-35" name="__codelineno-42-35" href="#__codelineno-42-35"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-42-36"><a id="__codelineno-42-36" name="__codelineno-42-36" href="#__codelineno-42-36"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-42-37"><a id="__codelineno-42-37" name="__codelineno-42-37" href="#__codelineno-42-37"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> ψ → U)</span>
+</span><span id="__span-42-38"><a id="__codelineno-42-38" name="__codelineno-42-38" href="#__codelineno-42-38"></a><span class="err">  </span><span class="p">( </span>equivs-A-B <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → Equiv (A t) (B t))</span>
+</span><span id="__span-42-39"><a id="__codelineno-42-39" name="__codelineno-42-39" href="#__codelineno-42-39"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
+</span><span id="__span-42-40"><a id="__codelineno-42-40" name="__codelineno-42-40" href="#__codelineno-42-40"></a><span class="err">  : Equiv</span>
+</span><span id="__span-42-41"><a id="__codelineno-42-41" name="__codelineno-42-41" href="#__codelineno-42-41"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t])</span>
+</span><span id="__span-42-42"><a id="__codelineno-42-42" name="__codelineno-42-42" href="#__codelineno-42-42"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ </span><span class="s">first</span><span class="err"> (equivs-A-B t) (a t)])</span>
+</span><span id="__span-42-43"><a id="__codelineno-42-43" name="__codelineno-42-43" href="#__codelineno-42-43"></a><span class="err">  :=</span>
+</span><span id="__span-42-44"><a id="__codelineno-42-44" name="__codelineno-42-44" href="#__codelineno-42-44"></a><span class="err">  ( ( </span><span class="p">\ </span>a&#39; t <span class="err">→ </span><span class="s">first</span><span class="err"> (equivs-A-B t) (a&#39; t))</span>
+</span><span id="__span-42-45"><a id="__codelineno-42-45" name="__codelineno-42-45" href="#__codelineno-42-45"></a><span class="err">  , ( is-equiv-extensions-is-equiv I ψ ϕ A B</span>
+</span><span id="__span-42-46"><a id="__codelineno-42-46" name="__codelineno-42-46" href="#__codelineno-42-46"></a><span class="err">      ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">first</span><span class="err"> (equivs-A-B t))</span>
+</span><span id="__span-42-47"><a id="__codelineno-42-47" name="__codelineno-42-47" href="#__codelineno-42-47"></a><span class="err">      ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">second</span><span class="err"> (equivs-A-B t))</span>
+</span><span id="__span-42-48"><a id="__codelineno-42-48" name="__codelineno-42-48" href="#__codelineno-42-48"></a><span class="err">      ( a)))</span>
+</span></code></pre></div>
+<h3 id="retracts-induce-retracts-of-extension-types">Retracts induce retracts of extension types<a class="headerlink" href="#retracts-induce-retracts-of-extension-types" title="Permanent link">&para;</a></h3>
+<p>We show that if <code>f : A → B</code> has a retraction, then the same is true for the
+induced map on extension types. We reduce this to the case of equivalences by
+working with external retractions.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="nd">#section</span><span class="n"> section-retraction-extensions</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="kr">#variable</span><span class="p"> </span>I<span class="err"> : CUBE</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="kr">#variable</span><span class="p"> </span>ψ<span class="err"> : I → TOPE</span>
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a><span class="kr">#variable</span><span class="p"> </span>ϕ<span class="err"> : ψ → TOPE</span>
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a><span class="kr">#variables</span><span class="p"> </span>A B<span class="err"> : ψ → U</span>
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>
+</span><span id="__span-43-8"><a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a><span class="kr">#variable</span><span class="p"> </span>s<span class="err"> : </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → A t → B t</span>
+</span><span id="__span-43-9"><a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a><span class="kr">#variable</span><span class="p"> </span>r<span class="err"> : </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → B t → A t</span>
+</span><span id="__span-43-10"><a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a><span class="kr">#variable</span><span class="p"> </span>η<span class="err"> : </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A t) → r t (s t a) = a</span>
+</span><span id="__span-43-11"><a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a>
+</span><span id="__span-43-12"><a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-sec-rec-extensions-sec-rec" id="define:is-sec-rec-extensions-sec-rec" style="visibility: visible; position: relative; color: inherit">is-sec-rec-extensions-sec-rec</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-43-13"><a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
+</span><span id="__span-43-14"><a id="__codelineno-43-14" name="__codelineno-43-14" href="#__codelineno-43-14"></a><span class="err">  : is-section-retraction-pair</span>
+</span><span id="__span-43-15"><a id="__codelineno-43-15" name="__codelineno-43-15" href="#__codelineno-43-15"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t])</span>
+</span><span id="__span-43-16"><a id="__codelineno-43-16" name="__codelineno-43-16" href="#__codelineno-43-16"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ s t (a t)])</span>
+</span><span id="__span-43-17"><a id="__codelineno-43-17" name="__codelineno-43-17" href="#__codelineno-43-17"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ r t(s t(a t))])</span>
+</span><span id="__span-43-18"><a id="__codelineno-43-18" name="__codelineno-43-18" href="#__codelineno-43-18"></a><span class="err">    ( </span><span class="p">\ </span>a&#39; t <span class="err">→ s t (a&#39; t))</span>
+</span><span id="__span-43-19"><a id="__codelineno-43-19" name="__codelineno-43-19" href="#__codelineno-43-19"></a><span class="err">    ( </span><span class="p">\ </span>b&#39; t <span class="err">→ r t (b&#39; t))</span>
+</span><span id="__span-43-20"><a id="__codelineno-43-20" name="__codelineno-43-20" href="#__codelineno-43-20"></a><span class="err">  :=</span>
+</span><span id="__span-43-21"><a id="__codelineno-43-21" name="__codelineno-43-21" href="#__codelineno-43-21"></a><span class="err">    is-equiv-extensions-is-equiv I ψ ϕ A A</span>
+</span><span id="__span-43-22"><a id="__codelineno-43-22" name="__codelineno-43-22" href="#__codelineno-43-22"></a><span class="err">    ( </span><span class="p">\ </span>t a₀ <span class="err">→ r t (s t (a₀)))</span>
+</span><span id="__span-43-23"><a id="__codelineno-43-23" name="__codelineno-43-23" href="#__codelineno-43-23"></a><span class="err">    ( </span><span class="p">\ </span>t <span class="err">→ is-equiv-retraction-section (A t) (B t) (s t) (r t) (η t))</span>
+</span><span id="__span-43-24"><a id="__codelineno-43-24" name="__codelineno-43-24" href="#__codelineno-43-24"></a><span class="err">    ( a)</span>
+</span><span id="__span-43-25"><a id="__codelineno-43-25" name="__codelineno-43-25" href="#__codelineno-43-25"></a>
+</span><span id="__span-43-26"><a id="__codelineno-43-26" name="__codelineno-43-26" href="#__codelineno-43-26"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-retraction-extensions-has-retraction&#39;" id="define:has-retraction-extensions-has-retraction&#39;" style="visibility: visible; position: relative; color: inherit">has-retraction-extensions-has-retraction&#39;</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext η<span class="p">)</span>
+</span><span id="__span-43-27"><a id="__codelineno-43-27" name="__codelineno-43-27" href="#__codelineno-43-27"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
+</span><span id="__span-43-28"><a id="__codelineno-43-28" name="__codelineno-43-28" href="#__codelineno-43-28"></a><span class="err">  : has-retraction</span>
+</span><span id="__span-43-29"><a id="__codelineno-43-29" name="__codelineno-43-29" href="#__codelineno-43-29"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t])</span>
+</span><span id="__span-43-30"><a id="__codelineno-43-30" name="__codelineno-43-30" href="#__codelineno-43-30"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ s t (a t)])</span>
+</span><span id="__span-43-31"><a id="__codelineno-43-31" name="__codelineno-43-31" href="#__codelineno-43-31"></a><span class="err">    ( </span><span class="p">\ </span>a&#39; t <span class="err">→ s t (a&#39; t))</span>
+</span><span id="__span-43-32"><a id="__codelineno-43-32" name="__codelineno-43-32" href="#__codelineno-43-32"></a><span class="err">  :=</span>
+</span><span id="__span-43-33"><a id="__codelineno-43-33" name="__codelineno-43-33" href="#__codelineno-43-33"></a><span class="err">    has-retraction-internalize</span>
+</span><span id="__span-43-34"><a id="__codelineno-43-34" name="__codelineno-43-34" href="#__codelineno-43-34"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t])</span>
+</span><span id="__span-43-35"><a id="__codelineno-43-35" name="__codelineno-43-35" href="#__codelineno-43-35"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ s t (a t)])</span>
+</span><span id="__span-43-36"><a id="__codelineno-43-36" name="__codelineno-43-36" href="#__codelineno-43-36"></a><span class="err">    ( </span><span class="p">\ </span>a&#39; t <span class="err">→ s t (a&#39; t))</span>
+</span><span id="__span-43-37"><a id="__codelineno-43-37" name="__codelineno-43-37" href="#__codelineno-43-37"></a><span class="err">    </span><span class="p">( </span>( (t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ r t (s t (a t))]</span>
+</span><span id="__span-43-38"><a id="__codelineno-43-38" name="__codelineno-43-38" href="#__codelineno-43-38"></a><span class="err">      , </span><span class="p">\ </span>b&#39; t <span class="err">→ r t (b&#39; t))</span>
+</span><span id="__span-43-39"><a id="__codelineno-43-39" name="__codelineno-43-39" href="#__codelineno-43-39"></a><span class="err">    , is-sec-rec-extensions-sec-rec a)</span>
+</span><span id="__span-43-40"><a id="__codelineno-43-40" name="__codelineno-43-40" href="#__codelineno-43-40"></a>
+</span><span id="__span-43-41"><a id="__codelineno-43-41" name="__codelineno-43-41" href="#__codelineno-43-41"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-section-extensions-has-section&#39;" id="define:has-section-extensions-has-section&#39;" style="visibility: visible; position: relative; color: inherit">has-section-extensions-has-section&#39;</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext η<span class="p">)</span>
+</span><span id="__span-43-42"><a id="__codelineno-43-42" name="__codelineno-43-42" href="#__codelineno-43-42"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
+</span><span id="__span-43-43"><a id="__codelineno-43-43" name="__codelineno-43-43" href="#__codelineno-43-43"></a><span class="err">  : has-section</span>
+</span><span id="__span-43-44"><a id="__codelineno-43-44" name="__codelineno-43-44" href="#__codelineno-43-44"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ s t (a t)])</span>
+</span><span id="__span-43-45"><a id="__codelineno-43-45" name="__codelineno-43-45" href="#__codelineno-43-45"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ r t (s t (a t))])</span>
+</span><span id="__span-43-46"><a id="__codelineno-43-46" name="__codelineno-43-46" href="#__codelineno-43-46"></a><span class="err">    ( </span><span class="p">\ </span>b t <span class="err">→ r t (b t))</span>
+</span><span id="__span-43-47"><a id="__codelineno-43-47" name="__codelineno-43-47" href="#__codelineno-43-47"></a><span class="err">  :=</span>
+</span><span id="__span-43-48"><a id="__codelineno-43-48" name="__codelineno-43-48" href="#__codelineno-43-48"></a><span class="err">    has-section-internalize</span>
+</span><span id="__span-43-49"><a id="__codelineno-43-49" name="__codelineno-43-49" href="#__codelineno-43-49"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ s t (a t)])</span>
+</span><span id="__span-43-50"><a id="__codelineno-43-50" name="__codelineno-43-50" href="#__codelineno-43-50"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ r t (s t (a t))])</span>
+</span><span id="__span-43-51"><a id="__codelineno-43-51" name="__codelineno-43-51" href="#__codelineno-43-51"></a><span class="err">    ( </span><span class="p">\ </span>b&#39; t <span class="err">→ r t (b&#39; t))</span>
+</span><span id="__span-43-52"><a id="__codelineno-43-52" name="__codelineno-43-52" href="#__codelineno-43-52"></a><span class="err">    </span><span class="p">( </span>( ( (t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t])</span>
+</span><span id="__span-43-53"><a id="__codelineno-43-53" name="__codelineno-43-53" href="#__codelineno-43-53"></a><span class="err">      , ( </span><span class="p">\ </span>a&#39; t <span class="err">→ s t (a&#39; t)))</span>
+</span><span id="__span-43-54"><a id="__codelineno-43-54" name="__codelineno-43-54" href="#__codelineno-43-54"></a><span class="err">    , is-sec-rec-extensions-sec-rec a)</span>
+</span><span id="__span-43-55"><a id="__codelineno-43-55" name="__codelineno-43-55" href="#__codelineno-43-55"></a>
+</span><span id="__span-43-56"><a id="__codelineno-43-56" name="__codelineno-43-56" href="#__codelineno-43-56"></a><span class="nd">#end</span><span class="n"> section-retraction-extensions</span>
+</span></code></pre></div>
+<p>It is convenient to have uncurried versions.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-retraction-extensions-has-retraction" id="define:has-retraction-extensions-has-retraction" style="visibility: visible; position: relative; color: inherit">has-retraction-extensions-has-retraction</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> ψ → U)</span>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a><span class="err">  </span><span class="p">( </span>s <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → A t → B t)</span>
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a><span class="err">  </span><span class="p">( </span>has-retraction-s <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → has-retraction (A t) (B t) (s t))</span>
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a><span class="err">  : has-retraction</span>
+</span><span id="__span-44-10"><a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t])</span>
+</span><span id="__span-44-11"><a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ s t (a t)])</span>
+</span><span id="__span-44-12"><a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a><span class="err">    ( </span><span class="p">\ </span>a&#39; t <span class="err">→ s t (a&#39; t))</span>
+</span><span id="__span-44-13"><a id="__codelineno-44-13" name="__codelineno-44-13" href="#__codelineno-44-13"></a><span class="err">  :=</span>
+</span><span id="__span-44-14"><a id="__codelineno-44-14" name="__codelineno-44-14" href="#__codelineno-44-14"></a><span class="err">    has-retraction-extensions-has-retraction&#39; I ψ ϕ A B s</span>
+</span><span id="__span-44-15"><a id="__codelineno-44-15" name="__codelineno-44-15" href="#__codelineno-44-15"></a><span class="err">    ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">first</span><span class="err"> (has-retraction-s t))</span>
+</span><span id="__span-44-16"><a id="__codelineno-44-16" name="__codelineno-44-16" href="#__codelineno-44-16"></a><span class="err">    ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">second</span><span class="err"> (has-retraction-s t))</span>
+</span><span id="__span-44-17"><a id="__codelineno-44-17" name="__codelineno-44-17" href="#__codelineno-44-17"></a><span class="err">    ( a)</span>
+</span><span id="__span-44-18"><a id="__codelineno-44-18" name="__codelineno-44-18" href="#__codelineno-44-18"></a>
+</span><span id="__span-44-19"><a id="__codelineno-44-19" name="__codelineno-44-19" href="#__codelineno-44-19"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-section-extensions-has-section" id="define:has-section-extensions-has-section" style="visibility: visible; position: relative; color: inherit">has-section-extensions-has-section</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-44-20"><a id="__codelineno-44-20" name="__codelineno-44-20" href="#__codelineno-44-20"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-44-21"><a id="__codelineno-44-21" name="__codelineno-44-21" href="#__codelineno-44-21"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-44-22"><a id="__codelineno-44-22" name="__codelineno-44-22" href="#__codelineno-44-22"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-44-23"><a id="__codelineno-44-23" name="__codelineno-44-23" href="#__codelineno-44-23"></a><span class="err">  </span><span class="p">( </span>B A <span class="p">:</span><span class="err"> ψ → U)</span>
+</span><span id="__span-44-24"><a id="__codelineno-44-24" name="__codelineno-44-24" href="#__codelineno-44-24"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → B t → A t)</span>
+</span><span id="__span-44-25"><a id="__codelineno-44-25" name="__codelineno-44-25" href="#__codelineno-44-25"></a><span class="err">  </span><span class="p">( </span>has-section-r <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → has-section (B t) (A t) (r t))</span>
+</span><span id="__span-44-26"><a id="__codelineno-44-26" name="__codelineno-44-26" href="#__codelineno-44-26"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
+</span><span id="__span-44-27"><a id="__codelineno-44-27" name="__codelineno-44-27" href="#__codelineno-44-27"></a><span class="err">  : has-section</span>
+</span><span id="__span-44-28"><a id="__codelineno-44-28" name="__codelineno-44-28" href="#__codelineno-44-28"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ (</span><span class="s">first</span><span class="err"> (has-section-r t)) (a t)])</span>
+</span><span id="__span-44-29"><a id="__codelineno-44-29" name="__codelineno-44-29" href="#__codelineno-44-29"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ r t (</span><span class="s">first</span><span class="err"> (has-section-r t) (a t))])</span>
+</span><span id="__span-44-30"><a id="__codelineno-44-30" name="__codelineno-44-30" href="#__codelineno-44-30"></a><span class="err">    ( </span><span class="p">\ </span>b t <span class="err">→ r t (b t))</span>
+</span><span id="__span-44-31"><a id="__codelineno-44-31" name="__codelineno-44-31" href="#__codelineno-44-31"></a><span class="err">  :=</span>
+</span><span id="__span-44-32"><a id="__codelineno-44-32" name="__codelineno-44-32" href="#__codelineno-44-32"></a><span class="err">    has-section-extensions-has-section&#39; I ψ ϕ A B</span>
+</span><span id="__span-44-33"><a id="__codelineno-44-33" name="__codelineno-44-33" href="#__codelineno-44-33"></a><span class="err">    ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">first</span><span class="err"> (has-section-r t))</span>
+</span><span id="__span-44-34"><a id="__codelineno-44-34" name="__codelineno-44-34" href="#__codelineno-44-34"></a><span class="err">    ( r)</span>
+</span><span id="__span-44-35"><a id="__codelineno-44-35" name="__codelineno-44-35" href="#__codelineno-44-35"></a><span class="err">    ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">second</span><span class="err"> (has-section-r t))</span>
+</span><span id="__span-44-36"><a id="__codelineno-44-36" name="__codelineno-44-36" href="#__codelineno-44-36"></a><span class="err">    ( a)</span>
+</span></code></pre></div>
+<p>We summarize by saying that retracts of types induce retracts of extension
+types.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-retract-of-extensions-are-retract-of" id="define:is-retract-of-extensions-are-retract-of" style="visibility: visible; position: relative; color: inherit">is-retract-of-extensions-are-retract-of</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> ψ → U)</span>
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a><span class="err">  </span><span class="p">( </span>are-retract-A-of-B <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → is-retract-of (A t) (B t))</span>
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ϕ) → A t)</span>
+</span><span id="__span-45-8"><a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a><span class="err">  : is-retract-of</span>
+</span><span id="__span-45-9"><a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t [ϕ t ↦ a t])</span>
+</span><span id="__span-45-10"><a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a><span class="err">    </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → B t [ϕ t ↦ </span><span class="s">first</span><span class="err"> (are-retract-A-of-B t) (a t)])</span>
+</span><span id="__span-45-11"><a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a><span class="err">  :=</span>
+</span><span id="__span-45-12"><a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a><span class="err">  ( ( </span><span class="p">\ </span>a&#39; t <span class="err">→ </span><span class="s">first</span><span class="err"> (are-retract-A-of-B t) (a&#39; t))</span>
+</span><span id="__span-45-13"><a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a><span class="err">  , ( has-retraction-extensions-has-retraction I ψ ϕ A B</span>
+</span><span id="__span-45-14"><a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a><span class="err">      ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">first</span><span class="err"> (are-retract-A-of-B t))</span>
+</span><span id="__span-45-15"><a id="__codelineno-45-15" name="__codelineno-45-15" href="#__codelineno-45-15"></a><span class="err">      ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">second</span><span class="err"> (are-retract-A-of-B t))</span>
+</span><span id="__span-45-16"><a id="__codelineno-45-16" name="__codelineno-45-16" href="#__codelineno-45-16"></a><span class="err">      ( a)))</span>
+</span></code></pre></div>
+<p>The following special case of extensions from <code>BOT</code> is also useful.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-section-extensions-BOT-has-section" id="define:has-section-extensions-BOT-has-section" style="visibility: visible; position: relative; color: inherit">has-section-extensions-BOT-has-section</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> ψ → U)</span>
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">( </span>t <span class="p">:</span><span class="err"> ψ) → A t → B t)</span>
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a><span class="err">  </span><span class="p">( </span>has-section-f <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → has-section (A t) (B t) (f t))</span>
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a><span class="err">  : has-section </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → A t) </span><span class="p">(</span>(t <span class="p">:</span><span class="err"> ψ) → B t) ( </span><span class="p">\ </span>a t <span class="err">→ f t (a t))</span>
+</span><span id="__span-46-8"><a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a><span class="err">  :=</span>
+</span><span id="__span-46-9"><a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a><span class="err">    ( ( </span><span class="p">\ </span>b t <span class="err">→ </span><span class="s">first</span><span class="err"> (has-section-f t) (b t))</span>
+</span><span id="__span-46-10"><a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a><span class="err">    , </span><span class="p">\ </span>b <span class="err">→</span>
+</span><span id="__span-46-11"><a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a><span class="err">      ( naiveextext-extext extext I ψ (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="m">BOT</span><span class="err">) B (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">recBOT</span><span class="err">)</span>
+</span><span id="__span-46-12"><a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ f t (</span><span class="s">first</span><span class="err"> (has-section-f t) (b t)))</span>
+</span><span id="__span-46-13"><a id="__codelineno-46-13" name="__codelineno-46-13" href="#__codelineno-46-13"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ b t)</span>
+</span><span id="__span-46-14"><a id="__codelineno-46-14" name="__codelineno-46-14" href="#__codelineno-46-14"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="s">second</span><span class="err"> (has-section-f t) (b t))))</span>
 </span></code></pre></div>
 
 

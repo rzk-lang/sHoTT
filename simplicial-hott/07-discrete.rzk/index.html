@@ -1318,9 +1318,8 @@ of discrete types is discrete.</p>
 </span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="err">      ( </span><span class="s">second</span><span class="err"> (equiv-hom-eq-function-type-is-discrete X A is-discrete-A f g))</span>
 </span></code></pre></div>
 <p>By extension extensionality, an extension type into a family of discrete types
-is discrete. Since <code class="language-rzk highlight"><span class="err">equiv-extension-equiv-family</span></code> considers total
-extension types only, extending from <code class="language-rzk highlight"><span class="err">BOT</span></code>, that's all we prove here for
-now.</p>
+is discrete. Since <code class="language-rzk highlight"><span class="err">equiv-extensions-BOT-equiv</span></code> considers total extension
+types only, extending from <code class="language-rzk highlight"><span class="err">BOT</span></code>, that's all we prove here for now.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-hom-eq-extension-type-is-discrete" id="define:equiv-hom-eq-extension-type-is-discrete" style="visibility: visible; position: relative; color: inherit">equiv-hom-eq-extension-type-is-discrete</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
@@ -1335,7 +1334,7 @@ now.</p>
 </span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="err">      </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → hom (A t) (f t) (g t))</span>
 </span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="err">      </span><span class="p">( </span>hom ((t <span class="p">:</span><span class="err"> ψ) → A t) f g)</span>
 </span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="err">      ( equiv-ExtExt extext I ψ (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="m">BOT</span><span class="err">) A (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">recBOT</span><span class="err">) f g)</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="err">      ( equiv-extension-equiv-family</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="err">      ( equiv-extensions-BOT-equiv</span>
 </span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="err">        ( extext)</span>
 </span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="err">        ( I)</span>
 </span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="err">        ( ψ)</span>

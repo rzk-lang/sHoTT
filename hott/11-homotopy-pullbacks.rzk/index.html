@@ -1614,7 +1614,28 @@ from composition and cancelling laws for equivalences.</p>
 </span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="err">      ( F&#39; a&#39;&#39;) ( has-sections-F&#39; a&#39;&#39;)</span>
 </span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="err">      ( F (f&#39; a&#39;&#39;)) ( ihc&#39;&#39; a&#39;&#39;))</span>
 </span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="nd">#end</span><span class="n"> homotopy-cartesian-horizontal-calculus</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-homotopy-cartesian-left-cancel-with-section&#39;" id="define:is-homotopy-cartesian-left-cancel-with-section&#39;" style="visibility: visible; position: relative; color: inherit">is-homotopy-cartesian-left-cancel-with-section&#39;</a></span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="err">  ( (sec-f&#39; , ε-f&#39;) : has-section A&#39;&#39; A&#39; f&#39;)</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="err">  </span><span class="p">( </span>has-sections-F&#39;
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>    <span class="p">:</span><span class="err"> </span><span class="p">(</span>a&#39; <span class="p">:</span><span class="err"> A&#39;)</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="err">    → has-section (C&#39;&#39; (sec-f&#39; a&#39;)) (C&#39; (f&#39; (sec-f&#39; a&#39;))) (F&#39; (sec-f&#39; a&#39;)))</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="err">  </span><span class="p">( </span>ihc&#39;&#39;
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>    <span class="p">:</span><span class="err"> is-homotopy-cartesian A&#39;&#39; C&#39;&#39; A C</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="err">      ( comp A&#39;&#39; A&#39; A f f&#39;)</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="err">      ( </span><span class="p">\ </span>a&#39;&#39; <span class="err">→</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="err">        comp (C&#39;&#39; a&#39;&#39;) (C&#39; (f&#39; a&#39;&#39;)) (C (f (f&#39; a&#39;&#39;)))</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="err">        ( F (f&#39; a&#39;&#39;)) (F&#39; a&#39;&#39;)))</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="err">  : is-homotopy-cartesian A&#39; C&#39; A C f F</span>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="err">  :=</span>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="err">    ind-has-section&#39; A&#39;&#39; A&#39; f&#39; (sec-f&#39;, ε-f&#39;)</span>
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="err">    ( </span><span class="p">\ </span>a&#39; <span class="err">→ is-equiv (C&#39; a&#39;) (C (f a&#39;)) (F a&#39;))</span>
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="err">    ( </span><span class="p">\ </span>a&#39; <span class="err">→</span>
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="err">      is-equiv-left-cancel</span>
+</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="err">      ( C&#39;&#39; (sec-f&#39; a&#39;)) (C&#39; (f&#39; (sec-f&#39; a&#39;))) (C (f (f&#39; (sec-f&#39; a&#39;))))</span>
+</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="err">      ( F&#39; (sec-f&#39; a&#39;)) ( has-sections-F&#39; a&#39;)</span>
+</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="err">      ( F (f&#39; (sec-f&#39; a&#39;))) ( ihc&#39;&#39; (sec-f&#39; a&#39;)))</span>
+</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a>
+</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a><span class="nd">#end</span><span class="n"> homotopy-cartesian-horizontal-calculus</span>
 </span></code></pre></div>
 <h2 id="fiber-products">Fiber products<a class="headerlink" href="#fiber-products" title="Permanent link">&para;</a></h2>
 <p>Given two type families <code>B C : A → U</code>, we can form their <strong>fiberwise product</strong>.</p>

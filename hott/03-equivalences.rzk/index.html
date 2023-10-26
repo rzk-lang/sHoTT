@@ -1474,6 +1474,9 @@ notion.</p>
 </span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="err">  := </span><span class="kt">Σ</span><span class="err"> </span><span class="p">(</span>f <span class="p">:</span><span class="err"> A → B) , (is-equiv A B f)</span>
 </span></code></pre></div>
 <h2 id="induction-with-section">Induction with section<a class="headerlink" href="#induction-with-section" title="Permanent link">&para;</a></h2>
+<p>We have two variants of induction with section that say that if <code>f : A → B</code> has
+a section, it suffices to prove statements about <code>b : B</code> by doing so terms of
+the form <code>f a</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ind-has-section" id="define:ind-has-section" style="visibility: visible; position: relative; color: inherit">ind-has-section</a></span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
@@ -1483,6 +1486,16 @@ notion.</p>
 </span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="err">  </span><span class="p">( </span>b <span class="p">:</span><span class="err"> B)</span>
 </span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="err">  : C b</span>
 </span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="err">  := transport B C (f (sec-f b)) b (ε-f b) (s (sec-f b))</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ind-has-section&#39;" id="define:ind-has-section&#39;" style="visibility: visible; position: relative; color: inherit">ind-has-section&#39;</a></span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="err">  ( ( sec-f , ε-f) : has-section A B f)</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> B → U)</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="err">  </span><span class="p">( </span>c&#39; <span class="p">:</span><span class="err"> </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B) → C (f (sec-f b)))</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="err">  </span><span class="p">( </span>b <span class="p">:</span><span class="err"> B)</span>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="err">  : C b</span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="err">  := transport B C (f (sec-f b)) b (ε-f b) (c&#39; b)</span>
 </span></code></pre></div>
 <p>It is convenient to have available the special case where <code>f</code> is an equivalence.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ind-has-section-equiv" id="define:ind-has-section-equiv" style="visibility: visible; position: relative; color: inherit">ind-has-section-equiv</a></span>
@@ -1794,41 +1807,49 @@ the composite <code>A → A'</code> is an equivalence.</p>
 and <code>has-retraction</code> (and their section counterparts, respectively) are
 equivalent, so we content ourselves in showing that there is a logical
 biimplication between them.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-retraction-externalize" id="define:has-retraction-externalize" style="visibility: visible; position: relative; color: inherit">has-retraction-externalize</a></span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-retraction-section" id="define:is-equiv-retraction-section" style="visibility: visible; position: relative; color: inherit">is-equiv-retraction-section</a></span>
 </span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="err">  </span><span class="p">( </span>s <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="err">  ( (r , η) : has-retraction A B s)</span>
-</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a><span class="err">  : has-external-retraction A B s</span>
-</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a><span class="err">  :=</span>
-</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a><span class="err">    ( ( A , r)</span>
-</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a><span class="err">    , is-equiv-homotopy A A (</span><span class="p">\ </span>a <span class="err">→ r (s (a))) (identity A)</span>
-</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a><span class="err">      ( η) ( is-equiv-identity A))</span>
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> B → A)</span>
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a><span class="err">  </span><span class="p">( </span>η <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → r (s a) = a)</span>
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a><span class="err">  : is-equiv A A (</span><span class="p">\ </span>a <span class="err">→ r (s a))</span>
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a><span class="err">  :=</span>
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a><span class="err">    is-equiv-homotopy A A (</span><span class="p">\ </span>a <span class="err">→ r (s (a))) (identity A)</span>
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a><span class="err">      ( η) ( is-equiv-identity A)</span>
 </span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>
-</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-section-externalize" id="define:has-section-externalize" style="visibility: visible; position: relative; color: inherit">has-section-externalize</a></span>
-</span><span id="__span-33-12"><a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a><span class="err">  </span><span class="p">( </span>B A&#39; <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-33-13"><a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> B → A&#39;)</span>
-</span><span id="__span-33-14"><a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a><span class="err">  ( (s , ε) : has-section B A&#39; r)</span>
-</span><span id="__span-33-15"><a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a><span class="err">  : has-external-section B A&#39; r</span>
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-retraction-externalize" id="define:has-retraction-externalize" style="visibility: visible; position: relative; color: inherit">has-retraction-externalize</a></span>
+</span><span id="__span-33-12"><a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-33-13"><a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a><span class="err">  </span><span class="p">( </span>s <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-33-14"><a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a><span class="err">  ( (r , η) : has-retraction A B s)</span>
+</span><span id="__span-33-15"><a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a><span class="err">  : has-external-retraction A B s</span>
 </span><span id="__span-33-16"><a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a><span class="err">  :=</span>
-</span><span id="__span-33-17"><a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a><span class="err">    ( ( A&#39; , s)</span>
-</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a><span class="err">    , is-equiv-homotopy A&#39; A&#39; (</span><span class="p">\ </span>a&#39; <span class="err">→ r (s (a&#39;))) (identity A&#39;)</span>
-</span><span id="__span-33-19"><a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a><span class="err">      ( ε) ( is-equiv-identity A&#39;))</span>
-</span><span id="__span-33-20"><a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a>
-</span><span id="__span-33-21"><a id="__codelineno-33-21" name="__codelineno-33-21" href="#__codelineno-33-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-retraction-internalize" id="define:has-retraction-internalize" style="visibility: visible; position: relative; color: inherit">has-retraction-internalize</a></span>
-</span><span id="__span-33-22"><a id="__codelineno-33-22" name="__codelineno-33-22" href="#__codelineno-33-22"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-33-23"><a id="__codelineno-33-23" name="__codelineno-33-23" href="#__codelineno-33-23"></a><span class="err">  </span><span class="p">( </span>s <span class="p">:</span><span class="err"> A → B)</span>
-</span><span id="__span-33-24"><a id="__codelineno-33-24" name="__codelineno-33-24" href="#__codelineno-33-24"></a><span class="err">  ( ((A&#39; , r) , ( (rec-rs , η-rs) , _))</span>
-</span><span id="__span-33-25"><a id="__codelineno-33-25" name="__codelineno-33-25" href="#__codelineno-33-25"></a><span class="err">    : has-external-retraction A B s)</span>
-</span><span id="__span-33-26"><a id="__codelineno-33-26" name="__codelineno-33-26" href="#__codelineno-33-26"></a><span class="err">  : has-retraction A B s</span>
-</span><span id="__span-33-27"><a id="__codelineno-33-27" name="__codelineno-33-27" href="#__codelineno-33-27"></a><span class="err">  := ( comp B A&#39; A rec-rs r , η-rs)</span>
+</span><span id="__span-33-17"><a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a><span class="err">    ( ( A , r)</span>
+</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a><span class="err">    , is-equiv-retraction-section A B s r η)</span>
+</span><span id="__span-33-19"><a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a>
+</span><span id="__span-33-20"><a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-section-externalize" id="define:has-section-externalize" style="visibility: visible; position: relative; color: inherit">has-section-externalize</a></span>
+</span><span id="__span-33-21"><a id="__codelineno-33-21" name="__codelineno-33-21" href="#__codelineno-33-21"></a><span class="err">  </span><span class="p">( </span>B A&#39; <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-33-22"><a id="__codelineno-33-22" name="__codelineno-33-22" href="#__codelineno-33-22"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> B → A&#39;)</span>
+</span><span id="__span-33-23"><a id="__codelineno-33-23" name="__codelineno-33-23" href="#__codelineno-33-23"></a><span class="err">  ( (s , ε) : has-section B A&#39; r)</span>
+</span><span id="__span-33-24"><a id="__codelineno-33-24" name="__codelineno-33-24" href="#__codelineno-33-24"></a><span class="err">  : has-external-section B A&#39; r</span>
+</span><span id="__span-33-25"><a id="__codelineno-33-25" name="__codelineno-33-25" href="#__codelineno-33-25"></a><span class="err">  :=</span>
+</span><span id="__span-33-26"><a id="__codelineno-33-26" name="__codelineno-33-26" href="#__codelineno-33-26"></a><span class="err">    ( ( A&#39; , s)</span>
+</span><span id="__span-33-27"><a id="__codelineno-33-27" name="__codelineno-33-27" href="#__codelineno-33-27"></a><span class="err">    , is-equiv-retraction-section A&#39; B s r ε)</span>
 </span><span id="__span-33-28"><a id="__codelineno-33-28" name="__codelineno-33-28" href="#__codelineno-33-28"></a>
-</span><span id="__span-33-29"><a id="__codelineno-33-29" name="__codelineno-33-29" href="#__codelineno-33-29"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-section-internalize" id="define:has-section-internalize" style="visibility: visible; position: relative; color: inherit">has-section-internalize</a></span>
-</span><span id="__span-33-30"><a id="__codelineno-33-30" name="__codelineno-33-30" href="#__codelineno-33-30"></a><span class="err">  </span><span class="p">( </span>B A&#39; <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-33-31"><a id="__codelineno-33-31" name="__codelineno-33-31" href="#__codelineno-33-31"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> B → A&#39;)</span>
-</span><span id="__span-33-32"><a id="__codelineno-33-32" name="__codelineno-33-32" href="#__codelineno-33-32"></a><span class="err">  ( ((A , s) , (_ , (sec-rs , ε-rs)))</span>
-</span><span id="__span-33-33"><a id="__codelineno-33-33" name="__codelineno-33-33" href="#__codelineno-33-33"></a><span class="err">    : has-external-section B A&#39; r)</span>
-</span><span id="__span-33-34"><a id="__codelineno-33-34" name="__codelineno-33-34" href="#__codelineno-33-34"></a><span class="err">  : has-section B A&#39; r</span>
-</span><span id="__span-33-35"><a id="__codelineno-33-35" name="__codelineno-33-35" href="#__codelineno-33-35"></a><span class="err">  := ( comp A&#39; A B s sec-rs , ε-rs)</span>
+</span><span id="__span-33-29"><a id="__codelineno-33-29" name="__codelineno-33-29" href="#__codelineno-33-29"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-retraction-internalize" id="define:has-retraction-internalize" style="visibility: visible; position: relative; color: inherit">has-retraction-internalize</a></span>
+</span><span id="__span-33-30"><a id="__codelineno-33-30" name="__codelineno-33-30" href="#__codelineno-33-30"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-33-31"><a id="__codelineno-33-31" name="__codelineno-33-31" href="#__codelineno-33-31"></a><span class="err">  </span><span class="p">( </span>s <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-33-32"><a id="__codelineno-33-32" name="__codelineno-33-32" href="#__codelineno-33-32"></a><span class="err">  ( ((A&#39; , r) , ( (rec-rs , η-rs) , _))</span>
+</span><span id="__span-33-33"><a id="__codelineno-33-33" name="__codelineno-33-33" href="#__codelineno-33-33"></a><span class="err">    : has-external-retraction A B s)</span>
+</span><span id="__span-33-34"><a id="__codelineno-33-34" name="__codelineno-33-34" href="#__codelineno-33-34"></a><span class="err">  : has-retraction A B s</span>
+</span><span id="__span-33-35"><a id="__codelineno-33-35" name="__codelineno-33-35" href="#__codelineno-33-35"></a><span class="err">  := ( comp B A&#39; A rec-rs r , η-rs)</span>
+</span><span id="__span-33-36"><a id="__codelineno-33-36" name="__codelineno-33-36" href="#__codelineno-33-36"></a>
+</span><span id="__span-33-37"><a id="__codelineno-33-37" name="__codelineno-33-37" href="#__codelineno-33-37"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-section-internalize" id="define:has-section-internalize" style="visibility: visible; position: relative; color: inherit">has-section-internalize</a></span>
+</span><span id="__span-33-38"><a id="__codelineno-33-38" name="__codelineno-33-38" href="#__codelineno-33-38"></a><span class="err">  </span><span class="p">( </span>B A&#39; <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-33-39"><a id="__codelineno-33-39" name="__codelineno-33-39" href="#__codelineno-33-39"></a><span class="err">  </span><span class="p">( </span>r <span class="p">:</span><span class="err"> B → A&#39;)</span>
+</span><span id="__span-33-40"><a id="__codelineno-33-40" name="__codelineno-33-40" href="#__codelineno-33-40"></a><span class="err">  ( ((A , s) , (_ , (sec-rs , ε-rs)))</span>
+</span><span id="__span-33-41"><a id="__codelineno-33-41" name="__codelineno-33-41" href="#__codelineno-33-41"></a><span class="err">    : has-external-section B A&#39; r)</span>
+</span><span id="__span-33-42"><a id="__codelineno-33-42" name="__codelineno-33-42" href="#__codelineno-33-42"></a><span class="err">  : has-section B A&#39; r</span>
+</span><span id="__span-33-43"><a id="__codelineno-33-43" name="__codelineno-33-43" href="#__codelineno-33-43"></a><span class="err">  := ( comp A&#39; A B s sec-rs , ε-rs)</span>
 </span></code></pre></div>
 <p>A consequence of the above is that in a section-retraction pair <code>(s, r)</code>, the
 map <code>s</code> is a section and the map <code>r</code> is a retraction. Note that not every

@@ -185,7 +185,7 @@ The union of shapes is defined by disjunction on topes.
   := \ t → ψ t ∨ χ t
 ```
 
-### Connection Squares
+### Connection squares
 
 <!-- This is manually adjusted diagram (hopefully fully supported in the future by rzk) -->
 <svg class="rzk-render" viewBox="-175 -100 350 375" width="150" height="150">

@@ -1,4 +1,4 @@
-# 10. Trivial Fibrations
+# 10. Trivial fibrations
 
 This is a literate `rzk` file:
 
@@ -266,6 +266,27 @@ the fibers.
       ( \ a → Σ (b : B), f a = b)
       ( \ a → is-contr-based-paths B (f a)))
     ( fubini-Σ A B (\ a b → f a = b))
+```
+
+The inverse of this equivalence is given (definitionally!) by the projection
+`\ (_ , (a , _)) → a`.
+
+```rzk
+#def compute-left-inverse-equiv-domain-sum-of-fibers
+  ( A B : U)
+  ( f : A → B)
+  ( (b , (a , p)) : (Σ (b : B) , fib A B f b))
+  : ( first (first ( second (equiv-domain-sum-of-fibers A B f))) (b , (a , p))
+    = a)
+  := refl
+
+#def compute-right-inverse-equiv-domain-sum-of-fibers
+  ( A B : U)
+  ( f : A → B)
+  ( (b , (a , p)) : (Σ (b : B) , fib A B f b))
+  : ( first (second ( second (equiv-domain-sum-of-fibers A B f))) (b , (a , p))
+    = a)
+  := refl
 ```
 
 ## Equivalence between fibers in equivalent domains

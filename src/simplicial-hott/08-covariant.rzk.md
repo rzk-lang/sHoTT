@@ -12,12 +12,13 @@ This is a literate `rzk` file:
 
 - `hott/*` - We require various prerequisites from homotopy type theory, for
   instance the notion of contractible types.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
-  subshapes.
-- `4-extension-types.md` — We use Theorem 4.1, an equivalence between lifts.
-- `5-segal-types.md` - We make use of the notion of Segal types and their
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
+- `04-extension-types.rzk.md` — We use Theorem 4.1, an equivalence between
+  lifts.
+- `05-segal-types.rzk.md` - We make use of the notion of Segal types and their
   structures.
-- `6-contractible.md` - We make use of weak function extensionality.
+- `06-contractible.rzk.md` - We make use of weak function extensionality.
 
 Some of the definitions in this file rely on extension extensionality:
 

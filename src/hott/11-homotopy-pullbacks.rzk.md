@@ -448,6 +448,27 @@ In fact, it suffices to assume that the left square has horizontal sections.
       ( F' a'') ( has-sections-F' a'')
       ( F (f' a'')) ( ihc'' a''))
 
+#def is-homotopy-cartesian-left-cancel-with-section'
+  ( (sec-f' , ε-f') : has-section A'' A' f')
+  ( has-sections-F'
+    : (a' : A')
+    → has-section (C'' (sec-f' a')) (C' (f' (sec-f' a'))) (F' (sec-f' a')))
+  ( ihc''
+    : is-homotopy-cartesian A'' C'' A C
+      ( comp A'' A' A f f')
+      ( \ a'' →
+        comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
+        ( F (f' a'')) (F' a'')))
+  : is-homotopy-cartesian A' C' A C f F
+  :=
+    ind-has-section' A'' A' f' (sec-f', ε-f')
+    ( \ a' → is-equiv (C' a') (C (f a')) (F a'))
+    ( \ a' →
+      is-equiv-left-cancel
+      ( C'' (sec-f' a')) (C' (f' (sec-f' a'))) (C (f (f' (sec-f' a'))))
+      ( F' (sec-f' a')) ( has-sections-F' a')
+      ( F (f' (sec-f' a'))) ( ihc'' (sec-f' a')))
+
 #end homotopy-cartesian-horizontal-calculus
 ```
 
@@ -502,6 +523,10 @@ Given two maps `B → A` and `C → A`, we can form the **relative product** ove
   : relative-product → C
   := \ ((_ , c), _) → c
 
+#def projection-relative-product uses (A B β C)
+  : relative-product → A
+  := \ ((_ , c) , _) → γ c
+
 #def homotopy-relative-product uses (A B C)
   ( (bc, p) : relative-product )
   : β (first-relative-product (bc,p)) = γ (second-relative-product (bc,p))
@@ -529,6 +554,10 @@ product of all fibers.
   : fiber-product → C
   := \ (_, (_, (c, _))) → c
 
+#def projection-fiber-product uses (A B β C γ)
+  : fiber-product → A
+  := \ (a, (_, (_, _))) → a
+
 #def homotopy-fiber-product uses (A B C)
   : ( abpcq : fiber-product )
   → β (first-fiber-product abpcq) = γ (second-fiber-product abpcq)
@@ -545,6 +574,17 @@ product of all fibers.
   ( ((b,c), e) : relative-product)
   : fiber-product
   := ( γ c , ( (b , e) , (c , refl)))
+
+#def compatible-projection-fiber-relative-product uses (A B β C γ)
+  ( x : relative-product)
+  : projection-relative-product x = projection-fiber-product (fiber-relative-product x)
+  := refl
+
+#def compatible-projection-relative-fiber-product uses (A B β C γ)
+  ( abpcq : fiber-product)
+  : ( projection-relative-product (relative-fiber-product abpcq)
+    = projection-fiber-product abpcq)
+  := second (second (second abpcq)) -- evaluates to q
 
 #def is-id-relative-fiber-relative-product
   ( bce : relative-product)
@@ -615,15 +655,214 @@ The relative product of `f : B → A` with a map `Unit → A` corresponding to
       , \ _ → refl)
     , ( second (compute-pullback-to-Unit B A f a)
       , is-equiv-identity Unit))
-
 ```
 
-## Applications
+### Total fibers of a square
 
-### Maps induced on fibers
+We consider a commutative square
 
-As an application of `#!rzk is-homotopy-cartesian-is-horizontal-equiv`, we show
-that an equivalence of maps induces an equivalence of fibers at each base point.
+```
+T → B
+↓   ↓
+C → A
+```
+
+given by the following data:
+
+```rzk
+#section fibers-comm-square
+
+-- the data of a comm square
+#variable A : U
+#variable B : U
+#variable β : B → A
+#variable C : U
+#variable γ : C → A
+#variable T : U
+#variable β' : T → B
+#variable γ' : T → C
+#variable η : (t : T) → β (β' t) = γ (γ' t)
+```
+
+We define the canonical **gap map** from `T` to the relative product over `A`.
+The fibers of this gap map are called the **total-fibers** of the commutative
+square.
+
+```rzk
+#def gap-map-comm-square
+  : T → relative-product A B β C γ
+  := \ t → ((β' t , γ' t) , η t)
+
+#def tot-fib-comm-square uses (β' γ' η)
+  ( bcp : relative-product A B β C γ)
+  : U
+  := fib T (relative-product A B β C γ) gap-map-comm-square bcp
+-- t , ((β' t , γ' t) , η t) = ((b , c) , p)
+```
+
+We aim to show that one can compute these total fibers of the commutative square
+in two steps: first, one takes the fibers in the vertical direction and obtains
+an induced map `fib T C γ c → fib B A β (γ c)`; second, one takes the fibers of
+these maps.
+
+We define the induced maps on fibers the resulting fibers between fibers.
+
+```rzk
+#def map-vertical-fibs-comm-square
+  ( c : C)
+  : fib T C γ' c → fib B A β (γ c)
+  := \ (t , q) →
+     ( (β' t)
+     , ( concat A (β (β' t)) (γ (γ' t)) (γ c)
+         (η t) (ap C A (γ' t) c γ q)))
+
+#def fib-vertical-fibs-comm-square uses (β' γ' η)
+  ( c : C)
+  ( bp : fib B A β (γ c))
+  : U
+  := fib (fib T C γ' c) (fib B A β (γ c))
+     ( map-vertical-fibs-comm-square c)
+     ( bp)
+-- (t, q : γ' t = c) , (β' t, concat (η t) (ap γ q)) = (b, p : β b = γ c)
+```
+
+Then we use a helper term to construct a comparison map from the total fibers to
+the fiber fibers.
+
+```rzk
+-- We append the random suffix IkCK to terms
+-- that are only meant to be used locally in this section
+
+#def helper-IkCK uses (β' η)
+  ( ((b , c) , p) : relative-product A B β C γ)
+  ( t : T)
+  : U
+  := Σ ( q : γ' t = c) , map-vertical-fibs-comm-square c (t , q) = (b , p)
+
+#def fib-vertical-fibs-helper-IkCK uses (β' γ' η)
+  ( ((b , c) , p) : relative-product A B β C γ)
+  ( t : T)
+  ( (q , e) : helper-IkCK ((b,c),p) t)
+  : fib-vertical-fibs-comm-square c (b,p)
+  := ((t , q) , e)
+
+#def fib-vertical-fibs-tot-fib-comm-square uses (η β' γ')
+  ( ((b,c),p) : relative-product A B β C γ)
+  ( (t , h) : tot-fib-comm-square ((b,c),p))
+  : fib-vertical-fibs-comm-square c (b,p)
+  :=
+    ( fib-vertical-fibs-helper-IkCK ((b,c),p) t)
+    ( ind-fib T (relative-product A B β C γ)
+      ( gap-map-comm-square)
+      ( \ bcp' (t, h') → helper-IkCK bcp' t)
+      ( \ t → (refl, refl))
+      ( ((b,c),p))
+      ( t , h))
+```
+
+We could have defined this comparison map without the helper by a direct fiber
+induction, but in this case it would not commute definitionally with the
+canonical projection to `T`.
+
+```rzk
+#def compute-fib-vertical-fibs-tot-fib-comm-square uses (η β' γ')
+  ( bcp : relative-product A B β C γ)
+  ( (t , h) : tot-fib-comm-square bcp)
+  :
+  ( first (first (fib-vertical-fibs-tot-fib-comm-square bcp (t , h)))
+  = t)
+  := refl
+```
+
+Finally, we show that these comparison maps are equivalences by summing over all
+of them. Indeed, by applications of `is-equiv-domain-sum-of-fibers`, the total
+type on each side is just equivalent to `T`.
+
+```rzk
+#def is-equiv-projection-fib-vertical-fibs-comm-square uses (η β')
+  : is-equiv
+    ( Σ (((b,c),p) : relative-product A B β C γ)
+      , fib-vertical-fibs-comm-square c (b,p))
+    ( T)
+    ( \ (_ , ((t , _) , _)) → t)
+  :=
+    is-equiv-triple-comp
+    ( Σ (((b,c),p) : relative-product A B β C γ)
+      , fib-vertical-fibs-comm-square c (b,p))
+    ( Σ ( c : C)
+      , ( Σ (bp : fib B A β (γ c))
+          , fib-vertical-fibs-comm-square c bp))
+    ( Σ (c : C) , fib T C γ' c)
+    ( T)
+    ( \ (((b , c) , p) , tqe) → (c , ((b , p) , tqe)))
+    ( ( \ (c , ((b , p) , tqe)) → (((b , c) , p) , tqe) , \ _ → refl)
+    , ( \ (c , ((b , p) , tqe)) → (((b , c) , p) , tqe) , \ _ → refl))
+    ( \ (c , (_ , (tq , _))) → (c , tq))
+    ( is-equiv-total-is-equiv-fiberwise C
+      ( \ c → Σ (bp : fib B A β (γ c)) , fib-vertical-fibs-comm-square c bp)
+      ( \ c → fib T C γ' c)
+      ( \ c (_ , (tq , _)) → tq)
+      ( \ c →
+        is-equiv-domain-sum-of-fibers
+        ( fib T C γ' c) (fib B A β (γ c))
+        ( map-vertical-fibs-comm-square c)))
+    ( \ (_ , (t , _)) → t)
+    ( is-equiv-domain-sum-of-fibers T C γ')
+
+#def is-equiv-fib-vertical-fibs-tot-fib-comm-square uses (η β' γ')
+  : (((b,c),p) : relative-product A B β C γ)
+  → is-equiv
+    ( tot-fib-comm-square ((b,c),p))
+    ( fib-vertical-fibs-comm-square c (b,p))
+    ( fib-vertical-fibs-tot-fib-comm-square ((b,c),p))
+  :=
+    is-equiv-fiberwise-is-equiv-total
+    ( relative-product A B β C γ)
+    ( \ bcp → tot-fib-comm-square bcp)
+    ( \ ((b,c),p) → fib-vertical-fibs-comm-square c (b,p))
+    ( \ bcp → fib-vertical-fibs-tot-fib-comm-square bcp)
+    ( is-equiv-right-factor
+      ( Σ (bcp : relative-product A B β C γ)
+        , tot-fib-comm-square bcp)
+      ( Σ (((b,c),p) : relative-product A B β C γ)
+        , fib-vertical-fibs-comm-square c (b,p))
+      ( T)
+      ( total-map
+        ( relative-product A B β C γ)
+        ( \ bcp → tot-fib-comm-square bcp)
+        ( \ ((b,c),p) → fib-vertical-fibs-comm-square c (b,p))
+        ( \ bcp → fib-vertical-fibs-tot-fib-comm-square bcp))
+      ( \ (_ , ((t , _) , _)) → t)
+      ( is-equiv-projection-fib-vertical-fibs-comm-square)
+      ( is-equiv-domain-sum-of-fibers
+        ( T) ( relative-product A B β C γ)
+        ( gap-map-comm-square)))
+```
+
+We summarize the result as the following equivalence:
+
+```rzk
+#def equiv-fib-vertical-fibs-tot-fib-comm-square uses (A B C β γ T β' γ' η)
+  ( b : B)
+  ( c : C)
+  ( p : β b = γ c)
+  : Equiv
+    ( tot-fib-comm-square ((b , c) , p))
+    ( fib-vertical-fibs-comm-square c (b , p))
+  :=
+    ( fib-vertical-fibs-tot-fib-comm-square ((b , c) , p)
+    , is-equiv-fib-vertical-fibs-tot-fib-comm-square ((b , c) , p))
+
+#end fibers-comm-square
+```
+
+## Functoriality of fibers
+
+We have an assignment that to each `α : A' → A` and each `a : A` assigns the
+fiber `fib A' A α a`. We now investigate the functoriality properties of this
+assignment.
+
+Every map of maps induces a map of fibers.
 
 ```rzk
 #section is-equiv-map-of-fibers-is-equiv-map-of-maps
@@ -647,7 +886,14 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
   , ( concat B (β (s'-c4XT a')) (s-c4XT (α a')) (s-c4XT a))
     ( second  map-of-maps-α-β a')
     ( ap A B (α a') a s-c4XT p))
+```
 
+### Equivalences induce equivalences on fibers
+
+As an application of `#!rzk is-homotopy-cartesian-is-horizontal-equiv`, we show
+that an equivalence of maps induces an equivalence of fibers at each base point.
+
+```rzk
 #def map-of-sums-of-fibers-map-of-maps uses (map-of-maps-α-β)
   ( (a, u) : Σ (a : A), fib A' A α a)
   : Σ (b : B), fib B' B β b
@@ -683,10 +929,10 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
   ( sums-of-fibers-to-domains-map-of-maps)
   ( second
     ( ( inv-equiv A' (Σ (a : A), fib A' A α a))
-      ( equiv-domain-sum-of-fibers A' A α)))
+      ( equiv-sum-of-fibers-domain A' A α)))
   ( second
     ( ( inv-equiv B' (Σ (b : B), fib B' B β b))
-      ( equiv-domain-sum-of-fibers B' B β)))
+      ( equiv-sum-of-fibers-domain B' B β)))
   ( is-equiv-s')
 
 #variable is-equiv-s : is-equiv A B s-c4XT
@@ -725,4 +971,150 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
     ( is-equiv-s)
     ( is-equiv-s')
     ( a))
+```
+
+### Composition induces composition on fibers
+
+The map induced on fibers respects composition up to homotopy.
+
+```rzk
+#def comp-map-of-maps
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( C' C : U)
+  ( γ : C' → C)
+  ( ((t',t),ηt) : map-of-maps B' B β C' C γ)
+  ( ((s',s),ηs) : map-of-maps A' A α B' B β)
+  : map-of-maps A' A α C' C γ
+  :=
+  ( ( comp A' B' C' t' s'
+    , comp A B C t s)
+  , ( \ a' →
+      concat C (γ (t' (s' a'))) (t (β (s' a'))) (t (s (α a')))
+      ( ηt (s' a'))
+      ( ap B C (β (s' a')) (s (α a')) t (ηs a'))))
+
+#def comp-map-of-fibers-comp-map-of-maps
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( C' C : U)
+  ( γ : C' → C)
+  ( ((t',t),ηt) : map-of-maps B' B β C' C γ)
+  ( ((s',s),ηs) : map-of-maps A' A α B' B β)
+  : ( a : A)
+  → homotopy (fib A' A α a) (fib C' C γ (t (s a)))
+    ( comp ( fib A' A α a) (fib B' B β (s a)) (fib C' C γ (t (s a)))
+      ( map-of-fibers-map-of-maps B' B β C' C γ ((t',t),ηt) ( s a))
+      ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) ( a)))
+    ( map-of-fibers-map-of-maps A' A α C' C γ
+      ( comp-map-of-maps A' A α B' B β C' C γ
+        ((t',t),ηt) ((s',s),ηs))
+      (a))
+  :=
+    ind-fib A' A α
+    ( \ a a'p →
+      ( ( map-of-fibers-map-of-maps B' B β C' C γ ((t',t),ηt) (s a))
+        ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) a
+          ( a'p))
+      =_{ fib C' C γ (t (s a))}
+        ( map-of-fibers-map-of-maps A' A α C' C γ
+          ( comp-map-of-maps A' A α B' B β C' C γ
+            ((t',t),ηt) ((s',s),ηs))
+          ( a) (a'p))))
+    ( \ a' → refl)
+```
+
+### Retracts induce retracts on fibers
+
+Every retract of types induces a retract on fibers.
+
+```rzk
+#def is-section-retraction-pair-Map
+  ( ((A',A),α) : Map)
+  ( ((B',B),β) : Map)
+  ( ((C',C),γ) : Map)
+  ( ((s',s),_) : map-Map ((A',A),α) ((B',B),β))
+  ( ((t',t),_) : map-Map ((B',B),β) ((C',C),γ))
+  : U
+  :=
+    product
+    ( is-section-retraction-pair A' B' C' s' t')
+    ( is-section-retraction-pair A B C s t)
+
+#def has-external-retract-Map
+  ( α β : Map)
+  ( S : map-Map α β)
+  : U
+  :=
+    Σ ((γ , T) : ( Σ (γ : Map) , (map-Map β γ)))
+    , ( is-section-retraction-pair-Map α β γ S T)
+
+#def is-external-retract-of-Map
+  ( α β : Map)
+  : U
+  :=
+    Σ (S : map-Map α β)
+    , has-external-retract-Map α β S
+
+#def is-retract-of-fibers-is-external-retract-of-Map
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( ( ((s',s),ηs) , ( ( ((C',C),γ) , ((r',r),ηr)) , ( is-s-r' , is-s-r)))
+    : is-external-retract-of-Map ((A',A),α) ((B',B),β))
+  ( a : A)
+  : is-retract-of (fib A' A α a) (fib B' B β (s a))
+  :=
+    ( ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) a)
+    , ( has-retraction-internalize
+        ( fib A' A α a) (fib B' B β (s a))
+        ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) a)
+        ( ( fib C' C γ (r (s a))
+          , map-of-fibers-map-of-maps B' B β C' C γ ((r',r),ηr) (s a))
+        , ( is-equiv-homotopy (fib A' A α a) (fib C' C γ (r (s a)))
+                ( comp ( fib A' A α a) (fib B' B β (s a)) (fib C' C γ (r (s a)))
+                  ( map-of-fibers-map-of-maps B' B β C' C γ ((r',r),ηr) ( s a))
+                  ( map-of-fibers-map-of-maps A' A α B' B β ((s',s),ηs) ( a)))
+                ( map-of-fibers-map-of-maps A' A α C' C γ
+                  ( comp-map-of-maps A' A α B' B β C' C γ
+                    ( (r',r),ηr) ((s',s),ηs))
+                  (a))
+            ( comp-map-of-fibers-comp-map-of-maps A' A α B' B β C' C γ
+              ( (r',r),ηr) ((s',s),ηs)
+              ( a))
+            ( is-equiv-map-of-fibers-is-equiv-map-of-maps A' A α C' C γ
+              ( comp-map-of-maps A' A α B' B β C' C γ ((r',r),ηr) ((s',s),ηs))
+              ( is-s-r')
+              ( is-s-r)
+              ( a))))))
+```
+
+### Equivalences are closed under retracts
+
+As an immediate corollary we obtain that equivalences are closed under retracts.
+
+```rzk
+#def is-equiv-is-retract-of-is-equiv
+  ( A' A : U)
+  ( α : A' → A)
+  ( B' B : U)
+  ( β : B' → B)
+  ( (((s',s),ηs) , has-ext-retr-S)
+    : is-external-retract-of-Map ((A',A),α) ((B',B),β))
+  ( is-equiv-β : is-equiv B' B β)
+  : is-equiv A' A α
+  :=
+  is-equiv-is-contr-map A' A α
+  ( \ a →
+    is-contr-is-retract-of-is-contr
+    ( fib A' A α a) (fib B' B β (s a))
+    ( is-retract-of-fibers-is-external-retract-of-Map A' A α B' B β
+      ( ((s',s),ηs) , has-ext-retr-S)
+      ( a))
+    ( is-contr-map-is-equiv B' B β is-equiv-β (s a)))
 ```

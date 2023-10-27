@@ -794,7 +794,7 @@ extensionality.
     → ( b : (t : ψ) → A t)
     → ( a : (t : ϕ) → A t)
     → ( e : (t : ϕ) → a t = b t)
-    → ( instance-HtpyExtProperty I ψ ϕ A b a e ))
+    → ( instance-HtpyExtProperty I ψ ϕ A b a e))
 ```
 
 If we assume weak extension extensionality, then then homotopy extension
@@ -1049,7 +1049,6 @@ We now assume extension extensionality and derive a few consequences.
 
 ```rzk
 #assume extext : ExtExt
-#assume naiveextext : NaiveExtExt
 ```
 
 ### Pointwise homotopy extension types
@@ -1245,7 +1244,9 @@ The converse is of course trivial.
 
 ## Functoriality of extension types
 
-For simplicity, we only consider extesions of `#!rzk BOT`.
+We aim to show that special properties of a map of types `f : A → B`, such as
+being an equivalence or having a retraction carry over to the induced map on
+extension types.
 
 For each map `f : A → B` and each shape inclusion `ϕ ⊂ ψ`, we have a commutative
 square.
@@ -1290,11 +1291,15 @@ We can view it as a map of maps either vertically or horizontally.
     , \ _ → refl)
 ```
 
+### Equivalences induce equivalences of extension types
+
+We start by treating the case of extensions from the empty shape `BOT`.
+
 It follows from extension extensionality that if `f : A → B` is an equivalence,
 then so is the map of maps `map-of-restriction-maps`.
 
 ```rzk
-#def is-equiv-extension-is-equiv-family uses (extext)
+#def is-equiv-extensions-BOT-is-equiv uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( A B : ψ → U)
@@ -1318,7 +1323,7 @@ then so is the map of maps `map-of-restriction-maps`.
               ( b)
               ( \ t → second (second (is-equiv-f t)) (b t)))))
 
-#def equiv-extension-equiv-family uses (extext)
+#def equiv-extensions-BOT-equiv uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( A B : ψ → U)
@@ -1326,11 +1331,11 @@ then so is the map of maps `map-of-restriction-maps`.
   : Equiv ((t : ψ) → A t) ((t : ψ) → B t)
   :=
     ( ( \ a t → first ( famequiv t) (a t))
-    , is-equiv-extension-is-equiv-family I ψ A B
+    , is-equiv-extensions-BOT-is-equiv I ψ A B
       ( \ t → first (famequiv t))
       ( \ t → second (famequiv t)))
 
-#def equiv-of-restriction-maps-equiv-family uses (extext)
+#def equiv-of-restriction-maps-equiv uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -1341,27 +1346,209 @@ then so is the map of maps `map-of-restriction-maps`.
     ( (t : ψ) → B t) ( (t : ϕ) → B t)  (\ b t → b t)
   :=
     ( map-of-restriction-maps I ψ ϕ A B (\ t → first (famequiv t))
-    , ( second (equiv-extension-equiv-family I ψ A B famequiv)
-      , second ( equiv-extension-equiv-family I
+    , ( second (equiv-extensions-BOT-equiv I ψ A B famequiv)
+      , second ( equiv-extensions-BOT-equiv I
                  (\ t → ϕ t) (\ t → A t) (\ t → B t) (\ t → famequiv t))))
 ```
 
-Similarly, a fiberwise section of a map `(t : ψ) → A t → B t` induces a section
-on extension types.
+Now we use the result for extensions of `BOT` to bootstrap to arbitrary
+extensions. We show that an equivalence `f : A → B` induces an equivalence of
+all extension types, not just those extended from `BOT`.
 
 ```rzk
-#def has-section-extension-has-section-family uses (naiveextext)
+#def is-equiv-extensions-is-equiv uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( f : (t : ψ) → A t → B t)
+  ( is-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  : ( a : (t : ϕ) → A t)
+  → is-equiv
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+    ( \ a' t → f t (a' t))
+  :=
+    is-homotopy-cartesian-is-horizontal-equiv
+    ( (t : ϕ) → A t)
+    ( \ a → (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ϕ) → B t)
+    ( \ b → (t : ψ) → B t [ϕ t ↦ b t])
+    ( \ a t → f t (a t))
+    ( \ _ a' t → f t (a' t))
+    ( is-equiv-extensions-BOT-is-equiv
+      ( I) (\ t → ϕ t) (\ t → A t) (\ t → B t) ( \ t → f t)
+      ( \ (t : ϕ) → is-equiv-f t))
+    ( is-equiv-Equiv-is-equiv'
+        ( (t : ψ) → A t) ((t : ψ) → B t) (\ a' t → f t (a' t))
+        ( Σ (a : (t : ϕ) → A t) , ((t : ψ) → A t [ϕ t ↦ a t]))
+        ( Σ (b : (t : ϕ) → B t) , ((t : ψ) → B t [ϕ t ↦ b t]))
+        ( \ (a , a') → ( \ t → f t (a t) , \ t → f t (a' t)))
+      ( cofibration-composition-functorial
+        I ψ ϕ (\ _ → BOT) A B f (\ _ → recBOT))
+      ( is-equiv-extensions-BOT-is-equiv I ψ A B f is-equiv-f))
+
+#def equiv-extensions-equiv uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( equivs-A-B : (t : ψ) → Equiv (A t) (B t))
+  ( a : (t : ϕ) → A t)
+  : Equiv
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ first (equivs-A-B t) (a t)])
+  :=
+  ( ( \ a' t → first (equivs-A-B t) (a' t))
+  , ( is-equiv-extensions-is-equiv I ψ ϕ A B
+      ( \ t → first (equivs-A-B t))
+      ( \ t → second (equivs-A-B t))
+      ( a)))
+```
+
+### Retracts induce retracts of extension types
+
+We show that if `f : A → B` has a retraction, then the same is true for the
+induced map on extension types. We reduce this to the case of equivalences by
+working with external retractions.
+
+```rzk
+#section section-retraction-extensions
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variable ϕ : ψ → TOPE
+#variables A B : ψ → U
+
+#variable s : (t : ψ) → A t → B t
+#variable r : (t : ψ) → B t → A t
+#variable η : (t : ψ) → (a : A t) → r t (s t a) = a
+
+#def is-sec-rec-extensions-sec-rec uses (extext)
+  ( a : (t : ϕ) → A t)
+  : is-section-retraction-pair
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t(s t(a t))])
+    ( \ a' t → s t (a' t))
+    ( \ b' t → r t (b' t))
+  :=
+    is-equiv-extensions-is-equiv I ψ ϕ A A
+    ( \ t a₀ → r t (s t (a₀)))
+    ( \ t → is-equiv-retraction-section (A t) (B t) (s t) (r t) (η t))
+    ( a)
+
+#def has-retraction-extensions-has-retraction' uses (extext η)
+  ( a : (t : ϕ) → A t)
+  : has-retraction
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( \ a' t → s t (a' t))
+  :=
+    has-retraction-internalize
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( \ a' t → s t (a' t))
+    ( ( (t : ψ) → A t [ϕ t ↦ r t (s t (a t))]
+      , \ b' t → r t (b' t))
+    , is-sec-rec-extensions-sec-rec a)
+
+#def has-section-extensions-has-section' uses (extext η)
+  ( a : (t : ϕ) → A t)
+  : has-section
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t (s t (a t))])
+    ( \ b t → r t (b t))
+  :=
+    has-section-internalize
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t (s t (a t))])
+    ( \ b' t → r t (b' t))
+    ( ( ( (t : ψ) → A t [ϕ t ↦ a t])
+      , ( \ a' t → s t (a' t)))
+    , is-sec-rec-extensions-sec-rec a)
+
+#end section-retraction-extensions
+```
+
+It is convenient to have uncurried versions.
+
+```rzk
+#def has-retraction-extensions-has-retraction uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( s : (t : ψ) → A t → B t)
+  ( has-retraction-s : (t : ψ) → has-retraction (A t) (B t) (s t))
+  ( a : (t : ϕ) → A t)
+  : has-retraction
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ s t (a t)])
+    ( \ a' t → s t (a' t))
+  :=
+    has-retraction-extensions-has-retraction' I ψ ϕ A B s
+    ( \ t → first (has-retraction-s t))
+    ( \ t → second (has-retraction-s t))
+    ( a)
+
+#def has-section-extensions-has-section uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( B A : ψ → U)
+  ( r : (t : ψ) → B t → A t)
+  ( has-section-r : (t : ψ) → has-section (B t) (A t) (r t))
+  ( a : (t : ϕ) → A t)
+  : has-section
+    ( (t : ψ) → B t [ϕ t ↦ (first (has-section-r t)) (a t)])
+    ( (t : ψ) → A t [ϕ t ↦ r t (first (has-section-r t) (a t))])
+    ( \ b t → r t (b t))
+  :=
+    has-section-extensions-has-section' I ψ ϕ A B
+    ( \ t → first (has-section-r t))
+    ( r)
+    ( \ t → second (has-section-r t))
+    ( a)
+```
+
+We summarize by saying that retracts of types induce retracts of extension
+types.
+
+```rzk
+#def is-retract-of-extensions-are-retract-of uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( are-retract-A-of-B : (t : ψ) → is-retract-of (A t) (B t))
+  ( a : (t : ϕ) → A t)
+  : is-retract-of
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ first (are-retract-A-of-B t) (a t)])
+  :=
+  ( ( \ a' t → first (are-retract-A-of-B t) (a' t))
+  , ( has-retraction-extensions-has-retraction I ψ ϕ A B
+      ( \ t → first (are-retract-A-of-B t))
+      ( \ t → second (are-retract-A-of-B t))
+      ( a)))
+```
+
+The following special case of extensions from `BOT` is also useful.
+
+```rzk
+#def has-section-extensions-BOT-has-section uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( A B : ψ → U)
   ( f : ( t : ψ) → A t → B t)
-  ( has-fiberwise-section-f : (t : ψ) → has-section (A t ) (B t) (f t))
+  ( has-section-f : (t : ψ) → has-section (A t) (B t) (f t))
   : has-section ((t : ψ) → A t) ((t : ψ) → B t) ( \ a t → f t (a t))
   :=
-    ( ( \ b t → first (has-fiberwise-section-f t) (b t))
+    ( ( \ b t → first (has-section-f t) (b t))
     , \ b →
-      ( naiveextext I ψ (\ _ → BOT) B (\ _ → recBOT)
-        ( \ t → f t (first (has-fiberwise-section-f t) (b t)))
+      ( naiveextext-extext extext I ψ (\ _ → BOT) B (\ _ → recBOT)
+        ( \ t → f t (first (has-section-f t) (b t)))
         ( \ t → b t)
-        ( \ t → second (has-fiberwise-section-f t) (b t))))
+        ( \ t → second (has-section-f t) (b t))))
 ```

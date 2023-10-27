@@ -473,6 +473,8 @@ the "Gray interchanger" built from two commutative triangles.
 
 ## Equivalences are fully faithful
 
+-- Or: Equivalences induce equivalences of hom
+
 ```rzk
 
 #def postcomp-Π-ext
@@ -564,32 +566,6 @@ the "Gray interchanger" built from two commutative triangles.
       ( ap-hom A B f x y)
       ( β)
 
--- --useless
--- #def fiber-ap-hom-postcomp
---   ( A B : U)
---   ( x y : A)
---   ( f : A → B)
---   ( β : hom B (f x) (f y))
---   : U
---   :=
---     fiber-postcomp-Π-ext 2 Δ¹ ∂Δ¹ (\ t → A) (\ t → B)
---       ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
---       ( \ t → f)
---       ( β)
-
--- --useless
--- #def equiv-fib-ap-hom-fib-post-comp-hom
---   ( A B : U)
---   ( x y : A)
---   ( f : A → B)
---   ( β : hom B (f x) (f y))
---   : Equiv
---     ( fiber-ap-hom A B x y f β)
---     ( fiber-ap-hom-postcomp A B x y f β)
---   := ( \ x' → x',
---        ( (\ x' → x', (\ x' → refl)),
---          (\ x' → x', (\ x' → refl))))
-
 
 #def is-contr-fiber-ap-hom-is-equiv uses (weakextext extext)
   ( A B : U)
@@ -601,20 +577,25 @@ the "Gray interchanger" built from two commutative triangles.
   :=
     is-contr-equiv-is-contr'
       ( fiber-ap-hom A B x y f β)
-      ( fiber-family-ext 2 Δ¹ ∂Δ¹ (\ t → A) (\ t → B)
+      ( fiber-family-ext 2 Δ¹ ∂Δ¹
+        ( \ t → A)
+        ( \ t → B)
         ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
         ( \ t → f)
         ( β))
-      ( equiv-fiber-postcomp-Π-ext-fiber-family-ext 2 Δ¹ ∂Δ¹ (\ t → A) (\ t → B)
+      ( equiv-fiber-postcomp-Π-ext-fiber-family-ext 2 Δ¹ ∂Δ¹
+        ( \ t → A)
+        ( \ t → B)
         ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
         ( \ t → f)
         ( β))
-      ( is-contr-fiber-family-ext-contr-fib 2 Δ¹ ∂Δ¹ (\ t → A) (\ t → B)
+      ( is-contr-fiber-family-ext-contr-fib 2 Δ¹ ∂Δ¹
+        ( \ t → A)
+        ( \ t → B)
         ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
         ( \ t → f)
         ( β)
         ( \t → is-equiv-f))
-
 
 #def is-equiv-ap-hom-is-equiv uses (weakextext extext)
   ( A B : U)
@@ -628,132 +609,37 @@ the "Gray interchanger" built from two commutative triangles.
       ( \ β → is-contr-fiber-ap-hom-is-equiv A B f is-equiv-f x y β)
 
 
--- #def coherence-hae-is-equiv
---   ( A B : U)
---   ( f : A → B)
---   ( is-equiv-f : is-equiv A B f)
---   : (\ (x' : A) → ( π₂ (π₂ is-equiv-f)) (f x'))
---     =
---     ap A B
---       ( comp A B A (π₁ (π₁ is-equiv-f)) f)
---       ( identity A)
---       ( \ x' → comp A A B f x')
---       ( left-cancel-is-equiv A B f is-equiv-f)
---   :=
---     eq-htpy A (\ x' → triple-comp A B A B f (π₁ (π₁ is-equiv-f)) f x')
---       ( comp A B ((y' : B) → (comp B A B f (π₁ (π₁ is-equiv-f)) y') = y')
---         ( π₂ (π₂ is-equiv-f))
---         ( f))
---       ( ap A B
---         (comp A B A (π₁ (π₁ is-equiv-f)) f)
---         (identity A)
---         ((π₂ (π₁ is-equiv-f))))
---       ( coherence-is-half-adjoint-equiv A B f
---         ( is-half-adjoint-equiv-is-equiv A B f is-equiv-f))
-
-
-
-#def inv-ap-hom-equiv uses (funext)
+#def retraction-ap-hom-retraction uses (funext) -- change this into retraction of ap-hom if f has one
   ( A B : U)
   ( f : A → B)
-  ( is-equiv-f : is-equiv A B f)
+  ( (r, ρ) : has-retraction A B f)
   ( x y : A)
   : (hom B (f x) (f y)) → (hom A x y)
   :=
     comp
       ( hom B (f x) (f y))
-      ( hom A ((π₁ (π₁ is-equiv-f)) (f x)) ((π₁ (π₁ is-equiv-f))(f y)))
+      ( hom A (r (f x)) (r (f y)))
       ( hom A x y)
       ( transport (A → A) (\ g' → (hom A (g' x) (g' y)))
-        ( comp A B A (π₁ (π₁ is-equiv-f)) f)
+        ( comp A B A r f)
         ( identity A)
-        ( left-cancel-is-equiv funext A B f is-equiv-f))
-      ( ap-hom B A (π₁ (π₁ is-equiv-f)) (f x) (f y))
+        ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ)) -- proof retraction here
+      ( ap-hom B A r (f x) (f y))
 
 
-#def has-retraction-ap-hom-equiv uses (funext)
+#def has-retraction-ap-hom-retraction uses (funext) --change into proof that ap-hom has a retraction is f has one
   ( A B : U)
   ( f : A → B)
-  ( is-equiv-f : is-equiv A B f)
+  ( (r, ρ) : has-retraction A B f)
   ( x y : A)
   : has-retraction (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
   :=
-    ( inv-ap-hom-equiv A B f is-equiv-f x y
+    ( retraction-ap-hom-retraction A B f (r, ρ) x y
     , \ α →
       apd (A → A) (\ g' → (hom A (g' x) (g' y)))
-        ( comp A B A (π₁ (π₁ is-equiv-f)) f)
+        ( comp A B A r f)
         ( identity A)
         ( \ g' → ap-hom A A g' x y α)
-        ( left-cancel-is-equiv funext A B f is-equiv-f))
-
-
-
--- #def has-section-ap-hom-equiv uses (funext)
---   ( A B : U)
---   ( f : A → B)
---   ( is-equiv-f : is-equiv A B f)
---   ( x y : A)
---   : has-retraction (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
---   :=
---     ( inv-ap-hom-equiv A B f is-equiv-f x y
---     , \ α →
---       concat (hom B (f x) (f y))
---         ( comp (hom B (f x) (f y)) (hom A x y) (hom B (f x) (f y))
---           ( ap-hom A B f x y)
---           ( inv-ap-hom-equiv A B f is-equiv-f x y)
---           ( α))
---         ( transport (A → A) (\ g' → hom A (g x) (g y))
---           ( triple-comp A B A B f (π₁ (π₁ is-equiv-f)) f)
---           ( f)
---           ( ap A B
---             ( comp A B A (π₁ (π₁ is-equiv-f)) f)
---             ( identity A)
---             ( f)
---             ( left-cancel-is-equiv A B f is-equiv-f))
---           ( α))
---         ( α)
---         ( ap-hom-naturality A A A B -- path 1
---           ( comp A B A (π₁ (π₁ is-equiv-f)) f)
---           ( identity A)
---           ( f)
---           ( f)
---           ( left-cancel-is-equiv A B f is-equiv-f)
---           ( refl)
---           ( x)
---           ( y))
-
---           )
-
-
-      -- triple-concat (hom B (f x) (f y))
-      --   ( comp (hom B (f x) (f y)) (hom A x y) (hom B (f x) (f y))
-      --     ( ap-hom A B f x y)
-      --     ( inv-ap-hom-equiv A B f is-equiv-f x y)
-      --     ( α))
-      --   ( transport (A → A) (\ g' → hom A (g x) (g y))
-      --     ( triple-comp A B A B f (π₁ (π₁ is-equiv-f)) f)
-      --     ( f)
-      --     ( ap A B
-      --       ( comp A B A (π₁ (π₁ is-equiv-f)) f)
-      --       ( identity A)
-      --       ( f)
-      --       ( left-cancel-is-equiv A B f is-equiv-f))
-      --     ( α))
-      --   ( transport)
-      --   ( α)
-
-
-
-
-
-
-
-  -- : ( α : hom A x y) →
-  --     ( comp (hom B (f x) (f y)) (hom A x y) (hom B (f x) (f y))
-  --       ( ap-hom A B f x y)
-  --       ( inv-ap-hom-equiv A B f is-equiv-f x y)
-  --       ( α)
-  --     = α)
-  -- :=
+        ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ)) -- proof retraction here
 
 ```

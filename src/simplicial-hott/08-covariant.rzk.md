@@ -2262,7 +2262,7 @@ In particular, in discrete types identity types are discrete.
     is-equiv-right-cancel (x = y) (hom A x y) (hom B (f x) (f y))
       ( hom-eq A x y)
       ( ap-hom A B f x y)
-      ( has-retraction-ap-hom-equiv funext A B f is-equiv-f x y)
+      ( has-retraction-ap-hom-retraction funext A B f (π₁ is-equiv-f) x y)
       ( is-equiv-homotopy (x = y) (hom B (f x) (f y))
         ( comp (x = y) (hom A x y) (hom B (f x) (f y))
           ( ap-hom A B f x y)

@@ -687,6 +687,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#propositions-and-embeddings" class="md-nav__link">
+    Propositions and embeddings
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subtypes" class="md-nav__link">
+    Subtypes
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1121,6 +1135,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#propositions-and-embeddings" class="md-nav__link">
+    Propositions and embeddings
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subtypes" class="md-nav__link">
+    Subtypes
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1374,8 +1402,8 @@ dependent functions <code class="language-rzk highlight"><span class="p">(</span
 </span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="err">          ( transport A C a a&#39; (</span><span class="s">first</span><span class="err"> (is-prop-A a a&#39;)) c)</span>
 </span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="err">          ( c&#39;))))</span>
 </span></code></pre></div>
-<p>Conversely, if the total type <code>total-type A C</code> is a proposition, then so is
-every fiber <code>C a</code>.</p>
+<p>Conversely, if the total type <code class="language-rzk highlight"><span class="err">total-type A C</span></code> is a proposition, then so
+is every fiber <code class="language-rzk highlight"><span class="err">C a</span></code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-fiberwise-prop-is-prop-total-type-is-prop-base" id="define:is-fiberwise-prop-is-prop-total-type-is-prop-base" style="visibility: visible; position: relative; color: inherit">is-fiberwise-prop-is-prop-total-type-is-prop-base</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>is-prop-A<span class="p">)</span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="err">  </span><span class="p">( </span>is-prop-ΣC <span class="p">:</span><span class="err"> is-prop (total-type A C))</span>
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
@@ -1394,6 +1422,137 @@ every fiber <code>C a</code>.</p>
 </span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="err">      ( second-path-Σ A C (a, c) (a, c&#39;) ( </span><span class="s">first</span><span class="err"> (is-prop-ΣC (a, c) (a, c&#39;)))))</span>
 </span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>
 </span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="nd">#end</span><span class="n"> families-over-propositions</span>
+</span></code></pre></div>
+<h2 id="propositions-and-embeddings">Propositions and embeddings<a class="headerlink" href="#propositions-and-embeddings" title="Permanent link">&para;</a></h2>
+<p>A map <code class="language-rzk highlight"><span class="err">f : A → B</span></code> is an embedding if and only if its fibers are
+propositions.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-image-based-paths-is-emb" id="define:is-contr-image-based-paths-is-emb" style="visibility: visible; position: relative; color: inherit">is-contr-image-based-paths-is-emb</a></span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="err">  </span><span class="p">( </span>is-emb-f <span class="p">:</span><span class="err"> is-emb A B f)</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="err">  </span><span class="p">( </span>x <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="err">  : is-contr </span><span class="p">(</span>Σ (y <span class="p">:</span><span class="err"> A) , f x = f y)</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="err">  :=</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="err">  is-contr-total-are-equiv-from-paths A x</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="err">  ( </span><span class="p">\ </span>y <span class="err">→ f x = f y)</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="err">  ( </span><span class="p">\ </span>y <span class="err">→ ap A B x y f)</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="err">  ( </span><span class="p">\ </span>y <span class="err">→ is-emb-f x y)</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-image-endpoint-based-paths-is-emb" id="define:is-contr-image-endpoint-based-paths-is-emb" style="visibility: visible; position: relative; color: inherit">is-contr-image-endpoint-based-paths-is-emb</a></span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="err">  </span><span class="p">( </span>is-emb-f <span class="p">:</span><span class="err"> is-emb A B f)</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="err">  </span><span class="p">( </span>y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="err">  : is-contr </span><span class="p">(</span>Σ (x <span class="p">:</span><span class="err"> A) , f x = f y)</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="err">  :=</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="err">    is-contr-equiv-is-contr&#39;</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="err">    </span><span class="p">( </span>Σ (x <span class="p">:</span><span class="err"> A) , f x = f y)</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="err">    </span><span class="p">( </span>Σ (x <span class="p">:</span><span class="err"> A) , f y = f x)</span>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="err">    ( total-equiv-family-of-equiv A (</span><span class="p">\ </span>x <span class="err">→ f x = f y) (</span><span class="p">\ </span>x <span class="err">→ f y = f x)</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="err">      ( </span><span class="p">\ </span>x <span class="err">→ equiv-rev B (f x) (f y)))</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="err">    ( is-contr-image-based-paths-is-emb A B f is-emb-f y)</span>
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-fib-over-image-is-emb" id="define:is-contr-fib-over-image-is-emb" style="visibility: visible; position: relative; color: inherit">is-contr-fib-over-image-is-emb</a></span>
+</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a><span class="err">  </span><span class="p">( </span>is-emb-f <span class="p">:</span><span class="err"> is-emb A B f)</span>
+</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a><span class="err">  </span><span class="p">( </span>y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a><span class="err">  : is-contr (fib A B f (f y))</span>
+</span><span id="__span-17-33"><a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a><span class="err">  := is-contr-image-endpoint-based-paths-is-emb A B f is-emb-f y</span>
+</span><span id="__span-17-34"><a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a>
+</span><span id="__span-17-35"><a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-is-inhabited-fib-is-emb" id="define:is-contr-is-inhabited-fib-is-emb" style="visibility: visible; position: relative; color: inherit">is-contr-is-inhabited-fib-is-emb</a></span>
+</span><span id="__span-17-36"><a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-37"><a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-17-38"><a id="__codelineno-17-38" name="__codelineno-17-38" href="#__codelineno-17-38"></a><span class="err">  </span><span class="p">( </span>is-emb-f <span class="p">:</span><span class="err"> is-emb A B f)</span>
+</span><span id="__span-17-39"><a id="__codelineno-17-39" name="__codelineno-17-39" href="#__codelineno-17-39"></a><span class="err">  : </span><span class="p">( </span>b <span class="p">:</span><span class="err"> B) → is-contr-is-inhabited (fib A B f b)</span>
+</span><span id="__span-17-40"><a id="__codelineno-17-40" name="__codelineno-17-40" href="#__codelineno-17-40"></a><span class="err">  :=</span>
+</span><span id="__span-17-41"><a id="__codelineno-17-41" name="__codelineno-17-41" href="#__codelineno-17-41"></a><span class="err">  ind-fib A B f</span>
+</span><span id="__span-17-42"><a id="__codelineno-17-42" name="__codelineno-17-42" href="#__codelineno-17-42"></a><span class="err">  ( </span><span class="p">\ </span>b p <span class="err">→ is-contr (fib A B f b))</span>
+</span><span id="__span-17-43"><a id="__codelineno-17-43" name="__codelineno-17-43" href="#__codelineno-17-43"></a><span class="err">  ( </span><span class="p">\ </span>a <span class="err">→ is-contr-fib-over-image-is-emb A B f is-emb-f a)</span>
+</span><span id="__span-17-44"><a id="__codelineno-17-44" name="__codelineno-17-44" href="#__codelineno-17-44"></a>
+</span><span id="__span-17-45"><a id="__codelineno-17-45" name="__codelineno-17-45" href="#__codelineno-17-45"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-fib-is-emb" id="define:is-prop-fib-is-emb" style="visibility: visible; position: relative; color: inherit">is-prop-fib-is-emb</a></span>
+</span><span id="__span-17-46"><a id="__codelineno-17-46" name="__codelineno-17-46" href="#__codelineno-17-46"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-47"><a id="__codelineno-17-47" name="__codelineno-17-47" href="#__codelineno-17-47"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-17-48"><a id="__codelineno-17-48" name="__codelineno-17-48" href="#__codelineno-17-48"></a><span class="err">  </span><span class="p">( </span>is-emb-f <span class="p">:</span><span class="err"> is-emb A B f)</span>
+</span><span id="__span-17-49"><a id="__codelineno-17-49" name="__codelineno-17-49" href="#__codelineno-17-49"></a><span class="err">  </span><span class="p">( </span>b <span class="p">:</span><span class="err"> B)</span>
+</span><span id="__span-17-50"><a id="__codelineno-17-50" name="__codelineno-17-50" href="#__codelineno-17-50"></a><span class="err">  : is-prop (fib A B f b)</span>
+</span><span id="__span-17-51"><a id="__codelineno-17-51" name="__codelineno-17-51" href="#__codelineno-17-51"></a><span class="err">  :=</span>
+</span><span id="__span-17-52"><a id="__codelineno-17-52" name="__codelineno-17-52" href="#__codelineno-17-52"></a><span class="err">  is-prop-is-contr-is-inhabited (fib A B f b)</span>
+</span><span id="__span-17-53"><a id="__codelineno-17-53" name="__codelineno-17-53" href="#__codelineno-17-53"></a><span class="err">  ( is-contr-is-inhabited-fib-is-emb A B f is-emb-f b)</span>
+</span><span id="__span-17-54"><a id="__codelineno-17-54" name="__codelineno-17-54" href="#__codelineno-17-54"></a>
+</span><span id="__span-17-55"><a id="__codelineno-17-55" name="__codelineno-17-55" href="#__codelineno-17-55"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-image-based-paths-is-contr-is-inhabited-fib" id="define:is-contr-image-based-paths-is-contr-is-inhabited-fib" style="visibility: visible; position: relative; color: inherit">is-contr-image-based-paths-is-contr-is-inhabited-fib</a></span>
+</span><span id="__span-17-56"><a id="__codelineno-17-56" name="__codelineno-17-56" href="#__codelineno-17-56"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-57"><a id="__codelineno-17-57" name="__codelineno-17-57" href="#__codelineno-17-57"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-17-58"><a id="__codelineno-17-58" name="__codelineno-17-58" href="#__codelineno-17-58"></a><span class="err">  </span><span class="p">( </span>is-contr-is-inhabited-fib-f <span class="p">:</span><span class="err"> </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B) → is-contr-is-inhabited (fib A B f b))</span>
+</span><span id="__span-17-59"><a id="__codelineno-17-59" name="__codelineno-17-59" href="#__codelineno-17-59"></a><span class="err">  </span><span class="p">( </span>x <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-17-60"><a id="__codelineno-17-60" name="__codelineno-17-60" href="#__codelineno-17-60"></a><span class="err">  : is-contr </span><span class="p">(</span>Σ (y <span class="p">:</span><span class="err"> A) , f x = f y)</span>
+</span><span id="__span-17-61"><a id="__codelineno-17-61" name="__codelineno-17-61" href="#__codelineno-17-61"></a><span class="err">  :=</span>
+</span><span id="__span-17-62"><a id="__codelineno-17-62" name="__codelineno-17-62" href="#__codelineno-17-62"></a><span class="err">  is-contr-equiv-is-contr&#39;</span>
+</span><span id="__span-17-63"><a id="__codelineno-17-63" name="__codelineno-17-63" href="#__codelineno-17-63"></a><span class="err">  </span><span class="p">( </span>Σ (y <span class="p">:</span><span class="err"> A) , f x = f y)</span>
+</span><span id="__span-17-64"><a id="__codelineno-17-64" name="__codelineno-17-64" href="#__codelineno-17-64"></a><span class="err">  </span><span class="p">( </span>Σ (y <span class="p">:</span><span class="err"> A) , f y = f x)</span>
+</span><span id="__span-17-65"><a id="__codelineno-17-65" name="__codelineno-17-65" href="#__codelineno-17-65"></a><span class="err">  ( total-equiv-family-of-equiv A (</span><span class="p">\ </span>y <span class="err">→ f x = f y) (</span><span class="p">\ </span>y <span class="err">→ f y = f x)</span>
+</span><span id="__span-17-66"><a id="__codelineno-17-66" name="__codelineno-17-66" href="#__codelineno-17-66"></a><span class="err">    ( </span><span class="p">\ </span>y <span class="err">→ equiv-rev B (f x) (f y)))</span>
+</span><span id="__span-17-67"><a id="__codelineno-17-67" name="__codelineno-17-67" href="#__codelineno-17-67"></a><span class="err">  ( is-contr-is-inhabited-fib-f (f x) ((x, </span><span class="s">refl</span><span class="err">)))</span>
+</span><span id="__span-17-68"><a id="__codelineno-17-68" name="__codelineno-17-68" href="#__codelineno-17-68"></a>
+</span><span id="__span-17-69"><a id="__codelineno-17-69" name="__codelineno-17-69" href="#__codelineno-17-69"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-emb-is-contr-is-inhabited-fib" id="define:is-emb-is-contr-is-inhabited-fib" style="visibility: visible; position: relative; color: inherit">is-emb-is-contr-is-inhabited-fib</a></span>
+</span><span id="__span-17-70"><a id="__codelineno-17-70" name="__codelineno-17-70" href="#__codelineno-17-70"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-71"><a id="__codelineno-17-71" name="__codelineno-17-71" href="#__codelineno-17-71"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-17-72"><a id="__codelineno-17-72" name="__codelineno-17-72" href="#__codelineno-17-72"></a><span class="err">  </span><span class="p">( </span>is-contr-is-inhabited-fib-f <span class="p">:</span><span class="err"> </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B) → is-contr-is-inhabited (fib A B f b))</span>
+</span><span id="__span-17-73"><a id="__codelineno-17-73" name="__codelineno-17-73" href="#__codelineno-17-73"></a><span class="err">  : is-emb A B f</span>
+</span><span id="__span-17-74"><a id="__codelineno-17-74" name="__codelineno-17-74" href="#__codelineno-17-74"></a><span class="err">  :=</span>
+</span><span id="__span-17-75"><a id="__codelineno-17-75" name="__codelineno-17-75" href="#__codelineno-17-75"></a><span class="err">  </span><span class="p">\ </span>x y <span class="err">→</span>
+</span><span id="__span-17-76"><a id="__codelineno-17-76" name="__codelineno-17-76" href="#__codelineno-17-76"></a><span class="err">  are-equiv-from-paths-is-contr-total A x (</span><span class="p">\ </span>z <span class="err">→ f x = f z)(</span><span class="p">\ </span>z <span class="err">→ ap A B x z f)</span>
+</span><span id="__span-17-77"><a id="__codelineno-17-77" name="__codelineno-17-77" href="#__codelineno-17-77"></a><span class="err">  ( is-contr-image-based-paths-is-contr-is-inhabited-fib A B f is-contr-is-inhabited-fib-f x) y</span>
+</span><span id="__span-17-78"><a id="__codelineno-17-78" name="__codelineno-17-78" href="#__codelineno-17-78"></a>
+</span><span id="__span-17-79"><a id="__codelineno-17-79" name="__codelineno-17-79" href="#__codelineno-17-79"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-emb-is-prop-fib" id="define:is-emb-is-prop-fib" style="visibility: visible; position: relative; color: inherit">is-emb-is-prop-fib</a></span>
+</span><span id="__span-17-80"><a id="__codelineno-17-80" name="__codelineno-17-80" href="#__codelineno-17-80"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-81"><a id="__codelineno-17-81" name="__codelineno-17-81" href="#__codelineno-17-81"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-17-82"><a id="__codelineno-17-82" name="__codelineno-17-82" href="#__codelineno-17-82"></a><span class="err">  </span><span class="p">( </span>is-prop-fib-f <span class="p">:</span><span class="err"> </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B) → is-prop (fib A B f b))</span>
+</span><span id="__span-17-83"><a id="__codelineno-17-83" name="__codelineno-17-83" href="#__codelineno-17-83"></a><span class="err">  : is-emb A B f</span>
+</span><span id="__span-17-84"><a id="__codelineno-17-84" name="__codelineno-17-84" href="#__codelineno-17-84"></a><span class="err">  :=</span>
+</span><span id="__span-17-85"><a id="__codelineno-17-85" name="__codelineno-17-85" href="#__codelineno-17-85"></a><span class="err">  is-emb-is-contr-is-inhabited-fib A B f</span>
+</span><span id="__span-17-86"><a id="__codelineno-17-86" name="__codelineno-17-86" href="#__codelineno-17-86"></a><span class="err">  ( </span><span class="p">\ </span>b <span class="err">→ is-contr-is-inhabited-is-prop (fib A B f b) (is-prop-fib-f b))</span>
+</span><span id="__span-17-87"><a id="__codelineno-17-87" name="__codelineno-17-87" href="#__codelineno-17-87"></a>
+</span><span id="__span-17-88"><a id="__codelineno-17-88" name="__codelineno-17-88" href="#__codelineno-17-88"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-emb-iff-is-prop-fib" id="define:is-emb-iff-is-prop-fib" style="visibility: visible; position: relative; color: inherit">is-emb-iff-is-prop-fib</a></span>
+</span><span id="__span-17-89"><a id="__codelineno-17-89" name="__codelineno-17-89" href="#__codelineno-17-89"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-90"><a id="__codelineno-17-90" name="__codelineno-17-90" href="#__codelineno-17-90"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-17-91"><a id="__codelineno-17-91" name="__codelineno-17-91" href="#__codelineno-17-91"></a><span class="err">  : iff (is-emb A B f) </span><span class="p">(</span>(b <span class="p">:</span><span class="err"> B) → is-prop (fib A B f b))</span>
+</span><span id="__span-17-92"><a id="__codelineno-17-92" name="__codelineno-17-92" href="#__codelineno-17-92"></a><span class="err">  := (is-prop-fib-is-emb A B f, is-emb-is-prop-fib A B f)</span>
+</span></code></pre></div>
+<h2 id="subtypes">Subtypes<a class="headerlink" href="#subtypes" title="Permanent link">&para;</a></h2>
+<p>A family of propositions <code class="language-rzk highlight"><span class="err">P : A → U</span></code> over a type <code class="language-rzk highlight"><span class="err">A</span></code> may be thought
+of as a predicate.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-predicate" id="define:is-predicate" style="visibility: visible; position: relative; color: inherit">is-predicate</a></span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="err">  : U</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="err">  := </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → is-prop (P a)</span>
+</span></code></pre></div>
+<p>When <code class="language-rzk highlight"><span class="err">P</span></code> is a predicate on <code class="language-rzk highlight"><span class="err">A</span></code> then <code class="language-rzk highlight"><span class="err">total-type A P</span></code> is
+referred to a subtype of <code class="language-rzk highlight"><span class="err">A</span></code>.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-emb-subtype-projection" id="define:is-emb-subtype-projection" style="visibility: visible; position: relative; color: inherit">is-emb-subtype-projection</a></span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="err">  </span><span class="p">( </span>is-predicate-P <span class="p">:</span><span class="err"> is-predicate A P)</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="err">  : is-emb (total-type A P) A (projection-total-type A P)</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="err">  :=</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="err">  is-emb-is-prop-fib (total-type A P) A (projection-total-type A P)</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="err">  ( </span><span class="p">\ </span>a <span class="err">→</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="err">    is-prop-Equiv-is-prop&#39;</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="err">    ( P a) ( fib (total-type A P) A (projection-total-type A P) a)</span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="err">    ( equiv-homotopy-fiber-strict-fiber A P a) (is-predicate-P a))</span>
+</span></code></pre></div>
+<p>The subtype projection embedding reflects identifications.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:subtype-eq-reflection" id="define:subtype-eq-reflection" style="visibility: visible; position: relative; color: inherit">subtype-eq-reflection</a></span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="err">  </span><span class="p">( </span>is-predicate-P <span class="p">:</span><span class="err"> is-predicate A P)</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="err">  : ( (a, p) : total-type A P)</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="err">    → ( (b, q) : total-type A P)</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="err">    → (a = b) → (a, p) =_{total-type A P} (b, q)</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="err">  :=</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="err">  inv-ap-is-emb (total-type A P) A (projection-total-type A P)</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="err">  ( is-emb-subtype-projection A P is-predicate-P)</span>
 </span></code></pre></div>
 
 

@@ -12,12 +12,12 @@ This is a literate `rzk` file:
 
 - `hott/*` - We require various prerequisites from homotopy type theory, for
   instance the axiom of function extensionality.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
-  subshapes.
-- `4-extension-types.md` — We use the fubini theorem and extension
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
+- `04-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
-- `5-segal-types.md` - We make heavy use of the notion of Segal types
-- `8-covariant.md` - We use covariant type families.
+- `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types
+- `08-covariant.rzk.md` - We use covariant type families.
 
 Some of the definitions in this file rely on function extensionality and
 extension extensionality:
@@ -401,6 +401,176 @@ Naturality in `#!rzk C` is not automatic but can be proven easily:
           A is-segal-A a C D is-covariant-C is-covariant-D ψ u x)
 ```
 
+## Yoneda embedding.
+
+```rzk title="Yoneda embedding. RS17, Definition 9.3"
+#def yoneda-embedding
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  :  hom A a' a → (z : A) → hom A a z → hom A a' z
+  :=
+     yon
+     ( A)
+     ( is-segal-A)
+     ( a)
+     ( hom A a')
+     ( is-covariant-representable-is-segal A is-segal-A a')
+
+#def compute-yoneda-embedding-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  : ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ) = φ
+  :=
+     yon-evid
+      ( A)
+      ( is-segal-A)
+      ( a)
+      ( hom A a')
+      ( is-covariant-representable-is-segal A is-segal-A a') φ
+
+#def htpy-compute-yoneda-embedding-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  : (x : A)
+    → ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ)) x
+    = φ x
+  :=
+     htpy-eq
+      ( A)
+      ( \ x → ( hom A a x → hom A a' x))
+      ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ ))
+      ( φ)
+      ( compute-yoneda-embedding-evid A is-segal-A a a' φ)
+
+#def htpy-yoneda-embedding-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  : ( f : hom A a x)
+    → ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ)) x f
+    = φ x f
+  :=
+     htpy-eq
+      ( hom A a x)
+      ( \ z → hom A a' x)
+      ( ( ( yoneda-embedding A is-segal-A a a')
+          ( ( evid A a ( hom A a')) φ )) x)
+      ( φ x)
+      ( htpy-compute-yoneda-embedding-evid A is-segal-A a a' φ x)
+
+#def rev-compute-htpy-yoneda-embedding-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  ( f : hom A a x)
+  : φ x f
+    = ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ)) x f
+  :=
+     rev
+      ( hom A a' x)
+      ( ( ( yoneda-embedding A is-segal-A a a')
+          ( ( evid A a ( hom A a')) φ )) x f)
+      ( φ x f)
+      ( htpy-yoneda-embedding-evid A is-segal-A a a' φ x f)
+```
+
+Define the action by precompostition.
+
+```rzk
+#def precomposition-evid-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  : ( x : A ) → ( hom A a x → hom A a' x)
+  := \ x f → comp-is-segal A is-segal-A a' a x ( ( evid A a ( hom A a')) φ) f
+```
+
+The Yoneda embedding coincides with `#!rzk precomposition-evid-is-segal`.
+
+```rzk
+#def eq-yoneda-embedding-precomposition-evid
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  ( f : hom A a x)
+  : ( ( yoneda-embedding A is-segal-A a a') ( ( evid A a ( hom A a')) φ)) x f
+    = precomposition-evid-is-segal A is-segal-A a a' φ x f
+  :=
+     compute-covariant-transport-of-hom-family-is-segal
+      ( A)
+      ( is-segal-A)
+      ( a')
+      ( a)
+      ( x)
+      ( (evid A a ( hom A a')) φ)
+      ( f )
+```
+
+Now we cocatenate the paths to prove the result as stated.
+
+```rzk
+#def eq-compute-precomposition-evid uses (funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  ( f : hom A a x)
+  : (φ x) f = (precomposition-evid-is-segal A is-segal-A a a' φ x) f
+  :=
+     concat
+      ( hom A a' x)
+      ( φ x f)
+      ( ( ( yoneda-embedding A is-segal-A a a')
+          ( ( evid A a ( hom A a')) φ )) x f)
+      ( precomposition-evid-is-segal A is-segal-A a a' φ x f)
+      ( rev-compute-htpy-yoneda-embedding-evid A is-segal-A a a' φ x f)
+      ( eq-yoneda-embedding-precomposition-evid A is-segal-A a a' φ x f)
+
+#def eq-htpy-precomposition-evid
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  ( x : A)
+  : φ x = precomposition-evid-is-segal A is-segal-A a a' φ x
+  :=
+     eq-htpy
+      ( funext)
+      ( hom A a x)
+      ( \ z → hom A a' x)
+      ( φ x)
+      ( precomposition-evid-is-segal A is-segal-A a a' φ x)
+      ( \ f → eq-compute-precomposition-evid A is-segal-A a a' φ x f)
+
+#def eq-precomposition-evid-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( φ : ( x : A) → ( hom A a x → hom A a' x))
+  : φ = precomposition-evid-is-segal A is-segal-A a a' φ
+  :=
+     eq-htpy
+      ( funext)
+      ( A)
+      ( \ x → ( hom A a x → hom A a' x))
+      ( φ)
+      ( precomposition-evid-is-segal A is-segal-A a a' φ)
+      ( \ x → eq-htpy-precomposition-evid A is-segal-A a a' φ x)
+```
+
 ## Yoneda for contravariant families
 
 Dually, the Yoneda lemma for contravariant type families characterizes natural
@@ -596,7 +766,7 @@ equivalence.
         ( contra-yon-evid A is-segal-A a C is-contravariant-C)))
 ```
 
-## Contravariant Naturality
+## Contravariant naturality
 
 The equivalence of the Yoneda lemma is natural in both `#!rzk a : A` and
 `#!rzk C : A → U`.

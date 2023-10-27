@@ -15,7 +15,7 @@ results from the following papers:
 - "[Limits and colimits of synthetic ∞-categories](https://arxiv.org/abs/2202.12386)"
   [^3]
 
-This formalization project follows the philosophy layed out in the article
+This formalization project follows the philosophy laid out in the article
 "[Could ∞-category theory be taught to undergraduates?](https://www.ams.org/journals/notices/202305/noti2692/noti2692.html)"
 [^4].
 
@@ -26,7 +26,7 @@ variant of type theory with shapes.
 See the list of contributors to this formalisation project at
 [`CONTRIBUTORS.md`](CONTRIBUTORS.md).
 
-## Checking the Formalisations Locally
+## Checking the formalisations locally
 
 It is recommended to use
 [VS Code extension for Rzk](https://rzk-lang.github.io/rzk/v0.6.2/getting-started/install/)

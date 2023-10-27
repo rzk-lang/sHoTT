@@ -10,10 +10,10 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
-  subshapes.
-- `4-extension-types.md` — We use extension extensionality.
-- `5-segal-types.md` - We use the notion of hom types.
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
+- `04-extension-types.rzk.md` — We use extension extensionality.
+- `05-segal-types.rzk.md` - We use the notion of hom types.
 
 Some of the definitions in this file rely on function extensionality and
 extension extensionality:
@@ -62,7 +62,7 @@ pointwise equal.
   ( x : A)
   : ( ap-hom A B F x x (id-hom A x)) = (id-hom B (F x))
   :=
-    eq-ext-htpy
+    naiveextext-extext
       ( extext)
       ( 2)
       ( Δ¹)

@@ -12,12 +12,13 @@ This is a literate `rzk` file:
 
 - `hott/*` - We require various prerequisites from homotopy type theory, for
   instance the notion of contractible types.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
-  subshapes.
-- `4-extension-types.md` — We use Theorem 4.1, an equivalence between lifts.
-- `5-segal-types.md` - We make use of the notion of Segal types and their
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
+- `04-extension-types.rzk.md` — We use Theorem 4.1, an equivalence between
+  lifts.
+- `05-segal-types.rzk.md` - We make use of the notion of Segal types and their
   structures.
-- `6-contractible.md` - We make use of weak function extensionality.
+- `06-contractible.rzk.md` - We make use of weak function extensionality.
 
 Some of the definitions in this file rely on extension extensionality:
 
@@ -368,7 +369,7 @@ Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the pro
   : is-right-orthogonal-to-shape
       ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → left-leg-of-Λ ts) A' A α
   :=
-    is-right-orthogonal-to-shape-× naiveextext A' A α
+    is-right-orthogonal-to-shape-product naiveextext A' A α
       2 Δ¹ 2 Δ¹ ( \ s → s ≡ 0₂) is-left-fib-α
 ```
 
@@ -680,7 +681,7 @@ By uncurrying (RS 4.2) we have an equivalence:
               (Δ¹ t) ∧ (s ≡ 0₂) ↦ a ,
               (Δ¹ t) ∧ (s ≡ 1₂) ↦ f t]))
   :=
-    total-equiv-family-equiv
+    total-equiv-family-of-equiv
       ( hom A a y)
       ( \ v → dhom-representable A a x y f u v)
       ( \ v →
@@ -763,7 +764,7 @@ By uncurrying (RS 4.2) we have an equivalence:
         ( Σ ( d : hom A a y) ,
             ( product (hom2 A a x y u f d) (hom2 A a a y (id-hom A a) v d))))
   :=
-    total-equiv-family-equiv
+    total-equiv-family-of-equiv
     ( hom A a y)
     ( \ v →
       ( ( (t , s) : Δ¹×Δ¹) →
@@ -828,7 +829,7 @@ By uncurrying (RS 4.2) we have an equivalence:
         ( Σ ( v : hom A a y) ,
             ( product (hom2 A a x y u f d) (hom2 A a a y (id-hom A a) v d))))
     ( representable-dhom-from-hom2 A a x y f u)
-    ( total-equiv-family-equiv
+    ( total-equiv-family-of-equiv
       ( hom A a y)
       ( \ d →
         ( product
@@ -867,7 +868,7 @@ Now we introduce the hypothesis that A is Segal type.
           ( hom2 A a x y u f d)
           ( Σ (v : hom A a y) , hom2 A a a y (id-hom A a) v d)))
     ( representable-dhom-from-hom2-dist A a x y f u)
-    ( total-equiv-family-equiv
+    ( total-equiv-family-of-equiv
       ( hom A a y)
       ( \ d → product (hom2 A a x y u f d) (Σ (v : hom A a y) , (v = d)))
       ( \ d →
@@ -875,12 +876,12 @@ Now we introduce the hypothesis that A is Segal type.
           ( hom2 A a x y u f d)
           ( Σ (v : hom A a y) , hom2 A a a y (id-hom A a) v d)))
       ( \ d →
-        ( total-equiv-family-equiv
+        ( total-equiv-family-of-equiv
           ( hom2 A a x y u f d)
           ( \ α → (Σ (v : hom A a y) , (v = d)))
           ( \ α → (Σ (v : hom A a y) , hom2 A a a y (id-hom A a) v d))
           ( \ α →
-            ( total-equiv-family-equiv
+            ( total-equiv-family-of-equiv
               ( hom A a y)
               ( \ v → (v = d))
               ( \ v → hom2 A a a y (id-hom A a) v d)
@@ -918,7 +919,7 @@ Now we introduce the hypothesis that A is Segal type.
       ( product (hom2 A a x y u f d) (Σ (v : hom A a y) , (v = d))))
     ( Σ (d : hom A a y) , (hom2 A a x y u f d))
     ( representable-dhom-from-path-space-is-segal A is-segal-A a x y f u)
-    ( total-equiv-family-equiv
+    ( total-equiv-family-of-equiv
       ( hom A a y)
       ( \ d → product (hom2 A a x y u f d) (Σ (v : hom A a y) , (v = d)))
       ( \ d → hom2 A a x y u f d)
@@ -1083,7 +1084,7 @@ types as follows.
               (Δ¹ t) ∧ (s ≡ 0₂) ↦ a ,
               (Δ¹ t) ∧ (s ≡ 1₂) ↦ f t]))
   :=
-    total-equiv-pullback-is-equiv
+    equiv-total-pullback-is-equiv
     ( ( (t , s) : ∂□) →
       A [ (t ≡ 0₂) ∧ (Δ¹ s) ↦ u s ,
           (Δ¹ t) ∧ (s ≡ 0₂) ↦ a ,
@@ -1326,7 +1327,7 @@ equivalence. This follows from the fact that the total types (summed over
       (covariant-uniqueness-curried A x y f C is-covariant-C u v)
   :=
 
-    total-equiv-family-of-equiv
+    is-equiv-fiberwise-is-equiv-total
       (C y)
       (dhom A x y f C u)
       (\ v' → covariant-transport A x y f C is-covariant-C u = v')
@@ -1464,7 +1465,7 @@ domain are equivalent:
     ( Σ (i : B x) , ((t : Δ¹) → C (f t) [t ≡ 0₂ ↦ (first (equiv-BC x)) i]))
     ( Σ (u : C x) , ((t : Δ¹) → C (f t) [t ≡ 0₂ ↦ u]))
   :=
-    total-equiv-pullback-is-equiv
+    equiv-total-pullback-is-equiv
       ( B x)
       ( C x)
       ( first (equiv-BC x))
@@ -1500,7 +1501,7 @@ domain are equivalent:
     ( (t : Δ¹) → B (f t) [t ≡ 0₂ ↦ i])
     ( (t : Δ¹) → C (f t) [t ≡ 0₂ ↦ (first (equiv-BC x)) i])
   :=
-    family-equiv-total-equiv
+    family-of-equiv-is-equiv-total
     ( B x)
     ( \ ii → ((t : Δ¹) → B (f t) [t ≡ 0₂ ↦ ii]))
     ( \ ii → ((t : Δ¹) → C (f t) [t ≡ 0₂ ↦ (first (equiv-BC x)) ii]))
@@ -1732,7 +1733,7 @@ By uncurrying (RS 4.2) we have an equivalence:
               (Δ¹ t) ∧ (s ≡ 0₂) ↦ f t ,
               (Δ¹ t) ∧ (s ≡ 1₂) ↦ a]))
   :=
-    total-equiv-family-equiv
+    total-equiv-family-of-equiv
     ( hom A x a)
     ( \ u → dhom-contra-representable A a x y f u v)
     ( \ u →
@@ -1759,7 +1760,7 @@ By uncurrying (RS 4.2) we have an equivalence:
       (Σ (d : hom A x a) ,
         product (hom2 A x a a u (id-hom A a) d) (hom2 A x y a f v d)))
   :=
-    total-equiv-family-equiv (hom A x a)
+    total-equiv-family-of-equiv (hom A x a)
     ( \ u →
       ( ( (t , s) : Δ¹×Δ¹) →
         A [ (t ≡ 0₂) ∧ (Δ¹ s) ↦ u s ,
@@ -1821,14 +1822,14 @@ By uncurrying (RS 4.2) we have an equivalence:
           ( Σ ( u : hom A x a) ,
               ( product (hom2 A x y a f v d) (hom2 A x a a u (id-hom A a) d))))
       ( representable-dhom-to-hom2 A a x y f v)
-      ( total-equiv-family-equiv (hom A x a)
+      ( total-equiv-family-of-equiv (hom A x a)
         (\ d →
           Σ ( u : hom A x a) ,
             ( product (hom2 A x a a u (id-hom A a) d) (hom2 A x y a f v d)))
         ( \ d →
           Σ ( u : hom A x a) ,
             ( product (hom2 A x y a f v d) (hom2 A x a a u (id-hom A a) d)))
-        ( \ d → total-equiv-family-equiv (hom A x a)
+        ( \ d → total-equiv-family-of-equiv (hom A x a)
           ( \ u → product (hom2 A x a a u (id-hom A a) d) (hom2 A x y a f v d))
           ( \ u → product (hom2 A x y a f v d) (hom2 A x a a u (id-hom A a) d))
           ( \ u →
@@ -1858,7 +1859,7 @@ By uncurrying (RS 4.2) we have an equivalence:
           ( hom2 A x y a f v d)
           ( hom2 A x a a u (id-hom A a) d)))
     ( representable-dhom-to-hom2-swap A a x y f v)
-    ( total-equiv-family-equiv (hom A x a)
+    ( total-equiv-family-of-equiv (hom A x a)
       ( \ d →
         ( product
           ( hom2 A x y a f v d)
@@ -1896,19 +1897,19 @@ Now we introduce the hypothesis that A is Segal type.
           ( hom2 A x y a f v d)
           ( Σ (u : hom A x a) , (hom2 A x a a u (id-hom A a) d))))
     ( representable-dhom-to-hom2-dist A a x y f v)
-    ( total-equiv-family-equiv (hom A x a)
+    ( total-equiv-family-of-equiv (hom A x a)
       ( \ d → product (hom2 A x y a f v d) (Σ (u : hom A x a) , (u = d)))
       ( \ d →
         product
           ( hom2 A x y a f v d)
           ( Σ (u : hom A x a) , hom2 A x a a u (id-hom A a) d))
       ( \ d →
-        total-equiv-family-equiv
+        total-equiv-family-of-equiv
           ( hom2 A x y a f v d)
           ( \ α → (Σ (u : hom A x a) , (u = d)))
           ( \ α → (Σ (u : hom A x a) , hom2 A x a a u (id-hom A a) d))
           ( \ α →
-          ( total-equiv-family-equiv
+          ( total-equiv-family-of-equiv
             ( hom A x a)
             ( \ u → (u = d))
             ( \ u → hom2 A x a a u (id-hom A a) d)
@@ -1930,7 +1931,7 @@ Now we introduce the hypothesis that A is Segal type.
         ( product (hom2 A x y a f v d) (Σ (u : hom A x a) , (u = d))))
     ( Σ (d : hom A x a) , (hom2 A x y a f v d))
     ( representable-dhom-to-path-space-is-segal A is-segal-A a x y f v)
-    ( total-equiv-family-equiv
+    ( total-equiv-family-of-equiv
       ( hom A x a)
       ( \ d → product (hom2 A x y a f v d) (Σ (u : hom A x a) , (u = d)))
       ( \ d → hom2 A x y a f v d)
@@ -2179,7 +2180,7 @@ The fibers of a covariant fibration over a Segal type are discrete types.
   : is-discrete (C x)
   :=
     ( \ u v →
-    total-equiv-family-of-equiv
+    is-equiv-fiberwise-is-equiv-total
       ( C x)
       ( \ v' → (u = v'))
       ( hom (C x) u)

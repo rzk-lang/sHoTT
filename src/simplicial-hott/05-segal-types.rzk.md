@@ -10,9 +10,9 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-- `hott/1-paths.md` - We require basic path algebra.
-- `hott/2-contractible.md` - We require the notion of contractible types and
-  their data.
+- `hott/01-paths.rzk.md` - We require basic path algebra.
+- `hott/02-contractible.rzk.md` - We require the notion of contractible types
+  and their data.
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk projection-total-type` in the proof of Theorem 5.5.
@@ -417,7 +417,7 @@ for the inclusion `Λ ⊂ Δ¹`.
   : U → U
   := is-local-type (2 × 2) Δ² (\ t → Λ t)
 
-#def is-local-horn-inclusion-unpacked
+#def unpack-is-local-horn-inclusion
   ( A : U)
   : is-local-horn-inclusion A = is-equiv (Δ² → A) (Λ → A) (horn-restriction A)
   := refl
@@ -558,7 +558,7 @@ is exactly `#!rzk horn-restriction A`.
                   ( h)))
             ( equiv-horn-restriction A))
           ( horn-restriction A , is-local-horn-inclusion-A)))
-    ( horn A x y z f g)
+      ( horn A x y z f g)
 ```
 
 We have now proven that both notions of Segal types are logically equivalent.
@@ -568,6 +568,28 @@ We have now proven that both notions of Segal types are logically equivalent.
   ( A : U)
   : iff (is-segal A) (is-local-horn-inclusion A)
   := (is-local-horn-inclusion-is-segal A , is-segal-is-local-horn-inclusion A)
+```
+
+Similarly, Segal types are characterized by having unique extensions along
+`Λ ⊂ Δ²`.
+
+```rzk
+#def is-segal-has-unique-inner-extensions
+  ( A : U)
+  ( has-inner-ue-A : has-unique-extensions (2 × 2) (Δ²) (\ t → Λ t) A)
+  : is-segal A
+  :=
+    is-segal-is-local-horn-inclusion A
+    ( is-local-type-has-unique-extensions (2 × 2) (Δ²) (\ t → Λ t) A
+      has-inner-ue-A)
+
+#def has-unique-inner-extensions-is-segal
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  : has-unique-extensions (2 × 2) (Δ²) (\ t → Λ t) A
+  :=
+    has-unique-extensions-is-local-type (2 × 2) (Δ²) (\ t → Λ t) A
+    ( is-local-horn-inclusion-is-segal A is-segal-A)
 ```
 
 ## Segal function and extension types
@@ -1233,7 +1255,7 @@ arrow.
   : Equiv (f = h) (hom2 A x x y (id-hom A x) f h)
   :=
     ( ( map-hom2-homotopy A x y f h) ,
-      ( total-equiv-family-of-equiv
+      ( is-equiv-fiberwise-is-equiv-total
         ( hom A x y)
         ( \ k → (f = k))
         ( \ k → (hom2 A x x y (id-hom A x) f k))
@@ -1295,7 +1317,7 @@ A dual notion of homotopy can be defined similarly.
   : Equiv (f = h) (hom2 A x y y f (id-hom A y) h)
   :=
     ( ( map-hom2-homotopy' A x y f h) ,
-      ( total-equiv-family-of-equiv
+      ( is-equiv-fiberwise-is-equiv-total
         ( hom A x y)
         ( \ k → (f = k))
         ( \ k → (hom2 A x y y f (id-hom A y) k))
@@ -1366,7 +1388,7 @@ the data provided by a commutative triangle with that boundary.
   : Equiv ((comp-is-segal A is-segal-A x y z f g) = k) (hom2 A x y z f g k)
   :=
     ( ( map-hom2-eq-is-segal A is-segal-A x y z f g k) ,
-      ( total-equiv-family-of-equiv
+      ( is-equiv-fiberwise-is-equiv-total
         ( hom A x z)
         ( \ m → (comp-is-segal A is-segal-A x y z f g) = m)
         ( hom2 A x y z f g)
@@ -1490,7 +1512,7 @@ As a special case of the above:
   :=
     ( \ _ → unit ,
       \ k →
-      eq-ext-htpy extext
+      naiveextext-extext extext
         ( 2 × 2) Δ² (\ _ → BOT)
         ( \ _ → Unit) (\ _ → recBOT)
         ( \ _ → unit) k
@@ -1574,7 +1596,7 @@ Interchange law
 #variable is-segal-A : is-segal A
 #variables x y z : A
 
-#def homotopy-interchange-law-statement
+#def statement-homotopy-interchange-law
   ( f1 f2 f3 : hom A x y)
   ( h1 h2 h3 : hom A y z)
   ( p : f1 = f2)
@@ -1602,25 +1624,25 @@ Interchange law
   ( q : f2 = f3)
   ( p' : h1 = h2)
   ( q' : h2 = h3)
-  : homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q'
+  : statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p' q'
   := ind-path
     ( hom A x y)
     ( f2)
-    ( \ f3 q -> homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q')
+    ( \ f3 q -> statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p' q')
     ( ind-path
       ( hom A x y)
       ( f1)
-      ( \ f2 p -> homotopy-interchange-law-statement f1 f2 f2 h1 h2 h3
+      ( \ f2 p -> statement-homotopy-interchange-law f1 f2 f2 h1 h2 h3
           p refl p' q')
       ( ind-path
         ( hom A y z)
         ( h2)
-        ( \ h3 q' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h3
+        ( \ h3 q' -> statement-homotopy-interchange-law f1 f1 f1 h1 h2 h3
             refl refl p' q')
         ( ind-path
           ( hom A y z)
           ( h1)
-          ( \ h2 p' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h2
+          ( \ h2 p' -> statement-homotopy-interchange-law f1 f1 f1 h1 h2 h2
               refl refl p' refl)
           ( refl)
           ( h2)
@@ -1818,7 +1840,7 @@ This is the relative notion of a Segal type.
   := is-right-orthogonal-to-shape (2 × 2) Δ² (\ t → Λ t) A' A α
 ```
 
-## Products of Segal Types
+## Products of Segal types
 
 This is an additional section which describes morphisms in products of types as
 products of morphisms. It is implicitly stated in Proposition 8.21.
@@ -1865,4 +1887,28 @@ products of morphisms. It is implicitly stated in Proposition 8.21.
           ( morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id ) ) ) )
 
 #end morphisms-of-products-is-products-of-morphisms
+```
+
+## Fibers of maps between Segal types
+
+For any map `f : A → B` between Segal types, each fiber `fib A B f b` is again a
+Segal type. This is an instance of a general statement about types with unique
+extensions for the shape inclusion `Λ ⊂ Δ²`.
+
+```rzk
+#def is-fiberwise-segal-are-segal uses (extext weakextext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-segal-A : is-segal A)
+  ( is-segal-B : is-segal B)
+  ( b : B)
+  : is-segal (fib A B f b)
+  :=
+    is-segal-has-unique-inner-extensions (fib A B f b)
+    ( has-fiberwise-unique-extensions-have-unique-extensions
+      extext weakextext
+      ( 2 × 2) (Δ²) (\ t → Λ t) A B f
+      ( has-unique-inner-extensions-is-segal A is-segal-A)
+      ( has-unique-inner-extensions-is-segal B is-segal-B)
+      ( b))
 ```

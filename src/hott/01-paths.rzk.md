@@ -389,7 +389,6 @@ A special case of this is sometimes useful
   (p q : x = y)
   : (p = q) → ( concat A y x y (rev A x y q) p) = refl
   := triangle-rotation A x y y p q refl
-
 ```
 
 ### Concatenation with a path and its reversal

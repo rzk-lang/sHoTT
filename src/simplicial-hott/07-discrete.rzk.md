@@ -10,12 +10,13 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-- `hott/1-paths.md` - We require basic path algebra.
-- `hott/4-equivalences.md` - We require the notion of equivalence between types.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
-  subshapes.
-- `4-extension-types.md` — We use extension extensionality.
-- `5-segal-types.md` - We use the notion of hom types.
+- `hott/01-paths.rzk.md` - We require basic path algebra.
+- `hott/04-equivalences.rzk.md` - We require the notion of equivalence between
+  types.
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
+- `04-extension-types.rzk.md` — We use extension extensionality.
+- `05-segal-types.rzk.md` - We use the notion of hom types.
 
 Some of the definitions in this file rely on function extensionality and
 extension extensionality:
@@ -159,7 +160,7 @@ equivalences of maps and when passing to/from total types.
       ( free-paths A) ( fibered-arr' A)
       ( \ ((a,b), p) → ((a,b), hom-eq A a b p))
     ( equiv-of-maps-total-map-hom-eq-const-Δ¹)
-    ( family-of-equiv-total-equiv
+    ( is-equiv-total-is-equiv-fiberwise
         ( product A A) ( \ (a,b) → a = b) ( \ (a,b) → hom A a b)
       ( \ (a,b) → hom-eq A a b)
       ( \ (a,b) → is-discrete-A a b))
@@ -169,7 +170,7 @@ equivalences of maps and when passing to/from total types.
   : is-discrete A
   :=
   \ a b →
-    ( total-equiv-family-of-equiv ( product A A) ( \ (a,b) → a = b)
+    ( is-equiv-fiberwise-is-equiv-total ( product A A) ( \ (a,b) → a = b)
         ( \ (a,b) → hom A a b)
       ( \ (a,b) → hom-eq A a b)
       ( is-equiv-Equiv-is-equiv' ( A) ( Δ¹ → A) ( \ a _ → a)
@@ -753,7 +754,7 @@ The previous calculations allow us to establish a family of equivalences:
       ( fibered-map-square-sigma-over-product
           A x y x y f refl refl))
   :=
-    family-of-equiv-total-equiv
+    is-equiv-total-is-equiv-fiberwise
       ( hom A x y)
       ( \ g → f = g)
       ( \ g →

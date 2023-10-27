@@ -1182,6 +1182,20 @@ We conclude that Segal composition is associative.
     ( left-associative-is-segal A is-segal-A w x y z f g h)
     ( right-associative-is-segal A is-segal-A w x y z f g h)
 
+#def rev-associative-is-segal uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( w x y z : A)
+  ( f : hom A w x)
+  ( g : hom A x y)
+  ( h : hom A y z)
+  : ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h)) =
+    ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h)
+  :=
+    rev (hom A w z)
+    ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h)
+    ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h))
+    ( associative-is-segal A is-segal-A w x y z f g h)
 
 #def postcomp-is-segal
   ( A : U)

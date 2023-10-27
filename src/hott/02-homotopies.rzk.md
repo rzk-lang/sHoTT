@@ -41,8 +41,50 @@ This is a literate `rzk` file:
 Homotopy composition is defined in diagrammatic order like `#!rzk concat` but
 unlike composition.
 
+The following is the unit for compositions of homotopies.
+
+```rzk
+#def refl-htpy
+  (f : A → B)
+  : homotopy f f
+  := \ x → refl
+```
+
 ```rzk
 #end homotopies
+```
+
+There is also a dependent version of homotopy.
+
+```rzk
+#def dhomotopy
+  ( A : U)
+  ( B : A → U)
+  (f g : (a : A) → B a)
+  : U
+  := (a : A) → (f a = g a)
+```
+
+## Some path algebra for homotopies
+
+In this section we prove some lemmas on the groupoidal structure of homotopies.
+
+Given a homotopy between two homotopies $C : H \sim K$ this produces a homotopy
+$K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
+
+```rzk
+#def htpy-cancel-left
+  (A B : U)
+  (f g : A → B)
+  (H K : homotopy A B f g)
+  (C : dhomotopy A (\ a → f a = g a) H K)
+  : dhomotopy
+    A
+    (\ b → g b = g b)
+    (\ x → concat B (g x) (f x) (g x) (rev B (f x) (g x) (K x)) (H x))
+    (refl-htpy A B g)
+  := \ x →
+      cancel-left-path B (f x) (g x) (H x) (K x) (C x)
 ```
 
 ## Whiskering homotopies
@@ -111,6 +153,25 @@ unlike composition.
       ( left-unit-concat B (f x) (g x) (H x))
       ( y)
       ( p)
+```
+
+It is sometimes useful to have this in inverse form.
+
+```rzk
+#def rev-nat-htpy
+  ( A B : U)
+  ( f g : A → B)
+  ( H : homotopy A B f g)
+  ( x y : A)
+  ( p : x = y)
+  : ( concat B (f x) (g x) (g y) (H x) (ap A B x y g p)) =
+    ( concat B (f x) (f y) (g y) (ap A B x y f p) (H y))
+  :=
+  rev
+  ( f x = g y)
+  ( concat B (f x) (f y) (g y) (ap A B x y f p) (H y))
+  ( concat B (f x) (g x) (g y) (H x) (ap A B x y g p))
+  ( nat-htpy A B f g H x y p)
 ```
 
 ```rzk title="Naturality in another form"

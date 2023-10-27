@@ -101,6 +101,30 @@ Preservation of composition requires the Segal hypothesis.
       ( ap-hom2 A B F x y z f g
         ( comp-is-segal A is-segal-A x y z f g)
         ( witness-comp-is-segal A is-segal-A x y z f g))
+
+#def rev-functors-pres-comp
+  ( A B : U)
+  ( is-segal-A : is-segal A)
+  ( is-segal-B : is-segal B)
+  ( F : A → B)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  :
+    ( ap-hom A B F x z (comp-is-segal A is-segal-A x y z f g))
+    =
+    ( comp-is-segal B is-segal-B
+      ( F x) (F y) (F z)
+      ( ap-hom A B F x y f)
+      ( ap-hom A B F y z g))
+  :=
+    rev (hom B (F x) (F z))
+    ( comp-is-segal B is-segal-B
+      ( F x) (F y) (F z)
+      ( ap-hom A B F x y f)
+      ( ap-hom A B F y z g))
+    ( ap-hom A B F x z (comp-is-segal A is-segal-A x y z f g))
+    ( functors-pres-comp A B is-segal-A is-segal-B F x y z f g)
 ```
 
 ## Natural transformations

@@ -1787,63 +1787,92 @@ map from <code class="language-rzk highlight"><span class="err">x = y</span></co
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="err">      </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>y <span class="p">:</span><span class="err"> A) →</span>
 </span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="err">        is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y)</span>
 </span></code></pre></div>
+<p>The inverse to <code class="language-rzk highlight"><span class="err">iso-eq</span></code> for a Rezk type.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:eq-iso-is-rezk" id="define:eq-iso-is-rezk" style="visibility: visible; position: relative; color: inherit">eq-iso-is-rezk</a></span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="err">  </span><span class="p">( </span>is-rezk-A <span class="p">:</span><span class="err"> is-rezk A)</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="err">  : Iso A (</span><span class="s">first</span><span class="err"> is-rezk-A) x y → x = y</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="err">  :=</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="err">    section-is-equiv (x = y) (Iso A (</span><span class="s">first</span><span class="err"> is-rezk-A) x y)</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="err">    ( iso-eq A (</span><span class="s">first</span><span class="err"> is-rezk-A) x y)</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="err">    ( ( </span><span class="s">second</span><span class="err"> is-rezk-A) x y)</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:iso-eq-iso-is-rezk" id="define:iso-eq-iso-is-rezk" style="visibility: visible; position: relative; color: inherit">iso-eq-iso-is-rezk</a></span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="err">  </span><span class="p">( </span>is-rezk-A <span class="p">:</span><span class="err"> is-rezk A)</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="err">  ( (e, is-iso-e) : Iso A (</span><span class="s">first</span><span class="err"> is-rezk-A) x y)</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="err">  : </span><span class="s">first</span><span class="err"> (iso-eq A (</span><span class="s">first</span><span class="err"> is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y (e, is-iso-e))) = e</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="err">  :=</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="err">    first-path-Σ</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="err">    ( hom A x y)</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="err">    ( is-iso-arrow A (</span><span class="s">first</span><span class="err"> is-rezk-A) x y)</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="err">    ( iso-eq A (</span><span class="s">first</span><span class="err"> is-rezk-A) x y</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="err">      ( eq-iso-is-rezk A is-rezk-A x y (e, is-iso-e)))</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="err">    ( (e, is-iso-e))</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="err">    ( ( </span><span class="s">second</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="err">      ( has-section-is-equiv (x = y) (Iso A (</span><span class="s">first</span><span class="err"> is-rezk-A) x y)</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="err">        ( iso-eq A (</span><span class="s">first</span><span class="err"> is-rezk-A) x y)</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="err">        ( ( </span><span class="s">second</span><span class="err"> is-rezk-A) x y))) (e, is-iso-e))</span>
+</span></code></pre></div>
 <p>The following results show how <code class="language-rzk highlight"><span class="err">iso-eq</span></code> mediates between the
 type-theoretic operations on paths and the category-theoretic operations on
 arrows.</p>
-<div class="language-rzk highlight"><span class="filename">RS17, Lemma 10.7</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:compute-covariant-transport-of-hom-family-iso-eq-is-segal" id="define:compute-covariant-transport-of-hom-family-iso-eq-is-segal" style="visibility: visible; position: relative; color: inherit">compute-covariant-transport-of-hom-family-iso-eq-is-segal</a></span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="err">  </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="err">  </span><span class="p">( </span>is-covariant-C <span class="p">:</span><span class="err"> is-covariant A C)</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="err">  </span><span class="p">( </span>e <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> C x)</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="err">  : covariant-transport</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="err">      ( A)</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="err">      ( x)</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="err">      ( y)</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="err">      ( </span><span class="s">first</span><span class="err"> (iso-eq A is-segal-A x y e))</span>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="err">      ( C)</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="err">      ( is-covariant-C)</span>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="err">      ( u)</span>
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="err">    = transport A C x y e u</span>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="err">  :=</span>
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="err">    ind-path</span>
-</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="err">      ( A)</span>
-</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="err">      ( x)</span>
-</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; e&#39; <span class="err">→</span>
-</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="err">        covariant-transport</span>
-</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="err">          ( A)</span>
-</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="err">          ( x)</span>
-</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="err">          ( y&#39;)</span>
-</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="err">          ( </span><span class="s">first</span><span class="err"> (iso-eq A is-segal-A x y&#39; e&#39;))</span>
-</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="err">          ( C)</span>
-</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="err">          ( is-covariant-C)</span>
-</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="err">          ( u)</span>
-</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="err">        = transport A C x y&#39; e&#39; u)</span>
-</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="err">      ( id-arr-covariant-transport A x C is-covariant-C u)</span>
-</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="err">      ( y)</span>
-</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="err">      ( e)</span>
-</span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">RS17, Lemma 10.8</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:compute-ap-hom-of-iso-eq" id="define:compute-ap-hom-of-iso-eq" style="visibility: visible; position: relative; color: inherit">compute-ap-hom-of-iso-eq</a></span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+<div class="language-rzk highlight"><span class="filename">RS17, Lemma 10.7</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:compute-covariant-transport-of-hom-family-iso-eq-is-segal" id="define:compute-covariant-transport-of-hom-family-iso-eq-is-segal" style="visibility: visible; position: relative; color: inherit">compute-covariant-transport-of-hom-family-iso-eq-is-segal</a></span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="err">  </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="err">  </span><span class="p">( </span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="err">  </span><span class="p">( </span>is-covariant-C <span class="p">:</span><span class="err"> is-covariant A C)</span>
 </span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
 </span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="err">  </span><span class="p">( </span>e <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="err">  : ( ap-hom A B f x y (</span><span class="s">first</span><span class="err"> (iso-eq A is-segal-A x y e))) =</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="err">    ( </span><span class="s">first</span><span class="err"> ( iso-eq B is-segal-B (f x) (f y) (ap A B x y f e)))</span>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="err">  :=</span>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="err">    ind-path</span>
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="err">      ( A)</span>
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="err">      ( x)</span>
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; e&#39; <span class="err">→</span>
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="err">        ( ap-hom A B f x y&#39; (</span><span class="s">first</span><span class="err"> (iso-eq A is-segal-A x y&#39; e&#39;))) =</span>
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="err">        ( </span><span class="s">first</span><span class="err"> (iso-eq B is-segal-B (f x) (f y&#39;) (ap A B x y&#39; f e&#39;))))</span>
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="err">      ( y)</span>
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="err">      ( e)</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> C x)</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="err">  : covariant-transport</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="err">      ( A)</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="err">      ( x)</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="err">      ( y)</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="err">      ( </span><span class="s">first</span><span class="err"> (iso-eq A is-segal-A x y e))</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="err">      ( C)</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="err">      ( is-covariant-C)</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="err">      ( u)</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="err">    = transport A C x y e u</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="err">  :=</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="err">    ind-path</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="err">      ( A)</span>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="err">      ( x)</span>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; e&#39; <span class="err">→</span>
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="err">        covariant-transport</span>
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="err">          ( A)</span>
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="err">          ( x)</span>
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="err">          ( y&#39;)</span>
+</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="err">          ( </span><span class="s">first</span><span class="err"> (iso-eq A is-segal-A x y&#39; e&#39;))</span>
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="err">          ( C)</span>
+</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="err">          ( is-covariant-C)</span>
+</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="err">          ( u)</span>
+</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a><span class="err">        = transport A C x y&#39; e&#39; u)</span>
+</span><span id="__span-12-32"><a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a><span class="err">      ( id-arr-covariant-transport A x C is-covariant-C u)</span>
+</span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a><span class="err">      ( y)</span>
+</span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a><span class="err">      ( e)</span>
+</span></code></pre></div>
+<div class="language-rzk highlight"><span class="filename">RS17, Lemma 10.8</span><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:compute-ap-hom-of-iso-eq" id="define:compute-ap-hom-of-iso-eq" style="visibility: visible; position: relative; color: inherit">compute-ap-hom-of-iso-eq</a></span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="err">  </span><span class="p">( </span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="err">  </span><span class="p">( </span>e <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="err">  : ( ap-hom A B f x y (</span><span class="s">first</span><span class="err"> (iso-eq A is-segal-A x y e))) =</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="err">    ( </span><span class="s">first</span><span class="err"> ( iso-eq B is-segal-B (f x) (f y) (ap A B x y f e)))</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="err">  :=</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="err">    ind-path</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="err">      ( A)</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="err">      ( x)</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; e&#39; <span class="err">→</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="err">        ( ap-hom A B f x y&#39; (</span><span class="s">first</span><span class="err"> (iso-eq A is-segal-A x y&#39; e&#39;))) =</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="err">        ( </span><span class="s">first</span><span class="err"> (iso-eq B is-segal-B (f x) (f y&#39;) (ap A B x y&#39; f e&#39;))))</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="err">      ( y)</span>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="err">      ( e)</span>
 </span></code></pre></div>
 
 

@@ -1244,6 +1244,30 @@ pointwise equal.</p>
 </span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="err">      ( ap-hom2 A B F x y z f g</span>
 </span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="err">        ( comp-is-segal A is-segal-A x y z f g)</span>
 </span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="err">        ( witness-comp-is-segal A is-segal-A x y z f g))</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:rev-functors-pres-comp" id="define:rev-functors-pres-comp" style="visibility: visible; position: relative; color: inherit">rev-functors-pres-comp</a></span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="err">  </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="err">  </span><span class="p">( </span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="err">  </span><span class="p">( </span>F <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="err">  </span><span class="p">( </span>x y z <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> hom A x y)</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="err">  </span><span class="p">( </span>g <span class="p">:</span><span class="err"> hom A y z)</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="err">  :</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="err">    ( ap-hom A B F x z (comp-is-segal A is-segal-A x y z f g))</span>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="err">    =</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="err">    ( comp-is-segal B is-segal-B</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="err">      ( F x) (F y) (F z)</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="err">      ( ap-hom A B F x y f)</span>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="err">      ( ap-hom A B F y z g))</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="err">  :=</span>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="err">    rev (hom B (F x) (F z))</span>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="err">    ( comp-is-segal B is-segal-B</span>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="err">      ( F x) (F y) (F z)</span>
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="err">      ( ap-hom A B F x y f)</span>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="err">      ( ap-hom A B F y z g))</span>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="err">    ( ap-hom A B F x z (comp-is-segal A is-segal-A x y z f g))</span>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="err">    ( functors-pres-comp A B is-segal-A is-segal-B F x y z f g)</span>
 </span></code></pre></div>
 <h2 id="natural-transformations">Natural transformations<a class="headerlink" href="#natural-transformations" title="Permanent link">&para;</a></h2>
 <p>Given two simplicial maps <code class="language-rzk highlight"><span class="err">f g : </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x</span></code> , a <strong>natural

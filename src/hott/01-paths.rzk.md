@@ -1068,49 +1068,49 @@ triple compostion for ease of use in a later proof.
   (H' : (concat A v w v p q) = refl)
   : r = (concat A v w z p (concat A w y z s t))
   :=
-    (concat
+  (concat
+    (v = z)
+    ( r)
+    ( concat A v v z refl r)
+    ( concat A v w z p (concat A w y z s t))
+    (rev
       (v = z)
-      ( r)
+      (concat  A v v z refl r)
+      ( r )
+      (left-unit-concat A v z r))
+    (concat
+      ( v = z)
       ( concat A v v z refl r)
-      ( concat A v w z p (concat A w y z s t))
+      ( concat A v v z (concat A v w v p q) r)
+      ( concat A v w z p (concat A w y z s t ))
       (rev
-        (v = z)
-        (concat  A v v z refl r)
-        ( r )
-        (left-unit-concat A v z r))
-      (concat
+        ( v = z )
+        (concat A v v z  (concat A v w v p q) r)
+        (concat A v v z refl r)
+        ( concat-eq-left
+          ( A)
+          ( v)
+          ( v)
+          ( z)
+          ( concat A v w v p q)
+          ( refl )
+          ( H')
+          ( r) ))
+      ( concat
         ( v = z)
-        ( concat A v v z refl r)
         ( concat A v v z (concat A v w v p q) r)
-        ( concat A v w z p (concat A w y z s t ))
-        (rev
-          ( v = z )
-          (concat A v v z  (concat A v w v p q) r)
-          (concat A v v z refl r)
-          ( concat-eq-left
-            ( A)
-            ( v)
-            ( v)
-            ( z)
-            ( concat A v w v p q)
-            ( refl )
-            ( H')
-            ( r) ))
-        ( concat
-          ( v = z)
-          ( concat A v v z (concat A v w v p q) r)
-          ( concat A v w z p (concat A w v z q r))
-          ( concat A v w z p (concat A w y z s t))
-          ( associative-concat A v w v z p q r)
-          ( concat-eq-right
-            ( A)
-            ( v)
-            ( w)
-            ( z)
-            ( p)
-            ( concat A w v z q r)
-            ( concat A w y z s t)
-            ( H)))))
+        ( concat A v w z p (concat A w v z q r))
+        ( concat A v w z p (concat A w y z s t))
+        ( associative-concat A v w v z p q r)
+        ( concat-eq-right
+          ( A)
+          ( v)
+          ( w)
+          ( z)
+          ( p)
+          ( concat A w v z q r)
+          ( concat A w y z s t)
+          ( H)))))
 ```
 
 It is also convenient to have a a version with the opposite associativity.
@@ -1226,8 +1226,8 @@ And a reversed version.
   </g>
   </svg>
 
-If $H \sim K$ is a homotopy between homotopies, then we can cancel on the left
-to get $$ K^{-1} \cdot H \sim \texttt{refl}$$
+Given a homotopy between paths `#! H : p = q`, then we can cancel on the left to
+get a homotopy between `#!rzk concat (rev p) q` and `#! refl`.
 
 ```rzk
 

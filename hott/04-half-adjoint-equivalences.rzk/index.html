@@ -553,6 +553,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#some-further-useful-coherences" class="md-nav__link">
+    Some further useful coherences
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1049,6 +1056,13 @@
         <li class="md-nav__item">
   <a href="#equivalences-are-embeddings" class="md-nav__link">
     Equivalences are embeddings
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-further-useful-coherences" class="md-nav__link">
+    Some further useful coherences
   </a>
   
 </li>
@@ -1835,6 +1849,169 @@ have equivalent identity types by showing that equivalences are embeddings.</p>
 </span><span id="__span-14-388"><a id="__codelineno-14-388" name="__codelineno-14-388" href="#__codelineno-14-388"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
 </span><span id="__span-14-389"><a id="__codelineno-14-389" name="__codelineno-14-389" href="#__codelineno-14-389"></a><span class="err">  : Equiv (x = y) (f x = f y)</span>
 </span><span id="__span-14-390"><a id="__codelineno-14-390" name="__codelineno-14-390" href="#__codelineno-14-390"></a><span class="err">  := (ap A B x y f , is-emb-is-equiv A B f is-equiv-f x y)</span>
+</span></code></pre></div>
+<h2 id="some-further-useful-coherences">Some further useful coherences<a class="headerlink" href="#some-further-useful-coherences" title="Permanent link">&para;</a></h2>
+<p>We prove some further coherences from half-adjoint equivalences. Some of the
+lemmas below resemble lemmas from the section on embeddings.</p>
+<p>For a half-adjoint equivalence <span class="arithmatex">\(f\)</span> with inverse <span class="arithmatex">\(g\)</span> and coherence
+<span class="arithmatex">\(G ⋅ f ∼ \text{ap}_f ⋅ H\)</span> we show</p>
+<div class="arithmatex">\[
+\text{ap}_f (H^{-1} a) ⋅ G (f a) = \texttt{refl}_{f (a)}.
+\]</div>
+<p>This is a consequence of cancelling the coherence on the left, and then applying
+the equality <span class="arithmatex">\(\text{ap}_f (H^{-1} a) = (\text{ap}_f (H a))^{-1}\)</span>. It is
+cumbersome to state and prove only becaues of data revtrieval and the number of
+reversals.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ap-rev-retr-htpy-concat-sec-htpy-is-refl-is-hae" id="define:ap-rev-retr-htpy-concat-sec-htpy-is-refl-is-hae" style="visibility: visible; position: relative; color: inherit">ap-rev-retr-htpy-concat-sec-htpy-is-refl-is-hae</a></span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="err">  </span><span class="p">(</span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="err">  </span><span class="p">(</span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="err">  </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="err">  </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B)</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="err">  </span><span class="p">(</span>q <span class="p">:</span><span class="err"> (f a) = b)</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="err">  </span><span class="p">(</span>is-hae <span class="p">:</span><span class="err"> is-half-adjoint-equiv A B f)</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="err">  : (concat ( B)</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="err">      ( f a)</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="err">      ( f ((map-inverse-is-half-adjoint-equiv  A B f is-hae) (f a )))</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="err">      ( f a)</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="err">      (ap ( A) ( B)</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="err">        ( a)</span>
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="err">        (((map-inverse-is-half-adjoint-equiv A B f is-hae) ( f a)))</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="err">        ( f)</span>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="err">        ( rev ( A)</span>
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="err">          ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="err">          ( a)</span>
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="err">          ((retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))</span>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="err">      ( (section-htpy-is-half-adjoint-equiv A B f is-hae) (f a)))</span>
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="err">      = </span><span class="s">refl</span>
+</span><span id="__span-15-22"><a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="err">  :=</span>
+</span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="err">  htpy-id-cancel-left-concat-left-eq</span>
+</span><span id="__span-15-24"><a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="err">  ( B)</span>
+</span><span id="__span-15-25"><a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="err">  (f a)</span>
+</span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="err">  ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))</span>
+</span><span id="__span-15-27"><a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="err">  ( ap ( A) ( B)</span>
+</span><span id="__span-15-28"><a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a><span class="err">    ( a)</span>
+</span><span id="__span-15-29"><a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a><span class="err">    ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-15-30"><a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a><span class="err">    ( f)</span>
+</span><span id="__span-15-31"><a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a><span class="err">    (rev ( A)</span>
+</span><span id="__span-15-32"><a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a><span class="err">      (((map-inverse-is-half-adjoint-equiv A B f is-hae) ( f a)))</span>
+</span><span id="__span-15-33"><a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a><span class="err">      ( a)</span>
+</span><span id="__span-15-34"><a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a><span class="err">      ( (retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))</span>
+</span><span id="__span-15-35"><a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a><span class="err">  ( rev ( B)</span>
+</span><span id="__span-15-36"><a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a><span class="err">    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))</span>
+</span><span id="__span-15-37"><a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a><span class="err">    ( f a)</span>
+</span><span id="__span-15-38"><a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a><span class="err">    ( ap ( A) ( B)</span>
+</span><span id="__span-15-39"><a id="__codelineno-15-39" name="__codelineno-15-39" href="#__codelineno-15-39"></a><span class="err">      ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-15-40"><a id="__codelineno-15-40" name="__codelineno-15-40" href="#__codelineno-15-40"></a><span class="err">      ( a)</span>
+</span><span id="__span-15-41"><a id="__codelineno-15-41" name="__codelineno-15-41" href="#__codelineno-15-41"></a><span class="err">      ( f)</span>
+</span><span id="__span-15-42"><a id="__codelineno-15-42" name="__codelineno-15-42" href="#__codelineno-15-42"></a><span class="err">      (( retraction-htpy-is-half-adjoint-equiv A B f is-hae) a) ))</span>
+</span><span id="__span-15-43"><a id="__codelineno-15-43" name="__codelineno-15-43" href="#__codelineno-15-43"></a><span class="err">  ( ap-rev ( A) ( B)</span>
+</span><span id="__span-15-44"><a id="__codelineno-15-44" name="__codelineno-15-44" href="#__codelineno-15-44"></a><span class="err">    (((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))</span>
+</span><span id="__span-15-45"><a id="__codelineno-15-45" name="__codelineno-15-45" href="#__codelineno-15-45"></a><span class="err">    ( a)</span>
+</span><span id="__span-15-46"><a id="__codelineno-15-46" name="__codelineno-15-46" href="#__codelineno-15-46"></a><span class="err">    ( f)</span>
+</span><span id="__span-15-47"><a id="__codelineno-15-47" name="__codelineno-15-47" href="#__codelineno-15-47"></a><span class="err">    ( ( retraction-htpy-is-half-adjoint-equiv A B f is-hae) a))</span>
+</span><span id="__span-15-48"><a id="__codelineno-15-48" name="__codelineno-15-48" href="#__codelineno-15-48"></a><span class="err">  ( (section-htpy-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-15-49"><a id="__codelineno-15-49" name="__codelineno-15-49" href="#__codelineno-15-49"></a><span class="err">  ( cancel-left-path</span>
+</span><span id="__span-15-50"><a id="__codelineno-15-50" name="__codelineno-15-50" href="#__codelineno-15-50"></a><span class="err">    ( B)</span>
+</span><span id="__span-15-51"><a id="__codelineno-15-51" name="__codelineno-15-51" href="#__codelineno-15-51"></a><span class="err">    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))</span>
+</span><span id="__span-15-52"><a id="__codelineno-15-52" name="__codelineno-15-52" href="#__codelineno-15-52"></a><span class="err">    ( f a)</span>
+</span><span id="__span-15-53"><a id="__codelineno-15-53" name="__codelineno-15-53" href="#__codelineno-15-53"></a><span class="err">    ( (section-htpy-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-15-54"><a id="__codelineno-15-54" name="__codelineno-15-54" href="#__codelineno-15-54"></a><span class="err">    ( ( ap A B ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)) a f</span>
+</span><span id="__span-15-55"><a id="__codelineno-15-55" name="__codelineno-15-55" href="#__codelineno-15-55"></a><span class="err">        (( retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))</span>
+</span><span id="__span-15-56"><a id="__codelineno-15-56" name="__codelineno-15-56" href="#__codelineno-15-56"></a><span class="err">    ( ((coherence-is-half-adjoint-equiv A B f is-hae) a)))</span>
+</span></code></pre></div>
+<p>Let <span class="arithmatex">\(f : A → B\)</span> be an equivalence between <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span>. We prove that</p>
+<div class="arithmatex">\[
+\text{ap}_f (H^-1 (a)) ⋅ \text{ap}_{f ∘ g} (q) ⋅ G (b) = q
+\]</div>
+<p>This expresses a relatively natural statement that if we start with
+<span class="arithmatex">\(q: f (a) = b\)</span>, apply <span class="arithmatex">\(g\)</span> to get <span class="arithmatex">\(\text{ap}_g (q) : g (f (a)) = g(b)\)</span>,
+precompose with <span class="arithmatex">\(H (a)\)</span> to get</p>
+<div class="arithmatex">\[
+a = g(f(a)) = g(b)
+\]</div>
+<p>apply <span class="arithmatex">\(g\)</span> and then postcompose with <span class="arithmatex">\(G : f (g (b)) = b\)</span>, the resulting path
+<span class="arithmatex">\(f(a) = b\)</span> is equal to <span class="arithmatex">\(q\)</span>.</p>
+<p>An alternate proof could use <code>triple-concat-eq-first</code> and
+<code>triple-concat-nat-htpy</code>. The proofs do not end up much shorter.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:id-conjugate-is-hae-ap-ap-is-hae" id="define:id-conjugate-is-hae-ap-ap-is-hae" style="visibility: visible; position: relative; color: inherit">id-conjugate-is-hae-ap-ap-is-hae</a></span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="err">  </span><span class="p">( </span>b <span class="p">:</span><span class="err"> B)</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> (f a) = b)</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="err">  </span><span class="p">(</span>is-hae <span class="p">:</span><span class="err"> is-half-adjoint-equiv A B f)</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="err">  :(concat ( B)</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="err">    ( f a)</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="err">    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (b)))</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="err">    ( b )</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="err">    (concat ( B)</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="err">      ( f a)</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="err">      ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="err">      ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) b))</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="err">      ( ap ( A) ( B) ( a)</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="err">        ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="err">        ( f)</span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="err">        (rev ( A)</span>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="err">          ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="err">          ( a)</span>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="err">          ( (retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))</span>
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="err">      ( ap ( B) ( B) ( f a) ( b)</span>
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="err">        ( </span><span class="p">\</span>z <span class="err">→ (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))</span>
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="err">        ( q)))</span>
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="err">    ( ( section-htpy-is-half-adjoint-equiv A B f is-hae) (b))) = q</span>
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="err">  :=</span>
+</span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="err">  concat</span>
+</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="err">  ((f a) = b)</span>
+</span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a><span class="err">  ((concat ( B)</span>
+</span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="err">    ( f a)</span>
+</span><span id="__span-16-32"><a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="err">    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (b)))</span>
+</span><span id="__span-16-33"><a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a><span class="err">    ( b )</span>
+</span><span id="__span-16-34"><a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a><span class="err">    (concat ( B)</span>
+</span><span id="__span-16-35"><a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a><span class="err">      ( f a)</span>
+</span><span id="__span-16-36"><a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a><span class="err">      ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))</span>
+</span><span id="__span-16-37"><a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a><span class="err">      ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) b))</span>
+</span><span id="__span-16-38"><a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a><span class="err">      ( ap ( A) ( B) ( a)</span>
+</span><span id="__span-16-39"><a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a><span class="err">        ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-16-40"><a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a><span class="err">        ( f)</span>
+</span><span id="__span-16-41"><a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a><span class="err">        (rev ( A)</span>
+</span><span id="__span-16-42"><a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a><span class="err">          ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-16-43"><a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="err">          ( a)</span>
+</span><span id="__span-16-44"><a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a><span class="err">          ( (retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))</span>
+</span><span id="__span-16-45"><a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a><span class="err">      ( ap ( B) ( B) ( f a) ( b)</span>
+</span><span id="__span-16-46"><a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a><span class="err">        ( </span><span class="p">\</span>z <span class="err">→ (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))</span>
+</span><span id="__span-16-47"><a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a><span class="err">        ( q)))</span>
+</span><span id="__span-16-48"><a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a><span class="err">    ( ( section-htpy-is-half-adjoint-equiv A B f is-hae) (b))) )</span>
+</span><span id="__span-16-49"><a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a><span class="err">  ((ap B B (f a) b (identity B) q))</span>
+</span><span id="__span-16-50"><a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a><span class="err">  ( q)</span>
+</span><span id="__span-16-51"><a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a><span class="err">  (rev-eq-top-cancel-commutative-square&#39;</span>
+</span><span id="__span-16-52"><a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a><span class="err">    ( B)</span>
+</span><span id="__span-16-53"><a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a><span class="err">    (f a)</span>
+</span><span id="__span-16-54"><a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a><span class="err">    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (f a)))</span>
+</span><span id="__span-16-55"><a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a><span class="err">    ( f ((map-inverse-is-half-adjoint-equiv A B f is-hae)  b))</span>
+</span><span id="__span-16-56"><a id="__codelineno-16-56" name="__codelineno-16-56" href="#__codelineno-16-56"></a><span class="err">    ( b)</span>
+</span><span id="__span-16-57"><a id="__codelineno-16-57" name="__codelineno-16-57" href="#__codelineno-16-57"></a><span class="err">    (ap ( A) ( B)</span>
+</span><span id="__span-16-58"><a id="__codelineno-16-58" name="__codelineno-16-58" href="#__codelineno-16-58"></a><span class="err">      ( a)</span>
+</span><span id="__span-16-59"><a id="__codelineno-16-59" name="__codelineno-16-59" href="#__codelineno-16-59"></a><span class="err">      ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-16-60"><a id="__codelineno-16-60" name="__codelineno-16-60" href="#__codelineno-16-60"></a><span class="err">      ( f)</span>
+</span><span id="__span-16-61"><a id="__codelineno-16-61" name="__codelineno-16-61" href="#__codelineno-16-61"></a><span class="err">      ( rev ( A)</span>
+</span><span id="__span-16-62"><a id="__codelineno-16-62" name="__codelineno-16-62" href="#__codelineno-16-62"></a><span class="err">        ( (map-inverse-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-16-63"><a id="__codelineno-16-63" name="__codelineno-16-63" href="#__codelineno-16-63"></a><span class="err">        ( a)</span>
+</span><span id="__span-16-64"><a id="__codelineno-16-64" name="__codelineno-16-64" href="#__codelineno-16-64"></a><span class="err">        ( (retraction-htpy-is-half-adjoint-equiv A B f is-hae) a)))</span>
+</span><span id="__span-16-65"><a id="__codelineno-16-65" name="__codelineno-16-65" href="#__codelineno-16-65"></a><span class="err">    ((section-htpy-is-half-adjoint-equiv A B f is-hae) (f a))</span>
+</span><span id="__span-16-66"><a id="__codelineno-16-66" name="__codelineno-16-66" href="#__codelineno-16-66"></a><span class="err">    (ap ( B) ( B) ( f a) ( b)</span>
+</span><span id="__span-16-67"><a id="__codelineno-16-67" name="__codelineno-16-67" href="#__codelineno-16-67"></a><span class="err">      (</span><span class="p">\</span>z <span class="err">→ (f ((map-inverse-is-half-adjoint-equiv A B f is-hae) z)))</span>
+</span><span id="__span-16-68"><a id="__codelineno-16-68" name="__codelineno-16-68" href="#__codelineno-16-68"></a><span class="err">      ( q))</span>
+</span><span id="__span-16-69"><a id="__codelineno-16-69" name="__codelineno-16-69" href="#__codelineno-16-69"></a><span class="err">    ( ap B B (f a) b (identity B) q )</span>
+</span><span id="__span-16-70"><a id="__codelineno-16-70" name="__codelineno-16-70" href="#__codelineno-16-70"></a><span class="err">    ( (section-htpy-is-half-adjoint-equiv A B f is-hae) b)</span>
+</span><span id="__span-16-71"><a id="__codelineno-16-71" name="__codelineno-16-71" href="#__codelineno-16-71"></a><span class="err">    (rev-nat-htpy ( B) ( B)</span>
+</span><span id="__span-16-72"><a id="__codelineno-16-72" name="__codelineno-16-72" href="#__codelineno-16-72"></a><span class="err">      ( </span><span class="p">\ </span>x <span class="err">→ f ((map-inverse-is-half-adjoint-equiv A B f is-hae) (x)))</span>
+</span><span id="__span-16-73"><a id="__codelineno-16-73" name="__codelineno-16-73" href="#__codelineno-16-73"></a><span class="err">      ( identity B)</span>
+</span><span id="__span-16-74"><a id="__codelineno-16-74" name="__codelineno-16-74" href="#__codelineno-16-74"></a><span class="err">      ( section-htpy-is-half-adjoint-equiv A B f is-hae)</span>
+</span><span id="__span-16-75"><a id="__codelineno-16-75" name="__codelineno-16-75" href="#__codelineno-16-75"></a><span class="err">      ( f a)</span>
+</span><span id="__span-16-76"><a id="__codelineno-16-76" name="__codelineno-16-76" href="#__codelineno-16-76"></a><span class="err">      ( b)</span>
+</span><span id="__span-16-77"><a id="__codelineno-16-77" name="__codelineno-16-77" href="#__codelineno-16-77"></a><span class="err">      ( q))</span>
+</span><span id="__span-16-78"><a id="__codelineno-16-78" name="__codelineno-16-78" href="#__codelineno-16-78"></a><span class="err">    ( ap-rev-retr-htpy-concat-sec-htpy-is-refl-is-hae A B f a b q is-hae))</span>
+</span><span id="__span-16-79"><a id="__codelineno-16-79" name="__codelineno-16-79" href="#__codelineno-16-79"></a><span class="err">  (ap-id B (f a) b q )</span>
 </span></code></pre></div>
 
 

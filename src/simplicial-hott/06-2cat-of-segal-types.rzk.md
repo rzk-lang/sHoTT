@@ -472,8 +472,6 @@ the "Gray interchanger" built from two commutative triangles.
 
 ## Equivalences are fully faithful
 
--- Or: Equivalences induce equivalences of hom
-
 The fiber of postcomposition by a map $f: \prod_{t : I|\psi} A (t) \to B (t)$ is
 equivalent to the family of fibers of $f\_t$.
 
@@ -643,7 +641,11 @@ More precicely:
         ( \ t → f)
         ( β)
         ( \ t → is-equiv-f)
+```
 
+We can also define a retraction of `#!rzk ap-hom` directly.
+
+```
 #def retraction-ap-hom-retraction uses (funext)
   ( A B : U)
   ( f : A → B)

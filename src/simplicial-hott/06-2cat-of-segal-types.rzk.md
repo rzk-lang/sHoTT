@@ -645,7 +645,7 @@ More precicely:
 
 We can also define a retraction of `#!rzk ap-hom` directly.
 
-```
+```rzk
 #def retraction-ap-hom-retraction uses (funext)
   ( A B : U)
   ( f : A → B)

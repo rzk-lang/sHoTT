@@ -1129,55 +1129,14 @@ It is also convenient to have a a version with the opposite associativity.
   ( H' : (concat A v w v p q) = refl)
   : r = ( concat A v y z (concat A v w y p s) t)
   :=
-    (concat
-      ( v = z)
-      ( r)
-      ( concat A v w z p (concat A w y z s t))
-      ( concat A v y z (concat A v w y p s) t)
-      ( concat
-        ( v = z)
-        ( r )
-        ( concat A v v z refl r)
-        ( concat A v w z p (concat A w y z s t) )
-        ( rev
-          (v = z)
-          (concat  A v v z refl r )
-          ( r )
-          (left-unit-concat A v z r))
-        ( concat
-          ( v = z)
-          ( concat A v v z refl r)
-          ( concat A v v z (concat A v w v p q) r )
-          ( concat A v w z p (concat A w y z s t ))
-          ( rev
-            ( v = z )
-            ( concat A v v z  (concat A v w v p q) r )
-            ( concat A v v z refl r)
-            ( concat-eq-left
-              ( A)
-              ( v)
-              ( v)
-              ( z)
-              ( concat A v w v p q )
-              ( refl )
-              ( H')
-              ( r) ))
-          ( concat
-            ( v = z)
-            ( concat A v v z (concat A v w v p q) r)
-            ( concat A v w z p (concat A w v z q r)  )
-            ( concat A v w z p (concat A w y z s t))
-            ( associative-concat A v w v z p q r)
-            ( concat-eq-right
-              ( A )
-              ( v )
-              ( w)
-              ( z)
-              ( p)
-              ( concat A w v z q r)
-              ( concat A w y z s t)
-              ( H)))))
-      ( rev-associative-concat A v w y z p s t))
+  concat
+  ( v = z)
+  ( r)
+  ( concat A v w z p (concat A w y z s t))
+  ( concat A v y z (concat A v w y p s) t)
+  ( eq-top-cancel-commutative-square A v w y z p q s r t H H')
+  ( rev-associative-concat A v w y z p s t)
+
 ```
 
 And a reversed version.
@@ -1195,11 +1154,11 @@ And a reversed version.
   ( H' : (concat A v w v p q) = refl)
   : ( concat A v y z (concat A v w y p s) t) = r
   :=
-    rev
-      ( v = z)
-      ( r)
-      ( concat A v y z (concat A v w y p s) t)
-      ( eq-top-cancel-commutative-square' A v w y z p q s r t H H')
+  rev
+  ( v = z)
+  ( r)
+  ( concat A v y z (concat A v w y p s) t)
+  ( eq-top-cancel-commutative-square' A v w y z p q s r t H H')
 ```
 
 <?xml version='1.0' encoding='UTF-8'?>
@@ -1282,11 +1241,12 @@ to get $$ K^{-1} \cdot H \sim \texttt{refl}$$
   (r : b = a)
   (H' : (concat A a b a q r) = refl)
   : (concat A a b a p r) = refl
-  :=  concat
-      ( a = a)
-      ( concat A a b a p r ) -- begin
-      ( concat A a b a q r ) -- middle
-      ( refl ) -- end
-      ( concat-eq-left A a b a p q H r)
-      ( H' )
+  :=
+  concat
+  ( a = a)
+  ( concat A a b a p r )
+  ( concat A a b a q r )
+  ( refl )
+  ( concat-eq-left A a b a p q H r)
+  ( H' )
 ```

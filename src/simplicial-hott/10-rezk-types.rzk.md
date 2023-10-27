@@ -742,6 +742,38 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
         is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y)
 ```
 
+The inverse to `#!rzk iso-eq` for a Rezk type.
+
+```rzk
+#def eq-iso-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x y : A)
+  : Iso A (first is-rezk-A) x y → x = y
+  :=
+    section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
+    ( iso-eq A (first is-rezk-A) x y)
+    ( ( second is-rezk-A) x y)
+
+#def iso-eq-iso-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x y : A)
+  ( (e, is-iso-e) : Iso A (first is-rezk-A) x y)
+  : first (iso-eq A (first is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y (e, is-iso-e))) = e
+  :=
+    first-path-Σ
+    ( hom A x y)
+    ( is-iso-arrow A (first is-rezk-A) x y)
+    ( iso-eq A (first is-rezk-A) x y
+      ( eq-iso-is-rezk A is-rezk-A x y (e, is-iso-e)))
+    ( (e, is-iso-e))
+    ( ( second
+      ( has-section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
+        ( iso-eq A (first is-rezk-A) x y)
+        ( ( second is-rezk-A) x y))) (e, is-iso-e))
+```
+
 The following results show how `#!rzk iso-eq` mediates between the
 type-theoretic operations on paths and the category-theoretic operations on
 arrows.

@@ -536,7 +536,20 @@ This is the dependent version of the currying equivalence.
   ( B : A → U)
   ( C : (x : A) → B x → U)
   : Equiv
-      ( (x : A) → Σ (y : B x) , C x y)
-      ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+    ( (x : A) → Σ (y : B x) , C x y)
+    ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
   := (choice A B C , is-equiv-choice A B C)
+
+#def inv-equiv-choice
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : Equiv
+    ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+    ( (x : A) → Σ (y : B x) , C x y)
+  :=
+  inv-equiv
+  ( (x : A) → Σ (y : B x) , C x y)
+  ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
+  ( equiv-choice A B C)
 ```

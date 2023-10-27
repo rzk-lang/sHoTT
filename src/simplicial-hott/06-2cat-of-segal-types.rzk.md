@@ -10,10 +10,10 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
-  their subshapes.
-- `04-extension-types.rzk.md` — We use extension extensionality.
-- `05-segal-types.rzk.md` - We use the notion of hom types.
+- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
+  subshapes.
+- `4-extension-types.md` — We use extension extensionality.
+- `5-segal-types.md` - We use the notion of hom types.
 
 Some of the definitions in this file rely on function extensionality and
 extension extensionality:
@@ -104,10 +104,9 @@ Preservation of composition requires the Segal hypothesis.
         ( witness-comp-is-segal A is-segal-A x y z f g))
 ```
 
-The action on morphisms commute with transport.
+The action on morphisms commutes with transport.
 
 ```rzk
-
 #def ap-hom-naturality
   ( A B C : U)
   ( f g : A → B)
@@ -475,8 +474,10 @@ the "Gray interchanger" built from two commutative triangles.
 
 -- Or: Equivalences induce equivalences of hom
 
-```rzk
+The fiber of postcomposition by a map $f: \prod_{t : I|\psi} A (t) \to B (t)$ is
+equivalent to the family of fibers of $f\_t$.
 
+```rzk
 #def postcomp-Π-ext
   ( I : CUBE)
   ( ψ : I → TOPE)
@@ -515,24 +516,6 @@ the "Gray interchanger" built from two commutative triangles.
   :=
     (t : ψ) → fib (A t) (B t) (f t) (β t) [ϕ t ↦ (a t, refl)]
 
-#def is-contr-fiber-family-ext-contr-fib
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
-  ( A B : ψ → U)
-  ( a : (t : ϕ) → A t)
-  ( f : (t : ψ) → (A t → B t))
-  ( β : (t : ψ) → B t [ϕ t ↦ f t (a t)])
-  ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
-  : is-contr (fiber-family-ext I ψ ϕ A B a f β)
-  :=
-    weakextext I ψ ϕ
-      ( \ t → fib (A t) (B t) (f t) (β t))
-      ( \ t → is-contr-map-is-equiv (A t) (B t) (f t) (family-equiv-f t) (β t))
-      ( \ t → (a t, refl))
-
-
-
 #def equiv-fiber-postcomp-Π-ext-fiber-family-ext
   ( I : CUBE)
   ( ψ : I → TOPE)
@@ -551,8 +534,87 @@ the "Gray interchanger" built from two commutative triangles.
       ( fiber-family-ext I ψ ϕ A B a f β)
       ( equiv-relative-extension-type-fib extext I ψ ϕ A B f a β)
       ( inv-equiv-axiom-choice I ψ ϕ A (\ t x → f t x = β t) a (\ t → refl))
+```
 
+In particular, if $f: \prod_{t : I|\psi} A (t) \to B (t)$ is a family of
+equivalence then the fibers of postcomposition by f are contractible.
 
+```rzk
+#def is-contr-fiber-family-ext-contr-fib
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ) → (A t → B t))
+  ( β : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  : is-contr (fiber-family-ext I ψ ϕ A B a f β)
+  :=
+    weakextext I ψ ϕ
+      ( \ t → fib (A t) (B t) (f t) (β t))
+      ( \ t → is-contr-map-is-equiv (A t) (B t) (f t) (family-equiv-f t) (β t))
+      ( \ t → (a t, refl))
+
+#def is-contr-fiber-postcomp-Π-ext-is-equiv-fam uses (weakextext extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ) → (A t → B t))
+  ( β : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  : is-contr (fiber-postcomp-Π-ext I ψ ϕ A B a f β)
+  :=
+    is-contr-equiv-is-contr'
+      ( fiber-postcomp-Π-ext I ψ ϕ A B a f β)
+      ( fiber-family-ext I ψ ϕ A B a f β)
+      ( equiv-fiber-postcomp-Π-ext-fiber-family-ext I ψ ϕ A B a f β)
+      ( is-contr-fiber-family-ext-contr-fib I ψ ϕ A B a f β family-equiv-f)
+
+#def is-equiv-postcomp-Π-ext-is-equiv uses (weakextext extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( f : (t : ψ) → (A t → B t))
+  ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  : is-equiv
+      ( (t : ψ) → A t [ϕ t ↦ a t])
+      ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+      ( postcomp-Π-ext I ψ ϕ A B a f)
+  :=
+    is-equiv-is-contr-map
+      ( (t : ψ) → A t [ϕ t ↦ a t])
+      ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+      ( postcomp-Π-ext I ψ ϕ A B a f)
+      ( \ β → is-contr-fiber-postcomp-Π-ext-is-equiv-fam I ψ ϕ A B a f β family-equiv-f)
+```
+
+Using this result we can show that `#!rzk ap-hom` is an equivalence when f is an
+equivalence.
+
+```rzk
+#def is-equiv-ap-hom-is-equiv uses (weakextext extext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( x y : A)
+  : is-equiv (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
+  :=
+    is-equiv-postcomp-Π-ext-is-equiv 2 Δ¹ ∂Δ¹
+        ( \ t → A)
+        ( \ t → B)
+        ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+        ( \ t → f)
+        ( \ t → is-equiv-f)
+```
+
+More precicely:
+
+```rzk
 #def fiber-ap-hom
   ( A B : U)
   ( x y : A)
@@ -566,7 +628,6 @@ the "Gray interchanger" built from two commutative triangles.
       ( ap-hom A B f x y)
       ( β)
 
-
 #def is-contr-fiber-ap-hom-is-equiv uses (weakextext extext)
   ( A B : U)
   ( f : A → B)
@@ -575,41 +636,15 @@ the "Gray interchanger" built from two commutative triangles.
   ( β : hom B (f x) (f y))
   : is-contr (fiber-ap-hom A B x y f β)
   :=
-    is-contr-equiv-is-contr'
-      ( fiber-ap-hom A B x y f β)
-      ( fiber-family-ext 2 Δ¹ ∂Δ¹
-        ( \ t → A)
-        ( \ t → B)
-        ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
-        ( \ t → f)
-        ( β))
-      ( equiv-fiber-postcomp-Π-ext-fiber-family-ext 2 Δ¹ ∂Δ¹
-        ( \ t → A)
-        ( \ t → B)
-        ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
-        ( \ t → f)
-        ( β))
-      ( is-contr-fiber-family-ext-contr-fib 2 Δ¹ ∂Δ¹
+    is-contr-fiber-postcomp-Π-ext-is-equiv-fam 2 Δ¹ ∂Δ¹
         ( \ t → A)
         ( \ t → B)
         ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
         ( \ t → f)
         ( β)
-        ( \t → is-equiv-f))
+        ( \ t → is-equiv-f)
 
-#def is-equiv-ap-hom-is-equiv uses (weakextext extext)
-  ( A B : U)
-  ( f : A → B)
-  ( is-equiv-f : is-equiv A B f)
-  ( x y : A)
-  : is-equiv (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
-  :=
-    is-equiv-is-contr-map (hom A x y) (hom B (f x) (f y))
-      (ap-hom A B f x y)
-      ( \ β → is-contr-fiber-ap-hom-is-equiv A B f is-equiv-f x y β)
-
-
-#def retraction-ap-hom-retraction uses (funext) -- change this into retraction of ap-hom if f has one
+#def retraction-ap-hom-retraction uses (funext)
   ( A B : U)
   ( f : A → B)
   ( (r, ρ) : has-retraction A B f)
@@ -623,11 +658,10 @@ the "Gray interchanger" built from two commutative triangles.
       ( transport (A → A) (\ g' → (hom A (g' x) (g' y)))
         ( comp A B A r f)
         ( identity A)
-        ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ)) -- proof retraction here
+        ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ))
       ( ap-hom B A r (f x) (f y))
 
-
-#def has-retraction-ap-hom-retraction uses (funext) --change into proof that ap-hom has a retraction is f has one
+#def has-retraction-ap-hom-retraction uses (funext)
   ( A B : U)
   ( f : A → B)
   ( (r, ρ) : has-retraction A B f)
@@ -640,6 +674,5 @@ the "Gray interchanger" built from two commutative triangles.
         ( comp A B A r f)
         ( identity A)
         ( \ g' → ap-hom A A g' x y α)
-        ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ)) -- proof retraction here
-
+        ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ))
 ```

@@ -2217,10 +2217,11 @@ are discrete.
       ( y)
 ```
 
-In particular, in discrete types identity types are discrete.
+In particular, in discrete types identity types are discrete. First we show that
+equivalences preserve discretness. For that, we need that `#!rzk hom-eq`
+commutes with actions on morphisms.
 
-```rzk title="RS17, Corollary 8.20"
-
+```rzk
 #def hom-eq-naturality
   ( A B : U)
   ( f : A → B)
@@ -2252,7 +2253,6 @@ In particular, in discrete types identity types are discrete.
       ( y)
       ( p)
 
-
 #def equiv-preserve-discretness uses (extext funext)
   ( A B : U)
   ( (f, is-equiv-f) : Equiv A B)
@@ -2263,7 +2263,7 @@ In particular, in discrete types identity types are discrete.
     is-equiv-right-cancel (x = y) (hom A x y) (hom B (f x) (f y))
       ( hom-eq A x y)
       ( ap-hom A B f x y)
-      ( has-retraction-ap-hom-retraction funext A B f (π₁ is-equiv-f) x y)
+      ( has-retraction-ap-hom-retraction funext A B f (π₁ is-equiv-f) x y) -- should I use retraction from contr map instead?
       ( is-equiv-homotopy (x = y) (hom B (f x) (f y))
         ( comp (x = y) (hom A x y) (hom B (f x) (f y))
           ( ap-hom A B f x y)
@@ -2277,7 +2277,9 @@ In particular, in discrete types identity types are discrete.
           ( is-emb-is-equiv A B f is-equiv-f x y)
           ( hom-eq B (f x) (f y))
           ( is-discrete-B (f x) (f y))))
+```
 
+```rzk title="RS17, Corollary 8.20"
 #def is-discrete-id-path-is-discrete uses (extext funext)
   ( A : U)
   ( is-discrete-A : is-discrete A)

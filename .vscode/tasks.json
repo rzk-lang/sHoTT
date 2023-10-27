@@ -5,9 +5,9 @@
   "tasks": [
     {
       "label": "typecheck",
-      "type": "shell",
+      "type": "process",
       "command": "rzk",
-      "args": ["typecheck", "src/hott/*", "src/simplicial-hott/*"],
+      "args": ["typecheck"],
       "problemMatcher": [],
       "group": {
         "kind": "build",

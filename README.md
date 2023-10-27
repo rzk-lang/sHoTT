@@ -29,17 +29,20 @@ variant of type theory with shapes. See the list of contributors at
 The formalizations can be viewed as markdown files rendered at
 [rzk-lang.github.io/sHoTT/](https://rzk-lang.github.io/sHoTT/) using syntax
 highlighting supplied by
-[MkDocs plugin for rzk](https://github.com/rzk-lang/mkdocs-plugin-rzk).
+[MkDocs plugin for Rzk](https://github.com/rzk-lang/mkdocs-plugin-rzk).
 
-## Checking the Formalisations Locally
+## Checking the formalisations locally
 
 Install the
 [`rzk`](https://rzk-lang.github.io/rzk/latest/getting-started/install/) proof
 assistant. Then run the following command from the root of this repository:
 
 ```sh
-rzk typecheck src/hott/* src/simplicial-hott/*
+rzk typecheck
 ```
+
+Please also have a look at our [style guide](src/STYLEGUIDE.md) before
+submitting your pull request.
 
 # References
 

@@ -16,12 +16,12 @@ This is a literate `rzk` file:
 
 - `hott/*` - We require various prerequisites from homotopy type theory, for
   instance the axiom of function extensionality.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
-  subshapes.
-- `4-extension-types.md` — We use the fubini theorem and extension
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
+- `04-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
-- `5-segal-types.md` - We make heavy use of the notion of Segal types
-- `10-rezk-types.md`- We use Rezk types.
+- `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types
+- `10-rezk-types.rzk.md`- We use Rezk types.
 
 ## (Iso-)Inner families
 

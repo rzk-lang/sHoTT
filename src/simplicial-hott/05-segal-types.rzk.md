@@ -1671,44 +1671,71 @@ Interchange law
 #end homotopy-interchange-law
 ```
 
-## Inner anodyne maps
+## Weak inner anodyne shape inclusions
+
+We say that a shape inclusion `ϕ ⊂ ψ` is **weak inner anodyne** if every Segal
+type `A` has unique extensions with respect to `ϕ ⊂ ψ`.
+
+This notion was just called "anodyne" in RS17.
 
 ```rzk title="RS17, Definition 5.19"
-#def is-inner-anodyne
-  (I : CUBE)
-  (ψ : I → TOPE)
-  (Φ : ψ → TOPE)
+#def is-weak-inner-anodyne
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( Φ : ψ → TOPE)
   : U
   := (A : U) → is-segal A → (h : Φ → A) → is-contr ((t : ψ) → A[ Φ t ↦ h t ])
 ```
 
-The cofibration Λ²₁ → Δ² is inner anodyne
+Since Segal types are exactly those that have unique extensions with respect to
+`Λ ⊂ Δ²`, we see that weak inner anodyne is a special case of the general notion
+of weak anodyne introduced earlier.
 
 ```rzk
-#def is-inner-anodyne-Λ²₁
-  : is-inner-anodyne (2 × 2) Δ² Λ²₁
-  := \ A is-segal-A h' →
-    is-contr-equiv-is-contr
-      ( Σ (h : hom A (h' (0₂,0₂)) (h' (1₂,1₂))) ,
-          (hom2 A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
-          (\ t → h' (t,0₂)) (\ s → h' (1₂,s)) h))
-      ( (t : Δ²) → A [Λ t ↦ h' t])
-      (compositions-are-horn-fillings
-        A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
-          (\ t → h' (t,0₂)) (\ s → h' (1₂,s)))
-      (is-segal-A (h' (0₂,0₂)) (h' (1₂,0₂)) (h' (1₂,1₂))
-          (\ t → h' (t,0₂)) (\ s → h' (1₂,s)))
+#def is-weak-inner-anodyne-is-weak-anodyne-for-Λ-Δ²
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( is-wa-Λ-Δ² : is-weak-anodyne-for-shape (2 × 2) Δ² (\ t → Λ t) I ψ ϕ)
+  : is-weak-inner-anodyne I ψ ϕ
+  :=
+    \ A is-segal-A →
+      ( is-wa-Λ-Δ² A (has-unique-inner-extensions-is-segal A is-segal-A))
+
+#def is-weak-anodyne-for-Λ-Δ²-is-weak-inner-anodyne
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( is-wia : is-weak-inner-anodyne I ψ ϕ)
+  : is-weak-anodyne-for-shape (2 × 2) Δ² (\ t → Λ t) I ψ ϕ
+  :=
+    \ A has-uie-A →
+      ( is-wia A (is-segal-has-unique-inner-extensions A has-uie-A))
 ```
 
+The shape inclusion `Λ ⊂ Δ²` is tautologically inner anodyne
+
+```rzk
+#def is-weak-inner-anodyne-Λ²₁
+  : is-weak-inner-anodyne (2 × 2) Δ² Λ²₁
+  :=
+    is-weak-inner-anodyne-is-weak-anodyne-for-Λ-Δ² (2 × 2) Δ² (\ t → Λ t)
+    ( is-weak-anodyne-for-self (2 × 2) Δ² (\ t → Λ t))
+```
+
+Weak inner anodyne shape inclusions are preserved under pushout product. This is
+the direct proof from RS17. One could also deduce it from the corresponding
+general statements about weak anodyne shape inclusions.
+
 ```rzk title="RS17, lemma 5.20"
-#def is-inner-anodyne-pushout-product-left-is-inner-anodyne uses (weakextext)
+#def is-weak-inner-anodyne-pushout-product-left-is-weak-inner-anodyne uses (weakextext)
   ( I J : CUBE)
   ( ψ : I → TOPE)
   ( Φ : ψ → TOPE)
-  (is-inner-anodyne-ψ-Φ : is-inner-anodyne I ψ Φ)
+  ( is-weak-inner-anodyne-ψ-Φ : is-weak-inner-anodyne I ψ Φ)
   ( ζ : J → TOPE)
   ( χ : ζ → TOPE)
-  : is-inner-anodyne (I × J)
+  : is-weak-inner-anodyne (I × J)
       (\ (t,s) → ψ t ∧ ζ s)
       (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
   := \ A is-segal-A h →
@@ -1721,17 +1748,17 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         ( ζ)
         ( χ)
         ( \ s → (t : ψ) → A[ Φ t ↦ h (t,s)])
-        ( \ s → is-inner-anodyne-ψ-Φ A is-segal-A (\ t → h (t,s)))
+        ( \ s → is-weak-inner-anodyne-ψ-Φ A is-segal-A (\ t → h (t,s)))
         ( \ s t → h (t,s)))
 
-#def is-inner-anodyne-pushout-product-right-is-inner-anodyne uses (weakextext)
+#def is-weak-inner-anodyne-pushout-product-right-is-weak-inner-anodyne uses (weakextext)
   ( I J : CUBE)
   ( ψ : I → TOPE)
   ( Φ : ψ → TOPE)
   ( ζ : J → TOPE)
   ( χ : ζ → TOPE)
-  (is-inner-anodyne-ζ-χ : is-inner-anodyne J ζ χ)
-  : is-inner-anodyne (I × J)
+  (is-weak-inner-anodyne-ζ-χ : is-weak-inner-anodyne J ζ χ)
+  : is-weak-inner-anodyne (I × J)
       (\ (t,s) → ψ t ∧ ζ s)
       (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
   := \ A is-segal-A h →
@@ -1744,9 +1771,12 @@ The cofibration Λ²₁ → Δ² is inner anodyne
         ( ψ)
         ( Φ)
         ( \ t → (s : ζ) → A[ χ s ↦ h (t,s)])
-        ( \ t → is-inner-anodyne-ζ-χ A is-segal-A (\ s → h (t,s)))
+        ( \ t → is-weak-inner-anodyne-ζ-χ A is-segal-A (\ s → h (t,s)))
         ( \ s t → h (s,t)))
 ```
+
+The following argument from RS17 proves that `Λ³₂ ⊂ Δ³` is weakly inner anodyne.
+It should be easy to adapt it to prove that it is actually inner anodyne.
 
 ```rzk title="RS17, lemma 5.21"
 #section retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
@@ -1820,22 +1850,22 @@ The cofibration Λ²₁ → Δ² is inner anodyne
 
 #end retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
 
-#def is-inner-anodyne-Δ³-Λ³₂ uses (weakextext)
-  : is-inner-anodyne (2 × 2 × 2) Δ³ Λ³₂
+#def is-weak-inner-anodyne-Δ³-Λ³₂ uses (weakextext)
+  : is-weak-inner-anodyne (2 × 2 × 2) Δ³ Λ³₂
   :=
     \ A is-segal-A h →
     is-contr-is-retract-of-is-contr
       (extend-against-Λ³₂-Δ³ A h)
       (extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)
       (is-retract-of-Δ³-Δ³×Δ² A h)
-      (is-inner-anodyne-pushout-product-right-is-inner-anodyne
+      (is-weak-inner-anodyne-pushout-product-right-is-weak-inner-anodyne
         ( 2 × 2 × 2)
         ( 2 × 2)
         ( Δ³)
         ( Λ³₂)
         ( Δ²)
         ( Λ²₁)
-        ( is-inner-anodyne-Λ²₁)
+        ( is-weak-inner-anodyne-Λ²₁)
         ( A)
         ( is-segal-A)
         ( h^ A h))

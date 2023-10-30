@@ -12,12 +12,13 @@ This is a literate `rzk` file:
 
 - `hott/*` - We require various prerequisites from homotopy type theory, for
   instance the notion of contractible types.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
-  subshapes.
-- `4-extension-types.md` — We use Theorem 4.1, an equivalence between lifts.
-- `5-segal-types.md` - We make use of the notion of Segal types and their
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
+- `04-extension-types.rzk.md` — We use Theorem 4.1, an equivalence between
+  lifts.
+- `05-segal-types.rzk.md` - We make use of the notion of Segal types and their
   structures.
-- `6-contractible.md` - We make use of weak function extensionality.
+- `06-contractible.rzk.md` - We make use of weak function extensionality.
 
 Some of the definitions in this file rely on extension extensionality:
 
@@ -1335,6 +1336,25 @@ equivalence. This follows from the fact that the total types (summed over
       v
 ```
 
+We compute covariant transport of a substitution.
+
+```rzk
+#def compute-covariant-transport-of-substitution
+  ( A B : U)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( g : B → A)
+  ( x y : B)
+  ( f : hom B x y)
+  ( u : C (g x))
+  : covariant-transport B x y f (\ b → C (g b))
+    ( is-covariant-substitution-is-covariant A B C is-covariant-C g) u
+    =
+    covariant-transport A (g x) (g y) (ap-hom B A g x y f) C
+    ( is-covariant-C) u
+  := refl
+```
+
 ## Covariant functoriality
 
 The covariant transport operation defines a covariantly functorial action of
@@ -1434,7 +1454,7 @@ domain are equivalent:
 #def equiv-total-dhom-equiv uses (A x y)
   : Equiv ( (t : Δ¹) → B (f t)) ((t : Δ¹) → C (f t))
   :=
-    equiv-extension-equiv-family
+    equiv-extensions-BOT-equiv
       ( extext)
       ( 2)
       ( Δ¹)
@@ -2197,7 +2217,7 @@ The fibers of a covariant fibration over a Segal type are discrete types.
       ( v))
 ```
 
-In a segal type, covariant hom families are covariant,hence representable homs
+In a Segal type, covariant hom families are covariant, hence representable homs
 are discrete.
 
 ```rzk title="RS17, Corollary 8.19"

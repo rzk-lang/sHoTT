@@ -10,9 +10,9 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-- `hott/1-paths.md` - We require basic path algebra.
-- `hott/2-contractible.md` - We require the notion of contractible types and
-  their data.
+- `hott/01-paths.rzk.md` - We require basic path algebra.
+- `hott/02-contractible.rzk.md` - We require the notion of contractible types
+  and their data.
 - `hott/total-space.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk projection-total-type` in the proof of Theorem 5.5.
@@ -558,7 +558,7 @@ is exactly `#!rzk horn-restriction A`.
                   ( h)))
             ( equiv-horn-restriction A))
           ( horn-restriction A , is-local-horn-inclusion-A)))
-    ( horn A x y z f g)
+      ( horn A x y z f g)
 ```
 
 We have now proven that both notions of Segal types are logically equivalent.
@@ -676,7 +676,7 @@ then $(x : X) → A x$ is a Segal type.
           ( \ t s → A s)
           ( \ u → recBOT)))
       ( \ h s t → h s t) -- second equivalence
-      ( second (equiv-extension-equiv-family extext I ψ
+      ( second (equiv-extensions-BOT-equiv extext I ψ
         ( \ s → Δ² → A s)
         ( \ s → Λ → A s)
         ( \ s → (horn-restriction (A s) , fiberwise-is-segal-A s))))
@@ -1182,6 +1182,20 @@ We conclude that Segal composition is associative.
     ( left-associative-is-segal A is-segal-A w x y z f g h)
     ( right-associative-is-segal A is-segal-A w x y z f g h)
 
+#def rev-associative-is-segal uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( w x y z : A)
+  ( f : hom A w x)
+  ( g : hom A x y)
+  ( h : hom A y z)
+  : ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h)) =
+    ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h)
+  :=
+    rev (hom A w z)
+    ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h)
+    ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h))
+    ( associative-is-segal A is-segal-A w x y z f g h)
 
 #def postcomp-is-segal
   ( A : U)
@@ -1596,7 +1610,7 @@ Interchange law
 #variable is-segal-A : is-segal A
 #variables x y z : A
 
-#def homotopy-interchange-law-statement
+#def statement-homotopy-interchange-law
   ( f1 f2 f3 : hom A x y)
   ( h1 h2 h3 : hom A y z)
   ( p : f1 = f2)
@@ -1624,25 +1638,25 @@ Interchange law
   ( q : f2 = f3)
   ( p' : h1 = h2)
   ( q' : h2 = h3)
-  : homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q'
+  : statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p' q'
   := ind-path
     ( hom A x y)
     ( f2)
-    ( \ f3 q -> homotopy-interchange-law-statement f1 f2 f3 h1 h2 h3 p q p' q')
+    ( \ f3 q -> statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p' q')
     ( ind-path
       ( hom A x y)
       ( f1)
-      ( \ f2 p -> homotopy-interchange-law-statement f1 f2 f2 h1 h2 h3
+      ( \ f2 p -> statement-homotopy-interchange-law f1 f2 f2 h1 h2 h3
           p refl p' q')
       ( ind-path
         ( hom A y z)
         ( h2)
-        ( \ h3 q' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h3
+        ( \ h3 q' -> statement-homotopy-interchange-law f1 f1 f1 h1 h2 h3
             refl refl p' q')
         ( ind-path
           ( hom A y z)
           ( h1)
-          ( \ h2 p' -> homotopy-interchange-law-statement f1 f1 f1 h1 h2 h2
+          ( \ h2 p' -> statement-homotopy-interchange-law f1 f1 f1 h1 h2 h2
               refl refl p' refl)
           ( refl)
           ( h2)
@@ -1840,7 +1854,7 @@ This is the relative notion of a Segal type.
   := is-right-orthogonal-to-shape (2 × 2) Δ² (\ t → Λ t) A' A α
 ```
 
-## Products of Segal Types
+## Products of Segal types
 
 This is an additional section which describes morphisms in products of types as
 products of morphisms. It is implicitly stated in Proposition 8.21.

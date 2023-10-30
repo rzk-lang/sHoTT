@@ -224,6 +224,10 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
 
 ## Induction with section
 
+We have two variants of induction with section that say that if `f : A → B` has
+a section, it suffices to prove statements about `b : B` by doing so terms of
+the form `f a`.
+
 ```rzk
 #def ind-has-section
   ( A B : U)
@@ -234,6 +238,16 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
   ( b : B)
   : C b
   := transport B C (f (sec-f b)) b (ε-f b) (s (sec-f b))
+
+#def ind-has-section'
+  ( A B : U)
+  ( f : A → B)
+  ( ( sec-f , ε-f) : has-section A B f)
+  ( C : B → U)
+  ( c' : (b : B) → C (f (sec-f b)))
+  ( b : B)
+  : C b
+  := transport B C (f (sec-f b)) b (ε-f b) (c' b)
 ```
 
 It is convenient to have available the special case where `f` is an equivalence.
@@ -595,6 +609,16 @@ equivalent, so we content ourselves in showing that there is a logical
 biimplication between them.
 
 ```rzk
+#def is-equiv-retraction-section
+  ( A B : U)
+  ( s : A → B)
+  ( r : B → A)
+  ( η : (a : A) → r (s a) = a)
+  : is-equiv A A (\ a → r (s a))
+  :=
+    is-equiv-homotopy A A (\ a → r (s (a))) (identity A)
+      ( η) ( is-equiv-identity A)
+
 #def has-retraction-externalize
   ( A B : U)
   ( s : A → B)
@@ -602,8 +626,7 @@ biimplication between them.
   : has-external-retraction A B s
   :=
     ( ( A , r)
-    , is-equiv-homotopy A A (\ a → r (s (a))) (identity A)
-      ( η) ( is-equiv-identity A))
+    , is-equiv-retraction-section A B s r η)
 
 #def has-section-externalize
   ( B A' : U)
@@ -612,8 +635,7 @@ biimplication between them.
   : has-external-section B A' r
   :=
     ( ( A' , s)
-    , is-equiv-homotopy A' A' (\ a' → r (s (a'))) (identity A')
-      ( ε) ( is-equiv-identity A'))
+    , is-equiv-retraction-section A' B s r ε)
 
 #def has-retraction-internalize
   ( A B : U)
@@ -940,6 +962,12 @@ dependent function types.
   :=
     Σ ( ( s',s) : product ( A' → B' ) ( A → B))
     , ( ( a' : A') → β ( s' a') = s ( α a'))
+
+#def map-Map
+  ( ((A',A),α) : Map)
+  ( ((B',B),β) : Map)
+  : U
+  := map-of-maps A' A α B' B β
 
 #def Equiv-of-maps
   ( A' A : U)

@@ -84,3 +84,26 @@ The following demonstrates the syntax for constructing terms in Sigma types:
   : B → U
   := \ b → C (f b)
 ```
+
+## Maps
+
+```rzk
+#def Map
+  : U
+  := Σ ((A',A) : product U U) , (A' → A)
+
+#def the-map-Map
+  ( ((A',A),α) : Map)
+  : A' → A
+  := α
+
+#def the-domain-Map
+  ( ((A',_),_) : Map)
+  : U
+  := A'
+
+#def the-codomain-Map
+  ( ((_,A),_) : Map)
+  : U
+  := A
+```

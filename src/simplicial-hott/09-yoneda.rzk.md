@@ -12,12 +12,12 @@ This is a literate `rzk` file:
 
 - `hott/*` - We require various prerequisites from homotopy type theory, for
   instance the axiom of function extensionality.
-- `3-simplicial-type-theory.md` — We rely on definitions of simplicies and their
-  subshapes.
-- `4-extension-types.md` — We use the fubini theorem and extension
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+  their subshapes.
+- `04-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.
-- `5-segal-types.md` - We make heavy use of the notion of Segal types
-- `8-covariant.md` - We use covariant type families.
+- `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types
+- `08-covariant.rzk.md` - We use covariant type families.
 
 Some of the definitions in this file rely on function extensionality and
 extension extensionality:
@@ -766,7 +766,7 @@ equivalence.
         ( contra-yon-evid A is-segal-A a C is-contravariant-C)))
 ```
 
-## Contravariant Naturality
+## Contravariant naturality
 
 The equivalence of the Yoneda lemma is natural in both `#!rzk a : A` and
 `#!rzk C : A → U`.

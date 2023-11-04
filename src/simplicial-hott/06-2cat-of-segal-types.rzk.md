@@ -138,46 +138,54 @@ The action on morphisms commutes with transport.
   ( p : f = g)
   ( q : h = k)
   ( x y : A)
-  : comp (hom B (f x) (f y)) (hom B (g x) (g y)) (hom C (k (g x)) (k (g y)))
-      ( ap-hom B C k (g x) (g y))
-      ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g p)
+  : comp
+    ( hom B (f x) (f y))
+    ( hom B (g x) (g y))
+    ( hom C (k (g x)) (k (g y)))
+    ( ap-hom B C k (g x) (g y))
+    ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g p)
     =
-    comp (hom B (f x) (f y)) (hom C (h (f x)) (h (f y))) (hom C (k (g x)) (k (g y)))
+    comp
+    ( hom B (f x) (f y)) (hom C (h (f x)) (h (f y))) (hom C (k (g x)) (k (g y)))
+    ( transport (A → C) (\ f' → hom C (f' x) (f' y))
+      ( comp A B C h f)
+      ( comp A B C k g)
+      ( comp-homotopic-maps A B C f g h k p q))
+    ( ap-hom B C h (f x) (f y))
+  :=
+  ind-path (A → B) f
+  ( \ g' p' →
+    comp (hom B (f x) (f y)) (hom B (g' x) (g' y)) (hom C (k (g' x)) (k (g' y)))
+    ( ap-hom B C k (g' x) (g' y))
+    ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g' p')
+    =
+    comp
+    ( hom B (f x) (f y))(hom C (h (f x)) (h (f y)))(hom C (k (g' x)) (k (g' y)))
+    ( transport (A → C) (\ f' → hom C (f' x) (f' y))
+      ( comp A B C h f)
+      ( comp A B C k g')
+      ( comp-homotopic-maps A B C f g' h k p' q))
+    ( ap-hom B C h (f x) (f y)))
+  ( ind-path (B → C) h
+    ( \ k' q' →
+      comp (hom B (f x) (f y)) (hom B (f x) (f y)) (hom C (k' (f x)) (k' (f y)))
+      ( ap-hom B C k' (f x) (f y))
+      ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f f refl)
+      =
+      comp
+      ( hom B (f x) (f y))
+      ( hom C (h (f x)) (h (f y)))
+      ( hom C (k' (f x)) (k' (f y)))
       ( transport (A → C) (\ f' → hom C (f' x) (f' y))
         ( comp A B C h f)
-        ( comp A B C k g)
-        ( comp-homotopic-maps A B C f g h k p q))
-      ( ap-hom B C h (f x) (f y))
-  :=
-    ind-path (A → B) f
-      ( \ g' p' →
-        comp (hom B (f x) (f y)) (hom B (g' x) (g' y)) (hom C (k (g' x)) (k (g' y)))
-          ( ap-hom B C k (g' x) (g' y))
-          ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g' p')
-        =
-        comp (hom B (f x) (f y)) (hom C (h (f x)) (h (f y))) (hom C (k (g' x)) (k (g' y)))
-          ( transport (A → C) (\ f' → hom C (f' x) (f' y))
-            ( comp A B C h f)
-            ( comp A B C k g')
-            ( comp-homotopic-maps A B C f g' h k p' q))
-          ( ap-hom B C h (f x) (f y)))
-      ( ind-path (B → C) h
-          ( \ k' q' →
-            comp (hom B (f x) (f y)) (hom B (f x) (f y)) (hom C (k' (f x)) (k' (f y)))
-              ( ap-hom B C k' (f x) (f y))
-              ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f f refl)
-            =
-            comp (hom B (f x) (f y)) (hom C (h (f x)) (h (f y))) (hom C (k' (f x)) (k' (f y)))
-              ( transport (A → C) (\ f' → hom C (f' x) (f' y))
-                ( comp A B C h f)
-                ( comp A B C k' f)
-                ( comp-homotopic-maps A B C f f h k' refl q'))
-              ( ap-hom B C h (f x) (f y)))
-            ( refl)
-          ( k)
-          ( q))
-      ( g)
-      ( p)
+        ( comp A B C k' f)
+        ( comp-homotopic-maps A B C f f h k' refl q'))
+      ( ap-hom B C h (f x) (f y)))
+    ( refl)
+    ( k)
+    ( q))
+  ( g)
+  ( p)
 ```
 
 ## Natural transformations
@@ -520,11 +528,11 @@ equivalent to the family of fibers of $f\_t$.
   ( β : (t : ψ) → B t [ϕ t ↦ f t (a t)])
   : U
   :=
-    fib
-      ( (t : ψ) → A t [ϕ t ↦ a t])
-      ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
-      ( postcomp-Π-ext I ψ ϕ A B a f)
-      ( β)
+  fib
+  ( (t : ψ) → A t [ϕ t ↦ a t])
+  ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  ( postcomp-Π-ext I ψ ϕ A B a f)
+  ( β)
 
 #def fiber-family-ext
   ( I : CUBE)
@@ -535,8 +543,7 @@ equivalent to the family of fibers of $f\_t$.
   ( f : (t : ψ) → (A t → B t))
   ( β : (t : ψ) → B t [ϕ t ↦ f t (a t)])
   : U
-  :=
-    (t : ψ) → fib (A t) (B t) (f t) (β t) [ϕ t ↦ (a t, refl)]
+  := (t : ψ) → fib (A t) (B t) (f t) (β t) [ϕ t ↦ (a t, refl)]
 
 #def equiv-fiber-postcomp-Π-ext-fiber-family-ext
   ( I : CUBE)
@@ -550,12 +557,12 @@ equivalent to the family of fibers of $f\_t$.
     ( fiber-postcomp-Π-ext I ψ ϕ A B a f β)
     ( fiber-family-ext I ψ ϕ A B a f β)
   :=
-    equiv-comp
-      ( fiber-postcomp-Π-ext I ψ ϕ A B a f β)
-      ( relative-extension-type I ψ ϕ A B f a β)
-      ( fiber-family-ext I ψ ϕ A B a f β)
-      ( equiv-relative-extension-type-fib extext I ψ ϕ A B f a β)
-      ( inv-equiv-axiom-choice I ψ ϕ A (\ t x → f t x = β t) a (\ t → refl))
+  equiv-comp
+  ( fiber-postcomp-Π-ext I ψ ϕ A B a f β)
+  ( relative-extension-type I ψ ϕ A B f a β)
+  ( fiber-family-ext I ψ ϕ A B a f β)
+  ( equiv-relative-extension-type-fib extext I ψ ϕ A B f a β)
+  ( inv-equiv-axiom-choice I ψ ϕ A (\ t x → f t x = β t) a (\ t → refl))
 ```
 
 In particular, if $f: \prod_{t : I|\psi} A (t) \to B (t)$ is a family of
@@ -573,10 +580,10 @@ equivalence then the fibers of postcomposition by f are contractible.
   ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
   : is-contr (fiber-family-ext I ψ ϕ A B a f β)
   :=
-    weakextext I ψ ϕ
-      ( \ t → fib (A t) (B t) (f t) (β t))
-      ( \ t → is-contr-map-is-equiv (A t) (B t) (f t) (family-equiv-f t) (β t))
-      ( \ t → (a t, refl))
+  weakextext I ψ ϕ
+  ( \ t → fib (A t) (B t) (f t) (β t))
+  ( \ t → is-contr-map-is-equiv (A t) (B t) (f t) (family-equiv-f t) (β t))
+  ( \ t → (a t, refl))
 
 #def is-contr-fiber-postcomp-Π-ext-is-equiv-fam uses (weakextext extext)
   ( I : CUBE)
@@ -589,11 +596,11 @@ equivalence then the fibers of postcomposition by f are contractible.
   ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
   : is-contr (fiber-postcomp-Π-ext I ψ ϕ A B a f β)
   :=
-    is-contr-equiv-is-contr'
-      ( fiber-postcomp-Π-ext I ψ ϕ A B a f β)
-      ( fiber-family-ext I ψ ϕ A B a f β)
-      ( equiv-fiber-postcomp-Π-ext-fiber-family-ext I ψ ϕ A B a f β)
-      ( is-contr-fiber-family-ext-contr-fib I ψ ϕ A B a f β family-equiv-f)
+  is-contr-equiv-is-contr'
+  ( fiber-postcomp-Π-ext I ψ ϕ A B a f β)
+  ( fiber-family-ext I ψ ϕ A B a f β)
+  ( equiv-fiber-postcomp-Π-ext-fiber-family-ext I ψ ϕ A B a f β)
+  ( is-contr-fiber-family-ext-contr-fib I ψ ϕ A B a f β family-equiv-f)
 
 #def is-equiv-postcomp-Π-ext-is-equiv uses (weakextext extext)
   ( I : CUBE)
@@ -604,15 +611,16 @@ equivalence then the fibers of postcomposition by f are contractible.
   ( f : (t : ψ) → (A t → B t))
   ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
   : is-equiv
-      ( (t : ψ) → A t [ϕ t ↦ a t])
-      ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
-      ( postcomp-Π-ext I ψ ϕ A B a f)
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+    ( postcomp-Π-ext I ψ ϕ A B a f)
   :=
-    is-equiv-is-contr-map
-      ( (t : ψ) → A t [ϕ t ↦ a t])
-      ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
-      ( postcomp-Π-ext I ψ ϕ A B a f)
-      ( \ β → is-contr-fiber-postcomp-Π-ext-is-equiv-fam I ψ ϕ A B a f β family-equiv-f)
+  is-equiv-is-contr-map
+  ( (t : ψ) → A t [ϕ t ↦ a t])
+  ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  ( postcomp-Π-ext I ψ ϕ A B a f)
+  ( \ β
+    → is-contr-fiber-postcomp-Π-ext-is-equiv-fam I ψ ϕ A B a f β family-equiv-f)
 ```
 
 Using this result we can show that `#!rzk ap-hom` is an equivalence when f is an
@@ -626,12 +634,10 @@ equivalence.
   ( x y : A)
   : is-equiv (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
   :=
-    is-equiv-postcomp-Π-ext-is-equiv 2 Δ¹ ∂Δ¹
-        ( \ t → A)
-        ( \ t → B)
-        ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
-        ( \ t → f)
-        ( \ t → is-equiv-f)
+  is-equiv-postcomp-Π-ext-is-equiv 2 Δ¹ ∂Δ¹
+  ( \ _ → A) ( \ _ → B)
+  ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+  ( \ _ → f) ( \ _ → is-equiv-f)
 ```
 
 More precicely:
@@ -644,11 +650,7 @@ More precicely:
   ( β : hom B (f x) (f y))
   : U
   :=
-    fib
-      ( hom A x y)
-      ( hom B (f x) (f y))
-      ( ap-hom A B f x y)
-      ( β)
+  fib (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y) (β)
 
 #def is-contr-fiber-ap-hom-is-equiv uses (weakextext extext)
   ( A B : U)
@@ -658,13 +660,12 @@ More precicely:
   ( β : hom B (f x) (f y))
   : is-contr (fiber-ap-hom A B x y f β)
   :=
-    is-contr-fiber-postcomp-Π-ext-is-equiv-fam 2 Δ¹ ∂Δ¹
-        ( \ t → A)
-        ( \ t → B)
-        ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
-        ( \ t → f)
-        ( β)
-        ( \ t → is-equiv-f)
+  is-contr-fiber-postcomp-Π-ext-is-equiv-fam 2 Δ¹ ∂Δ¹
+  ( \ _ → A) ( \ _ → B)
+  ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+  ( \ _ → f)
+  ( β)
+  ( \ _ → is-equiv-f)
 ```
 
 We can also define a retraction of `#!rzk ap-hom` directly.
@@ -677,15 +678,15 @@ We can also define a retraction of `#!rzk ap-hom` directly.
   ( x y : A)
   : (hom B (f x) (f y)) → (hom A x y)
   :=
-    comp
-      ( hom B (f x) (f y))
-      ( hom A (r (f x)) (r (f y)))
-      ( hom A x y)
-      ( transport (A → A) (\ g' → (hom A (g' x) (g' y)))
-        ( comp A B A r f)
-        ( identity A)
-        ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ))
-      ( ap-hom B A r (f x) (f y))
+  comp
+  ( hom B (f x) (f y))
+  ( hom A (r (f x)) (r (f y)))
+  ( hom A x y)
+  ( transport (A → A) (\ g' → (hom A (g' x) (g' y)))
+    ( comp A B A r f)
+    ( identity A)
+    ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ))
+  ( ap-hom B A r (f x) (f y))
 
 #def has-retraction-ap-hom-retraction uses (funext)
   ( A B : U)
@@ -694,11 +695,11 @@ We can also define a retraction of `#!rzk ap-hom` directly.
   ( x y : A)
   : has-retraction (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
   :=
-    ( retraction-ap-hom-retraction A B f (r, ρ) x y
+  ( retraction-ap-hom-retraction A B f (r, ρ) x y
     , \ α →
       apd (A → A) (\ g' → (hom A (g' x) (g' y)))
-        ( comp A B A r f)
-        ( identity A)
-        ( \ g' → ap-hom A A g' x y α)
-        ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ))
+      ( comp A B A r f)
+      ( identity A)
+      ( \ g' → ap-hom A A g' x y α)
+      ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ))
 ```

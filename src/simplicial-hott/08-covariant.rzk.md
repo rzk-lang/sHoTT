@@ -2237,7 +2237,7 @@ are discrete.
 ```
 
 In particular, in discrete types identity types are discrete. First we show that
-equivalences preserve discretness. For that, we need that `#!rzk hom-eq`
+equivalences preserve discreteness. For that, we need that `#!rzk hom-eq`
 commutes with actions on morphisms.
 
 ```rzk
@@ -2272,7 +2272,7 @@ commutes with actions on morphisms.
       ( y)
       ( p)
 
-#def equiv-preserve-discretness uses (extext funext)
+#def equiv-preserve-discreteness uses (extext funext)
   ( A B : U)
   ( (f, is-equiv-f) : Equiv A B)
   ( is-discrete-B : is-discrete B)
@@ -2305,10 +2305,10 @@ commutes with actions on morphisms.
   ( x y : A)
   : is-discrete (x = y)
   :=
-  equiv-preserve-discretness (x = y) (hom A x y)
-    ( hom-eq A x y , is-discrete-A x y)
-    ( is-discrete-hom-is-segal A
-      ( is-segal-is-discrete extext A is-discrete-A)
-      ( x) ( y))
+  equiv-preserve-discreteness (x = y) (hom A x y)
+  ( hom-eq A x y , is-discrete-A x y)
+  ( is-discrete-hom-is-segal A
+    ( is-segal-is-discrete extext A is-discrete-A)
+    ( x) ( y))
 
 ```

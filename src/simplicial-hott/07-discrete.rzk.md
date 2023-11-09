@@ -338,10 +338,14 @@ For instance, the arrow type of a discrete type is discrete.
 
 ## Left and right fibrations
 
-Recall that we can characterize discrete type eithe as those local for
+Recall that we can characterize discrete type either as those local for
 `{0} ⊂ Δ¹` _or_, equivalently, as those that are local for `{1} ⊂ Δ¹`. This
 suggests two different relative notions of discreteness and corresponding
 notions of anodyne shape inclusions.
+
+Note that while the absolute notions of locality for `{0} ⊂ Δ¹` and `{1} ⊂ Δ¹`
+agree, the relative notions _do not_. We will explore this discrepancy more when
+we introduce covariant and contravariant type families.
 
 ```rzk
 #def is-left-fibration

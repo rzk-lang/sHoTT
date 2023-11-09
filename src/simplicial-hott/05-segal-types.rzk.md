@@ -1910,7 +1910,7 @@ Segal type. This is an instance of a general statement about types with unique
 extensions for the shape inclusion `Λ ⊂ Δ²`.
 
 ```rzk
-#def is-fiberwise-segal-are-segal uses (extext weakextext)
+#def is-fiberwise-segal-are-segal uses (extext)
   ( A B : U)
   ( f : A → B)
   ( is-segal-A : is-segal A)
@@ -1919,8 +1919,7 @@ extensions for the shape inclusion `Λ ⊂ Δ²`.
   : is-segal (fib A B f b)
   :=
     is-segal-has-unique-inner-extensions (fib A B f b)
-    ( has-fiberwise-unique-extensions-have-unique-extensions
-      extext weakextext
+    ( has-fiberwise-unique-extensions-have-unique-extensions extext
       ( 2 × 2) (Δ²) (\ t → Λ t) A B f
       ( has-unique-inner-extensions-is-segal A is-segal-A)
       ( has-unique-inner-extensions-is-segal B is-segal-B)

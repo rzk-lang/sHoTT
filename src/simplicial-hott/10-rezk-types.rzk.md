@@ -902,14 +902,16 @@ first statement in a way that works without it.
       ( has-iso-arrows-is-discrete A is-discrete-A x y f))
 ```
 
+### Discrete types are Rezk
+
 As a corollary we obtain that every discrete type is Rezk.
 
 ```rzk
 #def is-rezk-is-discrete uses (extext)
   ( A : U)
-  ( is-discrete-A : is-discrete A)
-  : is-rezk A
+  : is-discrete A → is-rezk A
   :=
+  \ is-discrete-A →
   ( is-segal-is-discrete extext A is-discrete-A
   , ( \ x y →
       is-equiv-right-factor
@@ -922,4 +924,20 @@ As a corollary we obtain that every discrete type is Rezk.
       ( \ (f , _) → f)
       ( is-equiv-hom-iso-is-discrete A is-discrete-A x y)
       ( is-discrete-A x y)))
+```
+
+In particular, every contractible type is Rezk
+
+```rzk
+#def is-rezk-is-contr uses (extext)
+  ( A : U)
+  : is-contr A → is-rezk A
+  :=
+  \ is-contr-A →
+    ( is-rezk-is-discrete A
+      ( is-discrete-is-contr extext A is-contr-A))
+
+#def is-rezk-Unit uses (extext)
+  : is-rezk Unit
+  := is-rezk-is-contr Unit (is-contr-Unit)
 ```

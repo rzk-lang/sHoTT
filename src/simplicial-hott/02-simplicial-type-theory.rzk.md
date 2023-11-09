@@ -334,3 +334,94 @@ to diagrams extending a fixed diagram `σ': ϕ → A'` (or, respectively, its im
     , \ τ' → second (is-fretract-ψ-χ A' A α) τ'
     )
 ```
+
+### Isomorphisms of shape inclusions
+
+Consider two shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ`. We want to express the fact
+that there is an isomorphism `ψ ≅ χ` of shapes which restricts to an isomorphism
+`ϕ ≅ ζ`. Since shapes are not types themselves, the best we can currently do is
+describe this isomorphism on representables.
+
+```rzk
+#def isomorphism-shape-inclusions
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  : U
+  :=
+    ( Σ ( f
+          : (A : U)
+          → Equiv (ζ → A) (ϕ → A))
+      , ( ( A : U)
+        → ( σ : ζ → A)
+        → ( Equiv
+            ( (t : χ) → A [ζ t ↦ σ t])
+            ( (t : ψ) → A [ϕ t ↦ first (f A) σ t]))))
+
+#def functorial-isomorphism-shape-inclusions
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  : U
+  :=
+  Σ ( (f , F) : isomorphism-shape-inclusions I ψ ϕ J χ ζ)
+  , ( Σ ( e
+          : ( A' : U)
+          → ( A : U)
+          → ( α : A' → A)
+          → ( σ' : ζ → A')
+          → ( ( \ (t : I | ϕ t) → α (first (f A') σ' t))
+            = ( first (f A) (\ t → α (σ' t)))))
+      , ( ( A' : U)
+        → ( A : U)
+        → ( α : A' → A)
+        → ( σ' : ζ → A')
+        → ( τ' : (t : χ) → A' [ζ t ↦ σ' t])
+        → ( ( transport (ϕ → A) (\ σ → (t : ψ) → A [ϕ t ↦ σ t])
+              ( \ (t : I | ϕ t) → α (first (f A') σ' t))
+              ( first (f A) (\ t → α (σ' t)))
+              ( e A' A α σ')
+              (\ (t : ψ) → α (first (F A' σ') τ' t)))
+            = ( first (F A (\ (t : ζ) → α (σ' t))) (\ (t : χ) → α (τ' t))))))
+```
+
+As an example, we show establish the canonical isomorphism between the pairs
+`{0} ⊂ Δ¹` and `{1} ⊂ right-leg-of-Λ`. It really just boils down to the two
+formulas `\ τ (t , s) → τ s` describing the map
+`(Δ¹ → A) → (right-leg-of-Λ → A)` and `\ υ s → υ (1₂ , s)` describing its
+inverse. All of the necessary coherences are just `refl`. Unfortunately, there
+is currently no better way to define this functorial isomorphism other than
+spelling out the following monstrosity:
+
+```rzk
+#def right-leg-of-Λ : Λ → TOPE
+  := \ (t, s) → t ≡ 1₂
+
+#def isomorphism-0-Δ¹-1-right-leg-of-Λ
+  : isomorphism-shape-inclusions
+    (2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+    2 Δ¹ (\ t → t ≡ 0₂)
+  :=
+    ( \ A →
+      ( \ τ (t,s) → τ s
+      , ( ( \ υ s → υ (1₂, s) , \ _ → refl)
+        , ( \ υ s → υ (1₂, s) , \ _ → refl)))
+    , \ A _ →
+      ( \ τ (t,s) → τ s
+      , ( ( \ υ s → υ (1₂, s) , \ _ → refl)
+        , ( \ υ s → υ (1₂, s) , \ _ → refl))))
+
+#def functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ
+  : functorial-isomorphism-shape-inclusions
+    (2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+    2 Δ¹ (\ t → t ≡ 0₂)
+  :=
+    ( isomorphism-0-Δ¹-1-right-leg-of-Λ
+    , ( \ _ _ _ _ → refl , \ _ _ _ _ _ → refl))
+```

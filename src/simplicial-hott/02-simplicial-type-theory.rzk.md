@@ -352,9 +352,7 @@ describe this isomorphism on representables.
   ( ζ : χ → TOPE)
   : U
   :=
-    ( Σ ( f
-          : (A : U)
-          → Equiv (ζ → A) (ϕ → A))
+    ( Σ ( f : (A : U) → Equiv (ζ → A) (ϕ → A))
       , ( ( A : U)
         → ( σ : ζ → A)
         → ( Equiv
@@ -391,17 +389,35 @@ describe this isomorphism on representables.
             = ( first (F A (\ (t : ζ) → α (σ' t))) (\ (t : χ) → α (τ' t))))))
 ```
 
-As an example, we show establish the canonical isomorphism between the pairs
-`{0} ⊂ Δ¹` and `{1} ⊂ right-leg-of-Λ`. It really just boils down to the two
-formulas `\ τ (t , s) → τ s` describing the map
-`(Δ¹ → A) → (right-leg-of-Λ → A)` and `\ υ s → υ (1₂ , s)` describing its
-inverse. All of the necessary coherences are just `refl`. Unfortunately, there
-is currently no better way to define this functorial isomorphism other than
-spelling out the following monstrosity:
+In practice, the isomorphisms are usually given via an explicit formula, which
+would define a map `ψ → ϕ` if `ψ` and `ϕ` were themselves types. In this case
+all the coherences are just `refl`, hence it is easy to produce a term of type
+`functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ`.
+
+For example, consider the two shape inclusions `{0} ⊂ Δ¹` (subshapes of `2`) and
+`{1} ⊂ right-leg-of-Λ` (subshapes of `2 × 2`), where
 
 ```rzk
 #def right-leg-of-Λ : Λ → TOPE
   := \ (t, s) → t ≡ 1₂
+```
+
+These two shape inclusions are canonically isomorphic via the formulas
+
+```
+-- not valid rzk code
+#def f : Δ¹ → right-leg-of-Λ
+  \ s → (1₂ , s)
+
+#def g : right-leg-of-Λ → Δ¹
+  \ (t , s) → s
+```
+
+We turn these formulas into a functorial shape inclusion as follows.
+Unfortunately we have to repeat the same formula multiple times, leading to some
+ugly boilerplate code.
+
+```rzk
 
 #def isomorphism-0-Δ¹-1-right-leg-of-Λ
   : isomorphism-shape-inclusions

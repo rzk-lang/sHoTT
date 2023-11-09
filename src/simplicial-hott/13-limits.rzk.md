@@ -8,11 +8,12 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
-Some definitions make use of function extentionality.
+Some definitions make use of function extentionality and extension
+extensionality.
 
 ```rzk
 #assume funext : FunExt
-#assume naiveextext : NaiveExtExt
+#assume extext : ExtExt
 ```
 
 ## Definition limits and colimits
@@ -262,14 +263,14 @@ The type of cocones of a function with codomain a Segal type is a Segal type.
         ( f))
     ( \ b → constant A B b)
 
-#def is-segal-cocone-is-segal uses (funext)
+#def is-segal-cocone-is-segal uses (funext extext)
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
   : is-segal ( cocone A B f)
   :=
     is-segal-total-type-covariant-family-is-segal-base
-    ( naiveextext)
+    ( extext)
     ( B)
     ( family-cocone A B f)
     ( is-covariant-family-cone-is-segal
@@ -283,7 +284,7 @@ The type of cocones of a function with codomain a Segal type is a Segal type.
 Colimits are unique up to isomorphism.
 
 ```rzk title="BM, Corollary 1 (i)"
-#def iso-colimit-is-segal uses ( naiveextext funext)
+#def iso-colimit-is-segal uses ( extext funext)
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)

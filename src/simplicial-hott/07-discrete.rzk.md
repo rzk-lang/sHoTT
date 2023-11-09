@@ -336,9 +336,212 @@ For instance, the arrow type of a discrete type is discrete.
   := is-discrete-extension-type 2 Δ¹ (\ _ → A) (\ _ → is-discrete-A)
 ```
 
-## Discrete types are Segal types
+## Left and right fibrations
 
-Discrete types are automatically Segal types.
+Recall that we can characterize discrete type eithe as those local for
+`{0} ⊂ Δ¹` _or_, equivalently, as those that are local for `{1} ⊂ Δ¹`. This
+suggests two different relative notions of discreteness and corresponding
+notions of anodyne shape inclusions.
+
+```rzk
+#def is-left-fibration
+  ( A' A : U)
+  ( α : A' → A)
+  : U
+  := is-right-orthogonal-to-shape 2 Δ¹ ( \ s → s ≡ 0₂) A' A α
+
+#def is-right-fibration
+  ( A' A : U)
+  ( α : A' → A)
+  : U
+  := is-right-orthogonal-to-shape 2 Δ¹ ( \ s → s ≡ 1₂) A' A α
+```
+
+### Left and right anodyne shape inclusions
+
+```rzk
+#def is-left-anodyne
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  : U
+  := is-anodyne-for-shape 2 Δ¹ ( \ s → s ≡ 0₂) I ψ ϕ
+
+#def is-right-anodyne
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  : U
+  := is-anodyne-for-shape 2 Δ¹ ( \ s → s ≡ 1₂) I ψ ϕ
+```
+
+### Left fibrations are inner fibrations
+
+We aim to show that every left fibration is an inner fibration. This is a
+sequence of manipulations where we start with the assumption that `{0} ⊂ Δ¹` is
+left orthogonal to `α : A' → A`, i.e.
+
+```rzk
+#section is-inner-fibration-is-left-fibration
+
+#variables A' A : U
+#variable α : A' → A
+
+#variable is-left-fib-α : is-left-fibration A' A α
+```
+
+and deduce that various other shape inclusions are left orthogonal as well.
+
+The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
+`{1} ⊂ right-leg-of-Λ` of `Λ`.
+
+```rzk
+#def right-leg-of-Λ : Λ → TOPE
+  := \ (t, s) → t ≡ 1₂
+
+#def is-equiv-Δ¹-to-right-leg-of-Λ-rel-start
+  ( B : U)
+  ( b : B)
+  : is-equiv
+    ( ( s : Δ¹) → B [ s ≡ 0₂ ↦ b])
+    ( ( (t,s) : right-leg-of-Λ) → B [ s ≡ 0₂ ↦ b])
+    ( \ τ (t,s) → τ s)
+  :=
+    ( ( \ υ s → υ (1₂, s) , \ _ → refl)
+    , ( \ υ s → υ (1₂, s) , \ _ → refl))
+
+#def is-right-orthogonal-to-10-1×Δ¹-is-left-fibration uses (is-left-fib-α)
+  : is-right-orthogonal-to-shape
+      ( 2 × 2) (\ ts → right-leg-of-Λ ts) ( \ (_,s) → s ≡ 0₂) A' A α
+  :=
+    \ ( σ' : ( (t,s) : 2 × 2 | right-leg-of-Λ (t,s) ∧ s ≡ 0₂) → A') →
+      is-equiv-Equiv-is-equiv'
+      ( ( s : Δ¹) → A' [s ≡ 0₂ ↦ σ' (1₂, s)])
+      ( ( s : Δ¹) → A [s ≡ 0₂ ↦ α (σ' (1₂, s))])
+      ( \ τ s → α (τ s))
+      ( ( (_, s) : right-leg-of-Λ) → A' [ s ≡ 0₂ ↦ σ' (1₂,s)])
+      ( ( (_, s) : right-leg-of-Λ) → A [ s ≡ 0₂ ↦ α ( σ' (1₂,s))])
+      ( \ υ ts → α (υ ts))
+      ( ( ( \ τ' (t,s) → τ' s , \ τ (t,s) → τ s) , \ _ → refl),
+        ( is-equiv-Δ¹-to-right-leg-of-Λ-rel-start A' ( σ' (1₂, 0₂))
+        , is-equiv-Δ¹-to-right-leg-of-Λ-rel-start A ( α ( σ' (1₂, 0₂)))))
+      ( is-left-fib-α ( \ ( s : 2 | Δ¹ s ∧ s ≡ 0₂) → σ' (1₂,s)))
+```
+
+Next we use that `Λ` is the pushout of its left leg and its right leg to deduce
+that the pair `left-leg-of-Λ ⊂ Λ` is left orthogonal.
+
+```rzk
+#def left-leg-of-Λ : Λ → TOPE
+  := \ (t, s) → s ≡ 0₂
+
+#def is-right-orthogonal-to-left-leg-of-Λ-Λ-is-left-fibration uses (is-left-fib-α)
+  : is-right-orthogonal-to-shape
+      ( 2 × 2) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts) A' A α
+  :=
+    is-right-orthogonal-to-shape-pushout A' A α
+    ( 2 × 2) ( \ ts → right-leg-of-Λ ts) (\ ts → left-leg-of-Λ ts)
+    ( is-right-orthogonal-to-10-1×Δ¹-is-left-fibration)
+```
+
+Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the product of
+`Δ¹` with the left orthogonal pair `{0} ⊂ Δ¹`, hence left orthogonal itself.
+
+```rzk
+#def is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration
+       uses (extext is-left-fib-α)
+  : is-right-orthogonal-to-shape
+      ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → left-leg-of-Λ ts) A' A α
+  :=
+    is-right-orthogonal-to-shape-product extext A' A α
+      2 Δ¹ 2 Δ¹ ( \ s → s ≡ 0₂) is-left-fib-α
+```
+
+Next, we use the left cancellation of left orthogonal shape inclusions to deduce
+that `Λ ⊂ Δ¹×Δ¹` is left orthogonal to `α : A' → A`.
+
+```rzk
+#def is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration
+       uses (extext is-left-fib-α)
+  : is-right-orthogonal-to-shape
+      ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts) A' A α
+  :=
+    is-right-orthogonal-to-shape-left-cancel A' A α
+    ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts)
+    ( is-right-orthogonal-to-left-leg-of-Λ-Λ-is-left-fibration)
+    ( is-right-orthogonal-to-left-leg-of-Λ-Δ¹×Δ¹-is-left-fibration)
+```
+
+Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹` to obtain the
+desired left orthogonal shape inclusion `Λ ⊂ Δ²`.
+
+```rzk
+#def is-inner-fibration-is-left-fibration uses (extext is-left-fib-α)
+  : is-inner-fibration A' A α
+  :=
+    is-right-orthogonal-to-shape-right-cancel-retract A' A α
+    ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Δ² ts) ( \ ts → Λ ts)
+    ( is-right-orthogonal-to-Λ-Δ¹×Δ¹-is-left-fibration)
+    ( Δ²-is-functorial-retract-Δ¹×Δ¹)
+
+#end is-inner-fibration-is-left-fibration
+```
+
+In other words, we have shown that the inner horn inclusion `Λ ⊂ Δ²` is left
+anodyne.
+
+```rzk
+#def is-left-anodyne-Λ-Δ² uses (extext)
+  : is-left-anodyne (2 × 2) Δ² (\ t → Λ t)
+  := is-inner-fibration-is-left-fibration
+```
+
+### Left fibrations and Segal types
+
+Since the Segal types are precisely the local types with respect to `Λ ⊂ Δ²`, we
+immediately deduce that in any left fibration `α : A' → A`, if `A` is a Segal
+type, then so is `A'`.
+
+```rzk title="RS 17, Theorem 8.8, categorical version"
+#def is-segal-domain-left-fibration-is-segal-codomain uses (extext)
+  ( A' A : U)
+  ( α : A' → A)
+  ( is-left-fib-α : is-left-fibration A' A α)
+  ( is-segal-A : is-segal A)
+  : is-segal A'
+  :=
+    is-segal-is-local-horn-inclusion A'
+      ( is-local-type-right-orthogonal-is-local-type
+        ( 2 × 2) Δ² ( \ ts → Λ ts) A' A α
+        ( is-inner-fibration-is-left-fibration A' A α is-left-fib-α)
+        ( is-local-horn-inclusion-is-segal A is-segal-A))
+```
+
+### Discrete types are Segal types
+
+Another immediate corollary is that every discrete type is Segal.
+
+```rzk
+#def is-segal-is-discrete uses (extext)
+  ( A : U)
+  : is-discrete A → is-segal A
+  :=
+  \ is-discrete-A →
+  ( is-segal-has-unique-inner-extensions A
+    ( is-weak-anodyne-is-anodyne-for-shape extext
+      ( 2) (Δ¹) (\ t → t ≡ 0₂) ( 2 × 2) (Δ²) (\ t → Λ t)
+      ( is-left-anodyne-Λ-Δ²)
+      ( A)
+      ( has-unique-extensions-is-local-type 2 Δ¹ (\ t → t ≡ 0₂) A
+        ( is-left-local-is-Δ¹-local A
+          ( is-Δ¹-local-is-discrete A is-discrete-A)))))
+```
+
+## Discrete types are Segal types (original proof of RS17)
+
+This chapter contains the original proof of RS17 that discrete types are
+automatically Segal types. We retain it since some intermediate calculations
+might still be of use.
 
 ```rzk
 #section discrete-arr-equivalences
@@ -941,7 +1144,7 @@ general case to the one just proven:
 Finally, we conclude:
 
 ```rzk title="RS17, Proposition 7.3"
-#def is-segal-is-discrete uses (extext)
+#def is-segal-is-discrete' uses (extext)
   ( A : U)
   ( is-discrete-A : is-discrete A)
   : is-segal A

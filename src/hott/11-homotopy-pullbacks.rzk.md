@@ -240,15 +240,12 @@ maps `β → α` and obtain another homotopy cartesian square.
         ( is-equiv-transport A C (α (s' b')) (s (β b')) (η b'))
 ```
 
-
 ## Pasting calculus for homotopy cartesian squares
 
 Currently our notion of squares is not symmetric, since the vertical maps are
 given by type families, i.e. they are _display maps_, while the horizontal maps
 are arbitrary. Therefore we distinquish between the vertical and the horizontal
 pasting calculus.
-
-
 
 ### Vertical calculus
 
@@ -586,7 +583,6 @@ The converse holds provided that the map `f' : A' → B'` has a section.
 
 #end is-homotopy-cartesian-in-cube
 ```
-
 
 ## Fiber products
 

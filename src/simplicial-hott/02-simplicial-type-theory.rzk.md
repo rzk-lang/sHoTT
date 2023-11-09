@@ -418,7 +418,6 @@ Unfortunately we have to repeat the same formula multiple times, leading to some
 ugly boilerplate code.
 
 ```rzk
-
 #def isomorphism-0-Δ¹-1-right-leg-of-Λ
   : isomorphism-shape-inclusions
     (2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)

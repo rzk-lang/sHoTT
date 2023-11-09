@@ -1236,7 +1236,7 @@ implication with respect to types with unique extensions.
 Every anodyne shape inclusion is weak anodyne.
 
 ```rzk
-#def is-weak-anodyne-is-anodyne-for-shape uses (weakextext)
+#def is-weak-anodyne-is-anodyne-for-shape uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
@@ -1261,7 +1261,7 @@ analog fo weak anodyne shape inclusions.
   := \ _ has-ue₀ → has-ue₀
 
 #def implication-has-unique-extension-implication-right-orthogonal
-  uses (weakextext)
+  uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
@@ -1283,7 +1283,7 @@ analog fo weak anodyne shape inclusions.
         has-ue-ψ-ϕ))
 
 #def is-weak-anodyne-pushout-product-for-shape
-  uses (naiveextext weakextext)
+  uses (naiveextext extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
@@ -1304,7 +1304,7 @@ analog fo weak anodyne shape inclusions.
     ( A) (f A has-ue₀)
 
 #def is-weak-anodyne-pushout-product-for-shape'
-  uses (naiveextext weakextext)
+  uses (naiveextext extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )

@@ -298,7 +298,7 @@ for a section of the family of extensions of a function `ϕ → A` to a function
 For example, this applies to `Δ² ⊂ Δ¹×Δ¹`.
 
 ```rzk
-#def Δ²-is-functorial-retract-Δ¹×Δ¹
+#def is-functorial-retract-Δ²-Δ¹×Δ¹
   : is-functorial-shape-retract (2 × 2) (Δ¹×Δ¹) (Δ²)
   :=
     \ A' A α →

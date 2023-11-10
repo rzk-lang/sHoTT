@@ -163,7 +163,7 @@ left orthogonality of shape inclusion with respect to `α : A' → A`.
 The only fact that stops some of these laws from being a direct corollary is
 that the `Σ`-types appearing in the vertical pasting of the relevant squares
 (such as `Σ (\ σ : ϕ → A), ( (t : χ) → A [ϕ t ↦ σ t])`) are not literally equal
-to the corresponding extension types (such as `τ → A `). Therefore we have to
+to the corresponding extension types (such as `χ → A `). Therefore we have to
 occasionally go back or forth along the functorial equivalence
 `cofibration-composition-functorial`.
 
@@ -318,7 +318,7 @@ affecting left orthogonality.
     ( is-orth-ψ-ϕ (\ (s , t) → σ' (t , s)))
 ```
 
-### Exponentiation
+### Tensoring
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A` then so is `χ × ϕ ⊂ χ × ψ` for
 every other shape `χ`.
@@ -481,10 +481,10 @@ stability under pushout products.
       ( is-orth-ψ-ϕ))
 ```
 
-### Functorial isomorphisms of shape inclusion
+### Functorial isomorphisms
 
-If two pairs of shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ` are isomorphic, then
-`ϕ ⊂ ψ` is left orthogonal if and only if `ζ ⊂ χ` is left orthogonal.
+If two pairs of shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ` are (functorially)
+isomorphic, then `ϕ ⊂ ψ` is left orthogonal if and only if `ζ ⊂ χ` is left orthogonal.
 
 ```rzk
 #def is-right-orthogonal-to-shape-isomorphism'
@@ -543,6 +543,49 @@ If two pairs of shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ` are isomorphic, the
   ( E A' A α)
   ( \ σ' → second (F A' σ')) (\ σ → second (F A σ))
   ( second (second (f A')))
+```
+
+### Functorial retracts
+
+If `ϕ ⊂ ψ` is a left orthogonal shape inclusion and `ζ ⊂ χ` is a (functorial)
+retract of it, then `ζ ⊂ χ` is also left orthogonal.
+
+```rzk
+#def is-right-orthogonal-to-shape-retract
+  ( A' A : U)
+  ( α : A' → A)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ χ : ψ → TOPE)
+  -- ζ := χ ∧ ϕ
+  ( ((s , S) , (h , H)) : functorial-retract-shape-inclusion I ψ ϕ χ)
+  : is-right-orthogonal-to-shape I ψ ϕ A' A α
+  → is-right-orthogonal-to-shape I (\ t → χ t) (\ t → χ t ∧ ϕ t) A' A α
+  :=
+  \ is-orth-ψ-ϕ (σ' : (t : I | χ t ∧ ϕ t) → A') →
+    push-down-equiv-with-section
+    ( (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
+    ( \ τ' → (t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
+    ( (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+    ( \ τ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
+    ( \ τ' t → α (τ' t))
+    ( \ τ' υ →
+      ( transport
+        ( (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+        (\ σ → (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ σ t])
+        ( \ t → α (s A' σ' t))
+        ( \ t → s A ( \ t' → α (σ' t')) t)
+        ( h A' A α σ')
+        ( \ t → α ( υ t))))
+    ( ( S A' σ'
+      , S A (\ t → α (σ' t)))
+    , H A' A α σ')
+    ( undefined)
+
+
+
+
+
 ```
 
 ## Stability properties of right orthogonal maps

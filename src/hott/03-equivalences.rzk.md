@@ -42,7 +42,7 @@ We define equivalences to be bi-invertible maps.
   ( A : U)
   : is-equiv A A (\ a → a)
   :=
-    ( (\ a → a, \ _ → refl), (\ a → a, \ _ → refl))
+    ( (\ a → a , \ _ → refl) , (\ a → a , \ _ → refl))
 ```
 
 ## Equivalence data

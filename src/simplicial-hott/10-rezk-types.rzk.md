@@ -836,3 +836,56 @@ arrows.
       ( y)
       ( e)
 ```
+
+## Representable isos
+
+```rzk
+#def inverse-equiv-iso-representable -- helper to get the fiberwise inverse and the homotopies. this carries all the information from the equivalence
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : ( x : A) → ( has-inverse ( hom A a x) ( hom A a' x) ( first ( ψ x)))
+  := \ x → ( has-inverse-is-equiv
+              ( hom A a x)
+              ( hom A a' x)
+              ( first ( ψ x))
+              ( second ( ψ x)))
+
+#def map-equiv-iso-representable -- helper to get map in the fiberwise equiv for the specified direction
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : ( x : A) → ( hom A a x) → ( hom A a' x)
+  := \ x → first ( ψ x)
+
+#def inv-map-equiv-iso-representable -- helper to get inverse of map in the fiberwise equiv for the specified direction
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : ( x : A) → ( hom A a' x) → ( hom A a x)
+  := \ x → first ( ( inverse-equiv-iso-representable A is-segal-A a a' ψ) x)
+
+#def arrow-map-equiv-iso-representable -- helper to get the arrow from the
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : hom A a' a
+  := evid A a ( hom A a') ( map-equiv-iso-representable A is-segal-A a a' ψ)
+
+#def arrow-inv-map-equiv-iso-representable -- helper to get the arrow from the
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : hom A a a'
+  :=
+     evid
+      ( A)
+      ( a')
+      ( hom A a)
+      ( inv-map-equiv-iso-representable  A is-segal-A a a' ψ)
+```

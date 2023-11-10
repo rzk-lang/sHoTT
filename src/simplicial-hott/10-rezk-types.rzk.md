@@ -889,3 +889,45 @@ arrows.
       ( hom A a)
       ( inv-map-equiv-iso-representable  A is-segal-A a a' ψ)
 ```
+We now show that `arrow-map-equiv-iso-representable` has a retraction
+ `arrow-inv-map-equiv-iso-representable`
+
+```rzk
+#def htpy-comp-inv-map-equiv-map-equiv-iso-representable --homotopy for a one composition
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : ( x : A) → ( homotopy
+                  ( hom A a x)
+                  ( hom A a x)
+                  ( comp
+                      ( hom A a x)
+                      ( hom A a' x)
+                      ( hom A a x)
+                      ( inv-map-equiv-iso-representable A is-segal-A a a' ψ x)
+                      ( map-equiv-iso-representable A is-segal-A a a' ψ x))
+                  ( identity ( hom A a x)))
+  :=
+    \ x
+    → first ( second ( inverse-equiv-iso-representable A is-segal-A a a' ψ x))
+
+#def htpy-comp-map-equiv-inv-map-equiv-iso-representable --homotopy for a other composition
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : ( x : A) → ( homotopy
+                  ( hom A a' x)
+                  ( hom A a' x)
+                  ( comp
+                      ( hom A a' x)
+                      ( hom A a x)
+                      ( hom A a' x)
+                      ( map-equiv-iso-representable A is-segal-A a a' ψ x)
+                      ( inv-map-equiv-iso-representable A is-segal-A a a' ψ x))
+                  ( identity ( hom A a' x)))
+  :=
+    \ x
+    → second ( second ( inverse-equiv-iso-representable A is-segal-A a a' ψ x))
+```

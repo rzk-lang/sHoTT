@@ -692,54 +692,61 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
 
 ## Rezk types
 
-A Segal type $A$ is a Rezk type just when, for all `#!rzk x y : A`, the natural
-map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
+For every `x : A`, the identity arrow `id-hom A x : hom A x x` is an
+isomorphism.
 
 ```rzk
-#def iso-id-arrow
-  (A : U)
-  (is-segal-A : is-segal A)
-  : (x : A) → Iso A is-segal-A x x
+#def is-iso-arrow-id-hom
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x : A)
+  : is-iso-arrow A is-segal-A x x (id-hom A x)
   :=
-    \ x →
-    (
-    (id-hom A x) ,
-    (
-    (
-      (id-hom A x) ,
-      (id-comp-is-segal A is-segal-A x x (id-hom A x))
-    ) ,
-    (
-      (id-hom A x) ,
-      (id-comp-is-segal A is-segal-A x x (id-hom A x))
-    )
-      )
-  )
+    ( ( id-hom A x , comp-id-is-segal A is-segal-A x x (id-hom A x))
+    , ( id-hom A x , comp-id-is-segal A is-segal-A x x (id-hom A x)))
+
+#def iso-id-arrow
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  : (x : A) → Iso A is-segal-A x x
+  := \ x → ( id-hom A x , is-iso-arrow-id-hom A is-segal-A x)
+```
+
+More generally, every path induces an isomorphism.
+
+```rzk
+#def is-iso-arrow-hom-eq
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y : A)
+  : ( p : x = y)
+  → is-iso-arrow A is-segal-A x y (hom-eq A x y p)
+  :=
+    ind-path A x
+    ( \ y' p' → is-iso-arrow A is-segal-A x y' (hom-eq A x y' p'))
+    ( is-iso-arrow-id-hom A is-segal-A x)
+    ( y)
 
 #def iso-eq
   ( A : U)
   ( is-segal-A : is-segal A)
   ( x y : A)
   : (x = y) → Iso A is-segal-A x y
-  :=
-    \ p →
-    ind-path
-      ( A)
-      ( x)
-      ( \ y' p' → Iso A is-segal-A x y')
-      ( iso-id-arrow A is-segal-A x)
-      ( y)
-      ( p)
+  := \ p → (hom-eq A x y p , is-iso-arrow-hom-eq A is-segal-A x y p)
 ```
+
+A Segal type `A` is a Rezk type just when, for all `#!rzk x y : A`, this natural
+map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
 
 ```rzk title="RS17, Definition 10.6"
 #def is-rezk
   ( A : U)
   : U
   :=
-    Σ ( is-segal-A : is-segal A) ,
-      (x : A) → (y : A) →
-        is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y)
+    Σ ( is-segal-A : is-segal A)
+    , ( (x : A)
+      → (y : A)
+      → is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y))
 ```
 
 The inverse to `#!rzk iso-eq` for a Rezk type.
@@ -835,4 +842,102 @@ arrows.
       ( refl)
       ( y)
       ( e)
+```
+
+## Isomorphisms in discrete types
+
+In a discrete type every arrow is an isomorphisms. This is a straightforward
+path induction since every identity arrow is an isomorphism. Note that with
+extension extensionality, `is-discrete A` implies `is-segal A` but we state the
+first statement in a way that works without it.
+
+```rzk
+#def has-iso-arrows-is-segal-is-discrete
+  ( A : U)
+  ( is-discrete-A : is-discrete A)
+  ( is-segal-A : is-segal A)
+  ( x y : A)
+  : ( f : hom A x y)
+  → ( is-iso-arrow A is-segal-A x y f)
+  :=
+    ind-has-section-equiv (x =_{A} y) (hom A x y)
+    ( hom-eq A x y , is-discrete-A x y)
+    ( \ f → is-iso-arrow A is-segal-A x y f)
+    ( ind-path A x
+      ( \ y' p → is-iso-arrow A is-segal-A x y' (hom-eq A x y' p))
+      ( is-iso-arrow-id-hom A is-segal-A x)
+      ( y))
+
+#def has-iso-arrows-is-discrete uses (extext)
+  ( A : U)
+  ( is-discrete-A : is-discrete A)
+  ( x y : A)
+  ( f : hom A x y)
+  : ( is-iso-arrow A (is-segal-is-discrete extext A is-discrete-A)
+      x y f)
+  :=
+    has-iso-arrows-is-segal-is-discrete A
+    is-discrete-A
+    ( is-segal-is-discrete extext A is-discrete-A)
+    ( x) (y) (f)
+
+#def is-equiv-hom-iso-is-discrete uses (extext)
+  ( A : U)
+  ( is-discrete-A : is-discrete A)
+  ( x y : A)
+  : is-equiv
+    ( Iso A (is-segal-is-discrete extext A is-discrete-A)
+      x y)
+    ( hom A x y)
+    ( \ (f , _) → f)
+  :=
+    is-equiv-projection-contractible-fibers
+    ( hom A x y) (is-iso-arrow A (is-segal-is-discrete extext A is-discrete-A) x y)
+    ( \ f →
+      is-contr-is-inhabited-is-prop
+      ( is-iso-arrow A (is-segal-is-discrete extext A is-discrete-A) x y f)
+      ( is-prop-is-iso-arrow A
+        ( is-segal-is-discrete extext A is-discrete-A)
+        ( x) (y) (f))
+      ( has-iso-arrows-is-discrete A is-discrete-A x y f))
+```
+
+### Discrete types are Rezk
+
+As a corollary we obtain that every discrete type is Rezk.
+
+```rzk
+#def is-rezk-is-discrete uses (extext)
+  ( A : U)
+  : is-discrete A → is-rezk A
+  :=
+  \ is-discrete-A →
+  ( is-segal-is-discrete extext A is-discrete-A
+  , ( \ x y →
+      is-equiv-right-factor
+      ( x = y)
+      ( Iso A (is-segal-is-discrete extext A is-discrete-A)
+        x y)
+      ( hom A x y)
+      ( iso-eq A (is-segal-is-discrete extext A is-discrete-A)
+        x y)
+      ( \ (f , _) → f)
+      ( is-equiv-hom-iso-is-discrete A is-discrete-A x y)
+      ( is-discrete-A x y)))
+```
+
+In particular, every contractible type is Rezk
+
+```rzk
+#def is-rezk-is-contr uses (extext)
+  ( A : U)
+  : is-contr A → is-rezk A
+  :=
+  \ is-contr-A →
+    ( is-rezk-is-discrete A
+      ( is-discrete-is-contr extext A is-contr-A))
+
+#def is-rezk-Unit uses (extext)
+  : is-rezk Unit
+  := is-rezk-is-contr Unit (is-contr-Unit)
 ```

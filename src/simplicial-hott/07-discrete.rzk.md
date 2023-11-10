@@ -336,7 +336,27 @@ For instance, the arrow type of a discrete type is discrete.
   := is-discrete-extension-type 2 Δ¹ (\ _ → A) (\ _ → is-discrete-A)
 ```
 
-## Left and right fibrations
+## Contractible types are discrete
+
+Every contractible type is automatically discrete.
+
+```rzk
+#def is-discrete-is-contr uses (extext)
+  ( A : U)
+  : is-contr A → is-discrete A
+  :=
+  \ is-contr-A →
+    ( is-discrete-is-Δ¹-local A
+      ( is-Δ¹-local-is-left-local A
+        ( is-local-type-is-contr extext 2 Δ¹ (\ t → t ≡ 0₂) A
+          is-contr-A)))
+
+#def is-discrete-Unit uses (extext)
+  : is-discrete Unit
+  := is-discrete-is-contr Unit (is-contr-Unit)
+```
+
+## Discrete types are Segal types
 
 Recall that we can characterize discrete type either as those local for
 `{0} ⊂ Δ¹` _or_, equivalently, as those that are local for `{1} ⊂ Δ¹`. This

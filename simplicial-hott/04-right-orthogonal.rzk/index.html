@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.2.7">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.0">
     
     
       
@@ -20,10 +20,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.9f615399.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.649f08f9.min.css">
       
       
 
@@ -1169,7 +1169,6 @@ function extensionality:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">#assume</span><span class="p"> </span>naiveextext<span class="err"> : NaiveExtExt</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kr">#assume</span><span class="p"> </span>extext<span class="err"> : ExtExt</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kr">#assume</span><span class="p"> </span>funext<span class="err"> : FunExt</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kr">#assume</span><span class="p"> </span>weakextext<span class="err"> : WeakExtExt</span>
 </span></code></pre></div>
 <h2 id="right-orthogonal-maps-with-respect-to-shapes">Right orthogonal maps with respect to shapes<a class="headerlink" href="#right-orthogonal-maps-with-respect-to-shapes" title="Permanent link">&para;</a></h2>
 <p>For every shape inclusion <code>ϕ ⊂ ψ</code>, we obtain a fibrancy condition for a map
@@ -1986,17 +1985,25 @@ right orthogonal map.</p>
 </span></code></pre></div>
 <p>Weak extension extensionality says that every contractible type has unique
 extensions for every shape inclusion <code>ϕ ⊂ ψ</code>.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-is-contr" id="define:has-unique-extensions-is-contr" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-is-contr</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-is-contr" id="define:has-unique-extensions-is-contr" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-is-contr</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="err">  </span><span class="p">( </span>is-contr-C <span class="p">:</span><span class="err"> is-contr C)</span>
 </span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="err">  : has-unique-extensions I ψ ϕ C</span>
 </span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="err">  :=</span>
-</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="err">    weakextext I ψ ϕ</span>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="err">    weakextext-extext extext I ψ ϕ</span>
 </span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="err">    ( </span><span class="p">\ </span>_ <span class="err">→ C) ( </span><span class="p">\ </span>_ <span class="err">→ is-contr-C)</span>
 </span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>
-</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-Unit" id="define:has-unique-extensions-Unit" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-Unit</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
-</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="err">  : has-unique-extensions I ψ ϕ Unit</span>
-</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="err">  := has-unique-extensions-is-contr Unit is-contr-</span><span class="kt">Unit</span>
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type-is-contr" id="define:is-local-type-is-contr" style="visibility: visible; position: relative; color: inherit">is-local-type-is-contr</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="err">  </span><span class="p">( </span>is-contr-C <span class="p">:</span><span class="err"> is-contr C)</span>
+</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="err">  : is-local-type I ψ ϕ C</span>
+</span><span id="__span-31-13"><a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="err">  :=</span>
+</span><span id="__span-31-14"><a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a><span class="err">    is-local-type-has-unique-extensions I ψ ϕ C</span>
+</span><span id="__span-31-15"><a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a><span class="err">    ( has-unique-extensions-is-contr C is-contr-C)</span>
+</span><span id="__span-31-16"><a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a>
+</span><span id="__span-31-17"><a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-Unit" id="define:has-unique-extensions-Unit" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-Unit</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-31-18"><a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a><span class="err">  : has-unique-extensions I ψ ϕ Unit</span>
+</span><span id="__span-31-19"><a id="__codelineno-31-19" name="__codelineno-31-19" href="#__codelineno-31-19"></a><span class="err">  := has-unique-extensions-is-contr Unit is-contr-</span><span class="kt">Unit</span>
 </span></code></pre></div>
 <p>Unique extension types are closed under equivalence.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type-equiv-is-local-type" id="define:is-local-type-equiv-is-local-type" style="visibility: visible; position: relative; color: inherit">is-local-type-equiv-is-local-type</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
@@ -2023,7 +2030,7 @@ extensions for every shape inclusion <code>ϕ ⊂ ψ</code>.</p>
 <h3 id="unique-extension-types-are-types-with-right-orthogonal-terminal-map">Unique extension types are types with right orthogonal terminal map<a class="headerlink" href="#unique-extension-types-are-types-with-right-orthogonal-terminal-map" title="Permanent link">&para;</a></h3>
 <p>Next we prove the logical equivalence between <code>has-unique-extensions</code> and
 <code>is-right-orthogonal-terminal-map</code>. This follows directly from the fact that
-<code>Unit</code> has unique extensions (using <code>weakextext : WeakExtExt</code>).</p>
+<code>Unit</code> has unique extensions (using <code>extext</code>).</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nd">#section</span><span class="n"> is-right-orthogonal-terminal-map</span>
 </span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="kr">#variable</span><span class="p"> </span>I<span class="err"> : CUBE</span>
 </span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="kr">#variable</span><span class="p"> </span>ψ<span class="err"> : I → TOPE</span>
@@ -2031,7 +2038,7 @@ extensions for every shape inclusion <code>ϕ ⊂ ψ</code>.</p>
 </span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a><span class="kr">#variable</span><span class="p"> </span>A<span class="err"> : U</span>
 </span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>
 </span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-is-right-orthogonal-terminal-map" id="define:has-unique-extensions-is-right-orthogonal-terminal-map" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-is-right-orthogonal-terminal-map</a></span>
-</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a><span class="err">  </span><span class="p">( </span>is-orth-ψ-ϕ-tm-A <span class="p">:</span><span class="err"> is-right-orthogonal-terminal-map I ψ ϕ A)</span>
 </span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a><span class="err">  : has-unique-extensions I ψ ϕ A</span>
 </span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a><span class="err">  :=</span>
@@ -2041,7 +2048,7 @@ extensions for every shape inclusion <code>ϕ ⊂ ψ</code>.</p>
 </span><span id="__span-33-15"><a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a><span class="err">    ( has-unique-extensions-</span><span class="kt">Unit</span><span class="err"> I ψ ϕ)</span>
 </span><span id="__span-33-16"><a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a>
 </span><span id="__span-33-17"><a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-unique-extensions-is-right-orthogonal-a-terminal-map" id="define:has-unique-extensions-is-right-orthogonal-a-terminal-map" style="visibility: visible; position: relative; color: inherit">has-unique-extensions-is-right-orthogonal-a-terminal-map</a></span>
-</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-33-19"><a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a><span class="err">  </span><span class="p">( </span>tm <span class="p">:</span><span class="err"> A → Unit)</span>
 </span><span id="__span-33-20"><a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a><span class="err">  </span><span class="p">( </span>is-orth-ψ-ϕ-tm <span class="p">:</span><span class="err"> is-right-orthogonal-to-shape I ψ ϕ A Unit tm)</span>
 </span><span id="__span-33-21"><a id="__codelineno-33-21" name="__codelineno-33-21" href="#__codelineno-33-21"></a><span class="err">  : has-unique-extensions I ψ ϕ A</span>
@@ -2052,7 +2059,7 @@ extensions for every shape inclusion <code>ϕ ⊂ ψ</code>.</p>
 </span><span id="__span-33-26"><a id="__codelineno-33-26" name="__codelineno-33-26" href="#__codelineno-33-26"></a><span class="err">    ( has-unique-extensions-</span><span class="kt">Unit</span><span class="err"> I ψ ϕ)</span>
 </span><span id="__span-33-27"><a id="__codelineno-33-27" name="__codelineno-33-27" href="#__codelineno-33-27"></a>
 </span><span id="__span-33-28"><a id="__codelineno-33-28" name="__codelineno-33-28" href="#__codelineno-33-28"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-terminal-map-has-unique-extensions" id="define:is-right-orthogonal-terminal-map-has-unique-extensions" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-terminal-map-has-unique-extensions</a></span>
-</span><span id="__span-33-29"><a id="__codelineno-33-29" name="__codelineno-33-29" href="#__codelineno-33-29"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-33-29"><a id="__codelineno-33-29" name="__codelineno-33-29" href="#__codelineno-33-29"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-33-30"><a id="__codelineno-33-30" name="__codelineno-33-30" href="#__codelineno-33-30"></a><span class="err">  </span><span class="p">( </span>has-ue-ψ-ϕ-A <span class="p">:</span><span class="err"> has-unique-extensions I ψ ϕ A)</span>
 </span><span id="__span-33-31"><a id="__codelineno-33-31" name="__codelineno-33-31" href="#__codelineno-33-31"></a><span class="err">  : is-right-orthogonal-terminal-map I ψ ϕ A</span>
 </span><span id="__span-33-32"><a id="__codelineno-33-32" name="__codelineno-33-32" href="#__codelineno-33-32"></a><span class="err">  :=</span>
@@ -2061,7 +2068,7 @@ extensions for every shape inclusion <code>ϕ ⊂ ψ</code>.</p>
 </span><span id="__span-33-35"><a id="__codelineno-33-35" name="__codelineno-33-35" href="#__codelineno-33-35"></a><span class="err">    ( terminal-map A)</span>
 </span><span id="__span-33-36"><a id="__codelineno-33-36" name="__codelineno-33-36" href="#__codelineno-33-36"></a>
 </span><span id="__span-33-37"><a id="__codelineno-33-37" name="__codelineno-33-37" href="#__codelineno-33-37"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-orthogonal-terminal-map-is-local-type" id="define:is-right-orthogonal-terminal-map-is-local-type" style="visibility: visible; position: relative; color: inherit">is-right-orthogonal-terminal-map-is-local-type</a></span>
-</span><span id="__span-33-38"><a id="__codelineno-33-38" name="__codelineno-33-38" href="#__codelineno-33-38"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-33-38"><a id="__codelineno-33-38" name="__codelineno-33-38" href="#__codelineno-33-38"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-33-39"><a id="__codelineno-33-39" name="__codelineno-33-39" href="#__codelineno-33-39"></a><span class="err">  </span><span class="p">( </span>is-lt-ψ-ϕ-A <span class="p">:</span><span class="err"> is-local-type I ψ ϕ A)</span>
 </span><span id="__span-33-40"><a id="__codelineno-33-40" name="__codelineno-33-40" href="#__codelineno-33-40"></a><span class="err">  : is-right-orthogonal-terminal-map I ψ ϕ A</span>
 </span><span id="__span-33-41"><a id="__codelineno-33-41" name="__codelineno-33-41" href="#__codelineno-33-41"></a><span class="err">  :=</span>
@@ -2069,7 +2076,7 @@ extensions for every shape inclusion <code>ϕ ⊂ ψ</code>.</p>
 </span><span id="__span-33-43"><a id="__codelineno-33-43" name="__codelineno-33-43" href="#__codelineno-33-43"></a><span class="err">    ( has-unique-extensions-is-local-type I ψ ϕ A is-lt-ψ-ϕ-A)</span>
 </span><span id="__span-33-44"><a id="__codelineno-33-44" name="__codelineno-33-44" href="#__codelineno-33-44"></a>
 </span><span id="__span-33-45"><a id="__codelineno-33-45" name="__codelineno-33-45" href="#__codelineno-33-45"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-local-type-is-right-orthogonal-terminal-map" id="define:is-local-type-is-right-orthogonal-terminal-map" style="visibility: visible; position: relative; color: inherit">is-local-type-is-right-orthogonal-terminal-map</a></span>
-</span><span id="__span-33-46"><a id="__codelineno-33-46" name="__codelineno-33-46" href="#__codelineno-33-46"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-33-46"><a id="__codelineno-33-46" name="__codelineno-33-46" href="#__codelineno-33-46"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-33-47"><a id="__codelineno-33-47" name="__codelineno-33-47" href="#__codelineno-33-47"></a><span class="err">  </span><span class="p">( </span>is-orth-ψ-ϕ-tm-A <span class="p">:</span><span class="err"> is-right-orthogonal-terminal-map I ψ ϕ A)</span>
 </span><span id="__span-33-48"><a id="__codelineno-33-48" name="__codelineno-33-48" href="#__codelineno-33-48"></a><span class="err">  : is-local-type I ψ ϕ A</span>
 </span><span id="__span-33-49"><a id="__codelineno-33-49" name="__codelineno-33-49" href="#__codelineno-33-49"></a><span class="err">  :=</span>
@@ -2085,7 +2092,7 @@ unique extensions along <code>ϕ ⊂ ψ</code>. This follows immediately since t
 <code>α</code> are just the relative products of <code>α : A' → A</code> with the maps <code>a : Unit → A</code>
 from the unit type.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-fiberwise-unique-extensions-is-right-orthogonal-to-shape" id="define:has-fiberwise-unique-extensions-is-right-orthogonal-to-shape" style="visibility: visible; position: relative; color: inherit">has-fiberwise-unique-extensions-is-right-orthogonal-to-shape</a></span>
-</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext weakextext<span class="p">)</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
 </span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
@@ -2107,7 +2114,7 @@ from the unit type.</p>
 <p>Corollary: Given two types <code>A'</code> and <code>A</code> with unique extensions w.r.t. <code>ϕ ⊂ ψ</code>,
 every fiber of every map <code>α : A' → A</code> also has unique extensions.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-fiberwise-unique-extensions-have-unique-extensions" id="define:has-fiberwise-unique-extensions-have-unique-extensions" style="visibility: visible; position: relative; color: inherit">has-fiberwise-unique-extensions-have-unique-extensions</a></span>
-</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext weakextext<span class="p">)</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
 </span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
@@ -2236,7 +2243,7 @@ implication with respect to types with unique extensions.</p>
 </span><span id="__span-39-9"><a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a><span class="err">    → has-unique-extensions I ψ ϕ A)</span>
 </span></code></pre></div>
 <p>Every anodyne shape inclusion is weak anodyne.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-weak-anodyne-is-anodyne-for-shape" id="define:is-weak-anodyne-is-anodyne-for-shape" style="visibility: visible; position: relative; color: inherit">is-weak-anodyne-is-anodyne-for-shape</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-weak-anodyne-is-anodyne-for-shape" id="define:is-weak-anodyne-is-anodyne-for-shape" style="visibility: visible; position: relative; color: inherit">is-weak-anodyne-is-anodyne-for-shape</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE )</span>
 </span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE )</span>
@@ -2258,7 +2265,7 @@ analog fo weak anodyne shape inclusions.</p>
 </span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="err">  := </span><span class="p">\ </span>_ has-ue₀ <span class="err">→ has-ue₀</span>
 </span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>
 </span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:implication-has-unique-extension-implication-right-orthogonal" id="define:implication-has-unique-extension-implication-right-orthogonal" style="visibility: visible; position: relative; color: inherit">implication-has-unique-extension-implication-right-orthogonal</a></span>
-</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE )</span>
 </span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE )</span>
@@ -2280,7 +2287,7 @@ analog fo weak anodyne shape inclusions.</p>
 </span><span id="__span-41-27"><a id="__codelineno-41-27" name="__codelineno-41-27" href="#__codelineno-41-27"></a><span class="err">        has-ue-ψ-ϕ))</span>
 </span><span id="__span-41-28"><a id="__codelineno-41-28" name="__codelineno-41-28" href="#__codelineno-41-28"></a>
 </span><span id="__span-41-29"><a id="__codelineno-41-29" name="__codelineno-41-29" href="#__codelineno-41-29"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-weak-anodyne-pushout-product-for-shape" id="define:is-weak-anodyne-pushout-product-for-shape" style="visibility: visible; position: relative; color: inherit">is-weak-anodyne-pushout-product-for-shape</a></span>
-</span><span id="__span-41-30"><a id="__codelineno-41-30" name="__codelineno-41-30" href="#__codelineno-41-30"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>naiveextext weakextext<span class="p">)</span>
+</span><span id="__span-41-30"><a id="__codelineno-41-30" name="__codelineno-41-30" href="#__codelineno-41-30"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>naiveextext extext<span class="p">)</span>
 </span><span id="__span-41-31"><a id="__codelineno-41-31" name="__codelineno-41-31" href="#__codelineno-41-31"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-41-32"><a id="__codelineno-41-32" name="__codelineno-41-32" href="#__codelineno-41-32"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE )</span>
 </span><span id="__span-41-33"><a id="__codelineno-41-33" name="__codelineno-41-33" href="#__codelineno-41-33"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE )</span>
@@ -2301,7 +2308,7 @@ analog fo weak anodyne shape inclusions.</p>
 </span><span id="__span-41-48"><a id="__codelineno-41-48" name="__codelineno-41-48" href="#__codelineno-41-48"></a><span class="err">    ( A) (f A has-ue₀)</span>
 </span><span id="__span-41-49"><a id="__codelineno-41-49" name="__codelineno-41-49" href="#__codelineno-41-49"></a>
 </span><span id="__span-41-50"><a id="__codelineno-41-50" name="__codelineno-41-50" href="#__codelineno-41-50"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-weak-anodyne-pushout-product-for-shape&#39;" id="define:is-weak-anodyne-pushout-product-for-shape&#39;" style="visibility: visible; position: relative; color: inherit">is-weak-anodyne-pushout-product-for-shape&#39;</a></span>
-</span><span id="__span-41-51"><a id="__codelineno-41-51" name="__codelineno-41-51" href="#__codelineno-41-51"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>naiveextext weakextext<span class="p">)</span>
+</span><span id="__span-41-51"><a id="__codelineno-41-51" name="__codelineno-41-51" href="#__codelineno-41-51"></a><span class="p">  </span><span class="k">uses</span><span class="p"> (</span>naiveextext extext<span class="p">)</span>
 </span><span id="__span-41-52"><a id="__codelineno-41-52" name="__codelineno-41-52" href="#__codelineno-41-52"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-41-53"><a id="__codelineno-41-53" name="__codelineno-41-53" href="#__codelineno-41-53"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE )</span>
 </span><span id="__span-41-54"><a id="__codelineno-41-54" name="__codelineno-41-54" href="#__codelineno-41-54"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE )</span>
@@ -2361,10 +2368,10 @@ analog fo weak anodyne shape inclusions.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.footer", "navigation.sections", "navigation.path"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.footer", "navigation.sections", "navigation.path"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4e0fa4ba.min.js"></script>
       
         <script src="../../javascript/mathjax.js"></script>
       

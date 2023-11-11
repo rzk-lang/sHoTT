@@ -27,7 +27,7 @@ nav:
   - Simplicial HoTT:
       - Simplicial Type Theory: simplicial-hott/02-simplicial-type-theory.rzk.md
       - Extension Types: simplicial-hott/03-extension-types.rzk.md
-      - Right Orthogonal Fibrations: right-orthogonal/04-right-orthogonal.rzk.md
+      - Right Orthogonal Fibrations: simplicial-hott/04-right-orthogonal.rzk.md
       - Segal Types: simplicial-hott/05-segal-types.rzk.md
       - 2-Category of Segal Types: simplicial-hott/06-2cat-of-segal-types.rzk.md
       - Discrete Types: simplicial-hott/07-discrete.rzk.md

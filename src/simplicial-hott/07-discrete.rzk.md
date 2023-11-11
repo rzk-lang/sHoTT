@@ -440,13 +440,13 @@ Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the pro
 `Δ¹` with the left anodyne pair `{0} ⊂ Δ¹`, hence left anodyne itself.
 
 ```rzk
-#def is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹
+#def is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹ uses (extext)
   : is-left-anodyne ( 2 × 2)
     ( \ ts → Δ¹×Δ¹ ts) ( \ ts → left-leg-of-Λ ts)
   :=
-  \ A' A α is-left-fib-α →
+  \ A' A α →
     is-right-orthogonal-to-shape-product extext A' A α
-      2 Δ¹ 2 Δ¹ ( \ s → s ≡ 0₂) is-left-fib-α
+      2 Δ¹ 2 Δ¹ ( \ s → s ≡ 0₂)
 ```
 
 Next, we use the left cancellation of left anodyne shape inclusions to deduce

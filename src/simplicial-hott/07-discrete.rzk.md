@@ -408,37 +408,15 @@ The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
 `{1} ⊂ right-leg-of-Λ` of `Λ`.
 
 ```rzk
-#def right-leg-of-Λ : Λ → TOPE
-  := \ (t, s) → t ≡ 1₂
-
-#def is-equiv-Δ¹-to-right-leg-of-Λ-rel-start
-  ( B : U)
-  ( b : B)
-  : is-equiv
-    ( ( s : Δ¹) → B [ s ≡ 0₂ ↦ b])
-    ( ( (t,s) : right-leg-of-Λ) → B [ s ≡ 0₂ ↦ b])
-    ( \ τ (t,s) → τ s)
-  :=
-    ( ( \ υ s → υ (1₂, s) , \ _ → refl)
-    , ( \ υ s → υ (1₂, s) , \ _ → refl))
-
 #def is-left-anodyne-1-right-leg-of-Λ
-  : is-left-anodyne
-    ( 2 × 2) (\ ts → right-leg-of-Λ ts) ( \ (_,s) → s ≡ 0₂)
+  : is-left-anodyne ( 2 × 2)
+    (\ ts → right-leg-of-Λ ts) ( \ (_,s) → s ≡ 0₂)
   :=
-  \ A' A α is-left-fib-α →
-    \ ( σ' : ( (t,s) : 2 × 2 | right-leg-of-Λ (t,s) ∧ s ≡ 0₂) → A') →
-      is-equiv-Equiv-is-equiv'
-      ( ( s : Δ¹) → A' [s ≡ 0₂ ↦ σ' (1₂, s)])
-      ( ( s : Δ¹) → A [s ≡ 0₂ ↦ α (σ' (1₂, s))])
-      ( \ τ s → α (τ s))
-      ( ( (_, s) : right-leg-of-Λ) → A' [ s ≡ 0₂ ↦ σ' (1₂,s)])
-      ( ( (_, s) : right-leg-of-Λ) → A [ s ≡ 0₂ ↦ α ( σ' (1₂,s))])
-      ( \ υ ts → α (υ ts))
-      ( ( ( \ τ' (t,s) → τ' s , \ τ (t,s) → τ s) , \ _ → refl),
-        ( is-equiv-Δ¹-to-right-leg-of-Λ-rel-start A' ( σ' (1₂, 0₂))
-        , is-equiv-Δ¹-to-right-leg-of-Λ-rel-start A ( α ( σ' (1₂, 0₂)))))
-      ( is-left-fib-α ( \ ( s : 2 | Δ¹ s ∧ s ≡ 0₂) → σ' (1₂,s)))
+  \ A' A α →
+  is-right-orthogonal-to-shape-isomorphism A' A α
+  ( 2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+  ( 2) (Δ¹) (\ t → t ≡ 0₂)
+  ( functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ)
 ```
 
 Next we use that `Λ` is the pushout of its left leg and its right leg to deduce
@@ -449,8 +427,8 @@ that the pair `left-leg-of-Λ ⊂ Λ` is left anodyne.
   := \ (t, s) → s ≡ 0₂
 
 #def is-left-anodyne-left-leg-of-Λ-Λ
-  : is-left-anodyne
-      ( 2 × 2) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts)
+  : is-left-anodyne ( 2 × 2)
+    ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts)
   :=
   \ A' A α is-left-fib-α →
     is-right-orthogonal-to-shape-pushout A' A α

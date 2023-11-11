@@ -191,7 +191,7 @@ occasionally go back or forth along the functorial equivalence
       ( is-orth-ψ-ϕ σ'))
 ```
 
-### Stability under composition
+### Composition
 
 Left orthogonal shape inclusions are preserved under composition.
 
@@ -227,7 +227,7 @@ Left orthogonal shape inclusions are preserved under composition.
           σ')
 ```
 
-### Cancellation laws
+### Cancellation
 
 If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so is `χ ⊂ ψ`.
 
@@ -317,7 +317,7 @@ affecting left orthogonality.
     ( is-orth-ψ-ϕ (\ (s , t) → σ' (t , s)))
 ```
 
-### Stability under exponentiation
+### Exponentiation
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A` then so is `χ × ϕ ⊂ χ × ψ` for
 every other shape `χ`.
@@ -400,7 +400,7 @@ extensionality.
     ( is-right-orthogonal-to-shape-product A' A α J χ I ψ ϕ is-orth-ψ-ϕ)
 ```
 
-### Stability under exact pushouts
+### Exact pushouts
 
 For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to
 `α : A' → A`, then so is `ψ ⊂ ϕ ∪ ψ`.
@@ -480,6 +480,70 @@ stability under pushout products.
       ( is-orth-ψ-ϕ))
 ```
 
+### Functorial isomorphisms of shape inclusion
+
+If two pairs of shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ` are isomorphic, then
+`ϕ ⊂ ψ` is left orthogonal if and only if `ζ ⊂ χ` is left orthogonal.
+
+```rzk
+#def is-right-orthogonal-to-shape-isomorphism'
+  ( A' A : U)
+  ( α : A' → A)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  ( ((f , F) , (e , E)) : functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ)
+  : is-right-orthogonal-to-shape I ψ ϕ A' A α
+  →  is-right-orthogonal-to-shape J χ ζ A' A α
+  :=
+  is-homotopy-cartesian-in-cube
+  ( ζ → A') (\ σ' → (t : χ) → A' [ζ t ↦ σ' t])
+  ( ζ → A) (\ σ' → (t : χ) → A [ζ t ↦ σ' t])
+  ( \ σ' t → α (σ' t))
+  ( \ _ τ' t → α (τ' t))
+  ( ϕ → A') (\ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
+  ( ϕ → A) (\ σ' → (t : ψ) → A [ϕ t ↦ σ' t])
+  ( \ σ' t → α (σ' t))
+  ( \ _ τ' t → α (τ' t))
+  ( first (f A')) ( first (f A))
+  ( e A' A α)
+  ( \ σ' → first (F A' σ')) (\ σ → first (F A σ))
+  ( E A' A α)
+  ( \ σ' → second (F A' σ')) (\ σ → second (F A σ))
+
+#def is-right-orthogonal-to-shape-isomorphism
+  ( A' A : U)
+  ( α : A' → A)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  ( ((f , F) , (e , E)) : functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ)
+  : is-right-orthogonal-to-shape J χ ζ A' A α
+  → is-right-orthogonal-to-shape I ψ ϕ A' A α
+  :=
+  is-homotopy-cartesian-in-cube'
+  ( ζ → A') (\ σ' → (t : χ) → A' [ζ t ↦ σ' t])
+  ( ζ → A) (\ σ' → (t : χ) → A [ζ t ↦ σ' t])
+  ( \ σ' t → α (σ' t))
+  ( \ _ τ' t → α (τ' t))
+  ( ϕ → A') (\ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
+  ( ϕ → A) (\ σ' → (t : ψ) → A [ϕ t ↦ σ' t])
+  ( \ σ' t → α (σ' t))
+  ( \ _ τ' t → α (τ' t))
+  ( first (f A')) ( first (f A))
+  ( e A' A α)
+  ( \ σ' → first (F A' σ')) (\ σ → first (F A σ))
+  ( E A' A α)
+  ( \ σ' → second (F A' σ')) (\ σ → second (F A σ))
+  ( second (second (f A')))
+```
+
 ## Stability properties of right orthogonal maps
 
 Now we change perspective. We fix a shape inclusion `ϕ ⊂ ψ` and investigate
@@ -521,7 +585,7 @@ Right orthogonality is closed under homotopy.
     ( first (first (funext A' (\ _ → A) α β)) h)
 ```
 
-### Stability under composition
+### Composition
 
 ```rzk
 #variables A'' A' A : U
@@ -594,7 +658,7 @@ right (whether it is right orthogonal or not.)
     ( is-orth-ψ-ϕ-αα')
 ```
 
-### Stability under pullback
+### Pullback
 
 Right orthogonal maps are stable under pullback. More precisely: If `α : A' → A`
 is right orthogonal, then so is the second projection

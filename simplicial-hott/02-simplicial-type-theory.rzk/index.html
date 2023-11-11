@@ -812,6 +812,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#isomorphisms-of-shape-inclusions" class="md-nav__link">
+    Isomorphisms of shape inclusions
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1170,6 +1177,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#isomorphisms-of-shape-inclusions" class="md-nav__link">
+    Isomorphisms of shape inclusions
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1457,6 +1471,98 @@ to diagrams extending a fixed diagram <code>σ': ϕ → A'</code> (or, respectiv
 </span><span id="__span-24-20"><a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a><span class="err">      )</span>
 </span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a><span class="err">    , </span><span class="p">\ </span>τ&#39; <span class="err">→ </span><span class="s">second</span><span class="err"> (is-fretract-ψ-χ A&#39; A α) τ&#39;</span>
 </span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a><span class="err">    )</span>
+</span></code></pre></div>
+<h3 id="isomorphisms-of-shape-inclusions">Isomorphisms of shape inclusions<a class="headerlink" href="#isomorphisms-of-shape-inclusions" title="Permanent link">&para;</a></h3>
+<p>Consider two shape inclusions <code>ϕ ⊂ ψ</code> and <code>ζ ⊂ χ</code>. We want to express the fact
+that there is an isomorphism <code>ψ ≅ χ</code> of shapes which restricts to an isomorphism
+<code>ϕ ≅ ζ</code>. Since shapes are not types themselves, the best we can currently do is
+describe this isomorphism on representables.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:isomorphism-shape-inclusions" id="define:isomorphism-shape-inclusions" style="visibility: visible; position: relative; color: inherit">isomorphism-shape-inclusions</a></span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="err">  </span><span class="p">( </span>J <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="err">  </span><span class="p">( </span>χ <span class="p">:</span><span class="err"> J → TOPE)</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="err">  </span><span class="p">( </span>ζ <span class="p">:</span><span class="err"> χ → TOPE)</span>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="err">  : U</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="err">  :=</span>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="err">    </span><span class="p">( </span>Σ ( f <span class="p">:</span><span class="err"> </span><span class="p">(</span>A <span class="p">:</span><span class="err"> U) → Equiv (ζ → A) (ϕ → A))</span>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="err">      , </span><span class="p">( </span>( A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="err">        → </span><span class="p">( </span>σ <span class="p">:</span><span class="err"> ζ → A)</span>
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="err">        → </span><span class="p">( </span>Equiv
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>            ( (t <span class="p">:</span><span class="err"> χ) → A [ζ t ↦ σ t])</span>
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="err">            </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ </span><span class="s">first</span><span class="err"> (f A) σ t]))))</span>
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:functorial-isomorphism-shape-inclusions" id="define:functorial-isomorphism-shape-inclusions" style="visibility: visible; position: relative; color: inherit">functorial-isomorphism-shape-inclusions</a></span>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="err">  </span><span class="p">( </span>ϕ <span class="p">:</span><span class="err"> ψ → TOPE)</span>
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="err">  </span><span class="p">( </span>J <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a><span class="err">  </span><span class="p">( </span>χ <span class="p">:</span><span class="err"> J → TOPE)</span>
+</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a><span class="err">  </span><span class="p">( </span>ζ <span class="p">:</span><span class="err"> χ → TOPE)</span>
+</span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a><span class="err">  : U</span>
+</span><span id="__span-25-25"><a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a><span class="err">  :=</span>
+</span><span id="__span-25-26"><a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a><span class="err">  </span><span class="kt">Σ</span><span class="err"> ( (f , F) : isomorphism-shape-inclusions I ψ ϕ J χ ζ)</span>
+</span><span id="__span-25-27"><a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a><span class="err">  , </span><span class="p">( </span>Σ ( e
+</span><span id="__span-25-28"><a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a>          <span class="p">:</span><span class="err"> </span><span class="p">( </span>A&#39; <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-25-29"><a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a><span class="err">          → </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-25-30"><a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a><span class="err">          → </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
+</span><span id="__span-25-31"><a id="__codelineno-25-31" name="__codelineno-25-31" href="#__codelineno-25-31"></a><span class="err">          → </span><span class="p">( </span>σ&#39; <span class="p">:</span><span class="err"> ζ → A&#39;)</span>
+</span><span id="__span-25-32"><a id="__codelineno-25-32" name="__codelineno-25-32" href="#__codelineno-25-32"></a><span class="err">          → </span><span class="p">( </span>( \ (t <span class="p">:</span><span class="err"> I | ϕ t) → α (</span><span class="s">first</span><span class="err"> (f A&#39;) σ&#39; t))</span>
+</span><span id="__span-25-33"><a id="__codelineno-25-33" name="__codelineno-25-33" href="#__codelineno-25-33"></a><span class="err">            = ( </span><span class="s">first</span><span class="err"> (f A) (</span><span class="p">\ </span>t <span class="err">→ α (σ&#39; t)))))</span>
+</span><span id="__span-25-34"><a id="__codelineno-25-34" name="__codelineno-25-34" href="#__codelineno-25-34"></a><span class="err">      , </span><span class="p">( </span>( A&#39; <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-25-35"><a id="__codelineno-25-35" name="__codelineno-25-35" href="#__codelineno-25-35"></a><span class="err">        → </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-25-36"><a id="__codelineno-25-36" name="__codelineno-25-36" href="#__codelineno-25-36"></a><span class="err">        → </span><span class="p">( </span>α <span class="p">:</span><span class="err"> A&#39; → A)</span>
+</span><span id="__span-25-37"><a id="__codelineno-25-37" name="__codelineno-25-37" href="#__codelineno-25-37"></a><span class="err">        → </span><span class="p">( </span>σ&#39; <span class="p">:</span><span class="err"> ζ → A&#39;)</span>
+</span><span id="__span-25-38"><a id="__codelineno-25-38" name="__codelineno-25-38" href="#__codelineno-25-38"></a><span class="err">        → </span><span class="p">( </span>τ&#39; <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> χ) → A&#39; [ζ t ↦ σ&#39; t])</span>
+</span><span id="__span-25-39"><a id="__codelineno-25-39" name="__codelineno-25-39" href="#__codelineno-25-39"></a><span class="err">        → ( ( transport (ϕ → A) </span><span class="p">(</span>\ σ → (t <span class="p">:</span><span class="err"> ψ) → A [ϕ t ↦ σ t])</span>
+</span><span id="__span-25-40"><a id="__codelineno-25-40" name="__codelineno-25-40" href="#__codelineno-25-40"></a><span class="err">              </span><span class="p">( </span>\ (t <span class="p">:</span><span class="err"> I | ϕ t) → α (</span><span class="s">first</span><span class="err"> (f A&#39;) σ&#39; t))</span>
+</span><span id="__span-25-41"><a id="__codelineno-25-41" name="__codelineno-25-41" href="#__codelineno-25-41"></a><span class="err">              ( </span><span class="s">first</span><span class="err"> (f A) (</span><span class="p">\ </span>t <span class="err">→ α (σ&#39; t)))</span>
+</span><span id="__span-25-42"><a id="__codelineno-25-42" name="__codelineno-25-42" href="#__codelineno-25-42"></a><span class="err">              ( e A&#39; A α σ&#39;)</span>
+</span><span id="__span-25-43"><a id="__codelineno-25-43" name="__codelineno-25-43" href="#__codelineno-25-43"></a><span class="err">              </span><span class="p">(</span>\ (t <span class="p">:</span><span class="err"> ψ) → α (</span><span class="s">first</span><span class="err"> (F A&#39; σ&#39;) τ&#39; t)))</span>
+</span><span id="__span-25-44"><a id="__codelineno-25-44" name="__codelineno-25-44" href="#__codelineno-25-44"></a><span class="err">            = </span><span class="p">( </span>first (F A (\ (t <span class="p">:</span><span class="err"> ζ) → α (σ&#39; t))) </span><span class="p">(</span>\ (t <span class="p">:</span><span class="err"> χ) → α (τ&#39; t))))))</span>
+</span></code></pre></div>
+<p>In practice, the isomorphisms are usually given via an explicit formula, which
+would define a map <code>ψ → ϕ</code> if <code>ψ</code> and <code>ϕ</code> were themselves types. In this case
+all the coherences are just <code>refl</code>, hence it is easy to produce a term of type
+<code>functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ</code>.</p>
+<p>For example, consider the two shape inclusions <code>{0} ⊂ Δ¹</code> (subshapes of <code>2</code>) and
+<code>{1} ⊂ right-leg-of-Λ</code> (subshapes of <code>2 × 2</code>), where</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:right-leg-of-Λ" id="define:right-leg-of-Λ" style="visibility: visible; position: relative; color: inherit">right-leg-of-Λ</a></span><span class="err"> : Λ → TOPE</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="err">  := \ (t, s) → t </span><span class="sx">≡</span><span class="err"> </span><span class="m">1₂</span>
+</span></code></pre></div>
+<p>These two shape inclusions are canonically isomorphic via the formulas</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>-- not valid rzk code
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>#def f : Δ¹ → right-leg-of-Λ
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>  \ s → (1₂ , s)
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>#def g : right-leg-of-Λ → Δ¹
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>  \ (t , s) → s
+</span></code></pre></div>
+<p>We turn these formulas into a functorial shape inclusion as follows.
+Unfortunately we have to repeat the same formula multiple times, leading to some
+ugly boilerplate code.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:isomorphism-0-Δ¹-1-right-leg-of-Λ" id="define:isomorphism-0-Δ¹-1-right-leg-of-Λ" style="visibility: visible; position: relative; color: inherit">isomorphism-0-Δ¹-1-right-leg-of-Λ</a></span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="err">  : isomorphism-shape-inclusions</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="err">    (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) (</span><span class="p">\ </span>ts <span class="err">→ right-leg-of-Λ ts) (\ (t , s) → t </span><span class="sx">≡</span><span class="err"> </span><span class="m">1₂</span><span class="err"> </span><span class="sx">∧</span><span class="err"> s </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err">)</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="err">    </span><span class="kt">2</span><span class="err"> Δ¹ (</span><span class="p">\ </span>t <span class="err">→ t </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err">)</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="err">  :=</span>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="err">    ( </span><span class="p">\ </span>A <span class="err">→</span>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="err">      ( </span><span class="p">\ </span>τ <span class="err">(t,s) → τ s</span>
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="err">      , ( ( </span><span class="p">\ </span>υ s <span class="err">→ υ (</span><span class="m">1₂</span><span class="err">, s) , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="err">        , ( </span><span class="p">\ </span>υ s <span class="err">→ υ (</span><span class="m">1₂</span><span class="err">, s) , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">)))</span>
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="err">    , </span><span class="p">\ </span>A _ <span class="err">→</span>
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="err">      ( </span><span class="p">\ </span>τ <span class="err">(t,s) → τ s</span>
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a><span class="err">      , ( ( </span><span class="p">\ </span>υ s <span class="err">→ υ (</span><span class="m">1₂</span><span class="err">, s) , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-28-13"><a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a><span class="err">        , ( </span><span class="p">\ </span>υ s <span class="err">→ υ (</span><span class="m">1₂</span><span class="err">, s) , </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">refl</span><span class="err">))))</span>
+</span><span id="__span-28-14"><a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>
+</span><span id="__span-28-15"><a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ" id="define:functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ" style="visibility: visible; position: relative; color: inherit">functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ</a></span>
+</span><span id="__span-28-16"><a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a><span class="err">  : functorial-isomorphism-shape-inclusions</span>
+</span><span id="__span-28-17"><a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a><span class="err">    (</span><span class="kt">2</span><span class="err"> × </span><span class="kt">2</span><span class="err">) (</span><span class="p">\ </span>ts <span class="err">→ right-leg-of-Λ ts) (\ (t , s) → t </span><span class="sx">≡</span><span class="err"> </span><span class="m">1₂</span><span class="err"> </span><span class="sx">∧</span><span class="err"> s </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err">)</span>
+</span><span id="__span-28-18"><a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a><span class="err">    </span><span class="kt">2</span><span class="err"> Δ¹ (</span><span class="p">\ </span>t <span class="err">→ t </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err">)</span>
+</span><span id="__span-28-19"><a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a><span class="err">  :=</span>
+</span><span id="__span-28-20"><a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a><span class="err">    ( isomorphism-0-Δ¹-1-right-leg-of-Λ</span>
+</span><span id="__span-28-21"><a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a><span class="err">    , ( </span><span class="p">\ </span>_ _ _ _ <span class="err">→ </span><span class="s">refl</span><span class="err"> , </span><span class="p">\ </span>_ _ _ _ _ <span class="err">→ </span><span class="s">refl</span><span class="err">))</span>
 </span></code></pre></div>
 
 

@@ -671,35 +671,16 @@ More precicely:
 We can also define a retraction of `#!rzk ap-hom` directly.
 
 ```rzk
-#def retraction-ap-hom-retraction uses (funext)
+#def has-retraction-ap-hom-retraction uses (extext)
   ( A B : U)
   ( f : A → B)
-  ( (r, ρ) : has-retraction A B f)
-  ( x y : A)
-  : (hom B (f x) (f y)) → (hom A x y)
-  :=
-  comp
-  ( hom B (f x) (f y))
-  ( hom A (r (f x)) (r (f y)))
-  ( hom A x y)
-  ( transport (A → A) (\ g' → (hom A (g' x) (g' y)))
-    ( comp A B A r f)
-    ( identity A)
-    ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ))
-  ( ap-hom B A r (f x) (f y))
-
-#def has-retraction-ap-hom-retraction uses (funext)
-  ( A B : U)
-  ( f : A → B)
-  ( (r, ρ) : has-retraction A B f)
+  ( has-retraction-f : has-retraction A B f)
   ( x y : A)
   : has-retraction (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
   :=
-  ( retraction-ap-hom-retraction A B f (r, ρ) x y
-    , \ α →
-      apd (A → A) (\ g' → (hom A (g' x) (g' y)))
-      ( comp A B A r f)
-      ( identity A)
-      ( \ g' → ap-hom A A g' x y α)
-      ( eq-htpy funext A (\ x' → A) (comp A B A r f) (identity A) ρ))
+  has-retraction-extensions-has-retraction extext 2 Δ¹ ∂Δ¹
+    ( \ _ → A) ( \ _ → B)
+    ( \ _ → f)
+    ( \ _ → has-retraction-f)
+    ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
 ```

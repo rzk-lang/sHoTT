@@ -23,7 +23,6 @@ This is a literate `rzk` file:
 Some of the definitions in this file rely on extension extensionality:
 
 ```rzk
-#assume funext : FunExt
 #assume extext : ExtExt
 #assume weakfunext : WeakFunExt
 #assume naiveextext : NaiveExtExt
@@ -2236,70 +2235,26 @@ are discrete.
       ( y)
 ```
 
-In particular, in discrete types identity types are discrete. First we show that
-equivalences preserve discreteness. For that, we need that `#!rzk hom-eq`
-commutes with actions on morphisms.
+In particular, the identity types of discrete types are also discrete. First, we
+show that equivalences preserve discreteness, which is a special case of
+preservation of local types by equivalences.
 
 ```rzk
-#def hom-eq-naturality
+#def equiv-preserve-discreteness uses (extext)
   ( A B : U)
-  ( f : A → B)
-  ( x y : A)
-  ( p : x = y)
-  :
-  comp (x = y) (hom A x y) (hom B (f x) (f y))
-    ( ap-hom A B f x y)
-    ( hom-eq A x y)
-    ( p)
-  =
-  comp (x = y) ((f x) = (f y)) (hom B (f x) (f y))
-    ( hom-eq B (f x) (f y))
-    ( ap A B x y f)
-    ( p)
-  :=
-    ind-path A x
-      ( \ y' p' →
-        comp (x = y') (hom A x y') (hom B (f x) (f y'))
-          ( ap-hom A B f x y')
-          ( hom-eq A x y')
-          ( p')
-        =
-        comp (x = y') ((f x) = (f y')) (hom B (f x) (f y'))
-          ( hom-eq B (f x) (f y'))
-          ( ap A B x y' f)
-          ( p'))
-      ( functors-pres-id extext A B f x)
-      ( y)
-      ( p)
-
-#def equiv-preserve-discreteness uses (extext funext)
-  ( A B : U)
-  ( (f, is-equiv-f) : Equiv A B)
+  ( A≅B : Equiv A B)
   ( is-discrete-B : is-discrete B)
   : is-discrete A
   :=
-    \ x y →
-    is-equiv-right-cancel (x = y) (hom A x y) (hom B (f x) (f y))
-      ( hom-eq A x y)
-      ( ap-hom A B f x y)
-      ( has-retraction-ap-hom-retraction funext A B f (π₁ is-equiv-f) x y)
-      ( is-equiv-homotopy (x = y) (hom B (f x) (f y))
-        ( comp (x = y) (hom A x y) (hom B (f x) (f y))
-          ( ap-hom A B f x y)
-          ( hom-eq A x y))
-        ( comp (x = y) ((f x) = (f y)) (hom B (f x) (f y))
-          ( hom-eq B (f x) (f y))
-          ( ap A B x y f))
-        ( hom-eq-naturality A B f x y)
-        ( is-equiv-comp (x = y) ((f x) = (f y)) (hom B (f x) (f y))
-          ( ap A B x y f)
-          ( is-emb-is-equiv A B f is-equiv-f x y)
-          ( hom-eq B (f x) (f y))
-          ( is-discrete-B (f x) (f y))))
+  is-discrete-is-Δ¹-local A
+    (is-Δ¹-local-is-left-local A
+      ( is-local-type-equiv-is-local-type extext 2 Δ¹ (\ t → t ≡ 0₂) A B A≅B
+        ( is-left-local-is-Δ¹-local B
+          (is-Δ¹-local-is-discrete B is-discrete-B))))
 ```
 
 ```rzk title="RS17, Corollary 8.20"
-#def is-discrete-id-path-is-discrete uses (extext funext)
+#def is-discrete-id-path-is-discrete uses (extext)
   ( A : U)
   ( is-discrete-A : is-discrete A)
   ( x y : A)
@@ -2310,5 +2265,4 @@ commutes with actions on morphisms.
   ( is-discrete-hom-is-segal A
     ( is-segal-is-discrete extext A is-discrete-A)
     ( x) ( y))
-
 ```

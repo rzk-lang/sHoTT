@@ -967,3 +967,40 @@ Finally, we conclude:
   : is-segal A
   := is-contr-hom2-is-discrete A is-discrete-A
 ```
+
+## Naturality for hom-eq
+
+`#!rzk hom-eq` commute with `#!rzk ap-hom`.
+
+```rzk
+#def hom-eq-naturality
+  ( A B : U)
+  ( f : A → B)
+  ( x y : A)
+  ( p : x = y)
+  :
+  comp (x = y) (hom A x y) (hom B (f x) (f y))
+    ( ap-hom A B f x y)
+    ( hom-eq A x y)
+    ( p)
+  =
+  comp (x = y) ((f x) = (f y)) (hom B (f x) (f y))
+    ( hom-eq B (f x) (f y))
+    ( ap A B x y f)
+    ( p)
+  :=
+    ind-path A x
+      ( \ y' p' →
+        comp (x = y') (hom A x y') (hom B (f x) (f y'))
+          ( ap-hom A B f x y')
+          ( hom-eq A x y')
+          ( p')
+        =
+        comp (x = y') ((f x) = (f y')) (hom B (f x) (f y'))
+          ( hom-eq B (f x) (f y'))
+          ( ap A B x y' f)
+          ( p'))
+      ( functors-pres-id extext A B f x)
+      ( y)
+      ( p)
+```

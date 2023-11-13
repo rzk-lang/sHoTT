@@ -948,6 +948,14 @@ dependent function types.
   := ind-path A x
        ( \ y p → is-equiv (C x) (C y) (transport A C x y p))
        ( is-equiv-identity (C x) )
+
+#def equiv-transport
+  ( A : U)
+  ( C : A → U)
+  ( x y : A)
+  ( p : x = y)
+  : Equiv (C x) (C y)
+  := (transport A C x y p , is-equiv-transport A C x y p)
 ```
 
 ## Equivalence is equivalence invariant

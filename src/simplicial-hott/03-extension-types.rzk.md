@@ -351,8 +351,8 @@ The original form.
         ( (t : χ) → X t [ψ t ↦ f t]))
   :=
     ( ( \ h → (\ t → h t , \ t → h t))
-    , ( ( \ (_f , g) t → g t , \ h → refl)
-      , ( ( \ (_f , g) t → g t , \ h → refl))))
+    , ( ( \ (_ , g) t → g t , \ _ → refl)
+      , ( ( \ (_ , g) t → g t , \ _ → refl))))
 
 #def cofibration-composition-functorial
   ( I : CUBE)
@@ -395,8 +395,52 @@ A reformulated version via tope disjunction instead of inclusion (see
         , ( (t : χ) → X t [χ t ∧ ψ t ↦ f t]))
   :=
     ( ( \ h → (\ t → h t , \ t → h t))
-    , ( ( \ (_f , g) t → g t , \ h → refl)
-      , ( \ (_f , g) t → g t , \ h → refl)))
+    , ( ( \ (_ , g) t → g t , \ _ → refl)
+      , ( \ (_ , g) t → g t , \ _ → refl)))
+```
+
+Another variant is the following:
+
+```rzk
+#def cofibration-composition''
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ χ : ψ → TOPE)
+  ( A : ψ → U)
+  ( a : (t : I | ϕ t) → A t)
+  : Equiv
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( Σ ( b : (t : I | χ t) → A t [χ t ∧ ϕ t ↦ a t])
+      , (t : ψ) → A t [χ t ↦ b t , ϕ t ↦ a t])
+  :=
+  ( \ c → (\ t → c t , \ t → c t)
+  , ( ( \ (_ , c) t → c t
+      , \ _ → refl)
+    , ( \ (_ , c) t → c t
+      , \ _ → refl)))
+
+#def cofibration-composition-functorial''
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ χ : ψ → TOPE)
+  ( A' A : (t : I | ϕ t ∨ ψ t) → U)
+  ( α : (t : I | ϕ t ∨ ψ t) → A' t → A t)
+  ( a' : (t : I | ϕ t) → A' t)
+  : Equiv-of-maps
+    ( (t : ψ) → A' t [ϕ t ↦ a' t])
+    ( (t : ψ) → A t [ϕ t ↦ α t (a' t)])
+    ( \ c t → α t (c t))
+    ( Σ ( b' : (t : I | χ t) → A' t [χ t ∧ ϕ t ↦ a' t])
+      , (t : ψ) → A' t [χ t ↦ b' t , ϕ t ↦ a' t])
+    ( Σ ( b : (t : I | χ t) → A t [χ t ∧ ϕ t ↦ α t (a' t)])
+      , (t : ψ) → A t [χ t ↦ b t , ϕ t ↦ α t (a' t)])
+    ( \ (b , c) → (\ t → α t (b t) , \ t → α t (c t)))
+  :=
+  ( ( ( first (cofibration-composition'' I ψ ϕ χ A' a')
+      , first (cofibration-composition'' I ψ ϕ χ A (\ t → α t (a' t))))
+    , \ _ → refl)
+  , ( second (cofibration-composition'' I ψ ϕ χ A' a')
+    , second (cofibration-composition'' I ψ ϕ χ A (\ t → α t (a' t)))))
 ```
 
 ```rzk title="RS17, Theorem 4.5"

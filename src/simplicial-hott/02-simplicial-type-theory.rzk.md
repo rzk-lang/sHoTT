@@ -530,9 +530,7 @@ For example the pair `{00} ⊂ Δ²` is a retract of `{0} × Δ¹ ⊂ Δ¹ × Δ
 
 ```
 
-For completeness we verify that the intesection `Δ² ∧ {0}×Δ¹`
-is indeed `{00}`.
-
+For completeness we verify that the intesection `Δ² ∧ {0}×Δ¹` is indeed `{00}`.
 
 ```rzk
 #def verify-functorial-retract-0-Δ²-0Δ¹-Δ¹×Δ¹

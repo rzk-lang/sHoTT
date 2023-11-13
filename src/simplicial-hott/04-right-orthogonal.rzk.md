@@ -171,9 +171,13 @@ occasionally go back or forth along the functorial equivalence
 #def is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape uses (is-orth-ψ-ϕ)
   : is-homotopy-cartesian
     ( ϕ → A')
-    ( \ σ' → Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]), ( t : ψ) → A' [χ t ↦ τ' t])
+    ( \ σ' →
+      Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t])
+      , ( t : ψ) → A' [χ t ↦ τ' t])
     ( ϕ → A)
-    ( \ σ → Σ ( τ : (t : χ) → A [ϕ t ↦ σ t]), ( t : ψ) → A [χ t ↦ τ t])
+    ( \ σ →
+      Σ ( τ : (t : χ) → A [ϕ t ↦ σ t])
+      , ( t : ψ) → A [χ t ↦ τ t])
     ( \ σ' t → α (σ' t))
     ( \ _ (τ', υ') → ( \ t → α (τ' t), \ t → α (υ' t) ))
   :=
@@ -572,20 +576,47 @@ retract of it, then `ζ ⊂ χ` is also left orthogonal.
     ( \ τ' υ →
       ( transport
         ( (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
-        (\ σ → (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ σ t])
+        ( \ σ → (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ σ t])
         ( \ t → α (s A' σ' t))
-        ( \ t → s A ( \ t' → α (σ' t')) t)
+        ( s A ( \ t → α (σ' t)))
         ( h A' A α σ')
         ( \ t → α ( υ t))))
-    ( ( S A' σ'
-      , S A (\ t → α (σ' t)))
+    ( ( S A' σ' , S A (\ t → α (σ' t)))
     , H A' A α σ')
-    ( undefined)
-
-
-
-
-
+    ( second
+      ( equiv-comp
+      ( Σ ( τ' : (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
+      , (t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
+      ( Σ ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+          , (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
+        ( Σ ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+          , (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
+        ( ( \ (τ' , υ') →
+            ( (\ t → α (τ' t))
+            , (\ t → α (υ' t))))
+        , ( is-equiv-Equiv-is-equiv'
+            ( (t : ψ) → A' [ϕ t ↦ s A' σ' t])
+            ( (t : ψ) → A [ϕ t ↦ α (s A' σ' t)])
+            ( \ υ' t → α (υ' t))
+            ( Σ ( τ' : (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
+              , (t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
+            ( Σ ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+              , (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
+              ( \ (τ' , υ') → ( (\ t → α (τ' t)) , (\ t → α (υ' t))))
+              ( cofibration-composition-functorial'' I ψ ϕ χ
+                (\ _ → A') (\ _ → A) (\ _ → α) (s A' σ'))
+            ( is-orth-ψ-ϕ (s A' σ'))))
+        ( total-equiv-family-of-equiv
+          ( (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+          ( \ τ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
+          ( \ τ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
+          ( \ τ →
+            equiv-transport
+            ( (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+            ( \ σ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ σ t])
+            ( \ t → α (s A' σ' t))
+            ( s A (\ t → α (σ' t)))
+            ( h A' A α σ')))))
 ```
 
 ## Stability properties of right orthogonal maps

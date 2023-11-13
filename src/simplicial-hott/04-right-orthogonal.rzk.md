@@ -488,7 +488,8 @@ stability under pushout products.
 ### Functorial isomorphisms
 
 If two pairs of shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ` are (functorially)
-isomorphic, then `ϕ ⊂ ψ` is left orthogonal if and only if `ζ ⊂ χ` is left orthogonal.
+isomorphic, then `ϕ ⊂ ψ` is left orthogonal if and only if `ζ ⊂ χ` is left
+orthogonal.
 
 ```rzk
 #def is-right-orthogonal-to-shape-isomorphism'

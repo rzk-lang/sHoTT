@@ -840,7 +840,7 @@ arrows.
 ## Representable isos
 
 ```rzk
-#def inverse-equiv-iso-representable -- helper to get the fiberwise inverse and the homotopies. this carries all the information from the equivalence
+#def inverse-equiv-iso-representable
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -852,7 +852,7 @@ arrows.
               ( first ( ψ x))
               ( second ( ψ x)))
 
-#def map-equiv-iso-representable -- helper to get map in the fiberwise equiv for the specified direction
+#def map-equiv-iso-representable
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -860,7 +860,7 @@ arrows.
   : ( x : A) → ( hom A a x) → ( hom A a' x)
   := \ x → first ( ψ x)
 
-#def inv-map-equiv-iso-representable -- helper to get inverse of map in the fiberwise equiv for the specified direction
+#def inv-map-equiv-iso-representable
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -868,7 +868,7 @@ arrows.
   : ( x : A) → ( hom A a' x) → ( hom A a x)
   := \ x → first ( ( inverse-equiv-iso-representable A is-segal-A a a' ψ) x)
 
-#def arrow-map-equiv-iso-representable -- helper to get the arrow from the
+#def arrow-map-equiv-iso-representable
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -876,7 +876,7 @@ arrows.
   : hom A a' a
   := evid A a ( hom A a') ( map-equiv-iso-representable A is-segal-A a a' ψ)
 
-#def arrow-inv-map-equiv-iso-representable -- helper to get the arrow from the
+#def arrow-inv-map-equiv-iso-representable
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -893,7 +893,7 @@ We now show that `arrow-map-equiv-iso-representable` has a retraction
  `arrow-inv-map-equiv-iso-representable`
 
 ```rzk
-#def htpy-comp-inv-map-equiv-map-equiv-iso-representable --homotopy for a one composition
+#def htpy-comp-inv-map-equiv-map-equiv
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -912,7 +912,7 @@ We now show that `arrow-map-equiv-iso-representable` has a retraction
     \ x
     → first ( second ( inverse-equiv-iso-representable A is-segal-A a a' ψ x))
 
-#def htpy-comp-map-equiv-inv-map-equiv-iso-representable --homotopy for a other composition
+#def htpy-comp-map-equiv-inv-map-equiv
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -930,4 +930,298 @@ We now show that `arrow-map-equiv-iso-representable` has a retraction
   :=
     \ x
     → second ( second ( inverse-equiv-iso-representable A is-segal-A a a' ψ x))
+
+#def compute-htpy-comp-map-equiv-inv-map-equiv
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : map-equiv-iso-representable A is-segal-A a a' ψ a'
+       ( ( inv-map-equiv-iso-representable A is-segal-A a a' ψ a')
+            ( id-hom A a'))
+    = id-hom A a'
+  := htpy-comp-map-equiv-inv-map-equiv A is-segal-A a a' ψ a' ( id-hom A a')
+
+#def compute-htpy-comp-inv-map-equiv-map-equiv -- p1
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : inv-map-equiv-iso-representable A is-segal-A a a' ψ a
+      ( ( map-equiv-iso-representable A is-segal-A a a' ψ a) ( id-hom A a))
+    = id-hom A a
+  := htpy-comp-inv-map-equiv-map-equiv A is-segal-A a a' ψ a ( id-hom A a)
+
+#def eq-inv-map-equiv-arrow-maps-equiv --p2
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : inv-map-equiv-iso-representable A is-segal-A a a' ψ a
+      ( ( map-equiv-iso-representable A is-segal-A a a' ψ a)
+          ( id-hom A a))
+    =
+    inv-map-equiv-iso-representable A is-segal-A a a' ψ a
+      ( comp-is-segal
+          ( A)
+          ( is-segal-A)
+          ( a')
+          ( a)
+          ( a)
+          ( arrow-map-equiv-iso-representable
+              ( A)
+              ( is-segal-A)
+              ( a)
+              ( a')
+              ( ψ))
+          ( id-hom A a))
+  :=
+      ap
+       ( hom A a' a)
+       ( hom A a a)
+       ( map-equiv-iso-representable A is-segal-A a a' ψ a ( id-hom A a))
+       ( comp-is-segal
+            ( A)
+            ( is-segal-A)
+            ( a')
+            ( a)
+            ( a)
+            ( arrow-map-equiv-iso-representable
+                ( A)
+                ( is-segal-A)
+                ( a)
+                ( a')
+                ( ψ))
+            ( id-hom A a))
+       ( inv-map-equiv-iso-representable A is-segal-A a a' ψ a)
+       ( eq-compute-precomposition-evid
+          ( funext)
+          ( A)
+          ( is-segal-A)
+          ( a)
+          ( a')
+          ( map-equiv-iso-representable A is-segal-A a a' ψ)
+          ( a)
+          ( id-hom A a))
+
+#def eq-inv-map-equiv-arrow-maps-equiv2 --p3
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : inv-map-equiv-iso-representable A is-segal-A a a' ψ a
+      ( comp-is-segal
+            ( A)
+            ( is-segal-A)
+            ( a')
+            ( a)
+            ( a)
+            ( arrow-map-equiv-iso-representable
+                ( A)
+                ( is-segal-A)
+                ( a)
+                ( a')
+                ( ψ))
+            ( id-hom A a))
+    =
+    comp-is-segal
+      ( A)
+      ( is-segal-A)
+      ( a)
+      ( a')
+      ( a)
+      ( arrow-inv-map-equiv-iso-representable
+          ( A)
+          ( is-segal-A)
+          ( a)
+          ( a')
+          ( ψ))
+      ( comp-is-segal
+          ( A)
+          ( is-segal-A)
+          ( a')
+          ( a)
+          ( a)
+          ( arrow-map-equiv-iso-representable
+              ( A)
+              ( is-segal-A)
+              ( a)
+              ( a')
+              ( ψ))
+          ( id-hom A a))
+  :=
+      eq-compute-precomposition-evid
+          ( funext)
+          ( A)
+          ( is-segal-A)
+          ( a')
+          ( a)
+          ( inv-map-equiv-iso-representable A is-segal-A a a' ψ)
+          ( a)
+          ( comp-is-segal
+              ( A)
+              ( is-segal-A)
+              ( a')
+              ( a)
+              ( a)
+              ( arrow-map-equiv-iso-representable
+                  ( A)
+                  ( is-segal-A)
+                  ( a)
+                  ( a')
+                  ( ψ))
+              ( id-hom A a))
+
+#def eq-inv-map-equiv-arrow-maps-equiv3 --p4
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : comp-is-segal
+      ( A)
+      ( is-segal-A)
+      ( a)
+      ( a)
+      ( a)
+      ( comp-is-segal
+          ( A)
+          ( is-segal-A)
+          ( a)
+          ( a')
+          ( a)
+          ( arrow-inv-map-equiv-iso-representable
+              ( A)
+              ( is-segal-A)
+              ( a)
+              ( a')
+              ( ψ))
+          ( arrow-map-equiv-iso-representable
+              ( A)
+              ( is-segal-A)
+              ( a)
+              ( a')
+              ( ψ)))
+      ( id-hom A a)
+    =
+    comp-is-segal
+      ( A)
+      ( is-segal-A)
+      ( a)
+      ( a')
+      ( a)
+      ( arrow-inv-map-equiv-iso-representable
+          ( A)
+          ( is-segal-A)
+          ( a)
+          ( a')
+          ( ψ))
+      ( comp-is-segal
+          ( A)
+          ( is-segal-A)
+          ( a')
+          ( a)
+          ( a)
+          ( arrow-map-equiv-iso-representable
+              ( A)
+              ( is-segal-A)
+              ( a)
+              ( a')
+              ( ψ))
+          ( id-hom A a))
+  :=
+      associative-is-segal
+        ( extext)
+        ( A)
+        ( is-segal-A)
+        ( a)
+        ( a')
+        ( a)
+        ( a)
+        ( arrow-inv-map-equiv-iso-representable
+            ( A)
+            ( is-segal-A)
+            ( a)
+            ( a')
+            ( ψ))
+        ( arrow-map-equiv-iso-representable
+              ( A)
+              ( is-segal-A)
+              ( a)
+              ( a')
+              ( ψ))
+        ( id-hom A a)
+
+#def eq-inv-map-equiv-arrow-maps-equiv4 --p5
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : comp-is-segal
+      ( A)
+      ( is-segal-A)
+      ( a)
+      ( a)
+      ( a)
+      ( comp-is-segal
+          ( A)
+          ( is-segal-A)
+          ( a)
+          ( a')
+          ( a)
+          ( arrow-inv-map-equiv-iso-representable
+              ( A)
+              ( is-segal-A)
+              ( a)
+              ( a')
+              ( ψ))
+          ( arrow-map-equiv-iso-representable
+              ( A)
+              ( is-segal-A)
+              ( a)
+              ( a')
+              ( ψ)))
+      ( id-hom A a)
+    =
+    ( comp-is-segal
+        ( A)
+        ( is-segal-A)
+        ( a)
+        ( a')
+        ( a)
+        ( arrow-inv-map-equiv-iso-representable
+            ( A)
+            ( is-segal-A)
+            ( a)
+            ( a')
+            ( ψ))
+        ( arrow-map-equiv-iso-representable
+            ( A)
+            ( is-segal-A)
+            ( a)
+            ( a')
+            ( ψ)))
+  :=
+    comp-id-is-segal
+      ( A)
+      ( is-segal-A)
+      ( a)
+      ( a)
+      ( comp-is-segal
+        ( A)
+        ( is-segal-A)
+        ( a)
+        ( a')
+        ( a)
+        ( arrow-inv-map-equiv-iso-representable
+            ( A)
+            ( is-segal-A)
+            ( a)
+            ( a')
+            ( ψ))
+        ( arrow-map-equiv-iso-representable
+            ( A)
+            ( is-segal-A)
+            ( a)
+            ( a')
+            ( ψ)))
 ```

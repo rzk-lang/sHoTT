@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../03-extension-types.rzk/">
+      
+      
+        <link rel="next" href="../05-segal-types.rzk/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>4a. Right orthogonal fibrations - Simplicial HoTT</title>
+        <title>Right Orthogonal Fibrations - Simplicial HoTT</title>
       
     
     
@@ -109,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              4a. Right orthogonal fibrations
+              Right Orthogonal Fibrations
             
           </span>
         </div>
@@ -632,19 +636,21 @@
       
   
   
+    
+  
   
     
     
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
@@ -657,7 +663,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Simplicial HoTT
@@ -708,9 +714,29 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../right-orthogonal/04-right-orthogonal.rzk.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Right Orthogonal Fibrations
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -719,6 +745,232 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#right-orthogonal-maps-with-respect-to-shapes" class="md-nav__link">
+    Right orthogonal maps with respect to shapes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contractible-relative-extension-types" class="md-nav__link">
+    Contractible relative extension types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stability-properties-of-left-orthogonal-shape-inclusions" class="md-nav__link">
+    Stability properties of left orthogonal shape inclusions
+  </a>
+  
+    <nav class="md-nav" aria-label="Stability properties of left orthogonal shape inclusions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#over-an-intermediate-shape" class="md-nav__link">
+    Σ over an intermediate shape
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composition" class="md-nav__link">
+    Composition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cancellation" class="md-nav__link">
+    Cancellation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transposition" class="md-nav__link">
+    Transposition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exponentiation" class="md-nav__link">
+    Exponentiation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exact-pushouts" class="md-nav__link">
+    Exact pushouts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pushout-products" class="md-nav__link">
+    Pushout products
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functorial-isomorphisms-of-shape-inclusion" class="md-nav__link">
+    Functorial isomorphisms of shape inclusion
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stability-properties-of-right-orthogonal-maps" class="md-nav__link">
+    Stability properties of right orthogonal maps
+  </a>
+  
+    <nav class="md-nav" aria-label="Stability properties of right orthogonal maps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equivalences-are-right-orthogonal" class="md-nav__link">
+    Equivalences are right orthogonal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composition_1" class="md-nav__link">
+    Composition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#right-cancellation" class="md-nav__link">
+    Right cancellation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#left-cancellation-with-section" class="md-nav__link">
+    Left cancellation with section
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pullback" class="md-nav__link">
+    Pullback
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stability-under-equivalence" class="md-nav__link">
+    Stability under equivalence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-with-unique-extension" class="md-nav__link">
+    Types with unique extension
+  </a>
+  
+    <nav class="md-nav" aria-label="Types with unique extension">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unique-extensions-types-are-local-types" class="md-nav__link">
+    Unique extensions types are local types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties-of-local-types-unique-extension-types" class="md-nav__link">
+    Properties of local types / unique extension types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unique-extension-types-are-types-with-right-orthogonal-terminal-map" class="md-nav__link">
+    Unique extension types are types with right orthogonal terminal map
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fibers-of-right-orthogonal-maps" class="md-nav__link">
+    Fibers of right orthogonal maps
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anodyne-shape-inclusions" class="md-nav__link">
+    Anodyne shape inclusions
+  </a>
+  
+    <nav class="md-nav" aria-label="Anodyne shape inclusions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#weak-anodyne-shape-inclusions" class="md-nav__link">
+    Weak anodyne shape inclusions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2412,6 +2664,44 @@ analog fo weak anodyne shape inclusions.</p>
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../03-extension-types.rzk/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Extension Types" rel="prev">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Extension Types
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../05-segal-types.rzk/" class="md-footer__link md-footer__link--next" aria-label="Next: Segal Types" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Segal Types
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">

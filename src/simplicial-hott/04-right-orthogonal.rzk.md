@@ -937,6 +937,57 @@ orthogonal to `ϕ ⊂ ψ`, then so is the other.
 #end is-right-orthogonal-equiv-to-shape
 ```
 
+### Exponentiation / product types
+
+Let `α : A' → A` be right orthogonal to `ϕ ⊂ ψ`. Then the same is true for the
+induced map `(X → A') → (X → A)` for any type `X`. More generally, if
+`α x : A' x → A x` is a right orthogonal map for each `x : X`, then so is the
+map on dependent products `Π α : Π A' → Π A`.
+
+```rzk
+#def is-right-orthogonal-Π-to-shape uses (funext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( X : U)
+  ( A' A : X → U)
+  ( α : (x : X) → (A' x) → (A x))
+  ( are-right-orth-ψ-ϕ-α
+    : (x : X) → is-right-orthogonal-to-shape I ψ ϕ (A' x) (A x) (α x))
+  : is-right-orthogonal-to-shape I ψ ϕ
+    ( (x : X) → A' x)
+    ( (x : X) → A x)
+    ( \ a' x → α x (a' x))
+  :=
+  \ σ' →
+    is-equiv-Equiv-is-equiv
+    ( (t : ψ) → ((x : X) → A' x) [ϕ t ↦ σ' t])
+    ( (t : ψ) → ((x : X) → A x) [ϕ t ↦ \ x → α x (σ' t x)])
+    ( \ τ' t x → α x (τ' t x))
+    ( (x : X) → (t : ψ) → A' x [ϕ t ↦ σ' t x])
+    ( (x : X) → (t : ψ) → A x [ϕ t ↦ α x (σ' t x)])
+    ( \ τ' x t → α x (τ' x t))
+    ( flip-ext-fun-functorial I ψ ϕ X
+      (\ _ → A') (\ _ → A) (\ _ → α)
+      ( σ'))
+    ( is-equiv-function-is-equiv-family funext X
+      ( \ x → (t : ψ) → A' x [ϕ t ↦ σ' t x])
+      ( \ x → (t : ψ) → A x [ϕ t ↦ α x (σ' t x)])
+      ( \ x τ' t → α x (τ' t))
+      ( \ x → are-right-orth-ψ-ϕ-α x ( \ t → σ' t x)))
+```
+
+### Sigma types
+
+Warning: It is _not_ true that right orthogonal maps are preserved under
+dependent sums.
+
+Indeed, every map `f: A → B` can be written as
+`Σ (b : B) , fib f b → Σ (b : B) , Unit`; and it is not true that `f` is right
+orthogonal if and only if each `fib f b → Unit` is right orthogonal. For
+example, the map `{0} → Δ¹` is not a left fibration even though its fibers are
+all left fibrant (i.e. discrete).
+
 ## Types with unique extension
 
 We say that an type `A` has unique extensions for a shape inclusion `ϕ ⊂ ψ`, if

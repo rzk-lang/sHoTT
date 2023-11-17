@@ -309,8 +309,6 @@ The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
 `{1} ⊂ right-leg-of-Λ` of `Λ`.
 
 ```rzk
-#def right-leg-of-Λ : Λ → TOPE
-  := \ (t, s) → t ≡ 1₂
 
 #def is-equiv-Δ¹-to-right-leg-of-Λ-rel-start
   ( B : U)

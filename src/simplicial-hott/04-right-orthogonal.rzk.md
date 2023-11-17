@@ -12,7 +12,6 @@ Some of the definitions in this file rely on extension extensionality or
 function extensionality:
 
 ```rzk
-#assume naiveextext : NaiveExtExt
 #assume extext : ExtExt
 #assume funext : FunExt
 ```
@@ -331,7 +330,7 @@ The following proof uses a lot of currying and uncurrying and relies extension
 extensionality.
 
 ```rzk
-#def is-right-orthogonal-to-shape-product uses (naiveextext)
+#def is-right-orthogonal-to-shape-product uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( J : CUBE)
@@ -348,7 +347,7 @@ extensionality.
             ( t, s) →
           ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         , \ ( τ' : ( (t , s) : J × I | χ t ∧ ψ s) → A' [ϕ s ↦ σ' (t , s)]) →
-            naiveextext
+            naiveextext-extext extext
               ( J × I) ( \ (t , s) → χ t ∧ ψ s) ( \ (t , s) → χ t ∧ ϕ s)
               ( \ _ → A')
               ( \ ( t,s) → σ' (t , s))
@@ -368,7 +367,7 @@ extensionality.
             ( t, s) →
           ( first (second (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         , \ ( τ : ( (t , s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t , s))]) →
-            naiveextext
+            naiveextext-extext extext
               ( J × I) ( \ (t , s) → χ t ∧ ψ s) ( \ (t , s) → χ t ∧ ϕ s)
               ( \ _ → A)
               ( \ (t , s) → α (σ' (t , s)))
@@ -387,7 +386,7 @@ extensionality.
                     ( \ s' → τ (t, s')))
                   ( s))))
 
-#def is-right-orthogonal-to-shape-product' uses (naiveextext)
+#def is-right-orthogonal-to-shape-product' uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( I : CUBE)
@@ -436,7 +435,7 @@ Combining the stability under pushouts and crossing with a shape, we get
 stability under pushout products.
 
 ```rzk
-#def is-right-orthogonal-to-shape-pushout-product uses (naiveextext)
+#def is-right-orthogonal-to-shape-pushout-product uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( J : CUBE)
@@ -463,7 +462,7 @@ stability under pushout products.
     ( is-right-orthogonal-to-shape-product A' A α J χ I ψ ϕ
       ( is-orth-ψ-ϕ))
 
-#def is-right-orthogonal-to-shape-pushout-product' uses (naiveextext)
+#def is-right-orthogonal-to-shape-pushout-product' uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( I : CUBE)
@@ -1373,7 +1372,7 @@ conditions of being anodyne.
     ( is-right-orthogonal-to-shape-right-cancel-retract A' A α I ψ χ ϕ
       ( f A' A α is-orth₀) ( r))
 
-#def is-anodyne-pushout-product-for-shape uses (naiveextext)
+#def is-anodyne-pushout-product-for-shape uses (extext)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
@@ -1389,7 +1388,7 @@ conditions of being anodyne.
     ( is-right-orthogonal-to-shape-pushout-product A' A α J χ ζ I ψ ϕ
       ( f A' A α is-orth₀))
 
-#def is-anodyne-pushout-product-for-shape' uses (naiveextext)
+#def is-anodyne-pushout-product-for-shape' uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
@@ -1472,8 +1471,7 @@ analog fo weak anodyne shape inclusions.
       ( is-right-orthogonal-terminal-map-has-unique-extensions I ψ ϕ A
         has-ue-ψ-ϕ))
 
-#def is-weak-anodyne-pushout-product-for-shape
-  uses (naiveextext extext)
+#def is-weak-anodyne-pushout-product-for-shape uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
@@ -1493,8 +1491,7 @@ analog fo weak anodyne shape inclusions.
       is-right-orthogonal-to-shape-pushout-product A'₁ A₁ α₁ J χ ζ I ψ ϕ)
     ( A) (f A has-ue₀)
 
-#def is-weak-anodyne-pushout-product-for-shape'
-  uses (naiveextext extext)
+#def is-weak-anodyne-pushout-product-for-shape' uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )

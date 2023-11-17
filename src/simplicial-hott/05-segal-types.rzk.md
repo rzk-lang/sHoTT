@@ -1671,6 +1671,43 @@ Interchange law
 #end homotopy-interchange-law
 ```
 
+## Inner anodyne shape inclusions
+
+An **inner fibration** is a map `α : A' → A` which is right orthogonal to
+`Λ ⊂ Δ²`. This is the relative notion of a Segal type.
+
+```rzk
+#def is-inner-fibration
+  ( A' A : U)
+  ( α : A' → A)
+  : U
+  := is-right-orthogonal-to-shape (2 × 2) Δ² (\ t → Λ t) A' A α
+```
+
+We say that a shape inclusion `ϕ ⊂ ψ` is **inner anodyne** if it is anodyne for
+`Λ ⊂ Δ²`, i.e., if every inner fibration `A' → A` is right orthogonal to
+`ϕ ⊂ ψ`.
+
+```rzk
+#def is-inner-anodyne
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  : U
+  := is-anodyne-for-shape (2 × 2) (Δ²) (\ t → Λ t) I ψ ϕ
+
+#def unpack-is-inner-anodyne
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  : is-inner-anodyne I ψ ϕ
+  = ( (A' : U) → (A : U) → (α : A' → A)
+    → is-inner-fibration A' A α
+    → is-right-orthogonal-to-shape I ψ ϕ A' A α)
+  := refl
+
+```
+
 ## Weak inner anodyne shape inclusions
 
 We say that a shape inclusion `ϕ ⊂ ψ` is **weak inner anodyne** if every Segal
@@ -1869,19 +1906,6 @@ It should be easy to adapt it to prove that it is actually inner anodyne.
         ( A)
         ( is-segal-A)
         ( h^ A h))
-```
-
-## Inner fibrations
-
-An inner fibration is a map `α : A' → A` which is right orthogonal to `Λ ⊂ Δ²`.
-This is the relative notion of a Segal type.
-
-```rzk
-#def is-inner-fibration
-  ( A' A : U)
-  ( α : A' → A)
-  : U
-  := is-right-orthogonal-to-shape (2 × 2) Δ² (\ t → Λ t) A' A α
 ```
 
 ## Products of Segal types

@@ -1051,9 +1051,10 @@
 <p>This is a literate <code>rzk</code> file:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nd">#lang</span><span class="p"> </span><span class="s">rzk-1</span>
 </span></code></pre></div>
-<p>Some definitions make use of function extentionality.</p>
+<p>Some definitions make use of function extentionality and extension
+extensionality.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">#assume</span><span class="p"> </span>funext<span class="err"> : FunExt</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kr">#assume</span><span class="p"> </span>naiveextext<span class="err"> : NaiveExtExt</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kr">#assume</span><span class="p"> </span>extext<span class="err"> : ExtExt</span>
 </span></code></pre></div>
 <h2 id="definition-limits-and-colimits">Definition limits and colimits<a class="headerlink" href="#definition-limits-and-colimits" title="Permanent link">&para;</a></h2>
 <p>Given a function <code class="language-rzk highlight"><span class="err">f : A → B</span></code> and <code class="language-rzk highlight"><span class="err">b:B</span></code> we define the type of cones
@@ -1264,14 +1265,14 @@ When <code class="language-rzk highlight"><span class="err">is-segal B</span></c
 </span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="err">        ( f))</span>
 </span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="err">    ( </span><span class="p">\ </span>b <span class="err">→ constant A B b)</span>
 </span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>
-</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-cocone-is-segal" id="define:is-segal-cocone-is-segal" style="visibility: visible; position: relative; color: inherit">is-segal-cocone-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-cocone-is-segal" id="define:is-segal-cocone-is-segal" style="visibility: visible; position: relative; color: inherit">is-segal-cocone-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext extext<span class="p">)</span>
 </span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a><span class="err">  </span><span class="p">( </span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
 </span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
 </span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a><span class="err">  : is-segal ( cocone A B f)</span>
 </span><span id="__span-13-26"><a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a><span class="err">  :=</span>
 </span><span id="__span-13-27"><a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a><span class="err">    is-segal-total-type-covariant-family-is-segal-base</span>
-</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a><span class="err">    ( naiveextext)</span>
+</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a><span class="err">    ( extext)</span>
 </span><span id="__span-13-29"><a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a><span class="err">    ( B)</span>
 </span><span id="__span-13-30"><a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a><span class="err">    ( family-cocone A B f)</span>
 </span><span id="__span-13-31"><a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a><span class="err">    ( is-covariant-family-cone-is-segal</span>
@@ -1282,7 +1283,7 @@ When <code class="language-rzk highlight"><span class="err">is-segal B</span></c
 </span><span id="__span-13-36"><a id="__codelineno-13-36" name="__codelineno-13-36" href="#__codelineno-13-36"></a><span class="err">    ( is-segal-B)</span>
 </span></code></pre></div>
 <p>Colimits are unique up to isomorphism.</p>
-<div class="language-rzk highlight"><span class="filename">BM, Corollary 1 (i)</span><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:iso-colimit-is-segal" id="define:iso-colimit-is-segal" style="visibility: visible; position: relative; color: inherit">iso-colimit-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span> naiveextext funext<span class="p">)</span>
+<div class="language-rzk highlight"><span class="filename">BM, Corollary 1 (i)</span><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:iso-colimit-is-segal" id="define:iso-colimit-is-segal" style="visibility: visible; position: relative; color: inherit">iso-colimit-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span> extext funext<span class="p">)</span>
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="err">  </span><span class="p">( </span>is-segal-B <span class="p">:</span><span class="err"> is-segal B)</span>
 </span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>

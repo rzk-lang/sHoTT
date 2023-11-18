@@ -837,7 +837,7 @@ arrows.
       ( e)
 ```
 
-## Representable isos
+## Representable isomorphisms.
 
 ```rzk
 #def inverse-equiv-iso-representable
@@ -889,8 +889,8 @@ arrows.
       ( hom A a)
       ( inv-map-equiv-iso-representable  A is-segal-A a a' ψ)
 ```
-We now show that `arrow-map-equiv-iso-representable` has a retraction
- `arrow-inv-map-equiv-iso-representable`
+We now show that `arrow-map-equiv-iso-representable` section
+ `arrow-inv-map-equiv-iso-representable`.
 
 ```rzk
 #def htpy-comp-inv-map-equiv-map-equiv
@@ -930,18 +930,10 @@ We now show that `arrow-map-equiv-iso-representable` has a retraction
   :=
     \ x
     → second ( second ( inverse-equiv-iso-representable A is-segal-A a a' ψ x))
+```
+We compute the required paths for the section of `#rzk arrow-map-iso-representable`.
 
-#def compute-htpy-comp-map-equiv-inv-map-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : map-equiv-iso-representable A is-segal-A a a' ψ a'
-       ( ( inv-map-equiv-iso-representable A is-segal-A a a' ψ a')
-            ( id-hom A a'))
-    = id-hom A a'
-  := htpy-comp-map-equiv-inv-map-equiv A is-segal-A a a' ψ a' ( id-hom A a')
-
+```rzk
 #def compute-htpy-comp-inv-map-equiv-map-equiv -- p1
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -1224,8 +1216,11 @@ We now show that `arrow-map-equiv-iso-representable` has a retraction
             ( a)
             ( a')
             ( ψ)))
+```
+Concatenate all the paths above.
 
-#def section-arrow-map-equiv-iso-representable2 uses ( extext funext)
+```rzk
+#def eq-comp-arrow-inv-map-arrow-map-equiv-iso-representable uses (extext funext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1448,4 +1443,28 @@ We now show that `arrow-map-equiv-iso-representable` has a retraction
                     ( id-hom A a)))
             ( eq-inv-map-equiv-arrow-maps-equiv1 A is-segal-A a a' ψ))
         ( compute-htpy-comp-inv-map-equiv-map-equiv A is-segal-A a a' ψ)
+```
+
+Now we give the section of `arrow-map-equiv-iso-representable`.
+
+```rzk
+#def section-arrow-map-iso-representable uses ( extext funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : Section-arrow
+      ( A)
+      ( is-segal-A)
+      ( a')
+      ( a)
+      ( arrow-map-equiv-iso-representable A is-segal-A a a' ψ)
+  :=
+      ( arrow-inv-map-equiv-iso-representable A is-segal-A a a' ψ
+      , eq-comp-arrow-inv-map-arrow-map-equiv-iso-representable
+          ( A)
+          ( is-segal-A)
+          ( a)
+          ( a')
+          ( ψ))
 ```

@@ -889,8 +889,9 @@ arrows.
       ( hom A a)
       ( inv-map-equiv-iso-representable  A is-segal-A a a' ψ)
 ```
+
 We now show that `arrow-map-equiv-iso-representable` section
- `arrow-inv-map-equiv-iso-representable`.
+`arrow-inv-map-equiv-iso-representable`.
 
 ```rzk
 #def htpy-comp-inv-map-equiv-map-equiv
@@ -911,30 +912,13 @@ We now show that `arrow-map-equiv-iso-representable` section
   :=
     \ x
     → first ( second ( inverse-equiv-iso-representable A is-segal-A a a' ψ x))
-
-#def htpy-comp-map-equiv-inv-map-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : ( x : A) → ( homotopy
-                  ( hom A a' x)
-                  ( hom A a' x)
-                  ( comp
-                      ( hom A a' x)
-                      ( hom A a x)
-                      ( hom A a' x)
-                      ( map-equiv-iso-representable A is-segal-A a a' ψ x)
-                      ( inv-map-equiv-iso-representable A is-segal-A a a' ψ x))
-                  ( identity ( hom A a' x)))
-  :=
-    \ x
-    → second ( second ( inverse-equiv-iso-representable A is-segal-A a a' ψ x))
 ```
-We compute the required paths for the section of `#rzk arrow-map-iso-representable`.
+
+We compute the required paths for the section of
+`arrow-map-iso-representable`.
 
 ```rzk
-#def compute-htpy-comp-inv-map-equiv-map-equiv -- p1
+#def compute-htpy-comp-inv-map-equiv-map-equiv
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -944,7 +928,7 @@ We compute the required paths for the section of `#rzk arrow-map-iso-representab
     = id-hom A a
   := htpy-comp-inv-map-equiv-map-equiv A is-segal-A a a' ψ a ( id-hom A a)
 
-#def eq-inv-map-equiv-arrow-maps-equiv1 --p2
+#def eq-inv-map-map-equiv-iso-inv-map-comp-arrow-map-idhom-a
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -996,7 +980,7 @@ We compute the required paths for the section of `#rzk arrow-map-iso-representab
           ( a)
           ( id-hom A a))
 
-#def eq-inv-map-equiv-arrow-maps-equiv2 --p3
+#def eq-inv-map-comp-arr-map-equiv-comp-arrow-inv-map-equiv-comp-arr-map-equiv
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1064,7 +1048,7 @@ We compute the required paths for the section of `#rzk arrow-map-iso-representab
                   ( ψ))
               ( id-hom A a))
 
-#def eq-inv-map-equiv-arrow-maps-equiv3 --p4
+#def eq-comp-comp-arrow-inv-map-arr-map-comp-arr-inv-map-comp-arr-map-idhom-a
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1143,7 +1127,7 @@ We compute the required paths for the section of `#rzk arrow-map-iso-representab
               ( ψ))
         ( id-hom A a)
 
-#def eq-inv-map-equiv-arrow-maps-equiv4 --p5
+#def eq-comp-comp-inv-map-equiv-arr-map-idhom-a-comp-arr-inv-map-arr-map
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1217,6 +1201,7 @@ We compute the required paths for the section of `#rzk arrow-map-iso-representab
             ( a')
             ( ψ)))
 ```
+
 Concatenate all the paths above.
 
 ```rzk
@@ -1378,8 +1363,18 @@ Concatenate all the paths above.
                     ( a)
                     ( a')
                     ( ψ)))
-            ( eq-inv-map-equiv-arrow-maps-equiv4 A is-segal-A a a' ψ))
-        ( eq-inv-map-equiv-arrow-maps-equiv3 A is-segal-A a a' ψ)
+            ( eq-comp-comp-inv-map-equiv-arr-map-idhom-a-comp-arr-inv-map-arr-map
+               ( A)
+               ( is-segal-A)
+               ( a)
+               ( a')
+               ( ψ)))
+        ( eq-comp-comp-arrow-inv-map-arr-map-comp-arr-inv-map-comp-arr-map-idhom-a
+            ( A)
+            ( is-segal-A)
+            ( a)
+            ( a')
+            ( ψ))
         ( rev
             ( hom A a a)
             ( inv-map-equiv-iso-representable A is-segal-A a a' ψ a
@@ -1421,7 +1416,12 @@ Concatenate all the paths above.
                         ( a')
                         ( ψ))
                     ( id-hom A a)) )
-            ( eq-inv-map-equiv-arrow-maps-equiv2 A is-segal-A a a' ψ))
+            ( eq-inv-map-comp-arr-map-equiv-comp-arrow-inv-map-equiv-comp-arr-map-equiv
+                ( A)
+                ( is-segal-A)
+                ( a)
+                ( a')
+                ( ψ)))
         ( rev
             ( hom A a a)
             ( inv-map-equiv-iso-representable A is-segal-A a a' ψ a
@@ -1441,7 +1441,12 @@ Concatenate all the paths above.
                         ( a')
                         ( ψ))
                     ( id-hom A a)))
-            ( eq-inv-map-equiv-arrow-maps-equiv1 A is-segal-A a a' ψ))
+            ( eq-inv-map-map-equiv-iso-inv-map-comp-arrow-map-idhom-a
+               ( A)
+               ( is-segal-A)
+               ( a)
+               ( a')
+               ( ψ)))
         ( compute-htpy-comp-inv-map-equiv-map-equiv A is-segal-A a a' ψ)
 ```
 
@@ -1468,3 +1473,4 @@ Now we give the section of `arrow-map-equiv-iso-representable`.
           ( a')
           ( ψ))
 ```
+

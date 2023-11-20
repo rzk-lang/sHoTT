@@ -944,8 +944,8 @@ In particular, every contractible type is Rezk
 
 ## Representable isomorphisms.
 
-We prove [RS17, Proposition 10.11]. We firs need to access the fiberwise equivalence
-with no extra data, and then define some helpers.
+We prove [RS17, Proposition 10.11]. We firs need to access the fiberwise
+equivalence with no extra data, and then define some helpers.
 
 ```rzk
 #def map-fiberwise-equiv

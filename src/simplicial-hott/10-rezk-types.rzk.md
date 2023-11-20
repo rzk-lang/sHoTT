@@ -890,8 +890,8 @@ arrows.
       ( inv-map-fiberwise-equiv  A is-segal-A a a' ψ)
 ```
 
-We now show that `arrow-map-fiberwise-equiv` has section
-`arrow-inv-map-fiberwise-equiv`.
+We now show that `#!rzk arrow-map-fiberwise-equiv` has section
+`#!rzk arrow-inv-map-fiberwise-equiv`.
 
 ```rzk
 #def htpy-inv-map-fib-equiv-map-fib-equiv-id
@@ -915,7 +915,7 @@ We now show that `arrow-map-fiberwise-equiv` has section
 ```
 
 We compute the required paths for the section of
-`arrow-map-fiberwise-equiv`.
+`#!rzk arrow-map-fiberwise-equiv`.
 
 ```rzk
 #def compute-htpy-inv-map-fib-equiv-map-fib-equiv-id
@@ -1270,7 +1270,7 @@ Concatenate all the paths above.
         ( compute-htpy-inv-map-fib-equiv-map-fib-equiv-id A is-segal-A a a' ψ)
 ```
 
-Now we give the section of `arrow-map-fiberwise-equiv`.
+Now we give the section of `#!rzk arrow-map-fiberwise-equiv`.
 
 ```rzk
 #def section-arrow-map-fiberwise-equiv uses ( extext funext)
@@ -1289,8 +1289,8 @@ Now we give the section of `arrow-map-fiberwise-equiv`.
       , eq-comp-arrow-inv-map-arrow-map-equiv-id-a A is-segal-A a a' ψ)
 ```
 
-We see that `arrow-map-fiberwise-equiv` has retraction
-`arrow-inv-map-fiberwise-equiv`.
+We see that `#!rzk arrow-map-fiberwise-equiv` has retraction
+`#!rzk arrow-inv-map-fiberwise-equiv`.
 
 ```rzk
 #def htpy-comp-map-fib-equiv-inv-map-fib-equiv
@@ -1312,8 +1312,9 @@ We see that `arrow-map-fiberwise-equiv` has retraction
     \ x
     → second ( second ( inverse-fiberwise-equiv A is-segal-A a a' ψ x))
 ```
+
 We compute the required paths for the retraction of
-`arrow-map-iso-representable`.
+`#!rzk arrow-map-iso-representable`.
 
 ```rzk
 #def compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv
@@ -1540,7 +1541,7 @@ Concatenate all the paths above.
         ( compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv A is-segal-A a a' ψ)
 ```
 
-Now we give the retraction of `arrow-map-fiberwise-equiv`.
+Now we give the retraction of `#!rzk arrow-map-fiberwise-equiv`.
 
 ```rzk
 #def retraction-arrow-map-fiberwise-equiv uses ( funext)
@@ -1566,7 +1567,7 @@ Now we give the retraction of `arrow-map-fiberwise-equiv`.
 
 We show that arrows from fiberwise equivalences are isomorphisms.
 
-```rzk tittle="RS17, Proposition 10.11 (i)"
+```rzk title="RS17, Proposition 10.11 (i)"
 #def representable-isomorphism uses ( extext funext)
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -1581,7 +1582,11 @@ We show that arrows from fiberwise equivalences are isomorphisms.
   :=
       ( retraction-arrow-map-fiberwise-equiv A is-segal-A a a' ψ
       , section-arrow-map-fiberwise-equiv A is-segal-A a a' ψ)
+```
 
+The second part of Proposition 10.11.
+
+```rzk title="RS17, Proposition 10.11 (ii)"
 #def eq-representable-isomorphism uses ( extext funext)
   ( A : U)
   ( is-rezk-A : is-rezk A)

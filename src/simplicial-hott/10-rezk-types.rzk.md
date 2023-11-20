@@ -890,8 +890,8 @@ arrows.
       ( inv-map-fiberwise-equiv  A is-segal-A a a' ψ)
 ```
 
-We now show that `arrow-map-equiv-iso-representable` section
-`arrow-inv-map-equiv-iso-representable`.
+We now show that `arrow-map-fiberwise-equiv` has section
+`arrow-inv-map-fiberwise-equiv`.
 
 ```rzk
 #def htpy-inv-map-fib-equiv-map-fib-equiv-id
@@ -915,7 +915,7 @@ We now show that `arrow-map-equiv-iso-representable` section
 ```
 
 We compute the required paths for the section of
-`arrow-map-iso-representable`.
+`arrow-map-fiberwise-equiv`.
 
 ```rzk
 #def compute-htpy-inv-map-fib-equiv-map-fib-equiv-id
@@ -1270,10 +1270,10 @@ Concatenate all the paths above.
         ( compute-htpy-inv-map-fib-equiv-map-fib-equiv-id A is-segal-A a a' ψ)
 ```
 
-Now we give the section of `arrow-map-equiv-iso-representable`.
+Now we give the section of `arrow-map-fiberwise-equiv`.
 
 ```rzk
-#def section-arrow-map-iso-representable uses ( extext funext)
+#def section-arrow-map-fiberwise-equiv uses ( extext funext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1289,8 +1289,8 @@ Now we give the section of `arrow-map-equiv-iso-representable`.
       , eq-comp-arrow-inv-map-arrow-map-equiv-id-a A is-segal-A a a' ψ)
 ```
 
-We see that `arrow-map-equiv-iso-representable` has retraction
-`arrow-inv-map-equiv-iso-representable`.
+We see that `arrow-map-fiberwise-equiv` has retraction
+`arrow-inv-map-fiberwise-equiv`.
 
 ```rzk
 #def htpy-comp-map-fib-equiv-inv-map-fib-equiv
@@ -1316,7 +1316,7 @@ We compute the required paths for the retraction of
 `arrow-map-iso-representable`.
 
 ```rzk
-#def compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv -- p1
+#def compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1325,9 +1325,16 @@ We compute the required paths for the retraction of
        ( ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a')
             ( id-hom A a'))
     = id-hom A a'
-  := htpy-comp-map-fib-equiv-inv-map-fib-equiv A is-segal-A a a' ψ a' ( id-hom A a')
+  := htpy-comp-map-fib-equiv-inv-map-fib-equiv
+      ( A)
+      ( is-segal-A)
+      ( a)
+      ( a')
+      ( ψ)
+      ( a')
+      ( id-hom A a')
 
-#def ap-map-fiberwise-equiv -- p2
+#def ap-map-fiberwise-equiv
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1369,7 +1376,7 @@ We compute the required paths for the retraction of
           ( a')
           ( id-hom A a'))
 
-#def ap-map-fiberwise-equiv-eq-arr-inv-map-id-a'-arr-inv-map -- p3
+#def ap-map-fiberwise-equiv-eq-arr-inv-map-id-a'-arr-inv-map
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1407,7 +1414,7 @@ We compute the required paths for the retraction of
             ( a')
             ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ))
 
-#def eq-compute-precomposition-evid-map-fiberwise-equiv -- p4
+#def eq-compute-precomposition-evid-map-fiberwise-equiv
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1533,10 +1540,10 @@ Concatenate all the paths above.
         ( compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv A is-segal-A a a' ψ)
 ```
 
-Now we give the retraction of `arrow-map-equiv-iso-representable`.
+Now we give the retraction of `arrow-map-fiberwise-equiv`.
 
 ```rzk
-#def retraction-arrow-map-equiv-iso-representable uses ( funext)
+#def retraction-arrow-map-fiberwise-equiv uses ( funext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a a' : A)
@@ -1557,4 +1564,36 @@ Now we give the retraction of `arrow-map-equiv-iso-representable`.
           ( ψ))
 ```
 
-We show that representable arrows are isomophisms.
+We show that arrows from fiberwise equivalences are isomorphisms.
+
+```rzk tittle="RS17, Proposition 10.11 (i)"
+#def representable-isomorphism uses ( extext funext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : is-iso-arrow
+      ( A)
+      ( is-segal-A)
+      ( a')
+      ( a)
+      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+  :=
+      ( retraction-arrow-map-fiberwise-equiv A is-segal-A a a' ψ
+      , section-arrow-map-fiberwise-equiv A is-segal-A a a' ψ)
+
+#def eq-representable-isomorphism uses ( extext funext)
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( a a' : A)
+  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  : a' = a
+  :=
+      eq-iso-is-rezk
+        ( A)
+        ( is-rezk-A)
+        ( a')
+        ( a)
+        ( arr-map-fiberwise-equiv A ( first is-rezk-A) a a' ψ
+        , representable-isomorphism A ( first is-rezk-A) a a' ψ)
+```

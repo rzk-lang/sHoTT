@@ -12,10 +12,8 @@ Some of the definitions in this file rely on extension extensionality or
 function extensionality:
 
 ```rzk
-#assume naiveextext : NaiveExtExt
 #assume extext : ExtExt
 #assume funext : FunExt
-#assume weakextext : WeakExtExt
 ```
 
 ## Right orthogonal maps with respect to shapes
@@ -193,7 +191,7 @@ occasionally go back or forth along the functorial equivalence
       ( is-orth-ψ-ϕ σ'))
 ```
 
-### Stability under composition
+### Composition
 
 Left orthogonal shape inclusions are preserved under composition.
 
@@ -229,7 +227,7 @@ Left orthogonal shape inclusions are preserved under composition.
           σ')
 ```
 
-### Cancellation laws
+### Cancellation
 
 If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so is `χ ⊂ ψ`.
 
@@ -319,7 +317,7 @@ affecting left orthogonality.
     ( is-orth-ψ-ϕ (\ (s , t) → σ' (t , s)))
 ```
 
-### Stability under exponentiation
+### Exponentiation
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A` then so is `χ × ϕ ⊂ χ × ψ` for
 every other shape `χ`.
@@ -328,7 +326,7 @@ The following proof uses a lot of currying and uncurrying and relies extension
 extensionality.
 
 ```rzk
-#def is-right-orthogonal-to-shape-product uses (naiveextext)
+#def is-right-orthogonal-to-shape-product uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( J : CUBE)
@@ -345,7 +343,7 @@ extensionality.
             ( t, s) →
           ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         , \ ( τ' : ( (t , s) : J × I | χ t ∧ ψ s) → A' [ϕ s ↦ σ' (t , s)]) →
-            naiveextext
+            naiveextext-extext extext
               ( J × I) ( \ (t , s) → χ t ∧ ψ s) ( \ (t , s) → χ t ∧ ϕ s)
               ( \ _ → A')
               ( \ ( t,s) → σ' (t , s))
@@ -365,7 +363,7 @@ extensionality.
             ( t, s) →
           ( first (second (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
         , \ ( τ : ( (t , s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t , s))]) →
-            naiveextext
+            naiveextext-extext extext
               ( J × I) ( \ (t , s) → χ t ∧ ψ s) ( \ (t , s) → χ t ∧ ϕ s)
               ( \ _ → A)
               ( \ (t , s) → α (σ' (t , s)))
@@ -384,7 +382,7 @@ extensionality.
                     ( \ s' → τ (t, s')))
                   ( s))))
 
-#def is-right-orthogonal-to-shape-product' uses (naiveextext)
+#def is-right-orthogonal-to-shape-product' uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( I : CUBE)
@@ -402,7 +400,7 @@ extensionality.
     ( is-right-orthogonal-to-shape-product A' A α J χ I ψ ϕ is-orth-ψ-ϕ)
 ```
 
-### Stability under exact pushouts
+### Exact pushouts
 
 For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to
 `α : A' → A`, then so is `ψ ⊂ ϕ ∪ ψ`.
@@ -433,7 +431,7 @@ Combining the stability under pushouts and crossing with a shape, we get
 stability under pushout products.
 
 ```rzk
-#def is-right-orthogonal-to-shape-pushout-product uses (naiveextext)
+#def is-right-orthogonal-to-shape-pushout-product uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( J : CUBE)
@@ -460,7 +458,7 @@ stability under pushout products.
     ( is-right-orthogonal-to-shape-product A' A α J χ I ψ ϕ
       ( is-orth-ψ-ϕ))
 
-#def is-right-orthogonal-to-shape-pushout-product' uses (naiveextext)
+#def is-right-orthogonal-to-shape-pushout-product' uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( I : CUBE)
@@ -480,6 +478,70 @@ stability under pushout products.
     ( \ (t , s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
     ( is-right-orthogonal-to-shape-pushout-product A' A α J χ ζ I ψ ϕ
       ( is-orth-ψ-ϕ))
+```
+
+### Functorial isomorphisms of shape inclusion
+
+If two pairs of shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ` are isomorphic, then
+`ϕ ⊂ ψ` is left orthogonal if and only if `ζ ⊂ χ` is left orthogonal.
+
+```rzk
+#def is-right-orthogonal-to-shape-isomorphism'
+  ( A' A : U)
+  ( α : A' → A)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  ( ((f , F) , (e , E)) : functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ)
+  : is-right-orthogonal-to-shape I ψ ϕ A' A α
+  →  is-right-orthogonal-to-shape J χ ζ A' A α
+  :=
+  is-homotopy-cartesian-in-cube
+  ( ζ → A') (\ σ' → (t : χ) → A' [ζ t ↦ σ' t])
+  ( ζ → A) (\ σ' → (t : χ) → A [ζ t ↦ σ' t])
+  ( \ σ' t → α (σ' t))
+  ( \ _ τ' t → α (τ' t))
+  ( ϕ → A') (\ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
+  ( ϕ → A) (\ σ' → (t : ψ) → A [ϕ t ↦ σ' t])
+  ( \ σ' t → α (σ' t))
+  ( \ _ τ' t → α (τ' t))
+  ( first (f A')) ( first (f A))
+  ( e A' A α)
+  ( \ σ' → first (F A' σ')) (\ σ → first (F A σ))
+  ( E A' A α)
+  ( \ σ' → second (F A' σ')) (\ σ → second (F A σ))
+
+#def is-right-orthogonal-to-shape-isomorphism
+  ( A' A : U)
+  ( α : A' → A)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ : ψ → TOPE )
+  ( J : CUBE)
+  ( χ : J → TOPE)
+  ( ζ : χ → TOPE)
+  ( ((f , F) , (e , E)) : functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ)
+  : is-right-orthogonal-to-shape J χ ζ A' A α
+  → is-right-orthogonal-to-shape I ψ ϕ A' A α
+  :=
+  is-homotopy-cartesian-in-cube'
+  ( ζ → A') (\ σ' → (t : χ) → A' [ζ t ↦ σ' t])
+  ( ζ → A) (\ σ' → (t : χ) → A [ζ t ↦ σ' t])
+  ( \ σ' t → α (σ' t))
+  ( \ _ τ' t → α (τ' t))
+  ( ϕ → A') (\ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
+  ( ϕ → A) (\ σ' → (t : ψ) → A [ϕ t ↦ σ' t])
+  ( \ σ' t → α (σ' t))
+  ( \ _ τ' t → α (τ' t))
+  ( first (f A')) ( first (f A))
+  ( e A' A α)
+  ( \ σ' → first (F A' σ')) (\ σ → first (F A σ))
+  ( E A' A α)
+  ( \ σ' → second (F A' σ')) (\ σ → second (F A σ))
+  ( second (second (f A')))
 ```
 
 ## Stability properties of right orthogonal maps
@@ -523,7 +585,7 @@ Right orthogonality is closed under homotopy.
     ( first (first (funext A' (\ _ → A) α β)) h)
 ```
 
-### Stability under composition
+### Composition
 
 ```rzk
 #variables A'' A' A : U
@@ -596,7 +658,7 @@ right (whether it is right orthogonal or not.)
     ( is-orth-ψ-ϕ-αα')
 ```
 
-### Stability under pullback
+### Pullback
 
 Right orthogonal maps are stable under pullback. More precisely: If `α : A' → A`
 is right orthogonal, then so is the second projection
@@ -948,18 +1010,25 @@ Weak extension extensionality says that every contractible type has unique
 extensions for every shape inclusion `ϕ ⊂ ψ`.
 
 ```rzk
-#def has-unique-extensions-is-contr uses (weakextext)
+#def has-unique-extensions-is-contr uses (extext)
   ( C : U)
   ( is-contr-C : is-contr C)
   : has-unique-extensions I ψ ϕ C
   :=
-    weakextext I ψ ϕ
+    weakextext-extext extext I ψ ϕ
     ( \ _ → C) ( \ _ → is-contr-C)
 
-#def has-unique-extensions-Unit uses (weakextext)
+#def is-local-type-is-contr uses (extext)
+  ( C : U)
+  ( is-contr-C : is-contr C)
+  : is-local-type I ψ ϕ C
+  :=
+    is-local-type-has-unique-extensions I ψ ϕ C
+    ( has-unique-extensions-is-contr C is-contr-C)
+
+#def has-unique-extensions-Unit uses (extext)
   : has-unique-extensions I ψ ϕ Unit
   := has-unique-extensions-is-contr Unit is-contr-Unit
-
 ```
 
 Unique extension types are closed under equivalence.
@@ -991,7 +1060,7 @@ Unique extension types are closed under equivalence.
 
 Next we prove the logical equivalence between `has-unique-extensions` and
 `is-right-orthogonal-terminal-map`. This follows directly from the fact that
-`Unit` has unique extensions (using `weakextext : WeakExtExt`).
+`Unit` has unique extensions (using `extext`).
 
 ```rzk
 #section is-right-orthogonal-terminal-map
@@ -1001,7 +1070,7 @@ Next we prove the logical equivalence between `has-unique-extensions` and
 #variable A : U
 
 #def has-unique-extensions-is-right-orthogonal-terminal-map
-  uses (weakextext)
+  uses (extext)
   ( is-orth-ψ-ϕ-tm-A : is-right-orthogonal-terminal-map I ψ ϕ A)
   : has-unique-extensions I ψ ϕ A
   :=
@@ -1011,7 +1080,7 @@ Next we prove the logical equivalence between `has-unique-extensions` and
     ( has-unique-extensions-Unit I ψ ϕ)
 
 #def has-unique-extensions-is-right-orthogonal-a-terminal-map
-  uses (weakextext)
+  uses (extext)
   ( tm : A → Unit)
   ( is-orth-ψ-ϕ-tm : is-right-orthogonal-to-shape I ψ ϕ A Unit tm)
   : has-unique-extensions I ψ ϕ A
@@ -1022,7 +1091,7 @@ Next we prove the logical equivalence between `has-unique-extensions` and
     ( has-unique-extensions-Unit I ψ ϕ)
 
 #def is-right-orthogonal-terminal-map-has-unique-extensions
-  uses (weakextext)
+  uses (extext)
   ( has-ue-ψ-ϕ-A : has-unique-extensions I ψ ϕ A)
   : is-right-orthogonal-terminal-map I ψ ϕ A
   :=
@@ -1031,7 +1100,7 @@ Next we prove the logical equivalence between `has-unique-extensions` and
     ( terminal-map A)
 
 #def is-right-orthogonal-terminal-map-is-local-type
-  uses (weakextext)
+  uses (extext)
   ( is-lt-ψ-ϕ-A : is-local-type I ψ ϕ A)
   : is-right-orthogonal-terminal-map I ψ ϕ A
   :=
@@ -1039,7 +1108,7 @@ Next we prove the logical equivalence between `has-unique-extensions` and
     ( has-unique-extensions-is-local-type I ψ ϕ A is-lt-ψ-ϕ-A)
 
 #def is-local-type-is-right-orthogonal-terminal-map
-  uses (weakextext)
+  uses (extext)
   ( is-orth-ψ-ϕ-tm-A : is-right-orthogonal-terminal-map I ψ ϕ A)
   : is-local-type I ψ ϕ A
   :=
@@ -1059,7 +1128,7 @@ from the unit type.
 
 ```rzk
 #def has-fiberwise-unique-extensions-is-right-orthogonal-to-shape
-  uses (extext weakextext)
+  uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -1084,7 +1153,7 @@ every fiber of every map `α : A' → A` also has unique extensions.
 
 ```rzk
 #def has-fiberwise-unique-extensions-have-unique-extensions
-  uses (extext weakextext)
+  uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
@@ -1177,7 +1246,7 @@ conditions of being anodyne.
     ( is-right-orthogonal-to-shape-right-cancel-retract A' A α I ψ χ ϕ
       ( f A' A α is-orth₀) ( r))
 
-#def is-anodyne-pushout-product-for-shape uses (naiveextext)
+#def is-anodyne-pushout-product-for-shape uses (extext)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
@@ -1193,7 +1262,7 @@ conditions of being anodyne.
     ( is-right-orthogonal-to-shape-pushout-product A' A α J χ ζ I ψ ϕ
       ( f A' A α is-orth₀))
 
-#def is-anodyne-pushout-product-for-shape' uses (naiveextext)
+#def is-anodyne-pushout-product-for-shape' uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
@@ -1230,7 +1299,7 @@ implication with respect to types with unique extensions.
 Every anodyne shape inclusion is weak anodyne.
 
 ```rzk
-#def is-weak-anodyne-is-anodyne-for-shape uses (weakextext)
+#def is-weak-anodyne-is-anodyne-for-shape uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
@@ -1255,7 +1324,7 @@ analog fo weak anodyne shape inclusions.
   := \ _ has-ue₀ → has-ue₀
 
 #def implication-has-unique-extension-implication-right-orthogonal
-  uses (weakextext)
+  uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
@@ -1276,8 +1345,7 @@ analog fo weak anodyne shape inclusions.
       ( is-right-orthogonal-terminal-map-has-unique-extensions I ψ ϕ A
         has-ue-ψ-ϕ))
 
-#def is-weak-anodyne-pushout-product-for-shape
-  uses (naiveextext weakextext)
+#def is-weak-anodyne-pushout-product-for-shape uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )
@@ -1297,8 +1365,7 @@ analog fo weak anodyne shape inclusions.
       is-right-orthogonal-to-shape-pushout-product A'₁ A₁ α₁ J χ ζ I ψ ϕ)
     ( A) (f A has-ue₀)
 
-#def is-weak-anodyne-pushout-product-for-shape'
-  uses (naiveextext weakextext)
+#def is-weak-anodyne-pushout-product-for-shape' uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE )
   ( ϕ : ψ → TOPE )

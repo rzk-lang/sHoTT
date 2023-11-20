@@ -472,6 +472,118 @@ In fact, it suffices to assume that the left square has horizontal sections.
 #end homotopy-cartesian-horizontal-calculus
 ```
 
+### Homotopy cartesian faces of a cube
+
+Consider two squares induced by type families as follows
+
+```rzk
+#section is-homotopy-cartesian-in-cube
+
+#variable A' : U
+#variable C' : A' → U
+#variable A : U
+#variable C : A → U
+#variable α : A' → A
+#variable γ : (a' : A') → C' a' → C (α a')
+
+#variable B' : U
+#variable D' : B' → U
+#variable B : U
+#variable D : B → U
+#variable β : B' → B
+#variable δ : (b' : B') → D' b' → D (β b')
+```
+
+and a map between them in the following strict sense
+
+```rzk
+#variable f' : A' → B'
+#variable f : A → B
+#variable h : (a' : A') → β (f' a') = f (α a')
+
+#variable F' : (a' : A') → C' a' → D' (f' a')
+#variable F : (a : A) → C a → D (f a)
+#variable H
+  : (a' : A')
+  → (c' : C' a')
+  → ( transport B D (β (f' a')) (f (α a')) (h a')
+      ( δ (f' a') (F' a' c'))
+    = F (α a') (γ a' c'))
+```
+
+We view this as a cube
+
+```
+      Σ D'      Σ D
+
+Σ C'      Σ C
+
+       B'        B
+
+ A'        A
+```
+
+with display maps going down and ordinary maps going to the right and up-right.
+
+Assume furthermore that the two squares on the left and right are themselves
+homotopy cartesian.
+
+```rzk
+#variable is-hc-CD' : is-homotopy-cartesian A' C' B' D' f' F'
+#variable is-hc-CD : is-homotopy-cartesian A C B D f F
+```
+
+If the square `B' D' B D` is homotopy cartesian, then so is `A' C' A C`.
+
+```rzk
+#def is-homotopy-cartesian-in-cube
+  : is-homotopy-cartesian B' D' B D β δ
+  → is-homotopy-cartesian A' C' A C α γ
+  :=
+  \ is-hc-BD a' →
+    is-equiv-equiv-is-equiv
+    ( C' a') (C (α a')) (γ a')
+    ( D' (f' a')) (D (f (α a')))
+    (\ d' → transport B D (β (f' a')) (f (α a')) (h a') (δ (f' a') d'))
+    ( ( F' a' ,  F (α a')) , H a')
+    ( is-hc-CD' a')
+    ( is-hc-CD (α a'))
+    ( is-equiv-comp
+      ( D' (f' a')) (D (β (f' a'))) (D (f (α a')))
+      ( δ (f' a')) (is-hc-BD (f' a'))
+      ( transport B D (β (f' a')) (f (α a')) (h a'))
+      ( is-equiv-transport B D (β (f' a')) (f (α a')) (h a')))
+```
+
+The converse holds provided that the map `f' : A' → B'` has a section.
+
+```rzk
+#def is-homotopy-cartesian-in-cube'
+  ( has-sec-f' : has-section A' B' f')
+  : is-homotopy-cartesian A' C' A C α γ
+  → is-homotopy-cartesian B' D' B D β δ
+  :=
+  \ is-hc-AC →
+    ind-has-section A' B' f' has-sec-f'
+    ( \ b' → is-equiv (D' b') (D (β b')) (δ b'))
+    ( \ a' →
+      ( is-equiv-right-factor
+        ( D' (f' a')) (D (β (f' a'))) (D (f (α a')))
+        ( δ (f' a'))
+        ( transport B D (β (f' a')) (f (α a')) (h a'))
+        ( is-equiv-transport B D (β (f' a')) (f (α a')) (h a'))
+        ( is-equiv-equiv-is-equiv'
+          ( C' a') (C (α a')) (γ a')
+          ( D' (f' a')) (D (f (α a')))
+          (\ d' → transport B D (β (f' a')) (f (α a')) (h a') (δ (f' a') d'))
+          ( ( F' a' ,  F (α a')) , H a')
+          ( is-hc-CD' a')
+          ( is-hc-CD (α a'))
+          ( is-hc-AC a'))))
+
+#end is-homotopy-cartesian-in-cube
+```
+
 ## Fiber products
 
 Given two type families `B C : A → U`, we can form their **fiberwise product**.

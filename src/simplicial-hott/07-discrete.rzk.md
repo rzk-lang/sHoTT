@@ -336,9 +336,203 @@ For instance, the arrow type of a discrete type is discrete.
   := is-discrete-extension-type 2 Δ¹ (\ _ → A) (\ _ → is-discrete-A)
 ```
 
+## Contractible types are discrete
+
+Every contractible type is automatically discrete.
+
+```rzk
+#def is-discrete-is-contr uses (extext)
+  ( A : U)
+  : is-contr A → is-discrete A
+  :=
+  \ is-contr-A →
+    ( is-discrete-is-Δ¹-local A
+      ( is-Δ¹-local-is-left-local A
+        ( is-local-type-is-contr extext 2 Δ¹ (\ t → t ≡ 0₂) A
+          is-contr-A)))
+
+#def is-discrete-Unit uses (extext)
+  : is-discrete Unit
+  := is-discrete-is-contr Unit (is-contr-Unit)
+```
+
 ## Discrete types are Segal types
 
-Discrete types are automatically Segal types.
+Recall that we can characterize discrete type either as those local for
+`{0} ⊂ Δ¹` _or_, equivalently, as those that are local for `{1} ⊂ Δ¹`. This
+suggests two different relative notions of discreteness and corresponding
+notions of anodyne shape inclusions.
+
+Note that while the absolute notions of locality for `{0} ⊂ Δ¹` and `{1} ⊂ Δ¹`
+agree, the relative notions _do not_. We will explore this discrepancy more when
+we introduce covariant and contravariant type families.
+
+```rzk
+#def is-left-fibration
+  ( A' A : U)
+  ( α : A' → A)
+  : U
+  := is-right-orthogonal-to-shape 2 Δ¹ ( \ s → s ≡ 0₂) A' A α
+
+#def is-right-fibration
+  ( A' A : U)
+  ( α : A' → A)
+  : U
+  := is-right-orthogonal-to-shape 2 Δ¹ ( \ s → s ≡ 1₂) A' A α
+```
+
+### Left and right anodyne shape inclusions
+
+```rzk
+#def is-left-anodyne
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  : U
+  := is-anodyne-for-shape 2 Δ¹ ( \ s → s ≡ 0₂) I ψ ϕ
+
+#def is-right-anodyne
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  : U
+  := is-anodyne-for-shape 2 Δ¹ ( \ s → s ≡ 1₂) I ψ ϕ
+```
+
+### Left fibrations are inner fibrations
+
+We aim to show that every left fibration is an inner fibration, i.e. that the
+inner horn inclusion `Λ ⊂ Δ²` is left anodyne.
+
+The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
+`{1} ⊂ right-leg-of-Λ` of `Λ`.
+
+```rzk
+#def is-left-anodyne-1-right-leg-of-Λ
+  : is-left-anodyne ( 2 × 2)
+    (\ ts → right-leg-of-Λ ts) ( \ (_,s) → s ≡ 0₂)
+  :=
+  \ A' A α →
+  is-right-orthogonal-to-shape-isomorphism A' A α
+  ( 2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+  ( 2) (Δ¹) (\ t → t ≡ 0₂)
+  ( functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ)
+```
+
+Next we use that `Λ` is the pushout of its left leg and its right leg to deduce
+that the pair `left-leg-of-Λ ⊂ Λ` is left anodyne.
+
+```rzk
+#def left-leg-of-Λ : Λ → TOPE
+  := \ (t, s) → s ≡ 0₂
+
+#def is-left-anodyne-left-leg-of-Λ-Λ
+  : is-left-anodyne ( 2 × 2)
+    ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts)
+  :=
+  \ A' A α is-left-fib-α →
+    is-right-orthogonal-to-shape-pushout A' A α
+    ( 2 × 2) ( \ ts → right-leg-of-Λ ts) (\ ts → left-leg-of-Λ ts)
+    ( is-left-anodyne-1-right-leg-of-Λ A' A α is-left-fib-α)
+```
+
+Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the product of
+`Δ¹` with the left anodyne pair `{0} ⊂ Δ¹`, hence left anodyne itself.
+
+```rzk
+#def is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹ uses (extext)
+  : is-left-anodyne ( 2 × 2)
+    ( \ ts → Δ¹×Δ¹ ts) ( \ ts → left-leg-of-Λ ts)
+  :=
+  \ A' A α →
+    is-right-orthogonal-to-shape-product extext A' A α
+      2 Δ¹ 2 Δ¹ ( \ s → s ≡ 0₂)
+```
+
+Next, we use the left cancellation of left anodyne shape inclusions to deduce
+that `Λ ⊂ Δ¹×Δ¹` is left anodyne.
+
+```rzk
+#def is-left-anodyne-Λ-Δ¹×Δ¹ uses (extext)
+  : is-left-anodyne ( 2 × 2)
+    ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts)
+  :=
+  is-anodyne-left-cancel-for-shape 2 Δ¹ (\ t → t ≡ 0₂)
+  ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Λ ts) ( \ ts → left-leg-of-Λ ts)
+  ( is-left-anodyne-left-leg-of-Λ-Λ)
+  ( is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹)
+```
+
+Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹` to obtain the
+desired left anodyne shape inclusion `Λ ⊂ Δ²`.
+
+```rzk
+#def is-left-anodyne-Λ-Δ² uses (extext)
+  : is-left-anodyne (2 × 2)
+    Δ² (\ t → Λ t)
+  :=
+  is-anodyne-right-cancel-retract-for-shape 2 Δ¹ (\ t → t ≡ 0₂)
+  ( 2 × 2) ( \ ts → Δ¹×Δ¹ ts) ( \ ts → Δ² ts) ( \ ts → Λ ts)
+  ( is-functorial-retract-Δ²-Δ¹×Δ¹)
+  ( is-left-anodyne-Λ-Δ¹×Δ¹)
+```
+
+which we can unpack to get the desired implication
+
+```rzk
+#def is-inner-fibration-is-left-fibration uses (extext)
+  ( A' A : U)
+  ( α : A' → A)
+  : is-left-fibration A' A α → is-inner-fibration A' A α
+  := is-left-anodyne-Λ-Δ² A' A α
+```
+
+### Left fibrations and Segal types
+
+Since the Segal types are precisely the local types with respect to `Λ ⊂ Δ²`, we
+immediately deduce that in any left fibration `α : A' → A`, if `A` is a Segal
+type, then so is `A'`.
+
+```rzk title="RS 17, Theorem 8.8, categorical version"
+#def is-segal-domain-left-fibration-is-segal-codomain uses (extext)
+  ( A' A : U)
+  ( α : A' → A)
+  ( is-left-fib-α : is-left-fibration A' A α)
+  ( is-segal-A : is-segal A)
+  : is-segal A'
+  :=
+    is-segal-is-local-horn-inclusion A'
+      ( is-local-type-right-orthogonal-is-local-type
+        ( 2 × 2) Δ² ( \ ts → Λ ts) A' A α
+        ( is-inner-fibration-is-left-fibration A' A α is-left-fib-α)
+        ( is-local-horn-inclusion-is-segal A is-segal-A))
+```
+
+### Discrete types are Segal types
+
+Another immediate corollary is that every discrete type is Segal.
+
+```rzk
+#def is-segal-is-discrete uses (extext)
+  ( A : U)
+  : is-discrete A → is-segal A
+  :=
+  \ is-discrete-A →
+  ( is-segal-has-unique-inner-extensions A
+    ( is-weak-anodyne-is-anodyne-for-shape extext
+      ( 2) (Δ¹) (\ t → t ≡ 0₂) ( 2 × 2) (Δ²) (\ t → Λ t)
+      ( is-left-anodyne-Λ-Δ²)
+      ( A)
+      ( has-unique-extensions-is-local-type 2 Δ¹ (\ t → t ≡ 0₂) A
+        ( is-left-local-is-Δ¹-local A
+          ( is-Δ¹-local-is-discrete A is-discrete-A)))))
+```
+
+## Discrete types are Segal types (original proof of RS17)
+
+This chapter contains the original proof of RS17 that discrete types are
+automatically Segal types. We retain it since some intermediate calculations
+might still be of use.
 
 ```rzk
 #section discrete-arr-equivalences
@@ -941,7 +1135,7 @@ general case to the one just proven:
 Finally, we conclude:
 
 ```rzk title="RS17, Proposition 7.3"
-#def is-segal-is-discrete uses (extext)
+#def is-segal-is-discrete' uses (extext)
   ( A : U)
   ( is-discrete-A : is-discrete A)
   : is-segal A

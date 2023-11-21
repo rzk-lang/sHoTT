@@ -174,7 +174,6 @@ always do this (whether the square is homotopy-cartesian or not).
           first-path-Σ-eq-pair
             A C (α a', γ a' (s' a')) (α a', s (α a')) ( refl, η a' ))))
 
-
 #def induced-retraction-on-fibers-with-section uses (γ)
   ( ((s',s),η) : has-section-family-over-map)
   ( a : A )
@@ -203,9 +202,9 @@ always do this (whether the square is homotopy-cartesian or not).
       ( induced-retraction-on-fibers-with-section ((s',s),η) a)
       ( is-contr-map-is-equiv
         ( total-type A' C') (total-type A C)
-        (temp-uBDx-Σαγ)
+        ( temp-uBDx-Σαγ)
         ( is-equiv-Σαγ )
-        (a, s a)))
+        ( a , s a)))
 
 #end homotopy-cartesian
 ```

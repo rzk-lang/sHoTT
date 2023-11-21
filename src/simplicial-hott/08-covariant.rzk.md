@@ -18,9 +18,8 @@ This is a literate `rzk` file:
   lifts.
 - `05-segal-types.rzk.md` - We make use of the notion of Segal types and their
   structures.
-- `06-contractible.rzk.md` - We make use of weak function extensionality.
-
-Some of the definitions in this file rely on extension extensionality:
+- `06-contractible.rzk.md` - We make use of weak function extensionality. ! Some
+  of the definitions in this file rely on extension extensionality:
 
 ```rzk
 #assume extext : ExtExt

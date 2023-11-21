@@ -370,12 +370,12 @@ describe this isomorphism on representables.
   :=
   Σ ( (f , F) : isomorphism-shape-inclusions I ψ ϕ J χ ζ)
   , ( Σ ( e
-          : ( A' : U)
-          → ( A : U)
-          → ( α : A' → A)
-          → ( σ' : ζ → A')
-          → ( ( \ (t : I | ϕ t) → α (first (f A') σ' t))
-            = ( first (f A) (\ t → α (σ' t)))))
+        : ( A' : U)
+        → ( A : U)
+        → ( α : A' → A)
+        → ( σ' : ζ → A')
+        → ( ( \ (t : I | ϕ t) → α (first (f A') σ' t))
+          = ( first (f A) (\ t → α (σ' t)))))
       , ( ( A' : U)
         → ( A : U)
         → ( α : A' → A)
@@ -439,4 +439,103 @@ ugly boilerplate code.
   :=
     ( isomorphism-0-Δ¹-1-right-leg-of-Λ
     , ( \ _ _ _ _ → refl , \ _ _ _ _ _ → refl))
+```
+
+### Functorial retracts of shape inclusions
+
+We want to express what it means for a shape inclusion `ζ ⊂ χ` to be a retract
+of another shape inclusion `ϕ ⊂ ψ`.
+
+If these shapes were types, we would require a commutative diagram
+
+```
+ζ ⊂ χ
+↓   ↓
+ϕ ⊂ ψ
+↓   ↓
+ζ ⊂ χ
+```
+
+such that the vertical composites are the identity. As before, we cannot say
+this directly; instead we express this property on representables. Since the
+upper vertical maps are necessarily monomorphisms, we may we may assume up to
+isomorphism (which we already dealt with) that `ζ ⊂ χ` are actual subshapes of
+`ϕ ⊂ ψ`.
+
+We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following setting:
+
+```rzk
+#section retracts-shape-inclusions
+
+#variable I : CUBE
+#variable ψ : I → TOPE
+#variables ϕ χ : ψ → TOPE
+-- ζ := χ ∧ ϕ
+
+#def retract-shape-inclusion
+  : U
+  :=
+  Σ ( s
+    : ( A : U)
+    → ( σ : (t : I | χ t ∧ ϕ t) → A)
+    → ( t : ϕ)
+    → A [ χ t ∧ ϕ t ↦ σ t])
+  , ( ( A : U)
+    → ( σ : (t : I | χ t ∧ ϕ t) → A)
+    → ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ σ t])
+    → ( t : ψ)
+    → A [χ t ↦ τ t , ϕ t ↦ s A σ t])
+
+#def functorial-retract-shape-inclusion
+  : U
+  :=
+  Σ ( (s, S) : retract-shape-inclusion)
+  , Σ ( h
+      : ( A' : U)
+      → ( A : U)
+      → ( α : A' → A)
+      → ( σ' : (t : I | χ t ∧ ϕ t) → A')
+      → ( ( \ (t : I | ϕ t) → α (s A' σ' t))
+        =_{ ϕ → A}
+          ( s A ( \ t → α (σ' t)))))
+    , ( ( A' : U)
+      → ( A : U)
+      → ( α : A' → A)
+      → ( σ' : (t : I | χ t ∧ ϕ t) → A')
+      → ( τ' : (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
+      → ( ( transport
+            ( (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+            (\ σ → (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ σ t])
+            ( \ t → α (s A' σ' t))
+            ( \ t → s A ( \ t' → α (σ' t')) t)
+            ( h A' A α σ')
+            ( \ t → α ( S A' σ' τ' t)))
+        =_{ (t : ψ) → A [ϕ t ↦ s A (\ t' → α (τ' t')) t]}
+          ( S A (\ t → α (σ' t)) ( \ t → α (τ' t)))))
+
+#end retracts-shape-inclusions
+```
+
+For example the pair `{00} ⊂ Δ²` is a retract of `{0} × Δ¹ ⊂ Δ¹ × Δ¹`.
+
+```rzk
+#def functorial-retract-00-Δ²-0Δ¹-Δ¹×Δ¹
+  : functorial-retract-shape-inclusion (2 × 2)
+    ( Δ¹×Δ¹) ( \ (t , _) → t ≡ 0₂)
+    ( \ ts → Δ² ts)
+  :=
+  ( ( (\ _ f (t , s) → recOR ( t ≤ s ↦ f (t , t) , s ≤ t ↦ f (t , s)))
+    , (\ _ _ f (t , s) → recOR ( t ≤ s ↦ f (t , t) , s ≤ t ↦ f (t , s))))
+  , ( \ _ _ _ _ → refl , \ _ _ _ _ _ → refl))
+
+```
+
+For completeness we verify that the intesection `Δ² ∧ {0}×Δ¹` is indeed `{00}`.
+
+```rzk
+#def verify-functorial-retract-0-Δ²-0Δ¹-Δ¹×Δ¹
+  ( A : U)
+  : ( ( shape-intersection (2 × 2) (\ ts → Δ² ts) (\ (t , _) → t ≡ 0₂) → A)
+    = ( ( (t, s) : 2 × 2 | t ≡ 0₂ ∧ s ≡ 0₂) → A))
+  := refl
 ```

@@ -162,7 +162,7 @@ left orthogonality of shape inclusion with respect to `α : A' → A`.
 The only fact that stops some of these laws from being a direct corollary is
 that the `Σ`-types appearing in the vertical pasting of the relevant squares
 (such as `Σ (\ σ : ϕ → A), ( (t : χ) → A [ϕ t ↦ σ t])`) are not literally equal
-to the corresponding extension types (such as `τ → A `). Therefore we have to
+to the corresponding extension types (such as `χ → A `). Therefore we have to
 occasionally go back or forth along the functorial equivalence
 `cofibration-composition-functorial`.
 
@@ -170,9 +170,13 @@ occasionally go back or forth along the functorial equivalence
 #def is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape uses (is-orth-ψ-ϕ)
   : is-homotopy-cartesian
     ( ϕ → A')
-    ( \ σ' → Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t]), ( t : ψ) → A' [χ t ↦ τ' t])
+    ( \ σ' →
+      Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t])
+      , ( t : ψ) → A' [χ t ↦ τ' t])
     ( ϕ → A)
-    ( \ σ → Σ ( τ : (t : χ) → A [ϕ t ↦ σ t]), ( t : ψ) → A [χ t ↦ τ t])
+    ( \ σ →
+      Σ ( τ : (t : χ) → A [ϕ t ↦ σ t])
+      , ( t : ψ) → A [χ t ↦ τ t])
     ( \ σ' t → α (σ' t))
     ( \ _ (τ', υ') → ( \ t → α (τ' t), \ t → α (υ' t) ))
   :=
@@ -317,7 +321,7 @@ affecting left orthogonality.
     ( is-orth-ψ-ϕ (\ (s , t) → σ' (t , s)))
 ```
 
-### Exponentiation
+### Tensoring
 
 If `ϕ ⊂ ψ` is left orthogonal to `α : A' → A` then so is `χ × ϕ ⊂ χ × ψ` for
 every other shape `χ`.
@@ -480,10 +484,11 @@ stability under pushout products.
       ( is-orth-ψ-ϕ))
 ```
 
-### Functorial isomorphisms of shape inclusion
+### Functorial isomorphisms
 
-If two pairs of shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ` are isomorphic, then
-`ϕ ⊂ ψ` is left orthogonal if and only if `ζ ⊂ χ` is left orthogonal.
+If two pairs of shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ` are (functorially)
+isomorphic, then `ϕ ⊂ ψ` is left orthogonal if and only if `ζ ⊂ χ` is left
+orthogonal.
 
 ```rzk
 #def is-right-orthogonal-to-shape-isomorphism'
@@ -542,6 +547,76 @@ If two pairs of shape inclusions `ϕ ⊂ ψ` and `ζ ⊂ χ` are isomorphic, the
   ( E A' A α)
   ( \ σ' → second (F A' σ')) (\ σ → second (F A σ))
   ( second (second (f A')))
+```
+
+### Functorial retracts
+
+If `ϕ ⊂ ψ` is a left orthogonal shape inclusion and `ζ ⊂ χ` is a (functorial)
+retract of it, then `ζ ⊂ χ` is also left orthogonal.
+
+```rzk
+#def is-right-orthogonal-to-shape-retract
+  ( A' A : U)
+  ( α : A' → A)
+  ( I : CUBE)
+  ( ψ : I → TOPE )
+  ( ϕ χ : ψ → TOPE)
+  -- ζ := χ ∧ ϕ
+  ( ((s , S) , (h , H)) : functorial-retract-shape-inclusion I ψ ϕ χ)
+  : is-right-orthogonal-to-shape I ψ ϕ A' A α
+  → is-right-orthogonal-to-shape I (\ t → χ t) (\ t → χ t ∧ ϕ t) A' A α
+  :=
+  \ is-orth-ψ-ϕ (σ' : (t : I | χ t ∧ ϕ t) → A') →
+    push-down-equiv-with-section
+    ( (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
+    ( \ τ' → (t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
+    ( (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+    ( \ τ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
+    ( \ τ' t → α (τ' t))
+    ( \ τ' υ →
+      ( transport
+        ( (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+        ( \ σ → (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ σ t])
+        ( \ t → α (s A' σ' t))
+        ( s A ( \ t → α (σ' t)))
+        ( h A' A α σ')
+        ( \ t → α ( υ t))))
+    ( ( S A' σ' , S A (\ t → α (σ' t)))
+    , H A' A α σ')
+    ( second
+      ( equiv-comp
+      ( Σ ( τ' : (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
+      , (t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
+      ( Σ ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+          , (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
+        ( Σ ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+          , (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
+        ( ( \ (τ' , υ') →
+            ( (\ t → α (τ' t))
+            , (\ t → α (υ' t))))
+        , ( is-equiv-Equiv-is-equiv'
+            ( (t : ψ) → A' [ϕ t ↦ s A' σ' t])
+            ( (t : ψ) → A [ϕ t ↦ α (s A' σ' t)])
+            ( \ υ' t → α (υ' t))
+            ( Σ ( τ' : (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
+              , (t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
+            ( Σ ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+              , (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
+              ( \ (τ' , υ') → ( (\ t → α (τ' t)) , (\ t → α (υ' t))))
+              ( cofibration-composition-functorial'' I ψ ϕ χ
+                (\ _ → A') (\ _ → A) (\ _ → α) (s A' σ'))
+            ( is-orth-ψ-ϕ (s A' σ'))))
+        ( total-equiv-family-of-equiv
+          ( (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+          ( \ τ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
+          ( \ τ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
+          ( \ τ →
+            equiv-transport
+            ( (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+            ( \ σ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ σ t])
+            ( \ t → α (s A' σ' t))
+            ( s A (\ t → α (σ' t)))
+            ( h A' A α σ')))))
 ```
 
 ## Stability properties of right orthogonal maps
@@ -860,6 +935,57 @@ orthogonal to `ϕ ⊂ ψ`, then so is the other.
 
 #end is-right-orthogonal-equiv-to-shape
 ```
+
+### Exponentiation / product types
+
+Let `α : A' → A` be right orthogonal to `ϕ ⊂ ψ`. Then the same is true for the
+induced map `(X → A') → (X → A)` for any type `X`. More generally, if
+`α x : A' x → A x` is a right orthogonal map for each `x : X`, then so is the
+map on dependent products `Π α : Π A' → Π A`.
+
+```rzk
+#def is-right-orthogonal-Π-to-shape uses (funext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( X : U)
+  ( A' A : X → U)
+  ( α : (x : X) → (A' x) → (A x))
+  ( are-right-orth-ψ-ϕ-α
+    : (x : X) → is-right-orthogonal-to-shape I ψ ϕ (A' x) (A x) (α x))
+  : is-right-orthogonal-to-shape I ψ ϕ
+    ( (x : X) → A' x)
+    ( (x : X) → A x)
+    ( \ a' x → α x (a' x))
+  :=
+  \ σ' →
+    is-equiv-Equiv-is-equiv
+    ( (t : ψ) → ((x : X) → A' x) [ϕ t ↦ σ' t])
+    ( (t : ψ) → ((x : X) → A x) [ϕ t ↦ \ x → α x (σ' t x)])
+    ( \ τ' t x → α x (τ' t x))
+    ( (x : X) → (t : ψ) → A' x [ϕ t ↦ σ' t x])
+    ( (x : X) → (t : ψ) → A x [ϕ t ↦ α x (σ' t x)])
+    ( \ τ' x t → α x (τ' x t))
+    ( flip-ext-fun-functorial I ψ ϕ X
+      (\ _ → A') (\ _ → A) (\ _ → α)
+      ( σ'))
+    ( is-equiv-function-is-equiv-family funext X
+      ( \ x → (t : ψ) → A' x [ϕ t ↦ σ' t x])
+      ( \ x → (t : ψ) → A x [ϕ t ↦ α x (σ' t x)])
+      ( \ x τ' t → α x (τ' t))
+      ( \ x → are-right-orth-ψ-ϕ-α x ( \ t → σ' t x)))
+```
+
+### Sigma types
+
+Warning: It is _not_ true that right orthogonal maps are preserved under
+dependent sums.
+
+Indeed, every map `f: A → B` can be written as
+`Σ (b : B) , fib f b → Σ (b : B) , Unit`; and it is not true that `f` is right
+orthogonal if and only if each `fib f b → Unit` is right orthogonal. For
+example, the map `{0} → Δ¹` is not a left fibration even though its fibers are
+all left fibrant (i.e. discrete).
 
 ## Types with unique extension
 

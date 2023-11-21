@@ -1417,40 +1417,39 @@ always do this (whether the square is homotopy-cartesian or not).</p>
 </span><span id="__span-6-46"><a id="__codelineno-6-46" name="__codelineno-6-46" href="#__codelineno-6-46"></a><span class="err">          first-path-Σ-eq-pair</span>
 </span><span id="__span-6-47"><a id="__codelineno-6-47" name="__codelineno-6-47" href="#__codelineno-6-47"></a><span class="err">            A C (α a&#39;, γ a&#39; (s&#39; a&#39;)) (α a&#39;, s (α a&#39;)) ( </span><span class="s">refl</span><span class="err">, η a&#39; ))))</span>
 </span><span id="__span-6-48"><a id="__codelineno-6-48" name="__codelineno-6-48" href="#__codelineno-6-48"></a>
-</span><span id="__span-6-49"><a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a>
-</span><span id="__span-6-50"><a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:induced-retraction-on-fibers-with-section" id="define:induced-retraction-on-fibers-with-section" style="visibility: visible; position: relative; color: inherit">induced-retraction-on-fibers-with-section</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>γ<span class="p">)</span>
-</span><span id="__span-6-51"><a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a><span class="err">  ( ((s&#39;,s),η) : has-section-family-over-map)</span>
-</span><span id="__span-6-52"><a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A )</span>
-</span><span id="__span-6-53"><a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a><span class="err">  : ( is-retract-of</span>
-</span><span id="__span-6-54"><a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a><span class="err">      ( fib A&#39; A α a )</span>
-</span><span id="__span-6-55"><a id="__codelineno-6-55" name="__codelineno-6-55" href="#__codelineno-6-55"></a><span class="err">      ( fib</span>
-</span><span id="__span-6-56"><a id="__codelineno-6-56" name="__codelineno-6-56" href="#__codelineno-6-56"></a><span class="err">        ( total-type A&#39; C&#39;) (total-type A C)</span>
-</span><span id="__span-6-57"><a id="__codelineno-6-57" name="__codelineno-6-57" href="#__codelineno-6-57"></a><span class="err">        ( \ (a&#39;, c&#39;) → (α a&#39;, γ a&#39; c&#39;))</span>
-</span><span id="__span-6-58"><a id="__codelineno-6-58" name="__codelineno-6-58" href="#__codelineno-6-58"></a><span class="err">        ( a, s a)))</span>
-</span><span id="__span-6-59"><a id="__codelineno-6-59" name="__codelineno-6-59" href="#__codelineno-6-59"></a><span class="err">  :=</span>
-</span><span id="__span-6-60"><a id="__codelineno-6-60" name="__codelineno-6-60" href="#__codelineno-6-60"></a><span class="err">    ( \ (a&#39;, p) → ( (a&#39;, s&#39; a&#39;), </span><span class="s">first</span><span class="err"> (temp-uBDx-helper ((s&#39;,s),η) a (a&#39;,p))),</span>
-</span><span id="__span-6-61"><a id="__codelineno-6-61" name="__codelineno-6-61" href="#__codelineno-6-61"></a><span class="err">      ( induced-map-on-fibers-Σ (a, s a) ,</span>
-</span><span id="__span-6-62"><a id="__codelineno-6-62" name="__codelineno-6-62" href="#__codelineno-6-62"></a><span class="err">        \ (a&#39;, p) → </span><span class="s">second</span><span class="err"> (temp-uBDx-helper ((s&#39;,s),η) a (a&#39;,p))))</span>
-</span><span id="__span-6-63"><a id="__codelineno-6-63" name="__codelineno-6-63" href="#__codelineno-6-63"></a>
-</span><span id="__span-6-64"><a id="__codelineno-6-64" name="__codelineno-6-64" href="#__codelineno-6-64"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:push-down-equiv-with-section" id="define:push-down-equiv-with-section" style="visibility: visible; position: relative; color: inherit">push-down-equiv-with-section</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>γ<span class="p">)</span>
-</span><span id="__span-6-65"><a id="__codelineno-6-65" name="__codelineno-6-65" href="#__codelineno-6-65"></a><span class="err">  ( ((s&#39;,s),η) : has-section-family-over-map)</span>
-</span><span id="__span-6-66"><a id="__codelineno-6-66" name="__codelineno-6-66" href="#__codelineno-6-66"></a><span class="err">  </span><span class="p">( </span>is-equiv-Σαγ <span class="p">:</span><span class="err"> is-equiv</span>
-</span><span id="__span-6-67"><a id="__codelineno-6-67" name="__codelineno-6-67" href="#__codelineno-6-67"></a><span class="err">      (total-type A&#39; C&#39;) (total-type A C) temp-uBDx-Σαγ)</span>
-</span><span id="__span-6-68"><a id="__codelineno-6-68" name="__codelineno-6-68" href="#__codelineno-6-68"></a><span class="err">  : is-equiv A&#39; A α</span>
-</span><span id="__span-6-69"><a id="__codelineno-6-69" name="__codelineno-6-69" href="#__codelineno-6-69"></a><span class="err">  :=</span>
-</span><span id="__span-6-70"><a id="__codelineno-6-70" name="__codelineno-6-70" href="#__codelineno-6-70"></a><span class="err">    is-equiv-is-contr-map A&#39; A α</span>
-</span><span id="__span-6-71"><a id="__codelineno-6-71" name="__codelineno-6-71" href="#__codelineno-6-71"></a><span class="err">    ( </span><span class="p">\ </span>a <span class="err">→</span>
-</span><span id="__span-6-72"><a id="__codelineno-6-72" name="__codelineno-6-72" href="#__codelineno-6-72"></a><span class="err">      is-contr-is-retract-of-is-contr</span>
-</span><span id="__span-6-73"><a id="__codelineno-6-73" name="__codelineno-6-73" href="#__codelineno-6-73"></a><span class="err">      ( fib A&#39; A α a)</span>
-</span><span id="__span-6-74"><a id="__codelineno-6-74" name="__codelineno-6-74" href="#__codelineno-6-74"></a><span class="err">      ( fib (total-type A&#39; C&#39;) (total-type A C) (temp-uBDx-Σαγ) (a, s a))</span>
-</span><span id="__span-6-75"><a id="__codelineno-6-75" name="__codelineno-6-75" href="#__codelineno-6-75"></a><span class="err">      ( induced-retraction-on-fibers-with-section ((s&#39;,s),η) a)</span>
-</span><span id="__span-6-76"><a id="__codelineno-6-76" name="__codelineno-6-76" href="#__codelineno-6-76"></a><span class="err">      ( is-contr-map-is-equiv</span>
-</span><span id="__span-6-77"><a id="__codelineno-6-77" name="__codelineno-6-77" href="#__codelineno-6-77"></a><span class="err">        ( total-type A&#39; C&#39;) (total-type A C)</span>
-</span><span id="__span-6-78"><a id="__codelineno-6-78" name="__codelineno-6-78" href="#__codelineno-6-78"></a><span class="err">        (temp-uBDx-Σαγ)</span>
-</span><span id="__span-6-79"><a id="__codelineno-6-79" name="__codelineno-6-79" href="#__codelineno-6-79"></a><span class="err">        ( is-equiv-Σαγ )</span>
-</span><span id="__span-6-80"><a id="__codelineno-6-80" name="__codelineno-6-80" href="#__codelineno-6-80"></a><span class="err">        (a, s a)))</span>
-</span><span id="__span-6-81"><a id="__codelineno-6-81" name="__codelineno-6-81" href="#__codelineno-6-81"></a>
-</span><span id="__span-6-82"><a id="__codelineno-6-82" name="__codelineno-6-82" href="#__codelineno-6-82"></a><span class="nd">#end</span><span class="n"> homotopy-cartesian</span>
+</span><span id="__span-6-49"><a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:induced-retraction-on-fibers-with-section" id="define:induced-retraction-on-fibers-with-section" style="visibility: visible; position: relative; color: inherit">induced-retraction-on-fibers-with-section</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>γ<span class="p">)</span>
+</span><span id="__span-6-50"><a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a><span class="err">  ( ((s&#39;,s),η) : has-section-family-over-map)</span>
+</span><span id="__span-6-51"><a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a><span class="err">  </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A )</span>
+</span><span id="__span-6-52"><a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a><span class="err">  : ( is-retract-of</span>
+</span><span id="__span-6-53"><a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a><span class="err">      ( fib A&#39; A α a )</span>
+</span><span id="__span-6-54"><a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a><span class="err">      ( fib</span>
+</span><span id="__span-6-55"><a id="__codelineno-6-55" name="__codelineno-6-55" href="#__codelineno-6-55"></a><span class="err">        ( total-type A&#39; C&#39;) (total-type A C)</span>
+</span><span id="__span-6-56"><a id="__codelineno-6-56" name="__codelineno-6-56" href="#__codelineno-6-56"></a><span class="err">        ( \ (a&#39;, c&#39;) → (α a&#39;, γ a&#39; c&#39;))</span>
+</span><span id="__span-6-57"><a id="__codelineno-6-57" name="__codelineno-6-57" href="#__codelineno-6-57"></a><span class="err">        ( a, s a)))</span>
+</span><span id="__span-6-58"><a id="__codelineno-6-58" name="__codelineno-6-58" href="#__codelineno-6-58"></a><span class="err">  :=</span>
+</span><span id="__span-6-59"><a id="__codelineno-6-59" name="__codelineno-6-59" href="#__codelineno-6-59"></a><span class="err">    ( \ (a&#39;, p) → ( (a&#39;, s&#39; a&#39;), </span><span class="s">first</span><span class="err"> (temp-uBDx-helper ((s&#39;,s),η) a (a&#39;,p))),</span>
+</span><span id="__span-6-60"><a id="__codelineno-6-60" name="__codelineno-6-60" href="#__codelineno-6-60"></a><span class="err">      ( induced-map-on-fibers-Σ (a, s a) ,</span>
+</span><span id="__span-6-61"><a id="__codelineno-6-61" name="__codelineno-6-61" href="#__codelineno-6-61"></a><span class="err">        \ (a&#39;, p) → </span><span class="s">second</span><span class="err"> (temp-uBDx-helper ((s&#39;,s),η) a (a&#39;,p))))</span>
+</span><span id="__span-6-62"><a id="__codelineno-6-62" name="__codelineno-6-62" href="#__codelineno-6-62"></a>
+</span><span id="__span-6-63"><a id="__codelineno-6-63" name="__codelineno-6-63" href="#__codelineno-6-63"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:push-down-equiv-with-section" id="define:push-down-equiv-with-section" style="visibility: visible; position: relative; color: inherit">push-down-equiv-with-section</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>γ<span class="p">)</span>
+</span><span id="__span-6-64"><a id="__codelineno-6-64" name="__codelineno-6-64" href="#__codelineno-6-64"></a><span class="err">  ( ((s&#39;,s),η) : has-section-family-over-map)</span>
+</span><span id="__span-6-65"><a id="__codelineno-6-65" name="__codelineno-6-65" href="#__codelineno-6-65"></a><span class="err">  </span><span class="p">( </span>is-equiv-Σαγ <span class="p">:</span><span class="err"> is-equiv</span>
+</span><span id="__span-6-66"><a id="__codelineno-6-66" name="__codelineno-6-66" href="#__codelineno-6-66"></a><span class="err">      (total-type A&#39; C&#39;) (total-type A C) temp-uBDx-Σαγ)</span>
+</span><span id="__span-6-67"><a id="__codelineno-6-67" name="__codelineno-6-67" href="#__codelineno-6-67"></a><span class="err">  : is-equiv A&#39; A α</span>
+</span><span id="__span-6-68"><a id="__codelineno-6-68" name="__codelineno-6-68" href="#__codelineno-6-68"></a><span class="err">  :=</span>
+</span><span id="__span-6-69"><a id="__codelineno-6-69" name="__codelineno-6-69" href="#__codelineno-6-69"></a><span class="err">    is-equiv-is-contr-map A&#39; A α</span>
+</span><span id="__span-6-70"><a id="__codelineno-6-70" name="__codelineno-6-70" href="#__codelineno-6-70"></a><span class="err">    ( </span><span class="p">\ </span>a <span class="err">→</span>
+</span><span id="__span-6-71"><a id="__codelineno-6-71" name="__codelineno-6-71" href="#__codelineno-6-71"></a><span class="err">      is-contr-is-retract-of-is-contr</span>
+</span><span id="__span-6-72"><a id="__codelineno-6-72" name="__codelineno-6-72" href="#__codelineno-6-72"></a><span class="err">      ( fib A&#39; A α a)</span>
+</span><span id="__span-6-73"><a id="__codelineno-6-73" name="__codelineno-6-73" href="#__codelineno-6-73"></a><span class="err">      ( fib (total-type A&#39; C&#39;) (total-type A C) (temp-uBDx-Σαγ) (a, s a))</span>
+</span><span id="__span-6-74"><a id="__codelineno-6-74" name="__codelineno-6-74" href="#__codelineno-6-74"></a><span class="err">      ( induced-retraction-on-fibers-with-section ((s&#39;,s),η) a)</span>
+</span><span id="__span-6-75"><a id="__codelineno-6-75" name="__codelineno-6-75" href="#__codelineno-6-75"></a><span class="err">      ( is-contr-map-is-equiv</span>
+</span><span id="__span-6-76"><a id="__codelineno-6-76" name="__codelineno-6-76" href="#__codelineno-6-76"></a><span class="err">        ( total-type A&#39; C&#39;) (total-type A C)</span>
+</span><span id="__span-6-77"><a id="__codelineno-6-77" name="__codelineno-6-77" href="#__codelineno-6-77"></a><span class="err">        ( temp-uBDx-Σαγ)</span>
+</span><span id="__span-6-78"><a id="__codelineno-6-78" name="__codelineno-6-78" href="#__codelineno-6-78"></a><span class="err">        ( is-equiv-Σαγ )</span>
+</span><span id="__span-6-79"><a id="__codelineno-6-79" name="__codelineno-6-79" href="#__codelineno-6-79"></a><span class="err">        ( a , s a)))</span>
+</span><span id="__span-6-80"><a id="__codelineno-6-80" name="__codelineno-6-80" href="#__codelineno-6-80"></a>
+</span><span id="__span-6-81"><a id="__codelineno-6-81" name="__codelineno-6-81" href="#__codelineno-6-81"></a><span class="nd">#end</span><span class="n"> homotopy-cartesian</span>
 </span></code></pre></div>
 <h3 id="invariance-under-pullbacks">Invariance under pullbacks<a class="headerlink" href="#invariance-under-pullbacks" title="Permanent link">&para;</a></h3>
 <p>We can pullback a homotopy cartesian square over <code>α : A' → A</code> along any map of

@@ -1261,12 +1261,12 @@ equivalent to the family of fibers of $f\_t$.
     ( fiber-postcomp-Π-ext)
     ( fiber-family-ext)
   :=
-  equiv-comp
-  ( fiber-postcomp-Π-ext)
-  ( relative-extension-type)
-  ( fiber-family-ext)
-  ( equiv-relative-extension-type-fib)
-  ( inv-equiv-axiom-choice I ψ ϕ A (\ t x → f t x = τ t) a (\ t → refl))
+    equiv-comp
+    ( fiber-postcomp-Π-ext)
+    ( relative-extension-type)
+    ( fiber-family-ext)
+    ( equiv-relative-extension-type-fib)
+    ( inv-equiv-axiom-choice I ψ ϕ A (\ t x → f t x = τ t) a (\ t → refl))
 
 #end relative-extension-types
 ```
@@ -1395,9 +1395,7 @@ We can view it as a map of maps either vertically or horizontally.
     ( (t : ψ) → A t) ( (t : ϕ) → A t)  (\ a t → a t)
     ( (t : ψ) → B t) ( (t : ϕ) → B t)  (\ b t → b t)
   :=
-    ( ( ( \ a t → f t (a t))
-      , ( \ a t → f t (a t)))
-    , \ _ → refl)
+    ( ( (\ a t → f t (a t)), (\ a t → f t (a t))), \ _ → refl)
 
 #def map-of-map-extension-type
   ( I : CUBE)
@@ -1409,9 +1407,7 @@ We can view it as a map of maps either vertically or horizontally.
     ( (t : ψ) → A t) ( (t : ψ) → B t) (\ a t → f t (a t))
     ( (t : ϕ) → A t) ( (t : ϕ) → B t) (\ a t → f t (a t))
   :=
-    ( ( ( \ a t → a t)
-      , ( \ b t → b t))
-    , \ _ → refl)
+    ( ( (\ a t → a t), (\ b t → b t)), \ _ → refl)
 ```
 
 ### Equivalences induce equivalences of extension types
@@ -1422,37 +1418,37 @@ fibers of postcomposition by $f$ are contractible.
 ```rzk
 
 #def is-contr-fiber-family-ext-contr-fib
-  (I : CUBE)
-  (ψ : I → TOPE)
-  (ϕ : ψ → TOPE)
-  (A B : ψ → U)
-  (f : (t : ψ) → A t → B t)
-  (a : (t : ϕ) → A t)
-  (τ : (t : ψ) → B t [ϕ t ↦ f t (a t)])
-  (family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( f : (t : ψ) → A t → B t)
+  ( a : (t : ϕ) → A t)
+  ( τ : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
   : is-contr (fiber-family-ext I ψ ϕ A B f a τ)
   :=
-  ((weakextext-extext extext)  I ψ ϕ
-  ( \ t → fib (A t) (B t) (f t) (τ t))
-  ( \ t → is-contr-map-is-equiv (A t) (B t) (f t) (family-equiv-f t) (τ t))
-  ( \ t → (a t, refl)))
+    (weakextext-extext extext) I ψ ϕ
+    ( \ t → fib (A t) (B t) (f t) (τ t))
+    ( \ t → is-contr-map-is-equiv (A t) (B t) (f t) (family-equiv-f t) (τ t))
+    ( \ t → (a t, refl))
 
 #def is-contr-fiber-postcomp-Π-ext-is-equiv-fam uses (extext)
-  (I : CUBE)
-  (ψ : I → TOPE)
-  (ϕ : ψ → TOPE)
-  (A B : ψ → U)
-  (f : (t : ψ) → A t → B t)
-  (a : (t : ϕ) → A t)
-  (τ : (t : ψ) → B t [ϕ t ↦ f t (a t)])
-  (family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( f : (t : ψ) → A t → B t)
+  ( a : (t : ϕ) → A t)
+  ( τ : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
   : is-contr (fiber-postcomp-Π-ext I ψ ϕ A B f a τ)
   :=
-  is-contr-equiv-is-contr'
-  ( fiber-postcomp-Π-ext I ψ ϕ A B f a τ)
-  ( fiber-family-ext I ψ ϕ A B f a τ)
-  ( equiv-fiber-postcomp-Π-ext-fiber-family-ext I ψ ϕ A B f a τ)
-  ( is-contr-fiber-family-ext-contr-fib I ψ ϕ A B f a τ family-equiv-f)
+    is-contr-equiv-is-contr'
+    ( fiber-postcomp-Π-ext I ψ ϕ A B f a τ)
+    ( fiber-family-ext I ψ ϕ A B f a τ)
+    ( equiv-fiber-postcomp-Π-ext-fiber-family-ext I ψ ϕ A B f a τ)
+    ( is-contr-fiber-family-ext-contr-fib I ψ ϕ A B f a τ family-equiv-f)
 ```
 
 Hence, postcomposing with an equivalence induces an equivalence of extension
@@ -1460,24 +1456,24 @@ types.
 
 ```rzk
 #def is-equiv-extensions-is-equiv uses (extext)
-  (I : CUBE)
-  (ψ : I → TOPE)
-  (ϕ : ψ → TOPE)
-  (A B : ψ → U)
-  (f : (t : ψ) → A t → B t)
-  (a : (t : ϕ) → A t)
-  (family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( f : (t : ψ) → A t → B t)
+  ( a : (t : ϕ) → A t)
+  ( family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
   : is-equiv
     ( (t : ψ) → A t [ϕ t ↦ a t])
     ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
     ( postcomp-Π-ext I ψ ϕ A B f a)
   :=
-  is-equiv-is-contr-map
-  ( (t : ψ) → A t [ϕ t ↦ a t])
-  ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
-  ( postcomp-Π-ext I ψ ϕ A B f a)
-  ( \ τ
-    → is-contr-fiber-postcomp-Π-ext-is-equiv-fam I ψ ϕ A B f a τ family-equiv-f)
+    is-equiv-is-contr-map
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+    ( postcomp-Π-ext I ψ ϕ A B f a)
+    ( \ τ →
+      is-contr-fiber-postcomp-Π-ext-is-equiv-fam I ψ ϕ A B f a τ family-equiv-f)
 
 #def equiv-extensions-equiv uses (extext)
   ( I : CUBE)
@@ -1490,11 +1486,11 @@ types.
     ( (t : ψ) → A t [ϕ t ↦ a t])
     ( (t : ψ) → B t [ϕ t ↦ first (equivs-A-B t) (a t)])
   :=
-  ( ( postcomp-Π-ext I ψ ϕ A B (\ t → (first (equivs-A-B t))) a)
-  , ( is-equiv-extensions-is-equiv I ψ ϕ A B
+    ( postcomp-Π-ext I ψ ϕ A B (\ t → (first (equivs-A-B t))) a
+    , is-equiv-extensions-is-equiv I ψ ϕ A B
       ( \ t → first (equivs-A-B t))
       ( a)
-      ( \ t → second (equivs-A-B t))))
+      ( \ t → second (equivs-A-B t)))
 
 #def equiv-of-restriction-maps-equiv uses (extext)
   ( I : CUBE)

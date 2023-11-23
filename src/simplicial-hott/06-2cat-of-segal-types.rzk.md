@@ -515,11 +515,11 @@ that `#!rzk ap-hom` is an equivalence when f is an equivalence.
   ( x y : A)
   : is-equiv (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
   :=
-  is-equiv-extensions-is-equiv extext 2 Δ¹ ∂Δ¹
-  ( \ _ → A) ( \ _ → B)
-  ( \ _ → f)
-  ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
-  ( \ _ → is-equiv-f)
+    is-equiv-extensions-is-equiv extext 2 Δ¹ ∂Δ¹
+    ( \ _ → A) ( \ _ → B)
+    ( \ _ → f)
+    ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+    ( \ _ → is-equiv-f)
 ```
 
 More precicely:
@@ -532,7 +532,7 @@ More precicely:
   ( β : hom B (f x) (f y))
   : U
   :=
-  fib (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y) (β)
+    fib (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y) (β)
 
 #def is-contr-fiber-ap-hom-is-equiv uses (extext)
   ( A B : U)
@@ -542,12 +542,12 @@ More precicely:
   ( β : hom B (f x) (f y))
   : is-contr (fiber-ap-hom A B x y f β)
   :=
-  is-contr-fiber-postcomp-Π-ext-is-equiv-fam extext 2 Δ¹ ∂Δ¹
-  ( \ _ → A) ( \ _ → B)
+    is-contr-fiber-postcomp-Π-ext-is-equiv-fam extext 2 Δ¹ ∂Δ¹
+    ( \ _ → A) ( \ _ → B)
     ( \ _ → f)
-  ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
-  ( β)
-  ( \ _ → is-equiv-f)
+    ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+    ( β)
+    ( \ _ → is-equiv-f)
 ```
 
 We can also define a retraction of `#!rzk ap-hom` directly.
@@ -560,7 +560,7 @@ We can also define a retraction of `#!rzk ap-hom` directly.
   ( x y : A)
   : has-retraction (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
   :=
-  has-retraction-extensions-has-retraction extext 2 Δ¹ ∂Δ¹
+    has-retraction-extensions-has-retraction extext 2 Δ¹ ∂Δ¹
     ( \ _ → A) ( \ _ → B)
     ( \ _ → f)
     ( \ _ → has-retraction-f)

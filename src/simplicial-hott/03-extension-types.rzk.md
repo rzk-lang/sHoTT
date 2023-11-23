@@ -219,9 +219,34 @@ This equivalence is functorial in the following sense:
       ( uncurry-opcurry I J ψ ϕ ζ χ X f)
 ```
 
+### Functorial instances
+
 For each of these we provide a corresponding functorial instance
 
 ```rzk
+#def flip-ext-fun-functorial
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( X : U)
+  ( A' A : ψ → X → U)
+  ( α : (t : ψ) → (x : X) → A' t x → A t x)
+  ( σ' : (t : ϕ) → (x : X) → A' t x)
+  : Equiv-of-maps
+    ( (t : ψ) → ((x : X) → A' t x) [ϕ t ↦ σ' t])
+    ( (t : ψ) → ((x : X) → A t x) [ϕ t ↦ \ x → α t x (σ' t x)])
+    ( \ τ t x → α t x (τ t x))
+    ( (x : X) → (t : ψ) → A' t x [ϕ t ↦ σ' t x])
+    ( (x : X) → (t : ψ) → A t x [ϕ t ↦ α t x (σ' t x)])
+    ( \ τ x t → α t x (τ x t))
+  :=
+    ( ( ( first (flip-ext-fun I ψ ϕ X A' σ')
+        , first (flip-ext-fun I ψ ϕ X A (\ t x → α t x (σ' t x))))
+      , ( \ _ → refl))
+    , ( second (flip-ext-fun I ψ ϕ X A' σ')
+      , second (flip-ext-fun I ψ ϕ X A (\ t x → α t x (σ' t x)))))
+
+
 #def curry-uncurry-functorial
   ( I J : CUBE)
   ( ψ : I → TOPE)
@@ -370,9 +395,68 @@ The original form.
         ( (t : χ) → X t [ψ t ↦ f t]))
   :=
     ( ( \ h → (\ t → h t , \ t → h t))
-    , ( ( \ (_f , g) t → g t , \ h → refl)
-      , ( ( \ (_f , g) t → g t , \ h → refl))))
+    , ( ( \ (_ , g) t → g t , \ _ → refl)
+      , ( ( \ (_ , g) t → g t , \ _ → refl))))
+```
 
+A reformulated version via tope disjunction instead of inclusion (see
+<https://github.com/rzk-lang/rzk/issues/8>).
+
+```rzk title="RS17, Theorem 4.4"
+#def cofibration-composition'
+  ( I : CUBE)
+  ( χ ψ ϕ : I → TOPE)
+  ( X : χ → U)
+  ( a : (t : I | χ t ∧ ψ t ∧ ϕ t) → X t)
+  : Equiv
+      ( (t : χ) → X t [χ t ∧ ψ t ∧ ϕ t ↦ a t])
+      ( Σ ( f : (t : I | χ t ∧ ψ t) → X t [χ t ∧ ψ t ∧ ϕ t ↦ a t])
+        , ( (t : χ) → X t [χ t ∧ ψ t ↦ f t]))
+  :=
+    ( ( \ h → (\ t → h t , \ t → h t))
+    , ( ( \ (_ , g) t → g t , \ _ → refl)
+      , ( \ (_ , g) t → g t , \ _ → refl)))
+```
+
+Another variant is the following:
+
+```rzk
+#def cofibration-composition''
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ χ : ψ → TOPE)
+  ( A : ψ → U)
+  ( a : (t : I | ϕ t) → A t)
+  : Equiv
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( Σ ( b : (t : I | χ t) → A t [χ t ∧ ϕ t ↦ a t])
+      , (t : ψ) → A t [χ t ↦ b t , ϕ t ↦ a t])
+  :=
+  ( \ c → (\ t → c t , \ t → c t)
+  , ( ( \ (_ , c) t → c t
+      , \ _ → refl)
+    , ( \ (_ , c) t → c t
+      , \ _ → refl)))
+```
+
+```rzk title="RS17, Theorem 4.5"
+#def cofibration-union
+  ( I : CUBE)
+  ( ϕ ψ : I → TOPE)
+  ( X : (t : I | ϕ t ∨ ψ t) → U)
+  ( a : (t : ψ) → X t)
+  : Equiv
+      ( (t : I | ϕ t ∨ ψ t) → X t [ψ t ↦ a t])
+      ( (t : ϕ) → X t [ϕ t ∧ ψ t ↦ a t])
+  :=
+    ( \ h t → h t
+    , ( ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl)
+      , ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl)))
+```
+
+### Functorial instances
+
+```rzk
 #def cofibration-composition-functorial
   ( I : CUBE)
   ( χ : I → TOPE)
@@ -397,40 +481,29 @@ The original form.
         , ( ( \ (_f , g) t → g t , \ h → refl)))
       , ( ( \ (_f , g) t → g t , \ h → refl)
         , ( ( \ (_f , g) t → g t , \ h → refl)))))
-```
 
-A reformulated version via tope disjunction instead of inclusion (see
-<https://github.com/rzk-lang/rzk/issues/8>).
-
-```rzk title="RS17, Theorem 4.4"
-#def cofibration-composition'
+#def cofibration-composition-functorial''
   ( I : CUBE)
-  ( χ ψ ϕ : I → TOPE)
-  ( X : χ → U)
-  ( a : (t : I | χ t ∧ ψ t ∧ ϕ t) → X t)
-  : Equiv
-      ( (t : χ) → X t [χ t ∧ ψ t ∧ ϕ t ↦ a t])
-      ( Σ ( f : (t : I | χ t ∧ ψ t) → X t [χ t ∧ ψ t ∧ ϕ t ↦ a t])
-        , ( (t : χ) → X t [χ t ∧ ψ t ↦ f t]))
+  ( ψ : I → TOPE)
+  ( ϕ χ : ψ → TOPE)
+  ( A' A : (t : I | ϕ t ∨ ψ t) → U)
+  ( α : (t : I | ϕ t ∨ ψ t) → A' t → A t)
+  ( a' : (t : I | ϕ t) → A' t)
+  : Equiv-of-maps
+    ( (t : ψ) → A' t [ϕ t ↦ a' t])
+    ( (t : ψ) → A t [ϕ t ↦ α t (a' t)])
+    ( \ c t → α t (c t))
+    ( Σ ( b' : (t : I | χ t) → A' t [χ t ∧ ϕ t ↦ a' t])
+      , (t : ψ) → A' t [χ t ↦ b' t , ϕ t ↦ a' t])
+    ( Σ ( b : (t : I | χ t) → A t [χ t ∧ ϕ t ↦ α t (a' t)])
+      , (t : ψ) → A t [χ t ↦ b t , ϕ t ↦ α t (a' t)])
+    ( \ (b , c) → (\ t → α t (b t) , \ t → α t (c t)))
   :=
-    ( ( \ h → (\ t → h t , \ t → h t))
-    , ( ( \ (_f , g) t → g t , \ h → refl)
-      , ( \ (_f , g) t → g t , \ h → refl)))
-```
-
-```rzk title="RS17, Theorem 4.5"
-#def cofibration-union
-  ( I : CUBE)
-  ( ϕ ψ : I → TOPE)
-  ( X : (t : I | ϕ t ∨ ψ t) → U)
-  ( a : (t : ψ) → X t)
-  : Equiv
-      ( (t : I | ϕ t ∨ ψ t) → X t [ψ t ↦ a t])
-      ( (t : ϕ) → X t [ϕ t ∧ ψ t ↦ a t])
-  :=
-    ( \ h t → h t
-    , ( ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl)
-      , ( \ g t → recOR (ϕ t ↦ g t , ψ t ↦ a t) , \ _ → refl)))
+  ( ( ( first (cofibration-composition'' I ψ ϕ χ A' a')
+      , first (cofibration-composition'' I ψ ϕ χ A (\ t → α t (a' t))))
+    , \ _ → refl)
+  , ( second (cofibration-composition'' I ψ ϕ χ A' a')
+    , second (cofibration-composition'' I ψ ϕ χ A (\ t → α t (a' t)))))
 
 #def cofibration-union-functorial
   ( I : CUBE)

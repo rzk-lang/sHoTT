@@ -10,10 +10,8 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-- `hott/4-equivalences.rzk` — contains the definitions of `#!rzk Equiv` and
+- `hott/03-equivalences.rzk.md` — contains the definitions of `#!rzk Equiv` and
   `#!rzk comp-equiv`
-- the file `hott/4-equivalences.rzk` relies in turn on the previous files in
-  `hott/`
 
 ## Extension up to homotopy
 
@@ -371,10 +369,10 @@ For each of these we provide a corresponding functorial instance
     ( (t : ψ) → (Σ (x : X t) , Y t x) [ϕ t ↦ (a t , b t)])
   :=
     inv-equiv
-      ( (t : ψ) → (Σ (x : X t) , Y t x) [ϕ t ↦ (a t , b t)])
-      ( Σ ( f : ((t : ψ) → X t [ϕ t ↦ a t]))
+    ( (t : ψ) → (Σ (x : X t) , Y t x) [ϕ t ↦ (a t , b t)])
+    ( Σ ( f : ((t : ψ) → X t [ϕ t ↦ a t]))
       , ( (t : ψ) → Y t (f t) [ϕ t ↦ b t]))
-      ( axiom-choice I ψ ϕ X Y a b)
+    ( axiom-choice I ψ ϕ X Y a b)
 ```
 
 ## Composites and unions of cofibrations

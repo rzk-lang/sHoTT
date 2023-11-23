@@ -145,12 +145,12 @@ $K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
   : comp A B C h f = comp A B C k g
   :=
     ind-path (A → B) f (\ g' p' → comp A B C h f = comp A B C k g')
-      ( ind-path (B → C) h (\ k' q' → comp A B C h f = comp A B C k' f)
-        ( refl)
-        ( k)
-        ( q))
-      ( g)
-      ( p)
+    ( ind-path (B → C) h (\ k' q' → comp A B C h f = comp A B C k' f)
+      ( refl)
+      ( k)
+      ( q))
+    ( g)
+    ( p)
 ```
 
 ## Naturality

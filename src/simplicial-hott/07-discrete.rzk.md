@@ -13,9 +13,9 @@ This is a literate `rzk` file:
 - `hott/01-paths.rzk.md` - We require basic path algebra.
 - `hott/04-equivalences.rzk.md` - We require the notion of equivalence between
   types.
-- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
   their subshapes.
-- `04-extension-types.rzk.md` — We use extension extensionality.
+- `03-extension-types.rzk.md` — We use extension extensionality.
 - `05-segal-types.rzk.md` - We use the notion of hom types.
 
 Some of the definitions in this file rely on function extensionality and
@@ -252,8 +252,7 @@ of discrete types is discrete.
 ```
 
 By extension extensionality, an extension type into a family of discrete types
-is discrete. Since `#!rzk equiv-extensions-BOT-equiv` considers total extension
-types only, extending from `#!rzk BOT`, that's all we prove here for now.
+is discrete.
 
 ```rzk
 #def equiv-hom-eq-extension-type-is-discrete uses (extext)
@@ -270,13 +269,11 @@ types only, extending from `#!rzk BOT`, that's all we prove here for now.
       ( (t : ψ) → hom (A t) (f t) (g t))
       ( hom ((t : ψ) → A t) f g)
       ( equiv-ExtExt extext I ψ (\ _ → BOT) A (\ _ → recBOT) f g)
-      ( equiv-extensions-BOT-equiv
-        ( extext)
-        ( I)
-        ( ψ)
+      ( equiv-extensions-equiv extext I ψ (\ _ → BOT)
         ( \ t → f t = g t)
         ( \ t → hom (A t) (f t) (g t))
-        ( \ t → (hom-eq (A t) (f t) (g t) , (is-discrete-A t (f t) (g t)))))
+        ( \ t → (hom-eq (A t) (f t) (g t) , (is-discrete-A t (f t) (g t))))
+        ( \ _ → recBOT))
       ( fubini
         ( I)
         ( 2)
@@ -1140,4 +1137,41 @@ Finally, we conclude:
   ( is-discrete-A : is-discrete A)
   : is-segal A
   := is-contr-hom2-is-discrete A is-discrete-A
+```
+
+## Naturality for hom-eq
+
+`#!rzk hom-eq` commute with `#!rzk ap-hom`.
+
+```rzk
+#def hom-eq-naturality
+  ( A B : U)
+  ( f : A → B)
+  ( x y : A)
+  ( p : x = y)
+  :
+  comp (x = y) (hom A x y) (hom B (f x) (f y))
+    ( ap-hom A B f x y)
+    ( hom-eq A x y)
+    ( p)
+  =
+  comp (x = y) ((f x) = (f y)) (hom B (f x) (f y))
+    ( hom-eq B (f x) (f y))
+    ( ap A B x y f)
+    ( p)
+  :=
+    ind-path A x
+      ( \ y' p' →
+        comp (x = y') (hom A x y') (hom B (f x) (f y'))
+          ( ap-hom A B f x y')
+          ( hom-eq A x y')
+          ( p')
+        =
+        comp (x = y') ((f x) = (f y')) (hom B (f x) (f y'))
+          ( hom-eq B (f x) (f y'))
+          ( ap A B x y' f)
+          ( p'))
+      ( functors-pres-id extext A B f x)
+      ( y)
+      ( p)
 ```

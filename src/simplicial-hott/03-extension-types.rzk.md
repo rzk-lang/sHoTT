@@ -1131,39 +1131,70 @@ Given a map `α : A' → A`, there is also a notion of relative extension types.
 #variable I : CUBE
 #variable ψ : I → TOPE
 #variable ϕ : ψ → TOPE
-#variables A' A : ψ → U
-#variable α : (t : ψ) → A' t → A t
-#variable σ' : (t : ϕ) → A' t
-#variable τ : (t : ψ) → A t [ϕ t ↦ α t (σ' t)]
+#variables A B : ψ → U
+#variable f : (t : ψ) → A t → B t
+#variable a : (t : ϕ) → A t
+#variable τ : (t : ψ) → B t [ϕ t ↦ f t (a t)]
 
 #def relative-extension-type
   : U
   :=
-    Σ ( τ' : (t : ψ) → A' t [ϕ t ↦ σ' t])
-    , ( ( t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl])
+    Σ ( τ' : (t : ψ) → A t [ϕ t ↦ a t])
+    , ( ( t : ψ) → (f t (τ' t) = τ t) [ϕ t ↦ refl])
+```
 
-#def relative-extension-type'
+This is equivalently expressed as the fibers of postcomposition by $f$.
+
+```rzk
+#def postcomp-Π-ext
+  : ((t : ψ) → A t [ϕ t ↦ a t]) →
+    ((t : ψ) → B t [ϕ t ↦ f t (a t)])
+  := ( \ τ' t → f t (τ' t))
+
+#def fiber-postcomp-Π-ext
   : U
   :=
     fib
-    ( (t : ψ) → A' t [ϕ t ↦ σ' t])
-    ( (t : ψ) → A t [ϕ t ↦ α t (σ' t)])
-    ( \ τ' t → α t (τ' t))
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+    ( postcomp-Π-ext)
     ( τ)
 
 #def equiv-relative-extension-type-fib uses (extext)
   : Equiv
-    ( relative-extension-type')
+    ( fiber-postcomp-Π-ext)
     ( relative-extension-type)
   :=
     total-equiv-family-of-equiv
-    ( (t : ψ) → A' t [ϕ t ↦ σ' t])
-    ( \ τ' → (\ t → α t (τ' t)) =_{ (t : ψ) → A t [ϕ t ↦ α t (σ' t)]} τ)
-    ( \ τ' → (t : ψ) → (α t (τ' t) = τ t) [ϕ t ↦ refl])
+    ( (t : ψ) → A t [ϕ t ↦ a t])
+    ( \ τ' → (\ t → f t (τ' t)) =_{ (t : ψ) → B t [ϕ t ↦ f t (a t)]} τ)
+    ( \ τ' → (t : ψ) → (f t (τ' t) = τ t) [ϕ t ↦ refl])
     ( \ τ' →
-      equiv-ExtExt extext I ψ ϕ A
-      ( \ t → α t (σ' t))
-      ( \ t → α t (τ' t)) ( τ))
+      equiv-ExtExt extext I ψ ϕ B
+      ( \ t → f t (a t))
+      ( \ t → f t (τ' t)) ( τ))
+```
+
+The fiber of postcomposition by a map $f: \prod_{t : I|\psi} A (t) \to B (t)$ is
+equivalent to the family of fibers of $f\_t$.
+
+```rzk
+#def fiber-family-ext
+  : U
+  := (t : ψ) → fib (A t) (B t) (f t) (τ t) [ϕ t ↦ (a t, refl)]
+
+#def equiv-fiber-postcomp-Π-ext-fiber-family-ext uses (extext)
+  : Equiv
+    ( fiber-postcomp-Π-ext)
+    ( fiber-family-ext)
+  :=
+  equiv-comp
+  ( fiber-postcomp-Π-ext)
+  ( relative-extension-type)
+  ( fiber-family-ext)
+  ( equiv-relative-extension-type-fib)
+  ( inv-equiv-axiom-choice I ψ ϕ A (\ t x → f t x = τ t) a (\ t → refl))
+
 #end relative-extension-types
 ```
 
@@ -1312,100 +1343,68 @@ We can view it as a map of maps either vertically or horizontally.
 
 ### Equivalences induce equivalences of extension types
 
-We start by treating the case of extensions from the empty shape `BOT`.
-
-It follows from extension extensionality that if `f : A → B` is an equivalence,
-then so is the map of maps `map-of-restriction-maps`.
+If $f: \prod_{t : I|\psi} A (t) \to B (t)$ is a family of equivalence then the
+fibers of postcomposition by $f$ are contractible.
 
 ```rzk
-#def is-equiv-extensions-BOT-is-equiv uses (extext)
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( A B : ψ → U)
-  ( f : (t : ψ) → (A t) → (B t))
-  ( is-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
-  : is-equiv ((t : ψ) → A t) ((t : ψ) → B t) ( \ a t → f t (a t))
-  :=  ( ( ( \ b t → (first (first (is-equiv-f t))) (b t))
-        , ( \ a →
-            naiveextext-extext extext I ψ ( \ t → BOT)
-              ( A)
-              ( \ u → recBOT)
-              ( \ t → first (first (is-equiv-f t)) (f t (a t)))
-              ( a)
-              ( \ t → second (first (is-equiv-f t)) (a t))))
-      , ( ( \ b t → first (second (is-equiv-f t)) (b t))
-        , ( \ b →
-            naiveextext-extext extext I ψ ( \ t → BOT)
-              ( B)
-              ( \ u → recBOT)
-              ( \ t → f t (first (second (is-equiv-f t)) (b t)))
-              ( b)
-              ( \ t → second (second (is-equiv-f t)) (b t)))))
 
-#def equiv-extensions-BOT-equiv uses (extext)
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( A B : ψ → U)
-  ( famequiv : (t : ψ) → (Equiv (A t) (B t)))
-  : Equiv ((t : ψ) → A t) ((t : ψ) → B t)
+#def is-contr-fiber-family-ext-contr-fib
+  (I : CUBE)
+  (ψ : I → TOPE)
+  (ϕ : ψ → TOPE)
+  (A B : ψ → U)
+  (f : (t : ψ) → A t → B t)
+  (a : (t : ϕ) → A t)
+  (τ : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  (family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  : is-contr (fiber-family-ext I ψ ϕ A B f a τ)
   :=
-    ( ( \ a t → first ( famequiv t) (a t))
-    , is-equiv-extensions-BOT-is-equiv I ψ A B
-      ( \ t → first (famequiv t))
-      ( \ t → second (famequiv t)))
+  ((weakextext-extext extext)  I ψ ϕ
+  ( \ t → fib (A t) (B t) (f t) (τ t))
+  ( \ t → is-contr-map-is-equiv (A t) (B t) (f t) (family-equiv-f t) (τ t))
+  ( \ t → (a t, refl)))
 
-#def equiv-of-restriction-maps-equiv uses (extext)
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
-  ( A B : ψ → U)
-  ( famequiv : (t : ψ) → (Equiv (A t) (B t)))
-  : Equiv-of-maps
-    ( (t : ψ) → A t) ( (t : ϕ) → A t)  (\ a t → a t)
-    ( (t : ψ) → B t) ( (t : ϕ) → B t)  (\ b t → b t)
+#def is-contr-fiber-postcomp-Π-ext-is-equiv-fam uses (extext)
+  (I : CUBE)
+  (ψ : I → TOPE)
+  (ϕ : ψ → TOPE)
+  (A B : ψ → U)
+  (f : (t : ψ) → A t → B t)
+  (a : (t : ϕ) → A t)
+  (τ : (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  (family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  : is-contr (fiber-postcomp-Π-ext I ψ ϕ A B f a τ)
   :=
-    ( map-of-restriction-maps I ψ ϕ A B (\ t → first (famequiv t))
-    , ( second (equiv-extensions-BOT-equiv I ψ A B famequiv)
-      , second ( equiv-extensions-BOT-equiv I
-                 (\ t → ϕ t) (\ t → A t) (\ t → B t) (\ t → famequiv t))))
+  is-contr-equiv-is-contr'
+  ( fiber-postcomp-Π-ext I ψ ϕ A B f a τ)
+  ( fiber-family-ext I ψ ϕ A B f a τ)
+  ( equiv-fiber-postcomp-Π-ext-fiber-family-ext I ψ ϕ A B f a τ)
+  ( is-contr-fiber-family-ext-contr-fib I ψ ϕ A B f a τ family-equiv-f)
 ```
 
-Now we use the result for extensions of `BOT` to bootstrap to arbitrary
-extensions. We show that an equivalence `f : A → B` induces an equivalence of
-all extension types, not just those extended from `BOT`.
+Hence, postcomposing with an equivalence induces an equivalence of extension
+types.
 
 ```rzk
 #def is-equiv-extensions-is-equiv uses (extext)
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
-  ( A B : ψ → U)
-  ( f : (t : ψ) → A t → B t)
-  ( is-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
-  : ( a : (t : ϕ) → A t)
-  → is-equiv
+  (I : CUBE)
+  (ψ : I → TOPE)
+  (ϕ : ψ → TOPE)
+  (A B : ψ → U)
+  (f : (t : ψ) → A t → B t)
+  (a : (t : ϕ) → A t)
+  (family-equiv-f : (t : ψ) → is-equiv (A t) (B t) (f t))
+  : is-equiv
     ( (t : ψ) → A t [ϕ t ↦ a t])
     ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
-    ( \ a' t → f t (a' t))
+    ( postcomp-Π-ext I ψ ϕ A B f a)
   :=
-    is-homotopy-cartesian-is-horizontal-equiv
-    ( (t : ϕ) → A t)
-    ( \ a → (t : ψ) → A t [ϕ t ↦ a t])
-    ( (t : ϕ) → B t)
-    ( \ b → (t : ψ) → B t [ϕ t ↦ b t])
-    ( \ a t → f t (a t))
-    ( \ _ a' t → f t (a' t))
-    ( is-equiv-extensions-BOT-is-equiv
-      ( I) (\ t → ϕ t) (\ t → A t) (\ t → B t) ( \ t → f t)
-      ( \ (t : ϕ) → is-equiv-f t))
-    ( is-equiv-Equiv-is-equiv'
-        ( (t : ψ) → A t) ((t : ψ) → B t) (\ a' t → f t (a' t))
-        ( Σ (a : (t : ϕ) → A t) , ((t : ψ) → A t [ϕ t ↦ a t]))
-        ( Σ (b : (t : ϕ) → B t) , ((t : ψ) → B t [ϕ t ↦ b t]))
-        ( \ (a , a') → ( \ t → f t (a t) , \ t → f t (a' t)))
-      ( cofibration-composition-functorial
-        I ψ ϕ (\ _ → BOT) A B f (\ _ → recBOT))
-      ( is-equiv-extensions-BOT-is-equiv I ψ A B f is-equiv-f))
+  is-equiv-is-contr-map
+  ( (t : ψ) → A t [ϕ t ↦ a t])
+  ( (t : ψ) → B t [ϕ t ↦ f t (a t)])
+  ( postcomp-Π-ext I ψ ϕ A B f a)
+  ( \ τ
+    → is-contr-fiber-postcomp-Π-ext-is-equiv-fam I ψ ϕ A B f a τ family-equiv-f)
 
 #def equiv-extensions-equiv uses (extext)
   ( I : CUBE)
@@ -1418,11 +1417,31 @@ all extension types, not just those extended from `BOT`.
     ( (t : ψ) → A t [ϕ t ↦ a t])
     ( (t : ψ) → B t [ϕ t ↦ first (equivs-A-B t) (a t)])
   :=
-  ( ( \ a' t → first (equivs-A-B t) (a' t))
+  ( ( postcomp-Π-ext I ψ ϕ A B (\ t → (first (equivs-A-B t))) a)
   , ( is-equiv-extensions-is-equiv I ψ ϕ A B
       ( \ t → first (equivs-A-B t))
-      ( \ t → second (equivs-A-B t))
-      ( a)))
+      ( a)
+      ( \ t → second (equivs-A-B t))))
+
+#def equiv-of-restriction-maps-equiv uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A B : ψ → U)
+  ( famequiv : (t : ψ) → (Equiv (A t) (B t)))
+  : Equiv-of-maps
+    ( (t : ψ) → A t) ( (t : ϕ) → A t)  (\ a t → a t)
+    ( (t : ψ) → B t) ( (t : ϕ) → B t)  (\ b t → b t)
+  :=
+    ( map-of-restriction-maps I ψ ϕ A B (\ t → first (famequiv t))
+    , ( second (equiv-extensions-equiv I ψ ( \ _ → BOT)
+      ( A) ( B)
+      ( famequiv)
+      ( \ _ → recBOT))
+      , second ( equiv-extensions-equiv I ( \ t → ϕ t) ( \ _ → BOT)
+        ( \ t → A t) ( \ t → B t)
+        ( \ t → famequiv t)
+        ( \ _ → recBOT))))
 ```
 
 ### Retracts induce retracts of extension types
@@ -1454,8 +1473,9 @@ working with external retractions.
   :=
     is-equiv-extensions-is-equiv I ψ ϕ A A
     ( \ t a₀ → r t (s t (a₀)))
-    ( \ t → is-equiv-retraction-section (A t) (B t) (s t) (r t) (η t))
     ( a)
+    ( \ t → is-equiv-retraction-section (A t) (B t) (s t) (r t) (η t))
+
 
 #def has-retraction-extensions-has-retraction' uses (extext η)
   ( a : (t : ϕ) → A t)

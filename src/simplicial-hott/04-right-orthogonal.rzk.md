@@ -504,8 +504,8 @@ Every equivalence `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
   ( is-equiv-α : is-equiv A' A α)
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=
-    is-equiv-extensions-is-equiv extext I ψ ϕ
-    ( \ _ → A') ( \  _ → A) ( \ _ → α) ( \ _ → is-equiv-α)
+    ( \ a → is-equiv-extensions-is-equiv extext I ψ ϕ
+      ( \ _ → A') ( \  _ → A) ( \ _ → α) ( a) ( \ _ → is-equiv-α))
 ```
 
 Right orthogonality is closed under homotopy.
@@ -664,7 +664,7 @@ follows for the former.
     = τhB)
   :=
     ind-has-section-equiv
-    ( relative-extension-type' I ψ ϕ
+    ( fiber-postcomp-Π-ext I ψ ϕ
       ( \ _ → relative-product A A' α B f) ( \ _ → B)
       ( \ _ → second-relative-product A A' α B f)
       ( σB') ( τB))

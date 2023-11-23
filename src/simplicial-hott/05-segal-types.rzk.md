@@ -676,10 +676,11 @@ then $(x : X) → A x$ is a Segal type.
           ( \ t s → A s)
           ( \ u → recBOT)))
       ( \ h s t → h s t) -- second equivalence
-      ( second (equiv-extensions-BOT-equiv extext I ψ
+      ( second (equiv-extensions-equiv extext I ψ (\ _ → BOT)
         ( \ s → Δ² → A s)
         ( \ s → Λ → A s)
-        ( \ s → (horn-restriction (A s) , fiberwise-is-segal-A s))))
+        ( \ s → (horn-restriction (A s) , fiberwise-is-segal-A s))
+        ( \ _ → recBOT)))
       ( \ h t s → (h s) t) -- third equivalence
       ( second
         ( fubini

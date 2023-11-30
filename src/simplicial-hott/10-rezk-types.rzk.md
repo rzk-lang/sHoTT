@@ -948,19 +948,18 @@ We prove [RS17, Proposition 10.11]. We firs need to access the fiberwise
 equivalence with no extra data, and then define some helpers.
 
 ```rzk
+#section representable-isomorphisms
+
+#variable A : U
+#variable is-segal-A : is-segal A
+#variables a a' : A
+#variable ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x))
+
 #def map-fiberwise-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
   : ( x : A) → ( hom A a x) → ( hom A a' x)
   := \ x → first ( ψ x)
 
 #def inverse-fiberwise-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
   : ( x : A) → ( has-inverse ( hom A a x) ( hom A a' x) ( first ( ψ x)))
   :=
   \ x →
@@ -970,40 +969,24 @@ equivalence with no extra data, and then define some helpers.
     ( first ( ψ x))
     ( second ( ψ x))
 
-#def inv-map-fiberwise-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+#def inv-map-fiberwise-equiv uses ( A a a' ψ)
   : ( x : A) → ( hom A a' x) → ( hom A a x)
-  := \ x → first ( inverse-fiberwise-equiv A is-segal-A a a' ψ x)
+  := \ x → first ( inverse-fiberwise-equiv x)
 
 #def arr-map-fiberwise-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
   : hom A a' a
-  := evid A a ( hom A a') ( map-fiberwise-equiv A is-segal-A a a' ψ)
+  := evid A a ( hom A a') ( map-fiberwise-equiv )
 
 #def arr-inv-map-fiberwise-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
   : hom A a a'
-  := evid A a' ( hom A a) ( inv-map-fiberwise-equiv  A is-segal-A a a' ψ)
+  := evid A a' ( hom A a) ( inv-map-fiberwise-equiv)
 ```
 
 We now show that `#!rzk arrow-map-fiberwise-equiv` has section
 `#!rzk arrow-inv-map-fiberwise-equiv`.
 
 ```rzk
-#def htpy-inv-map-fib-equiv-map-fib-equiv-id
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+#def htpy-inv-map-fib-equiv-map-fib-equiv-id uses ( A a a' ψ)
   : ( x : A)
   → ( homotopy
       ( hom A a x)
@@ -1012,10 +995,10 @@ We now show that `#!rzk arrow-map-fiberwise-equiv` has section
         ( hom A a x)
         ( hom A a' x)
         ( hom A a x)
-        ( inv-map-fiberwise-equiv A is-segal-A a a' ψ x)
-        ( map-fiberwise-equiv A is-segal-A a a' ψ x))
+        ( inv-map-fiberwise-equiv x)
+        ( map-fiberwise-equiv x))
       ( identity ( hom A a x)))
-  := \ x → first ( second ( inverse-fiberwise-equiv A is-segal-A a a' ψ x))
+  := \ x → first ( second ( inverse-fiberwise-equiv x))
 ```
 
 We compute the required paths for the section of
@@ -1023,209 +1006,158 @@ We compute the required paths for the section of
 
 ```rzk
 #def compute-htpy-inv-map-fib-equiv-map-fib-equiv-id
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : inv-map-fiberwise-equiv A is-segal-A a a' ψ a
-    ( ( map-fiberwise-equiv A is-segal-A a a' ψ a) ( id-hom A a))
+  : inv-map-fiberwise-equiv a ( map-fiberwise-equiv a ( id-hom A a))
   =_{ hom A a a}
     id-hom A a
-  := htpy-inv-map-fib-equiv-map-fib-equiv-id A is-segal-A a a' ψ a ( id-hom A a)
+  := htpy-inv-map-fib-equiv-map-fib-equiv-id a ( id-hom A a)
 
-#def ap-inv-map-fiberwise-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : inv-map-fiberwise-equiv A is-segal-A a a' ψ a
-    ( ( map-fiberwise-equiv A is-segal-A a a' ψ a) ( id-hom A a))
+#def ap-inv-map-fiberwise-equiv uses ( A is-segal-A a a' ψ)
+  : inv-map-fiberwise-equiv a ( map-fiberwise-equiv a ( id-hom A a))
   =_{ hom A a a}
-    inv-map-fiberwise-equiv A is-segal-A a a' ψ a
+    inv-map-fiberwise-equiv a
     ( comp-is-segal A is-segal-A a' a a
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+      ( arr-map-fiberwise-equiv)
       ( id-hom A a))
   :=
   ap
   ( hom A a' a)
   ( hom A a a)
-  ( map-fiberwise-equiv A is-segal-A a a' ψ a ( id-hom A a))
+  ( map-fiberwise-equiv a ( id-hom A a))
   ( comp-is-segal A is-segal-A a' a a
-    ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+    ( arr-map-fiberwise-equiv)
     ( id-hom A a))
-  ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a)
+  ( inv-map-fiberwise-equiv a)
   ( eq-compute-precomposition-evid funext A is-segal-A a a'
-    ( map-fiberwise-equiv A is-segal-A a a' ψ)
+    ( map-fiberwise-equiv)
     ( a)
     ( id-hom A a))
 
 #def eq-compute-precomposition-evid-arr-inv-map-fiberwise-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : inv-map-fiberwise-equiv A is-segal-A a a' ψ a
+  uses ( A is-segal-A a a' ψ)
+  : inv-map-fiberwise-equiv a
     ( comp-is-segal A is-segal-A a' a a
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+      ( arr-map-fiberwise-equiv)
       ( id-hom A a))
   =_{ hom A a a}
     comp-is-segal A is-segal-A a a' a
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+      ( arr-inv-map-fiberwise-equiv)
       ( comp-is-segal A is-segal-A a' a a
-        ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+        ( arr-map-fiberwise-equiv)
         ( id-hom A a))
   :=
   eq-compute-precomposition-evid funext A is-segal-A a' a
-  ( inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+  ( inv-map-fiberwise-equiv)
   ( a)
   ( comp-is-segal A is-segal-A a' a a
-    ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+    ( arr-map-fiberwise-equiv)
     ( id-hom A a))
 
 #def assoc-is-segal-comp-comp-arr-inv-equiv-arr-map-idhom-a
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+  uses ( A is-segal-A a a' ψ)
   : comp-is-segal A is-segal-A a a a
       ( comp-is-segal A is-segal-A a a' a
-        ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-        ( arr-map-fiberwise-equiv A is-segal-A a a' ψ))
+         arr-inv-map-fiberwise-equiv
+         arr-map-fiberwise-equiv)
       ( id-hom A a)
   =_{ hom A a a}
     comp-is-segal A is-segal-A a a' a
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+      ( arr-inv-map-fiberwise-equiv)
       ( comp-is-segal A is-segal-A a' a a
-        ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+        ( arr-map-fiberwise-equiv)
         ( id-hom A a))
   :=
   associative-is-segal extext A is-segal-A a a' a a
-  ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-  ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+  ( arr-inv-map-fiberwise-equiv)
+  ( arr-map-fiberwise-equiv)
   ( id-hom A a)
 
-#def comp-id-comp-arr-inv-map-arr-map-id-a
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+#def comp-id-comp-arr-inv-map-arr-map-id-a uses ( A is-segal-A a a' ψ)
   : comp-is-segal A is-segal-A a a a
       ( comp-is-segal A is-segal-A a a' a
-        ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-        ( arr-map-fiberwise-equiv A is-segal-A a a' ψ))
+          arr-inv-map-fiberwise-equiv
+          arr-map-fiberwise-equiv)
       ( id-hom A a)
   =_{ hom A a a}
     comp-is-segal A is-segal-A a a' a
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+      arr-inv-map-fiberwise-equiv
+      arr-map-fiberwise-equiv
   :=
   comp-id-is-segal A is-segal-A a a
   ( comp-is-segal A is-segal-A a a' a
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-    ( arr-map-fiberwise-equiv A is-segal-A a a' ψ))
+      arr-inv-map-fiberwise-equiv
+      arr-map-fiberwise-equiv)
 ```
 
 Concatenate all the paths above.
 
 ```rzk
-#def eq-comp-arrow-inv-map-arrow-map-equiv-id-a uses (extext funext)
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+#def eq-comp-arrow-inv-map-arrow-map-equiv-id-a
+  uses ( extext funext A is-segal-A a a' ψ)
   : comp-is-segal A is-segal-A a a' a
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+      arr-inv-map-fiberwise-equiv
+      arr-map-fiberwise-equiv
   =_{ hom A a a}
     id-hom A a
   :=
   quintuple-concat
   ( hom A a a)
   ( comp-is-segal A is-segal-A a a' a
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-    ( arr-map-fiberwise-equiv A is-segal-A a a' ψ))
+      arr-inv-map-fiberwise-equiv
+      arr-map-fiberwise-equiv)
   ( comp-is-segal A is-segal-A a a a
     ( comp-is-segal A is-segal-A a a' a
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ))
+        arr-inv-map-fiberwise-equiv
+        arr-map-fiberwise-equiv)
     ( id-hom A a))
   ( comp-is-segal A is-segal-A a a' a
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-    ( comp-is-segal A is-segal-A a' a a
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( id-hom A a)))
-  ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a
-    ( comp-is-segal A is-segal-A a' a a
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( id-hom A a)))
-  ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a
-    ( map-fiberwise-equiv A is-segal-A a a' ψ a ( id-hom A a)))
+    ( arr-inv-map-fiberwise-equiv)
+    ( comp-is-segal A is-segal-A a' a a arr-map-fiberwise-equiv ( id-hom A a)))
+  ( inv-map-fiberwise-equiv a
+    ( comp-is-segal A is-segal-A a' a a arr-map-fiberwise-equiv ( id-hom A a)))
+  ( inv-map-fiberwise-equiv a ( map-fiberwise-equiv a ( id-hom A a)))
   ( id-hom A a)
   ( rev
     ( hom A a a)
     ( comp-is-segal A is-segal-A a a a
       ( comp-is-segal A is-segal-A a a' a
-        ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-        ( arr-map-fiberwise-equiv A is-segal-A a a' ψ))
+          arr-inv-map-fiberwise-equiv
+          arr-map-fiberwise-equiv)
       ( id-hom A a))
     ( comp-is-segal A is-segal-A a a' a
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ))
-    ( comp-id-comp-arr-inv-map-arr-map-id-a A is-segal-A a a' ψ))
-  ( assoc-is-segal-comp-comp-arr-inv-equiv-arr-map-idhom-a A is-segal-A a a' ψ)
+        arr-inv-map-fiberwise-equiv
+        arr-map-fiberwise-equiv)
+    ( comp-id-comp-arr-inv-map-arr-map-id-a))
+  ( assoc-is-segal-comp-comp-arr-inv-equiv-arr-map-idhom-a)
   ( rev
     ( hom A a a)
-    ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a
-      ( comp-is-segal A is-segal-A a' a a
-        ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-        ( id-hom A a)))
+    ( inv-map-fiberwise-equiv a
+      ( comp-is-segal A is-segal-A a' a a arr-map-fiberwise-equiv ( id-hom A a)))
     ( comp-is-segal A is-segal-A a a' a
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( comp-is-segal A is-segal-A a' a a
-        ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-        ( id-hom A a)) )
-    ( eq-compute-precomposition-evid-arr-inv-map-fiberwise-equiv
-      ( A)
-      ( is-segal-A)
-      ( a)
-      ( a')
-      ( ψ)))
+      ( arr-inv-map-fiberwise-equiv)
+      ( comp-is-segal A is-segal-A a' a a arr-map-fiberwise-equiv ( id-hom A a)))
+    ( eq-compute-precomposition-evid-arr-inv-map-fiberwise-equiv))
   ( rev
     ( hom A a a)
-    ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a
-      ( map-fiberwise-equiv A is-segal-A a a' ψ a ( id-hom A a)))
-    ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a
-      ( comp-is-segal A is-segal-A a' a a
-        ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-        ( id-hom A a)))
-    ( ap-inv-map-fiberwise-equiv A is-segal-A a a' ψ))
-  ( compute-htpy-inv-map-fib-equiv-map-fib-equiv-id A is-segal-A a a' ψ)
+    ( inv-map-fiberwise-equiv a ( map-fiberwise-equiv a ( id-hom A a)))
+    ( inv-map-fiberwise-equiv a
+      ( comp-is-segal A is-segal-A a' a a arr-map-fiberwise-equiv ( id-hom A a)))
+    ( ap-inv-map-fiberwise-equiv))
+  ( compute-htpy-inv-map-fib-equiv-map-fib-equiv-id)
 ```
 
 Now we give the section of `#!rzk arrow-map-fiberwise-equiv`.
 
 ```rzk
-#def section-arrow-map-fiberwise-equiv uses ( extext funext)
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : Section-arrow A is-segal-A a' a
-    ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-  :=
-  ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ
-  , eq-comp-arrow-inv-map-arrow-map-equiv-id-a A is-segal-A a a' ψ)
+#def section-arrow-map-fiberwise-equiv uses ( extext funext A is-segal-A a a' ψ)
+  : Section-arrow A is-segal-A a' a arr-map-fiberwise-equiv
+  := ( arr-inv-map-fiberwise-equiv , eq-comp-arrow-inv-map-arrow-map-equiv-id-a)
 ```
 
 We see that `#!rzk arrow-map-fiberwise-equiv` has retraction
 `#!rzk arrow-inv-map-fiberwise-equiv`.
 
 ```rzk
-#def htpy-comp-map-fib-equiv-inv-map-fib-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+#def htpy-comp-map-fib-equiv-inv-map-fib-equiv uses ( A a a' ψ)
   : ( x : A)
   → ( homotopy
       ( hom A a' x)
@@ -1234,187 +1166,146 @@ We see that `#!rzk arrow-map-fiberwise-equiv` has retraction
         ( hom A a' x)
         ( hom A a x)
         ( hom A a' x)
-        ( map-fiberwise-equiv A is-segal-A a a' ψ x)
-        ( inv-map-fiberwise-equiv A is-segal-A a a' ψ x))
+        ( map-fiberwise-equiv x)
+        ( inv-map-fiberwise-equiv x))
       ( identity ( hom A a' x)))
-  := \ x → second ( second ( inverse-fiberwise-equiv A is-segal-A a a' ψ x))
+  := \ x → second ( second ( inverse-fiberwise-equiv x))
 ```
 
 We compute the required paths for the retraction of
 `#!rzk arrow-map-iso-representable`.
 
 ```rzk
-#def compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : map-fiberwise-equiv A is-segal-A a a' ψ a'
-    ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a' ( id-hom A a'))
+#def compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv uses ( A a a' ψ)
+  : map-fiberwise-equiv a' ( inv-map-fiberwise-equiv a' ( id-hom A a'))
   =_{ hom A a' a'}
     id-hom A a'
-  :=
-  htpy-comp-map-fib-equiv-inv-map-fib-equiv A is-segal-A a a' ψ a' ( id-hom A a')
+  := htpy-comp-map-fib-equiv-inv-map-fib-equiv a' ( id-hom A a')
 
-#def ap-map-fiberwise-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : map-fiberwise-equiv A is-segal-A a a' ψ a'
-    ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a' ( id-hom A a'))
+#def ap-map-fiberwise-equiv uses ( A is-segal-A a a' ψ)
+  : map-fiberwise-equiv a' ( inv-map-fiberwise-equiv a' ( id-hom A a'))
   =_{ hom A a' a'}
-    map-fiberwise-equiv A is-segal-A a a' ψ a'
+    map-fiberwise-equiv a'
     ( comp-is-segal A is-segal-A a a' a'
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+      ( arr-inv-map-fiberwise-equiv)
       ( id-hom A a'))
   :=
   ap
   ( hom A a a')
   ( hom A a' a')
-  ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a' ( id-hom A a'))
-  ( comp-is-segal A is-segal-A a a' a'
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-    ( id-hom A a'))
-  ( map-fiberwise-equiv A is-segal-A a a' ψ a')
+  ( inv-map-fiberwise-equiv a' ( id-hom A a'))
+  ( comp-is-segal A is-segal-A a a' a' arr-inv-map-fiberwise-equiv (id-hom A a'))
+  ( map-fiberwise-equiv a')
   ( eq-compute-precomposition-evid funext A is-segal-A a' a
-    ( inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+    ( inv-map-fiberwise-equiv)
     ( a')
     ( id-hom A a'))
 
 #def ap-map-fiberwise-equiv-eq-arr-inv-map-id-a'-arr-inv-map
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : map-fiberwise-equiv A is-segal-A a a' ψ a'
+  uses ( A is-segal-A a a' ψ)
+  : map-fiberwise-equiv a'
     ( comp-is-segal A is-segal-A a a' a'
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+      ( arr-inv-map-fiberwise-equiv)
       ( id-hom A a'))
   =_{ hom A a' a'}
-    map-fiberwise-equiv A is-segal-A a a' ψ a'
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+    map-fiberwise-equiv a' arr-inv-map-fiberwise-equiv
   :=
   ap
   ( hom A a a')
   ( hom A a' a')
   ( comp-is-segal A is-segal-A a a' a'
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+    ( arr-inv-map-fiberwise-equiv)
     ( id-hom A a'))
-  ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
-  ( map-fiberwise-equiv A is-segal-A a a' ψ a')
-  ( comp-id-is-segal A is-segal-A a a'
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ))
+  ( arr-inv-map-fiberwise-equiv)
+  ( map-fiberwise-equiv a')
+  ( comp-id-is-segal A is-segal-A a a' arr-inv-map-fiberwise-equiv)
 
 #def eq-compute-precomposition-evid-map-fiberwise-equiv
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
-  : map-fiberwise-equiv A is-segal-A a a' ψ a'
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+  uses ( A is-segal-A a a' ψ)
+  : map-fiberwise-equiv a' arr-inv-map-fiberwise-equiv
   =_{ hom A a' a'}
     comp-is-segal A is-segal-A a' a a'
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+      arr-map-fiberwise-equiv
+      arr-inv-map-fiberwise-equiv
   :=
   eq-compute-precomposition-evid funext A is-segal-A a a'
-  ( map-fiberwise-equiv A is-segal-A a a' ψ)
-  ( a')
-  ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+    map-fiberwise-equiv
+    a'
+    arr-inv-map-fiberwise-equiv
 ```
 
 Concatenate all the paths above.
 
 ```rzk
-#def eq-comp-arr-map-fiberwise-arr-inv-map-fiberwise-id-a' uses (funext)
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+#def eq-comp-arr-map-fiberwise-arr-inv-map-fiberwise-id-a'
+  uses ( funext A is-segal-A a a' ψ)
   : comp-is-segal A is-segal-A a' a a'
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+      arr-map-fiberwise-equiv
+      arr-inv-map-fiberwise-equiv
   =_{ hom A a' a'}
     id-hom A a'
   :=
   quadruple-concat
   ( hom A a' a')
   ( comp-is-segal A is-segal-A a' a a'
-    ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ))
-  ( map-fiberwise-equiv A is-segal-A a a' ψ a'
-    ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ))
-  ( map-fiberwise-equiv A is-segal-A a a' ψ a'
+      arr-map-fiberwise-equiv
+      arr-inv-map-fiberwise-equiv)
+  ( map-fiberwise-equiv a' arr-inv-map-fiberwise-equiv)
+  ( map-fiberwise-equiv a'
     ( comp-is-segal A is-segal-A a a' a'
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+      ( arr-inv-map-fiberwise-equiv)
       ( id-hom A a')))
-  ( map-fiberwise-equiv A is-segal-A a a' ψ a'
-    ( ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a')
-      ( id-hom A a')))
+  ( map-fiberwise-equiv a' ( inv-map-fiberwise-equiv a' ( id-hom A a')))
   ( id-hom A a')
   ( rev
     ( hom A a' a')
-    ( map-fiberwise-equiv A is-segal-A a a' ψ a'
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ))
+    ( map-fiberwise-equiv a' arr-inv-map-fiberwise-equiv)
     ( comp-is-segal A is-segal-A a' a a'
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ))
-    ( eq-compute-precomposition-evid-map-fiberwise-equiv A is-segal-A a a' ψ))
+        arr-map-fiberwise-equiv
+        arr-inv-map-fiberwise-equiv)
+    ( eq-compute-precomposition-evid-map-fiberwise-equiv))
   ( rev
     ( hom A a' a')
-    ( map-fiberwise-equiv A is-segal-A a a' ψ a'
+    ( map-fiberwise-equiv a'
       ( comp-is-segal A is-segal-A a a' a'
-        ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+        ( arr-inv-map-fiberwise-equiv)
         ( id-hom A a')))
-    ( map-fiberwise-equiv A is-segal-A a a' ψ a'
-      ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ))
-    ( ap-map-fiberwise-equiv-eq-arr-inv-map-id-a'-arr-inv-map
-      ( A)
-      ( is-segal-A)
-      ( a)
-      ( a')
-      ( ψ)))
+    ( map-fiberwise-equiv a' arr-inv-map-fiberwise-equiv)
+    ( ap-map-fiberwise-equiv-eq-arr-inv-map-id-a'-arr-inv-map))
   ( rev
     ( hom A a' a')
-    ( map-fiberwise-equiv A is-segal-A a a' ψ a'
-      ( inv-map-fiberwise-equiv A is-segal-A a a' ψ a' ( id-hom A a')))
-    ( map-fiberwise-equiv A is-segal-A a a' ψ a'
+    ( map-fiberwise-equiv a'
+      ( inv-map-fiberwise-equiv a' ( id-hom A a')))
+    ( map-fiberwise-equiv a'
       ( comp-is-segal A is-segal-A a a' a'
-        ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ)
+        ( arr-inv-map-fiberwise-equiv)
         ( id-hom A a')))
-    ( ap-map-fiberwise-equiv A is-segal-A a a' ψ))
-  ( compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv A is-segal-A a a' ψ)
+    ( ap-map-fiberwise-equiv))
+  ( compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv)
 ```
 
 Now we give the retraction of `#!rzk arrow-map-fiberwise-equiv`.
 
 ```rzk
-#def retraction-arrow-map-fiberwise-equiv uses ( funext)
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+#def retraction-arrow-map-fiberwise-equiv uses ( funext A is-segal-A a a' ψ)
   : Retraction-arrow A is-segal-A a' a
-      ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+      ( arr-map-fiberwise-equiv)
   :=
-  ( arr-inv-map-fiberwise-equiv A is-segal-A a a' ψ
-  , eq-comp-arr-map-fiberwise-arr-inv-map-fiberwise-id-a' A is-segal-A a a' ψ)
+  ( arr-inv-map-fiberwise-equiv
+  , eq-comp-arr-map-fiberwise-arr-inv-map-fiberwise-id-a')
 ```
 
 We show that arrows from fiberwise equivalences are isomorphisms.
 
 ```rzk title="RS17, Proposition 10.11 (i)"
-#def representable-isomorphism uses ( extext funext)
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( a a' : A)
-  ( ψ : ( x : A) → ( Equiv ( hom A a x) ( hom A a' x)))
+#def representable-isomorphism uses ( extext funext A is-segal-A a a' ψ)
   : is-iso-arrow A is-segal-A a' a
-    ( arr-map-fiberwise-equiv A is-segal-A a a' ψ)
+    ( arr-map-fiberwise-equiv)
   :=
-  ( retraction-arrow-map-fiberwise-equiv A is-segal-A a a' ψ
-  , section-arrow-map-fiberwise-equiv A is-segal-A a a' ψ)
+  ( retraction-arrow-map-fiberwise-equiv
+  , section-arrow-map-fiberwise-equiv)
+
+#end representable-isomorphisms
 ```
 
 The second part of Proposition 10.11.
@@ -1428,6 +1319,6 @@ The second part of Proposition 10.11.
   : a' = a
   :=
   eq-iso-is-rezk A is-rezk-A a' a
-    ( arr-map-fiberwise-equiv A ( first is-rezk-A) a a' ψ
-    , representable-isomorphism A ( first is-rezk-A) a a' ψ)
+  ( arr-map-fiberwise-equiv A a a' ψ
+  , representable-isomorphism A ( first is-rezk-A) a a' ψ)
 ```

@@ -1288,19 +1288,18 @@ Now we give the retraction of `#!rzk arrow-map-fiberwise-equiv`.
 
 ```rzk
 #def retraction-arrow-map-fiberwise-equiv uses ( funext A is-segal-A a a' ψ)
-  : Retraction-arrow A is-segal-A a' a
-      ( arr-map-fiberwise-equiv)
+  : Retraction-arrow A is-segal-A a' a arr-map-fiberwise-equiv
   :=
   ( arr-inv-map-fiberwise-equiv
   , eq-comp-arr-map-fiberwise-arr-inv-map-fiberwise-id-a')
 ```
 
-We show that arrows from fiberwise equivalences are isomorphisms.
+We show that arrows from fiberwise equivalences are isomorphisms, i.e. that
+`#!rzk arr-map-fiberwise-equiv` is an isomorphism.
 
 ```rzk title="RS17, Proposition 10.11 (i)"
 #def representable-isomorphism uses ( extext funext A is-segal-A a a' ψ)
-  : is-iso-arrow A is-segal-A a' a
-    ( arr-map-fiberwise-equiv)
+  : is-iso-arrow A is-segal-A a' a arr-map-fiberwise-equiv
   :=
   ( retraction-arrow-map-fiberwise-equiv
   , section-arrow-map-fiberwise-equiv)

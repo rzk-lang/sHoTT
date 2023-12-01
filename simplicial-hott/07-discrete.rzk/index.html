@@ -917,6 +917,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#naturality-for-hom-eq" class="md-nav__link">
+    Naturality for hom-eq
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1175,6 +1182,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#naturality-for-hom-eq" class="md-nav__link">
+    Naturality for hom-eq
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1414,8 +1428,7 @@ of discrete types is discrete.</p>
 </span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="err">      ( </span><span class="s">second</span><span class="err"> (equiv-hom-eq-function-type-is-discrete X A is-discrete-A f g))</span>
 </span></code></pre></div>
 <p>By extension extensionality, an extension type into a family of discrete types
-is discrete. Since <code class="language-rzk highlight"><span class="err">equiv-extensions-BOT-equiv</span></code> considers total extension
-types only, extending from <code class="language-rzk highlight"><span class="err">BOT</span></code>, that's all we prove here for now.</p>
+is discrete.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-hom-eq-extension-type-is-discrete" id="define:equiv-hom-eq-extension-type-is-discrete" style="visibility: visible; position: relative; color: inherit">equiv-hom-eq-extension-type-is-discrete</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> I → TOPE)</span>
@@ -1430,42 +1443,40 @@ types only, extending from <code class="language-rzk highlight"><span class="err
 </span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="err">      </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → hom (A t) (f t) (g t))</span>
 </span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="err">      </span><span class="p">( </span>hom ((t <span class="p">:</span><span class="err"> ψ) → A t) f g)</span>
 </span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="err">      ( equiv-ExtExt extext I ψ (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="m">BOT</span><span class="err">) A (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">recBOT</span><span class="err">) f g)</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="err">      ( equiv-extensions-BOT-equiv</span>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="err">        ( extext)</span>
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="err">        ( I)</span>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="err">        ( ψ)</span>
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ f t = g t)</span>
-</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ hom (A t) (f t) (g t))</span>
-</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ (hom-eq (A t) (f t) (g t) , (is-discrete-A t (f t) (g t)))))</span>
-</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="err">      ( fubini</span>
-</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="err">        ( I)</span>
-</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="err">        ( </span><span class="kt">2</span><span class="err">)</span>
-</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="err">        ( ψ)</span>
-</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="m">BOT</span><span class="err">)</span>
-</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="err">        ( Δ¹)</span>
-</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="err">        ( ∂Δ¹)</span>
-</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="err">        ( </span><span class="p">\ </span>t s <span class="err">→ A t)</span>
-</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="err">        ( \ (t , s) → </span><span class="s">recOR</span><span class="err"> (s </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err"> ↦ f t , s </span><span class="sx">≡</span><span class="err"> </span><span class="m">1₂</span><span class="err"> ↦ g t)))</span>
-</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>
-</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:compute-hom-eq-extension-type-is-discrete" id="define:compute-hom-eq-extension-type-is-discrete" style="visibility: visible; position: relative; color: inherit">compute-hom-eq-extension-type-is-discrete</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
-</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
-</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> I) → TOPE)</span>
-</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> ψ → U)</span>
-</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="err">  </span><span class="p">( </span>is-discrete-A <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → is-discrete (A t))</span>
-</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="err">  </span><span class="p">( </span>f g <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → A t)</span>
-</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a><span class="err">  </span><span class="p">( </span>h <span class="p">:</span><span class="err"> f = g)</span>
-</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a><span class="err">  : </span><span class="p">( </span>hom-eq ((t <span class="p">:</span><span class="err"> ψ) → A t) f g h) =</span>
-</span><span id="__span-11-40"><a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a><span class="err">    ( </span><span class="s">first</span><span class="err"> (equiv-hom-eq-extension-type-is-discrete I ψ A is-discrete-A f g)) h</span>
-</span><span id="__span-11-41"><a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a><span class="err">  :=</span>
-</span><span id="__span-11-42"><a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a><span class="err">    ind-path</span>
-</span><span id="__span-11-43"><a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a><span class="err">      </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t)</span>
-</span><span id="__span-11-44"><a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a><span class="err">      ( f)</span>
-</span><span id="__span-11-45"><a id="__codelineno-11-45" name="__codelineno-11-45" href="#__codelineno-11-45"></a><span class="err">      </span><span class="p">( </span>\ g&#39; h&#39; →
-</span><span id="__span-11-46"><a id="__codelineno-11-46" name="__codelineno-11-46" href="#__codelineno-11-46"></a>        ( hom-eq ((t <span class="p">:</span><span class="err"> ψ) → A t) f g&#39; h&#39;) =</span>
-</span><span id="__span-11-47"><a id="__codelineno-11-47" name="__codelineno-11-47" href="#__codelineno-11-47"></a><span class="err">        ( </span><span class="s">first</span><span class="err"> (equiv-hom-eq-extension-type-is-discrete I ψ A is-discrete-A f g&#39;) h&#39;))</span>
-</span><span id="__span-11-48"><a id="__codelineno-11-48" name="__codelineno-11-48" href="#__codelineno-11-48"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-11-49"><a id="__codelineno-11-49" name="__codelineno-11-49" href="#__codelineno-11-49"></a><span class="err">      ( g)</span>
-</span><span id="__span-11-50"><a id="__codelineno-11-50" name="__codelineno-11-50" href="#__codelineno-11-50"></a><span class="err">      ( h)</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="err">      ( equiv-extensions-equiv extext I ψ (</span><span class="p">\ </span>_ <span class="err">→ </span><span class="m">BOT</span><span class="err">)</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ f t = g t)</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ hom (A t) (f t) (g t))</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ (hom-eq (A t) (f t) (g t) , (is-discrete-A t (f t) (g t))))</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="err">        ( </span><span class="p">\ </span>_ <span class="err">→ </span><span class="s">recBOT</span><span class="err">))</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="err">      ( fubini</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="err">        ( I)</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="err">        ( </span><span class="kt">2</span><span class="err">)</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="err">        ( ψ)</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ </span><span class="m">BOT</span><span class="err">)</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="err">        ( Δ¹)</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="err">        ( ∂Δ¹)</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="err">        ( </span><span class="p">\ </span>t s <span class="err">→ A t)</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="err">        ( \ (t , s) → </span><span class="s">recOR</span><span class="err"> (s </span><span class="sx">≡</span><span class="err"> </span><span class="m">0₂</span><span class="err"> ↦ f t , s </span><span class="sx">≡</span><span class="err"> </span><span class="m">1₂</span><span class="err"> ↦ g t)))</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:compute-hom-eq-extension-type-is-discrete" id="define:compute-hom-eq-extension-type-is-discrete" style="visibility: visible; position: relative; color: inherit">compute-hom-eq-extension-type-is-discrete</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="err">  </span><span class="p">( </span>ψ <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> I) → TOPE)</span>
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> ψ → U)</span>
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="err">  </span><span class="p">( </span>is-discrete-A <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → is-discrete (A t))</span>
+</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="err">  </span><span class="p">( </span>f g <span class="p">:</span><span class="err"> </span><span class="p">(</span>t <span class="p">:</span><span class="err"> ψ) → A t)</span>
+</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="err">  </span><span class="p">( </span>h <span class="p">:</span><span class="err"> f = g)</span>
+</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="err">  : </span><span class="p">( </span>hom-eq ((t <span class="p">:</span><span class="err"> ψ) → A t) f g h) =</span>
+</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a><span class="err">    ( </span><span class="s">first</span><span class="err"> (equiv-hom-eq-extension-type-is-discrete I ψ A is-discrete-A f g)) h</span>
+</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a><span class="err">  :=</span>
+</span><span id="__span-11-40"><a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a><span class="err">    ind-path</span>
+</span><span id="__span-11-41"><a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a><span class="err">      </span><span class="p">( </span>(t <span class="p">:</span><span class="err"> ψ) → A t)</span>
+</span><span id="__span-11-42"><a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a><span class="err">      ( f)</span>
+</span><span id="__span-11-43"><a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a><span class="err">      </span><span class="p">( </span>\ g&#39; h&#39; →
+</span><span id="__span-11-44"><a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a>        ( hom-eq ((t <span class="p">:</span><span class="err"> ψ) → A t) f g&#39; h&#39;) =</span>
+</span><span id="__span-11-45"><a id="__codelineno-11-45" name="__codelineno-11-45" href="#__codelineno-11-45"></a><span class="err">        ( </span><span class="s">first</span><span class="err"> (equiv-hom-eq-extension-type-is-discrete I ψ A is-discrete-A f g&#39;) h&#39;))</span>
+</span><span id="__span-11-46"><a id="__codelineno-11-46" name="__codelineno-11-46" href="#__codelineno-11-46"></a><span class="err">      ( </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-11-47"><a id="__codelineno-11-47" name="__codelineno-11-47" href="#__codelineno-11-47"></a><span class="err">      ( g)</span>
+</span><span id="__span-11-48"><a id="__codelineno-11-48" name="__codelineno-11-48" href="#__codelineno-11-48"></a><span class="err">      ( h)</span>
 </span></code></pre></div>
 <div class="language-rzk highlight"><span class="filename">RS17, Proposition 7.2, for extension types</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-discrete-extension-type" id="define:is-discrete-extension-type" style="visibility: visible; position: relative; color: inherit">is-discrete-extension-type</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  </span><span class="p">( </span>I <span class="p">:</span><span class="err"> CUBE)</span>
@@ -2226,6 +2237,39 @@ general case to the one just proven:</p>
 </span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="err">  </span><span class="p">( </span>is-discrete-A <span class="p">:</span><span class="err"> is-discrete A)</span>
 </span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="err">  : is-segal A</span>
 </span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="err">  := is-contr-hom2-is-discrete A is-discrete-A</span>
+</span></code></pre></div>
+<h2 id="naturality-for-hom-eq">Naturality for hom-eq<a class="headerlink" href="#naturality-for-hom-eq" title="Permanent link">&para;</a></h2>
+<p><code class="language-rzk highlight"><span class="err">hom-eq</span></code> commute with <code class="language-rzk highlight"><span class="err">ap-hom</span></code>.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:hom-eq-naturality" id="define:hom-eq-naturality" style="visibility: visible; position: relative; color: inherit">hom-eq-naturality</a></span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → B)</span>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="err">  </span><span class="p">( </span>x y <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="err">  :</span>
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="err">  comp (x = y) (hom A x y) (hom B (f x) (f y))</span>
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="err">    ( ap-hom A B f x y)</span>
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a><span class="err">    ( hom-eq A x y)</span>
+</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a><span class="err">    ( p)</span>
+</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a><span class="err">  =</span>
+</span><span id="__span-35-12"><a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a><span class="err">  comp (x = y) ((f x) = (f y)) (hom B (f x) (f y))</span>
+</span><span id="__span-35-13"><a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a><span class="err">    ( hom-eq B (f x) (f y))</span>
+</span><span id="__span-35-14"><a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a><span class="err">    ( ap A B x y f)</span>
+</span><span id="__span-35-15"><a id="__codelineno-35-15" name="__codelineno-35-15" href="#__codelineno-35-15"></a><span class="err">    ( p)</span>
+</span><span id="__span-35-16"><a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a><span class="err">  :=</span>
+</span><span id="__span-35-17"><a id="__codelineno-35-17" name="__codelineno-35-17" href="#__codelineno-35-17"></a><span class="err">    ind-path A x</span>
+</span><span id="__span-35-18"><a id="__codelineno-35-18" name="__codelineno-35-18" href="#__codelineno-35-18"></a><span class="err">      ( </span><span class="p">\ </span>y&#39; p&#39; <span class="err">→</span>
+</span><span id="__span-35-19"><a id="__codelineno-35-19" name="__codelineno-35-19" href="#__codelineno-35-19"></a><span class="err">        comp (x = y&#39;) (hom A x y&#39;) (hom B (f x) (f y&#39;))</span>
+</span><span id="__span-35-20"><a id="__codelineno-35-20" name="__codelineno-35-20" href="#__codelineno-35-20"></a><span class="err">          ( ap-hom A B f x y&#39;)</span>
+</span><span id="__span-35-21"><a id="__codelineno-35-21" name="__codelineno-35-21" href="#__codelineno-35-21"></a><span class="err">          ( hom-eq A x y&#39;)</span>
+</span><span id="__span-35-22"><a id="__codelineno-35-22" name="__codelineno-35-22" href="#__codelineno-35-22"></a><span class="err">          ( p&#39;)</span>
+</span><span id="__span-35-23"><a id="__codelineno-35-23" name="__codelineno-35-23" href="#__codelineno-35-23"></a><span class="err">        =</span>
+</span><span id="__span-35-24"><a id="__codelineno-35-24" name="__codelineno-35-24" href="#__codelineno-35-24"></a><span class="err">        comp (x = y&#39;) ((f x) = (f y&#39;)) (hom B (f x) (f y&#39;))</span>
+</span><span id="__span-35-25"><a id="__codelineno-35-25" name="__codelineno-35-25" href="#__codelineno-35-25"></a><span class="err">          ( hom-eq B (f x) (f y&#39;))</span>
+</span><span id="__span-35-26"><a id="__codelineno-35-26" name="__codelineno-35-26" href="#__codelineno-35-26"></a><span class="err">          ( ap A B x y&#39; f)</span>
+</span><span id="__span-35-27"><a id="__codelineno-35-27" name="__codelineno-35-27" href="#__codelineno-35-27"></a><span class="err">          ( p&#39;))</span>
+</span><span id="__span-35-28"><a id="__codelineno-35-28" name="__codelineno-35-28" href="#__codelineno-35-28"></a><span class="err">      ( functors-pres-id extext A B f x)</span>
+</span><span id="__span-35-29"><a id="__codelineno-35-29" name="__codelineno-35-29" href="#__codelineno-35-29"></a><span class="err">      ( y)</span>
+</span><span id="__span-35-30"><a id="__codelineno-35-30" name="__codelineno-35-30" href="#__codelineno-35-30"></a><span class="err">      ( p)</span>
 </span></code></pre></div>
 
 

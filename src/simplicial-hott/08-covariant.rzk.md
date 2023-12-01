@@ -1308,13 +1308,11 @@ domain are equivalent:
 #def equiv-total-dhom-equiv uses (A x y)
   : Equiv ( (t : Δ¹) → B (f t)) ((t : Δ¹) → C (f t))
   :=
-    equiv-extensions-BOT-equiv
-      ( extext)
-      ( 2)
-      ( Δ¹)
+    equiv-extensions-equiv extext 2 Δ¹ (\ _ → BOT)
       ( \ t → B (f t))
       ( \ t → C (f t))
       ( \ t → equiv-BC (f t))
+      ( \ _ → recBOT)
 
 #def equiv-total-covariant-dhom-equiv uses (extext equiv-BC)
   : Equiv
@@ -2087,4 +2085,36 @@ are discrete.
       ( hom A x)
       ( is-covariant-representable-is-segal A is-segal-A x)
       ( y)
+```
+
+In particular, the identity types of discrete types are also discrete. First, we
+show that equivalences preserve discreteness, which is a special case of
+preservation of local types by equivalences.
+
+```rzk
+#def equiv-preserve-discreteness uses (extext)
+  ( A B : U)
+  ( A≅B : Equiv A B)
+  ( is-discrete-B : is-discrete B)
+  : is-discrete A
+  :=
+  is-discrete-is-Δ¹-local A
+    (is-Δ¹-local-is-left-local A
+      ( is-local-type-equiv-is-local-type extext 2 Δ¹ (\ t → t ≡ 0₂) A B A≅B
+        ( is-left-local-is-Δ¹-local B
+          (is-Δ¹-local-is-discrete B is-discrete-B))))
+```
+
+```rzk title="RS17, Corollary 8.20"
+#def is-discrete-id-path-is-discrete uses (extext)
+  ( A : U)
+  ( is-discrete-A : is-discrete A)
+  ( x y : A)
+  : is-discrete (x = y)
+  :=
+  equiv-preserve-discreteness (x = y) (hom A x y)
+  ( hom-eq A x y , is-discrete-A x y)
+  ( is-discrete-hom-is-segal A
+    ( is-segal-is-discrete extext A is-discrete-A)
+    ( x) ( y))
 ```

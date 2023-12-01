@@ -10,9 +10,9 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
   their subshapes.
-- `04-extension-types.rzk.md` — We use extension extensionality.
+- `03-extension-types.rzk.md` — We use extension extensionality.
 - `05-segal-types.rzk.md` - We use the notion of hom types.
 
 Some of the definitions in this file rely on function extensionality and
@@ -125,6 +125,66 @@ Preservation of composition requires the Segal hypothesis.
       ( ap-hom A B F y z g))
     ( ap-hom A B F x z (comp-is-segal A is-segal-A x y z f g))
     ( functors-pres-comp A B is-segal-A is-segal-B F x y z f g)
+```
+
+The action on morphisms commutes with transport.
+
+```rzk
+#def ap-hom-naturality
+  ( A B C : U)
+  ( f g : A → B)
+  ( h k : B → C)
+  ( p : f = g)
+  ( q : h = k)
+  ( x y : A)
+  : comp
+    ( hom B (f x) (f y))
+    ( hom B (g x) (g y))
+    ( hom C (k (g x)) (k (g y)))
+    ( ap-hom B C k (g x) (g y))
+    ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g p)
+    =
+    comp
+    ( hom B (f x) (f y)) (hom C (h (f x)) (h (f y))) (hom C (k (g x)) (k (g y)))
+    ( transport (A → C) (\ f' → hom C (f' x) (f' y))
+      ( comp A B C h f)
+      ( comp A B C k g)
+      ( comp-homotopic-maps A B C f g h k p q))
+    ( ap-hom B C h (f x) (f y))
+  :=
+  ind-path (A → B) f
+  ( \ g' p' →
+    comp (hom B (f x) (f y)) (hom B (g' x) (g' y)) (hom C (k (g' x)) (k (g' y)))
+    ( ap-hom B C k (g' x) (g' y))
+    ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g' p')
+    =
+    comp
+    ( hom B (f x) (f y))(hom C (h (f x)) (h (f y)))(hom C (k (g' x)) (k (g' y)))
+    ( transport (A → C) (\ f' → hom C (f' x) (f' y))
+      ( comp A B C h f)
+      ( comp A B C k g')
+      ( comp-homotopic-maps A B C f g' h k p' q))
+    ( ap-hom B C h (f x) (f y)))
+  ( ind-path (B → C) h
+    ( \ k' q' →
+      comp (hom B (f x) (f y)) (hom B (f x) (f y)) (hom C (k' (f x)) (k' (f y)))
+      ( ap-hom B C k' (f x) (f y))
+      ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f f refl)
+      =
+      comp
+      ( hom B (f x) (f y))
+      ( hom C (h (f x)) (h (f y)))
+      ( hom C (k' (f x)) (k' (f y)))
+      ( transport (A → C) (\ f' → hom C (f' x) (f' y))
+        ( comp A B C h f)
+        ( comp A B C k' f)
+        ( comp-homotopic-maps A B C f f h k' refl q'))
+      ( ap-hom B C h (f x) (f y)))
+    ( refl)
+    ( k)
+    ( q))
+  ( g)
+  ( p)
 ```
 
 ## Natural transformations
@@ -439,4 +499,70 @@ the "Gray interchanger" built from two commutative triangles.
     ( postwhisker-nat-trans A B C f g g' η)
     ( horizontal-comp-nat-trans A B C f g f' g' η η')
   := \ (t, s) a → η' t (η s a)
+```
+
+## Equivalences are fully faithful
+
+Since `#!rzk hom` is defined as an extension type, `#!rzk ap-hom` correspond to
+postcomposition. Hence, we can use `#!rzk is-equiv-extensions-is-equiv` to show
+that `#!rzk ap-hom` is an equivalence when f is an equivalence.
+
+```rzk
+#def is-equiv-ap-hom-is-equiv uses (extext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( x y : A)
+  : is-equiv (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
+  :=
+    is-equiv-extensions-is-equiv extext 2 Δ¹ ∂Δ¹
+    ( \ _ → A) ( \ _ → B)
+    ( \ _ → f)
+    ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+    ( \ _ → is-equiv-f)
+```
+
+More precicely:
+
+```rzk
+#def fiber-ap-hom
+  ( A B : U)
+  ( x y : A)
+  ( f : A → B)
+  ( β : hom B (f x) (f y))
+  : U
+  :=
+    fib (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y) (β)
+
+#def is-contr-fiber-ap-hom-is-equiv uses (extext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( x y : A)
+  ( β : hom B (f x) (f y))
+  : is-contr (fiber-ap-hom A B x y f β)
+  :=
+    is-contr-fiber-postcomp-Π-ext-is-equiv-fam extext 2 Δ¹ ∂Δ¹
+    ( \ _ → A) ( \ _ → B)
+    ( \ _ → f)
+    ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+    ( β)
+    ( \ _ → is-equiv-f)
+```
+
+We can also define a retraction of `#!rzk ap-hom` directly.
+
+```rzk
+#def has-retraction-ap-hom-retraction uses (extext)
+  ( A B : U)
+  ( f : A → B)
+  ( has-retraction-f : has-retraction A B f)
+  ( x y : A)
+  : has-retraction (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
+  :=
+    has-retraction-extensions-has-retraction extext 2 Δ¹ ∂Δ¹
+    ( \ _ → A) ( \ _ → B)
+    ( \ _ → f)
+    ( \ _ → has-retraction-f)
+    ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
 ```

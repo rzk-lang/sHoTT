@@ -813,6 +813,28 @@ identifications. This defines `#!rzk eq-htpy` to be the retraction to
   ( f g : (x : X) → A x)
   : ((x : X) → f x = g x) → (f = g)
   := first (first (funext X A f g))
+
+#def left-cancel-is-equiv uses (funext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : (comp A B A (π₁ (π₁ is-equiv-f)) f) = (identity A)
+  :=
+    eq-htpy A (\ x' → A)
+    ( comp A B A (π₁ (π₁ is-equiv-f)) f)
+    ( identity A)
+    ( π₂ (π₁ is-equiv-f))
+
+#def right-cancel-is-equiv uses (funext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : (comp B A B f (π₁ (π₂ is-equiv-f))) = (identity B)
+  :=
+    eq-htpy B (\ x' → B)
+    ( comp B A B f (π₁ (π₂ is-equiv-f)))
+    ( identity B)
+    ( π₂ (π₂ is-equiv-f))
 ```
 
 Using function extensionality, a fiberwise equivalence defines an equivalence of

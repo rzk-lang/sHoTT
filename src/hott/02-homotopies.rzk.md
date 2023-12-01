@@ -132,6 +132,27 @@ $K^{-1} \cdot H  \sim \text{refl-htpy}_{g}$
       g
 ```
 
+## Composition of equal maps
+
+```rzk
+
+#def comp-homotopic-maps
+  ( A B C : U)
+  ( f g : A → B)
+  ( h k : B → C)
+  ( p : f = g)
+  ( q : h = k)
+  : comp A B C h f = comp A B C k g
+  :=
+    ind-path (A → B) f (\ g' p' → comp A B C h f = comp A B C k g')
+    ( ind-path (B → C) h (\ k' q' → comp A B C h f = comp A B C k' f)
+      ( refl)
+      ( k)
+      ( q))
+    ( g)
+    ( p)
+```
+
 ## Naturality
 
 ```rzk title="The naturality square associated to a homotopy and a path"

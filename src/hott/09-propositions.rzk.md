@@ -20,7 +20,7 @@ A type is a proposition when its identity types are contractible.
 
 ```rzk
 #def is-prop
-  (A : U)
+  ( A : U)
   : U
   := (a : A) → (b : A) → is-contr (a = b)
 ```
@@ -38,17 +38,17 @@ this is true for every contractible type.
 
 ```rzk
 #def all-elements-equal
-  (A : U)
+  ( A : U)
   : U
   := (a : A) → (b : A) → (a = b)
 
 #def is-contr-is-inhabited
-  (A : U)
+  ( A : U)
   : U
   := A → is-contr A
 
 #def is-emb-terminal-map
-  (A : U)
+  ( A : U)
   : U
   := is-emb A Unit (terminal-map A)
 ```
@@ -73,7 +73,7 @@ this is true for every contractible type.
   ( is-prop-A : is-prop A)
   : is-contr-is-inhabited A
   :=
-    \ a → (a, \ b → first (is-prop-A a b))
+    \ a → (a , \ b → first (is-prop-A a b))
 
 #def terminal-map-is-emb-is-inhabited-is-contr-is-inhabited
   ( A : U)
@@ -87,7 +87,7 @@ this is true for every contractible type.
 #def terminal-map-is-emb-is-contr-is-inhabited
   ( A : U)
   ( c : is-contr-is-inhabited A)
-  : (is-emb-terminal-map A)
+  : ( is-emb-terminal-map A)
   :=
     ( is-emb-is-inhabited-emb A Unit (terminal-map A)
       ( terminal-map-is-emb-is-inhabited-is-contr-is-inhabited A c))
@@ -99,7 +99,7 @@ this is true for every contractible type.
   :=
     \ x y →
       ( is-contr-equiv-is-contr' (x = y) (unit = unit)
-        ( (ap A Unit x y (terminal-map A)) , (f x y))
+        ( ( ap A Unit x y (terminal-map A)) , (f x y))
         ( is-contr-path-types-Unit unit unit))
 
 #def is-prop-is-contr-is-inhabited
@@ -116,7 +116,7 @@ this is true for every contractible type.
   : is-prop A
   :=
     is-prop-is-contr-is-inhabited A
-    (  is-contr-is-inhabited-all-elements-equal A all-elements-equal-A)
+    ( is-contr-is-inhabited-all-elements-equal A all-elements-equal-A)
 ```
 
 ## Properties of propositions
@@ -128,15 +128,15 @@ If two propositions are logically equivalent, then they are equivalent:
   ( A B : U)
   ( is-prop-A : is-prop A)
   ( is-prop-B : is-prop B)
-  ( (f , g) : iff A B)
+  ( ( f , g) : iff A B)
   : is-equiv A B f
   :=
-    ( ( g ,
-        \ a →
-          (all-elements-equal-is-prop A is-prop-A) ((comp A B A g f) a) a) ,
-      ( g ,
-        \ b →
-          (all-elements-equal-is-prop B is-prop-B) ((comp B A B f g) b) b))
+    ( ( g
+      , \ a →
+          ( all-elements-equal-is-prop A is-prop-A) ((comp A B A g f) a) a)
+    , ( g
+      , \ b →
+          ( all-elements-equal-is-prop B is-prop-B) ((comp B A B f g) b) b))
 
 #def equiv-iff-is-prop-is-prop
   ( A B : U)
@@ -144,7 +144,7 @@ If two propositions are logically equivalent, then they are equivalent:
   ( is-prop-B : is-prop B)
   ( e : iff A B)
   : Equiv A B
-  := (first e, is-equiv-iff-is-prop-is-prop A B is-prop-A is-prop-B e)
+  := (first e , is-equiv-iff-is-prop-is-prop A B is-prop-A is-prop-B e)
 ```
 
 Every contractible type is a proposition:
@@ -155,7 +155,7 @@ Every contractible type is a proposition:
   ( is-contr-A : is-contr A)
   : is-prop A
   :=
-    is-prop-is-contr-is-inhabited A ( \ _ → is-contr-A)
+    is-prop-is-contr-is-inhabited A (\ _ → is-contr-A)
 ```
 
 All parallel paths in a proposition are equal.
@@ -194,7 +194,7 @@ invoking `is-prop-is-contr`.
 #def ind-prop-is-contr
   ( A : U)
   ( is-contr-A : is-contr A)
-  : ( B : A → U) → ( a : A) → ( b : B a) → ( x : A) →  B x
+  : ( B : A → U) → (a : A) → (b : B a) → (x : A) → B x
   := ind-prop A (is-prop-is-contr A is-contr-A)
 ```
 
@@ -207,7 +207,7 @@ Retracts of propositions are propositions:
 ```rzk
 #def is-prop-is-retract-of-is-prop
   ( A B : U)
-  ( (f,(g,η)) : is-retract-of A B) -- f : A → B with retraction g
+  ( ( f , (g , η)) : is-retract-of A B) -- f : A → B with retraction g
   ( is-prop-B : is-prop B)
   : is-prop A
   :=
@@ -215,7 +215,7 @@ Retracts of propositions are propositions:
     ( \ a a' →
       triple-concat A a (g (f a)) (g (f a')) a'
       ( rev A (g (f a)) a (η a))
-      ( ap B A (f a) (f a') g ( first (is-prop-B (f a) (f a'))))
+      ( ap B A (f a) (f a') g (first (is-prop-B (f a) (f a'))))
       ( η a'))
 ```
 
@@ -224,9 +224,9 @@ In particular, propositions are closed under equivalences:
 ```rzk
 #def is-prop-Equiv-is-prop
   ( A B : U)
-  ( (f, (rec-f, _)) : Equiv A B)
+  ( ( f , (rec-f , _)) : Equiv A B)
   : is-prop B → is-prop A
-  := is-prop-is-retract-of-is-prop A B (f, rec-f)
+  := is-prop-is-retract-of-is-prop A B (f , rec-f)
 
 #def is-prop-Equiv-is-prop'
   ( A B : U)
@@ -250,7 +250,7 @@ dependent functions `#!rzk (x : A) → B x` is a proposition.
     \ f g →
     is-contr-equiv-is-contr'
       ( f = g)
-      ( (x : A) → f x = g x)
+      ( ( x : A) → f x = g x)
       ( equiv-FunExt funext A B f g)
       ( weakfunext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
 ```
@@ -274,9 +274,9 @@ If each `C a` is a proposition, then so is the total type `total-type A C`.
   : is-prop (total-type A C)
   :=
     is-prop-all-elements-equal (total-type A C)
-    ( \ (a, c) (a', c') →
-      eq-pair A C (a, c) (a', c')
-      ( first ( is-prop-A a a')
+    ( \ (a , c) (a' , c') →
+      eq-pair A C (a , c) (a' , c')
+      ( first (is-prop-A a a')
       , first
         ( is-fiberwise-prop-C a'
           ( transport A C a a' (first (is-prop-A a a')) c)
@@ -297,12 +297,12 @@ is every fiber `#!rzk C a`.
       transport
       ( a = a)
       ( \ p → transport A C a a p c = c')
-      ( first-path-Σ A C (a, c) (a, c') ( first (is-prop-ΣC (a, c) (a, c'))))
+      ( first-path-Σ A C (a , c) (a , c') (first (is-prop-ΣC (a , c) (a , c'))))
       ( refl)
       ( all-paths-equal-is-prop A is-prop-A a a
-        ( first-path-Σ A C (a, c) (a, c') ( first (is-prop-ΣC (a, c) (a, c'))))
+        ( first-path-Σ A C (a , c) (a , c') (first (is-prop-ΣC (a , c) (a , c'))))
         ( refl))
-      ( second-path-Σ A C (a, c) (a, c') ( first (is-prop-ΣC (a, c) (a, c')))))
+      ( second-path-Σ A C (a , c) (a , c') (first (is-prop-ΣC (a , c) (a , c')))))
 
 #end families-over-propositions
 ```
@@ -333,8 +333,8 @@ propositions.
   : is-contr (Σ (x : A) , f x = f y)
   :=
     is-contr-equiv-is-contr'
-    ( Σ (x : A) , f x = f y)
-    ( Σ (x : A) , f y = f x)
+    ( Σ ( x : A) , f x = f y)
+    ( Σ ( x : A) , f y = f x)
     ( total-equiv-family-of-equiv A (\ x → f x = f y) (\ x → f y = f x)
       ( \ x → equiv-rev B (f x) (f y)))
     ( is-contr-image-based-paths-is-emb A B f is-emb-f y)
@@ -375,11 +375,11 @@ propositions.
   : is-contr (Σ (y : A) , f x = f y)
   :=
   is-contr-equiv-is-contr'
-  ( Σ (y : A) , f x = f y)
-  ( Σ (y : A) , f y = f x)
+  ( Σ ( y : A) , f x = f y)
+  ( Σ ( y : A) , f y = f x)
   ( total-equiv-family-of-equiv A (\ y → f x = f y) (\ y → f y = f x)
     ( \ y → equiv-rev B (f x) (f y)))
-  ( is-contr-is-inhabited-fib-f (f x) ((x, refl)))
+  ( is-contr-is-inhabited-fib-f (f x) ((x , refl)))
 
 #def is-emb-is-contr-is-inhabited-fib
   ( A B : U)
@@ -404,7 +404,7 @@ propositions.
   ( A B : U)
   ( f : A → B)
   : iff (is-emb A B f) ((b : B) → is-prop (fib A B f b))
-  := (is-prop-fib-is-emb A B f, is-emb-is-prop-fib A B f)
+  := (is-prop-fib-is-emb A B f , is-emb-is-prop-fib A B f)
 ```
 
 ## Subtypes
@@ -433,7 +433,7 @@ referred to a subtype of `#!rzk A`.
   is-emb-is-prop-fib (total-type A P) A (projection-total-type A P)
   ( \ a →
     is-prop-Equiv-is-prop'
-    ( P a) ( fib (total-type A P) A (projection-total-type A P) a)
+    ( P a) (fib (total-type A P) A (projection-total-type A P) a)
     ( equiv-homotopy-fiber-strict-fiber A P a) (is-predicate-P a))
 ```
 
@@ -444,9 +444,9 @@ The subtype projection embedding reflects identifications.
   ( A : U)
   ( P : A → U)
   ( is-predicate-P : is-predicate A P)
-  : ( (a, p) : total-type A P)
-    → ( (b, q) : total-type A P)
-    → (a = b) → (a, p) =_{total-type A P} (b, q)
+  : ( ( a , p) : total-type A P)
+    → ( ( b , q) : total-type A P)
+    → ( a = b) → (a , p) =_{total-type A P} (b , q)
   :=
   inv-ap-is-emb (total-type A P) A (projection-total-type A P)
   ( is-emb-subtype-projection A P is-predicate-P)

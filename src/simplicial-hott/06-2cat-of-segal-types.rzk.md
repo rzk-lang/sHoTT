@@ -45,7 +45,7 @@ targets. The action is called `#!rzk ap-hom` to avoid conflicting with
   ( f : hom A x y)
   ( g : hom A y z)
   ( h : hom A x z)
-  (α : hom2 A x y z f g h)
+  ( α : hom2 A x y z f g h)
   : hom2 B (F x) (F y) (F z)
     ( ap-hom A B F x y f) (ap-hom A B F y z g) (ap-hom A B F x z h)
   := \ t → F (α t)
@@ -90,8 +90,8 @@ Preservation of composition requires the Segal hypothesis.
       ( F x) (F y) (F z)
       ( ap-hom A B F x y f)
       ( ap-hom A B F y z g))
-    =
-    ( ap-hom A B F x z (comp-is-segal A is-segal-A x y z f g))
+
+  = ( ap-hom A B F x z (comp-is-segal A is-segal-A x y z f g))
   :=
     uniqueness-comp-is-segal B is-segal-B
       ( F x) (F y) (F z)
@@ -112,8 +112,8 @@ Preservation of composition requires the Segal hypothesis.
   ( g : hom A y z)
   :
     ( ap-hom A B F x z (comp-is-segal A is-segal-A x y z f g))
-    =
-    ( comp-is-segal B is-segal-B
+
+  = ( comp-is-segal B is-segal-B
       ( F x) (F y) (F z)
       ( ap-hom A B F x y f)
       ( ap-hom A B F y z g))
@@ -143,8 +143,8 @@ The action on morphisms commutes with transport.
     ( hom C (k (g x)) (k (g y)))
     ( ap-hom B C k (g x) (g y))
     ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g p)
-    =
-    comp
+
+  = comp
     ( hom B (f x) (f y)) (hom C (h (f x)) (h (f y))) (hom C (k (g x)) (k (g y)))
     ( transport (A → C) (\ f' → hom C (f' x) (f' y))
       ( comp A B C h f)
@@ -157,8 +157,8 @@ The action on morphisms commutes with transport.
     comp (hom B (f x) (f y)) (hom B (g' x) (g' y)) (hom C (k (g' x)) (k (g' y)))
     ( ap-hom B C k (g' x) (g' y))
     ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f g' p')
-    =
-    comp
+
+  = comp
     ( hom B (f x) (f y))(hom C (h (f x)) (h (f y)))(hom C (k (g' x)) (k (g' y)))
     ( transport (A → C) (\ f' → hom C (f' x) (f' y))
       ( comp A B C h f)
@@ -170,8 +170,8 @@ The action on morphisms commutes with transport.
       comp (hom B (f x) (f y)) (hom B (f x) (f y)) (hom C (k' (f x)) (k' (f y)))
       ( ap-hom B C k' (f x) (f y))
       ( transport (A → B) (\ f' → hom B (f' x) (f' y)) f f refl)
-      =
-      comp
+
+    = comp
       ( hom B (f x) (f y))
       ( hom C (h (f x)) (h (f y)))
       ( hom C (k' (f x)) (k' (f y)))
@@ -211,7 +211,7 @@ Equivalently , natural transformations can be determined by their **components**
   ( B : A → U)
   ( f g : (x : A) → (B x))
   : U
-  := ( x : A) → hom (B x) (f x) (g x)
+  := (x : A) → hom (B x) (f x) (g x)
 ```
 
 ```rzk
@@ -244,8 +244,8 @@ Equivalently , natural transformations can be determined by their **components**
       ( nat-trans-components A B f g)
       ( ev-components-nat-trans A B f g)
   :=
-    ( ( \ η t x → η x t , \ _ → refl) ,
-      ( \ η t x → η x t , \ _ → refl))
+    ( ( \ η t x → η x t , \ _ → refl)
+    , ( \ η t x → η x t , \ _ → refl))
 
 #def equiv-components-nat-trans
   ( A : U)
@@ -253,8 +253,8 @@ Equivalently , natural transformations can be determined by their **components**
   ( f g : (x : A) → (B x))
   : Equiv (nat-trans A B f g) (nat-trans-components A B f g)
   :=
-    ( ev-components-nat-trans A B f g ,
-      is-equiv-ev-components-nat-trans A B f g)
+    ( ev-components-nat-trans A B f g
+    , is-equiv-ev-components-nat-trans A B f g)
 ```
 
 ### Naturality square
@@ -269,29 +269,53 @@ type.
 #variable is-segal-A : is-segal A
 #variable α : (Δ¹×Δ¹) → A
 
-#def α00 : A := α (0₂,0₂)
-#def α01 : A := α (0₂,1₂)
-#def α10 : A := α (1₂,0₂)
-#def α11 : A := α (1₂,1₂)
+#def α00
+  : A
+  := α (0₂ , 0₂)
+#def α01
+  : A
+  := α (0₂ , 1₂)
+#def α10
+  : A
+  := α (1₂ , 0₂)
+#def α11
+  : A
+  := α (1₂ , 1₂)
 
-#def α0* : Δ¹ → A := \ t → α (0₂,t)
-#def α1* : Δ¹ → A := \ t → α (1₂,t)
-#def α*0 : Δ¹ → A := \ s → α (s,0₂)
-#def α*1 : Δ¹ → A := \ s → α (s,1₂)
-#def α-diag : Δ¹ → A := \ s → α (s,s)
+#def α0*
+  : Δ¹ → A
+  := \ t → α (0₂ , t)
+#def α1*
+  : Δ¹ → A
+  := \ t → α (1₂ , t)
+#def α*0
+  : Δ¹ → A
+  := \ s → α (s , 0₂)
+#def α*1
+  : Δ¹ → A
+  := \ s → α (s , 1₂)
+#def α-diag
+  : Δ¹ → A
+  := \ s → α (s , s)
 
-#def lhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α01 α11 α0* α*1
-#def rhs uses (α) : Δ¹ → A := comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
+#def lhs uses (α)
+  : Δ¹ → A
+  := comp-is-segal A is-segal-A α00 α01 α11 α0* α*1
+#def rhs uses (α)
+  : Δ¹ → A
+  := comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
 
-#def lower-triangle-square : hom2 A α00 α01 α11 α0* α*1 α-diag
-  := \ (s, t) → α (t,s)
+#def lower-triangle-square
+  : hom2 A α00 α01 α11 α0* α*1 α-diag
+  := \ (s , t) → α (t , s)
 
-#def upper-triangle-square : hom2 A α00 α10 α11 α*0 α1* α-diag
-  := \ (s,t) → α (s,t)
+#def upper-triangle-square
+  : hom2 A α00 α10 α11 α*0 α1* α-diag
+  := \ (s , t) → α (s , t)
 
 #def comp-eq-square-is-segal uses (α)
-  : comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 =
-    comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
+  : comp-is-segal A is-segal-A α00 α01 α11 α0* α*1
+  = comp-is-segal A is-segal-A α00 α10 α11 α*0 α1*
   :=
     zig-zag-concat (hom A α00 α11) lhs α-diag rhs
     ( uniqueness-comp-is-segal A is-segal-A α00 α01 α11 α0* α*1 α-diag
@@ -308,19 +332,19 @@ is a Segal type.
 
 ```rzk title="RS17, Proposition 6.6"
 #def naturality-nat-trans-is-segal
-  (A B : U)
-  (is-segal-B : is-segal B)
-  (f g : A → B)
-  (α : nat-trans A (\ _ → B) f g)
-  (x y : A)
-  (k : hom A x y)
+  ( A B : U)
+  ( is-segal-B : is-segal B)
+  ( f g : A → B)
+  ( α : nat-trans A (\ _ → B) f g)
+  ( x y : A)
+  ( k : hom A x y)
   : comp-is-segal B is-segal-B (f x) (f y) (g y)
     ( ap-hom A B f x y k)
-    ( \ s → α s y) =
-    comp-is-segal B is-segal-B (f x) (g x) (g y)
+    ( \ s → α s y)
+  = comp-is-segal B is-segal-B (f x) (g x) (g y)
     ( \ s → α s x)
     ( ap-hom A B g x y k)
-  := comp-eq-square-is-segal B is-segal-B (\ (s,t) → α s (k t))
+  := comp-eq-square-is-segal B is-segal-B (\ (s , t) → α s (k t))
 ```
 
 ### Vertical composition
@@ -366,8 +390,8 @@ The components of the identity natural transformation are identity arrows.
   ( B : A → U)
   ( f : (x : A) → (B x))
   ( a : A)
-  : (ev-components-nat-trans A B f f (id-hom ((x : A) → B x) f)) a =
-    id-hom (B a) (f a)
+  : ( ev-components-nat-trans A B f f (id-hom ((x : A) → B x) f)) a
+  = id-hom (B a) (f a)
   := refl
 ```
 
@@ -386,14 +410,14 @@ components of the natural transformation defined by composing in the Segal type
   ( a : A)
   : ( comp-is-segal (B a) (is-segal-B a) (f a) (g a) (h a)
       ( ev-components-nat-trans A B f g α a)
-      ( ev-components-nat-trans A B g h β a)) =
-    ( ev-components-nat-trans A B f h
+      ( ev-components-nat-trans A B g h β a))
+  = ( ev-components-nat-trans A B f h
       ( comp-is-segal
-        ( (x : A) → B x) ( is-segal-function-type (funext) (A) (B) (is-segal-B))
+        ( ( x : A) → B x) (is-segal-function-type (funext) (A) (B) (is-segal-B))
         ( f) (g) (h) (α) (β))) a
   :=
     functors-pres-comp
-    ( (x : A) → (B x)) (B a)
+    ( ( x : A) → (B x)) (B a)
     ( is-segal-function-type (funext) (A) (B) (is-segal-B)) (is-segal-B a)
     ( \ s → s a) (f) (g) (h) (α) (β)
 ```
@@ -474,7 +498,7 @@ the "Gray interchanger" built from two commutative triangles.
   ( η : nat-trans A (\ _ → B) f g)
   ( η' : nat-trans B (\ _ → C) f' g')
   : Δ¹×Δ¹ → (A → C)
-  := \ (t, s) a → η' s (η t a)
+  := \ (t , s) a → η' s (η t a)
 
 #def left-gray-interchanger-horizontal-comp-nat-trans
   ( A B C : U)
@@ -486,7 +510,7 @@ the "Gray interchanger" built from two commutative triangles.
     ( postwhisker-nat-trans A B C f g f' η)
     ( prewhisker-nat-trans A B C g f' g' η')
     ( horizontal-comp-nat-trans A B C f g f' g' η η')
-  := \ (t, s) a → η' s (η t a)
+  := \ (t , s) a → η' s (η t a)
 
 #def right-gray-interchanger-horizontal-comp-nat-trans
   ( A B C : U)
@@ -498,7 +522,7 @@ the "Gray interchanger" built from two commutative triangles.
     ( prewhisker-nat-trans A B C f f' g' η')
     ( postwhisker-nat-trans A B C f g g' η)
     ( horizontal-comp-nat-trans A B C f g f' g' η η')
-  := \ (t, s) a → η' t (η s a)
+  := \ (t , s) a → η' t (η s a)
 ```
 
 ## Equivalences are fully faithful
@@ -516,7 +540,7 @@ that `#!rzk ap-hom` is an equivalence when f is an equivalence.
   : is-equiv (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
   :=
     is-equiv-extensions-is-equiv extext 2 Δ¹ ∂Δ¹
-    ( \ _ → A) ( \ _ → B)
+    ( \ _ → A) (\ _ → B)
     ( \ _ → f)
     ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
     ( \ _ → is-equiv-f)
@@ -543,7 +567,7 @@ More precicely:
   : is-contr (fiber-ap-hom A B x y f β)
   :=
     is-contr-fiber-postcomp-Π-ext-is-equiv-fam extext 2 Δ¹ ∂Δ¹
-    ( \ _ → A) ( \ _ → B)
+    ( \ _ → A) (\ _ → B)
     ( \ _ → f)
     ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
     ( β)
@@ -561,7 +585,7 @@ We can also define a retraction of `#!rzk ap-hom` directly.
   : has-retraction (hom A x y) (hom B (f x) (f y)) (ap-hom A B f x y)
   :=
     has-retraction-extensions-has-retraction extext 2 Δ¹ ∂Δ¹
-    ( \ _ → A) ( \ _ → B)
+    ( \ _ → A) (\ _ → B)
     ( \ _ → f)
     ( \ _ → has-retraction-f)
     ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))

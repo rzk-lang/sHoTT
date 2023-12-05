@@ -36,17 +36,17 @@ We calculate the transport of `#!rzk (a , q) : fib b` along `#!rzk p : a = a'`:
   ( a a' : A)
   ( u : (f a) = b)
   ( p : a = a')
-  : ( transport A ( \ x → (f x) = b) a a' p u) =
-    ( concat B (f a') (f a) b (ap A B a' a f (rev A a a' p)) u)
+  : ( transport A (\ x → (f x) = b) a a' p u)
+  = ( concat B (f a') (f a) b (ap A B a' a f (rev A a a' p)) u)
   :=
     ind-path
       ( A)
       ( a)
       ( \ a'' p' →
-        ( transport (A) (\ x → (f x) = b) (a) (a'') (p') (u)) =
-        ( concat (B) (f a'') (f a) (b) (ap A B a'' a f (rev A a a'' p')) (u)))
+        ( transport (A) (\ x → (f x) = b) (a) (a'') (p') (u))
+      = ( concat (B) (f a'') (f a) (b) (ap A B a'' a f (rev A a a'' p')) (u)))
       ( rev
-        ( (f a) = b) (concat B (f a) (f a) b refl u) (u)
+        ( ( f a) = b) (concat B (f a) (f a) b refl u) (u)
         ( left-unit-concat B (f a) b u))
       ( a')
       ( p)
@@ -63,31 +63,31 @@ of the form `#!rzk (a, refl : f a = f a) : fib A B f`.
   ( A B : U)
   ( f : A → B)
   ( C : (b : B) → fib A B f b → U)
-  ( s : (a : A) → C (f a) (a, refl))
+  ( s : (a : A) → C (f a) (a , refl))
   ( b : B)
-  ( (a, q) : fib A B f b)
-  : C b (a, q)
+  ( ( a , q) : fib A B f b)
+  : C b (a , q)
   :=
-    ind-path B (f a) (\ b p → C b (a, p)) (s a) b q
+    ind-path B (f a) (\ b p → C b (a , p)) (s a) b q
 
 #def ind-rev-fib
   ( A B : U)
   ( f : A → B)
   ( C : (b : B) → rev-fib A B f b → U)
-  ( s : (a : A) → C (f a) (a, refl))
+  ( s : (a : A) → C (f a) (a , refl))
   ( b : B)
-  ( (a, q) : rev-fib A B f b)
-  : C b (a, q)
+  ( ( a , q) : rev-fib A B f b)
+  : C b (a , q)
   :=
-    ind-path-end B (f a) (\ b p → C b (a, p)) (s a) b q
+    ind-path-end B (f a) (\ b p → C b (a , p)) (s a) b q
 
 #def compute-ind-fib
   ( A B : U)
   ( f : A → B)
   ( C : (b : B) → fib A B f b → U)
-  ( s : (a : A) → C (f a) (a, refl))
+  ( s : (a : A) → C (f a) (a , refl))
   ( a : A)
-  : ind-fib A B f C s (f a) (a, refl) = s a
+  : ind-fib A B f C s (f a) (a , refl) = s a
   := refl
 ```
 
@@ -123,17 +123,17 @@ Contractible maps are equivalences:
 #def has-section-is-contr-map
   : has-section A B f
   :=
-    ( is-contr-map-inverse ,
-      \ b → second (center-contraction (fib A B f b) (is-contr-f b)))
+    ( is-contr-map-inverse
+    , \ b → second (center-contraction (fib A B f b) (is-contr-f b)))
 
 #def is-contr-map-data-in-fiber uses (is-contr-f)
-  (a : A)
+  ( a : A)
   : fib A B f (f a)
   := (is-contr-map-inverse (f a) , (second has-section-is-contr-map) (f a))
 
 #def is-contr-map-path-in-fiber
-  (a : A)
-  : (is-contr-map-data-in-fiber a) =_{fib A B f (f a)} (a , refl)
+  ( a : A)
+  : ( is-contr-map-data-in-fiber a) =_{fib A B f (f a)} (a , refl)
   :=
     all-elements-equal-is-contr
       ( fib A B f (f a))
@@ -144,10 +144,10 @@ Contractible maps are equivalences:
 #def is-contr-map-has-retraction uses (is-contr-f)
   : has-retraction A B f
   :=
-    ( is-contr-map-inverse ,
-      \ a → ( ap (fib A B f (f a)) A
+    ( is-contr-map-inverse
+    , \ a → (ap (fib A B f (f a)) A
                 ( is-contr-map-data-in-fiber a)
-                ( (a , refl))
+                ( ( a , refl))
                 ( \ u → first u)
                 ( is-contr-map-path-in-fiber a)))
 
@@ -175,12 +175,12 @@ work from the assumption that `f` is a half adjoint equivalence.
   ( b : B)
   : fib A B f b
   :=
-    ( map-inverse-is-half-adjoint-equiv A B f is-hae-f b,
-      section-htpy-is-half-adjoint-equiv A B f is-hae-f b)
+    ( map-inverse-is-half-adjoint-equiv A B f is-hae-f b
+    , section-htpy-is-half-adjoint-equiv A B f is-hae-f b)
 
 #def calculate-is-split-surjection-is-half-adjoint-equiv
   ( a : A)
-  : is-split-surjection-is-half-adjoint-equiv (f a) = (a, refl)
+  : is-split-surjection-is-half-adjoint-equiv (f a) = (a , refl)
   :=
     path-of-pairs-pair-of-paths
     ( A)
@@ -192,7 +192,7 @@ work from the assumption that `f` is a half adjoint equivalence.
     ( refl)
     ( triple-concat
       ( f a = f a)
-      ( transport A ( \ x → (f x) = (f a))
+      ( transport A (\ x → (f x) = (f a))
         ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
         ( a)
         ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)
@@ -205,7 +205,7 @@ work from the assumption that `f` is a half adjoint equivalence.
           ( a)
           ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
           ( f)
-          ( rev A ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a
+          ( rev A (map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a
             ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)))
         ( section-htpy-is-half-adjoint-equiv A B f is-hae-f (f a)))
       ( concat B
@@ -234,12 +234,12 @@ work from the assumption that `f` is a half adjoint equivalence.
           ( a)
           ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
           ( f)
-          ( rev A ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a
+          ( rev A (map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a
             ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a)))
         ( section-htpy-is-half-adjoint-equiv A B f is-hae-f (f a))
         ( ap A B (map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a)) a f
           ( retraction-htpy-is-half-adjoint-equiv A B f is-hae-f a))
-        (coherence-is-half-adjoint-equiv A B f is-hae-f a))
+        ( coherence-is-half-adjoint-equiv A B f is-hae-f a))
       ( concat-ap-rev-ap-id A B
         ( map-inverse-is-half-adjoint-equiv A B f is-hae-f (f a))
         ( a)
@@ -262,8 +262,8 @@ work from the assumption that `f` is a half adjoint equivalence.
   : is-contr-map A B f
   :=
     \ b →
-      ( is-split-surjection-is-half-adjoint-equiv b,
-        contraction-fib-is-half-adjoint-equiv b)
+      ( is-split-surjection-is-half-adjoint-equiv b
+      , contraction-fib-is-half-adjoint-equiv b)
 
 #end is-contr-map-is-equiv
 ```
@@ -279,8 +279,8 @@ work from the assumption that `f` is a half adjoint equivalence.
   :=
     \ b →
     ( is-split-surjection-is-half-adjoint-equiv A B f
-      ( is-half-adjoint-equiv-is-equiv A B f is-equiv-f) b ,
-      \ z → contraction-fib-is-half-adjoint-equiv A B f
+      ( is-half-adjoint-equiv-is-equiv A B f is-equiv-f) b
+    , \ z → contraction-fib-is-half-adjoint-equiv A B f
         ( is-half-adjoint-equiv-is-equiv A B f is-equiv-f) b z)
 
 #def is-contr-map-iff-is-equiv
@@ -305,59 +305,59 @@ temporarily refer to the fiber as the "homotopy fiber" and `#!rzk B a` as the
 #variable B : A → U
 
 #def homotopy-fiber-strict-fiber
-  (a : A)
-  (b : B a)
+  ( a : A)
+  ( b : B a)
   : fib (total-type A B) A (projection-total-type A B) a
-  := ((a, b), refl)
+  := ((a , b) , refl)
 
 #def strict-fiber-homotopy-fiber
-  (a : A)
-  (((a', b'), p) : fib (total-type A B) A (projection-total-type A B) a)
+  ( a : A)
+  ( ( ( a' , b') , p) : fib (total-type A B) A (projection-total-type A B) a)
   : B a
   := transport A B a' a p b'
 
 #def retract-homotopy-fiber-strict-fiber
-  (a : A)
-  (b : B a)
+  ( a : A)
+  ( b : B a)
   : strict-fiber-homotopy-fiber a (homotopy-fiber-strict-fiber a b) = b
   := refl
 
 #def calculation-retract-strict-fiber-homotopy-fiber
-  (a : A)
-  (b : B a)
+  ( a : A)
+  ( b : B a)
   : homotopy-fiber-strict-fiber a
-    ( strict-fiber-homotopy-fiber a ((a, b), refl)) =
-    ( (a, b), refl)
+    ( strict-fiber-homotopy-fiber a ((a , b) , refl))
+  = ( ( a , b) , refl)
   := refl
 
 #def retract-strict-fiber-homotopy-fiber
-  (a : A)
-  (((a', b'), p) : fib (total-type A B) A (projection-total-type A B) a)
-  : homotopy-fiber-strict-fiber a (strict-fiber-homotopy-fiber a ((a', b'), p))
-    = ((a', b'), p)
+  ( a : A)
+  ( ( ( a' , b') , p) : fib (total-type A B) A (projection-total-type A B) a)
+  : homotopy-fiber-strict-fiber a (strict-fiber-homotopy-fiber a ((a' , b') , p))
+    = ( ( a' , b') , p)
   :=
     ind-fib
     ( total-type A B)
     ( A)
     ( projection-total-type A B)
-    ( \ a0 ((a'', b''), p') →
+    ( \ a0 ((a'' , b'') , p') →
       homotopy-fiber-strict-fiber a0
-      ( strict-fiber-homotopy-fiber a0 ((a'', b''), p')) = ((a'', b''), p'))
-    ( \ (a'', b'') → refl)
+      ( strict-fiber-homotopy-fiber a0 ((a'' , b'') , p')) = ((a'' , b'') , p'))
+    ( \ (a'' , b'') → refl)
     ( a)
-    ( ((a', b'), p))
+    ( ( ( a' , b') , p))
 
 #def equiv-homotopy-fiber-strict-fiber
-  (a : A)
+  ( a : A)
   : Equiv
     ( B a)
     ( fib (total-type A B) A (projection-total-type A B) a)
   :=
-    ( homotopy-fiber-strict-fiber a,
-      ( ( strict-fiber-homotopy-fiber a,
-          retract-homotopy-fiber-strict-fiber a),
-        ( strict-fiber-homotopy-fiber a,
-          retract-strict-fiber-homotopy-fiber a)))
+    ( homotopy-fiber-strict-fiber a
+    , ( ( strict-fiber-homotopy-fiber a
+        , retract-homotopy-fiber-strict-fiber a)
+      , ( strict-fiber-homotopy-fiber a
+        , retract-strict-fiber-homotopy-fiber a)))
 
 #end strict-vs-homotopy-fiber
 ```
@@ -375,21 +375,21 @@ of the fibers of the first function.
 #variable g : B → C
 
 #def fiber-sum-fiber-comp
-  (c : C)
-  ((a, r) : fib A C (comp A B C g f) c)
-  : ( Σ ((b, q) : fib B C g c), fib A B f b)
-  := ((f a, r), (a, refl))
+  ( c : C)
+  ( ( a , r) : fib A C (comp A B C g f) c)
+  : ( Σ ( ( b , q) : fib B C g c) , fib A B f b)
+  := ((f a , r) , (a , refl))
 
 #def fiber-comp-fiber-sum
-  (c : C)
-  ( ((b, q), (a, p)) : Σ ((b, q) : fib B C g c), fib A B f b)
+  ( c : C)
+  ( ( ( b , q) , (a , p)) : Σ ((b , q) : fib B C g c) , fib A B f b)
   : fib A C (comp A B C g f) c
-  := (a, concat C (g (f a)) (g b) c (ap B C (f a) b g p) q)
+  := (a , concat C (g (f a)) (g b) c (ap B C (f a) b g p) q)
 
 #def is-retract-fiber-sum-fiber-comp
-  (c : C)
-  ((a, r) : fib A C (comp A B C g f) c)
-  : fiber-comp-fiber-sum c (fiber-sum-fiber-comp c (a, r)) = (a, r)
+  ( c : C)
+  ( ( a , r) : fib A C (comp A B C g f) c)
+  : fiber-comp-fiber-sum c (fiber-sum-fiber-comp c (a , r)) = (a , r)
   :=
     eq-eq-fiber-Σ
     ( A)
@@ -400,46 +400,46 @@ of the fibers of the first function.
     ( left-unit-concat C (g (f a)) c r)
 
 #def is-retract-fiber-comp-fiber-sum'
-  (c : C)
-  ((b, q) : fib B C g c)
-  : ((a, p) : fib A B f b) →
-    fiber-sum-fiber-comp c (fiber-comp-fiber-sum c ((b, q), (a, p))) =
-    ((b, q), (a, p))
+  ( c : C)
+  ( ( b , q) : fib B C g c)
+  : ( ( a , p) : fib A B f b)
+  → fiber-sum-fiber-comp c (fiber-comp-fiber-sum c ((b , q) , (a , p)))
+  = ( ( b , q) , (a , p))
   :=
     ind-fib B C g
-    ( \ c' (b', q') → ((a, p) : fib A B f b') →
-      fiber-sum-fiber-comp c' (fiber-comp-fiber-sum c' ((b', q'), (a, p))) =
-      ((b', q'), (a, p)))
-    ( \ b0 (a, p) →
+    ( \ c' (b' , q') → ((a , p) : fib A B f b')
+    → fiber-sum-fiber-comp c' (fiber-comp-fiber-sum c' ((b' , q') , (a , p)))
+    = ( ( b' , q') , (a , p)))
+    ( \ b0 (a , p) →
       ( ind-fib A B f
-        ( \b0' (a', p') →
+        ( \ b0' (a' , p') →
           fiber-sum-fiber-comp (g b0')
-          ( fiber-comp-fiber-sum (g b0') ((b0', refl), (a', p'))) =
-          ((b0', refl), (a', p')))
-        ( \a0 → refl)
+          ( fiber-comp-fiber-sum (g b0') ((b0' , refl) , (a' , p')))
+        = ( ( b0' , refl) , (a' , p')))
+        ( \ a0 → refl)
         ( b0)
-        ( (a, p))))
+        ( ( a , p))))
     ( c)
-    ( (b, q))
+    ( ( b , q))
 
 #def is-retract-fiber-comp-fiber-sum
-  (c : C)
-  ( ((b, q), (a, p)) : Σ ((b, q) : fib B C g c), fib A B f b)
-  : fiber-sum-fiber-comp c (fiber-comp-fiber-sum c ((b, q), (a, p))) =
-    ((b, q), (a, p))
-  := is-retract-fiber-comp-fiber-sum' c (b, q) (a, p)
+  ( c : C)
+  ( ( ( b , q) , (a , p)) : Σ ((b , q) : fib B C g c) , fib A B f b)
+  : fiber-sum-fiber-comp c (fiber-comp-fiber-sum c ((b , q) , (a , p)))
+  = ( ( b , q) , (a , p))
+  := is-retract-fiber-comp-fiber-sum' c (b , q) (a , p)
 
 #def equiv-fiber-sum-fiber-comp
-  (c : C)
+  ( c : C)
   : Equiv
     ( fib A C (comp A B C g f) c)
-    ( Σ ((b, q) : fib B C g c), fib A B f b)
+    ( Σ ( ( b , q) : fib B C g c) , fib A B f b)
   :=
-    ( fiber-sum-fiber-comp c,
-      ( ( fiber-comp-fiber-sum c,
-          is-retract-fiber-sum-fiber-comp c),
-        ( fiber-comp-fiber-sum c,
-          is-retract-fiber-comp-fiber-sum c)))
+    ( fiber-sum-fiber-comp c
+    , ( ( fiber-comp-fiber-sum c
+        , is-retract-fiber-sum-fiber-comp c)
+      , ( fiber-comp-fiber-sum c
+        , is-retract-fiber-comp-fiber-sum c)))
 
 #end fiber-composition
 ```

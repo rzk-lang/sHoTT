@@ -20,3 +20,10 @@ jobs:
         with:
           dry: true
           prettier_options: --check **/*.{md,json,yaml,yml}
+
+      - name: Rzk formatter
+        uses: rzk-lang/rzk-action@v1.2.0
+        with:
+          rzk-version: v0.7.2
+          typecheck: false
+          check-formatting: true

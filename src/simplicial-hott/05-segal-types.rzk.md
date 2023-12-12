@@ -46,8 +46,8 @@ Extension types are used to define the type of arrows between fixed terms:
   ( x y : A)
   : U
   :=
-    ( t : Δ¹) →
-    A [ t ≡ 0₂ ↦ x ,  -- the left endpoint is exactly x
+    ( t : Δ¹)
+  → A [ t ≡ 0₂ ↦ x , -- the left endpoint is exactly x
         t ≡ 1₂ ↦ y]   -- the right endpoint is exactly y
 
 ```
@@ -60,7 +60,7 @@ For each `a : A`, the total types of the representables `\ z → hom A a z` and
   ( A : U)
   ( a : A)
   : U
-  := Σ ( z : A) , (hom A a z)
+  := Σ (z : A) , (hom A a z)
 
 #def slice
   ( A : U)
@@ -74,20 +74,20 @@ sense:
 
 ```rzk
 #def coslice-fun
-  (A B : U)
-  (f : A → B)
-  (a : A)
+  ( A B : U)
+  ( f : A → B)
+  ( a : A)
   : coslice A a → coslice B (f a)
   :=
-    \ (a', g) → (f a', \ t → f (g t))
+    \ (a' , g) → (f a' , \ t → f (g t))
 
 #def slice-fun
-  (A B : U)
-  (f : A → B)
-  (a : A)
+  ( A B : U)
+  ( f : A → B)
+  ( a : A)
   : slice A a → slice B (f a)
   :=
-    \ (a', g) → (f a', \ t → f (g t))
+    \ (a' , g) → (f a' , \ t → f (g t))
 ```
 
 Slices and coslices can also be defined directly as extension types:
@@ -99,42 +99,42 @@ Slices and coslices can also be defined directly as extension types:
 
 #def coslice'
   : U
-  := ( t : Δ¹) → A [t ≡ 0₂ ↦ a]
+  := (t : Δ¹) → A [t ≡ 0₂ ↦ a]
 
 #def coslice'-coslice
   : coslice A a → coslice'
-  := \ (_, f) → f
+  := \ (_ , f) → f
 
 #def coslice-coslice'
   : coslice' → coslice A a
-  := \ f → ( f 1₂ , \ t → f t) -- does not typecheck after η-reduction
+  := \ f → (f 1₂ , \ t → f t) -- does not typecheck after η-reduction
 
 #def is-id-coslice-coslice'-coslice
-  ( (a', f) : coslice A a)
-  : ( coslice-coslice' ( coslice'-coslice (a', f)) = (a', f))
+  ( ( a' , f) : coslice A a)
+  : ( coslice-coslice' (coslice'-coslice (a' , f)) = (a' , f))
   :=
     eq-pair A (hom A a)
-      ( coslice-coslice' ( coslice'-coslice (a', f))) (a', f)
-      (refl, refl)
+      ( coslice-coslice' (coslice'-coslice (a' , f))) (a' , f)
+      ( refl , refl)
 
 #def is-id-coslice'-coslice-coslice'
   ( f : coslice')
-  : ( coslice'-coslice ( coslice-coslice' f) = f)
+  : ( coslice'-coslice (coslice-coslice' f) = f)
   :=
     refl
 
 #def is-equiv-coslice'-coslice
   : is-equiv (coslice A a) coslice' coslice'-coslice
   :=
-    ( ( coslice-coslice', is-id-coslice-coslice'-coslice),
-      ( coslice-coslice', is-id-coslice'-coslice-coslice')
+    ( ( coslice-coslice' , is-id-coslice-coslice'-coslice)
+    , ( coslice-coslice' , is-id-coslice'-coslice-coslice')
     )
 
 #def is-equiv-coslice-coslice'
   : is-equiv coslice' (coslice A a)  coslice-coslice'
   :=
-    ( ( coslice'-coslice, is-id-coslice'-coslice-coslice'),
-      ( coslice'-coslice, is-id-coslice-coslice'-coslice)
+    ( ( coslice'-coslice , is-id-coslice'-coslice-coslice')
+    , ( coslice'-coslice , is-id-coslice-coslice'-coslice)
     )
 
 #end coslice-as-extension-type
@@ -145,42 +145,42 @@ Slices and coslices can also be defined directly as extension types:
 
 #def slice'
   : U
-  := ( t : Δ¹) → A[t ≡ 1₂ ↦ a]
+  := (t : Δ¹) → A[t ≡ 1₂ ↦ a]
 
 #def slice'-slice
   : slice A a → slice'
-  := \ (_, f) → f
+  := \ (_ , f) → f
 
 #def slice-slice'
   : slice' → slice A a
-  := \ f → ( f 0₂ , \ t → f t) -- does not typecheck after η-reduction
+  := \ f → (f 0₂ , \ t → f t) -- does not typecheck after η-reduction
 
 #def is-id-slice-slice'-slice
-  ( (a', f) : slice A a)
-  : ( slice-slice' ( slice'-slice (a', f)) = (a', f))
+  ( ( a' , f) : slice A a)
+  : ( slice-slice' (slice'-slice (a' , f)) = (a' , f))
   :=
     eq-pair A (\ a' → hom A a' a)
-      ( slice-slice' ( slice'-slice (a', f))) (a', f)
-      (refl, refl)
+      ( slice-slice' (slice'-slice (a' , f))) (a' , f)
+      ( refl , refl)
 
 #def is-id-slice'-slice-slice'
   ( f : slice')
-  : ( slice'-slice ( slice-slice' f) = f)
+  : ( slice'-slice (slice-slice' f) = f)
   :=
     refl
 
 #def is-equiv-slice'-slice
   : is-equiv (slice A a) slice' slice'-slice
   :=
-    ( ( slice-slice', is-id-slice-slice'-slice),
-      ( slice-slice', is-id-slice'-slice-slice')
+    ( ( slice-slice' , is-id-slice-slice'-slice)
+    , ( slice-slice' , is-id-slice'-slice-slice')
     )
 
 #def is-equiv-slice-slice'
   : is-equiv slice' (slice A a)  slice-slice'
   :=
-    ( ( slice'-slice, is-id-slice'-slice-slice'),
-      ( slice'-slice, is-id-slice-slice'-slice)
+    ( ( slice'-slice , is-id-slice'-slice-slice')
+    , ( slice'-slice , is-id-slice-slice'-slice)
     )
 
 #end slice-as-extension-type
@@ -210,9 +210,9 @@ Extension types are also used to define the type of commutative triangles:
   ( h : hom A x z)
   : U
   :=
-    ( (t₁ , t₂) : Δ²) →
-    A [ t₂ ≡ 0₂ ↦ f t₁ ,  -- the top edge is exactly `f`,
-        t₁ ≡ 1₂ ↦ g t₂ ,  -- the right edge is exactly `g`, and
+    ( ( t₁ , t₂) : Δ²)
+  → A [ t₂ ≡ 0₂ ↦ f t₁ , -- the top edge is exactly `f`,
+        t₁ ≡ 1₂ ↦ g t₂ , -- the right edge is exactly `g`, and
         t₂ ≡ t₁ ↦ h t₂]   -- the diagonal is exactly `h`
 ```
 
@@ -245,8 +245,8 @@ type.
   ( A : U)
   : is-equiv (arr A) (fibered-arr A) (fibered-arr-free-arr A)
   :=
-    ( ( (\ (_ , (_ , f)) → f) , (\ _ → refl))
-    , ( (\ (_ , (_ , f)) → f) , (\ _ → refl)))
+    ( ( ( \ (_ , (_ , f)) → f) , (\ _ → refl))
+    , ( ( \ (_ , (_ , f)) → f) , (\ _ → refl)))
 
 #def equiv-fibered-arr-free-arr
   ( A : U)
@@ -261,7 +261,7 @@ And the corresponding uncurried version.
   ( A : U)
   : U
   :=
-    Σ ((a,b) : product A A), hom A a b
+    Σ ( ( a , b) : product A A) , hom A a b
 
 #def fibered-arr-free-arr'
   ( A : U)
@@ -272,8 +272,8 @@ And the corresponding uncurried version.
   ( A : U)
   : is-equiv (arr A) (fibered-arr' A) (fibered-arr-free-arr' A)
   :=
-    ( ( (\ ((_ , _) , σ) → σ) , (\ _ → refl))
-    , ( (\ ((_ , _) , σ) → σ) , (\ _ → refl)))
+    ( ( ( \ ((_ , _) , σ) → σ) , (\ _ → refl))
+    , ( ( \ ((_ , _) , σ) → σ) , (\ _ → refl)))
 ```
 
 ## The Segal condition
@@ -287,9 +287,9 @@ also requires homotopical uniqueness of higher-order composites.
   ( A : U)
   : U
   :=
-    (x : A) → (y : A) → (z : A) →
-    (f : hom A x y) → (g : hom A y z) →
-    is-contr (Σ (h : hom A x z) , (hom2 A x y z f g h))
+    ( x : A) → (y : A) → (z : A)
+  → ( f : hom A x y) → (g : hom A y z)
+  → is-contr (Σ (h : hom A x z) , (hom2 A x y z f g h))
 ```
 
 Segal types have a composition functor and witnesses to the composition
@@ -360,11 +360,11 @@ composite equals $h$.
     first-path-Σ
       ( hom A x z)
       ( hom2 A x y z f g)
-      ( comp-is-segal A is-segal-A x y z f g ,
-        witness-comp-is-segal A is-segal-A x y z f g)
+      ( comp-is-segal A is-segal-A x y z f g
+      , witness-comp-is-segal A is-segal-A x y z f g)
       ( h , alpha)
       ( homotopy-contraction
-        ( Σ (k : hom A x z) , (hom2 A x y z f g k))
+        ( Σ ( k : hom A x z) , (hom2 A x y z f g k))
         ( is-segal-A x y z f g)
         ( h , alpha))
 ```
@@ -396,8 +396,8 @@ A pair of composable arrows form a horn.
   :=
     \ (t , s) →
     recOR
-      ( s ≡ 0₂ ↦ f t ,
-        t ≡ 1₂ ↦ g s)
+      ( s ≡ 0₂ ↦ f t
+      , t ≡ 1₂ ↦ g s)
 ```
 
 The underlying horn of a simplex:
@@ -405,7 +405,7 @@ The underlying horn of a simplex:
 ```rzk
 #def horn-restriction
   ( A : U)
-  : (Δ² → A) → (Λ → A)
+  : ( Δ² → A) → (Λ → A)
   := \ f t → f t
 ```
 
@@ -436,31 +436,31 @@ witnesses of the equivalence).
   ( f : hom A x y)
   ( g : hom A y z)
   : Equiv
-    ( Σ (h : hom A x z) , (hom2 A x y z f g h))
-    ( (t : Δ²) → A [Λ t ↦ horn A x y z f g t])
+    ( Σ ( h : hom A x z) , (hom2 A x y z f g h))
+    ( ( t : Δ²) → A [Λ t ↦ horn A x y z f g t])
   :=
-    ( \ hh t → (second hh) t ,
-      ( ( \ k → (\ t → k (t , t) , \ (t , s) → k (t , s)) ,
-          \ hh → refl) ,
-        ( \ k → (\ t → k (t , t) , \ (t , s) → k (t , s)) ,
-          \ hh → refl)))
+    ( \ hh t → (second hh) t
+    , ( ( \ k → (\ t → k (t , t) , \ (t , s) → k (t , s))
+        , \ hh → refl)
+      , ( \ k → (\ t → k (t , t) , \ (t , s) → k (t , s))
+        , \ hh → refl)))
 
 #def equiv-horn-restriction
   ( A : U)
   : Equiv
     ( Δ² → A)
-    ( Σ ( k : Λ → A) ,
-        ( Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
-            ( hom2 A
+    ( Σ ( k : Λ → A)
+      , ( Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂)))
+          , ( hom2 A
               ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
               ( \ t → k (t , 0₂)) (\ t → k (1₂ , t))
               ( h))))
   :=
     ( \ k →
-      ( ( \ t → k t) ,
-        ( \ t → k (t , t) , \ t → k t)) ,
-      ( ( \ khh t → (second (second khh)) t , \ k → refl) ,
-        ( \ khh t → (second (second khh)) t , \ k → refl)))
+      ( ( \ t → k t)
+      , ( \ t → k (t , t) , \ t → k t))
+    , ( ( \ khh t → (second (second khh)) t , \ k → refl)
+      , ( \ khh t → (second (second khh)) t , \ k → refl)))
 ```
 
 ```rzk title="RS17, Theorem 5.5 (the hard direction)"
@@ -471,9 +471,9 @@ witnesses of the equivalence).
   :=
     equiv-comp
       ( Δ² → A)
-      ( Σ ( k : Λ → A) ,
-          ( Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
-              ( hom2 A
+      ( Σ ( k : Λ → A)
+        , ( Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂)))
+            , ( hom2 A
                 ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
                 ( \ t → k (t , 0₂)) (\ t → k (1₂ , t))
                 ( h))))
@@ -482,16 +482,16 @@ witnesses of the equivalence).
       ( projection-total-type
         ( Λ → A)
         ( \ k →
-          Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
-            ( hom2 A
+          Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂)))
+          , ( hom2 A
               ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
               ( \ t → k (t , 0₂)) (\ t → k (1₂ , t))
-              ( h))) ,
-      ( is-equiv-projection-contractible-fibers
+              ( h)))
+    , ( is-equiv-projection-contractible-fibers
           ( Λ → A)
           ( \ k →
-            Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
-              ( hom2 A
+            Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂)))
+            , ( hom2 A
                 ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
                 ( \ t → k (t , 0₂)) (\ t → k (1₂ , t))
                 ( h)))
@@ -508,7 +508,7 @@ is exactly `#!rzk horn-restriction A`.
 #def test-equiv-horn-restriction-is-segal
   ( A : U)
   ( is-segal-A : is-segal A)
-  : (first (equiv-horn-restriction-is-segal A is-segal-A)) = (horn-restriction A)
+  : ( first (equiv-horn-restriction-is-segal A is-segal-A)) = (horn-restriction A)
   := refl
 ```
 
@@ -530,28 +530,28 @@ is exactly `#!rzk horn-restriction A`.
     contractible-fibers-is-equiv-projection
       ( Λ → A)
       ( \ k →
-        Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
-          ( hom2 A
+        Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂)))
+        , ( hom2 A
             ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
             ( \ t → k (t , 0₂))
             ( \ t → k (1₂ , t))
             ( h)))
       ( second
         ( equiv-comp
-          ( Σ ( k : Λ → A) ,
-            Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
-              ( hom2 A
+          ( Σ ( k : Λ → A)
+          , Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂)))
+            , ( hom2 A
                 ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
                 ( \ t → k (t , 0₂))
                 ( \ t → k (1₂ , t))
                 ( h)))
           ( Δ² → A)
-          ( Λ  → A)
+          ( Λ → A)
           ( inv-equiv
             ( Δ² → A)
-            ( Σ ( k : Λ → A) ,
-              Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂))) ,
-                ( hom2 A
+            ( Σ ( k : Λ → A)
+            , Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂)))
+              , ( hom2 A
                   ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
                   ( \ t → k (t , 0₂))
                   ( \ t → k (1₂ , t))
@@ -608,8 +608,8 @@ all $x$ then $(x : X) → A x$ is a Segal type.
   :=
     is-equiv-triple-comp
       ( Δ² → ((x : X) → A x))
-      ( (x : X) → Δ² → A x)
-      ( (x : X) → Λ → A x)
+      ( ( x : X) → Δ² → A x)
+      ( ( x : X) → Λ → A x)
       ( Λ → ((x : X) → A x))
       ( \ g x t → g t x) -- first equivalence
       ( second (flip-ext-fun
@@ -642,7 +642,7 @@ all $x$ then $(x : X) → A x$ is a Segal type.
   : is-segal ((x : X) → A x)
   :=
     is-segal-is-local-horn-inclusion
-      ( (x : X) → A x)
+      ( ( x : X) → A x)
       ( is-local-horn-inclusion-function-type
         ( X) (A)
         ( \ x → is-local-horn-inclusion-is-segal (A x)(fiberwise-is-segal-A x)))
@@ -661,8 +661,8 @@ then $(x : X) → A x$ is a Segal type.
   :=
     is-equiv-triple-comp
       ( Δ² → (s : ψ) → A s)
-      ( (s : ψ) → Δ² → A s)
-      ( (s : ψ) → Λ → A s)
+      ( ( s : ψ) → Δ² → A s)
+      ( ( s : ψ) → Λ → A s)
       ( Λ → (s : ψ) → A s)
       ( \ g s t → g t s)  -- first equivalence
       ( second
@@ -701,7 +701,7 @@ then $(x : X) → A x$ is a Segal type.
   : is-segal ((s : ψ) → A s)
   :=
     is-segal-is-local-horn-inclusion
-      ( (s : ψ) → A s)
+      ( ( s : ψ) → A s)
       ( is-local-horn-inclusion-extension-type
         ( I) (ψ) (A)
         ( \ s → is-local-horn-inclusion-is-segal (A s)(fiberwise-is-segal-A s)))
@@ -832,7 +832,7 @@ needed in the definition of Segal types.
   ( is-segal-A : is-segal A)
   ( x y : A)
   ( f : hom A x y)
-  : (comp-is-segal A is-segal-A x x y (id-hom A x) f) =_{hom A x y} f
+  : ( comp-is-segal A is-segal-A x x y (id-hom A x) f) =_{hom A x y} f
   :=
     uniqueness-comp-is-segal
       ( A)
@@ -871,8 +871,8 @@ that the type of arrows in a Segal type is itself a Segal type.
   :=
     \ (t , s) →
     recOR
-      ( t ≤ s ↦ triangle (s , t) ,
-        s ≤ t ↦ triangle (t , s))
+      ( t ≤ s ↦ triangle (s , t)
+      , s ≤ t ↦ triangle (t , s))
 ```
 
 For use in the proof of associativity:
@@ -975,7 +975,7 @@ The `#!rzk witness-square-comp-is-segal` as an arrow in the arrow type:
     witness-comp-is-segal
       ( arr A)
       ( is-segal-arr A is-segal-A)
-      ( f) ( g) ( h)
+      ( f) (g) (h)
       ( arr-in-arr-is-segal A is-segal-A w x y f g)
       ( arr-in-arr-is-segal A is-segal-A x y z g h)
 ```
@@ -1013,7 +1013,7 @@ middle-simplex map $((t , s) , r) ↦ ((t , r) , s)$ from $Δ³$ to $Δ²×Δ¹$
   : Δ³ → A
   :=
     \ ((t , s) , r) →
-    (witness-asociative-is-segal A is-segal-A w x y z f g h) (t , r) s
+    ( witness-asociative-is-segal A is-segal-A w x y z f g h) (t , r) s
 ```
 
 <svg style="float: right" viewBox="0 0 200 250" width="150" height="200">
@@ -1049,7 +1049,7 @@ The diagonal composite of three arrows extracted from the
   :=
     \ t →
     tetrahedron-associative-is-segal A is-segal-A w x y z f g h
-      ( (t , t) , t)
+      ( ( t , t) , t)
 ```
 
 <svg style="float: right" viewBox="0 0 200 250" width="150" height="200">
@@ -1081,13 +1081,13 @@ The diagonal composite of three arrows extracted from the
   ( g : hom A x y)
   ( h : hom A y z)
   : hom2 A w y z
-    (comp-is-segal A is-segal-A w x y f g)
+    ( comp-is-segal A is-segal-A w x y f g)
     h
-    (triple-comp-is-segal A is-segal-A w x y z f g h)
+    ( triple-comp-is-segal A is-segal-A w x y z f g h)
   :=
     \ (t , s) →
     tetrahedron-associative-is-segal A is-segal-A w x y z f g h
-      ( (t , t) , s)
+      ( ( t , t) , s)
 ```
 
 The front face:
@@ -1127,7 +1127,7 @@ The front face:
   :=
     \ (t , s) →
     tetrahedron-associative-is-segal A is-segal-A w x y z f g h
-      ( (t , s) , s)
+      ( ( t , s) , s)
 ```
 
 ```rzk
@@ -1138,8 +1138,8 @@ The front face:
   ( f : hom A w x)
   ( g : hom A x y)
   ( h : hom A y z)
-  : ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h) =
-    ( triple-comp-is-segal A is-segal-A w x y z f g h)
+  : ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h)
+  = ( triple-comp-is-segal A is-segal-A w x y z f g h)
   :=
     uniqueness-comp-is-segal
       A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h
@@ -1153,8 +1153,8 @@ The front face:
   ( f : hom A w x)
   ( g : hom A x y)
   ( h : hom A y z)
-  : ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h)) =
-    ( triple-comp-is-segal A is-segal-A w x y z f g h)
+  : ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h))
+  = ( triple-comp-is-segal A is-segal-A w x y z f g h)
   :=
     uniqueness-comp-is-segal
       ( A) (is-segal-A) (w) (x) (z) (f) (comp-is-segal A is-segal-A x y z g h)
@@ -1172,8 +1172,8 @@ We conclude that Segal composition is associative.
   ( f : hom A w x)
   ( g : hom A x y)
   ( h : hom A y z)
-  : ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h) =
-    ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h))
+  : ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h)
+  = ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h))
   :=
     zig-zag-concat
     ( hom A w z)
@@ -1190,8 +1190,8 @@ We conclude that Segal composition is associative.
   ( f : hom A w x)
   ( g : hom A x y)
   ( h : hom A y z)
-  : ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h)) =
-    ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h)
+  : ( comp-is-segal A is-segal-A w x z f (comp-is-segal A is-segal-A x y z g h))
+  = ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h)
   :=
     rev (hom A w z)
     ( comp-is-segal A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h)
@@ -1203,7 +1203,7 @@ We conclude that Segal composition is associative.
   ( is-segal-A : is-segal A)
   ( x y : A)
   ( f : hom A x y)
-  : (z : A) → (hom A z x) → (hom A z y)
+  : ( z : A) → (hom A z x) → (hom A z y)
   := \ z g → comp-is-segal A is-segal-A z x y g f
 
 #def precomp-is-segal
@@ -1211,7 +1211,7 @@ We conclude that Segal composition is associative.
   ( is-segal-A : is-segal A)
   ( x y : A)
   ( f : hom A x y)
-  : (z : A) → (hom A y z) → (hom A x z)
+  : ( z : A) → (hom A y z) → (hom A x z)
   := \ z → comp-is-segal A is-segal-A x y z f
 ```
 
@@ -1226,7 +1226,7 @@ arrow.
   ( A : U)
   ( x y : A)
   ( f g : hom A x y)
-  : (f = g) → (hom2 A x x y (id-hom A x) f g)
+  : ( f = g) → (hom2 A x x y (id-hom A x) f g)
   :=
     ind-path
       ( hom A x y)
@@ -1239,8 +1239,8 @@ arrow.
   ( A : U)
   ( x y : A)
   ( f : hom A x y)
-  : ( Σ (g : hom A x y) , (f = g)) →
-    ( Σ (g : hom A x y) , (hom2 A x x y (id-hom A x) f g))
+  : ( Σ ( g : hom A x y) , (f = g))
+  → ( Σ ( g : hom A x y) , (hom2 A x x y (id-hom A x) f g))
   := \ (g , p) → (g , map-hom2-homotopy A x y f g p)
 
 #def is-equiv-map-total-hom2-homotopy-is-segal
@@ -1249,13 +1249,13 @@ arrow.
   ( x y : A)
   ( f : hom A x y)
   : is-equiv
-      ( Σ (g : hom A x y) , f = g)
-      ( Σ (g : hom A x y) , (hom2 A x x y (id-hom A x) f g))
+      ( Σ ( g : hom A x y) , f = g)
+      ( Σ ( g : hom A x y) , (hom2 A x x y (id-hom A x) f g))
       ( map-total-hom2-homotopy A x y f)
   :=
     is-equiv-are-contr
-      ( Σ (g : hom A x y) , (f = g))
-      ( Σ (g : hom A x y) , (hom2 A x x y (id-hom A x) f g))
+      ( Σ ( g : hom A x y) , (f = g))
+      ( Σ ( g : hom A x y) , (hom2 A x x y (id-hom A x) f g))
       ( is-contr-based-paths (hom A x y) f)
       ( is-segal-A x x y (id-hom A x) f)
       ( map-total-hom2-homotopy A x y f)
@@ -1269,8 +1269,8 @@ arrow.
   ( f h : hom A x y)
   : Equiv (f = h) (hom2 A x x y (id-hom A x) f h)
   :=
-    ( ( map-hom2-homotopy A x y f h) ,
-      ( is-equiv-fiberwise-is-equiv-total
+    ( ( map-hom2-homotopy A x y f h)
+    , ( is-equiv-fiberwise-is-equiv-total
         ( hom A x y)
         ( \ k → (f = k))
         ( \ k → (hom2 A x x y (id-hom A x) f k))
@@ -1287,7 +1287,7 @@ A dual notion of homotopy can be defined similarly.
   ( x y : A)
   ( f g : hom A x y)
   ( p : f = g)
-  : (hom2 A x y y f (id-hom A y) g)
+  : ( hom2 A x y y f (id-hom A y) g)
   :=
     ind-path
       ( hom A x y)
@@ -1301,8 +1301,8 @@ A dual notion of homotopy can be defined similarly.
   ( A : U)
   ( x y : A)
   ( f : hom A x y)
-  : ( Σ (g : hom A x y) , (f = g)) →
-    ( Σ (g : hom A x y) , (hom2 A x y y f (id-hom A y) g))
+  : ( Σ ( g : hom A x y) , (f = g))
+  → ( Σ ( g : hom A x y) , (hom2 A x y y f (id-hom A y) g))
   := \ (g , p) → (g , map-hom2-homotopy' A x y f g p)
 
 #def is-equiv-map-total-hom2-homotopy'-is-segal
@@ -1311,13 +1311,13 @@ A dual notion of homotopy can be defined similarly.
   ( x y : A)
   ( f : hom A x y)
   : is-equiv
-      ( Σ (g : hom A x y) , f = g)
-      ( Σ (g : hom A x y) , (hom2 A x y y f (id-hom A y) g))
+      ( Σ ( g : hom A x y) , f = g)
+      ( Σ ( g : hom A x y) , (hom2 A x y y f (id-hom A y) g))
       ( map-total-hom2-homotopy' A x y f)
   :=
     is-equiv-are-contr
-      ( Σ (g : hom A x y) , (f = g))
-      ( Σ (g : hom A x y) , (hom2 A x y y f (id-hom A y) g))
+      ( Σ ( g : hom A x y) , (f = g))
+      ( Σ ( g : hom A x y) , (hom2 A x y y f (id-hom A y) g))
       ( is-contr-based-paths (hom A x y) f)
       ( is-segal-A x y y f (id-hom A y))
       ( map-total-hom2-homotopy' A x y f)
@@ -1331,8 +1331,8 @@ A dual notion of homotopy can be defined similarly.
   ( f h : hom A x y)
   : Equiv (f = h) (hom2 A x y y f (id-hom A y) h)
   :=
-    ( ( map-hom2-homotopy' A x y f h) ,
-      ( is-equiv-fiberwise-is-equiv-total
+    ( ( map-hom2-homotopy' A x y f h)
+    , ( is-equiv-fiberwise-is-equiv-total
         ( hom A x y)
         ( \ k → (f = k))
         ( \ k → (hom2 A x y y f (id-hom A y) k))
@@ -1369,8 +1369,8 @@ the data provided by a commutative triangle with that boundary.
   ( x y z : A)
   ( f : hom A x y)
   ( g : hom A y z)
-  : ( Σ (h : hom A x z) , (comp-is-segal A is-segal-A x y z f g) = h) →
-    ( Σ (h : hom A x z) , (hom2 A x y z f g h))
+  : ( Σ ( h : hom A x z) , (comp-is-segal A is-segal-A x y z f g) = h)
+  → ( Σ ( h : hom A x z) , (hom2 A x y z f g h))
   := \ (h , p) → (h , map-hom2-eq-is-segal A is-segal-A x y z f g h p)
 
 #def is-equiv-map-total-hom2-eq-is-segal
@@ -1380,13 +1380,13 @@ the data provided by a commutative triangle with that boundary.
   ( f : hom A x y)
   ( g : hom A y z)
   : is-equiv
-      ( Σ (h : hom A x z) , (comp-is-segal A is-segal-A x y z f g) = h)
-      ( Σ (h : hom A x z) , (hom2 A x y z f g h))
+      ( Σ ( h : hom A x z) , (comp-is-segal A is-segal-A x y z f g) = h)
+      ( Σ ( h : hom A x z) , (hom2 A x y z f g h))
       ( map-total-hom2-eq-is-segal A is-segal-A x y z f g)
   :=
     is-equiv-are-contr
-      ( Σ (h : hom A x z) , (comp-is-segal A is-segal-A x y z f g) = h)
-      ( Σ (h : hom A x z) , (hom2 A x y z f g h))
+      ( Σ ( h : hom A x z) , (comp-is-segal A is-segal-A x y z f g) = h)
+      ( Σ ( h : hom A x z) , (hom2 A x y z f g h))
       ( is-contr-based-paths (hom A x z) (comp-is-segal A is-segal-A x y z f g))
       ( is-segal-A x y z f g)
       ( map-total-hom2-eq-is-segal A is-segal-A x y z f g)
@@ -1402,8 +1402,8 @@ the data provided by a commutative triangle with that boundary.
   ( k : hom A x z)
   : Equiv ((comp-is-segal A is-segal-A x y z f g) = k) (hom2 A x y z f g k)
   :=
-    ( ( map-hom2-eq-is-segal A is-segal-A x y z f g k) ,
-      ( is-equiv-fiberwise-is-equiv-total
+    ( ( map-hom2-eq-is-segal A is-segal-A x y z f g k)
+    , ( is-equiv-fiberwise-is-equiv-total
         ( hom A x z)
         ( \ m → (comp-is-segal A is-segal-A x y z f g) = m)
         ( hom2 A x y z f g)
@@ -1424,21 +1424,21 @@ composition:
   ( h k : hom A y z)
   ( p : f = g)
   ( q : h = k)
-  : ( comp-is-segal A is-segal-A x y z f h) =
-    ( comp-is-segal A is-segal-A x y z g k)
+  : ( comp-is-segal A is-segal-A x y z f h)
+  = ( comp-is-segal A is-segal-A x y z g k)
   :=
     ind-path
       ( hom A y z)
       ( h)
       ( \ k' q' →
-        ( comp-is-segal A is-segal-A x y z f h) =
-        ( comp-is-segal A is-segal-A x y z g k'))
+        ( comp-is-segal A is-segal-A x y z f h)
+      = ( comp-is-segal A is-segal-A x y z g k'))
       ( ind-path
         ( hom A x y)
         ( f)
         ( \ g' p' →
-          ( comp-is-segal A is-segal-A x y z f h) =
-          ( comp-is-segal A is-segal-A x y z g' h))
+          ( comp-is-segal A is-segal-A x y z f h)
+        = ( comp-is-segal A is-segal-A x y z g' h))
         ( refl)
         ( g)
         ( p))
@@ -1470,8 +1470,8 @@ As a special case of the above:
   ( k : hom A w x)
   ( f g : hom A x y)
   ( p : f = g)
-  : ( comp-is-segal A is-segal-A w x y k f) =
-    ( comp-is-segal A is-segal-A w x y k g)
+  : ( comp-is-segal A is-segal-A w x y k f)
+  = ( comp-is-segal A is-segal-A w x y k g)
   := congruence-homotopy-is-segal A is-segal-A w x y k k f g refl p
 ```
 
@@ -1483,17 +1483,17 @@ As a special case of the above:
   ( f g : hom A x y)
   ( h : hom A y z)
   ( p : f = g)
-  : ( postwhisker-homotopy-is-segal A is-segal-A x y z f g h p) =
-    ( ap (hom A x y) (hom A x z) f g (\ k → comp-is-segal A is-segal-A x y z k h) p)
+  : ( postwhisker-homotopy-is-segal A is-segal-A x y z f g h p)
+  = ( ap (hom A x y) (hom A x z) f g (\ k → comp-is-segal A is-segal-A x y z k h) p)
   :=
     ind-path
       ( hom A x y)
       ( f)
       ( \ g' p' →
-        ( postwhisker-homotopy-is-segal A is-segal-A x y z f g' h p') =
-        ( ap
-          (hom A x y) (hom A x z)
-          (f) (g') (\ k → comp-is-segal A is-segal-A x y z k h) (p')))
+        ( postwhisker-homotopy-is-segal A is-segal-A x y z f g' h p')
+      = ( ap
+          ( hom A x y) (hom A x z)
+          ( f) (g') (\ k → comp-is-segal A is-segal-A x y z k h) (p')))
       ( refl)
       ( g)
       ( p)
@@ -1507,15 +1507,15 @@ As a special case of the above:
   ( k : hom A w x)
   ( f g : hom A x y)
   ( p : f = g)
-  : ( prewhisker-homotopy-is-segal A is-segal-A w x y k f g p) =
-    ( ap (hom A x y) (hom A w y) f g (comp-is-segal A is-segal-A w x y k) p)
+  : ( prewhisker-homotopy-is-segal A is-segal-A w x y k f g p)
+  = ( ap (hom A x y) (hom A w y) f g (comp-is-segal A is-segal-A w x y k) p)
   :=
     ind-path
       ( hom A x y)
       ( f)
       ( \ g' p' →
-        ( prewhisker-homotopy-is-segal A is-segal-A w x y k f g' p') =
-        ( ap (hom A x y) (hom A w y) f g' (comp-is-segal A is-segal-A w x y k) p'))
+        ( prewhisker-homotopy-is-segal A is-segal-A w x y k f g' p')
+      = ( ap (hom A x y) (hom A w y) f g' (comp-is-segal A is-segal-A w x y k) p'))
       ( refl)
       ( g)
       ( p)
@@ -1525,8 +1525,8 @@ As a special case of the above:
 #def is-contr-Δ²→Unit uses (extext)
   : is-contr (Δ² → Unit)
   :=
-    ( \ _ → unit ,
-      \ k →
+    ( \ _ → unit
+    , \ k →
       naiveextext-extext extext
         ( 2 × 2) Δ² (\ _ → BOT)
         ( \ _ → Unit) (\ _ → recBOT)
@@ -1538,10 +1538,10 @@ As a special case of the above:
   :=
     \ x y z f g →
     is-contr-is-retract-of-is-contr
-      ( Σ (h : hom Unit x z) , (hom2 Unit x y z f g h))
+      ( Σ ( h : hom Unit x z) , (hom2 Unit x y z f g h))
       ( Δ² → Unit)
-      ( ( \ (_ , k) → k) ,
-        ( \ k → ((\ t → k (t , t)) , k) , \ _ → refl))
+      ( ( \ (_ , k) → k)
+      , ( \ k → ((\ t → k (t , t)) , k) , \ _ → refl))
       ( is-contr-Δ²→Unit)
 
 #end is-segal-Unit
@@ -1621,8 +1621,8 @@ Interchange law
   : U
   := congruence-homotopy-is-segal A is-segal-A x y z f1 f3 h1 h3
       ( concat (hom A x y) f1 f2 f3 p q)
-      ( concat (hom A y z) h1 h2 h3 p' q') =
-    concat
+      ( concat (hom A y z) h1 h2 h3 p' q')
+  = concat
       ( hom A x z)
       ( comp-is-segal A is-segal-A x y z f1 h1)
       ( comp-is-segal A is-segal-A x y z f2 h2)
@@ -1643,21 +1643,21 @@ Interchange law
   := ind-path
     ( hom A x y)
     ( f2)
-    ( \ f3 q -> statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p' q')
+    ( \ f3 q → statement-homotopy-interchange-law f1 f2 f3 h1 h2 h3 p q p' q')
     ( ind-path
       ( hom A x y)
       ( f1)
-      ( \ f2 p -> statement-homotopy-interchange-law f1 f2 f2 h1 h2 h3
+      ( \ f2 p → statement-homotopy-interchange-law f1 f2 f2 h1 h2 h3
           p refl p' q')
       ( ind-path
         ( hom A y z)
         ( h2)
-        ( \ h3 q' -> statement-homotopy-interchange-law f1 f1 f1 h1 h2 h3
+        ( \ h3 q' → statement-homotopy-interchange-law f1 f1 f1 h1 h2 h3
             refl refl p' q')
         ( ind-path
           ( hom A y z)
           ( h1)
-          ( \ h2 p' -> statement-homotopy-interchange-law f1 f1 f1 h1 h2 h2
+          ( \ h2 p' → statement-homotopy-interchange-law f1 f1 f1 h1 h2 h2
               refl refl p' refl)
           ( refl)
           ( h2)
@@ -1702,7 +1702,7 @@ We say that a shape inclusion `ϕ ⊂ ψ` is **inner anodyne** if it is anodyne 
   ( ψ : I → TOPE)
   ( ϕ : ψ → TOPE)
   : is-inner-anodyne I ψ ϕ
-  = ( (A' : U) → (A : U) → (α : A' → A)
+  = ( ( A' : U) → (A : U) → (α : A' → A)
     → is-inner-fibration A' A α
     → is-right-orthogonal-to-shape I ψ ϕ A' A α)
   := refl
@@ -1774,20 +1774,20 @@ general statements about weak anodyne shape inclusions.
   ( ζ : J → TOPE)
   ( χ : ζ → TOPE)
   : is-weak-inner-anodyne (I × J)
-      (\ (t,s) → ψ t ∧ ζ s)
-      (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
+      ( \ (t , s) → ψ t ∧ ζ s)
+      ( \ (t , s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
   := \ A is-segal-A h →
     is-contr-equiv-is-contr'
-      (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
-      ( (s : ζ) → ((t : ψ) → A[ Φ t ↦ h (t,s)])[ χ s ↦ \ t → h (t, s)])
-      (uncurry-opcurry I J ψ Φ ζ χ (\ s t → A) h)
-      (weakextext
+      ( ( ( t , s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t , s)])
+      ( ( s : ζ) → ((t : ψ) → A[ Φ t ↦ h (t , s)])[ χ s ↦ \ t → h (t , s)])
+      ( uncurry-opcurry I J ψ Φ ζ χ (\ s t → A) h)
+      ( weakextext
         ( J)
         ( ζ)
         ( χ)
-        ( \ s → (t : ψ) → A[ Φ t ↦ h (t,s)])
-        ( \ s → is-weak-inner-anodyne-ψ-Φ A is-segal-A (\ t → h (t,s)))
-        ( \ s t → h (t,s)))
+        ( \ s → (t : ψ) → A[ Φ t ↦ h (t , s)])
+        ( \ s → is-weak-inner-anodyne-ψ-Φ A is-segal-A (\ t → h (t , s)))
+        ( \ s t → h (t , s)))
 
 #def is-weak-inner-anodyne-pushout-product-right-is-weak-inner-anodyne uses (weakextext)
   ( I J : CUBE)
@@ -1795,22 +1795,22 @@ general statements about weak anodyne shape inclusions.
   ( Φ : ψ → TOPE)
   ( ζ : J → TOPE)
   ( χ : ζ → TOPE)
-  (is-weak-inner-anodyne-ζ-χ : is-weak-inner-anodyne J ζ χ)
+  ( is-weak-inner-anodyne-ζ-χ : is-weak-inner-anodyne J ζ χ)
   : is-weak-inner-anodyne (I × J)
-      (\ (t,s) → ψ t ∧ ζ s)
-      (\ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
+      ( \ (t , s) → ψ t ∧ ζ s)
+      ( \ (t , s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s))
   := \ A is-segal-A h →
     is-contr-equiv-is-contr
-      ( (t : ψ) → ((s : ζ) → A[ χ s ↦ h (t,s)])[ Φ t ↦ \ s → h (t, s)])
-      (((t,s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t,s)])
-      (curry-uncurry I J ψ Φ ζ χ (\ s t → A) h)
-      (weakextext
+      ( ( t : ψ) → ((s : ζ) → A[ χ s ↦ h (t , s)])[ Φ t ↦ \ s → h (t , s)])
+      ( ( ( t , s) : I × J | ψ t ∧ ζ s) → A[(Φ t ∧ ζ s) ∨ (ψ t ∧ χ s) ↦ h (t , s)])
+      ( curry-uncurry I J ψ Φ ζ χ (\ s t → A) h)
+      ( weakextext
         ( I)
         ( ψ)
         ( Φ)
-        ( \ t → (s : ζ) → A[ χ s ↦ h (t,s)])
-        ( \ t → is-weak-inner-anodyne-ζ-χ A is-segal-A (\ s → h (t,s)))
-        ( \ s t → h (s,t)))
+        ( \ t → (s : ζ) → A[ χ s ↦ h (t , s)])
+        ( \ t → is-weak-inner-anodyne-ζ-χ A is-segal-A (\ s → h (t , s)))
+        ( \ s t → h (s , t)))
 ```
 
 The following argument from RS17 proves that `Λ³₂ ⊂ Δ³` is weakly inner anodyne.
@@ -1821,7 +1821,7 @@ It should be easy to adapt it to prove that it is actually inner anodyne.
 
 -- Δ³×Λ²₁ ∪_{Λ³₂×Λ²₁} Λ³₂×Δ²
 #def pushout-prod-Λ³₂-Λ²₁
-  : (Δ³×Δ²) → TOPE
+  : ( Δ³×Δ²) → TOPE
   := shape-pushout-prod (2 × 2 × 2) (2 × 2) Δ³ Λ³₂ Δ² Λ²₁
 
 
@@ -1830,14 +1830,14 @@ It should be easy to adapt it to prove that it is actually inner anodyne.
 
 #def h^
   : pushout-prod-Λ³₂-Λ²₁ → A
-  := \ ( ((t1, t2), t3), (s1, s2) ) →
+  := \ (((t1 , t2) , t3) , (s1 , s2)) →
     recOR
-      ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ h ((t1, t2), t3),
-        t1 ≤ s1 ∧ t2 ≤ s2 ↦ h ((s1, t2), t3),
-        s1 ≤ t1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ h ((t1, s2), t3),
-        t1 ≤ s1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ h ((s1, s2), t3),
-        s1 ≤ t1 ∧ s2 ≤ t3 ↦ h ((t1, s2), s2),
-        t1 ≤ s1 ∧ s2 ≤ t3 ↦ h ((s1, s2), s2))
+      ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ h ((t1 , t2) , t3)
+      , t1 ≤ s1 ∧ t2 ≤ s2 ↦ h ((s1 , t2) , t3)
+      , s1 ≤ t1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ h ((t1 , s2) , t3)
+      , t1 ≤ s1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ h ((s1 , s2) , t3)
+      , s1 ≤ t1 ∧ s2 ≤ t3 ↦ h ((t1 , s2) , s2)
+      , t1 ≤ s1 ∧ s2 ≤ t3 ↦ h ((s1 , s2) , s2))
 
 
 #def extend-against-Λ³₂-Δ³
@@ -1849,22 +1849,22 @@ It should be easy to adapt it to prove that it is actually inner anodyne.
   := (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
 
 #def retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
-  (f : extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
+  ( f : extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
   : extend-against-Λ³₂-Δ³
-  := \ ((t1, t2), t3) → f ( ((t1, t2), t3), (t1, t2) )
+  := \ ((t1 , t2) , t3) → f (((t1 , t2) , t3) , (t1 , t2))
 
 #def section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
-  (g : (t : Δ³) → A[ Λ³₂ t ↦ h t ])
-  : (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
+  ( g : (t : Δ³) → A[ Λ³₂ t ↦ h t ])
+  : ( x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
   :=
-    \ ( ((t1, t2), t3), (s1, s2) ) →
+    \ (((t1 , t2) , t3) , (s1 , s2)) →
     recOR
-      ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ g ((t1, t2), t3),
-        t1 ≤ s1 ∧ t2 ≤ s2 ↦ g ((s1, t2), t3),
-        s1 ≤ t1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ g ((t1, s2), t3),
-        t1 ≤ s1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ g ((s1, s2), t3),
-        s1 ≤ t1 ∧ s2 ≤ t3 ↦ g ((t1, s2), s2),
-        t1 ≤ s1 ∧ s2 ≤ t3 ↦ g ((s1, s2), s2))
+      ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ g ((t1 , t2) , t3)
+      , t1 ≤ s1 ∧ t2 ≤ s2 ↦ g ((s1 , t2) , t3)
+      , s1 ≤ t1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ g ((t1 , s2) , t3)
+      , t1 ≤ s1 ∧ t3 ≤ s2 ∧ s2 ≤ t2 ↦ g ((s1 , s2) , t3)
+      , s1 ≤ t1 ∧ s2 ≤ t3 ↦ g ((t1 , s2) , s2)
+      , t1 ≤ s1 ∧ s2 ≤ t3 ↦ g ((s1 , s2) , s2))
 
 #def homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
   : homotopy extend-against-Λ³₂-Δ³ extend-against-Λ³₂-Δ³
@@ -1882,9 +1882,9 @@ It should be easy to adapt it to prove that it is actually inner anodyne.
       extend-against-Λ³₂-Δ³
       extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
   :=
-    ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,
-      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² ,
-        homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
+    ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
+    , ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
+      , homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
 
 #end retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
 
@@ -1893,10 +1893,10 @@ It should be easy to adapt it to prove that it is actually inner anodyne.
   :=
     \ A is-segal-A h →
     is-contr-is-retract-of-is-contr
-      (extend-against-Λ³₂-Δ³ A h)
-      (extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)
-      (is-retract-of-Δ³-Δ³×Δ² A h)
-      (is-weak-inner-anodyne-pushout-product-right-is-weak-inner-anodyne
+      ( extend-against-Λ³₂-Δ³ A h)
+      ( extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)
+      ( is-retract-of-Δ³-Δ³×Δ² A h)
+      ( is-weak-inner-anodyne-pushout-product-right-is-weak-inner-anodyne
         ( 2 × 2 × 2)
         ( 2 × 2)
         ( Δ³)
@@ -1917,43 +1917,43 @@ products of morphisms. It is implicitly stated in Proposition 8.21.
 ```rzk
 #section morphisms-of-products-is-products-of-morphisms
 #variables A B : U
-#variable p : ( product A B )
-#variable p' : ( product A B )
+#variable p : (product A B)
+#variable p' : (product A B)
 
 #def morphism-in-product-to-product-of-morphism
-  : hom ( product A B ) p p' →
-    product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) )
-  :=  \ f → ( \ ( t : Δ¹ ) → first ( f t ) , \ ( t : Δ¹ ) → second ( f t ) )
+  : hom (product A B) p p'
+  → product (hom A (first p) (first p')) (hom B (second p) (second p'))
+  := \ f → (\ (t : Δ¹) → first (f t) , \ (t : Δ¹) → second (f t))
 
 #def product-of-morphism-to-morphism-in-product
-  : product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) ) →
-    hom ( product A B ) p p'
-  := \ ( f , g ) ( t : Δ¹ ) → ( f t , g t )
+  : product (hom A (first p) (first p')) (hom B (second p) (second p'))
+  → hom (product A B) p p'
+  := \ (f , g) (t : Δ¹) → (f t , g t)
 
 #def morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id
-  : ( f :  product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) ) ) →
-    ( morphism-in-product-to-product-of-morphism )
-    ( ( product-of-morphism-to-morphism-in-product )
-      f ) = f
+  : ( f : product (hom A (first p) (first p')) (hom B (second p) (second p')))
+  → ( morphism-in-product-to-product-of-morphism)
+    ( ( product-of-morphism-to-morphism-in-product)
+      f) = f
   := \ f → refl
 
 #def product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id
-  : ( f :  hom ( product A B ) p p' ) →
-    ( product-of-morphism-to-morphism-in-product )
-    ( ( morphism-in-product-to-product-of-morphism )
-      f ) = f
+  : ( f : hom (product A B) p p')
+  → ( product-of-morphism-to-morphism-in-product)
+    ( ( morphism-in-product-to-product-of-morphism)
+      f) = f
   := \ f → refl
 
 #def morphism-in-product-equiv-product-of-morphism
   : Equiv
-    ( hom ( product A B ) p p' )
-    ( product ( hom A ( first p ) ( first p' ) ) ( hom B ( second p ) ( second p' ) ) )
+    ( hom (product A B) p p')
+    ( product (hom A (first p) (first p')) (hom B (second p) (second p')))
   :=
-    ( ( morphism-in-product-to-product-of-morphism ) ,
-      ( ( ( product-of-morphism-to-morphism-in-product ) ,
-          ( product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id ) ) ,
-        ( ( product-of-morphism-to-morphism-in-product ) ,
-          ( morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id ) ) ) )
+    ( ( morphism-in-product-to-product-of-morphism)
+    , ( ( ( product-of-morphism-to-morphism-in-product)
+        , ( product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id))
+      , ( ( product-of-morphism-to-morphism-in-product)
+        , ( morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id))))
 
 #end morphisms-of-products-is-products-of-morphisms
 ```

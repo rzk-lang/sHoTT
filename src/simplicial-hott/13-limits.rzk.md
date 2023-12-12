@@ -26,7 +26,7 @@ over `#!rzk f`.
   ( A B : U)
   ( f : A → B)
   : U
-  := Σ (b : B), hom (A → B) (constant A B b) f
+  := Σ (b : B) , hom (A → B) (constant A B b) f
 ```
 
 Given a function `#!rzk f : A → B` and `#!rzk b:B` we define the type of cocones
@@ -37,27 +37,27 @@ under `#!rzk f`.
   ( A B : U)
   ( f : A → B)
   : U
-  := Σ (b : B), hom ( A → B) f (constant A B b)
+  := Σ (b : B) , hom (A → B) f (constant A B b)
 ```
 
 We define a colimit for `#!rzk f : A → B` as an initial cocone under `#!rzk f`.
 
 ```rzk
 #def colimit
-  ( A B : U )
-  ( f : A → B )
+  ( A B : U)
+  ( f : A → B)
   : U
-  := Σ ( x : cocone A B f) , is-initial ( cocone A B f) x
+  := Σ (x : cocone A B f) , is-initial (cocone A B f) x
 ```
 
 We define a limit of `#!rzk f : A → B` as a final cone over `#!rzk f`.
 
 ```rzk
 #def limit
-  ( A B : U )
-  ( f : A → B )
+  ( A B : U)
+  ( f : A → B)
   : U
-  :=  Σ ( x : cone A B f) , is-final ( cone A B f) x
+  := Σ (x : cone A B f) , is-final (cone A B f) x
 ```
 
 We give a second definition of limits, we eventually want to prove both
@@ -65,27 +65,27 @@ definitions coincide. Define cone as a family.
 
 ```rzk
 #def family-cone
-  (A B : U)
-  : (A → B) → (B) → U
+  ( A B : U)
+  : ( A → B) → (B) → U
   := \ f → \ b → (hom (A → B) (constant A B b) f)
 
 #def constant-nat-trans
-  (A B : U)
-  ( x y : B )
+  ( A B : U)
+  ( x y : B)
   ( k : hom B x y)
   : hom (A → B) (constant A B x) (constant A B y)
-  := \ t a → ( constant A ( hom B x y ) k ) a t
+  := \ t a → (constant A (hom B x y) k) a t
 
 #def cone-precomposition
   ( A B : U)
   ( is-segal-B : is-segal B)
-  ( f : A → B )
-  ( b x : B )
+  ( f : A → B)
+  ( b x : B)
   ( k : hom B b x)
-  : ( family-cone A B f x) →  ( family-cone A B f b)
+  : ( family-cone A B f x) → (family-cone A B f b)
   :=
-  \ α
-  → vertical-comp-nat-trans
+  \ α →
+  vertical-comp-nat-trans
     ( A)
     ( \ _ → B)
     ( \ _ → is-segal-B)
@@ -104,9 +104,9 @@ Another definition of limit.
   ( is-segal-B : is-segal B)
   ( f : A → B)
   : U
-  := Σ (b : B),
-  Σ ( c : family-cone A B f b)
-    , ( x : B) → ( k : hom B b x)
+  := Σ (b : B)
+  , Σ ( c : family-cone A B f b)
+    , ( x : B) → (k : hom B b x)
       → is-equiv
         ( family-cone A B f x)
         ( family-cone A B f b)
@@ -118,8 +118,8 @@ definitions coincide. Define cocone as a family.
 
 ```rzk
 #def family-cocone
-  (A B : U)
-  : ( A → B) → ( B) → U
+  ( A B : U)
+  : ( A → B) → (B) → U
   := \ f → \ b → (hom (A → B) f (constant A B b))
 
 #def cocone-postcomposition
@@ -128,10 +128,10 @@ definitions coincide. Define cocone as a family.
   ( f : A → B)
   ( x b : B)
   ( k : hom B x b)
-  : ( family-cocone A B f x) → ( family-cocone A B f b)
+  : ( family-cocone A B f x) → (family-cocone A B f b)
   :=
-  \ α
-  → vertical-comp-nat-trans
+  \ α →
+  vertical-comp-nat-trans
     ( A)
     ( \ _ → B)
     ( \ _ → is-segal-B)
@@ -139,7 +139,7 @@ definitions coincide. Define cocone as a family.
     ( constant A B x)
     ( constant A B b)
     ( α)
-    ( constant-nat-trans A B x b k )
+    ( constant-nat-trans A B x b k)
 ```
 
 Another definition of colimit.
@@ -150,9 +150,9 @@ Another definition of colimit.
   ( is-segal-B : is-segal B)
   ( f : A → B)
   : U
-  := Σ (b : B),
-  Σ ( c : family-cocone A B f b)
-    , ( x : B) → ( k : hom B x b)
+  := Σ (b : B)
+  , Σ ( c : family-cocone A B f b)
+    , ( x : B) → (k : hom B x b)
     → is-equiv
       ( family-cocone A B f x)
       ( family-cocone A B f b)
@@ -167,13 +167,13 @@ When `#!rzk is-segal B` then definitions 1 and 3 coincide.
   ( A B : U)
   ( f : A → B)
   : U
-  := Σ ( b : B),( x : B) → Equiv ( hom B b x) ( family-cone A B f x)
+  := Σ (b : B) , (x : B) → Equiv (hom B b x) (family-cone A B f x)
 
 #def colimit3
   ( A B : U)
   ( f : A → B)
   : U
-  := Σ ( b : B), ( x : B) → Equiv ( hom B x b) ( family-cocone A B f x)
+  := Σ (b : B) , (x : B) → Equiv (hom B x b) (family-cocone A B f x)
 ```
 
 ## Uniqueness of initial and final objects.
@@ -189,17 +189,17 @@ In a Segal type, initial objects are isomorphic.
   ( is-initial-b : is-initial A b)
   : Iso A is-segal-A a b
   :=
-    ( first (is-initial-a b) ,
-      ( ( first (is-initial-b a) ,
-          all-elements-equal-is-contr
+    ( first (is-initial-a b)
+    , ( ( first (is-initial-b a)
+        , all-elements-equal-is-contr
             ( hom A a a)
             ( is-initial-a a)
             ( comp-is-segal A is-segal-A a b a
               ( first (is-initial-a b))
               ( first (is-initial-b a)))
-            ( id-hom A a)) ,
-        ( first (is-initial-b a) ,
-          all-elements-equal-is-contr
+            ( id-hom A a))
+      , ( first (is-initial-b a)
+        , all-elements-equal-is-contr
             ( hom A b b)
             ( is-initial-b b)
             ( comp-is-segal A is-segal-A b a b
@@ -219,17 +219,17 @@ In a Segal type, final objects are isomorphic.
   ( is-final-b : is-final A b)
   : Iso A is-segal-A a b
   :=
-    ( first (is-final-b a) ,
-      ( ( first (is-final-a b) ,
-          all-elements-equal-is-contr
+    ( first (is-final-b a)
+    , ( ( first (is-final-a b)
+        , all-elements-equal-is-contr
             ( hom A a a)
             ( is-final-a a)
             ( comp-is-segal A is-segal-A a b a
               ( first (is-final-b a))
               ( first (is-final-a b)))
-            ( id-hom A a)) ,
-        ( first (is-final-a b) ,
-          all-elements-equal-is-contr
+            ( id-hom A a))
+      , ( first (is-final-a b)
+        , all-elements-equal-is-contr
             ( hom A b b)
             ( is-final-b b)
             ( comp-is-segal A is-segal-A b a b
@@ -247,12 +247,12 @@ The type of cocones of a function with codomain a Segal type is a Segal type.
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
-  : is-covariant B ( \ b → family-cocone A B f b)
+  : is-covariant B (\ b → family-cocone A B f b)
   :=
     is-covariant-substitution-is-covariant
     ( A → B)
     ( B)
-    ( hom ( A → B) f)
+    ( hom (A → B) f)
     ( is-covariant-representable-is-segal
         ( A → B)
         ( is-segal-function-type
@@ -267,7 +267,7 @@ The type of cocones of a function with codomain a Segal type is a Segal type.
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
-  : is-segal ( cocone A B f)
+  : is-segal (cocone A B f)
   :=
     is-segal-total-type-covariant-family-is-segal-base
     ( extext)
@@ -284,7 +284,7 @@ The type of cocones of a function with codomain a Segal type is a Segal type.
 Colimits are unique up to isomorphism.
 
 ```rzk title="BM, Corollary 1 (i)"
-#def iso-colimit-is-segal uses ( extext funext)
+#def iso-colimit-is-segal uses (extext funext)
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)

@@ -49,9 +49,9 @@ orthogonal** to the map `α`, if `α : A' → A` is right orthogonal to `ϕ ⊂ 
   : U
   :=
     is-homotopy-cartesian
-      ( ϕ → A' ) ( \ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
-      ( ϕ → A ) ( \ σ → (t : ψ) → A [ϕ t ↦ σ t])
-      ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
+      ( ϕ → A') (\ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
+      ( ϕ → A) (\ σ → (t : ψ) → A [ϕ t ↦ σ t])
+      ( \ σ' t → α (σ' t)) (\ _ τ' x → α (τ' x))
 ```
 
 ## Contractible relative extension types
@@ -71,20 +71,20 @@ extension types.
 
 #def is-right-orthogonal-to-shape-has-contr-relative-extension-types uses (extext)
   ( are-contr-relext-α
-    : has-contr-relative-extension-types I ψ ϕ
+ : has-contr-relative-extension-types I ψ ϕ
       ( \ _ → A') (\ _ → A) (\ _ → α))
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=
     \ σ' →
     is-equiv-is-contr-map
-    ( (t : ψ) → A' [ϕ t ↦ σ' t])
-    ( (t : ψ) → A [ϕ t ↦ α (σ' t)])
+    ( ( t : ψ) → A' [ϕ t ↦ σ' t])
+    ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
     ( \ τ' t → α (τ' t))
     ( \ τ →
       is-contr-equiv-is-contr'
       ( fib
-        ( (t : ψ) → A' [ϕ t ↦ σ' t])
-        ( (t : ψ) → A [ϕ t ↦ α (σ' t)])
+        ( ( t : ψ) → A' [ϕ t ↦ σ' t])
+        ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
         ( \ τ' t → α (τ' t))
         ( τ))
       ( relative-extension-type I ψ ϕ
@@ -100,8 +100,8 @@ extension types.
     \ σ' τ →
       is-contr-equiv-is-contr
       ( fib
-        ( (t : ψ) → A' [ϕ t ↦ σ' t])
-        ( (t : ψ) → A [ϕ t ↦ α (σ' t)])
+        ( ( t : ψ) → A' [ϕ t ↦ σ' t])
+        ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
         ( \ τ' t → α (τ' t))
         ( τ))
       ( relative-extension-type I ψ ϕ
@@ -109,8 +109,8 @@ extension types.
       ( equiv-relative-extension-type-fib extext I ψ ϕ
         ( \ _ → A') (\ _ → A) (\ _ → α) σ' τ)
       ( is-contr-map-is-equiv
-        ( (t : ψ) → A' [ϕ t ↦ σ' t])
-        ( (t : ψ) → A [ϕ t ↦ α (σ' t)])
+        ( ( t : ψ) → A' [ϕ t ↦ σ' t])
+        ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
         ( \ τ' t → α (τ' t))
         ( is-orth-α σ')
         ( τ))
@@ -149,8 +149,8 @@ conditions.
 #variable ϕ : χ → TOPE
 #variable is-orth-ψ-χ : is-right-orthogonal-to-shape I ψ χ A' A α
 #variable is-orth-χ-ϕ : is-right-orthogonal-to-shape
-                          I ( \ t → χ t) ( \ t → ϕ t) A' A α
-#variable is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
+                          I (\ t → χ t) (\ t → ϕ t) A' A α
+#variable is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ (\ t → ϕ t) A' A α
 ```
 
 Using the vertical pasting calculus for homotopy cartesian squares, it is not
@@ -178,20 +178,20 @@ occasionally go back or forth along the functorial equivalence
       Σ ( τ : (t : χ) → A [ϕ t ↦ σ t])
       , ( t : ψ) → A [χ t ↦ τ t])
     ( \ σ' t → α (σ' t))
-    ( \ _ (τ', υ') → ( \ t → α (τ' t), \ t → α (υ' t) ))
+    ( \ _ (τ' , υ') → (\ t → α (τ' t) , \ t → α (υ' t)))
   :=
-    ( \ (σ' : ϕ → A') →
-    is-equiv-Equiv-is-equiv'
+    ( \ (σ' : ϕ → A')
+  → is-equiv-Equiv-is-equiv'
       ( ( t : ψ) → A' [ϕ t ↦ σ' t])
       ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
-      ( \ υ' t → α ( υ' t))
+      ( \ υ' t → α (υ' t))
       ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t])
         , ( ( t : ψ) → A' [χ t ↦ τ' t]))
-      ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)])
+      ( Σ ( τ : (t : χ) → A [ϕ t ↦ α (σ' t)])
         , ( ( t : ψ) → A [χ t ↦ τ t]))
-      ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
+      ( \ (τ' , υ') → (\ t → α (τ' t) , \ t → α (υ' t)))
       ( cofibration-composition-functorial I ψ χ ϕ
-        ( \ _ → A') ( \ _ → A) ( \ _ → α) σ')
+        ( \ _ → A') (\ _ → A) (\ _ → α) σ')
       ( is-orth-ψ-ϕ σ'))
 ```
 
@@ -202,30 +202,30 @@ Left orthogonal shape inclusions are preserved under composition.
 ```rzk title="right-orthogonality for composition of shape inclusions"
 
 #def is-right-orthogonal-to-shape-comp uses (is-orth-ψ-χ is-orth-χ-ϕ)
-  : is-right-orthogonal-to-shape I ψ ( \ t → ϕ t) A' A α
+  : is-right-orthogonal-to-shape I ψ (\ t → ϕ t) A' A α
   :=
     \ σ' →
       is-equiv-Equiv-is-equiv
         ( ( t : ψ) → A' [ϕ t ↦ σ' t])
         ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
-        ( \ υ' t → α ( υ' t))
+        ( \ υ' t → α (υ' t))
         ( Σ ( τ' : (t : χ) → A' [ϕ t ↦ σ' t])
           , ( ( t : ψ) → A' [χ t ↦ τ' t]))
-        ( Σ ( τ : ( t : χ) → A [ϕ t ↦ α (σ' t)])
+        ( Σ ( τ : (t : χ) → A [ϕ t ↦ α (σ' t)])
           , ( ( t : ψ) → A [χ t ↦ τ t]))
-        ( \ (τ', υ') → ( \ t → α (τ' t), \t → α (υ' t)))
+        ( \ (τ' , υ') → (\ t → α (τ' t) , \ t → α (υ' t)))
         ( cofibration-composition-functorial I ψ χ ϕ
-          ( \ _ → A') ( \ _ → A) ( \ _ → α) σ')
+          ( \ _ → A') (\ _ → A) (\ _ → α) σ')
         ( is-homotopy-cartesian-vertical-pasting-from-fibers
-          ( ϕ → A' )
+          ( ϕ → A')
           ( \ σ' → (t : χ) → A' [ϕ t ↦ σ' t])
           ( \ _ τ' → (t : ψ) → A' [χ t ↦ τ' t])
-          ( ϕ → A )
+          ( ϕ → A)
           ( \ σ → (t : χ) → A [ϕ t ↦ σ t])
           ( \ _ τ → (t : ψ) → A [χ t ↦ τ t])
           ( \ σ' t → α (σ' t))
-          ( \ _ τ' x → α (τ' x) )
-          ( \ _ _ υ' x → α (υ' x) )
+          ( \ _ τ' x → α (τ' x))
+          ( \ _ _ υ' x → α (υ' x))
           is-orth-χ-ϕ
           ( \ _ τ' → is-orth-ψ-χ τ')
           σ')
@@ -241,18 +241,18 @@ If `ϕ ⊂ χ` and `ϕ ⊂ ψ` are left orthogonal to `α : A' → A`, then so i
   :=
     \ τ' →
         is-homotopy-cartesian-lower-cancel-to-fibers
-          ( ϕ → A' )
+          ( ϕ → A')
           ( \ σ' → (t : χ) → A' [ϕ t ↦ σ' t])
           ( \ _ τ' → (t : ψ) → A' [χ t ↦ τ' t])
-          ( ϕ → A )
+          ( ϕ → A)
           ( \ σ → (t : χ) → A [ϕ t ↦ σ t])
           ( \ _ τ → (t : ψ) → A [χ t ↦ τ t])
           ( \ σ' t → α (σ' t))
-          ( \ _ τ' x → α (τ' x) )
-          ( \ _ _ υ' x → α (υ' x) )
-          ( is-orth-χ-ϕ )
-          (is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape)
-          ( \ ( t : ϕ) → τ' t)
+          ( \ _ τ' x → α (τ' x))
+          ( \ _ _ υ' x → α (υ' x))
+          ( is-orth-χ-ϕ)
+          ( is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape)
+          ( \ (t : ϕ) → τ' t)
           ( τ')
 ```
 
@@ -262,18 +262,18 @@ shape retract, then `ϕ ⊂ ψ` is left orthogonal to `α : A' → A`.
 ```rzk
 #def is-right-orthogonal-to-shape-right-cancel-retract uses (is-orth-ψ-ϕ)
   ( is-fretract-ψ-χ : is-functorial-shape-retract I ψ χ)
-  : is-right-orthogonal-to-shape I ( \ t → χ t) ( \ t → ϕ t) A' A α
+  : is-right-orthogonal-to-shape I (\ t → χ t) (\ t → ϕ t) A' A α
   :=
     is-homotopy-cartesian-upper-cancel-with-section
-      ( ϕ → A' )
+      ( ϕ → A')
       ( \ σ' → (t : χ) → A' [ϕ t ↦ σ' t])
       ( \ _ τ' → (t : ψ) → A' [χ t ↦ τ' t])
-      ( ϕ → A )
+      ( ϕ → A)
       ( \ σ → (t : χ) → A [ϕ t ↦ σ t])
       ( \ _ τ → (t : ψ) → A [χ t ↦ τ t])
       ( \ σ' t → α (σ' t))
-      ( \ _ τ' x → α (τ' x) )
-      ( \ _ _ υ' x → α (υ' x) )
+      ( \ _ τ' x → α (τ' x))
+      ( \ _ _ υ' x → α (υ' x))
       ( relativize-is-functorial-shape-retract I ψ χ is-fretract-ψ-χ ϕ A' A α)
       ( is-homotopy-cartesian-Σ-is-right-orthogonal-to-shape)
 
@@ -295,7 +295,7 @@ affecting left orthogonality.
   ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape (I × J)
     ( \ (s , t) → ψ (s , t))
     ( \ (s , t) → ϕ (s , t))
-    ( A') ( A) ( α))
+    ( A') (A) (α))
   : is-right-orthogonal-to-shape (J × I)
     ( \ (t , s) → ψ (s , t))
     ( \ (t , s) → ϕ (s , t))
@@ -303,21 +303,21 @@ affecting left orthogonality.
   :=
     \ σ' →
     is-equiv-Equiv-is-equiv
-    ( ( (t , s) : J × I | ψ (s , t)) → A' [ϕ (s , t) ↦ σ' (t , s)])
-    ( ( (t , s) : J × I | ψ (s , t)) → A [ϕ (s , t) ↦ α (σ' (t , s))])
+    ( ( ( t , s) : J × I | ψ (s , t)) → A' [ϕ (s , t) ↦ σ' (t , s)])
+    ( ( ( t , s) : J × I | ψ (s , t)) → A [ϕ (s , t) ↦ α (σ' (t , s))])
     ( \ τ' ts → α (τ' ts))
-    ( ((s , t) : I × J | ψ (s , t)) → A' [ϕ (s , t) ↦ σ' (t , s)])
-    ( ((s , t) : I × J | ψ (s , t)) → A [ϕ (s , t) ↦ α (σ' (t , s))])
+    ( ( ( s , t) : I × J | ψ (s , t)) → A' [ϕ (s , t) ↦ σ' (t , s)])
+    ( ( ( s , t) : I × J | ψ (s , t)) → A [ϕ (s , t) ↦ α (σ' (t , s))])
     ( \ τ' st → α (τ' st))
     ( ( ( ( \ v (x , y) → v (y , x))
         , ( \ v (x , y) → v (y , x))
         )
       , ( \ _ → refl)
       )
-    , ( ( ( ( \ v (x , y) → v (y , x)) , ( \ _ → refl))
-        , ( ( \ v (x , y) → v (y , x)) , ( \ _ → refl)))
-      , ( ( ( \ v (x , y) → v (y , x)) , ( \ _ → refl))
-        , ( ( \ v (x , y) → v (y , x)) , ( \ _ → refl)))))
+    , ( ( ( ( \ v (x , y) → v (y , x)) , (\ _ → refl))
+        , ( ( \ v (x , y) → v (y , x)) , (\ _ → refl)))
+      , ( ( ( \ v (x , y) → v (y , x)) , (\ _ → refl))
+        , ( ( \ v (x , y) → v (y , x)) , (\ _ → refl)))))
     ( is-orth-ψ-ϕ (\ (s , t) → σ' (t , s)))
 ```
 
@@ -336,67 +336,67 @@ extensionality.
   ( J : CUBE)
   ( χ : J → TOPE)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ϕ A' A α)
   : is-right-orthogonal-to-shape
-      ( J × I) ( \ (t , s) → χ t ∧ ψ s) ( \ (t , s) → χ t ∧ ϕ s) A' A α
+      ( J × I) (\ (t , s) → χ t ∧ ψ s) (\ (t , s) → χ t ∧ ϕ s) A' A α
   :=
-    \ ( σ' : ( (t , s) : J × I | χ t ∧ ϕ s) → A') →
-      ( ( \ ( τ : ( (t , s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t , s))])
-            ( t, s) →
-          ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
-        , \ ( τ' : ( (t , s) : J × I | χ t ∧ ψ s) → A' [ϕ s ↦ σ' (t , s)]) →
-            naiveextext-extext extext
-              ( J × I) ( \ (t , s) → χ t ∧ ψ s) ( \ (t , s) → χ t ∧ ϕ s)
+    \ (σ' : ((t , s) : J × I | χ t ∧ ϕ s) → A')
+    → ( ( \ (τ : ((t , s) : J × I | χ t ∧ ψ s) → A[ϕ s ↦ α (σ' (t , s))])
+            ( t , s)
+        → ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t , s'))))) (\ s' → τ (t , s')) s
+        , \ (τ' : ((t , s) : J × I | χ t ∧ ψ s) → A' [ϕ s ↦ σ' (t , s)])
+          → naiveextext-extext extext
+              ( J × I) (\ (t , s) → χ t ∧ ψ s) (\ (t , s) → χ t ∧ ϕ s)
               ( \ _ → A')
-              ( \ ( t,s) → σ' (t , s))
-              ( \ ( t,s) →
-                ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
-                  ( \ s' → α (τ' (t, s'))) s)
+              ( \ (t , s) → σ' (t , s))
+              ( \ (t , s) →
+                ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t , s')))))
+                  ( \ s' → α (τ' (t , s'))) s)
               ( τ')
-              ( \ ( t,s) →
-                ext-htpy-eq I ψ ϕ (\ _ → A') ( \ s' → σ' (t, s'))
-                  ( ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
-                    ( \ s' → α (τ' (t, s'))))
-                  ( \ s' → τ' (t, s') )
-                  ( ( second (first (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
-                    ( \ s' → τ' (t, s')))
+              ( \ (t , s) →
+                ext-htpy-eq I ψ ϕ (\ _ → A') (\ s' → σ' (t , s'))
+                  ( ( first (first (is-orth-ψ-ϕ (\ s' → σ' (t , s')))))
+                    ( \ s' → α (τ' (t , s'))))
+                  ( \ s' → τ' (t , s'))
+                  ( ( second (first (is-orth-ψ-ϕ (\ s' → σ' (t , s')))))
+                    ( \ s' → τ' (t , s')))
                   ( s)))
-      , ( \ ( τ : ( (t , s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t , s))])
-            ( t, s) →
-          ( first (second (is-orth-ψ-ϕ (\ s' → σ' (t, s'))))) ( \ s' → τ (t, s')) s
-        , \ ( τ : ( (t , s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t , s))]) →
-            naiveextext-extext extext
-              ( J × I) ( \ (t , s) → χ t ∧ ψ s) ( \ (t , s) → χ t ∧ ϕ s)
+      , ( \ (τ : ((t , s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t , s))])
+            ( t , s)
+        → ( first (second (is-orth-ψ-ϕ (\ s' → σ' (t , s'))))) (\ s' → τ (t , s')) s
+        , \ (τ : ((t , s) : J × I | χ t ∧ ψ s) → A [ϕ s ↦ α (σ' (t , s))])
+          → naiveextext-extext extext
+              ( J × I) (\ (t , s) → χ t ∧ ψ s) (\ (t , s) → χ t ∧ ϕ s)
               ( \ _ → A)
               ( \ (t , s) → α (σ' (t , s)))
               ( \ (t , s) →
-                α ( ( first ( second ( is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
-                      ( \ s' → τ (t, s')) s))
+                α ((first (second (is-orth-ψ-ϕ (\ s' → σ' (t , s')))))
+                      ( \ s' → τ (t , s')) s))
               ( τ)
-              ( \ ( t,s) →
-                ext-htpy-eq I ψ ϕ (\ _ → A) ( \ s' → α (σ' (t, s')))
+              ( \ (t , s) →
+                ext-htpy-eq I ψ ϕ (\ _ → A) (\ s' → α (σ' (t , s')))
                   ( \ s'' →
-                      α ( ( first (second (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
-                          ( \ s' → τ (t, s'))
+                      α ((first (second (is-orth-ψ-ϕ (\ s' → σ' (t , s')))))
+                          ( \ s' → τ (t , s'))
                           ( s'')))
-                  ( \ s' → τ (t, s') )
-                  ( ( second ( second (is-orth-ψ-ϕ (\ s' → σ' (t, s')))))
-                    ( \ s' → τ (t, s')))
+                  ( \ s' → τ (t , s'))
+                  ( ( second (second (is-orth-ψ-ϕ (\ s' → σ' (t , s')))))
+                    ( \ s' → τ (t , s')))
                   ( s))))
 
 #def is-right-orthogonal-to-shape-product' uses (extext)
   ( A' A : U)
   ( α : A' → A)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ϕ A' A α)
   : is-right-orthogonal-to-shape
-      ( I × J) ( \ (s , t) → ψ s ∧ χ t) ( \ (s , t) → ϕ s ∧ χ t) A' A α
+      ( I × J) (\ (s , t) → ψ s ∧ χ t) (\ (s , t) → ϕ s ∧ χ t) A' A α
   :=
     is-right-orthogonal-to-shape-transpose A' A α J I
     ( \ (t , s) → χ t ∧ ψ s)
@@ -415,18 +415,18 @@ For any two shapes `ϕ, ψ ⊂ I`, if `ϕ ∩ ψ ⊂ ϕ` is left orthogonal to
   ( α : A' → A)
   ( I : CUBE)
   ( ϕ ψ : I → TOPE)
-  ( is-orth-ϕ-ψ∧ϕ : is-right-orthogonal-to-shape I ϕ ( \ t → ϕ t ∧ ψ t) A' A α)
-  : is-right-orthogonal-to-shape I ( \ t → ϕ t ∨ ψ t) ( \ t → ψ t) A' A α
-  := \ ( τ' : ψ → A') →
-       is-equiv-Equiv-is-equiv
-         ( (t : I | ϕ t ∨ ψ t) → A' [ψ t ↦ τ' t])
-         ( (t : I | ϕ t ∨ ψ t) → A [ψ t ↦ α (τ' t)])
+  ( is-orth-ϕ-ψ∧ϕ : is-right-orthogonal-to-shape I ϕ (\ t → ϕ t ∧ ψ t) A' A α)
+  : is-right-orthogonal-to-shape I (\ t → ϕ t ∨ ψ t) (\ t → ψ t) A' A α
+  := \ (τ' : ψ → A')
+     → is-equiv-Equiv-is-equiv
+         ( ( t : I | ϕ t ∨ ψ t) → A' [ψ t ↦ τ' t])
+         ( ( t : I | ϕ t ∨ ψ t) → A [ψ t ↦ α (τ' t)])
          ( \ υ' t → α (υ' t))
-         ( (t : ϕ) → A' [ϕ t ∧ ψ t ↦ τ' t])
-         ( (t : ϕ) → A [ϕ t ∧ ψ t ↦ α (τ' t)])
+         ( ( t : ϕ) → A' [ϕ t ∧ ψ t ↦ τ' t])
+         ( ( t : ϕ) → A [ϕ t ∧ ψ t ↦ α (τ' t)])
          ( \ ν' t → α (ν' t))
          ( cofibration-union-functorial I ϕ ψ (\ _ → A') (\ _ → A) (\ _ → α) τ')
-         ( is-orth-ϕ-ψ∧ϕ ( \ t → τ' t))
+         ( is-orth-ϕ-ψ∧ϕ (\ t → τ' t))
 ```
 
 ### Pushout products
@@ -442,13 +442,13 @@ stability under pushout products.
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( is-orth-ψ-ϕ : is-right-orthogonal-to-shape I ψ ϕ A' A α)
   : is-right-orthogonal-to-shape (J × I)
     ( \ (t , s) → χ t ∧ ψ s)
     ( \ (t , s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
-    ( A') ( A) ( α)
+    ( A') (A) (α)
   :=
     is-right-orthogonal-to-shape-left-cancel A' A α (J × I)
     ( \ (t , s) → χ t ∧ ψ s)
@@ -457,8 +457,8 @@ stability under pushout products.
     ( is-right-orthogonal-to-shape-pushout A' A α (J × I)
       ( \ (t , s) → ζ t ∧ ψ s)
       ( \ (t , s) → χ t ∧ ϕ s)
-      ( is-right-orthogonal-to-shape-product A' A α J ( \ t → ζ t) I ψ ϕ
-        (is-orth-ψ-ϕ)))
+      ( is-right-orthogonal-to-shape-product A' A α J (\ t → ζ t) I ψ ϕ
+        ( is-orth-ψ-ϕ)))
     ( is-right-orthogonal-to-shape-product A' A α J χ I ψ ϕ
       ( is-orth-ψ-ϕ))
 
@@ -466,8 +466,8 @@ stability under pushout products.
   ( A' A : U)
   ( α : A' → A)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
@@ -475,7 +475,7 @@ stability under pushout products.
   : is-right-orthogonal-to-shape (I × J)
     ( \ (s , t) → ψ s ∧ χ t)
     ( \ (s , t) → (ϕ s ∧ χ t) ∨ (ψ s ∧ ζ t))
-    ( A') ( A) ( α)
+    ( A') (A) (α)
   :=
     is-right-orthogonal-to-shape-transpose A' A α J I
     ( \ (t , s) → χ t ∧ ψ s)
@@ -495,14 +495,14 @@ orthogonal.
   ( A' A : U)
   ( α : A' → A)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
-  ( ((f , F) , (e , E)) : functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ)
+  ( ( ( f , F) , (e , E)) : functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ)
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
-  →  is-right-orthogonal-to-shape J χ ζ A' A α
+  → is-right-orthogonal-to-shape J χ ζ A' A α
   :=
   is-homotopy-cartesian-in-cube
   ( ζ → A') (\ σ' → (t : χ) → A' [ζ t ↦ σ' t])
@@ -513,7 +513,7 @@ orthogonal.
   ( ϕ → A) (\ σ' → (t : ψ) → A [ϕ t ↦ σ' t])
   ( \ σ' t → α (σ' t))
   ( \ _ τ' t → α (τ' t))
-  ( first (f A')) ( first (f A))
+  ( first (f A')) (first (f A))
   ( e A' A α)
   ( \ σ' → first (F A' σ')) (\ σ → first (F A σ))
   ( E A' A α)
@@ -523,12 +523,12 @@ orthogonal.
   ( A' A : U)
   ( α : A' → A)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
-  ( ((f , F) , (e , E)) : functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ)
+  ( ( ( f , F) , (e , E)) : functorial-isomorphism-shape-inclusions I ψ ϕ J χ ζ)
   : is-right-orthogonal-to-shape J χ ζ A' A α
   → is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=
@@ -541,7 +541,7 @@ orthogonal.
   ( ϕ → A) (\ σ' → (t : ψ) → A [ϕ t ↦ σ' t])
   ( \ σ' t → α (σ' t))
   ( \ _ τ' t → α (τ' t))
-  ( first (f A')) ( first (f A))
+  ( first (f A')) (first (f A))
   ( e A' A α)
   ( \ σ' → first (F A' σ')) (\ σ → first (F A σ))
   ( E A' A α)
@@ -559,60 +559,60 @@ retract of it, then `ζ ⊂ χ` is also left orthogonal.
   ( A' A : U)
   ( α : A' → A)
   ( I : CUBE)
-  ( ψ : I → TOPE )
+  ( ψ : I → TOPE)
   ( ϕ χ : ψ → TOPE)
   -- ζ := χ ∧ ϕ
-  ( ((s , S) , (h , H)) : functorial-retract-shape-inclusion I ψ ϕ χ)
+  ( ( ( s , S) , (h , H)) : functorial-retract-shape-inclusion I ψ ϕ χ)
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   → is-right-orthogonal-to-shape I (\ t → χ t) (\ t → χ t ∧ ϕ t) A' A α
   :=
-  \ is-orth-ψ-ϕ (σ' : (t : I | χ t ∧ ϕ t) → A') →
-    push-down-equiv-with-section
-    ( (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
+  \ is-orth-ψ-ϕ (σ' : (t : I | χ t ∧ ϕ t) → A')
+  → push-down-equiv-with-section
+    ( ( t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
     ( \ τ' → (t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
-    ( (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+    ( ( t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
     ( \ τ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
     ( \ τ' t → α (τ' t))
     ( \ τ' υ →
       ( transport
-        ( (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+        ( ( t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
         ( \ σ → (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ σ t])
         ( \ t → α (s A' σ' t))
-        ( s A ( \ t → α (σ' t)))
+        ( s A (\ t → α (σ' t)))
         ( h A' A α σ')
-        ( \ t → α ( υ t))))
+        ( \ t → α (υ t))))
     ( ( S A' σ' , S A (\ t → α (σ' t)))
     , H A' A α σ')
     ( second
       ( equiv-comp
       ( Σ ( τ' : (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
-      , (t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
+      , ( t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
       ( Σ ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
-          , (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
+          , ( t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
         ( Σ ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
-          , (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
+          , ( t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
         ( ( \ (τ' , υ') →
-            ( (\ t → α (τ' t))
-            , (\ t → α (υ' t))))
+            ( ( \ t → α (τ' t))
+            , ( \ t → α (υ' t))))
         , ( is-equiv-Equiv-is-equiv'
-            ( (t : ψ) → A' [ϕ t ↦ s A' σ' t])
-            ( (t : ψ) → A [ϕ t ↦ α (s A' σ' t)])
+            ( ( t : ψ) → A' [ϕ t ↦ s A' σ' t])
+            ( ( t : ψ) → A [ϕ t ↦ α (s A' σ' t)])
             ( \ υ' t → α (υ' t))
             ( Σ ( τ' : (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
-              , (t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
+              , ( t : ψ) → A' [χ t ↦ τ' t , ϕ t ↦ s A' σ' t])
             ( Σ ( τ : (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
-              , (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
-              ( \ (τ' , υ') → ( (\ t → α (τ' t)) , (\ t → α (υ' t))))
+              , ( t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
+              ( \ (τ' , υ') → ((\ t → α (τ' t)) , (\ t → α (υ' t))))
               ( cofibration-composition-functorial'' I ψ ϕ χ
-                (\ _ → A') (\ _ → A) (\ _ → α) (s A' σ'))
+                ( \ _ → A') (\ _ → A) (\ _ → α) (s A' σ'))
             ( is-orth-ψ-ϕ (s A' σ'))))
         ( total-equiv-family-of-equiv
-          ( (t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+          ( ( t : χ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
           ( \ τ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ α (s A' σ' t)])
           ( \ τ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ s A (\ t' → α (σ' t')) t])
           ( \ τ →
             equiv-transport
-            ( (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+            ( ( t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
             ( \ σ → (t : ψ) → A [χ t ↦ τ t , ϕ t ↦ σ t])
             ( \ t → α (s A' σ' t))
             ( s A (\ t → α (σ' t)))
@@ -643,7 +643,7 @@ Every equivalence `α : A' → A` is right orthogonal to `ϕ ⊂ ψ`.
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=
     ( \ a → is-equiv-extensions-is-equiv extext I ψ ϕ
-      ( \ _ → A') ( \  _ → A) ( \ _ → α) ( a) ( \ _ → is-equiv-α))
+      ( \ _ → A') (\ _ → A) (\ _ → α) (a) (\ _ → is-equiv-α))
 ```
 
 Right orthogonality is closed under homotopy.
@@ -656,7 +656,7 @@ Right orthogonality is closed under homotopy.
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   → is-right-orthogonal-to-shape I ψ ϕ A' A β
   :=
-    transport (A' → A) ( is-right-orthogonal-to-shape I ψ ϕ A' A) α β
+    transport (A' → A) (is-right-orthogonal-to-shape I ψ ϕ A' A) α β
     ( first (first (funext A' (\ _ → A) α β)) h)
 ```
 
@@ -719,11 +719,11 @@ right (whether it is right orthogonal or not.)
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=
     is-homotopy-cartesian-left-cancel-with-section'
-        ( ϕ → A'' ) ( \ σ'' → (t : ψ) → A'' [ϕ t ↦ σ'' t])
-        ( ϕ → A' ) ( \ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
-        ( ϕ → A ) ( \ σ → (t : ψ) → A [ϕ t ↦ σ t])
-        ( \ σ'' t → α' (σ'' t)) ( \ _ τ'' x → α' (τ'' x) )
-        ( \ σ' t → α (σ' t)) ( \ _ τ' x → α (τ' x) )
+        ( ϕ → A'') (\ σ'' → (t : ψ) → A'' [ϕ t ↦ σ'' t])
+        ( ϕ → A') (\ σ' → (t : ψ) → A' [ϕ t ↦ σ' t])
+        ( ϕ → A) (\ σ → (t : ψ) → A [ϕ t ↦ σ t])
+        ( \ σ'' t → α' (σ'' t)) (\ _ τ'' x → α' (τ'' x))
+        ( \ σ' t → α (σ' t)) (\ _ τ' x → α (τ' x))
     ( has-section-extensions-BOT-has-section extext I (\ t → ϕ t)
           ( \ _ → A'') (\ _ → A') (\ _ → α')
       ( \ _ → has-section-α'))
@@ -751,27 +751,27 @@ follows for the former.
 #def relative-extension-type-pullback-general-relative-extension-type
   ( σB' : ϕ → relative-product A A' α B f)
   ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
-  ( (τA', hA)
-    : general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
+  ( ( τA' , hA)
+ : general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
       ( \ t → first-relative-product A A' α B f (σB' t))
       ( \ t → f (τB t))
       ( \ t → homotopy-relative-product A A' α B f (σB' t)))
   : relative-extension-type I ψ ϕ
-    ( \ _ → relative-product A A' α B f) ( \ _ → B)
+    ( \ _ → relative-product A A' α B f) (\ _ → B)
     ( \ _ → second-relative-product A A' α B f)
-    ( σB') ( τB)
+    ( σB') (τB)
   :=
-    ( \ t → ( (τA' t, τB t) , hA t)
+    ( \ t → ((τA' t , τB t) , hA t)
     , \ t → refl)
 
 #def general-relative-extension-type-relative-extension-type-pullback
   ( σB' : ϕ → relative-product A A' α B f)
   ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
-  ( (τB', hB)
-    : relative-extension-type I ψ ϕ
-      ( \ _ → relative-product A A' α B f) ( \ _ → B)
+  ( ( τB' , hB)
+ : relative-extension-type I ψ ϕ
+      ( \ _ → relative-product A A' α B f) (\ _ → B)
       ( \ _ → second-relative-product A A' α B f)
-      ( σB') ( τB))
+      ( σB') (τB))
   : general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
     ( \ t → first-relative-product A A' α B f (σB' t))
     ( \ t → f (τB t))
@@ -787,54 +787,54 @@ follows for the former.
       ( ap B A
         ( second-relative-product A A' α B f (τB' t))
         ( τB t)
-        ( f) ( hB t)))
+        ( f) (hB t)))
 
 #def is-id-rel-ext-type-pb-gen-rel-ext-type-rel-ext-type-pb uses (extext)
   ( σB' : ϕ → relative-product A A' α B f)
   ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
   : ( τhB
-      : relative-extension-type I ψ ϕ
-        ( \ _ → relative-product A A' α B f) ( \ _ → B)
+ : relative-extension-type I ψ ϕ
+        ( \ _ → relative-product A A' α B f) (\ _ → B)
         ( \ _ → second-relative-product A A' α B f)
-        ( σB') ( τB))
+        ( σB') (τB))
   → ( relative-extension-type-pullback-general-relative-extension-type σB' τB
       ( general-relative-extension-type-relative-extension-type-pullback σB' τB τhB)
     = τhB)
   :=
     ind-has-section-equiv
     ( fiber-postcomp-Π-ext I ψ ϕ
-      ( \ _ → relative-product A A' α B f) ( \ _ → B)
+      ( \ _ → relative-product A A' α B f) (\ _ → B)
       ( \ _ → second-relative-product A A' α B f)
-      ( σB') ( τB))
+      ( σB') (τB))
     ( relative-extension-type I ψ ϕ
-      ( \ _ → relative-product A A' α B f) ( \ _ → B)
+      ( \ _ → relative-product A A' α B f) (\ _ → B)
       ( \ _ → second-relative-product A A' α B f)
-      ( σB') ( τB))
+      ( σB') (τB))
     ( equiv-relative-extension-type-fib extext I ψ ϕ
-      ( \ _ → relative-product A A' α B f) ( \ _ → B)
+      ( \ _ → relative-product A A' α B f) (\ _ → B)
       ( \ _ → second-relative-product A A' α B f)
-      ( σB') ( τB))
+      ( σB') (τB))
     ( \ τhB →
       ( relative-extension-type-pullback-general-relative-extension-type σB' τB
         ( general-relative-extension-type-relative-extension-type-pullback σB' τB τhB)
       = τhB))
     ( ind-fib
-      ( (t : ψ) → relative-product A A' α B f [ϕ t ↦ σB' t])
-      ( (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
+      ( ( t : ψ) → relative-product A A' α B f [ϕ t ↦ σB' t])
+      ( ( t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
       ( \ τB' t → second-relative-product A A' α B f (τB' t))
-      ( \ τB₁ (τB'₁, h₁) →
+      ( \ τB₁ (τB'₁ , h₁) →
         ( relative-extension-type-pullback-general-relative-extension-type σB' τB₁
           ( general-relative-extension-type-relative-extension-type-pullback σB' τB₁
             ( τB'₁
             , ext-htpy-eq I ψ ϕ (\ _ → B)
               ( \ t → second-relative-product A A' α B f (σB' t))
               ( \ t → second-relative-product A A' α B f (τB'₁ t))
-              ( τB₁) ( h₁)))
+              ( τB₁) (h₁)))
         = ( τB'₁
           , ext-htpy-eq I ψ ϕ (\ _ → B)
             ( \ t → second-relative-product A A' α B f (σB' t))
             ( \ t → second-relative-product A A' α B f (τB'₁ t))
-            ( τB₁) ( h₁))))
+            ( τB₁) (h₁))))
       ( \ τB' → refl)
       ( τB))
 
@@ -843,9 +843,9 @@ follows for the former.
   ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
   : is-retract-of
     ( relative-extension-type I ψ ϕ
-      ( \ _ → relative-product A A' α B f) ( \ _ → B)
+      ( \ _ → relative-product A A' α B f) (\ _ → B)
       ( \ _ → second-relative-product A A' α B f)
-      ( σB') ( τB))
+      ( σB') (τB))
     ( general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
       ( \ t → first-relative-product A A' α B f (σB' t))
       ( \ t → f (τB t))
@@ -861,18 +861,18 @@ Then we can deduce that right orthogonal maps are preserved under pullback:
 ```rzk
 #def is-right-orthogonal-pullback-to-shape uses (extext is-orth-ψ-ϕ-α B f)
   : is-right-orthogonal-to-shape I ψ ϕ
-    ( relative-product A A' α B f) ( B)
+    ( relative-product A A' α B f) (B)
     ( second-relative-product A A' α B f)
   :=
     is-right-orthogonal-to-shape-has-contr-relative-extension-types I ψ ϕ
-    ( relative-product A A' α B f) ( B)
+    ( relative-product A A' α B f) (B)
     ( second-relative-product A A' α B f)
     ( \ σB' τB →
       is-contr-is-retract-of-is-contr
       ( relative-extension-type I ψ ϕ
-        ( \ _ → relative-product A A' α B f) ( \ _ → B)
+        ( \ _ → relative-product A A' α B f) (\ _ → B)
         ( \ _ → second-relative-product A A' α B f)
-        ( σB') ( τB))
+        ( σB') (τB))
       ( general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
         ( \ t → first-relative-product A A' α B f (σB' t))
         ( \ t → f (τB t))
@@ -905,29 +905,29 @@ orthogonal to `ϕ ⊂ ψ`, then so is the other.
 #variable β : B' → B
 
 #def is-right-orthogonal-equiv-to-shape uses (funext extext)
-  ( (((s', s), η), (is-equiv-s', is-equiv-s)) : Equiv-of-maps A' A α B' B β)
+  ( ( ( ( s' , s) , η) , (is-equiv-s' , is-equiv-s)) : Equiv-of-maps A' A α B' B β)
   ( is-orth-ψ-ϕ-β : is-right-orthogonal-to-shape I ψ ϕ B' B β)
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=
     is-right-orthogonal-right-cancel-to-shape I ψ ϕ A' A B α s
     ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A B s is-equiv-s)
     ( is-right-orthogonal-homotopy-to-shape I ψ ϕ A' B
-      ( \ a' → β (s' a')) ( \ a' → s (α a')) ( η)
+      ( \ a' → β (s' a')) (\ a' → s (α a')) (η)
       ( is-right-orthogonal-comp-to-shape I ψ ϕ A' B' B s' β
         ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A' B' s' is-equiv-s')
         ( is-orth-ψ-ϕ-β)))
 
 #def is-right-orthogonal-equiv-to-shape'
   uses (funext extext)
-  ( (((s', s), η), (is-equiv-s', is-equiv-s)) : Equiv-of-maps A' A α B' B β)
+  ( ( ( ( s' , s) , η) , (is-equiv-s' , is-equiv-s)) : Equiv-of-maps A' A α B' B β)
   ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
   : is-right-orthogonal-to-shape I ψ ϕ B' B β
   :=
     is-right-orthogonal-left-cancel-with-section-to-shape
           I ψ ϕ A' B' B s' β
     ( is-right-orthogonal-homotopy-to-shape I ψ ϕ A' B
-      ( \ a' → s (α a')) ( \ a' → β (s' a'))
-      ( rev-homotopy A' B ( \ a' → β (s' a')) ( \ a' → s (α a')) ( η))
+      ( \ a' → s (α a')) (\ a' → β (s' a'))
+      ( rev-homotopy A' B (\ a' → β (s' a')) (\ a' → s (α a')) (η))
       ( is-right-orthogonal-comp-to-shape I ψ ϕ A' A B α s
         ( is-orth-ψ-ϕ-α)
         ( is-right-orthogonal-is-equiv-to-shape I ψ ϕ A B s is-equiv-s)))
@@ -952,28 +952,28 @@ map on dependent products `Π α : Π A' → Π A`.
   ( A' A : X → U)
   ( α : (x : X) → (A' x) → (A x))
   ( are-right-orth-ψ-ϕ-α
-    : (x : X) → is-right-orthogonal-to-shape I ψ ϕ (A' x) (A x) (α x))
+ : ( x : X) → is-right-orthogonal-to-shape I ψ ϕ (A' x) (A x) (α x))
   : is-right-orthogonal-to-shape I ψ ϕ
-    ( (x : X) → A' x)
-    ( (x : X) → A x)
+    ( ( x : X) → A' x)
+    ( ( x : X) → A x)
     ( \ a' x → α x (a' x))
   :=
   \ σ' →
     is-equiv-Equiv-is-equiv
-    ( (t : ψ) → ((x : X) → A' x) [ϕ t ↦ σ' t])
-    ( (t : ψ) → ((x : X) → A x) [ϕ t ↦ \ x → α x (σ' t x)])
+    ( ( t : ψ) → ((x : X) → A' x) [ϕ t ↦ σ' t])
+    ( ( t : ψ) → ((x : X) → A x) [ϕ t ↦ \ x → α x (σ' t x)])
     ( \ τ' t x → α x (τ' t x))
-    ( (x : X) → (t : ψ) → A' x [ϕ t ↦ σ' t x])
-    ( (x : X) → (t : ψ) → A x [ϕ t ↦ α x (σ' t x)])
+    ( ( x : X) → (t : ψ) → A' x [ϕ t ↦ σ' t x])
+    ( ( x : X) → (t : ψ) → A x [ϕ t ↦ α x (σ' t x)])
     ( \ τ' x t → α x (τ' x t))
     ( flip-ext-fun-functorial I ψ ϕ X
-      (\ _ → A') (\ _ → A) (\ _ → α)
+      ( \ _ → A') (\ _ → A) (\ _ → α)
       ( σ'))
     ( is-equiv-function-is-equiv-family funext X
       ( \ x → (t : ψ) → A' x [ϕ t ↦ σ' t x])
       ( \ x → (t : ψ) → A x [ϕ t ↦ α x (σ' t x)])
       ( \ x τ' t → α x (τ' t))
-      ( \ x → are-right-orth-ψ-ϕ-α x ( \ t → σ' t x)))
+      ( \ x → are-right-orth-ψ-ϕ-α x (\ t → σ' t x)))
 ```
 
 ### Sigma types
@@ -1001,7 +1001,7 @@ for each `σ : ϕ → A` the type of `ψ`-extensions is contractible.
 
 #def has-unique-extensions
   : U
-  := ( σ : ϕ → A) → is-contr ( (t : ψ) → A [ϕ t ↦ σ t])
+  := (σ : ϕ → A) → is-contr ((t : ψ) → A [ϕ t ↦ σ t])
 ```
 
 There are other equivalent characterizations which we shall prove below:
@@ -1012,7 +1012,7 @@ equivalence.
 ```rzk
 #def is-local-type
   : U
-  := is-equiv (ψ → A) (ϕ → A) ( \ τ t → τ t)
+  := is-equiv (ψ → A) (ϕ → A) (\ τ t → τ t)
 ```
 
 We can ask that the terminal map `A → Unit` is right orthogonal to `ϕ ⊂ ψ`.
@@ -1035,12 +1035,12 @@ of the restriction map `(ψ → A) → (ϕ → A)`.
   ( has-ue-ψ-ϕ-A : has-unique-extensions)
   : is-local-type
   :=
-    is-equiv-is-contr-map (ψ → A) (ϕ → A) ( \ τ t → τ t)
-      ( \ ( σ : ϕ → A) →
-        is-contr-equiv-is-contr
-          ( extension-type I ψ ϕ ( \ t → A) σ)
-          ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
-          ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
+    is-equiv-is-contr-map (ψ → A) (ϕ → A) (\ τ t → τ t)
+      ( \ (σ : ϕ → A)
+      → is-contr-equiv-is-contr
+          ( extension-type I ψ ϕ (\ t → A) σ)
+          ( homotopy-extension-type I ψ ϕ (\ t → A) σ)
+          ( extension-type-weakening I ψ ϕ (\ t → A) σ)
           ( has-ue-ψ-ϕ-A σ))
 
 #def has-unique-extensions-is-local-type
@@ -1049,11 +1049,11 @@ of the restriction map `(ψ → A) → (ϕ → A)`.
   :=
     \ σ →
       is-contr-equiv-is-contr'
-        ( extension-type I ψ ϕ ( \ t → A) σ)
-        ( homotopy-extension-type I ψ ϕ ( \ t → A) σ)
-        ( extension-type-weakening I ψ ϕ ( \ t → A) σ)
+        ( extension-type I ψ ϕ (\ t → A) σ)
+        ( homotopy-extension-type I ψ ϕ (\ t → A) σ)
+        ( extension-type-weakening I ψ ϕ (\ t → A) σ)
         ( is-contr-map-is-equiv
-            ( ψ → A) (ϕ → A) ( \ τ t → τ t)
+            ( ψ → A) (ϕ → A) (\ τ t → τ t)
             ( is-lt-ψ-ϕ-A)
             ( σ))
 
@@ -1112,8 +1112,8 @@ right orthogonal map.
   ( is-orth-ψ-ϕ-α : is-right-orthogonal-to-shape I ψ ϕ A' A α)
   : has-unique-extensions I ψ ϕ A → has-unique-extensions I ψ ϕ A'
   :=
-    \ has-ue-A ( σ' : ϕ → A') →
-      is-contr-equiv-is-contr'
+    \ has-ue-A (σ' : ϕ → A')
+    → is-contr-equiv-is-contr'
         ( ( t : ψ) → A' [ϕ t ↦ σ' t])
         ( ( t : ψ) → A [ϕ t ↦ α (σ' t)])
         ( \ τ' t → α (τ' t) , is-orth-ψ-ϕ-α σ')
@@ -1128,7 +1128,7 @@ right orthogonal map.
   :=
     is-local-type-has-unique-extensions I ψ ϕ A'
       ( has-unique-extensions-right-orthogonal-has-unique-extensions
-          ( A') ( A) ( α) ( is-orth-α)
+          ( A') (A) (α) (is-orth-α)
           ( has-unique-extensions-is-local-type I ψ ϕ A is-local-A))
 ```
 
@@ -1142,7 +1142,7 @@ extensions for every shape inclusion `ϕ ⊂ ψ`.
   : has-unique-extensions I ψ ϕ C
   :=
     weakextext-extext extext I ψ ϕ
-    ( \ _ → C) ( \ _ → is-contr-C)
+    ( \ _ → C) (\ _ → is-contr-C)
 
 #def is-local-type-is-contr uses (extext)
   ( C : U)
@@ -1166,14 +1166,14 @@ Unique extension types are closed under equivalence.
   : is-local-type I ψ ϕ A → is-local-type I ψ ϕ A'
   :=
     is-equiv-Equiv-is-equiv
-      ( ψ → A') ( ϕ → A') ( \ τ' t → τ' t)
-      ( ψ → A)  ( ϕ → A)  ( \ τ t → τ t)
+      ( ψ → A') (ϕ → A') (\ τ' t → τ' t)
+      ( ψ → A)  (ϕ → A)  (\ τ t → τ t)
       ( equiv-of-restriction-maps-equiv extext I ψ ϕ
-        ( \ _ → A') ( \ _ → A) ( \ _ → A'≃A))
+        ( \ _ → A') (\ _ → A) (\ _ → A'≃A))
 
 #def has-unique-extensions-equiv-has-unique-extensions uses (extext)
   ( A' A : U)
-  ( (α , is-equiv-α) : Equiv A' A)
+  ( ( α , is-equiv-α) : Equiv A' A)
   : has-unique-extensions I ψ ϕ A → has-unique-extensions I ψ ϕ A'
   :=
     has-unique-extensions-right-orthogonal-has-unique-extensions A' A α
@@ -1222,7 +1222,7 @@ Next we prove the logical equivalence between `has-unique-extensions` and
   : is-right-orthogonal-terminal-map I ψ ϕ A
   :=
     is-right-orthogonal-have-unique-extensions I ψ ϕ A Unit
-    ( has-ue-ψ-ϕ-A) ( has-unique-extensions-Unit I ψ ϕ)
+    ( has-ue-ψ-ϕ-A) (has-unique-extensions-Unit I ψ ϕ)
     ( terminal-map A)
 
 #def is-right-orthogonal-terminal-map-is-local-type
@@ -1271,7 +1271,7 @@ from the unit type.
     ( has-unique-extensions-is-right-orthogonal-terminal-map I ψ ϕ
       ( relative-product A A' α Unit (\ unit → a))
       ( is-right-orthogonal-pullback-to-shape I ψ ϕ A' A α
-        ( is-orth-ψ-ϕ-α) ( Unit) (\ unit → a)))
+        ( is-orth-ψ-ϕ-α) (Unit) (\ unit → a)))
 ```
 
 Corollary: Given two types `A'` and `A` with unique extensions w.r.t. `ϕ ⊂ ψ`,
@@ -1287,11 +1287,11 @@ every fiber of every map `α : A' → A` also has unique extensions.
   ( α : A' → A)
   ( has-ue-ψ-ϕ-A' : has-unique-extensions I ψ ϕ A')
   ( has-ue-ψ-ϕ-A : has-unique-extensions I ψ ϕ A)
-  : (a : A) → has-unique-extensions I ψ ϕ (fib A' A α a)
+  : ( a : A) → has-unique-extensions I ψ ϕ (fib A' A α a)
   :=
     has-fiberwise-unique-extensions-is-right-orthogonal-to-shape I ψ ϕ A' A α
     ( is-right-orthogonal-have-unique-extensions I ψ ϕ A' A
-      ( has-ue-ψ-ϕ-A') ( has-ue-ψ-ϕ-A) ( α))
+      ( has-ue-ψ-ϕ-A') (has-ue-ψ-ϕ-A) (α))
 ```
 
 ## Anodyne shape inclusions
@@ -1370,15 +1370,15 @@ conditions of being anodyne.
   :=
     \ r f A' A α is-orth₀ →
     ( is-right-orthogonal-to-shape-right-cancel-retract A' A α I ψ χ ϕ
-      ( f A' A α is-orth₀) ( r))
+      ( f A' A α is-orth₀) (r))
 
 #def is-anodyne-pushout-product-for-shape uses (extext)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   : is-anodyne-for-shape I ψ ϕ
   → is-anodyne-for-shape (J × I)
     ( \ (t , s) → χ t ∧ ψ s)
@@ -1390,8 +1390,8 @@ conditions of being anodyne.
 
 #def is-anodyne-pushout-product-for-shape' uses (extext)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
@@ -1413,11 +1413,11 @@ implication with respect to types with unique extensions.
 ```rzk
 #def is-weak-anodyne-for-shape
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   : U
   :=
-    ( (A : U)
+    ( ( A : U)
     → has-unique-extensions I₀ ψ₀ ϕ₀ A
     → has-unique-extensions I ψ ϕ A)
 ```
@@ -1427,8 +1427,8 @@ Every anodyne shape inclusion is weak anodyne.
 ```rzk
 #def is-weak-anodyne-is-anodyne-for-shape uses (extext)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   : is-anodyne-for-shape I ψ ϕ
   → is-weak-anodyne-for-shape I ψ ϕ
   :=
@@ -1452,13 +1452,13 @@ analog fo weak anodyne shape inclusions.
 #def implication-has-unique-extension-implication-right-orthogonal
   uses (extext)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
   ( impl
-    : (A' : U) → (A : U) → (α : A' → A)
+ : ( A' : U) → (A : U) → (α : A' → A)
     → is-right-orthogonal-to-shape I ψ ϕ A' A α
     → is-right-orthogonal-to-shape J χ ζ A' A α)
   ( A : U)
@@ -1473,8 +1473,8 @@ analog fo weak anodyne shape inclusions.
 
 #def is-weak-anodyne-pushout-product-for-shape uses (extext)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
@@ -1486,15 +1486,15 @@ analog fo weak anodyne shape inclusions.
   :=
     \ f A has-ue₀ →
     implication-has-unique-extension-implication-right-orthogonal I ψ ϕ
-    ( J × I) ( \ (t , s) → χ t ∧ ψ s) ( \ (t , s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
+    ( J × I) (\ (t , s) → χ t ∧ ψ s) (\ (t , s) → (ζ t ∧ ψ s) ∨ (χ t ∧ ϕ s))
     ( \ A'₁ A₁ α₁ →
       is-right-orthogonal-to-shape-pushout-product A'₁ A₁ α₁ J χ ζ I ψ ϕ)
     ( A) (f A has-ue₀)
 
 #def is-weak-anodyne-pushout-product-for-shape' uses (extext)
   ( I : CUBE)
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   ( J : CUBE)
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
@@ -1505,7 +1505,7 @@ analog fo weak anodyne shape inclusions.
   :=
     \ f A has-ue₀ →
     implication-has-unique-extension-implication-right-orthogonal I ψ ϕ
-    ( I × J) ( \ (s , t) → ψ s ∧ χ t) ( \ (s , t) → (ϕ s ∧ χ t) ∨ (ψ s ∧ ζ t))
+    ( I × J) (\ (s , t) → ψ s ∧ χ t) (\ (s , t) → (ϕ s ∧ χ t) ∨ (ψ s ∧ ζ t))
     ( \ A'₁ A₁ α₁ →
       is-right-orthogonal-to-shape-pushout-product' A'₁ A₁ α₁ I ψ ϕ J χ ζ)
     ( A) (f A has-ue₀)

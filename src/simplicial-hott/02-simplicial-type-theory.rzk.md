@@ -13,29 +13,34 @@ This is a literate `rzk` file:
 ### Simplices
 
 ```rzk title="The 1-simplex"
-#def Δ¹ : 2 → TOPE
+#def Δ¹
+  : 2 → TOPE
   := \ t → TOP
 ```
 
 ```rzk title="The 2-simplex"
-#def Δ² : (2 × 2) → TOPE
+#def Δ²
+  : ( 2 × 2) → TOPE
   := \ (t , s) → s ≤ t
 ```
 
 ```rzk title="The 3-simplex"
-#def Δ³ : (2 × 2 × 2) → TOPE
+#def Δ³
+  : ( 2 × 2 × 2) → TOPE
   := \ ((t1 , t2) , t3) → t3 ≤ t2 ∧ t2 ≤ t1
 ```
 
 ### Boundaries of simplices
 
 ```rzk title="The boundary of a 1-simplex"
-#def ∂Δ¹ : Δ¹ → TOPE
+#def ∂Δ¹
+  : Δ¹ → TOPE
   := \ t → (t ≡ 0₂ ∨ t ≡ 1₂)
 ```
 
 ```rzk title="The boundary of a 2-simplex"
-#def ∂Δ² : Δ² → TOPE
+#def ∂Δ²
+  : Δ² → TOPE
   :=
     \ (t , s) → (s ≡ 0₂ ∨ t ≡ 1₂ ∨ s ≡ t)
 ```
@@ -43,21 +48,25 @@ This is a literate `rzk` file:
 ### The 2 dimensional inner horn
 
 ```rzk
-#def Λ : (2 × 2) → TOPE
+#def Λ
+  : ( 2 × 2) → TOPE
   := \ (t , s) → (s ≡ 0₂ ∨ t ≡ 1₂)
 
-#def Λ²₁ : Δ² → TOPE
-  := \ (s,t) → Λ (s,t)
+#def Λ²₁
+  : Δ² → TOPE
+  := \ (s , t) → Λ (s , t)
 ```
 
 ### The 3 dimensional inner horns
 
 ```rzk
-#def Λ³₁ : Δ³ → TOPE
-  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t2 ≡ t1 ∨ t1 ≡ 1₂
+#def Λ³₁
+  : Δ³ → TOPE
+  := \ ((t1 , t2) , t3) → t3 ≡ 0₂ ∨ t2 ≡ t1 ∨ t1 ≡ 1₂
 
-#def Λ³₂ : Δ³ → TOPE
-  := \ ((t1, t2), t3) → t3 ≡ 0₂ ∨ t3 ≡ t2 ∨ t1 ≡ 1₂
+#def Λ³₂
+  : Δ³ → TOPE
+  := \ ((t1 , t2) , t3) → t3 ≡ 0₂ ∨ t3 ≡ t2 ∨ t1 ≡ 1₂
 ```
 
 ### Products
@@ -69,37 +78,43 @@ The product of topes defines the product of shapes.
   ( I J : CUBE)
   ( ψ : I → TOPE)
   ( χ : J → TOPE)
-  : (I × J) → TOPE
+  : ( I × J) → TOPE
   := \ (t , s) → ψ t ∧ χ s
 ```
 
 ```rzk title="The square as a product"
-#def Δ¹×Δ¹ : (2 × 2) → TOPE
+#def Δ¹×Δ¹
+  : ( 2 × 2) → TOPE
   := shape-prod 2 2 Δ¹ Δ¹
 ```
 
 ```rzk title="The total boundary of the square"
-#def ∂□ : (2 × 2) → TOPE
-  := \ (t ,s) → ((∂Δ¹ t) ∧ (Δ¹ s)) ∨ ((Δ¹ t) ∧ (∂Δ¹ s))
+#def ∂□
+  : ( 2 × 2) → TOPE
+  := \ (t , s) → ((∂Δ¹ t) ∧ (Δ¹ s)) ∨ ((Δ¹ t) ∧ (∂Δ¹ s))
 ```
 
 ```rzk title="The vertical boundary of the square"
-#def ∂Δ¹×Δ¹ : (2 × 2) → TOPE
+#def ∂Δ¹×Δ¹
+  : ( 2 × 2) → TOPE
   := shape-prod 2 2 ∂Δ¹ Δ¹
 ```
 
 ```rzk title="The horizontal boundary of the square"
-#def Δ¹×∂Δ¹ : (2 × 2) → TOPE
+#def Δ¹×∂Δ¹
+  : ( 2 × 2) → TOPE
   := shape-prod 2 2 Δ¹ ∂Δ¹
 ```
 
 ```rzk title="The prism from a 2-simplex in an arrow type"
-#def Δ²×Δ¹ : (2 × 2 × 2) → TOPE
+#def Δ²×Δ¹
+  : ( 2 × 2 × 2) → TOPE
   := shape-prod (2 × 2) 2 Δ² Δ¹
 ```
 
 ```rzk
-#def Δ³×Δ² : ((2 × 2 × 2) × (2 × 2)) → TOPE
+#def Δ³×Δ²
+  : ( ( 2 × 2 × 2) × (2 × 2)) → TOPE
   := shape-prod (2 × 2 × 2) (2 × 2) Δ³ Δ²
 ```
 
@@ -107,14 +122,14 @@ Maps out of $Δ²$ are a retract of maps out of $Δ¹×Δ¹$.
 
 ```rzk title="RS17, Proposition 3.6"
 #def Δ²-is-retract-Δ¹×Δ¹
-  (A : U)
+  ( A : U)
   : is-retract-of (Δ² → A) (Δ¹×Δ¹ → A)
   :=
     ( ( \ f → \ (t , s) →
         recOR
-          ( t <= s |-> f (t , t) ,
-            s <= t |-> f (t , s))) ,
-      ( ( \ f → \ ts → f ts ) , \ _ → refl))
+          ( t ≤ s ↦ f (t , t)
+          , s ≤ t ↦ f (t , s)))
+    , ( ( \ f → \ ts → f ts) , \ _ → refl))
 ```
 
 Maps out of $Δ³$ are a retract of maps out of $Δ²×Δ¹$.
@@ -122,28 +137,28 @@ Maps out of $Δ³$ are a retract of maps out of $Δ²×Δ¹$.
 ```rzk title="RS17, Proposition 3.7"
 
 #def Δ³-is-retract-Δ²×Δ¹-retraction
-  (A : U)
-  : (Δ²×Δ¹ → A) → (Δ³ → A)
+  ( A : U)
+  : ( Δ²×Δ¹ → A) → (Δ³ → A)
   := \ f → \ ((t1 , t2) , t3) → f ((t1 , t3) , t2)
 
 #def Δ³-is-retract-Δ²×Δ¹-section
-  (A : U)
-  : (Δ³ → A) → (Δ²×Δ¹ → A)
+  ( A : U)
+  : ( Δ³ → A) → (Δ²×Δ¹ → A)
   :=
     \ f → \ ((t1 , t2) , t3) →
     recOR
-      ( t3 <= t2 |-> f ((t1 , t2) , t2) ,
-        t2 <= t3 |->
+      ( t3 ≤ t2 ↦ f ((t1 , t2) , t2)
+      , t2 ≤ t3 ↦
           recOR
-            ( t3 <= t1 |-> f ((t1 , t3) , t2) ,
-              t1 <= t3 |-> f ((t1 , t1) , t2)))
+            ( t3 ≤ t1 ↦ f ((t1 , t3) , t2)
+            , t1 ≤ t3 ↦ f ((t1 , t1) , t2)))
 
 #def Δ³-is-retract-Δ²×Δ¹
   ( A : U)
   : is-retract-of (Δ³ → A) (Δ²×Δ¹ → A)
   :=
-    ( Δ³-is-retract-Δ²×Δ¹-section A ,
-      ( Δ³-is-retract-Δ²×Δ¹-retraction A , \ _ → refl))
+    ( Δ³-is-retract-Δ²×Δ¹-section A
+    , ( Δ³-is-retract-Δ²×Δ¹-retraction A , \ _ → refl))
 ```
 
 ### Pushout product
@@ -157,8 +172,8 @@ Pushout product Φ×ζ ∪\_{Φ×χ} ψ×χ of Φ ↪ ψ and χ ↪ ζ, domain o
   ( Φ : ψ → TOPE)
   ( ζ : J → TOPE)
   ( χ : ζ → TOPE)
-  : (shape-prod I J ψ ζ) → TOPE
-  := \ (t,s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s)
+  : ( shape-prod I J ψ ζ) → TOPE
+  := \ (t , s) → (Φ t ∧ ζ s) ∨ (ψ t ∧ χ s)
 ```
 
 ### Intersections
@@ -213,10 +228,10 @@ The union of shapes is defined by disjunction on topes.
 
 ```rzk title="RS17 Proposition 3.5(a)"
 #define join-square-arrow
-  (A : U)
-  (f : 2 → A)
-  : (2 × 2) → A
-  := \ (t, s) → recOR ( t ≤ s ↦ f s , s ≤ t ↦ f t )
+  ( A : U)
+  ( f : 2 → A)
+  : ( 2 × 2) → A
+  := \ (t , s) → recOR (t ≤ s ↦ f s , s ≤ t ↦ f t)
 ```
 
 <!-- This is manually adjusted diagram (hopefully fully supported in the future by rzk) -->
@@ -245,10 +260,10 @@ The union of shapes is defined by disjunction on topes.
 
 ```rzk title="RS17 Proposition 3.5(b)"
 #define meet-square-arrow
-  (A : U)
-  (f : 2 → A)
-  : (2 × 2) → A
-  := \ (t, s) → recOR ( t ≤ s ↦ f t , s ≤ t ↦ f s )
+  ( A : U)
+  ( f : 2 → A)
+  : ( 2 × 2) → A
+  := \ (t , s) → recOR (t ≤ s ↦ f t , s ≤ t ↦ f s)
 ```
 
 <!-- Definitions for the SVG images above -->
@@ -282,13 +297,13 @@ for a section of the family of extensions of a function `ϕ → A` to a function
 
 ```rzk
 #def is-functorial-shape-retract
-  ( I : CUBE )
-  ( ψ : I → TOPE )
-  ( ϕ : ψ → TOPE )
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
   : U
   :=
-    ( A' : U) → (A : U) → (α : A' → A) →
-    has-section-family-over-map
+    ( A' : U) → (A : U) → (α : A' → A)
+  → has-section-family-over-map
       ( ϕ → A') (\ f → (t : ψ) → A' [ϕ t ↦ f t])
       ( ϕ → A) (\ f → (t : ψ) → A [ϕ t ↦ f t])
       ( \ f t → α (f t))
@@ -302,8 +317,8 @@ For example, this applies to `Δ² ⊂ Δ¹×Δ¹`.
   : is-functorial-shape-retract (2 × 2) (Δ¹×Δ¹) (Δ²)
   :=
     \ A' A α →
-      ( ( first (Δ²-is-retract-Δ¹×Δ¹ A'), first (Δ²-is-retract-Δ¹×Δ¹ A) ) ,
-          \ a' → refl)
+      ( ( first (Δ²-is-retract-Δ¹×Δ¹ A') , first (Δ²-is-retract-Δ¹×Δ¹ A))
+        , \ a' → refl)
 ```
 
 Every functorial shape retract automatically induces a section when restricting
@@ -321,9 +336,9 @@ to diagrams extending a fixed diagram `σ': ϕ → A'` (or, respectively, its im
   ( α : A' → A)
   ( σ' : ϕ → A')
   : has-section-family-over-map
-      ( (t : χ) → A' [ϕ t ↦ σ' t])
+      ( ( t : χ) → A' [ϕ t ↦ σ' t])
       ( \ τ' → (t : ψ) → A' [χ t ↦ τ' t])
-      ( (t : χ) → A [ϕ t ↦ α (σ' t)])
+      ( ( t : χ) → A [ϕ t ↦ α (σ' t)])
       ( \ τ → (t : ψ) → A [χ t ↦ τ t])
       ( \ τ' t → α (τ' t))
       ( \ _ υ' t → α (υ' t))
@@ -356,8 +371,8 @@ describe this isomorphism on representables.
       , ( ( A : U)
         → ( σ : ζ → A)
         → ( Equiv
-            ( (t : χ) → A [ζ t ↦ σ t])
-            ( (t : ψ) → A [ϕ t ↦ first (f A) σ t]))))
+            ( ( t : χ) → A [ζ t ↦ σ t])
+            ( ( t : ψ) → A [ϕ t ↦ first (f A) σ t]))))
 
 #def functorial-isomorphism-shape-inclusions
   ( I : CUBE)
@@ -368,9 +383,9 @@ describe this isomorphism on representables.
   ( ζ : χ → TOPE)
   : U
   :=
-  Σ ( (f , F) : isomorphism-shape-inclusions I ψ ϕ J χ ζ)
+  Σ ( ( f , F) : isomorphism-shape-inclusions I ψ ϕ J χ ζ)
   , ( Σ ( e
-        : ( A' : U)
+ : ( A' : U)
         → ( A : U)
         → ( α : A' → A)
         → ( σ' : ζ → A')
@@ -385,7 +400,7 @@ describe this isomorphism on representables.
               ( \ (t : I | ϕ t) → α (first (f A') σ' t))
               ( first (f A) (\ t → α (σ' t)))
               ( e A' A α σ')
-              (\ (t : ψ) → α (first (F A' σ') τ' t)))
+              ( \ (t : ψ) → α (first (F A' σ') τ' t)))
             = ( first (F A (\ (t : ζ) → α (σ' t))) (\ (t : χ) → α (τ' t))))))
 ```
 
@@ -398,8 +413,9 @@ For example, consider the two shape inclusions `{0} ⊂ Δ¹` (subshapes of `2`)
 `{1} ⊂ right-leg-of-Λ` (subshapes of `2 × 2`), where
 
 ```rzk
-#def right-leg-of-Λ : Λ → TOPE
-  := \ (t, s) → t ≡ 1₂
+#def right-leg-of-Λ
+  : Λ → TOPE
+  := \ (t , s) → t ≡ 1₂
 ```
 
 These two shape inclusions are canonically isomorphic via the formulas
@@ -420,21 +436,21 @@ ugly boilerplate code.
 ```rzk
 #def isomorphism-0-Δ¹-1-right-leg-of-Λ
   : isomorphism-shape-inclusions
-    (2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+    ( 2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
     2 Δ¹ (\ t → t ≡ 0₂)
   :=
     ( \ A →
-      ( \ τ (t,s) → τ s
-      , ( ( \ υ s → υ (1₂, s) , \ _ → refl)
-        , ( \ υ s → υ (1₂, s) , \ _ → refl)))
+      ( \ τ (t , s) → τ s
+      , ( ( \ υ s → υ (1₂ , s) , \ _ → refl)
+        , ( \ υ s → υ (1₂ , s) , \ _ → refl)))
     , \ A _ →
-      ( \ τ (t,s) → τ s
-      , ( ( \ υ s → υ (1₂, s) , \ _ → refl)
-        , ( \ υ s → υ (1₂, s) , \ _ → refl))))
+      ( \ τ (t , s) → τ s
+      , ( ( \ υ s → υ (1₂ , s) , \ _ → refl)
+        , ( \ υ s → υ (1₂ , s) , \ _ → refl))))
 
 #def functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ
   : functorial-isomorphism-shape-inclusions
-    (2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+    ( 2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
     2 Δ¹ (\ t → t ≡ 0₂)
   :=
     ( isomorphism-0-Δ¹-1-right-leg-of-Λ
@@ -476,7 +492,7 @@ We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following settin
   : U
   :=
   Σ ( s
-    : ( A : U)
+ : ( A : U)
     → ( σ : (t : I | χ t ∧ ϕ t) → A)
     → ( t : ϕ)
     → A [ χ t ∧ ϕ t ↦ σ t])
@@ -489,29 +505,29 @@ We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following settin
 #def functorial-retract-shape-inclusion
   : U
   :=
-  Σ ( (s, S) : retract-shape-inclusion)
+  Σ ( ( s , S) : retract-shape-inclusion)
   , Σ ( h
-      : ( A' : U)
+ : ( A' : U)
       → ( A : U)
       → ( α : A' → A)
       → ( σ' : (t : I | χ t ∧ ϕ t) → A')
       → ( ( \ (t : I | ϕ t) → α (s A' σ' t))
         =_{ ϕ → A}
-          ( s A ( \ t → α (σ' t)))))
+          ( s A (\ t → α (σ' t)))))
     , ( ( A' : U)
       → ( A : U)
       → ( α : A' → A)
       → ( σ' : (t : I | χ t ∧ ϕ t) → A')
       → ( τ' : (t : χ) → A' [χ t ∧ ϕ t ↦ σ' t])
       → ( ( transport
-            ( (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
-            (\ σ → (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ σ t])
+            ( ( t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)])
+            ( \ σ → (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ σ t])
             ( \ t → α (s A' σ' t))
-            ( \ t → s A ( \ t' → α (σ' t')) t)
+            ( \ t → s A (\ t' → α (σ' t')) t)
             ( h A' A α σ')
-            ( \ t → α ( S A' σ' τ' t)))
+            ( \ t → α (S A' σ' τ' t)))
         =_{ (t : ψ) → A [ϕ t ↦ s A (\ t' → α (τ' t')) t]}
-          ( S A (\ t → α (σ' t)) ( \ t → α (τ' t)))))
+          ( S A (\ t → α (σ' t)) (\ t → α (τ' t)))))
 
 #end retracts-shape-inclusions
 ```
@@ -521,11 +537,11 @@ For example the pair `{00} ⊂ Δ²` is a retract of `{0} × Δ¹ ⊂ Δ¹ × Δ
 ```rzk
 #def functorial-retract-00-Δ²-0Δ¹-Δ¹×Δ¹
   : functorial-retract-shape-inclusion (2 × 2)
-    ( Δ¹×Δ¹) ( \ (t , _) → t ≡ 0₂)
+    ( Δ¹×Δ¹) (\ (t , _) → t ≡ 0₂)
     ( \ ts → Δ² ts)
   :=
-  ( ( (\ _ f (t , s) → recOR ( t ≤ s ↦ f (t , t) , s ≤ t ↦ f (t , s)))
-    , (\ _ _ f (t , s) → recOR ( t ≤ s ↦ f (t , t) , s ≤ t ↦ f (t , s))))
+  ( ( ( \ _ f (t , s) → recOR (t ≤ s ↦ f (t , t) , s ≤ t ↦ f (t , s)))
+    , ( \ _ _ f (t , s) → recOR (t ≤ s ↦ f (t , t) , s ≤ t ↦ f (t , s))))
   , ( \ _ _ _ _ → refl , \ _ _ _ _ _ → refl))
 
 ```
@@ -536,6 +552,6 @@ For completeness we verify that the intesection `Δ² ∧ {0}×Δ¹` is indeed `
 #def verify-functorial-retract-0-Δ²-0Δ¹-Δ¹×Δ¹
   ( A : U)
   : ( ( shape-intersection (2 × 2) (\ ts → Δ² ts) (\ (t , _) → t ≡ 0₂) → A)
-    = ( ( (t, s) : 2 × 2 | t ≡ 0₂ ∧ s ≡ 0₂) → A))
+    = ( ( ( t , s) : 2 × 2 | t ≡ 0₂ ∧ s ≡ 0₂) → A))
   := refl
 ```

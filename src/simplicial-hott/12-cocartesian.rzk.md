@@ -37,7 +37,7 @@ families.
   :=
     product
     ( product (is-segal B) (is-segal (Σ (b : B) , P b)))
-    ( (b : B) → (is-segal (P b)))
+    ( ( b : B) → (is-segal (P b)))
 
 #def is-isoinner-family
   ( B : U)
@@ -46,7 +46,7 @@ families.
   :=
     product
     ( product (is-rezk B) (is-rezk (Σ (b : B) , P b)))
-    ( (b : B) → (is-rezk (P b)))
+    ( ( b : B) → (is-rezk (P b)))
 ```
 
 ## Cocartesian arrows
@@ -66,12 +66,12 @@ this is preferred for usage.
   ( f : dhom B b b' u P e e')
   : U
   :=
-    (b'' : B) → (v : hom B b' b'') → (w : hom B b b'') →
-      (sigma : hom2 B b b' b'' u v w) → (e'' : P b'') →
-      (h : dhom B b b'' w P e e'') →
-      is-contr
-        ( Σ ( g : dhom B b' b'' v P e' e'') ,
-          ( dhom2 B b b' b'' u v w sigma P e e' e'' f g h))
+    ( b'' : B) → (v : hom B b' b'') → (w : hom B b b'')
+    → ( sigma : hom2 B b b' b'' u v w) → (e'' : P b'')
+    → ( h : dhom B b b'' w P e e'')
+    → is-contr
+        ( Σ ( g : dhom B b' b'' v P e' e'')
+        , ( dhom2 B b b' b'' u v w sigma P e e' e'' f g h))
 ```
 
 ## Cocartesian lifts
@@ -88,8 +88,8 @@ a given starting point in the fiber.
   ( e : P b)
   : U
   :=
-    Σ (e' : P b') ,
-      Σ (f : dhom B b b' u P e e') , is-cocartesian-arrow B b b' u P e e' f
+    Σ ( e' : P b')
+    , Σ ( f : dhom B b b' u P e e') , is-cocartesian-arrow B b b' u P e e' f
 ```
 
 ## Cocartesian family
@@ -103,9 +103,9 @@ cocartesian lift, given a point in the fiber over the domain.
   ( P : B → U)
   : U
   :=
-    ( b : B) → ( b' : B) → ( u : hom B b b') →
-      ( e : P b) → ( Σ (e' : P b'),
-        ( Σ (f : dhom B b b' u P e e'), is-cocartesian-arrow B b b' u P e e' f))
+    ( b : B) → (b' : B) → (u : hom B b b')
+    → ( e : P b) → (Σ (e' : P b')
+      , ( Σ ( f : dhom B b b' u P e e') , is-cocartesian-arrow B b b' u P e e' f))
 ```
 
 ```rzk title="BW23, Definition 5.2.2"

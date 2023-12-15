@@ -944,7 +944,8 @@ In particular, every contractible type is Rezk
 
 ## Representable isomorphisms.
 
-We prove [RS17, Proposition 10.11]. We first need to access the fiberwise equivalence with no extra data, and then define some helpers.
+We prove [RS17, Proposition 10.11]. We first need to access the fiberwise
+equivalence with no extra data, and then define some helpers.
 
 ```rzk
 #section representable-isomorphisms
@@ -1010,46 +1011,58 @@ We compute the required paths for the section of
     id-hom A a
   := htpy-inv-map-fib-equiv-map-fib-equiv-id a (id-hom A a)
 
-#def ap-inv-map-representable-equiv uses (A is-segal-A a a' ψ)
-  : inv-map-representable-equiv a (map-representable-equiv a (id-hom A a))
+#def rev-ap-inv-map-representable-equiv uses (A is-segal-A a a' ψ)
+  : inv-map-representable-equiv a
+    ( comp-is-segal A is-segal-A a' a a
+      ( arr-map-representable-equiv)
+      ( id-hom A a))
+  =_{ hom A a a}
+    inv-map-representable-equiv a (map-representable-equiv a (id-hom A a))
+  :=
+  rev
+    ( hom A a a)
+    ( inv-map-representable-equiv a (map-representable-equiv a (id-hom A a)))
+    ( inv-map-representable-equiv a
+      ( comp-is-segal A is-segal-A a' a a arr-map-representable-equiv (id-hom A a)))
+    ( ap
+      ( hom A a' a)
+      ( hom A a a)
+      ( map-representable-equiv a (id-hom A a))
+      ( comp-is-segal A is-segal-A a' a a
+        ( arr-map-representable-equiv)
+        ( id-hom A a))
+      ( inv-map-representable-equiv a)
+      ( eq-compute-precomposition-evid funext A is-segal-A a a'
+        ( map-representable-equiv)
+        ( a)
+        ( id-hom A a)))
+
+#def rev-eq-compute-precomposition-evid-arr-inv-map-representable-equiv
+  uses (A is-segal-A a a' ψ)
+  : comp-is-segal A is-segal-A a a' a
+      ( arr-inv-map-representable-equiv)
+      ( comp-is-segal A is-segal-A a' a a
+        ( arr-map-representable-equiv)
+        ( id-hom A a))
   =_{ hom A a a}
     inv-map-representable-equiv a
     ( comp-is-segal A is-segal-A a' a a
       ( arr-map-representable-equiv)
       ( id-hom A a))
   :=
-  ap
-  ( hom A a' a)
+  rev
   ( hom A a a)
-  ( map-representable-equiv a (id-hom A a))
-  ( comp-is-segal A is-segal-A a' a a
-    ( arr-map-representable-equiv)
-    ( id-hom A a))
-  ( inv-map-representable-equiv a)
-  ( eq-compute-precomposition-evid funext A is-segal-A a a'
-    ( map-representable-equiv)
+  ( inv-map-representable-equiv a
+    ( comp-is-segal A is-segal-A a' a a arr-map-representable-equiv (id-hom A a)))
+  ( comp-is-segal A is-segal-A a a' a
+    ( arr-inv-map-representable-equiv)
+    ( comp-is-segal A is-segal-A a' a a arr-map-representable-equiv (id-hom A a)))
+  ( eq-compute-precomposition-evid funext A is-segal-A a' a
+    ( inv-map-representable-equiv)
     ( a)
-    ( id-hom A a))
-
-#def eq-compute-precomposition-evid-arr-inv-map-representable-equiv
-  uses (A is-segal-A a a' ψ)
-  : inv-map-representable-equiv a
     ( comp-is-segal A is-segal-A a' a a
       ( arr-map-representable-equiv)
-      ( id-hom A a))
-  =_{ hom A a a}
-    comp-is-segal A is-segal-A a a' a
-      ( arr-inv-map-representable-equiv)
-      ( comp-is-segal A is-segal-A a' a a
-        ( arr-map-representable-equiv)
-        ( id-hom A a))
-  :=
-  eq-compute-precomposition-evid funext A is-segal-A a' a
-  ( inv-map-representable-equiv)
-  ( a)
-  ( comp-is-segal A is-segal-A a' a a
-    ( arr-map-representable-equiv)
-    ( id-hom A a))
+      ( id-hom A a)))
 
 #def assoc-is-segal-comp-comp-arr-inv-equiv-arr-map-idhom-a
   uses (A is-segal-A a a' ψ)
@@ -1070,21 +1083,31 @@ We compute the required paths for the section of
   ( arr-map-representable-equiv)
   ( id-hom A a)
 
-#def comp-id-comp-arr-inv-map-arr-map-id-a uses (A is-segal-A a a' ψ)
-  : comp-is-segal A is-segal-A a a a
+#def rev-comp-id-comp-arr-inv-map-arr-map-id-a uses (A is-segal-A a a' ψ)
+  : comp-is-segal A is-segal-A a a' a
+      arr-inv-map-representable-equiv
+      arr-map-representable-equiv
+      ( id-hom A a)
+  =_{ hom A a a}
+    comp-is-segal A is-segal-A a a a
       ( comp-is-segal A is-segal-A a a' a
           arr-inv-map-representable-equiv
           arr-map-representable-equiv)
-      ( id-hom A a)
-  =_{ hom A a a}
-    comp-is-segal A is-segal-A a a' a
-      arr-inv-map-representable-equiv
-      arr-map-representable-equiv
   :=
-  comp-id-is-segal A is-segal-A a a
-  ( comp-is-segal A is-segal-A a a' a
-      arr-inv-map-representable-equiv
-      arr-map-representable-equiv)
+  rev
+    ( hom A a a)
+    ( comp-is-segal A is-segal-A a a a
+      ( comp-is-segal A is-segal-A a a' a
+          arr-inv-map-representable-equiv
+          arr-map-representable-equiv)
+      ( id-hom A a))
+    ( comp-is-segal A is-segal-A a a' a
+        arr-inv-map-representable-equiv
+        arr-map-representable-equiv)
+    ( comp-id-is-segal A is-segal-A a a a
+      ( comp-is-segal A is-segal-A a a' a
+          arr-inv-map-representable-equiv
+          arr-map-representable-equiv))
 ```
 
 Concatenate all the paths above.
@@ -1115,32 +1138,10 @@ Concatenate all the paths above.
     ( comp-is-segal A is-segal-A a' a a arr-map-representable-equiv (id-hom A a)))
   ( inv-map-representable-equiv a (map-representable-equiv a (id-hom A a)))
   ( id-hom A a)
-  ( rev
-    ( hom A a a)
-    ( comp-is-segal A is-segal-A a a a
-      ( comp-is-segal A is-segal-A a a' a
-          arr-inv-map-representable-equiv
-          arr-map-representable-equiv)
-      ( id-hom A a))
-    ( comp-is-segal A is-segal-A a a' a
-        arr-inv-map-representable-equiv
-        arr-map-representable-equiv)
-    ( comp-id-comp-arr-inv-map-arr-map-id-a))
+  ( rev-comp-id-comp-arr-inv-map-arr-map-id-a)
   ( assoc-is-segal-comp-comp-arr-inv-equiv-arr-map-idhom-a)
-  ( rev
-    ( hom A a a)
-    ( inv-map-representable-equiv a
-      ( comp-is-segal A is-segal-A a' a a arr-map-representable-equiv (id-hom A a)))
-    ( comp-is-segal A is-segal-A a a' a
-      ( arr-inv-map-representable-equiv)
-      ( comp-is-segal A is-segal-A a' a a arr-map-representable-equiv (id-hom A a)))
-    ( eq-compute-precomposition-evid-arr-inv-map-representable-equiv))
-  ( rev
-    ( hom A a a)
-    ( inv-map-representable-equiv a (map-representable-equiv a (id-hom A a)))
-    ( inv-map-representable-equiv a
-      ( comp-is-segal A is-segal-A a' a a arr-map-representable-equiv (id-hom A a)))
-    ( ap-inv-map-representable-equiv))
+  ( rev-eq-compute-precomposition-evid-arr-inv-map-representable-equiv)
+  ( rev-ap-inv-map-representable-equiv)
   ( compute-htpy-inv-map-fib-equiv-map-fib-equiv-id)
 ```
 

@@ -1221,7 +1221,7 @@ We compute the required paths for the retraction of
     ( arr-inv-map-representable-equiv)
     ( comp-id-is-segal A is-segal-A a a' arr-inv-map-representable-equiv))
 
-#def ap-map-representable-equiv uses (A is-segal-A a a' ψ)
+#def rev-ap-map-representable-equiv uses (A is-segal-A a a' ψ)
   : map-representable-equiv a'
     ( comp-is-segal A is-segal-A a a' a'
       ( arr-inv-map-representable-equiv)

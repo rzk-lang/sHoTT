@@ -13,9 +13,9 @@ This is a literate `rzk` file:
 - `hott/01-paths.rzk.md` - We require basic path algebra.
 - `hott/04-equivalences.rzk.md` - We require the notion of equivalence between
   types.
-- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
   their subshapes.
-- `04-extension-types.rzk.md` — We use extension extensionality.
+- `03-extension-types.rzk.md` — We use extension extensionality.
 - `05-segal-types.rzk.md` - We use the notion of hom types.
 
 Some of the definitions in this file rely on function extensionality and

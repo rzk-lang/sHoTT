@@ -1076,7 +1076,9 @@ types as follows.
     , ( dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
         ( witness-comp-is-segal A is-segal-A x y z f g)
         C u v w k m n)
-  := (U
+  := (comp-is-segal (total-type A C)
+       ( is-segal-total-type-covariant-family-is-segal-base
+       A C is-covariant-C is-segal-A) U
      , U)
 ```
 

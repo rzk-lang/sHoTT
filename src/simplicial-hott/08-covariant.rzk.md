@@ -1056,7 +1056,7 @@ types as follows.
     ( representable-dhom-from-cofibration-composition A a x y f u)
 ```
 
-## Dependent Composition
+## Dependent composition
 
 ```rzk
 #def dependent-composition
@@ -1078,8 +1078,12 @@ types as follows.
         C u v w k m n)
   := (comp-is-segal (total-type A C)
        ( is-segal-total-type-covariant-family-is-segal-base
-       A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w) k m ---something wrong here
-     , U)
+       A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w)
+       ( \ t → (f t , k t)) (\ t → (g t , m t)) ---I truly have no idea
+       , witness-comp-is-segal (total-type A C)
+       ( is-segal-total-type-covariant-family-is-segal-base
+       A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w)
+       ( \ t → (f t , k t)) (\ t → (g t , m t)))
 ```
 
 ## Covariant lifts, transport, and uniqueness

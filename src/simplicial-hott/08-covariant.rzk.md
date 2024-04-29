@@ -1073,17 +1073,15 @@ types as follows.
   ( k : dhom A x y f C u v)
   ( m : dhom A y z g C v w)
   : Σ ( n : (dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w))
-    , ( dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+      , ( dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
         ( witness-comp-is-segal A is-segal-A x y z f g)
         C u v w k m n)
-  := (comp-is-segal (total-type A C)
-       ( is-segal-total-type-covariant-family-is-segal-base
-       A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w)
-       ( \ t → (f t , k t)) (\ t → (g t , m t)) ---I truly have no idea
-       , witness-comp-is-segal (total-type A C)
+  := (projection-total-type (comp-is-segal (total-type A C)
        ( is-segal-total-type-covariant-family-is-segal-base
        A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w)
        ( \ t → (f t , k t)) (\ t → (g t , m t)))
+       ---I truly have no idea
+       , U)
 ```
 
 ## Covariant lifts, transport, and uniqueness

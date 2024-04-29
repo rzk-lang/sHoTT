@@ -1056,6 +1056,30 @@ types as follows.
     ( representable-dhom-from-cofibration-composition A a x y f u)
 ```
 
+## Dependent Composition
+
+```rzk
+#def dependent-composition
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( k : dhom A x y f C u v)
+  ( m : dhom A y z g C v w)
+  : Σ ( n : (dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w))
+    , ( dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+        ( witness-comp-is-segal A is-segal-A x y z f g)
+        C u v w k m n)
+  := (U
+     , U)
+```
+
 ## Covariant lifts, transport, and uniqueness
 
 In a covariant family C over a base type A , a term u : C x may be transported

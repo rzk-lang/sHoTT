@@ -1078,7 +1078,7 @@ types as follows.
         C u v w k m n)
   := (comp-is-segal (total-type A C)
        ( is-segal-total-type-covariant-family-is-segal-base
-       A C is-covariant-C is-segal-A) U
+       A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w) k m ---something wrong here
      , U)
 ```
 

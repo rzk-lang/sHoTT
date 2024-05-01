@@ -467,6 +467,66 @@ Segal, then so is `Σ A, C`.
             ( is-naive-left-fibration-is-covariant A C is-covariant-C))
 ```
 
+## Dependent composition
+
+```rzk
+#def dcomp uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( k : dhom A x y f C u v)
+  ( m : dhom A y z g C v w)
+  : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
+  := comp-is-segal (total-type A C)
+     ( is-segal-total-type-covariant-family-is-segal-base
+     A C is-covariant-C is-segal-A)
+     ( x , u) (y , v) (z , w)
+     ( \ t → (f t , k t)) (\ t → (g t , m t))
+     --I now need to project to the second variable but I can't.
+
+  --second (first (first(
+     --( is-segal-total-type-covariant-family-is-segal-base
+     --A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w)
+     --( \ t → (f t , k t)) (\ t → (g t , m t)))))
+
+  --Σ ( n : (dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w))
+      --, ( dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+        --( witness-comp-is-segal A is-segal-A x y z f g)
+        --C u v w k m n)
+
+         --projection-total-type?????
+       --( comp-is-segal (total-type A C)
+       --( is-segal-total-type-covariant-family-is-segal-base
+       --A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w)
+       --( \ t → (f t , k t)) (\ t → (g t , m t)))
+```
+
+## Covariant lifts, transport, and uniqueness
+
+In a covariant family C over a base type A , a term u : C x may be transported
+along an arrow f : hom A x y to give a term in C y.
+
+```rzk title="RS17, covariant transport from beginning of Section 8.2"
+#def covariant-transport
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  : C y
+  :=
+    first (center-contraction (dhom-from A x y f C u) (is-covariant-C x y f u))
+```
+
+
 ## Representable covariant families
 
 If `A` is a Segal type and `a : A` is any term, then `hom A a` defines a
@@ -1054,52 +1114,6 @@ types as follows.
             , ( Δ¹ t) ∧ (s ≡ 1₂) ↦ f t]))
     ( representable-dhom-from-composite-expansion A a x y f u)
     ( representable-dhom-from-cofibration-composition A a x y f u)
-```
-
-## Dependent composition
-
-```rzk
-#def dependent-composition
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( x y z : A)
-  ( f : hom A x y)
-  ( g : hom A y z)
-  ( C : A → U)
-  ( is-covariant-C : is-covariant A C)
-  ( u : C x)
-  ( v : C y)
-  ( w : C z)
-  ( k : dhom A x y f C u v)
-  ( m : dhom A y z g C v w)
-  : Σ ( n : (dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w))
-      , ( dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
-        ( witness-comp-is-segal A is-segal-A x y z f g)
-        C u v w k m n)
-  := (projection-total-type (comp-is-segal (total-type A C)
-       ( is-segal-total-type-covariant-family-is-segal-base
-       A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w)
-       ( \ t → (f t , k t)) (\ t → (g t , m t)))
-       ---I truly have no idea
-       , U)
-```
-
-## Covariant lifts, transport, and uniqueness
-
-In a covariant family C over a base type A , a term u : C x may be transported
-along an arrow f : hom A x y to give a term in C y.
-
-```rzk title="RS17, covariant transport from beginning of Section 8.2"
-#def covariant-transport
-  ( A : U)
-  ( x y : A)
-  ( f : hom A x y)
-  ( C : A → U)
-  ( is-covariant-C : is-covariant A C)
-  ( u : C x)
-  : C y
-  :=
-    first (center-contraction (dhom-from A x y f C u) (is-covariant-C x y f u))
 ```
 
 For example, if `A` is a Segal type and `a : A`, the family `C x := hom A a x`

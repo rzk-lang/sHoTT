@@ -484,11 +484,11 @@ Segal, then so is `Σ A, C`.
   ( k : dhom A x y f C u v)
   ( m : dhom A y z g C v w)
   : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
-  := comp-is-segal (total-type A C)
+  := \ t → second ((comp-is-segal (total-type A C)
      ( is-segal-total-type-covariant-family-is-segal-base
      A C is-covariant-C is-segal-A)
      ( x , u) (y , v) (z , w)
-     ( \ t → (f t , k t)) (\ t → (g t , m t))
+     ( \ r → (f r , k r)) (\ s → (g s , m s))) t)
      --I now need to project to the second variable but I can't.
 
   --second (first (first(

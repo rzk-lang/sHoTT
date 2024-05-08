@@ -469,7 +469,7 @@ Segal, then so is `Σ A, C`.
 
 ## Dependent composition
 
-```rzk
+```rzk title="RS17, Remark 8.11"
 #def dcomp uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -481,31 +481,18 @@ Segal, then so is `Σ A, C`.
   ( u : C x)
   ( v : C y)
   ( w : C z)
-  ( k : dhom A x y f C u v)
-  ( m : dhom A y z g C v w)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
   : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
-  := \ t → second ((comp-is-segal (total-type A C)
-     ( is-segal-total-type-covariant-family-is-segal-base
-     A C is-covariant-C is-segal-A)
-     ( x , u) (y , v) (z , w)
-     ( \ r → (f r , k r)) (\ s → (g s , m s))) t)
-     --I now need to project to the second variable but I can't.
-
-  --second (first (first(
-     --( is-segal-total-type-covariant-family-is-segal-base
-     --A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w)
-     --( \ t → (f t , k t)) (\ t → (g t , m t)))))
-
-  --Σ ( n : (dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w))
-      --, ( dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
-        --( witness-comp-is-segal A is-segal-A x y z f g)
-        --C u v w k m n)
-
-         --projection-total-type?????
-       --( comp-is-segal (total-type A C)
-       --( is-segal-total-type-covariant-family-is-segal-base
-       --A C is-covariant-C is-segal-A) (x , u) (y , v) (z , w)
-       --( \ t → (f t , k t)) (\ t → (g t , m t)))
+  :=
+    \ r →
+      second
+        ( comp-is-segal
+          ( total-type A C)
+          ( is-segal-total-type-covariant-family-is-segal-base
+            A C is-covariant-C is-segal-A)
+          ( x , u) (y , v) (z , w)
+          ( \ r → (f r , ff r)) (\ s → (g s , gg s)) r)
 ```
 
 ## Covariant lifts, transport, and uniqueness

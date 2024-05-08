@@ -485,14 +485,14 @@ Segal, then so is `Σ A, C`.
   ( gg : dhom A y z g C v w)
   : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
   :=
-    \ r →
+    \ t →
       second
         ( comp-is-segal
           ( total-type A C)
           ( is-segal-total-type-covariant-family-is-segal-base
             A C is-covariant-C is-segal-A)
           ( x , u) (y , v) (z , w)
-          ( \ r → (f r , ff r)) (\ s → (g s , gg s)) r)
+          ( \ r → (f r , ff r)) (\ s → (g s , gg s)) t)
 ```
 
 ## Covariant lifts, transport, and uniqueness

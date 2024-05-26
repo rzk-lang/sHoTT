@@ -581,6 +581,7 @@ Segal, then so is `Σ A, C`.
 ```
 
 ```rzk title="RS17, Remark 8.11"
+--This probably doesn't work, same "being over comp f g" problems as the previous approach.
 #def dcomp uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -615,7 +616,6 @@ Segal, then so is `Σ A, C`.
             ( x , u) (y , v) (z , w)
             ( dhom-to-hom-total-type A x y f C u v ff)
             ( dhom-to-hom-total-type A y z g C v w gg))))))
-
 ```
 
 ```rzk

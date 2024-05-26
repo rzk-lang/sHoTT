@@ -598,7 +598,6 @@ Segal, then so is `Σ A, C`.
   :=
     dhom2-to-dhom A x y z f g (comp-is-segal A is-segal-A x y z f g)
       ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg
-      -- I need something of type dhom A x z h C u w here
       -- It crashed when I added the same thing as below, but with a first instead of a second in front
       ( second (second (second (hom2-total-type-to-dhom2
           A is-segal-A x y z f g C is-covariant-C u v w ff gg

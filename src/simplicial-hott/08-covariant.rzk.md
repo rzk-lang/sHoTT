@@ -469,7 +469,6 @@ Segal, then so is `Σ A, C`.
 
 ## Dependent composition
 
-
 ```rzk
 -- #def dhom-dhom-to-dhom2
 --   ( A : U)

@@ -514,6 +514,19 @@ Segal, then so is `Σ A, C`.
 ```
 
 ```rzk
+#def dhom-to-hom-total-type
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( u : C x)
+  ( v : C y)
+  ( ff : dhom A x y f C u v)
+  : hom (total-type A C) (x , u) (y , v)
+  := \ t → (f t , ff t)
+```
+
+```rzk
 #def dhom2-to-hom2-total-type
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -539,7 +552,7 @@ Segal, then so is `Σ A, C`.
       ( \ t → (h t , hh t) , \ t → (α t , k t))
 ```
 
-```rzk title="RS17, Remark 8.11"
+```rzk
 #def hom2-total-type-to-dhom2
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -565,6 +578,48 @@ Segal, then so is `Σ A, C`.
     ( \ t → first (k t)
     , ( \ t → first (kk t)
       , ( \ t → second (kk (t , t)) , \ t → second (kk t))))
+```
+
+```rzk title="RS17, Remark 8.11"
+#def dcomp uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
+  :=
+    dhom2-to-dhom A x y z f g (comp-is-segal A is-segal-A x y z f g)
+      ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg
+      -- I need something of type dhom A x z h C u w here
+      -- It crashed when I added the same thing as below, but with a first instead of a second in front
+      ( second (second (second (hom2-total-type-to-dhom2
+          A is-segal-A x y z f g C is-covariant-C u v w ff gg
+          ( comp-is-segal
+          ( total-type A C)
+          ( is-segal-total-type-covariant-family-is-segal-base
+            A C is-covariant-C is-segal-A)
+          ( x , u) (y , v) (z , w)
+          ( dhom-to-hom-total-type A x y f C u v ff)
+          ( dhom-to-hom-total-type A y z g C v w gg)
+            , witness-comp-is-segal
+            ( total-type A C)
+            ( is-segal-total-type-covariant-family-is-segal-base
+              A C is-covariant-C is-segal-A)
+            ( x , u) (y , v) (z , w)
+            ( dhom-to-hom-total-type A x y f C u v ff)
+            ( dhom-to-hom-total-type A y z g C v w gg))))))
+
+```
+
+```rzk
 -- #def test uses (extext)
 --   ( A : U)
 --   ( is-segal-A : is-segal A)

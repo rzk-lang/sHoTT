@@ -527,6 +527,89 @@ Segal, then so is `Σ A, C`.
 ```
 
 ```rzk
+#def comp-total-type uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : hom (total-type A C) (x , u) (z , w)
+  := comp-is-segal
+      ( total-type A C)
+      ( is-segal-total-type-covariant-family-is-segal-base
+        A C is-covariant-C is-segal-A)
+      ( x , u) (y , v) (z , w)
+      ( dhom-to-hom-total-type A x y f C u v ff)
+      ( dhom-to-hom-total-type A y z g C v w gg)
+```
+
+```rzk
+#def proj-comp-total-type uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : hom A x z
+  :=
+    \ t → first
+      ( comp-total-type A is-segal-A x y z f g C is-covariant-C u v w ff gg t)
+```
+
+```rzk
+#def eq-comp-total-type uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : ( proj-comp-total-type A is-segal-A x y z f g C is-covariant-C u v w ff gg)
+    =_{hom A x z}
+      ( comp-is-segal A is-segal-A x y z f g)
+  := U
+```
+
+```rzk
+#def dhom-to-hom-total-type-to-comp
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
+  :=
+    U
+```
+
+```rzk
 #def dhom2-to-hom2-total-type
   ( A : U)
   ( is-segal-A : is-segal A)

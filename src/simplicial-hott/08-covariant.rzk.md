@@ -701,7 +701,7 @@ Segal, then so is `Σ A, C`.
   :=
     dhom2-to-dhom A x y z f g (comp-is-segal A is-segal-A x y z f g)
       ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg
-      -- It crashed when I added the same thing as below, but with a first instead of a second in front
+      -- This crashed when I added the same thing as below, but with a first instead of a second in front
       ( second (second (second (hom2-total-type-to-dhom2
           A is-segal-A x y z f g C is-covariant-C u v w ff gg
           ( comp-is-segal
@@ -771,13 +771,14 @@ Segal, then so is `Σ A, C`.
 --   ( gg : dhom A y z g C v w)
 --   : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
 --   :=
---       second
---           comp-is-segal
+--     \ t → second
+--           ( comp-is-segal
 --           ( total-type A C)
 --           ( is-segal-total-type-covariant-family-is-segal-base
 --             A C is-covariant-C is-segal-A)
 --           ( x , u) (y , v) (z , w)
---           ( \ r → (f r , ff r)) (\ s → (g s , gg s))
+--           ( \ r → (f r , ff r)) (\ s → (g s , gg s)) t)
+-- This crashed.
 ```
 
 ## Covariant lifts, transport, and uniqueness

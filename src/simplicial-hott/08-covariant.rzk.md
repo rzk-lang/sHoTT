@@ -591,25 +591,6 @@ Segal, then so is `Σ A, C`.
 ```
 
 ```rzk
-#def dhom-to-hom-total-type-to-comp
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( x y z : A)
-  ( f : hom A x y)
-  ( g : hom A y z)
-  ( C : A → U)
-  ( is-covariant-C : is-covariant A C)
-  ( u : C x)
-  ( v : C y)
-  ( w : C z)
-  ( ff : dhom A x y f C u v)
-  ( gg : dhom A y z g C v w)
-  : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
-  :=
-    U
-```
-
-```rzk
 #def dhom2-to-hom2-total-type
   ( A : U)
   ( is-segal-A : is-segal A)

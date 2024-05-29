@@ -584,25 +584,23 @@ Segal, then so is `Σ A, C`.
   ( w : C z)
   ( ff : dhom A x y f C u v)
   ( gg : dhom A y z g C v w)
-  : hom2 A x y z f g
-     ( proj-comp-total-type A is-segal-A x y z f g C is-covariant-C u v w ff gg)
+  : Σ ( h : hom A x z) , hom2 A x y z f g h
+     --( proj-comp-total-type A is-segal-A x y z f g C is-covariant-C u v w ff gg)
   :=
-    witness-comp-is-segal
-      ( total-type A C)
-      ( is-segal-total-type-covariant-family-is-segal-base
-        A C is-covariant-C is-segal-A)
-      ( x , u) (y , v) (z , w)
-      ( dhom-to-hom-total-type A x y f C u v ff)
-      ( dhom-to-hom-total-type A y z g C v w gg)
-
-    -- \ t → first
-    --   ( witness-comp-is-segal
-    --   ( total-type A C)
-    --   ( is-segal-total-type-covariant-family-is-segal-base
-    --     A C is-covariant-C is-segal-A)
-    --   ( x , u) (y , v) (z , w)
-    --   ( dhom-to-hom-total-type A x y f C u v ff)
-    --   ( dhom-to-hom-total-type A y z g C v w gg) t )
+      -- ( \ t → first (comp-is-segal
+      -- ( total-type A C)
+      -- ( is-segal-total-type-covariant-family-is-segal-base
+      --   A C is-covariant-C is-segal-A)
+      -- ( x , u) (y , v) (z , w)
+      -- ( dhom-to-hom-total-type A x y f C u v ff)
+      -- ( dhom-to-hom-total-type A y z g C v w gg) t)
+      -- , \ t → first (witness-comp-is-segal
+      -- ( total-type A C)
+      -- ( is-segal-total-type-covariant-family-is-segal-base
+      --   A C is-covariant-C is-segal-A)
+      -- ( x , u) (y , v) (z , w)
+      -- ( dhom-to-hom-total-type A x y f C u v ff)
+      -- ( dhom-to-hom-total-type A y z g C v w gg)))
     -- This crashed.
 ```
 

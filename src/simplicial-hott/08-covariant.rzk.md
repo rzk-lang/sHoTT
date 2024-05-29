@@ -600,7 +600,7 @@ Segal, then so is `Σ A, C`.
       --   A C is-covariant-C is-segal-A)
       -- ( x , u) (y , v) (z , w)
       -- ( dhom-to-hom-total-type A x y f C u v ff)
-      -- ( dhom-to-hom-total-type A y z g C v w gg)))
+      -- ( dhom-to-hom-total-type A y z g C v w gg) t))
     -- This crashed.
 ```
 

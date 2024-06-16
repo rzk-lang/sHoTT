@@ -552,23 +552,23 @@ together the two identifications to the out and back path.
 
 ## Total type over a contractible type
 
-We prove that a ∑-type with contractible base is equivalent to the dependent
+We show that a ∑-type with contractible base is equivalent to the dependent
 type evaluated at the point of contraction.
 
 ```rzk
-#def sigma-is-contr-base-1
+#def second-center-to-total-type-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
   :
     ( C (center-contraction A is-contr-A))
-    → ( Σ ( x : A) , C x)
+  → ( Σ ( x : A) , C x)
   :=
     \ v → ((center-contraction A is-contr-A) , v)
 ```
 
 ```rzk
-#def sigma-is-contr-base-2
+#def total-type-to-second-center-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
@@ -591,21 +591,21 @@ type evaluated at the point of contraction.
 ```
 
 ```rzk
-#def has-retraction-sigma-is-contr-base
+#def has-retraction-total-type-to-second-center-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
   : has-retraction
     ( Σ ( x : A) , C x)
     ( C (center-contraction A is-contr-A))
-    ( sigma-is-contr-base-2 A is-contr-A C)
+    ( total-type-to-second-center-is-contr-base A is-contr-A C)
   :=
-    ( ( sigma-is-contr-base-1 A is-contr-A C)
+    ( ( second-center-to-total-type-is-contr-base A is-contr-A C)
     , \ (x , u) →
     ( rev (Σ (x : A) , C x)
         ( x , u)
-        ( sigma-is-contr-base-1 A is-contr-A C
-          ( sigma-is-contr-base-2 A is-contr-A C (x , u)))
+        ( second-center-to-total-type-is-contr-base A is-contr-A C
+          ( total-type-to-second-center-is-contr-base A is-contr-A C (x , u)))
         ( transport-lift A C
             ( x)
             ( center-contraction A is-contr-A)
@@ -614,88 +614,25 @@ type evaluated at the point of contraction.
               ( center-contraction A is-contr-A)
               ( x)
               ( homotopy-contraction A is-contr-A x))
-            u)))
+            ( u))))
 ```
 
 ```rzk
-#def test2
-  ( A : U)
-  ( is-contr-A : is-contr A)
-  ( C : A → U)
-  ( u : C (center-contraction A is-contr-A))
-  : transport A C
-      ( center-contraction A is-contr-A)
-      ( center-contraction A is-contr-A)
-      ( first-path-Σ A C (center-contraction A is-contr-A , u)
-        ( center-contraction A is-contr-A , u)
-        ( refl))
-      ( u) =_{ C (center-contraction A is-contr-A) }
-      ( u)
-  :=
-    second-path-Σ A C
-      ( ( center-contraction A is-contr-A) , u)
-      ( ( center-contraction A is-contr-A) , u)
-      refl
-```
-
-```rzk
-#def test3
-  ( A : U)
-  ( is-contr-A : is-contr A)
-  ( C : A → U)
-  ( u : C (center-contraction A is-contr-A))
-  : ( sigma-is-contr-base-2 A is-contr-A C
-        ( sigma-is-contr-base-1 A is-contr-A C u))
-    =_{ C (center-contraction A is-contr-A) }
-    ( transport A C
-      ( center-contraction A is-contr-A)
-      ( center-contraction A is-contr-A)
-      ( first-path-Σ A C (center-contraction A is-contr-A , u)
-        ( center-contraction A is-contr-A , u)
-        ( refl))
-      ( u))
-  :=
-    transport2
-      ( A)
-      ( C)
-      ( center-contraction A is-contr-A)
-      ( center-contraction A is-contr-A)
-      ( rev
-          ( A)
-          ( center-contraction A is-contr-A)
-          ( center-contraction A is-contr-A)
-          ( homotopy-contraction A is-contr-A (center-contraction A is-contr-A)))
-      ( refl)
-      ( all-paths-equal-is-contr
-          ( A)
-          ( is-contr-A)
-          ( center-contraction A is-contr-A)
-          ( center-contraction A is-contr-A)
-          ( rev
-            ( A)
-            ( center-contraction A is-contr-A)
-            ( center-contraction A is-contr-A)
-            ( homotopy-contraction A is-contr-A (center-contraction A is-contr-A)))
-            ( refl))
-      ( u)
-```
-
-```rzk
-#def has-section-sigma-is-contr-base
+#def has-section-total-type-to-second-center-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
   : has-section
     ( Σ ( x : A) , C x)
     ( C (center-contraction A is-contr-A))
-    ( sigma-is-contr-base-2 A is-contr-A C)
+    ( total-type-to-second-center-is-contr-base A is-contr-A C)
   :=
-    ( ( sigma-is-contr-base-1 A is-contr-A C)
+    ( ( second-center-to-total-type-is-contr-base A is-contr-A C)
     , \ u →
       ( concat
         ( C (center-contraction A is-contr-A))
-        ( sigma-is-contr-base-2 A is-contr-A C
-          ( sigma-is-contr-base-1 A is-contr-A C u))
+        ( total-type-to-second-center-is-contr-base A is-contr-A C
+          ( second-center-to-total-type-is-contr-base A is-contr-A C u))
         ( transport A C
           ( center-contraction A is-contr-A)
           ( center-contraction A is-contr-A)
@@ -704,12 +641,39 @@ type evaluated at the point of contraction.
             ( refl))
           ( u))
         ( u)
-        ( test3 A is-contr-A C u)
-        ( test2 A is-contr-A C u)))
+        ( transport2
+          ( A)
+          ( C)
+          ( center-contraction A is-contr-A)
+          ( center-contraction A is-contr-A)
+          ( rev
+            ( A)
+            ( center-contraction A is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( homotopy-contraction A is-contr-A
+              ( center-contraction A is-contr-A)))
+          ( refl)
+          ( all-paths-equal-is-contr
+            ( A)
+            ( is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( rev
+              ( A)
+              ( center-contraction A is-contr-A)
+              ( center-contraction A is-contr-A)
+              ( homotopy-contraction A is-contr-A
+                ( center-contraction A is-contr-A)))
+              ( refl))
+            ( u))
+        ( second-path-Σ A C
+          ( ( center-contraction A is-contr-A) , u)
+          ( ( center-contraction A is-contr-A) , u)
+          ( refl))))
 ```
 
 ```rzk
-#def equiv-sigma-is-contr-base
+#def equiv-total-type-second-center-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
@@ -717,7 +681,9 @@ type evaluated at the point of contraction.
     ( Σ ( x : A) , C x)
     ( C (center-contraction A is-contr-A))
   :=
-    ( ( sigma-is-contr-base-2 A is-contr-A C)
-    , ( ( ( has-retraction-sigma-is-contr-base A is-contr-A C)
-    , ( has-section-sigma-is-contr-base A is-contr-A C))))
+    ( ( total-type-to-second-center-is-contr-base A is-contr-A C)
+    , ( ( ( has-retraction-total-type-to-second-center-is-contr-base
+            A is-contr-A C)
+      , ( has-section-total-type-to-second-center-is-contr-base
+            A is-contr-A C))))
 ```

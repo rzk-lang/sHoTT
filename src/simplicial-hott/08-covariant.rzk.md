@@ -467,6 +467,7 @@ Segal, then so is `Σ A, C`.
             ( is-naive-left-fibration-is-covariant A C is-covariant-C))
 ```
 
+
 ## Dependent composition
 
 ```rzk
@@ -638,12 +639,38 @@ Segal, then so is `Σ A, C`.
 --   ( w : C z)
 --   ( ff : dhom A x y f C u v)
 --   ( gg : dhom A y z g C v w)
---   : ( ( t₁ , t₂) : Δ²) → A
---     [ t₂ ≡ 0₂ ↦ f t₁
---       , t₁ ≡ 1₂ ↦ g t₂
---       , t₂ ≡ t₁ ↦ (proj-comp-total-type A is-segal-A x y z f g C is-covariant-C u v w ff gg) t₂
---        ]
---   hom2 A x y z f g
+--   :
+--     hom2 (total-type A C) (x , u) (y , v) (z , w)
+--       ( dhom-to-hom-total-type A x y f C u v ff)
+--       ( dhom-to-hom-total-type A y z g C v w gg)
+--       ( comp-total-type A is-segal-A x y z f g C is-covariant-C u v w ff gg)
+--   :=
+--       witness-comp-is-segal
+--         ( total-type A C)
+--         ( is-segal-total-type-covariant-family-is-segal-base
+--           A C is-covariant-C is-segal-A)
+--         ( x , u) (y , v) (z , w)
+--         ( dhom-to-hom-total-type A x y f C u v ff)
+--         ( dhom-to-hom-total-type A y z g C v w gg)
+```
+
+```rzk
+-- #set-option "max-whnf-depth" = "20"
+-- #def is-comp-proj-comp-total-type uses (extext)
+--   ( A : U)
+--   ( is-segal-A : is-segal A)
+--   ( x y z : A)
+--   ( f : hom A x y)
+--   ( g : hom A y z)
+--   ( C : A → U)
+--   ( is-covariant-C : is-covariant A C)
+--   ( u : C x)
+--   ( v : C y)
+--   ( w : C z)
+--   ( ff : dhom A x y f C u v)
+--   ( gg : dhom A y z g C v w)
+--   :
+--     hom2 A x y z f g
 --       ( proj-comp-total-type A is-segal-A x y z f g C is-covariant-C u v w ff gg)
 --   :=
 --       \ (t₁ , t₂) →
@@ -979,7 +1006,6 @@ along an arrow f : hom A x y to give a term in C y.
   :=
     first (center-contraction (dhom-from A x y f C u) (is-covariant-C x y f u))
 ```
-
 
 ## Representable covariant families
 

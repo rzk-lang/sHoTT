@@ -59,9 +59,6 @@ This is a literate `rzk` file:
 #end contractible-data
 ```
 
-
-
-
 ## Unit type
 
 The prototypical contractible type is the unit type, which is built-in to rzk.
@@ -581,16 +578,16 @@ type evaluated at the point of contraction.
   :=
     \ (x , u) →
       transport
-        A
-        C
-        x
+        ( A)
+        ( C)
+        ( x)
         ( center-contraction A is-contr-A)
         ( rev
-          A
+          ( A)
           ( center-contraction A is-contr-A)
-          x
+          ( x)
           ( homotopy-contraction A is-contr-A x))
-        u
+        ( u)
 ```
 
 ```rzk
@@ -664,7 +661,7 @@ type evaluated at the point of contraction.
       ( center-contraction A is-contr-A)
       ( center-contraction A is-contr-A)
       ( rev
-          A
+          ( A)
           ( center-contraction A is-contr-A)
           ( center-contraction A is-contr-A)
           ( homotopy-contraction A is-contr-A (center-contraction A is-contr-A)))
@@ -675,12 +672,12 @@ type evaluated at the point of contraction.
           ( center-contraction A is-contr-A)
           ( center-contraction A is-contr-A)
           ( rev
-          A
-          ( center-contraction A is-contr-A)
-          ( center-contraction A is-contr-A)
-          ( homotopy-contraction A is-contr-A (center-contraction A is-contr-A)))
-          ( refl))
-      u
+            ( A)
+            ( center-contraction A is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( homotopy-contraction A is-contr-A (center-contraction A is-contr-A)))
+            ( refl))
+      ( u)
 ```
 
 ```rzk
@@ -703,8 +700,8 @@ type evaluated at the point of contraction.
           ( center-contraction A is-contr-A)
           ( center-contraction A is-contr-A)
           ( first-path-Σ A C (center-contraction A is-contr-A , u)
-           ( center-contraction A is-contr-A , u)
-           ( refl))
+            ( center-contraction A is-contr-A , u)
+            ( refl))
           ( u))
         ( u)
         ( test3 A is-contr-A C u)

@@ -553,3 +553,141 @@ together the two identifications to the out and back path.
       ( path-eq-path-through-center-is-contr A is-contr-A x y p))
     ( path-eq-path-through-center-is-contr A is-contr-A x y q)
 ```
+
+## Total type over a contractible type
+
+We show that a ∑-type with contractible base is equivalent to the dependent
+type evaluated at the point of contraction.
+
+```rzk
+#def second-center-to-total-type-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  :
+    ( C (center-contraction A is-contr-A))
+  → ( Σ ( x : A) , C x)
+  :=
+    \ v → ((center-contraction A is-contr-A) , v)
+```
+
+```rzk
+#def total-type-to-second-center-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  :
+    ( Σ ( x : A) , C x)
+  → ( C (center-contraction A is-contr-A))
+  :=
+    \ (x , u) →
+      transport
+        ( A)
+        ( C)
+        ( x)
+        ( center-contraction A is-contr-A)
+        ( rev
+          ( A)
+          ( center-contraction A is-contr-A)
+          ( x)
+          ( homotopy-contraction A is-contr-A x))
+        ( u)
+```
+
+```rzk
+#def has-retraction-total-type-to-second-center-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  : has-retraction
+    ( Σ ( x : A) , C x)
+    ( C (center-contraction A is-contr-A))
+    ( total-type-to-second-center-is-contr-base A is-contr-A C)
+  :=
+    ( ( second-center-to-total-type-is-contr-base A is-contr-A C)
+    , \ (x , u) →
+    ( rev (Σ (x : A) , C x)
+        ( x , u)
+        ( second-center-to-total-type-is-contr-base A is-contr-A C
+          ( total-type-to-second-center-is-contr-base A is-contr-A C (x , u)))
+        ( transport-lift A C
+            ( x)
+            ( center-contraction A is-contr-A)
+            ( rev
+              ( A)
+              ( center-contraction A is-contr-A)
+              ( x)
+              ( homotopy-contraction A is-contr-A x))
+            ( u))))
+```
+
+```rzk
+#def has-section-total-type-to-second-center-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  : has-section
+    ( Σ ( x : A) , C x)
+    ( C (center-contraction A is-contr-A))
+    ( total-type-to-second-center-is-contr-base A is-contr-A C)
+  :=
+    ( ( second-center-to-total-type-is-contr-base A is-contr-A C)
+    , \ u →
+      ( concat
+        ( C (center-contraction A is-contr-A))
+        ( total-type-to-second-center-is-contr-base A is-contr-A C
+          ( second-center-to-total-type-is-contr-base A is-contr-A C u))
+        ( transport A C
+          ( center-contraction A is-contr-A)
+          ( center-contraction A is-contr-A)
+          ( first-path-Σ A C (center-contraction A is-contr-A , u)
+            ( center-contraction A is-contr-A , u)
+            ( refl))
+          ( u))
+        ( u)
+        ( transport2
+          ( A)
+          ( C)
+          ( center-contraction A is-contr-A)
+          ( center-contraction A is-contr-A)
+          ( rev
+            ( A)
+            ( center-contraction A is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( homotopy-contraction A is-contr-A
+              ( center-contraction A is-contr-A)))
+          ( refl)
+          ( all-paths-equal-is-contr
+            ( A)
+            ( is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( rev
+              ( A)
+              ( center-contraction A is-contr-A)
+              ( center-contraction A is-contr-A)
+              ( homotopy-contraction A is-contr-A
+                ( center-contraction A is-contr-A)))
+              ( refl))
+            ( u))
+        ( second-path-Σ A C
+          ( ( center-contraction A is-contr-A) , u)
+          ( ( center-contraction A is-contr-A) , u)
+          ( refl))))
+```
+
+```rzk
+#def equiv-total-type-second-center-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  : Equiv
+    ( Σ ( x : A) , C x)
+    ( C (center-contraction A is-contr-A))
+  :=
+    ( ( total-type-to-second-center-is-contr-base A is-contr-A C)
+    , ( ( ( has-retraction-total-type-to-second-center-is-contr-base
+            A is-contr-A C)
+      , ( has-section-total-type-to-second-center-is-contr-base
+            A is-contr-A C))))
+```

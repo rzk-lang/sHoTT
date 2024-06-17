@@ -564,9 +564,8 @@ type evaluated at the point of contraction.
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
-  :
-    ( C (center-contraction A is-contr-A))
-  → ( Σ ( x : A) , C x)
+  : ( C (center-contraction A is-contr-A))
+    → ( Σ ( x : A) , C x)
   :=
     \ v → ((center-contraction A is-contr-A) , v)
 ```
@@ -576,9 +575,8 @@ type evaluated at the point of contraction.
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
-  :
-    ( Σ ( x : A) , C x)
-  → ( C (center-contraction A is-contr-A))
+  : ( Σ ( x : A) , C x)
+    → ( C (center-contraction A is-contr-A))
   :=
     \ (x , u) →
       transport

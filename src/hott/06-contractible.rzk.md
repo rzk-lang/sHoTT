@@ -224,10 +224,6 @@ A retract of contractible types is contractible.
 #end is-contr-is-retract-of-is-contr
 ```
 
-```rzk
-
-```
-
 ## Functions between contractible types
 
 ```rzk title="Any function between contractible types is an equivalence"
@@ -680,4 +676,30 @@ evaluated at the point of contraction.
             A is-contr-A C)
       , ( has-section-total-type-to-second-center-is-contr-base
             A is-contr-A C))))
+```
+
+Any two elements in a contractible type are equal, so we extend the equivalence
+to the dependent type evaluated at any given term in the base.
+
+```rzk
+#def transport-equiv-total-type-second-center-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  ( x : A)
+  : Equiv
+    ( Σ ( x : A) , C x)
+    ( C x)
+  :=
+    equiv-comp
+      ( Σ ( x : A) , C x)
+      ( C (center-contraction A is-contr-A))
+      ( C x)
+      ( equiv-total-type-second-center-is-contr-base A is-contr-A C)
+      ( equiv-transport
+        ( A)
+        ( C)
+        ( center-contraction A is-contr-A)
+        ( x)
+        ( homotopy-contraction A is-contr-A x))
 ```

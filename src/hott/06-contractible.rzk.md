@@ -550,10 +550,10 @@ together the two identifications to the out and back path.
     ( path-eq-path-through-center-is-contr A is-contr-A x y q)
 ```
 
-## Total type over a contractible base type
+## Total type over a contractible type
 
-We show that a ∑-type with contractible base is equivalent to the dependent type
-evaluated at the point of contraction.
+We show that a ∑-type with contractible base is equivalent to the dependent
+type evaluated at the point of contraction.
 
 ```rzk
 #def second-center-to-total-type-is-contr-base
@@ -564,9 +564,7 @@ evaluated at the point of contraction.
   → ( Σ ( x : A) , C x)
   :=
     \ v → ((center-contraction A is-contr-A) , v)
-```
 
-```rzk
 #def total-type-to-second-center-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
@@ -586,9 +584,7 @@ evaluated at the point of contraction.
           ( x)
           ( homotopy-contraction A is-contr-A x))
         ( u)
-```
 
-```rzk
 #def has-retraction-total-type-to-second-center-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
@@ -613,9 +609,7 @@ evaluated at the point of contraction.
               ( x)
               ( homotopy-contraction A is-contr-A x))
             ( u))))
-```
 
-```rzk
 #def has-section-total-type-to-second-center-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
@@ -668,9 +662,7 @@ evaluated at the point of contraction.
           ( ( center-contraction A is-contr-A) , u)
           ( ( center-contraction A is-contr-A) , u)
           ( refl))))
-```
 
-```rzk
 #def equiv-total-type-second-center-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
@@ -682,6 +674,6 @@ evaluated at the point of contraction.
     ( ( total-type-to-second-center-is-contr-base A is-contr-A C)
     , ( ( ( has-retraction-total-type-to-second-center-is-contr-base
             A is-contr-A C)
-        , ( has-section-total-type-to-second-center-is-contr-base
+      , ( has-section-total-type-to-second-center-is-contr-base
             A is-contr-A C))))
 ```

@@ -550,7 +550,7 @@ together the two identifications to the out and back path.
     ( path-eq-path-through-center-is-contr A is-contr-A x y q)
 ```
 
-## Total type over a contractible type
+## Total type over a contractible base type
 
 We show that a ∑-type with contractible base is equivalent to the dependent type
 evaluated at the point of contraction.

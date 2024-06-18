@@ -556,8 +556,8 @@ together the two identifications to the out and back path.
 
 ## Total type over a contractible type
 
-We show that a ∑-type with contractible base is equivalent to the dependent
-type evaluated at the point of contraction.
+We show that a ∑-type with contractible base is equivalent to the dependent type
+evaluated at the point of contraction.
 
 ```rzk
 #def second-center-to-total-type-is-contr-base

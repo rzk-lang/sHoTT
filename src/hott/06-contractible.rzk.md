@@ -686,20 +686,20 @@ to the dependent type evaluated at any given term in the base.
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
-  ( x : A)
+  ( a : A)
   : Equiv
     ( Σ ( x : A) , C x)
-    ( C x)
+    ( C a)
   :=
     equiv-comp
       ( Σ ( x : A) , C x)
       ( C (center-contraction A is-contr-A))
-      ( C x)
+      ( C a)
       ( equiv-total-type-second-center-is-contr-base A is-contr-A C)
       ( equiv-transport
         ( A)
         ( C)
         ( center-contraction A is-contr-A)
-        ( x)
-        ( homotopy-contraction A is-contr-A x))
+        ( a)
+        ( homotopy-contraction A is-contr-A a))
 ```

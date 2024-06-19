@@ -478,9 +478,11 @@ Segal, then so is `Σ A, C`.
   ( C : A → U)
   ( is-covariant-C : is-covariant A C)
   : has-unique-extensions (2 × 2) Δ² (\ t → Λ t) (Σ (x : A) , C x)
-  := U
-  -- Hint: use has-unique-inner-extensions-is-segal
-
+  :=
+    has-unique-inner-extensions-is-segal
+      ( Σ ( x : A) , C x)
+      ( is-segal-total-type-covariant-family-is-segal-base
+        A C is-covariant-C is-segal-A)
 
 #def has-unique-inner-extensions-is-segal-case-consequence uses (extext)
   ( A : U)
@@ -490,7 +492,13 @@ Segal, then so is `Σ A, C`.
   ( a : (t : Λ) → A)
   ( c : (t : Λ) → C (a t))
   : is-contr ((t : Δ²) → (Σ (x : A) , C x) [Λ t ↦ (a t , c t)])
-  := U
+  :=
+    has-unique-inner-extensions-is-segal-case
+      ( A)
+      ( is-segal-A)
+      ( C)
+      ( is-covariant-C)
+      ( \ t → (a t , c t))
 
 #def axiom-choice-case
   ( A : U)
@@ -519,14 +527,14 @@ Segal, then so is `Σ A, C`.
 
 -- This one I think you are already working on.
 -- If you have it in some other file then delete this.
-#def equiv-sigma-is-contr-base
-  ( A : U)
-  ( is-contr-A : is-contr A)
-  ( C : A → U)
-  : Equiv
-    ( Σ ( x : A) , C x)
-    ( C (center-contraction A is-contr A))
-  := U
+-- #def equiv-sigma-is-contr-base
+--   ( A : U)
+--   ( is-contr-A : is-contr A)
+--   ( C : A → U)
+--   : Equiv
+--     ( Σ ( x : A) , C x)
+--     ( C (center-contraction A is-contr A))
+--   := U
 
 #def equiv-ext-is-segal-base
   ( A : U)

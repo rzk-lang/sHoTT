@@ -471,6 +471,160 @@ Segal, then so is `Σ A, C`.
 ## Dependent composition
 
 ```rzk
+-- Here is a path way to solve the problem. It includes the problem you are already working on.
+#def has-unique-inner-extensions-is-segal-case uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  : has-unique-extensions (2 × 2) Δ² (\ t → Λ t) (Σ (x : A) , C x)
+  := U
+  -- Hint: use has-unique-inner-extensions-is-segal
+
+
+#def has-unique-inner-extensions-is-segal-case-consequence uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( a : (t : Λ) → A)
+  ( c : (t : Λ) → C (a t))
+  : is-contr ((t : Δ²) → (Σ (x : A) , C x) [Λ t ↦ (a t , c t)])
+  := U
+
+#def axiom-choice-case
+  ( A : U)
+  ( C : A → U)
+  ( a : (t : Λ) → A)
+  ( c : (t : Λ) → C (a t))
+  : Equiv
+    ( ( t : Δ²) → (Σ (x : A) , C x) [Λ t ↦ (a t , c t)])
+    ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
+      , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
+  := U
+
+#def axiom-choice-case-consequence uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( a : (t : Λ) → A)
+  ( c : (t : Λ) → C (a t))
+  : is-contr
+    ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
+      , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
+  := U
+-- Hint: Use is-contr-equiv-is-contr
+
+
+-- This one I think you are already working on.
+-- If you have it in some other file then delete this.
+#def equiv-sigma-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  : Equiv
+    ( Σ ( x : A) , C x)
+    ( C (center-contraction A is-contr A))
+  := U
+
+#def equiv-ext-is-segal-base
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( a : (t : Λ) → A)
+  ( c : (t : Λ) → C (a t))
+  : Equiv
+    ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
+    , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
+    ( ( t : Δ²)
+      → C (witness-comp-is-segal A is-segal-A (a (0₂ , 0₂)) (a (1₂ , 0₂))
+          ( a (1₂ , 1₂)) (\ s → a (s , 0₂)) (\ s → a (1₂ , s)) t) [Λ t ↦ c t])
+  := U
+  -- Hint: Use the last exercise. This one is hard!
+
+#def is-contr-horn-ext-is-covariant uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( a : (t : Λ) → A)
+  ( c : (t : Λ) → C (a t))
+  : is-contr
+    ( ( t : Δ²)
+      → C (witness-comp-is-segal A is-segal-A (a (0₂ , 0₂)) (a (1₂ , 0₂))
+          ( a (1₂ , 1₂)) (\ s → a (s , 0₂)) (\ s → a (1₂ , s)) t) [Λ t ↦ c t])
+  := U
+  -- Hint: Start from is-contr-equiv-is-contr
+  -- You also need:
+  --    equiv-ext-is-segal-base
+  --    quiv-sigma-is-contr-base
+  --    axiom-choice-case-consequence
+
+#def dhorn
+  ( A : U)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( C : A → U)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( k : dhom A x y f C u v)
+  ( m : dhom A y z g C v w)
+  : ( ( t : Λ) → C (horn A x y z f g t))
+  := U
+   -- Hint: Use recOR from one of the first files.
+
+#def compositions-are-dhorn-fillings
+  ( A : U)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( h : hom A x z)
+  ( α : hom2 A x y z f g h)
+  ( C : A → U)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( k : dhom A x y f C u v)
+  ( m : dhom A y z g C v w)
+  : Equiv
+    ( Σ ( n : dhom A x z h C u w)
+      , ( dhom2 A x y z f g h α C u v w k m n))
+    ( ( t : Δ²) → C (α t)
+                    [Λ t ↦ dhorn A x y z f g C u v w k m t])
+  := U
+
+#def is-contr-ext-is-covariant uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( k : dhom A x y f C u v)
+  ( m : dhom A y z g C v w)
+  : is-contr
+    ( Σ ( n : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w)
+      , dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+        ( witness-comp-is-segal A is-segal-A x y z f g) C u v w k m n)
+  := U
+  -- Hint: Use is-contr-equiv-is-contr' and the previous results.
+  -- Again you need equiv-sigma-is-contr-base
+
+
+--  What is missing: a term that extracts the composition from the contractibility!
+```
+
+## Dependent composition try
+
+
+```rzk
 #def dhom-to-hom-total-type
   ( A : U)
   ( x y : A)

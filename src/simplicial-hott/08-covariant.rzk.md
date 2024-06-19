@@ -509,7 +509,15 @@ Segal, then so is `Σ A, C`.
     ( ( t : Δ²) → (Σ (x : A) , C x) [Λ t ↦ (a t , c t)])
     ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
       , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
-  := U
+  :=
+    axiom-choice
+      ( 2 × 2)
+      ( Δ²)
+      ( \ t → Λ t)
+      ( \ t → A)
+      ( \ t → \ x → C x)
+      ( a)
+      ( c)
 
 #def axiom-choice-case-consequence uses (extext)
   ( A : U)
@@ -521,9 +529,14 @@ Segal, then so is `Σ A, C`.
   : is-contr
     ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
       , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
-  := U
--- Hint: Use is-contr-equiv-is-contr
-
+  :=
+    is-contr-equiv-is-contr
+      ( ( t : Δ²) → (Σ (x : A) , C x) [Λ t ↦ (a t , c t)])
+      ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
+        , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
+      ( axiom-choice-case A C a c)
+      ( has-unique-inner-extensions-is-segal-case-consequence
+          A is-segal-A C is-covariant-C a c)
 
 -- This one I think you are already working on.
 -- If you have it in some other file then delete this.

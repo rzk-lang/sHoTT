@@ -518,7 +518,8 @@ In a contractible type any path $p : x = y$ is equal to the path constructed in
     ( A)
     ( x)
     ( \ y' p' → (all-elements-equal-is-contr A is-contr-A x y') = p')
-    ( left-inverse-concat A (center-contraction A is-contr-A) x (homotopy-contraction A is-contr-A x))
+    ( left-inverse-concat A (center-contraction A is-contr-A) x
+      ( homotopy-contraction A is-contr-A x))
     ( y)
     ( p)
 
@@ -552,8 +553,8 @@ together the two identifications to the out and back path.
 
 ## Total type over a contractible type
 
-We show that a ∑-type with contractible base is equivalent to the dependent
-type evaluated at the point of contraction.
+We show that a ∑-type with contractible base is equivalent to the dependent type
+evaluated at the point of contraction.
 
 ```rzk
 #def second-center-to-total-type-is-contr-base
@@ -596,19 +597,20 @@ type evaluated at the point of contraction.
   :=
     ( ( second-center-to-total-type-is-contr-base A is-contr-A C)
     , \ (x , u) →
-    ( rev (Σ (x : A) , C x)
-        ( x , u)
-        ( second-center-to-total-type-is-contr-base A is-contr-A C
-          ( total-type-to-second-center-is-contr-base A is-contr-A C (x , u)))
-        ( transport-lift A C
-            ( x)
-            ( center-contraction A is-contr-A)
-            ( rev
-              ( A)
-              ( center-contraction A is-contr-A)
+        ( rev
+          ( Σ ( x : A) , C x)
+          ( x , u)
+          ( second-center-to-total-type-is-contr-base A is-contr-A C
+            ( total-type-to-second-center-is-contr-base A is-contr-A C (x , u)))
+          ( transport-lift A C
               ( x)
-              ( homotopy-contraction A is-contr-A x))
-            ( u))))
+              ( center-contraction A is-contr-A)
+              ( rev
+                ( A)
+                ( center-contraction A is-contr-A)
+                ( x)
+                ( homotopy-contraction A is-contr-A x))
+              ( u))))
 
 #def has-section-total-type-to-second-center-is-contr-base
   ( A : U)
@@ -621,18 +623,6 @@ type evaluated at the point of contraction.
   :=
     ( ( second-center-to-total-type-is-contr-base A is-contr-A C)
     , \ u →
-      ( concat
-        ( C (center-contraction A is-contr-A))
-        ( total-type-to-second-center-is-contr-base A is-contr-A C
-          ( second-center-to-total-type-is-contr-base A is-contr-A C u))
-        ( transport A C
-          ( center-contraction A is-contr-A)
-          ( center-contraction A is-contr-A)
-          ( first-path-Σ A C (center-contraction A is-contr-A , u)
-            ( center-contraction A is-contr-A , u)
-            ( refl))
-          ( u))
-        ( u)
         ( transport2
           ( A)
           ( C)
@@ -656,12 +646,8 @@ type evaluated at the point of contraction.
               ( center-contraction A is-contr-A)
               ( homotopy-contraction A is-contr-A
                 ( center-contraction A is-contr-A)))
-              ( refl))
-            ( u))
-        ( second-path-Σ A C
-          ( ( center-contraction A is-contr-A) , u)
-          ( ( center-contraction A is-contr-A) , u)
-          ( refl))))
+            ( refl))
+          ( u)))
 
 #def equiv-total-type-second-center-is-contr-base
   ( A : U)
@@ -676,4 +662,30 @@ type evaluated at the point of contraction.
             A is-contr-A C)
       , ( has-section-total-type-to-second-center-is-contr-base
             A is-contr-A C))))
+```
+
+Any two elements in a contractible type are equal, so we extend the equivalence
+to the dependent type evaluated at any given term in the base.
+
+```rzk
+#def transport-equiv-total-type-second-center-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  ( a : A)
+  : Equiv
+    ( Σ ( x : A) , C x)
+    ( C a)
+  :=
+    equiv-comp
+      ( Σ ( x : A) , C x)
+      ( C (center-contraction A is-contr-A))
+      ( C a)
+      ( equiv-total-type-second-center-is-contr-base A is-contr-A C)
+      ( equiv-transport
+        ( A)
+        ( C)
+        ( center-contraction A is-contr-A)
+        ( a)
+        ( homotopy-contraction A is-contr-A a))
 ```

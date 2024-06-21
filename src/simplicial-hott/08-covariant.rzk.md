@@ -616,7 +616,7 @@ We can compose dependent arrows given a covariant type family.
         ( horn A x y z f g)
         ( dhorn A x y z f g C u v w ff gg))
 
-#def dcomp uses (extext)
+#def dcomp-is-covariant-family-is-segal-base uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( C : A → U)
@@ -631,11 +631,72 @@ We can compose dependent arrows given a covariant type family.
   ( gg : dhom A y z g C v w)
   : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
   :=
-    \ t →
-      ( second
-        ( first
-          ( is-contr-ext-dhom-is-covariant
-                A is-segal-A C is-covariant-C x y z f g u v w ff gg))) (t , t)
+    ( first
+      ( first
+        ( is-contr-ext-dhom-is-covariant
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)))
+
+#def witness-dcomp-is-covariant-family-is-segal-base uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+      ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg
+        ( dcomp-is-covariant-family-is-segal-base
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)
+  :=
+    ( second
+      ( first
+        ( is-contr-ext-dhom-is-covariant
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)))
+```
+
+```rzk
+#def uniqueness-dcomp-is-covariant-family-is-segal-base uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  ( hh : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w)
+  ( H : dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+        ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg hh)
+  : ( dcomp-is-covariant-family-is-segal-base
+      A is-segal-A C is-covariant-C x y z f g u v w ff gg) = hh
+  :=
+    first-path-Σ
+      ( dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w)
+      ( \ hh →
+          dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+          ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg hh)
+      ( ( dcomp-is-covariant-family-is-segal-base
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)
+        , ( witness-dcomp-is-covariant-family-is-segal-base
+            A is-segal-A C is-covariant-C x y z f g u v w ff gg))
+      ( hh , H)
+      ( homotopy-contraction
+        ( ( Σ ( hh : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w)
+        , dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+          ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg hh))
+        ( is-contr-ext-dhom-is-covariant
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)
+        ( hh , H))
 ```
 
 ## Covariant lifts, transport, and uniqueness

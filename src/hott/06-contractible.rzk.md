@@ -224,10 +224,6 @@ A retract of contractible types is contractible.
 #end is-contr-is-retract-of-is-contr
 ```
 
-```rzk
-
-```
-
 ## Functions between contractible types
 
 ```rzk title="Any function between contractible types is an equivalence"
@@ -522,7 +518,8 @@ In a contractible type any path $p : x = y$ is equal to the path constructed in
     ( A)
     ( x)
     ( \ y' p' → (all-elements-equal-is-contr A is-contr-A x y') = p')
-    ( left-inverse-concat A (center-contraction A is-contr-A) x (homotopy-contraction A is-contr-A x))
+    ( left-inverse-concat A (center-contraction A is-contr-A) x
+      ( homotopy-contraction A is-contr-A x))
     ( y)
     ( p)
 
@@ -552,4 +549,143 @@ together the two identifications to the out and back path.
       ( p)
       ( path-eq-path-through-center-is-contr A is-contr-A x y p))
     ( path-eq-path-through-center-is-contr A is-contr-A x y q)
+```
+
+## Total type over a contractible type
+
+We show that a ∑-type with contractible base is equivalent to the dependent type
+evaluated at the point of contraction.
+
+```rzk
+#def total-type-center-fiber-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  : ( C (center-contraction A is-contr-A))
+  → ( Σ ( x : A) , C x)
+  :=
+    \ v → ((center-contraction A is-contr-A) , v)
+
+#def center-fiber-total-type-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  : ( Σ ( x : A) , C x)
+  → ( C (center-contraction A is-contr-A))
+  :=
+    \ (x , u) →
+      transport
+        ( A)
+        ( C)
+        ( x)
+        ( center-contraction A is-contr-A)
+        ( rev
+          ( A)
+          ( center-contraction A is-contr-A)
+          ( x)
+          ( homotopy-contraction A is-contr-A x))
+        ( u)
+
+#def has-retraction-center-fiber-total-type-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  : has-retraction
+    ( Σ ( x : A) , C x)
+    ( C (center-contraction A is-contr-A))
+    ( center-fiber-total-type-is-contr-base A is-contr-A C)
+  :=
+    ( ( total-type-center-fiber-is-contr-base A is-contr-A C)
+    , \ (x , u) →
+        ( rev
+          ( Σ ( x : A) , C x)
+          ( x , u)
+          ( total-type-center-fiber-is-contr-base A is-contr-A C
+            ( center-fiber-total-type-is-contr-base A is-contr-A C (x , u)))
+          ( transport-lift A C
+              ( x)
+              ( center-contraction A is-contr-A)
+              ( rev
+                ( A)
+                ( center-contraction A is-contr-A)
+                ( x)
+                ( homotopy-contraction A is-contr-A x))
+              ( u))))
+
+#def has-section-center-fiber-total-type-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  : has-section
+    ( Σ ( x : A) , C x)
+    ( C (center-contraction A is-contr-A))
+    ( center-fiber-total-type-is-contr-base A is-contr-A C)
+  :=
+    ( ( total-type-center-fiber-is-contr-base A is-contr-A C)
+    , \ u →
+        ( transport2
+          ( A)
+          ( C)
+          ( center-contraction A is-contr-A)
+          ( center-contraction A is-contr-A)
+          ( rev
+            ( A)
+            ( center-contraction A is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( homotopy-contraction A is-contr-A
+              ( center-contraction A is-contr-A)))
+          ( refl)
+          ( all-paths-equal-is-contr
+            ( A)
+            ( is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( center-contraction A is-contr-A)
+            ( rev
+              ( A)
+              ( center-contraction A is-contr-A)
+              ( center-contraction A is-contr-A)
+              ( homotopy-contraction A is-contr-A
+                ( center-contraction A is-contr-A)))
+            ( refl))
+          ( u)))
+
+#def equiv-center-fiber-total-type-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  : Equiv
+    ( Σ ( x : A) , C x)
+    ( C (center-contraction A is-contr-A))
+  :=
+    ( ( center-fiber-total-type-is-contr-base A is-contr-A C)
+    , ( ( ( has-retraction-center-fiber-total-type-is-contr-base
+            A is-contr-A C)
+      , ( has-section-center-fiber-total-type-is-contr-base
+            A is-contr-A C))))
+```
+
+Any two elements in a contractible type are equal, so we extend the equivalence
+to the dependent type evaluated at any given term in the base.
+
+```rzk
+#def transport-equiv-center-fiber-total-type-is-contr-base
+  ( A : U)
+  ( is-contr-A : is-contr A)
+  ( C : A → U)
+  ( a : A)
+  : Equiv
+    ( Σ ( x : A) , C x)
+    ( C a)
+  :=
+    equiv-comp
+      ( Σ ( x : A) , C x)
+      ( C (center-contraction A is-contr-A))
+      ( C a)
+      ( equiv-center-fiber-total-type-is-contr-base A is-contr-A C)
+      ( equiv-transport
+        ( A)
+        ( C)
+        ( center-contraction A is-contr-A)
+        ( a)
+        ( homotopy-contraction A is-contr-A a))
 ```

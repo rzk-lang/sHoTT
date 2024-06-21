@@ -648,7 +648,7 @@ Segal, then so is `Σ A, C`.
       ( compositions-are-dhorn-fillings A x y z f g
         ( comp-is-segal A is-segal-A x y z f g)
         ( witness-comp-is-segal A is-segal-A x y z f g)
-        C u v w ff gg)
+          C u v w ff gg)
       ( is-contr-horn-ext-is-covariant A is-segal-A C is-covariant-C
         ( horn A x y z f g)
         ( dhorn A x y z f g C u v w ff gg))
@@ -674,6 +674,8 @@ Segal, then so is `Σ A, C`.
           ( is-contr-ext-is-covariant
                 A is-segal-A C is-covariant-C x y z f g u v w ff gg))) (t , t)
 ```
+
+-- Do I want to prove an analogue of is-segal-is-local-horn-inclusion or other?
 
 ## Dependent composition try
 

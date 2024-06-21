@@ -557,7 +557,7 @@ We show that a ∑-type with contractible base is equivalent to the dependent ty
 evaluated at the point of contraction.
 
 ```rzk
-#def second-center-to-total-type-is-contr-base
+#def total-type-center-fiber-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
@@ -566,7 +566,7 @@ evaluated at the point of contraction.
   :=
     \ v → ((center-contraction A is-contr-A) , v)
 
-#def total-type-to-second-center-is-contr-base
+#def center-fiber-total-type-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
@@ -586,22 +586,22 @@ evaluated at the point of contraction.
           ( homotopy-contraction A is-contr-A x))
         ( u)
 
-#def has-retraction-total-type-to-second-center-is-contr-base
+#def has-retraction-center-fiber-total-type-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
   : has-retraction
     ( Σ ( x : A) , C x)
     ( C (center-contraction A is-contr-A))
-    ( total-type-to-second-center-is-contr-base A is-contr-A C)
+    ( center-fiber-total-type-is-contr-base A is-contr-A C)
   :=
-    ( ( second-center-to-total-type-is-contr-base A is-contr-A C)
+    ( ( total-type-center-fiber-is-contr-base A is-contr-A C)
     , \ (x , u) →
         ( rev
           ( Σ ( x : A) , C x)
           ( x , u)
-          ( second-center-to-total-type-is-contr-base A is-contr-A C
-            ( total-type-to-second-center-is-contr-base A is-contr-A C (x , u)))
+          ( total-type-center-fiber-is-contr-base A is-contr-A C
+            ( center-fiber-total-type-is-contr-base A is-contr-A C (x , u)))
           ( transport-lift A C
               ( x)
               ( center-contraction A is-contr-A)
@@ -612,16 +612,16 @@ evaluated at the point of contraction.
                 ( homotopy-contraction A is-contr-A x))
               ( u))))
 
-#def has-section-total-type-to-second-center-is-contr-base
+#def has-section-center-fiber-total-type-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
   : has-section
     ( Σ ( x : A) , C x)
     ( C (center-contraction A is-contr-A))
-    ( total-type-to-second-center-is-contr-base A is-contr-A C)
+    ( center-fiber-total-type-is-contr-base A is-contr-A C)
   :=
-    ( ( second-center-to-total-type-is-contr-base A is-contr-A C)
+    ( ( total-type-center-fiber-is-contr-base A is-contr-A C)
     , \ u →
         ( transport2
           ( A)
@@ -649,7 +649,7 @@ evaluated at the point of contraction.
             ( refl))
           ( u)))
 
-#def equiv-total-type-second-center-is-contr-base
+#def equiv-center-fiber-total-type-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
@@ -657,10 +657,10 @@ evaluated at the point of contraction.
     ( Σ ( x : A) , C x)
     ( C (center-contraction A is-contr-A))
   :=
-    ( ( total-type-to-second-center-is-contr-base A is-contr-A C)
-    , ( ( ( has-retraction-total-type-to-second-center-is-contr-base
+    ( ( center-fiber-total-type-is-contr-base A is-contr-A C)
+    , ( ( ( has-retraction-center-fiber-total-type-is-contr-base
             A is-contr-A C)
-      , ( has-section-total-type-to-second-center-is-contr-base
+      , ( has-section-center-fiber-total-type-is-contr-base
             A is-contr-A C))))
 ```
 
@@ -668,7 +668,7 @@ Any two elements in a contractible type are equal, so we extend the equivalence
 to the dependent type evaluated at any given term in the base.
 
 ```rzk
-#def transport-equiv-total-type-second-center-is-contr-base
+#def transport-equiv-center-fiber-total-type-is-contr-base
   ( A : U)
   ( is-contr-A : is-contr A)
   ( C : A → U)
@@ -681,7 +681,7 @@ to the dependent type evaluated at any given term in the base.
       ( Σ ( x : A) , C x)
       ( C (center-contraction A is-contr-A))
       ( C a)
-      ( equiv-total-type-second-center-is-contr-base A is-contr-A C)
+      ( equiv-center-fiber-total-type-is-contr-base A is-contr-A C)
       ( equiv-transport
         ( A)
         ( C)

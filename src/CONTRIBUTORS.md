@@ -6,6 +6,7 @@ Formalizations were contributed by the following people (listed alphabetically):
 - [Fredrik Bakke](https://github.com/fredrik-bakke),
 - [César Bardomiano Martínez](https://github.com/cesarbm03),
 - [Jonathan Campbell](https://github.com/jonalfcam),
+- [Theofanis Chatzidiamantis-Christoforidis](https://github.com/thchatzidiamantis),
 - [Aras Ergus](https://www.aergus.net/),
 - [Matthias Hutzler](https://github.com/MatthiasHu),
 - [Nikolai Kudasov](https://fizruk.github.io/),

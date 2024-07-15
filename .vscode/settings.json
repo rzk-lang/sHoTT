@@ -62,6 +62,5 @@
     "editor.detectIndentation": false,
     "editor.insertSpaces": true
   },
-  "rzk.format.enable": true,
-  "agdaMode.connection.agdaLanguageServer": true
+  "rzk.format.enable": true
 }

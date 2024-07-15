@@ -469,8 +469,8 @@ Segal, then so is `Σ A, C`.
 
 ## Dependent composition
 
-In a covariant family over a Segal type, we will define dependent composition
-of arrows. We first apply the result that the total type is Segal as follows.
+In a covariant family over a Segal type, we will define dependent composition of
+arrows. We first apply the result that the total type is Segal as follows.
 
 ```rzk
 #def is-contr-horn-ext-is-covariant-family-is-segal-base uses (extext)

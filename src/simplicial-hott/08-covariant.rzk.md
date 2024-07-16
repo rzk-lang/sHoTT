@@ -467,6 +467,269 @@ Segal, then so is `Σ A, C`.
             ( is-naive-left-fibration-is-covariant A C is-covariant-C))
 ```
 
+## Dependent composition
+
+In a covariant family over a Segal type, we will define dependent composition of
+arrows. We first apply the result that the total type is Segal as follows.
+
+```rzk
+#def is-contr-horn-ext-is-covariant-family-is-segal-base uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( a : (t : Λ) → A)
+  ( c : (t : Λ) → C (a t))
+  : is-contr
+    ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
+      , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
+  :=
+    is-contr-equiv-is-contr
+      ( ( t : Δ²) → (Σ (x : A) , C x) [Λ t ↦ (a t , c t)])
+      ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
+        , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
+      ( axiom-choice
+        ( 2 × 2)
+        ( Δ²)
+        ( \ t → Λ t)
+        ( \ t → A)
+        ( \ t → \ x → C x)
+        ( a)
+        ( c))
+      ( has-unique-inner-extensions-is-segal
+        ( Σ ( x : A) , C x)
+        ( is-segal-total-type-covariant-family-is-segal-base
+          A C is-covariant-C is-segal-A)
+        ( \ t → (a t , c t)))
+
+#def equiv-comp-horn-ext-is-segal-base
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( a : (t : Λ) → A)
+  ( c : (t : Λ) → C (a t))
+  : Equiv
+    ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
+    , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
+    ( ( t : Δ²)
+      → C (witness-comp-is-segal A is-segal-A (a (0₂ , 0₂)) (a (1₂ , 0₂))
+          ( a (1₂ , 1₂)) (\ s → a (s , 0₂)) (\ s → a (1₂ , s)) t) [Λ t ↦ c t])
+  :=
+    transport-equiv-center-fiber-total-type-is-contr-base
+      ( ( t : Δ²) → A [Λ t ↦ a t])
+      ( has-unique-inner-extensions-is-segal A is-segal-A a)
+      ( \ f → ((t : Δ²) → C (f t) [Λ t ↦ c t]))
+      ( witness-comp-is-segal A is-segal-A (a (0₂ , 0₂)) (a (1₂ , 0₂))
+          ( a (1₂ , 1₂)) (\ s → a (s , 0₂)) (\ s → a (1₂ , s)))
+
+#def is-contr-comp-horn-ext-is-covariant-family-is-segal-base uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( a : (t : Λ) → A)
+  ( c : (t : Λ) → C (a t))
+  : is-contr
+    ( ( t : Δ²)
+      → C (witness-comp-is-segal A is-segal-A (a (0₂ , 0₂)) (a (1₂ , 0₂))
+          ( a (1₂ , 1₂)) (\ s → a (s , 0₂)) (\ s → a (1₂ , s)) t) [Λ t ↦ c t])
+  :=
+    is-contr-equiv-is-contr
+      ( Σ ( f : ((t : Δ²) → A [Λ t ↦ a t]))
+      , ( ( t : Δ²) → C (f t) [Λ t ↦ c t]))
+      ( ( t : Δ²)
+        → C (witness-comp-is-segal A is-segal-A (a (0₂ , 0₂)) (a (1₂ , 0₂))
+            ( a (1₂ , 1₂)) (\ s → a (s , 0₂)) (\ s → a (1₂ , s)) t) [Λ t ↦ c t])
+      ( equiv-comp-horn-ext-is-segal-base A is-segal-A C a c)
+      ( is-contr-horn-ext-is-covariant-family-is-segal-base
+        A is-segal-A C is-covariant-C a c)
+
+#def dhorn
+  ( A : U)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( C : A → U)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : ( ( t : Λ) → C (horn A x y z f g t))
+  :=
+    \ (t , s) →
+      recOR
+        ( s ≡ 0₂ ↦ ff t
+        , t ≡ 1₂ ↦ gg s)
+
+#def dcompositions-are-dhorn-fillings
+  ( A : U)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( h : hom A x z)
+  ( α : hom2 A x y z f g h)
+  ( C : A → U)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : Equiv
+    ( Σ ( hh : dhom A x z h C u w)
+      , ( dhom2 A x y z f g h α C u v w ff gg hh))
+    ( ( t : Δ²) → C (α t) [Λ t ↦ dhorn A x y z f g C u v w ff gg t])
+  :=
+    ( \ (hh , H) t → H t
+    , ( ( \ k → (\ t → k (t , t) , \ (t , s) → k (t , s))
+        , \ (hh , H) → refl)
+      , ( \ k → (\ t → k (t , t) , \ (t , s) → k (t , s))
+        , \ (hh , H) → refl)))
+```
+
+We now prove contractibility of a type that will be used to define dependent
+composition.
+
+```rzk title="RS17, Remark 8.11"
+#def is-contr-dhom2-comp-is-covariant-family-is-segal-base uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : is-contr
+    ( Σ ( hh : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w)
+      , dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+        ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg hh)
+  :=
+    is-contr-equiv-is-contr'
+      ( Σ ( hh : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w)
+        , dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+          ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg hh)
+      ( ( t : Δ²) → C ((witness-comp-is-segal A is-segal-A x y z f g) t)
+                    [Λ t ↦ dhorn A x y z f g C u v w ff gg t])
+      ( dcompositions-are-dhorn-fillings A x y z f g
+        ( comp-is-segal A is-segal-A x y z f g)
+        ( witness-comp-is-segal A is-segal-A x y z f g)
+          C u v w ff gg)
+      ( is-contr-comp-horn-ext-is-covariant-family-is-segal-base
+        ( A)
+        ( is-segal-A)
+        ( C)
+        ( is-covariant-C)
+        ( horn A x y z f g)
+        ( dhorn A x y z f g C u v w ff gg))
+
+#def dcomp-is-covariant-family-is-segal-base uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w
+  :=
+    ( first
+      ( first
+        ( is-contr-dhom2-comp-is-covariant-family-is-segal-base
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)))
+
+#def witness-dcomp-is-covariant-family-is-segal-base uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  : dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+      ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg
+        ( dcomp-is-covariant-family-is-segal-base
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)
+  :=
+    ( second
+      ( first
+        ( is-contr-dhom2-comp-is-covariant-family-is-segal-base
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)))
+```
+
+Dependent composition is unique.
+
+```rzk
+#def uniqueness-dcomp-is-covariant-family-is-segal-base uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( x y z : A)
+  ( f : hom A x y)
+  ( g : hom A y z)
+  ( u : C x)
+  ( v : C y)
+  ( w : C z)
+  ( ff : dhom A x y f C u v)
+  ( gg : dhom A y z g C v w)
+  ( hh : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w)
+  ( H : dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+        ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg hh)
+  : ( dcomp-is-covariant-family-is-segal-base
+      A is-segal-A C is-covariant-C x y z f g u v w ff gg) = hh
+  :=
+    first-path-Σ
+      ( dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w)
+      ( \ hh →
+          dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+          ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg hh)
+      ( ( dcomp-is-covariant-family-is-segal-base
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)
+        , ( witness-dcomp-is-covariant-family-is-segal-base
+            A is-segal-A C is-covariant-C x y z f g u v w ff gg))
+      ( hh , H)
+      ( homotopy-contraction
+        ( ( Σ ( hh : dhom A x z (comp-is-segal A is-segal-A x y z f g) C u w)
+        , dhom2 A x y z f g (comp-is-segal A is-segal-A x y z f g)
+          ( witness-comp-is-segal A is-segal-A x y z f g) C u v w ff gg hh))
+        ( is-contr-dhom2-comp-is-covariant-family-is-segal-base
+          A is-segal-A C is-covariant-C x y z f g u v w ff gg)
+        ( hh , H))
+```
+
+## Covariant lifts, transport, and uniqueness
+
+In a covariant family C over a base type A , a term u : C x may be transported
+along an arrow f : hom A x y to give a term in C y.
+
+```rzk title="RS17, covariant transport from beginning of Section 8.2"
+#def covariant-transport
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( u : C x)
+  : C y
+  :=
+    first (center-contraction (dhom-from A x y f C u) (is-covariant-C x y f u))
+```
+
 ## Representable covariant families
 
 If `A` is a Segal type and `a : A` is any term, then `hom A a` defines a
@@ -1054,24 +1317,6 @@ types as follows.
             , ( Δ¹ t) ∧ (s ≡ 1₂) ↦ f t]))
     ( representable-dhom-from-composite-expansion A a x y f u)
     ( representable-dhom-from-cofibration-composition A a x y f u)
-```
-
-## Covariant lifts, transport, and uniqueness
-
-In a covariant family C over a base type A , a term u : C x may be transported
-along an arrow f : hom A x y to give a term in C y.
-
-```rzk title="RS17, covariant transport from beginning of Section 8.2"
-#def covariant-transport
-  ( A : U)
-  ( x y : A)
-  ( f : hom A x y)
-  ( C : A → U)
-  ( is-covariant-C : is-covariant A C)
-  ( u : C x)
-  : C y
-  :=
-    first (center-contraction (dhom-from A x y f C u) (is-covariant-C x y f u))
 ```
 
 For example, if `A` is a Segal type and `a : A`, the family `C x := hom A a x`

@@ -8,14 +8,32 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
+### The 3 dimensional 2-Segal horns
+
 ```rzk
--- #def is-2segal-local
---   ( A : U)
---   : U
---   :=
---     product
---      ( is-local-type (2 × 2 × 2) Δ³ (2segalhorn1) A)
---      ( is-local-type (2 × 2 × 2) Δ³ (2segalhorn2) A)
+#def Δ³₍₀₂₎
+  : Δ³ → TOPE
+  :=
+    \ ((t1 , t2) , t3) → t3 ≡ 0₂ ∨ t3 ≡ t2
+
+#def Δ³₍₁₃₎
+  : Δ³ → TOPE
+  :=
+    \ ((t1 , t2) , t3) → t2 ≡ t1 ∨ t1 ≡ 1₂
+```
+
+### 2-Segal types
+
+A type is 2-Segal if it is local with respect to 2-Segal horn inclusions.
+
+```rzk
+#def is-2segal-local
+  ( A : U)
+  : U
+  :=
+    product
+     ( is-local-type (2 × 2 × 2) Δ³ Δ³₍₀₂₎ A)
+     ( is-local-type (2 × 2 × 2) Δ³ Δ³₍₁₃₎ A)
 ```
 
 ```rzk

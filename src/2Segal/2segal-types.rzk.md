@@ -9,13 +9,13 @@ This is a literate `rzk` file:
 ```
 
 ```rzk
-#def is-2segal-local
-  ( A : U)
-  : U
-  :=
-    product
-      ( is-local-type (2 × 2 × 2) Δ³ Λ³₁ A)
-      ( is-local-type (2 × 2 × 2) Δ³ Λ³₂ A)
+-- #def is-2segal-local
+--   ( A : U)
+--   : U
+--   :=
+--     product
+--      ( is-local-type (2 × 2 × 2) Δ³ (2segalhorn1) A)
+--      ( is-local-type (2 × 2 × 2) Δ³ (2segalhorn2) A)
 ```
 
 ```rzk

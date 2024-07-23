@@ -10,7 +10,7 @@ This is a literate `rzk` file:
 
 ### The 3 dimensional 2-Segal horns
 
-```rzkx
+```rzk
 #def Λ³₍₀₂₎
   : Δ³ → TOPE
   :=
@@ -116,17 +116,48 @@ We use the conventions from the definition of `#!rzk hom3` from
       ( ( t : Δ³) → A [Λ³₍₀₂₎ t ↦ 3horn₍₀₂₎ A w x y z f gf hgf g h α₃ α₁ t])
   :=
     ( \ H t → second (second (second H)) t
-      , ( ( \ k → (\ t → k ((t , t) , t)
+      , ( ( ( \ k → (\ t → k ((1₂ , t) , t)
           , ( \ (t , s) → k ((t , s) , s)
             , ( \ (t , s) → k ((1₂ , t) , s)
               , \ ((t1 , t2) , t3) → k ((t1 , t2) , t3))))
-        , \ H → refl)
-          , ( U , U)
-      )
-    )
+          , \ H → refl))
+        , ( ( \ k → (\ t → k ((1₂ , t) , t)
+            , ( \ (t , s) → k ((t , s) , s)
+              , ( \ (t , s) → k ((1₂ , t) , s)
+                , \ ((t1 , t2) , t3) → k ((t1 , t2) , t3))))
+            , \ H → refl))))
+
+#def associators-are-3horn-fillings₍₁₃₎
+  ( A : U)
+  ( w x y z : A)
+  ( f : hom A w x)
+  ( hgf : hom A w z)
+  ( g : hom A x y)
+  ( hg : hom A x z)
+  ( h : hom A y z)
+  ( α₂ : hom2 A w x z f hg hgf)
+  ( α₀ : hom2 A x y z g h hg)
+  : Equiv
+      ( Σ ( gf : hom A w y)
+      , ( Σ ( α₃ : hom2 A w x y f g gf)
+        , ( Σ ( α₁ : hom2 A w y z gf h hgf)
+            , hom3 A w x y z f gf hgf g hg h α₃ α₂ α₁ α₀)))
+      ( ( t : Δ³) → A [Λ³₍₁₃₎ t ↦ 3horn₍₁₃₎ A w x y z f hgf g hg h α₂ α₀ t])
+  :=
+    ( \ H t → second (second (second H)) t
+      , ( ( ( \ k → (\ t → k ((t , t) , 0₂)
+          , ( \ (t , s) → k ((t , s) , 0₂)
+            , ( \ (t , s) → k ((t , t) , s)
+              , \ ((t1 , t2) , t3) → k ((t1 , t2) , t3))))
+          , \ H → refl))
+        , ( ( \ k → (\ t → k ((t , t) , 0₂)
+            , ( \ (t , s) → k ((t , s) , 0₂)
+              , ( \ (t , s) → k ((t , t) , s)
+                , \ ((t1 , t2) , t3) → k ((t1 , t2) , t3))))
+            , \ H → refl))))
 ```
 
-A type is 2-Segal if it is local with respect to 2-Segal horn inclusions.
+A type is 2-Segal iff it is local with respect to 2-Segal horn inclusions.
 
 ```rzk
 #def is-local-2-segal-horn-inclusion

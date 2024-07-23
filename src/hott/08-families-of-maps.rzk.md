@@ -789,8 +789,8 @@ contractible.
 
 The proof of `weakfunext-funext` from `06-contractible.rzk` works with a weaker
 version of function extensionality only requiring the map in the converse
-direction. We can then prove a cycle of implications between FunExt, NaiveFunExt
-and WeakFunExt.
+direction. We can then prove a cycle of implications between `#!rzk FunExt`, `#!rzk NaiveFunExt`
+and `#!rzk WeakFunExt`.
 
 ```rzk
 #def NaiveFunExt

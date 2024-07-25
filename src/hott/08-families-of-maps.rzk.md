@@ -695,7 +695,15 @@ contractible.
 
 ## Weak function extensionality implies function extensionality
 
-```rzk title="Rijke, 13.1"
+Using the fundamental theorem of identity types, we prove the converse of
+`weakfunext-funext`, so we now know that `#!rzk FunExt` is logically equivalent
+to `#!rzk WeakFunExt`. We follow the proof in Rijke, section 13.1.
+
+We first fix one of the two functions and show that `#!rzk WeakFunExt` implies a
+version of function extensionality that asserts that a type of "maps together
+with homotopies" is contractible.
+
+```rzk
 #def prod-eq-pair-dhomotopy
   ( A : U)
   ( C : A → U)
@@ -765,7 +773,12 @@ contractible.
           ( A)
           ( \ x → Σ (c : (C x)) , (f x =_{C x} c))
           ( \ x → is-contr-based-paths (C x) (f x)))
+```
 
+We now use the fundamental theorem of identity types to go from the version for
+a fixed f to the total `#!rzk FunExt` axiom.
+
+```rzk
 #def funext-weirdfunext
   ( weirdfunext : WeirdFunExt)
   : FunExt

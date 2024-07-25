@@ -8,6 +8,12 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
+```rzk
+#assume funext : FunExt
+-- #assume weakextext : WeakExtExt
+-- #assume extext : ExtExt
+```
+
 ### The 3 dimensional 2-Segal horns
 
 ```rzk
@@ -20,6 +26,16 @@ This is a literate `rzk` file:
   : Δ³ → TOPE
   :=
     \ ((t1 , t2) , t3) → t2 ≡ t3 ∨ t1 ≡ 1₂ -- This could be t1==t2.
+
+#def 3-horn-restriction₍₀₂₎
+  ( A : U)
+  : ( Δ³ → A) → (Λ³₍₀₂₎ → A)
+  := \ f t → f t
+
+#def 3-horn-restriction₍₁₃₎
+  ( A : U)
+  : ( Δ³ → A) → (Λ³₍₁₃₎ → A)
+  := \ f t → f t
 ```
 
 ### 2-Segal types
@@ -157,6 +173,21 @@ We use the conventions from the definition of `#!rzk hom3` from
             , \ H → refl))))
 ```
 
+A type is 2-Segal if and only if its based hom-types are Segal.
+
+```rzk
+#def test45
+  ( A : U)
+  ( w x y : A)
+  ( f : hom A w x)
+  ( gf : hom A w y)
+  ( g : hom A x y)
+  ( α₃ : hom2 A w x y f g gf)
+  : hom (coslice A w) (x , f) (y , gf)
+  :=
+    U
+```
+
 A type is 2-Segal iff it is local with respect to 2-Segal horn inclusions.
 
 ```rzk
@@ -167,4 +198,74 @@ A type is 2-Segal iff it is local with respect to 2-Segal horn inclusions.
     product
      ( is-local-type (2 × 2 × 2) Δ³ Λ³₍₀₂₎ A)
      ( is-local-type (2 × 2 × 2) Δ³ Λ³₍₁₃₎ A)
+```
+
+The proof of `is-local-horn-inclusion-function-type` works for 2-segal types by
+just changing the horns.
+
+```rzk
+#def is-local-2-segal-horn-inclusion-function-type uses (funext)
+  ( X : U)
+  ( A : X → U)
+  ( fiberwise-is-2-segal-A : (x : X) → is-local-2-segal-horn-inclusion (A x))
+  : is-local-2-segal-horn-inclusion ((x : X) → A x)
+  :=
+    ( ( is-equiv-triple-comp
+        ( Δ³ → ((x : X) → A x))
+        ( ( x : X) → Δ³ → A x)
+        ( ( x : X) → Λ³₍₀₂₎ → A x)
+        ( Λ³₍₀₂₎ → ((x : X) → A x))
+        ( \ g x t → g t x) -- first equivalence
+        ( second (flip-ext-fun
+          ( 2 × 2 × 2)
+          ( Δ³)
+          ( \ t → BOT)
+          ( X)
+          ( \ t → A)
+          ( \ t → recBOT)))
+        ( \ h x t → h x t) -- second equivalence
+        ( second (equiv-function-equiv-family
+          ( funext)
+          ( X)
+          ( \ x → (Δ³ → A x))
+          ( \ x → (Λ³₍₀₂₎ → A x))
+          ( \ x → (3-horn-restriction₍₀₂₎ (A x)
+            , first (fiberwise-is-2-segal-A x)))))
+        ( \ h t x → (h x) t) -- third equivalence
+        ( second (flip-ext-fun-inv
+          ( 2 × 2 × 2)
+          ( \ t → Λ³₍₀₂₎ t)
+          ( \ t → BOT)
+          ( X)
+          ( \ t → A)
+          ( \ t → recBOT))))
+          , ( is-equiv-triple-comp
+              ( Δ³ → ((x : X) → A x))
+              ( ( x : X) → Δ³ → A x)
+              ( ( x : X) → Λ³₍₁₃₎ → A x)
+              ( Λ³₍₁₃₎ → ((x : X) → A x))
+              ( \ g x t → g t x) -- first equivalence
+              ( second (flip-ext-fun
+                ( 2 × 2 × 2)
+                ( Δ³)
+                ( \ t → BOT)
+                ( X)
+                ( \ t → A)
+                ( \ t → recBOT)))
+              ( \ h x t → h x t) -- second equivalence
+              ( second (equiv-function-equiv-family
+                ( funext)
+                ( X)
+                ( \ x → (Δ³ → A x))
+                ( \ x → (Λ³₍₁₃₎ → A x))
+                ( \ x → (3-horn-restriction₍₁₃₎ (A x)
+                  , second (fiberwise-is-2-segal-A x)))))
+              ( \ h t x → (h x) t) -- third equivalence
+              ( second (flip-ext-fun-inv
+                ( 2 × 2 × 2)
+                ( \ t → Λ³₍₁₃₎ t)
+                ( \ t → BOT)
+                ( X)
+                ( \ t → A)
+                ( \ t → recBOT)))))
 ```

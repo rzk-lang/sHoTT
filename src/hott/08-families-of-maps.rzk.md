@@ -637,7 +637,6 @@ This allows us to apply "based path induction" to a family satisfying the
 fundamental theorem:
 
 ```rzk
--- Please suggest a better name.
 #def ind-based-path
   ( familyequiv : (z : A) → (is-equiv (a = z) (B z) (f z)))
   ( P : (z : A) → B z → U)
@@ -696,7 +695,7 @@ contractible.
 
 ## Weak function extensionality implies function extensionality
 
-```rzk title"Rijke, 13.1"
+```rzk title="Rijke, 13.1"
 #def prod-eq-pair-dhomotopy
   ( A : U)
   ( C : A → U)

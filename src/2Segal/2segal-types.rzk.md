@@ -11,7 +11,7 @@ This is a literate `rzk` file:
 ```rzk
 #assume funext : FunExt
 -- #assume weakextext : WeakExtExt
--- #assume extext : ExtExt
+#assume extext : ExtExt
 ```
 
 ### The 3 dimensional 2-Segal horns
@@ -176,16 +176,16 @@ We use the conventions from the definition of `#!rzk hom3` from
 A type is 2-Segal if and only if its based hom-types are Segal.
 
 ```rzk
-#def test45
-  ( A : U)
-  ( w x y : A)
-  ( f : hom A w x)
-  ( gf : hom A w y)
-  ( g : hom A x y)
-  ( α₃ : hom2 A w x y f g gf)
-  : hom (coslice A w) (x , f) (y , gf)
-  :=
-    U
+-- #def test45
+--   ( A : U)
+--   ( w x y : A)
+--   ( f : hom A w x)
+--   ( gf : hom A w y)
+--   ( g : hom A x y)
+--   ( α₃ : hom2 A w x y f g gf)
+--   : hom (coslice A w) (x , f) (y , gf)
+--   :=
+--     U
 ```
 
 A type is 2-Segal iff it is local with respect to 2-Segal horn inclusions.
@@ -200,72 +200,148 @@ A type is 2-Segal iff it is local with respect to 2-Segal horn inclusions.
      ( is-local-type (2 × 2 × 2) Δ³ Λ³₍₁₃₎ A)
 ```
 
-The proof of `is-local-horn-inclusion-function-type` works for 2-segal types by
-just changing the horns.
+The proof of `is-local-horn-inclusion-function-type` generalizes to types being
+local with respect to an arbitrary subshape inclusion.
+
+```rzk
+#def subshape-restriction
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : U)
+  : ( ψ → A) → (ϕ → A)
+  := \ f t → f t
+
+#def is-local-function-type-fiberwise-is-local
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : U)
+  ( C : A → U)
+  ( fiberwise-is-local-C : (x : A) → is-local-type I ψ ϕ (C x))
+  : is-local-type I ψ ϕ ((x : A) → C x)
+  :=
+    is-equiv-triple-comp
+      ( ψ → ((x : A) → C x))
+      ( ( x : A) → ψ → C x)
+      ( ( x : A) → ϕ → C x)
+      ( ϕ → ((x : A) → C x))
+      ( \ g x t → g t x) -- first equivalence
+      ( second (flip-ext-fun
+        ( I)
+        ( ψ)
+        ( \ t → BOT)
+        ( A)
+        ( \ t → C)
+        ( \ t → recBOT)))
+      ( \ h x t → h x t) -- second equivalence
+      ( second (equiv-function-equiv-family
+        ( funext)
+        ( A)
+        ( \ x → (ψ → C x))
+        ( \ x → (ϕ → C x))
+        ( \ x → (subshape-restriction I ψ ϕ (C x) , fiberwise-is-local-C x))))
+      ( \ h t x → (h x) t) -- third equivalence
+      ( second (flip-ext-fun-inv
+        ( I)
+        ( \ t → ϕ t)
+        ( \ t → BOT)
+        ( A)
+        ( \ t → C)
+        ( \ t → recBOT)))
+```
+
+Using this general form, we prove that (dependent) function types into a family
+of 2-Segal types are 2-Segal.
 
 ```rzk
 #def is-local-2-segal-horn-inclusion-function-type uses (funext)
-  ( X : U)
-  ( A : X → U)
-  ( fiberwise-is-2-segal-A : (x : X) → is-local-2-segal-horn-inclusion (A x))
-  : is-local-2-segal-horn-inclusion ((x : X) → A x)
+  ( A : U)
+  ( C : A → U)
+  ( fiberwise-is-2-segal-A : (x : A) → is-local-2-segal-horn-inclusion (C x))
+  : is-local-2-segal-horn-inclusion ((x : A) → C x)
   :=
-    ( ( is-equiv-triple-comp
-        ( Δ³ → ((x : X) → A x))
-        ( ( x : X) → Δ³ → A x)
-        ( ( x : X) → Λ³₍₀₂₎ → A x)
-        ( Λ³₍₀₂₎ → ((x : X) → A x))
-        ( \ g x t → g t x) -- first equivalence
-        ( second (flip-ext-fun
-          ( 2 × 2 × 2)
-          ( Δ³)
+    ( is-local-function-type-fiberwise-is-local
+        ( 2 × 2 × 2)
+        ( Δ³)
+        ( Λ³₍₀₂₎)
+        ( A)
+        ( C)
+        ( \ x → first (fiberwise-is-2-segal-A x))
+    , is-local-function-type-fiberwise-is-local
+        ( 2 × 2 × 2)
+        ( Δ³)
+        ( Λ³₍₁₃₎)
+        ( A)
+        ( C)
+        ( \ x → second (fiberwise-is-2-segal-A x)))
+```
+
+We do the same for the proof of `is-local-horn-inclusion-extension-type`
+
+```rzk
+#def is-local-subshape-inclusion-extension-type uses (extext)
+  ( I J : CUBE)
+  ( χ : I → TOPE)
+  ( ψ : J → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : χ → U)
+  ( fiberwise-is-local-A : (s : χ) → is-local-type J ψ ϕ (A s))
+  : is-local-type J ψ ϕ ((s : χ) → A s)
+  :=
+    is-equiv-triple-comp
+      ( ψ → (s : χ) → A s)
+      ( ( s : χ) → ψ → A s)
+      ( ( s : χ) → ϕ → A s)
+      ( ϕ → (s : χ) → A s)
+      ( \ g s t → g t s)  -- first equivalence
+      ( second
+        ( fubini
+          ( J)
+          ( I)
+          ( \ t → ψ t)
           ( \ t → BOT)
-          ( X)
-          ( \ t → A)
-          ( \ t → recBOT)))
-        ( \ h x t → h x t) -- second equivalence
-        ( second (equiv-function-equiv-family
-          ( funext)
-          ( X)
-          ( \ x → (Δ³ → A x))
-          ( \ x → (Λ³₍₀₂₎ → A x))
-          ( \ x → (3-horn-restriction₍₀₂₎ (A x)
-            , first (fiberwise-is-2-segal-A x)))))
-        ( \ h t x → (h x) t) -- third equivalence
-        ( second (flip-ext-fun-inv
-          ( 2 × 2 × 2)
-          ( \ t → Λ³₍₀₂₎ t)
+          ( χ)
+          ( \ s → BOT)
+          ( \ t s → A s)
+          ( \ u → recBOT)))
+      ( \ h s t → h s t) -- second equivalence
+      ( second (equiv-extensions-equiv extext I χ (\ _ → BOT)
+        ( \ s → ψ → A s)
+        ( \ s → ϕ → A s)
+        ( \ s → (subshape-restriction J ψ ϕ (A s) , fiberwise-is-local-A s))
+        ( \ _ → recBOT)))
+      ( \ h t s → (h s) t) -- third equivalence
+      ( second
+        ( fubini
+          ( I)
+          ( J)
+          ( χ)
+          ( \ s → BOT)
+          ( \ t → ϕ t)
           ( \ t → BOT)
-          ( X)
-          ( \ t → A)
-          ( \ t → recBOT))))
-          , ( is-equiv-triple-comp
-              ( Δ³ → ((x : X) → A x))
-              ( ( x : X) → Δ³ → A x)
-              ( ( x : X) → Λ³₍₁₃₎ → A x)
-              ( Λ³₍₁₃₎ → ((x : X) → A x))
-              ( \ g x t → g t x) -- first equivalence
-              ( second (flip-ext-fun
-                ( 2 × 2 × 2)
-                ( Δ³)
-                ( \ t → BOT)
-                ( X)
-                ( \ t → A)
-                ( \ t → recBOT)))
-              ( \ h x t → h x t) -- second equivalence
-              ( second (equiv-function-equiv-family
-                ( funext)
-                ( X)
-                ( \ x → (Δ³ → A x))
-                ( \ x → (Λ³₍₁₃₎ → A x))
-                ( \ x → (3-horn-restriction₍₁₃₎ (A x)
-                  , second (fiberwise-is-2-segal-A x)))))
-              ( \ h t x → (h x) t) -- third equivalence
-              ( second (flip-ext-fun-inv
-                ( 2 × 2 × 2)
-                ( \ t → Λ³₍₁₃₎ t)
-                ( \ t → BOT)
-                ( X)
-                ( \ t → A)
-                ( \ t → recBOT)))))
+          ( \ s t → A s)
+          ( \ u → recBOT)))
+
+#def is-2-segal-extension-type uses (extext)
+  ( I : CUBE)
+  ( χ : I → TOPE)
+  ( A : χ → U)
+  ( fiberwise-is-2-segal-A : (s : χ) → is-local-2-segal-horn-inclusion (A s))
+  : is-local-2-segal-horn-inclusion ((s : χ) → A s)
+  :=
+    ( is-local-subshape-inclusion-extension-type I
+        ( 2 × 2 × 2)
+        ( χ)
+        ( Δ³)
+        ( Λ³₍₀₂₎)
+        ( A)
+        ( \ x → first (fiberwise-is-2-segal-A x))
+    , is-local-subshape-inclusion-extension-type I
+        ( 2 × 2 × 2)
+        ( χ)
+        ( Δ³)
+        ( Λ³₍₁₃₎)
+        ( A)
+        ( \ x → second (fiberwise-is-2-segal-A x)))
 ```

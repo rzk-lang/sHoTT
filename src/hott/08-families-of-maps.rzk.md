@@ -637,7 +637,6 @@ This allows us to apply "based path induction" to a family satisfying the
 fundamental theorem:
 
 ```rzk
--- Please suggest a better name.
 #def ind-based-path
   ( familyequiv : (z : A) → (is-equiv (a = z) (B z) (f z)))
   ( P : (z : A) → B z → U)
@@ -692,6 +691,149 @@ contractible.
       is-contr-total-are-equiv-from-paths A a B
       ( \ x → first (familyequiv x))
       ( \ x → second (familyequiv x))))
+```
+
+## Weak function extensionality implies function extensionality
+
+Using the fundamental theorem of identity types, we prove the converse of
+`weakfunext-funext`, so we now know that `#!rzk FunExt` is logically equivalent
+to `#!rzk WeakFunExt`. We follow the proof in Rijke, section 13.1.
+
+We first fix one of the two functions and show that `#!rzk WeakFunExt` implies a
+version of function extensionality that asserts that a type of "maps together
+with homotopies" is contractible.
+
+```rzk
+#def components-dhomotopy
+  ( A : U)
+  ( C : A → U)
+  ( f : (x : A) → C x)
+  : ( Σ ( g : (x : A) → C x)
+      , ( dhomotopy A C f g))
+  → ( ( x : A)
+    → ( Σ ( c : (C x))
+      , ( f x =_{C x} c)))
+  :=
+    \ (g , H) →
+      ( \ x →
+        ( g x , H x))
+
+#def has-retraction-components-dhomotopy
+  ( A : U)
+  ( C : A → U)
+  ( f : (x : A) → C x)
+  : has-retraction
+      ( Σ ( g : (x : A) → C x)
+        , ( dhomotopy A C f g))
+      ( ( x : A)
+        → ( Σ ( c : (C x))
+          , ( f x =_{C x} c)))
+      ( components-dhomotopy A C f)
+  :=
+    ( ( \ G →
+        ( \ x → first (G x) , \ x → second (G x)))
+    , \ x → refl)
+
+#def is-retract-components-dhomotopy
+  ( A : U)
+  ( C : A → U)
+  ( f : (x : A) → C x)
+  : is-retract-of
+      ( Σ ( g : (x : A) → C x)
+        , ( dhomotopy A C f g))
+      ( ( x : A)
+        → ( Σ ( c : (C x))
+          , ( f x =_{C x} c)))
+  :=
+    ( components-dhomotopy A C f
+    , has-retraction-components-dhomotopy A C f)
+
+#def WeirdFunExt
+  : U
+  :=
+    ( A : U) → (C : A → U)
+  → ( f : (x : A) → C x)
+  → is-contr
+      ( Σ ( g : (x : A) → C x)
+        , ( dhomotopy A C f g))
+
+#def weirdfunext-weakfunext
+  ( weakfunext : WeakFunExt)
+  : WeirdFunExt
+  :=
+    \ A C f →
+      is-contr-is-retract-of-is-contr
+        ( Σ ( g : (x : A) → C x)
+          , ( dhomotopy A C f g))
+        ( ( x : A)
+          → ( Σ ( c : (C x))
+              , ( f x =_{C x} c)))
+        ( is-retract-components-dhomotopy A C f)
+        ( weakfunext
+          ( A)
+          ( \ x → Σ (c : (C x)) , (f x =_{C x} c))
+          ( \ x → is-contr-based-paths (C x) (f x)))
+```
+
+We now use the fundamental theorem of identity types to go from the version for
+a fixed f to the total `#!rzk FunExt` axiom.
+
+```rzk
+#def funext-weirdfunext
+  ( weirdfunext : WeirdFunExt)
+  : FunExt
+  :=
+    \ A C f g →
+      are-equiv-from-paths-is-contr-total
+        ( ( x : A) → C x)
+        ( f)
+        ( \ h → dhomotopy A C f h)
+        ( \ h → htpy-eq A C f h)
+        ( weirdfunext A C f)
+        ( g)
+
+#def funext-weakfunext
+  ( weakfunext : WeakFunExt)
+  : FunExt
+  :=
+    funext-weirdfunext (weirdfunext-weakfunext weakfunext)
+```
+
+The proof of `weakfunext-funext` from `06-contractible.rzk` works with a version
+of function extensionality only requiring the map in the converse direction. We
+can then prove a cycle of implications between `#!rzk FunExt`,
+`#!rzk NaiveFunExt` and `#!rzk WeakFunExt`.
+
+```rzk
+#def NaiveFunExt
+  : U
+  :=
+    ( A : U) → (C : A → U)
+  → ( f : (x : A) → C x)
+  → ( g : (x : A) → C x)
+  → ( p : (x : A) → f x = g x)
+  → ( f = g)
+
+#def naivefunext-funext
+  ( funext : FunExt)
+  : NaiveFunExt
+  :=
+    \ A C f g p →
+      eq-htpy funext A C f g p
+
+#def weakfunext-naivefunext
+  ( naivefunext : NaiveFunExt)
+  : WeakFunExt
+  :=
+    \ A C is-contr-C →
+      ( map-weakfunext A C is-contr-C
+      , ( \ g →
+          ( naivefunext
+            ( A)
+            ( C)
+            ( map-weakfunext A C is-contr-C)
+            ( g)
+          ( \ a → second (is-contr-C a) (g a)))))
 ```
 
 ## Maps over product types

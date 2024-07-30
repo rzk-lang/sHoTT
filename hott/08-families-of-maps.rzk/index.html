@@ -654,6 +654,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#weak-function-extensionality-implies-function-extensionality" class="md-nav__link">
+    Weak function extensionality implies function extensionality
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#maps-over-product-types" class="md-nav__link">
     Maps over product types
   </a>
@@ -1096,6 +1103,13 @@
         <li class="md-nav__item">
   <a href="#fundamental-theorem-of-identity-types" class="md-nav__link">
     Fundamental theorem of identity types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weak-function-extensionality-implies-function-extensionality" class="md-nav__link">
+    Weak function extensionality implies function extensionality
   </a>
   
 </li>
@@ -1715,27 +1729,26 @@ a type family <code>B : A → U</code>, when is <code>B</code> equivalent to <co
 </span></code></pre></div>
 <p>This allows us to apply "based path induction" to a family satisfying the
 fundamental theorem:</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c">-- Please suggest a better name.</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ind-based-path" id="define:ind-based-path" style="visibility: visible; position: relative; color: inherit">ind-based-path</a></span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="err">  </span><span class="p">( </span>familyequiv <span class="p">:</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → (is-equiv (a = z) (B z) (f z)))</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → B z → U)</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="err">  </span><span class="p">( </span>p0 <span class="p">:</span><span class="err"> P a (f a </span><span class="s">refl</span><span class="err">))</span>
-</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> B u)</span>
-</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="err">  : P u p</span>
-</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="err">  :=</span>
-</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="err">    ind-sing</span>
-</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="err">      </span><span class="p">( </span>Σ ( v <span class="p">:</span><span class="err"> A) , B v)</span>
-</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="err">      ( a , f a </span><span class="s">refl</span><span class="err">)</span>
-</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="err">      ( \ (u&#39; , p&#39;) → P u&#39; p&#39;)</span>
-</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="err">      </span><span class="p">( </span>contr-implies-singleton-induction-pointed
-</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>        ( Σ ( z <span class="p">:</span><span class="err"> A) , B z)</span>
-</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="err">        ( is-contr-total-are-equiv-from-paths familyequiv)</span>
-</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="err">        ( \ (x&#39; , p&#39;) → P x&#39; p&#39;))</span>
-</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="err">      ( p0)</span>
-</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="err">      ( u , p)</span>
-</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>
-</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="nd">#end</span><span class="n"> fundamental-thm-id-types</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:ind-based-path" id="define:ind-based-path" style="visibility: visible; position: relative; color: inherit">ind-based-path</a></span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="err">  </span><span class="p">( </span>familyequiv <span class="p">:</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → (is-equiv (a = z) (B z) (f z)))</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> </span><span class="p">(</span>z <span class="p">:</span><span class="err"> A) → B z → U)</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="err">  </span><span class="p">( </span>p0 <span class="p">:</span><span class="err"> P a (f a </span><span class="s">refl</span><span class="err">))</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="err">  </span><span class="p">( </span>u <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> B u)</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="err">  : P u p</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="err">  :=</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="err">    ind-sing</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="err">      </span><span class="p">( </span>Σ ( v <span class="p">:</span><span class="err"> A) , B v)</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="err">      ( a , f a </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="err">      ( \ (u&#39; , p&#39;) → P u&#39; p&#39;)</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="err">      </span><span class="p">( </span>contr-implies-singleton-induction-pointed
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>        ( Σ ( z <span class="p">:</span><span class="err"> A) , B z)</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="err">        ( is-contr-total-are-equiv-from-paths familyequiv)</span>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="err">        ( \ (x&#39; , p&#39;) → P x&#39; p&#39;))</span>
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="err">      ( p0)</span>
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="err">      ( u , p)</span>
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="nd">#end</span><span class="n"> fundamental-thm-id-types</span>
 </span></code></pre></div>
 <p>We can now answer the original question. A type family <code>B : A → U</code> is equivalent
 to the family of based paths at a point if and only if its total space is
@@ -1768,106 +1781,238 @@ contractible.</p>
 </span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="err">      ( </span><span class="p">\ </span>x <span class="err">→ </span><span class="s">first</span><span class="err"> (familyequiv x))</span>
 </span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="err">      ( </span><span class="p">\ </span>x <span class="err">→ </span><span class="s">second</span><span class="err"> (familyequiv x))))</span>
 </span></code></pre></div>
+<h2 id="weak-function-extensionality-implies-function-extensionality">Weak function extensionality implies function extensionality<a class="headerlink" href="#weak-function-extensionality-implies-function-extensionality" title="Permanent link">&para;</a></h2>
+<p>Using the fundamental theorem of identity types, we prove the converse of
+<code>weakfunext-funext</code>, so we now know that <code class="language-rzk highlight"><span class="err">FunExt</span></code> is logically equivalent
+to <code class="language-rzk highlight"><span class="err">WeakFunExt</span></code>. We follow the proof in Rijke, section 13.1.</p>
+<p>We first fix one of the two functions and show that <code class="language-rzk highlight"><span class="err">WeakFunExt</span></code> implies a
+version of function extensionality that asserts that a type of "maps together
+with homotopies" is contractible.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:components-dhomotopy" id="define:components-dhomotopy" style="visibility: visible; position: relative; color: inherit">components-dhomotopy</a></span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="err">  : </span><span class="p">( </span>Σ ( g <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="err">      , ( dhomotopy A C f g))</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="err">  → </span><span class="p">( </span>( x <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="err">    → </span><span class="p">( </span>Σ ( c <span class="p">:</span><span class="err"> (C x))</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="err">      , ( f x =_{C x} c)))</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="err">  :=</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="err">    \ (g , H) →</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="err">      ( </span><span class="p">\ </span>x <span class="err">→</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="err">        ( g x , H x))</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-retraction-components-dhomotopy" id="define:has-retraction-components-dhomotopy" style="visibility: visible; position: relative; color: inherit">has-retraction-components-dhomotopy</a></span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="err">  : has-retraction</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="err">      </span><span class="p">( </span>Σ ( g <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="err">        , ( dhomotopy A C f g))</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="err">      </span><span class="p">( </span>( x <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="err">        → </span><span class="p">( </span>Σ ( c <span class="p">:</span><span class="err"> (C x))</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="err">          , ( f x =_{C x} c)))</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="err">      ( components-dhomotopy A C f)</span>
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="err">  :=</span>
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="err">    ( ( </span><span class="p">\ </span>G <span class="err">→</span>
+</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a><span class="err">        ( </span><span class="p">\ </span>x <span class="err">→ </span><span class="s">first</span><span class="err"> (G x) , </span><span class="p">\ </span>x <span class="err">→ </span><span class="s">second</span><span class="err"> (G x)))</span>
+</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a><span class="err">    , </span><span class="p">\ </span>x <span class="err">→ </span><span class="s">refl</span><span class="err">)</span>
+</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a>
+</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-retract-components-dhomotopy" id="define:is-retract-components-dhomotopy" style="visibility: visible; position: relative; color: inherit">is-retract-components-dhomotopy</a></span>
+</span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-17-33"><a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-17-34"><a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-17-35"><a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a><span class="err">  : is-retract-of</span>
+</span><span id="__span-17-36"><a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a><span class="err">      </span><span class="p">( </span>Σ ( g <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-17-37"><a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a><span class="err">        , ( dhomotopy A C f g))</span>
+</span><span id="__span-17-38"><a id="__codelineno-17-38" name="__codelineno-17-38" href="#__codelineno-17-38"></a><span class="err">      </span><span class="p">( </span>( x <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-17-39"><a id="__codelineno-17-39" name="__codelineno-17-39" href="#__codelineno-17-39"></a><span class="err">        → </span><span class="p">( </span>Σ ( c <span class="p">:</span><span class="err"> (C x))</span>
+</span><span id="__span-17-40"><a id="__codelineno-17-40" name="__codelineno-17-40" href="#__codelineno-17-40"></a><span class="err">          , ( f x =_{C x} c)))</span>
+</span><span id="__span-17-41"><a id="__codelineno-17-41" name="__codelineno-17-41" href="#__codelineno-17-41"></a><span class="err">  :=</span>
+</span><span id="__span-17-42"><a id="__codelineno-17-42" name="__codelineno-17-42" href="#__codelineno-17-42"></a><span class="err">    ( components-dhomotopy A C f</span>
+</span><span id="__span-17-43"><a id="__codelineno-17-43" name="__codelineno-17-43" href="#__codelineno-17-43"></a><span class="err">    , has-retraction-components-dhomotopy A C f)</span>
+</span><span id="__span-17-44"><a id="__codelineno-17-44" name="__codelineno-17-44" href="#__codelineno-17-44"></a>
+</span><span id="__span-17-45"><a id="__codelineno-17-45" name="__codelineno-17-45" href="#__codelineno-17-45"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:WeirdFunExt" id="define:WeirdFunExt" style="visibility: visible; position: relative; color: inherit">WeirdFunExt</a></span>
+</span><span id="__span-17-46"><a id="__codelineno-17-46" name="__codelineno-17-46" href="#__codelineno-17-46"></a><span class="err">  : U</span>
+</span><span id="__span-17-47"><a id="__codelineno-17-47" name="__codelineno-17-47" href="#__codelineno-17-47"></a><span class="err">  :=</span>
+</span><span id="__span-17-48"><a id="__codelineno-17-48" name="__codelineno-17-48" href="#__codelineno-17-48"></a><span class="err">    </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U) → </span><span class="p">(</span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-17-49"><a id="__codelineno-17-49" name="__codelineno-17-49" href="#__codelineno-17-49"></a><span class="err">  → </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-17-50"><a id="__codelineno-17-50" name="__codelineno-17-50" href="#__codelineno-17-50"></a><span class="err">  → is-contr</span>
+</span><span id="__span-17-51"><a id="__codelineno-17-51" name="__codelineno-17-51" href="#__codelineno-17-51"></a><span class="err">      </span><span class="p">( </span>Σ ( g <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-17-52"><a id="__codelineno-17-52" name="__codelineno-17-52" href="#__codelineno-17-52"></a><span class="err">        , ( dhomotopy A C f g))</span>
+</span><span id="__span-17-53"><a id="__codelineno-17-53" name="__codelineno-17-53" href="#__codelineno-17-53"></a>
+</span><span id="__span-17-54"><a id="__codelineno-17-54" name="__codelineno-17-54" href="#__codelineno-17-54"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:weirdfunext-weakfunext" id="define:weirdfunext-weakfunext" style="visibility: visible; position: relative; color: inherit">weirdfunext-weakfunext</a></span>
+</span><span id="__span-17-55"><a id="__codelineno-17-55" name="__codelineno-17-55" href="#__codelineno-17-55"></a><span class="err">  </span><span class="p">( </span>weakfunext <span class="p">:</span><span class="err"> WeakFunExt)</span>
+</span><span id="__span-17-56"><a id="__codelineno-17-56" name="__codelineno-17-56" href="#__codelineno-17-56"></a><span class="err">  : WeirdFunExt</span>
+</span><span id="__span-17-57"><a id="__codelineno-17-57" name="__codelineno-17-57" href="#__codelineno-17-57"></a><span class="err">  :=</span>
+</span><span id="__span-17-58"><a id="__codelineno-17-58" name="__codelineno-17-58" href="#__codelineno-17-58"></a><span class="err">    </span><span class="p">\ </span>A C f <span class="err">→</span>
+</span><span id="__span-17-59"><a id="__codelineno-17-59" name="__codelineno-17-59" href="#__codelineno-17-59"></a><span class="err">      is-contr-is-retract-of-is-contr</span>
+</span><span id="__span-17-60"><a id="__codelineno-17-60" name="__codelineno-17-60" href="#__codelineno-17-60"></a><span class="err">        </span><span class="p">( </span>Σ ( g <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-17-61"><a id="__codelineno-17-61" name="__codelineno-17-61" href="#__codelineno-17-61"></a><span class="err">          , ( dhomotopy A C f g))</span>
+</span><span id="__span-17-62"><a id="__codelineno-17-62" name="__codelineno-17-62" href="#__codelineno-17-62"></a><span class="err">        </span><span class="p">( </span>( x <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-17-63"><a id="__codelineno-17-63" name="__codelineno-17-63" href="#__codelineno-17-63"></a><span class="err">          → </span><span class="p">( </span>Σ ( c <span class="p">:</span><span class="err"> (C x))</span>
+</span><span id="__span-17-64"><a id="__codelineno-17-64" name="__codelineno-17-64" href="#__codelineno-17-64"></a><span class="err">              , ( f x =_{C x} c)))</span>
+</span><span id="__span-17-65"><a id="__codelineno-17-65" name="__codelineno-17-65" href="#__codelineno-17-65"></a><span class="err">        ( is-retract-components-dhomotopy A C f)</span>
+</span><span id="__span-17-66"><a id="__codelineno-17-66" name="__codelineno-17-66" href="#__codelineno-17-66"></a><span class="err">        ( weakfunext</span>
+</span><span id="__span-17-67"><a id="__codelineno-17-67" name="__codelineno-17-67" href="#__codelineno-17-67"></a><span class="err">          ( A)</span>
+</span><span id="__span-17-68"><a id="__codelineno-17-68" name="__codelineno-17-68" href="#__codelineno-17-68"></a><span class="err">          </span><span class="p">( </span>\ x → Σ (c <span class="p">:</span><span class="err"> (C x)) , (f x =_{C x} c))</span>
+</span><span id="__span-17-69"><a id="__codelineno-17-69" name="__codelineno-17-69" href="#__codelineno-17-69"></a><span class="err">          ( </span><span class="p">\ </span>x <span class="err">→ is-contr-based-paths (C x) (f x)))</span>
+</span></code></pre></div>
+<p>We now use the fundamental theorem of identity types to go from the version for
+a fixed f to the total <code class="language-rzk highlight"><span class="err">FunExt</span></code> axiom.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:funext-weirdfunext" id="define:funext-weirdfunext" style="visibility: visible; position: relative; color: inherit">funext-weirdfunext</a></span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  </span><span class="p">( </span>weirdfunext <span class="p">:</span><span class="err"> WeirdFunExt)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="err">  : FunExt</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="err">  :=</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="err">    </span><span class="p">\ </span>A C f g <span class="err">→</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="err">      are-equiv-from-paths-is-contr-total</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="err">        </span><span class="p">( </span>( x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="err">        ( f)</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="err">        ( </span><span class="p">\ </span>h <span class="err">→ dhomotopy A C f h)</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="err">        ( </span><span class="p">\ </span>h <span class="err">→ htpy-eq A C f h)</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="err">        ( weirdfunext A C f)</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="err">        ( g)</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:funext-weakfunext" id="define:funext-weakfunext" style="visibility: visible; position: relative; color: inherit">funext-weakfunext</a></span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="err">  </span><span class="p">( </span>weakfunext <span class="p">:</span><span class="err"> WeakFunExt)</span>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="err">  : FunExt</span>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="err">  :=</span>
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="err">    funext-weirdfunext (weirdfunext-weakfunext weakfunext)</span>
+</span></code></pre></div>
+<p>The proof of <code>weakfunext-funext</code> from <code>06-contractible.rzk</code> works with a version
+of function extensionality only requiring the map in the converse direction. We
+can then prove a cycle of implications between <code class="language-rzk highlight"><span class="err">FunExt</span></code>,
+<code class="language-rzk highlight"><span class="err">NaiveFunExt</span></code> and <code class="language-rzk highlight"><span class="err">WeakFunExt</span></code>.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:NaiveFunExt" id="define:NaiveFunExt" style="visibility: visible; position: relative; color: inherit">NaiveFunExt</a></span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">  : U</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  :=</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="err">    </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U) → </span><span class="p">(</span>C <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="err">  → </span><span class="p">( </span>f <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="err">  → </span><span class="p">( </span>g <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → C x)</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="err">  → </span><span class="p">( </span>p <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → f x = g x)</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="err">  → ( f = g)</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:naivefunext-funext" id="define:naivefunext-funext" style="visibility: visible; position: relative; color: inherit">naivefunext-funext</a></span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="err">  </span><span class="p">( </span>funext <span class="p">:</span><span class="err"> FunExt)</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="err">  : NaiveFunExt</span>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="err">  :=</span>
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="err">    </span><span class="p">\ </span>A C f g p <span class="err">→</span>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="err">      eq-htpy funext A C f g p</span>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:weakfunext-naivefunext" id="define:weakfunext-naivefunext" style="visibility: visible; position: relative; color: inherit">weakfunext-naivefunext</a></span>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="err">  </span><span class="p">( </span>naivefunext <span class="p">:</span><span class="err"> NaiveFunExt)</span>
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="err">  : WeakFunExt</span>
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="err">  :=</span>
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="err">    </span><span class="p">\ </span>A C is-contr-C <span class="err">→</span>
+</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="err">      ( map-weakfunext A C is-contr-C</span>
+</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="err">      , ( </span><span class="p">\ </span>g <span class="err">→</span>
+</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="err">          ( naivefunext</span>
+</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="err">            ( A)</span>
+</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="err">            ( C)</span>
+</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="err">            ( map-weakfunext A C is-contr-C)</span>
+</span><span id="__span-19-28"><a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="err">            ( g)</span>
+</span><span id="__span-19-29"><a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="err">          ( </span><span class="p">\ </span>a <span class="err">→ </span><span class="s">second</span><span class="err"> (is-contr-C a) (g a)))))</span>
+</span></code></pre></div>
 <h2 id="maps-over-product-types">Maps over product types<a class="headerlink" href="#maps-over-product-types" title="Permanent link">&para;</a></h2>
 <p>For later use, we specialize the previous results to the case of a family of
 types over a product type.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nd">#section</span><span class="n"> fibered-map-over-product</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kr">#variables</span><span class="p"> </span>A A&#39; B B&#39;<span class="err"> : U</span>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="kr">#variable</span><span class="p"> </span>C<span class="err"> : A → B → U</span>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="kr">#variable</span><span class="p"> </span>C&#39;<span class="err"> : A&#39; → B&#39; → U</span>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="kr">#variable</span><span class="p"> </span>f<span class="err"> : A → A&#39;</span>
-</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="kr">#variable</span><span class="p"> </span>g<span class="err"> : B → B&#39;</span>
-</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="kr">#variable</span><span class="p"> </span>h<span class="err"> : </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B) → (C a b) → C&#39; (f a) (g b)</span>
-</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
-</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:total-map-fibered-map-over-product" id="define:total-map-fibered-map-over-product" style="visibility: visible; position: relative; color: inherit">total-map-fibered-map-over-product</a></span>
-</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="err">  : </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
-</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="err">  → </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
-</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="err">  := \ (a , (b , c)) → (f a , (g b , h a b c))</span>
-</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
-</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:pullback-is-equiv-base-is-equiv-total-is-equiv" id="define:pullback-is-equiv-base-is-equiv-total-is-equiv" style="visibility: visible; position: relative; color: inherit">pullback-is-equiv-base-is-equiv-total-is-equiv</a></span>
-</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="err">  </span><span class="p">( </span>is-equiv-total
-</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a> <span class="p">:</span><span class="err"> is-equiv</span>
-</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="err">      </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
-</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="err">      </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
-</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="err">      ( total-map-fibered-map-over-product))</span>
-</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="err">  </span><span class="p">( </span>is-equiv-f <span class="p">:</span><span class="err"> is-equiv A A&#39; f)</span>
-</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="err">  : is-equiv</span>
-</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
-</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; (f a) b&#39;))</span>
-</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="err">    ( \ (a , (b , c)) → (a , (g b , h a b c)))</span>
-</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="err">  :=</span>
-</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="err">    is-equiv-right-factor</span>
-</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
-</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; (f a) b&#39;))</span>
-</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a><span class="err">    </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
-</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a><span class="err">    ( \ (a , (b , c)) → (a , (g b , h a b c)))</span>
-</span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a><span class="err">    ( \ (a , (b&#39; , c&#39;)) → (f a , (b&#39; , c&#39;)))</span>
-</span><span id="__span-17-33"><a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a><span class="err">    ( </span><span class="s">second</span>
-</span><span id="__span-17-34"><a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a><span class="err">      ( equiv-total-pullback-is-equiv</span>
-</span><span id="__span-17-35"><a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a><span class="err">        ( A) (A&#39;)</span>
-</span><span id="__span-17-36"><a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a><span class="err">        ( f) (is-equiv-f)</span>
-</span><span id="__span-17-37"><a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a><span class="err">        </span><span class="p">( </span>\ a&#39; → (Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))))</span>
-</span><span id="__span-17-38"><a id="__codelineno-17-38" name="__codelineno-17-38" href="#__codelineno-17-38"></a><span class="err">    ( is-equiv-total)</span>
-</span><span id="__span-17-39"><a id="__codelineno-17-39" name="__codelineno-17-39" href="#__codelineno-17-39"></a>
-</span><span id="__span-17-40"><a id="__codelineno-17-40" name="__codelineno-17-40" href="#__codelineno-17-40"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:pullback-is-equiv-bases-are-equiv-total-is-equiv" id="define:pullback-is-equiv-bases-are-equiv-total-is-equiv" style="visibility: visible; position: relative; color: inherit">pullback-is-equiv-bases-are-equiv-total-is-equiv</a></span>
-</span><span id="__span-17-41"><a id="__codelineno-17-41" name="__codelineno-17-41" href="#__codelineno-17-41"></a><span class="err">  </span><span class="p">( </span>is-equiv-total
-</span><span id="__span-17-42"><a id="__codelineno-17-42" name="__codelineno-17-42" href="#__codelineno-17-42"></a> <span class="p">:</span><span class="err"> is-equiv</span>
-</span><span id="__span-17-43"><a id="__codelineno-17-43" name="__codelineno-17-43" href="#__codelineno-17-43"></a><span class="err">      </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
-</span><span id="__span-17-44"><a id="__codelineno-17-44" name="__codelineno-17-44" href="#__codelineno-17-44"></a><span class="err">      </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
-</span><span id="__span-17-45"><a id="__codelineno-17-45" name="__codelineno-17-45" href="#__codelineno-17-45"></a><span class="err">      ( total-map-fibered-map-over-product))</span>
-</span><span id="__span-17-46"><a id="__codelineno-17-46" name="__codelineno-17-46" href="#__codelineno-17-46"></a><span class="err">  </span><span class="p">( </span>is-equiv-f <span class="p">:</span><span class="err"> is-equiv A A&#39; f)</span>
-</span><span id="__span-17-47"><a id="__codelineno-17-47" name="__codelineno-17-47" href="#__codelineno-17-47"></a><span class="err">  </span><span class="p">( </span>is-equiv-g <span class="p">:</span><span class="err"> is-equiv B B&#39; g)</span>
-</span><span id="__span-17-48"><a id="__codelineno-17-48" name="__codelineno-17-48" href="#__codelineno-17-48"></a><span class="err">  : is-equiv</span>
-</span><span id="__span-17-49"><a id="__codelineno-17-49" name="__codelineno-17-49" href="#__codelineno-17-49"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
-</span><span id="__span-17-50"><a id="__codelineno-17-50" name="__codelineno-17-50" href="#__codelineno-17-50"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C&#39; (f a) (g b)))</span>
-</span><span id="__span-17-51"><a id="__codelineno-17-51" name="__codelineno-17-51" href="#__codelineno-17-51"></a><span class="err">    ( \ (a , (b , c)) → (a , (b , h a b c)))</span>
-</span><span id="__span-17-52"><a id="__codelineno-17-52" name="__codelineno-17-52" href="#__codelineno-17-52"></a><span class="err">  :=</span>
-</span><span id="__span-17-53"><a id="__codelineno-17-53" name="__codelineno-17-53" href="#__codelineno-17-53"></a><span class="err">    is-equiv-right-factor</span>
-</span><span id="__span-17-54"><a id="__codelineno-17-54" name="__codelineno-17-54" href="#__codelineno-17-54"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
-</span><span id="__span-17-55"><a id="__codelineno-17-55" name="__codelineno-17-55" href="#__codelineno-17-55"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C&#39; (f a) (g b)))</span>
-</span><span id="__span-17-56"><a id="__codelineno-17-56" name="__codelineno-17-56" href="#__codelineno-17-56"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; (f a) b&#39;))</span>
-</span><span id="__span-17-57"><a id="__codelineno-17-57" name="__codelineno-17-57" href="#__codelineno-17-57"></a><span class="err">    ( \ (a , (b , c)) → (a , (b , h a b c)))</span>
-</span><span id="__span-17-58"><a id="__codelineno-17-58" name="__codelineno-17-58" href="#__codelineno-17-58"></a><span class="err">    ( \ (a , (b , c)) → (a , (g b , c)))</span>
-</span><span id="__span-17-59"><a id="__codelineno-17-59" name="__codelineno-17-59" href="#__codelineno-17-59"></a><span class="err">    </span><span class="p">( </span>is-equiv-total-is-equiv-fiberwise A
-</span><span id="__span-17-60"><a id="__codelineno-17-60" name="__codelineno-17-60" href="#__codelineno-17-60"></a>      ( \ a → (Σ (b <span class="p">:</span><span class="err"> B) , C&#39; (f a) (g b)))</span>
-</span><span id="__span-17-61"><a id="__codelineno-17-61" name="__codelineno-17-61" href="#__codelineno-17-61"></a><span class="err">      </span><span class="p">( </span>\ a → (Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; (f a) b&#39;))</span>
-</span><span id="__span-17-62"><a id="__codelineno-17-62" name="__codelineno-17-62" href="#__codelineno-17-62"></a><span class="err">      ( </span><span class="p">\ </span>a <span class="err">(b , c) → (g b , c))</span>
-</span><span id="__span-17-63"><a id="__codelineno-17-63" name="__codelineno-17-63" href="#__codelineno-17-63"></a><span class="err">      ( </span><span class="p">\ </span>a <span class="err">→</span>
-</span><span id="__span-17-64"><a id="__codelineno-17-64" name="__codelineno-17-64" href="#__codelineno-17-64"></a><span class="err">        ( </span><span class="s">second</span>
-</span><span id="__span-17-65"><a id="__codelineno-17-65" name="__codelineno-17-65" href="#__codelineno-17-65"></a><span class="err">          ( equiv-total-pullback-is-equiv</span>
-</span><span id="__span-17-66"><a id="__codelineno-17-66" name="__codelineno-17-66" href="#__codelineno-17-66"></a><span class="err">            ( B) (B&#39;)</span>
-</span><span id="__span-17-67"><a id="__codelineno-17-67" name="__codelineno-17-67" href="#__codelineno-17-67"></a><span class="err">            ( g) (is-equiv-g)</span>
-</span><span id="__span-17-68"><a id="__codelineno-17-68" name="__codelineno-17-68" href="#__codelineno-17-68"></a><span class="err">            ( </span><span class="p">\ </span>b&#39; <span class="err">→ C&#39; (f a) b&#39;)))))</span>
-</span><span id="__span-17-69"><a id="__codelineno-17-69" name="__codelineno-17-69" href="#__codelineno-17-69"></a><span class="err">    ( pullback-is-equiv-base-is-equiv-total-is-equiv is-equiv-total is-equiv-f)</span>
-</span><span id="__span-17-70"><a id="__codelineno-17-70" name="__codelineno-17-70" href="#__codelineno-17-70"></a>
-</span><span id="__span-17-71"><a id="__codelineno-17-71" name="__codelineno-17-71" href="#__codelineno-17-71"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:fibered-map-is-equiv-bases-are-equiv-total-map-is-equiv" id="define:fibered-map-is-equiv-bases-are-equiv-total-map-is-equiv" style="visibility: visible; position: relative; color: inherit">fibered-map-is-equiv-bases-are-equiv-total-map-is-equiv</a></span>
-</span><span id="__span-17-72"><a id="__codelineno-17-72" name="__codelineno-17-72" href="#__codelineno-17-72"></a><span class="err">  </span><span class="p">( </span>is-equiv-total
-</span><span id="__span-17-73"><a id="__codelineno-17-73" name="__codelineno-17-73" href="#__codelineno-17-73"></a> <span class="p">:</span><span class="err"> is-equiv</span>
-</span><span id="__span-17-74"><a id="__codelineno-17-74" name="__codelineno-17-74" href="#__codelineno-17-74"></a><span class="err">      </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
-</span><span id="__span-17-75"><a id="__codelineno-17-75" name="__codelineno-17-75" href="#__codelineno-17-75"></a><span class="err">      </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
-</span><span id="__span-17-76"><a id="__codelineno-17-76" name="__codelineno-17-76" href="#__codelineno-17-76"></a><span class="err">      ( total-map-fibered-map-over-product))</span>
-</span><span id="__span-17-77"><a id="__codelineno-17-77" name="__codelineno-17-77" href="#__codelineno-17-77"></a><span class="err">  </span><span class="p">( </span>is-equiv-f <span class="p">:</span><span class="err"> is-equiv A A&#39; f)</span>
-</span><span id="__span-17-78"><a id="__codelineno-17-78" name="__codelineno-17-78" href="#__codelineno-17-78"></a><span class="err">  </span><span class="p">( </span>is-equiv-g <span class="p">:</span><span class="err"> is-equiv B B&#39; g)</span>
-</span><span id="__span-17-79"><a id="__codelineno-17-79" name="__codelineno-17-79" href="#__codelineno-17-79"></a><span class="err">  </span><span class="p">( </span>a0 <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-17-80"><a id="__codelineno-17-80" name="__codelineno-17-80" href="#__codelineno-17-80"></a><span class="err">  </span><span class="p">( </span>b0 <span class="p">:</span><span class="err"> B)</span>
-</span><span id="__span-17-81"><a id="__codelineno-17-81" name="__codelineno-17-81" href="#__codelineno-17-81"></a><span class="err">  : is-equiv (C a0 b0) (C&#39; (f a0) (g b0)) (h a0 b0)</span>
-</span><span id="__span-17-82"><a id="__codelineno-17-82" name="__codelineno-17-82" href="#__codelineno-17-82"></a><span class="err">  :=</span>
-</span><span id="__span-17-83"><a id="__codelineno-17-83" name="__codelineno-17-83" href="#__codelineno-17-83"></a><span class="err">    is-equiv-fiberwise-is-equiv-total B</span>
-</span><span id="__span-17-84"><a id="__codelineno-17-84" name="__codelineno-17-84" href="#__codelineno-17-84"></a><span class="err">      ( </span><span class="p">\ </span>b <span class="err">→ C a0 b)</span>
-</span><span id="__span-17-85"><a id="__codelineno-17-85" name="__codelineno-17-85" href="#__codelineno-17-85"></a><span class="err">      ( </span><span class="p">\ </span>b <span class="err">→ C&#39; (f a0) (g b))</span>
-</span><span id="__span-17-86"><a id="__codelineno-17-86" name="__codelineno-17-86" href="#__codelineno-17-86"></a><span class="err">      ( </span><span class="p">\ </span>b c <span class="err">→ h a0 b c)</span>
-</span><span id="__span-17-87"><a id="__codelineno-17-87" name="__codelineno-17-87" href="#__codelineno-17-87"></a><span class="err">      ( is-equiv-fiberwise-is-equiv-total</span>
-</span><span id="__span-17-88"><a id="__codelineno-17-88" name="__codelineno-17-88" href="#__codelineno-17-88"></a><span class="err">        ( A)</span>
-</span><span id="__span-17-89"><a id="__codelineno-17-89" name="__codelineno-17-89" href="#__codelineno-17-89"></a><span class="err">        </span><span class="p">( </span>\ a → (Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
-</span><span id="__span-17-90"><a id="__codelineno-17-90" name="__codelineno-17-90" href="#__codelineno-17-90"></a><span class="err">        </span><span class="p">( </span>\ a → (Σ (b <span class="p">:</span><span class="err"> B) , C&#39; (f a) (g b)))</span>
-</span><span id="__span-17-91"><a id="__codelineno-17-91" name="__codelineno-17-91" href="#__codelineno-17-91"></a><span class="err">        ( </span><span class="p">\ </span>a <span class="err">(b , c) → (b , h a b c))</span>
-</span><span id="__span-17-92"><a id="__codelineno-17-92" name="__codelineno-17-92" href="#__codelineno-17-92"></a><span class="err">        ( pullback-is-equiv-bases-are-equiv-total-is-equiv</span>
-</span><span id="__span-17-93"><a id="__codelineno-17-93" name="__codelineno-17-93" href="#__codelineno-17-93"></a><span class="err">            is-equiv-total is-equiv-f is-equiv-g)</span>
-</span><span id="__span-17-94"><a id="__codelineno-17-94" name="__codelineno-17-94" href="#__codelineno-17-94"></a><span class="err">        ( a0))</span>
-</span><span id="__span-17-95"><a id="__codelineno-17-95" name="__codelineno-17-95" href="#__codelineno-17-95"></a><span class="err">      ( b0)</span>
-</span><span id="__span-17-96"><a id="__codelineno-17-96" name="__codelineno-17-96" href="#__codelineno-17-96"></a>
-</span><span id="__span-17-97"><a id="__codelineno-17-97" name="__codelineno-17-97" href="#__codelineno-17-97"></a><span class="nd">#end</span><span class="n"> fibered-map-over-product</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nd">#section</span><span class="n"> fibered-map-over-product</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="kr">#variables</span><span class="p"> </span>A A&#39; B B&#39;<span class="err"> : U</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="kr">#variable</span><span class="p"> </span>C<span class="err"> : A → B → U</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="kr">#variable</span><span class="p"> </span>C&#39;<span class="err"> : A&#39; → B&#39; → U</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="kr">#variable</span><span class="p"> </span>f<span class="err"> : A → A&#39;</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="kr">#variable</span><span class="p"> </span>g<span class="err"> : B → B&#39;</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="kr">#variable</span><span class="p"> </span>h<span class="err"> : </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B) → (C a b) → C&#39; (f a) (g b)</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:total-map-fibered-map-over-product" id="define:total-map-fibered-map-over-product" style="visibility: visible; position: relative; color: inherit">total-map-fibered-map-over-product</a></span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="err">  : </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="err">  → </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="err">  := \ (a , (b , c)) → (f a , (g b , h a b c))</span>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:pullback-is-equiv-base-is-equiv-total-is-equiv" id="define:pullback-is-equiv-base-is-equiv-total-is-equiv" style="visibility: visible; position: relative; color: inherit">pullback-is-equiv-base-is-equiv-total-is-equiv</a></span>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="err">  </span><span class="p">( </span>is-equiv-total
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a> <span class="p">:</span><span class="err"> is-equiv</span>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="err">      </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="err">      </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="err">      ( total-map-fibered-map-over-product))</span>
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="err">  </span><span class="p">( </span>is-equiv-f <span class="p">:</span><span class="err"> is-equiv A A&#39; f)</span>
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="err">  : is-equiv</span>
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; (f a) b&#39;))</span>
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="err">    ( \ (a , (b , c)) → (a , (g b , h a b c)))</span>
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="err">  :=</span>
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a><span class="err">    is-equiv-right-factor</span>
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; (f a) b&#39;))</span>
+</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a><span class="err">    </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
+</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a><span class="err">    ( \ (a , (b , c)) → (a , (g b , h a b c)))</span>
+</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a><span class="err">    ( \ (a , (b&#39; , c&#39;)) → (f a , (b&#39; , c&#39;)))</span>
+</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a><span class="err">    ( </span><span class="s">second</span>
+</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a><span class="err">      ( equiv-total-pullback-is-equiv</span>
+</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a><span class="err">        ( A) (A&#39;)</span>
+</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a><span class="err">        ( f) (is-equiv-f)</span>
+</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a><span class="err">        </span><span class="p">( </span>\ a&#39; → (Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))))</span>
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a><span class="err">    ( is-equiv-total)</span>
+</span><span id="__span-20-39"><a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a>
+</span><span id="__span-20-40"><a id="__codelineno-20-40" name="__codelineno-20-40" href="#__codelineno-20-40"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:pullback-is-equiv-bases-are-equiv-total-is-equiv" id="define:pullback-is-equiv-bases-are-equiv-total-is-equiv" style="visibility: visible; position: relative; color: inherit">pullback-is-equiv-bases-are-equiv-total-is-equiv</a></span>
+</span><span id="__span-20-41"><a id="__codelineno-20-41" name="__codelineno-20-41" href="#__codelineno-20-41"></a><span class="err">  </span><span class="p">( </span>is-equiv-total
+</span><span id="__span-20-42"><a id="__codelineno-20-42" name="__codelineno-20-42" href="#__codelineno-20-42"></a> <span class="p">:</span><span class="err"> is-equiv</span>
+</span><span id="__span-20-43"><a id="__codelineno-20-43" name="__codelineno-20-43" href="#__codelineno-20-43"></a><span class="err">      </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
+</span><span id="__span-20-44"><a id="__codelineno-20-44" name="__codelineno-20-44" href="#__codelineno-20-44"></a><span class="err">      </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
+</span><span id="__span-20-45"><a id="__codelineno-20-45" name="__codelineno-20-45" href="#__codelineno-20-45"></a><span class="err">      ( total-map-fibered-map-over-product))</span>
+</span><span id="__span-20-46"><a id="__codelineno-20-46" name="__codelineno-20-46" href="#__codelineno-20-46"></a><span class="err">  </span><span class="p">( </span>is-equiv-f <span class="p">:</span><span class="err"> is-equiv A A&#39; f)</span>
+</span><span id="__span-20-47"><a id="__codelineno-20-47" name="__codelineno-20-47" href="#__codelineno-20-47"></a><span class="err">  </span><span class="p">( </span>is-equiv-g <span class="p">:</span><span class="err"> is-equiv B B&#39; g)</span>
+</span><span id="__span-20-48"><a id="__codelineno-20-48" name="__codelineno-20-48" href="#__codelineno-20-48"></a><span class="err">  : is-equiv</span>
+</span><span id="__span-20-49"><a id="__codelineno-20-49" name="__codelineno-20-49" href="#__codelineno-20-49"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
+</span><span id="__span-20-50"><a id="__codelineno-20-50" name="__codelineno-20-50" href="#__codelineno-20-50"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C&#39; (f a) (g b)))</span>
+</span><span id="__span-20-51"><a id="__codelineno-20-51" name="__codelineno-20-51" href="#__codelineno-20-51"></a><span class="err">    ( \ (a , (b , c)) → (a , (b , h a b c)))</span>
+</span><span id="__span-20-52"><a id="__codelineno-20-52" name="__codelineno-20-52" href="#__codelineno-20-52"></a><span class="err">  :=</span>
+</span><span id="__span-20-53"><a id="__codelineno-20-53" name="__codelineno-20-53" href="#__codelineno-20-53"></a><span class="err">    is-equiv-right-factor</span>
+</span><span id="__span-20-54"><a id="__codelineno-20-54" name="__codelineno-20-54" href="#__codelineno-20-54"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
+</span><span id="__span-20-55"><a id="__codelineno-20-55" name="__codelineno-20-55" href="#__codelineno-20-55"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C&#39; (f a) (g b)))</span>
+</span><span id="__span-20-56"><a id="__codelineno-20-56" name="__codelineno-20-56" href="#__codelineno-20-56"></a><span class="err">    </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; (f a) b&#39;))</span>
+</span><span id="__span-20-57"><a id="__codelineno-20-57" name="__codelineno-20-57" href="#__codelineno-20-57"></a><span class="err">    ( \ (a , (b , c)) → (a , (b , h a b c)))</span>
+</span><span id="__span-20-58"><a id="__codelineno-20-58" name="__codelineno-20-58" href="#__codelineno-20-58"></a><span class="err">    ( \ (a , (b , c)) → (a , (g b , c)))</span>
+</span><span id="__span-20-59"><a id="__codelineno-20-59" name="__codelineno-20-59" href="#__codelineno-20-59"></a><span class="err">    </span><span class="p">( </span>is-equiv-total-is-equiv-fiberwise A
+</span><span id="__span-20-60"><a id="__codelineno-20-60" name="__codelineno-20-60" href="#__codelineno-20-60"></a>      ( \ a → (Σ (b <span class="p">:</span><span class="err"> B) , C&#39; (f a) (g b)))</span>
+</span><span id="__span-20-61"><a id="__codelineno-20-61" name="__codelineno-20-61" href="#__codelineno-20-61"></a><span class="err">      </span><span class="p">( </span>\ a → (Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; (f a) b&#39;))</span>
+</span><span id="__span-20-62"><a id="__codelineno-20-62" name="__codelineno-20-62" href="#__codelineno-20-62"></a><span class="err">      ( </span><span class="p">\ </span>a <span class="err">(b , c) → (g b , c))</span>
+</span><span id="__span-20-63"><a id="__codelineno-20-63" name="__codelineno-20-63" href="#__codelineno-20-63"></a><span class="err">      ( </span><span class="p">\ </span>a <span class="err">→</span>
+</span><span id="__span-20-64"><a id="__codelineno-20-64" name="__codelineno-20-64" href="#__codelineno-20-64"></a><span class="err">        ( </span><span class="s">second</span>
+</span><span id="__span-20-65"><a id="__codelineno-20-65" name="__codelineno-20-65" href="#__codelineno-20-65"></a><span class="err">          ( equiv-total-pullback-is-equiv</span>
+</span><span id="__span-20-66"><a id="__codelineno-20-66" name="__codelineno-20-66" href="#__codelineno-20-66"></a><span class="err">            ( B) (B&#39;)</span>
+</span><span id="__span-20-67"><a id="__codelineno-20-67" name="__codelineno-20-67" href="#__codelineno-20-67"></a><span class="err">            ( g) (is-equiv-g)</span>
+</span><span id="__span-20-68"><a id="__codelineno-20-68" name="__codelineno-20-68" href="#__codelineno-20-68"></a><span class="err">            ( </span><span class="p">\ </span>b&#39; <span class="err">→ C&#39; (f a) b&#39;)))))</span>
+</span><span id="__span-20-69"><a id="__codelineno-20-69" name="__codelineno-20-69" href="#__codelineno-20-69"></a><span class="err">    ( pullback-is-equiv-base-is-equiv-total-is-equiv is-equiv-total is-equiv-f)</span>
+</span><span id="__span-20-70"><a id="__codelineno-20-70" name="__codelineno-20-70" href="#__codelineno-20-70"></a>
+</span><span id="__span-20-71"><a id="__codelineno-20-71" name="__codelineno-20-71" href="#__codelineno-20-71"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:fibered-map-is-equiv-bases-are-equiv-total-map-is-equiv" id="define:fibered-map-is-equiv-bases-are-equiv-total-map-is-equiv" style="visibility: visible; position: relative; color: inherit">fibered-map-is-equiv-bases-are-equiv-total-map-is-equiv</a></span>
+</span><span id="__span-20-72"><a id="__codelineno-20-72" name="__codelineno-20-72" href="#__codelineno-20-72"></a><span class="err">  </span><span class="p">( </span>is-equiv-total
+</span><span id="__span-20-73"><a id="__codelineno-20-73" name="__codelineno-20-73" href="#__codelineno-20-73"></a> <span class="p">:</span><span class="err"> is-equiv</span>
+</span><span id="__span-20-74"><a id="__codelineno-20-74" name="__codelineno-20-74" href="#__codelineno-20-74"></a><span class="err">      </span><span class="p">( </span>Σ ( a <span class="p">:</span><span class="err"> A) , </span><span class="p">(</span>Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
+</span><span id="__span-20-75"><a id="__codelineno-20-75" name="__codelineno-20-75" href="#__codelineno-20-75"></a><span class="err">      </span><span class="p">( </span>Σ ( a&#39; <span class="p">:</span><span class="err"> A&#39;) , </span><span class="p">(</span>Σ (b&#39; <span class="p">:</span><span class="err"> B&#39;) , C&#39; a&#39; b&#39;))</span>
+</span><span id="__span-20-76"><a id="__codelineno-20-76" name="__codelineno-20-76" href="#__codelineno-20-76"></a><span class="err">      ( total-map-fibered-map-over-product))</span>
+</span><span id="__span-20-77"><a id="__codelineno-20-77" name="__codelineno-20-77" href="#__codelineno-20-77"></a><span class="err">  </span><span class="p">( </span>is-equiv-f <span class="p">:</span><span class="err"> is-equiv A A&#39; f)</span>
+</span><span id="__span-20-78"><a id="__codelineno-20-78" name="__codelineno-20-78" href="#__codelineno-20-78"></a><span class="err">  </span><span class="p">( </span>is-equiv-g <span class="p">:</span><span class="err"> is-equiv B B&#39; g)</span>
+</span><span id="__span-20-79"><a id="__codelineno-20-79" name="__codelineno-20-79" href="#__codelineno-20-79"></a><span class="err">  </span><span class="p">( </span>a0 <span class="p">:</span><span class="err"> A)</span>
+</span><span id="__span-20-80"><a id="__codelineno-20-80" name="__codelineno-20-80" href="#__codelineno-20-80"></a><span class="err">  </span><span class="p">( </span>b0 <span class="p">:</span><span class="err"> B)</span>
+</span><span id="__span-20-81"><a id="__codelineno-20-81" name="__codelineno-20-81" href="#__codelineno-20-81"></a><span class="err">  : is-equiv (C a0 b0) (C&#39; (f a0) (g b0)) (h a0 b0)</span>
+</span><span id="__span-20-82"><a id="__codelineno-20-82" name="__codelineno-20-82" href="#__codelineno-20-82"></a><span class="err">  :=</span>
+</span><span id="__span-20-83"><a id="__codelineno-20-83" name="__codelineno-20-83" href="#__codelineno-20-83"></a><span class="err">    is-equiv-fiberwise-is-equiv-total B</span>
+</span><span id="__span-20-84"><a id="__codelineno-20-84" name="__codelineno-20-84" href="#__codelineno-20-84"></a><span class="err">      ( </span><span class="p">\ </span>b <span class="err">→ C a0 b)</span>
+</span><span id="__span-20-85"><a id="__codelineno-20-85" name="__codelineno-20-85" href="#__codelineno-20-85"></a><span class="err">      ( </span><span class="p">\ </span>b <span class="err">→ C&#39; (f a0) (g b))</span>
+</span><span id="__span-20-86"><a id="__codelineno-20-86" name="__codelineno-20-86" href="#__codelineno-20-86"></a><span class="err">      ( </span><span class="p">\ </span>b c <span class="err">→ h a0 b c)</span>
+</span><span id="__span-20-87"><a id="__codelineno-20-87" name="__codelineno-20-87" href="#__codelineno-20-87"></a><span class="err">      ( is-equiv-fiberwise-is-equiv-total</span>
+</span><span id="__span-20-88"><a id="__codelineno-20-88" name="__codelineno-20-88" href="#__codelineno-20-88"></a><span class="err">        ( A)</span>
+</span><span id="__span-20-89"><a id="__codelineno-20-89" name="__codelineno-20-89" href="#__codelineno-20-89"></a><span class="err">        </span><span class="p">( </span>\ a → (Σ (b <span class="p">:</span><span class="err"> B) , C a b))</span>
+</span><span id="__span-20-90"><a id="__codelineno-20-90" name="__codelineno-20-90" href="#__codelineno-20-90"></a><span class="err">        </span><span class="p">( </span>\ a → (Σ (b <span class="p">:</span><span class="err"> B) , C&#39; (f a) (g b)))</span>
+</span><span id="__span-20-91"><a id="__codelineno-20-91" name="__codelineno-20-91" href="#__codelineno-20-91"></a><span class="err">        ( </span><span class="p">\ </span>a <span class="err">(b , c) → (b , h a b c))</span>
+</span><span id="__span-20-92"><a id="__codelineno-20-92" name="__codelineno-20-92" href="#__codelineno-20-92"></a><span class="err">        ( pullback-is-equiv-bases-are-equiv-total-is-equiv</span>
+</span><span id="__span-20-93"><a id="__codelineno-20-93" name="__codelineno-20-93" href="#__codelineno-20-93"></a><span class="err">            is-equiv-total is-equiv-f is-equiv-g)</span>
+</span><span id="__span-20-94"><a id="__codelineno-20-94" name="__codelineno-20-94" href="#__codelineno-20-94"></a><span class="err">        ( a0))</span>
+</span><span id="__span-20-95"><a id="__codelineno-20-95" name="__codelineno-20-95" href="#__codelineno-20-95"></a><span class="err">      ( b0)</span>
+</span><span id="__span-20-96"><a id="__codelineno-20-96" name="__codelineno-20-96" href="#__codelineno-20-96"></a>
+</span><span id="__span-20-97"><a id="__codelineno-20-97" name="__codelineno-20-97" href="#__codelineno-20-97"></a><span class="nd">#end</span><span class="n"> fibered-map-over-product</span>
 </span></code></pre></div>
 
 

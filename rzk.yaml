@@ -1,4 +1,3 @@
 include:
   - src/hott/**/*.rzk.md
   - src/simplicial-hott/**/*.rzk.md
-  - src/2Segal/**/*.rzk.md

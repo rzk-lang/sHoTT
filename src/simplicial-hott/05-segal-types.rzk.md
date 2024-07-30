@@ -606,34 +606,14 @@ all $x$ then $(x : X) → A x$ is a Segal type.
   ( fiberwise-is-segal-A : (x : X) → is-local-horn-inclusion (A x))
   : is-local-horn-inclusion ((x : X) → A x)
   :=
-    is-equiv-triple-comp
-      ( Δ² → ((x : X) → A x))
-      ( ( x : X) → Δ² → A x)
-      ( ( x : X) → Λ → A x)
-      ( Λ → ((x : X) → A x))
-      ( \ g x t → g t x) -- first equivalence
-      ( second (flip-ext-fun
-        ( 2 × 2)
-        ( Δ²)
-        ( \ t → BOT)
-        ( X)
-        ( \ t → A)
-        ( \ t → recBOT)))
-      ( \ h x t → h x t) -- second equivalence
-      ( second (equiv-function-equiv-family
-        ( funext)
-        ( X)
-        ( \ x → (Δ² → A x))
-        ( \ x → (Λ → A x))
-        ( \ x → (horn-restriction (A x) , fiberwise-is-segal-A x))))
-      ( \ h t x → (h x) t) -- third equivalence
-      ( second (flip-ext-fun-inv
-        ( 2 × 2)
-        ( Λ)
-        ( \ t → BOT)
-        ( X)
-        ( \ t → A)
-        ( \ t → recBOT)))
+    is-local-function-type-fiberwise-is-local
+      ( funext)
+      ( 2 × 2)
+      ( Δ²)
+      ( \ t → Λ t)
+      ( X)
+      ( A)
+      ( fiberwise-is-segal-A)
 
 #def is-segal-function-type uses (funext)
   ( X : U)
@@ -659,39 +639,15 @@ then $(x : X) → A x$ is a Segal type.
   ( fiberwise-is-segal-A : (s : ψ) → is-local-horn-inclusion (A s))
   : is-local-horn-inclusion ((s : ψ) → A s)
   :=
-    is-equiv-triple-comp
-      ( Δ² → (s : ψ) → A s)
-      ( ( s : ψ) → Δ² → A s)
-      ( ( s : ψ) → Λ → A s)
-      ( Λ → (s : ψ) → A s)
-      ( \ g s t → g t s)  -- first equivalence
-      ( second
-        ( fubini
-          ( 2 × 2)
-          ( I)
-          ( Δ²)
-          ( \ t → BOT)
-          ( ψ)
-          ( \ s → BOT)
-          ( \ t s → A s)
-          ( \ u → recBOT)))
-      ( \ h s t → h s t) -- second equivalence
-      ( second (equiv-extensions-equiv extext I ψ (\ _ → BOT)
-        ( \ s → Δ² → A s)
-        ( \ s → Λ → A s)
-        ( \ s → (horn-restriction (A s) , fiberwise-is-segal-A s))
-        ( \ _ → recBOT)))
-      ( \ h t s → (h s) t) -- third equivalence
-      ( second
-        ( fubini
-          ( I)
-          ( 2 × 2)
-          ( ψ)
-          ( \ s → BOT)
-          ( Λ)
-          ( \ t → BOT)
-          ( \ s t → A s)
-          ( \ u → recBOT)))
+    is-local-subshape-inclusion-extension-type
+      ( extext)
+      ( I)
+      ( 2 × 2)
+      ( ψ)
+      ( Δ²)
+      ( \ t → Λ t)
+      ( A)
+      ( fiberwise-is-segal-A)
 
 #def is-segal-extension-type uses (extext)
   ( I : CUBE)

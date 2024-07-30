@@ -198,6 +198,102 @@ A type is 2-Segal iff it is local with respect to 2-Segal horn inclusions.
     product
      ( is-local-type (2 × 2 × 2) Δ³ Λ³₍₀₂₎ A)
      ( is-local-type (2 × 2 × 2) Δ³ Λ³₍₁₃₎ A)
+
+#def equiv-2-segal-horn-restriction₍₀₂₎
+  ( A : U)
+  : Equiv
+    ( Δ³ → A)
+    ( Σ ( k : Λ³₍₀₂₎ → A)
+      , ( Σ ( hg : hom A (k ((1₂ , 0₂) , 0₂)) (k ((1₂ , 1₂) , 1₂)))
+          , ( Σ ( α₂ : hom2
+                        ( A)
+                        ( k ((0₂ , 0₂) , 0₂))
+                        ( k ((1₂ , 0₂) , 0₂))
+                        ( k ((1₂ , 1₂) , 1₂))
+                        ( \ t → k ((t , 0₂) , 0₂))
+                        ( hg)
+                        ( \ t → k ((t , t) , t)))
+              , ( Σ ( α₀ : hom2
+                            ( A)
+                            ( k ((1₂ , 0₂) , 0₂))
+                            ( k ((1₂ , 1₂) , 0₂))
+                            ( k ((1₂ , 1₂) , 1₂))
+                            ( \ t → k ((1₂ , t) , 0₂))
+                            ( \ t → k ((1₂ , 1₂) , t))
+                            ( hg))
+                  , ( hom3
+                        ( A)
+                        ( k ((0₂ , 0₂) , 0₂))
+                        ( k ((1₂ , 0₂) , 0₂))
+                        ( k ((1₂ , 1₂) , 0₂))
+                        ( k ((1₂ , 1₂) , 1₂))
+                        ( \ t → k ((t , 0₂) , 0₂))
+                        ( \ t → k ((t , t) , 0₂))
+                        ( \ t → k ((t , t) , t))
+                        ( \ t → k ((1₂ , t) , 0₂))
+                        ( hg)
+                        ( \ t → k ((1₂ , 1₂) , t))
+                        ( \ (t , s) → k ((t , s) , 0₂))
+                        ( α₂)
+                        ( \ (t , s) → k ((t , t) , s))
+                        ( α₀))))))
+  :=
+    ( \ H →
+      ( ( ( ( ( \ t → H t)
+        , ( ( ( \ t → H ((1₂ , t) , t))
+          , ( ( ( \ (t , s) → H ((t , s) , s))
+            , ( ( \ (t , s) → H ((1₂ , t) , s)
+              , ( H)))))))))))
+      , ( ( \ G t → second (second (second (second (G)))) t , \ H → refl)
+      , ( ( \ G t → second (second (second (second (G)))) t , \ H → refl))))
+
+#def equiv-2-segal-horn-restriction₍₁₃₎
+  ( A : U)
+  : Equiv
+    ( Δ³ → A)
+    ( Σ ( k : Λ³₍₁₃₎ → A)
+      , ( Σ ( gf : hom A (k ((0₂ , 0₂) , 0₂)) (k ((1₂ , 1₂) , 0₂)))
+          , ( Σ ( α₃ : hom2
+                        ( A)
+                        ( k ((0₂ , 0₂) , 0₂))
+                        ( k ((1₂ , 0₂) , 0₂))
+                        ( k ((1₂ , 1₂) , 0₂))
+                        ( \ t → k ((t , 0₂) , 0₂))
+                        ( \ t → k ((1₂ , t) , 0₂))
+                        ( gf))
+              , ( Σ ( α₁ : hom2
+                            ( A)
+                            ( k ((0₂ , 0₂) , 0₂))
+                            ( k ((1₂ , 1₂) , 0₂))
+                            ( k ((1₂ , 1₂) , 1₂))
+                            ( gf)
+                            ( \ t → k ((1₂ , 1₂) , t))
+                            ( \ t → k ((t , t) , t)))
+                  , ( hom3
+                        ( A)
+                        ( k ((0₂ , 0₂) , 0₂))
+                        ( k ((1₂ , 0₂) , 0₂))
+                        ( k ((1₂ , 1₂) , 0₂))
+                        ( k ((1₂ , 1₂) , 1₂))
+                        ( \ t → k ((t , 0₂) , 0₂))
+                        ( gf)
+                        ( \ t → k ((t , t) , t))
+                        ( \ t → k ((1₂ , t) , 0₂))
+                        ( \ t → k ((1₂ , t) , t))
+                        ( \ t → k ((1₂ , 1₂) , t))
+                        ( α₃)
+                        ( \ (t , s) → k ((t , s) , s))
+                        ( α₁)
+                        ( \ (t , s) → k ((1₂ , t) , s)))))))
+  :=
+    ( \ H →
+      ( ( ( ( ( \ t → H t)
+        , ( ( ( \ t → H ((t , t) , 0₂))
+          , ( ( ( \ (t , s) → H ((t , s) , 0₂))
+            , ( ( \ (t , s) → H ((t , t) , s)
+              , ( H)))))))))))
+      , ( ( \ G t → second (second (second (second (G)))) t , \ H → refl)
+      , ( ( \ G t → second (second (second (second (G)))) t , \ H → refl))))
 ```
 
 The proof of `is-local-horn-inclusion-function-type` generalizes to types being

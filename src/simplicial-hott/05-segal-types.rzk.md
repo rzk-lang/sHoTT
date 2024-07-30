@@ -487,7 +487,7 @@ witnesses of the equivalence).
               ( k (0₂ , 0₂)) (k (1₂ , 0₂)) (k (1₂ , 1₂))
               ( \ t → k (t , 0₂)) (\ t → k (1₂ , t))
               ( h)))
-    , ( is-equiv-projection-contractible-fibers
+      , ( is-equiv-projection-contractible-fibers
           ( Λ → A)
           ( \ k →
             Σ ( h : hom A (k (0₂ , 0₂)) (k (1₂ , 1₂)))

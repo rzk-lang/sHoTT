@@ -704,7 +704,7 @@ version of function extensionality that asserts that a type of "maps together
 with homotopies" is contractible.
 
 ```rzk
-#def prod-eq-pair-dhomotopy
+#def components-dhomotopy
   ( A : U)
   ( C : A → U)
   ( f : (x : A) → C x)
@@ -718,7 +718,7 @@ with homotopies" is contractible.
       ( \ x →
         ( g x , H x))
 
-#def has-retraction-prod-eq-pair-dhomotopy
+#def has-retraction-components-dhomotopy
   ( A : U)
   ( C : A → U)
   ( f : (x : A) → C x)
@@ -728,13 +728,13 @@ with homotopies" is contractible.
       ( ( x : A)
         → ( Σ ( c : (C x))
           , ( f x =_{C x} c)))
-      ( prod-eq-pair-dhomotopy A C f)
+      ( components-dhomotopy A C f)
   :=
     ( ( \ G →
         ( \ x → first (G x) , \ x → second (G x)))
     , \ x → refl)
 
-#def is-retract-prod-eq-pair-dhomotopy
+#def is-retract-components-dhomotopy
   ( A : U)
   ( C : A → U)
   ( f : (x : A) → C x)
@@ -745,8 +745,8 @@ with homotopies" is contractible.
         → ( Σ ( c : (C x))
           , ( f x =_{C x} c)))
   :=
-    ( prod-eq-pair-dhomotopy A C f
-    , has-retraction-prod-eq-pair-dhomotopy A C f)
+    ( components-dhomotopy A C f
+    , has-retraction-components-dhomotopy A C f)
 
 #def WeirdFunExt
   : U
@@ -768,7 +768,7 @@ with homotopies" is contractible.
         ( ( x : A)
           → ( Σ ( c : (C x))
               , ( f x =_{C x} c)))
-        ( is-retract-prod-eq-pair-dhomotopy A C f)
+        ( is-retract-components-dhomotopy A C f)
         ( weakfunext
           ( A)
           ( \ x → Σ (c : (C x)) , (f x =_{C x} c))

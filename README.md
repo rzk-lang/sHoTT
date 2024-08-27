@@ -34,7 +34,7 @@ highlighting supplied by
 ## Checking the formalisations locally
 
 Install the
-[`rzk`](https://rzk-lang.github.io/rzk/latest/getting-started/install/) proof
+[`rzk`](https://rzk-lang.github.io/rzk/en/latest/getting-started/install/) proof
 assistant. Then run the following command from the root of this repository:
 
 ```sh

@@ -892,6 +892,27 @@ types are contractible.
   := (x : A) → is-contr (hom A a x)
 ```
 
+Initial objects map to initial objects by equivalences.
+
+```rzk
+#def is-inital-equiv-is-initial uses (extext)
+  (A B : U)
+  (e : Equiv A B)
+  (a : A)
+  (is-initial-a : is-initial A a) :
+  is-initial B (first e a)
+  :=
+  \ b →
+    ind-has-section-equiv A B e
+      ( \ b → is-contr (hom B (first e a) b))
+      ( \ a' → is-contr-equiv-is-contr (hom A a a')
+          ( hom B (first e a) (first e a'))
+          ( ap-hom A B (first e) a a'
+          , is-equiv-ap-hom-is-equiv extext A B (first e) (second e) a a')
+      ( is-initial-a a'))
+      ( b)
+```
+
 Initial objects satisfy an induction principle relative to covariant families.
 
 ```rzk
@@ -1112,6 +1133,27 @@ types are contractible.
   ( a : A)
   : U
   := (x : A) → is-contr (hom A x a)
+```
+
+Final objects map to final objects by equivalences.
+
+```rzk
+#def is-final-equiv-is-final uses (extext)
+  (A B : U)
+  (e : Equiv A B)
+  (a : A)
+  (is-final-a : is-final A a) :
+  is-final B (first e a)
+  :=
+  \ b →
+    ind-has-section-equiv A B e
+      ( \ b → is-contr (hom B b (first e a)))
+      ( \ a' → is-contr-equiv-is-contr (hom A a' a)
+          ( hom B (first e a') (first e a))
+          ( ap-hom A B (first e) a' a
+          , is-equiv-ap-hom-is-equiv extext A B (first e) (second e) a' a)
+      ( is-final-a a'))
+      ( b)
 ```
 
 Final objects satisfy an induction principle relative to contravariant families.
@@ -1364,4 +1406,174 @@ condition a name.
   : U
   := Σ ((a , u) : Σ (x : A) , (C x))
       , is-initial (Σ (x : A) , (C x)) (a , u)
+
+#def has-initial-tot-is-representable-family-is-segal uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-rep-C : is-representable-family A C)
+  : has-initial-tot A C
+  :=
+    ( ( first is-rep-C
+      , evid
+          ( A)
+          ( first is-rep-C)
+          ( C)
+          (equiv-for-is-representable-family A C is-rep-C))
+    , is-inital-equiv-is-initial
+        ( coslice A (first is-rep-C))
+        ( Σ (x : A) , (C x))
+        ( total-equiv-family-of-equiv
+          ( A)
+          (\ x → hom A (first is-rep-C) x)
+          ( C)
+          ( second is-rep-C))
+        ( (first is-rep-C, id-hom A (first is-rep-C)))
+        ( is-initial-id-hom-is-segal A is-segal-A (first is-rep-C)))
+
+#def is-representable-family-has-initial-tot
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  ( has-initial-tot-A : has-initial-tot A C)
+  : (is-representable-family A C)
+  :=
+    ( first(first has-initial-tot-A)
+    , \ b →
+      ( ( yon
+          ( A)
+          ( is-segal-A)
+          ( first(first has-initial-tot-A))
+          ( C)
+          ( is-covariant-C)
+          ( second(first has-initial-tot-A))
+          ( b))
+      , is-equiv-is-contr-map
+        ( hom A ( first(first has-initial-tot-A)) b)
+        ( C b)
+        ( yon
+          ( A)
+          ( is-segal-A)
+          ( first(first has-initial-tot-A))
+          ( C)
+          ( is-covariant-C)
+          ( second(first has-initial-tot-A))
+          ( b))
+        ( \ v →
+          is-contr-equiv-is-contr
+            ( hom (Σ (a : A) , (C a)) (first has-initial-tot-A) (b, v))
+            ( fib
+                ( hom A ( first(first has-initial-tot-A)) b)
+                ( C b)
+                ( yon
+                  ( A)
+                  ( is-segal-A)
+                  ( first(first has-initial-tot-A))
+                  ( C)
+                  ( is-covariant-C)
+                  ( second(first has-initial-tot-A))
+                  ( b))
+                ( v))
+            ( equiv-comp
+              ( hom (Σ (a : A) , (C a)) (first has-initial-tot-A) (b, v))
+              ( Σ (f : hom A (first(first has-initial-tot-A)) b)
+                , dhom
+                  ( A)
+                  ( first(first has-initial-tot-A))
+                  ( b)
+                  ( f)
+                  ( C)
+                  ( second(first has-initial-tot-A))
+                  ( v))
+              ( fib
+                ( hom A (first(first has-initial-tot-A)) b)
+                ( C b)
+                ( yon
+                  ( A)
+                  ( is-segal-A)
+                  ( first(first has-initial-tot-A))
+                  ( C)
+                  ( is-covariant-C)
+                  ( second(first has-initial-tot-A))
+                  ( b))
+                ( v))
+              ( axiom-choice
+                    ( 2)
+                    ( Δ¹)
+                    ( ∂Δ¹)
+                    ( \ _ → A)
+                    ( \ t x → C x)
+                    ( \ t →
+                      recOR
+                        ( t ≡ 0₂ ↦ first(first has-initial-tot-A)
+                        , t ≡ 1₂ ↦ b))
+                    ( \ t →
+                      recOR
+                        ( t ≡ 0₂ ↦ second(first has-initial-tot-A)
+                        , t ≡ 1₂ ↦ v)))
+              ( total-equiv-family-of-equiv
+                ( hom A (first(first has-initial-tot-A)) b)
+                ( \ f →
+                  dhom
+                    ( A)
+                    ( first(first has-initial-tot-A))
+                    ( b)
+                    ( f)
+                    ( C)
+                    ( second(first has-initial-tot-A))
+                    ( v))
+                ( \ f →
+                  covariant-transport
+                    ( A)
+                    ( first(first has-initial-tot-A))
+                    ( b)
+                    ( f)
+                    ( C)
+                    ( is-covariant-C)
+                    ( second(first has-initial-tot-A))
+                  = v)
+                ( \ f →
+                    ( covariant-uniqueness-curried
+                      ( A)
+                      ( first(first has-initial-tot-A))
+                      ( b)
+                      ( f)
+                      ( C)
+                      ( is-covariant-C)
+                      ( second(first has-initial-tot-A))
+                      ( v)
+                    , is-equiv-covariant-uniqueness-curried
+                      ( A)
+                      ( first(first has-initial-tot-A))
+                      ( b)
+                      ( f)
+                      ( C)
+                      ( is-covariant-C)
+                      ( second(first has-initial-tot-A))
+                      ( v)))))
+            ( second has-initial-tot-A (b, v)))))
+```
+
+```rzk title="RS17, Proposition 9.10"
+#def is-representable-iff-has-initial-tot uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  : iff (is-representable-family A C) (has-initial-tot A C)
+  :=
+    ( \ is-rep-C →
+      has-initial-tot-is-representable-family-is-segal
+      ( A)
+      ( is-segal-A)
+      ( C)
+      ( is-rep-C)
+    , \ has-initial-tot-A →
+      is-representable-family-has-initial-tot
+      ( A)
+      ( is-segal-A)
+      ( C)
+      ( is-covariant-C)
+      ( has-initial-tot-A))
 ```

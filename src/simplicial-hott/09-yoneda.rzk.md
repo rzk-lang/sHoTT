@@ -896,10 +896,11 @@ Initial objects map to initial objects by equivalences.
 
 ```rzk
 #def is-inital-equiv-is-initial uses (extext)
-  (A B : U)
-  (e : Equiv A B)
-  (a : A)
-  (is-initial-a : is-initial A a) :
+  ( A B : U)
+  ( e : Equiv A B)
+  ( a : A)
+  ( is-initial-a : is-initial A a)
+  :
   is-initial B (first e a)
   :=
   \ b →
@@ -1139,10 +1140,11 @@ Final objects map to final objects by equivalences.
 
 ```rzk
 #def is-final-equiv-is-final uses (extext)
-  (A B : U)
-  (e : Equiv A B)
-  (a : A)
-  (is-final-a : is-final A a) :
+  ( A B : U)
+  ( e : Equiv A B)
+  ( a : A)
+  ( is-final-a : is-final A a)
+  :
   is-final B (first e a)
   :=
   \ b →
@@ -1419,16 +1421,16 @@ condition a name.
           ( A)
           ( first is-rep-C)
           ( C)
-          (equiv-for-is-representable-family A C is-rep-C))
+          ( equiv-for-is-representable-family A C is-rep-C))
     , is-inital-equiv-is-initial
         ( coslice A (first is-rep-C))
-        ( Σ (x : A) , (C x))
+        ( Σ ( x : A) , (C x))
         ( total-equiv-family-of-equiv
           ( A)
-          (\ x → hom A (first is-rep-C) x)
+          ( \ x → hom A (first is-rep-C) x)
           ( C)
           ( second is-rep-C))
-        ( (first is-rep-C, id-hom A (first is-rep-C)))
+        ( ( first is-rep-C , id-hom A (first is-rep-C)))
         ( is-initial-id-hom-is-segal A is-segal-A (first is-rep-C)))
 
 #def is-representable-family-has-initial-tot
@@ -1437,7 +1439,7 @@ condition a name.
   ( C : A → U)
   ( is-covariant-C : is-covariant A C)
   ( has-initial-tot-A : has-initial-tot A C)
-  : (is-representable-family A C)
+  : ( is-representable-family A C)
   :=
     ( first(first has-initial-tot-A)
     , \ b →
@@ -1450,7 +1452,7 @@ condition a name.
           ( second(first has-initial-tot-A))
           ( b))
       , is-equiv-is-contr-map
-        ( hom A ( first(first has-initial-tot-A)) b)
+        ( hom A (first(first has-initial-tot-A)) b)
         ( C b)
         ( yon
           ( A)
@@ -1462,9 +1464,9 @@ condition a name.
           ( b))
         ( \ v →
           is-contr-equiv-is-contr
-            ( hom (Σ (a : A) , (C a)) (first has-initial-tot-A) (b, v))
+            ( hom (Σ (a : A) , (C a)) (first has-initial-tot-A) (b , v))
             ( fib
-                ( hom A ( first(first has-initial-tot-A)) b)
+                ( hom A (first(first has-initial-tot-A)) b)
                 ( C b)
                 ( yon
                   ( A)
@@ -1476,8 +1478,8 @@ condition a name.
                   ( b))
                 ( v))
             ( equiv-comp
-              ( hom (Σ (a : A) , (C a)) (first has-initial-tot-A) (b, v))
-              ( Σ (f : hom A (first(first has-initial-tot-A)) b)
+              ( hom (Σ (a : A) , (C a)) (first has-initial-tot-A) (b , v))
+              ( Σ ( f : hom A (first(first has-initial-tot-A)) b)
                 , dhom
                   ( A)
                   ( first(first has-initial-tot-A))
@@ -1552,7 +1554,7 @@ condition a name.
                       ( is-covariant-C)
                       ( second(first has-initial-tot-A))
                       ( v)))))
-            ( second has-initial-tot-A (b, v)))))
+            ( second has-initial-tot-A (b , v)))))
 ```
 
 ```rzk title="RS17, Proposition 9.10"
@@ -1577,3 +1579,4 @@ condition a name.
       ( is-covariant-C)
       ( has-initial-tot-A))
 ```
+

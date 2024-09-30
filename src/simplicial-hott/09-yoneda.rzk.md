@@ -1408,7 +1408,13 @@ condition a name.
   : U
   := Σ ((a , u) : Σ (x : A) , (C x))
       , is-initial (Σ (x : A) , (C x)) (a , u)
+```
 
+As a representable family is fiberwise equivalent to a `#!rzk Σ (x : A) , C x`,
+the total space of the family is equivalent to a coslice, and coslices have an
+initial object by `#!rzk is-initial-id-hom-is-segal`.
+
+```rzk
 #def has-initial-tot-is-representable-family-is-segal uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -1433,6 +1439,19 @@ condition a name.
         ( ( first is-rep-C , id-hom A (first is-rep-C)))
         ( is-initial-id-hom-is-segal A is-segal-A (first is-rep-C)))
 
+```
+
+The other direction is a bit longer. We follow the proof of RS17 9.10:
+given `#!rzk (a, u) : Σ (x : A) , C x` an initial object of
+`#!rzk Σ (x : A) , C x`, evaluating `#!rzk yon` at `#!rzk u : C a`
+yields a family of maps `#!rzk (x : A) → hom A a x → C x`. This is a
+contractible map as its fiber at `#!rzk (b : A, v : C b)` is equivalent
+to the hom type `#!rzk hom (Σ (x : A) , C x) (a, u) (b, v)` through
+the composite of `#!rzk covariant-uniqueness-curried` and
+`#!rzk axiom-choice` and it is thus an equivalence using
+`#!rzk is-equiv-is-contr-map`.
+
+```rzk
 #def is-representable-family-has-initial-tot
   ( A : U)
   ( is-segal-A : is-segal A)
@@ -1441,23 +1460,23 @@ condition a name.
   ( has-initial-tot-A : has-initial-tot A C)
   : ( is-representable-family A C)
   :=
-    ( first(first has-initial-tot-A)
+    ( first (first has-initial-tot-A)
     , \ b →
       ( ( yon
           ( A)
           ( is-segal-A)
-          ( first(first has-initial-tot-A))
+          ( first (first has-initial-tot-A))
           ( C)
           ( is-covariant-C)
           ( second(first has-initial-tot-A))
           ( b))
       , is-equiv-is-contr-map
-        ( hom A (first(first has-initial-tot-A)) b)
+        ( hom A (first (first has-initial-tot-A)) b)
         ( C b)
         ( yon
           ( A)
           ( is-segal-A)
-          ( first(first has-initial-tot-A))
+          ( first (first has-initial-tot-A))
           ( C)
           ( is-covariant-C)
           ( second(first has-initial-tot-A))
@@ -1466,12 +1485,12 @@ condition a name.
           is-contr-equiv-is-contr
             ( hom (Σ (a : A) , (C a)) (first has-initial-tot-A) (b , v))
             ( fib
-                ( hom A (first(first has-initial-tot-A)) b)
+                ( hom A (first (first has-initial-tot-A)) b)
                 ( C b)
                 ( yon
                   ( A)
                   ( is-segal-A)
-                  ( first(first has-initial-tot-A))
+                  ( first (first has-initial-tot-A))
                   ( C)
                   ( is-covariant-C)
                   ( second(first has-initial-tot-A))
@@ -1479,22 +1498,22 @@ condition a name.
                 ( v))
             ( equiv-comp
               ( hom (Σ (a : A) , (C a)) (first has-initial-tot-A) (b , v))
-              ( Σ ( f : hom A (first(first has-initial-tot-A)) b)
+              ( Σ ( f : hom A (first (first has-initial-tot-A)) b)
                 , dhom
                   ( A)
-                  ( first(first has-initial-tot-A))
+                  ( first (first has-initial-tot-A))
                   ( b)
                   ( f)
                   ( C)
                   ( second(first has-initial-tot-A))
                   ( v))
               ( fib
-                ( hom A (first(first has-initial-tot-A)) b)
+                ( hom A (first (first has-initial-tot-A)) b)
                 ( C b)
                 ( yon
                   ( A)
                   ( is-segal-A)
-                  ( first(first has-initial-tot-A))
+                  ( first (first has-initial-tot-A))
                   ( C)
                   ( is-covariant-C)
                   ( second(first has-initial-tot-A))
@@ -1508,18 +1527,18 @@ condition a name.
                     ( \ t x → C x)
                     ( \ t →
                       recOR
-                        ( t ≡ 0₂ ↦ first(first has-initial-tot-A)
+                        ( t ≡ 0₂ ↦ first (first has-initial-tot-A)
                         , t ≡ 1₂ ↦ b))
                     ( \ t →
                       recOR
                         ( t ≡ 0₂ ↦ second(first has-initial-tot-A)
                         , t ≡ 1₂ ↦ v)))
               ( total-equiv-family-of-equiv
-                ( hom A (first(first has-initial-tot-A)) b)
+                ( hom A (first (first has-initial-tot-A)) b)
                 ( \ f →
                   dhom
                     ( A)
-                    ( first(first has-initial-tot-A))
+                    ( first (first has-initial-tot-A))
                     ( b)
                     ( f)
                     ( C)
@@ -1528,7 +1547,7 @@ condition a name.
                 ( \ f →
                   covariant-transport
                     ( A)
-                    ( first(first has-initial-tot-A))
+                    ( first (first has-initial-tot-A))
                     ( b)
                     ( f)
                     ( C)
@@ -1538,7 +1557,7 @@ condition a name.
                 ( \ f →
                     ( covariant-uniqueness-curried
                       ( A)
-                      ( first(first has-initial-tot-A))
+                      ( first (first has-initial-tot-A))
                       ( b)
                       ( f)
                       ( C)
@@ -1547,7 +1566,7 @@ condition a name.
                       ( v)
                     , is-equiv-covariant-uniqueness-curried
                       ( A)
-                      ( first(first has-initial-tot-A))
+                      ( first (first has-initial-tot-A))
                       ( b)
                       ( f)
                       ( C)

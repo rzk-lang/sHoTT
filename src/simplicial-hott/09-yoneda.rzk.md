@@ -1441,15 +1441,14 @@ initial object by `#!rzk is-initial-id-hom-is-segal`.
 
 ```
 
-The other direction is a bit longer. We follow the proof of RS17 9.10:
-given `#!rzk (a, u) : Σ (x : A) , C x` an initial object of
-`#!rzk Σ (x : A) , C x`, evaluating `#!rzk yon` at `#!rzk u : C a`
-yields a family of maps `#!rzk (x : A) → hom A a x → C x`. This is a
-contractible map as its fiber at `#!rzk (b : A, v : C b)` is equivalent
-to the hom type `#!rzk hom (Σ (x : A) , C x) (a, u) (b, v)` through
-the composite of `#!rzk covariant-uniqueness-curried` and
-`#!rzk axiom-choice` and it is thus an equivalence using
-`#!rzk is-equiv-is-contr-map`.
+The other direction is a bit longer. We follow the proof of RS17 9.10: given
+`#!rzk (a, u) : Σ (x : A) , C x` an initial object of `#!rzk Σ (x : A) , C x`,
+evaluating `#!rzk yon` at `#!rzk u : C a` yields a family of maps
+`#!rzk (x : A) → hom A a x → C x`. This is a contractible map as its fiber at
+`#!rzk (b : A, v : C b)` is equivalent to the hom type
+`#!rzk hom (Σ (x : A) , C x) (a, u) (b, v)` through the composite of
+`#!rzk covariant-uniqueness-curried` and `#!rzk axiom-choice` and it is thus an
+equivalence using `#!rzk is-equiv-is-contr-map`.
 
 ```rzk
 #def is-representable-family-has-initial-tot
@@ -1598,4 +1597,3 @@ the composite of `#!rzk covariant-uniqueness-curried` and
       ( is-covariant-C)
       ( has-initial-tot-A))
 ```
-

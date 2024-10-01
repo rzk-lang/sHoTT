@@ -1415,7 +1415,7 @@ the total space of the family is equivalent to a coslice, and coslices have an
 initial object by `#!rzk is-initial-id-hom-is-segal`.
 
 ```rzk
-#def has-initial-tot-is-representable-family-is-segal uses (extext)
+#def has-initial-tot-is-representable-family uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( C : A → U)
@@ -1467,7 +1467,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
           ( first (first has-initial-tot-A))
           ( C)
           ( is-covariant-C)
-          ( second(first has-initial-tot-A))
+          ( second (first has-initial-tot-A))
           ( b))
       , is-equiv-is-contr-map
         ( hom A (first (first has-initial-tot-A)) b)
@@ -1478,7 +1478,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
           ( first (first has-initial-tot-A))
           ( C)
           ( is-covariant-C)
-          ( second(first has-initial-tot-A))
+          ( second (first has-initial-tot-A))
           ( b))
         ( \ v →
           is-contr-equiv-is-contr
@@ -1492,7 +1492,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                   ( first (first has-initial-tot-A))
                   ( C)
                   ( is-covariant-C)
-                  ( second(first has-initial-tot-A))
+                  ( second (first has-initial-tot-A))
                   ( b))
                 ( v))
             ( equiv-comp
@@ -1504,7 +1504,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                   ( b)
                   ( f)
                   ( C)
-                  ( second(first has-initial-tot-A))
+                  ( second (first has-initial-tot-A))
                   ( v))
               ( fib
                 ( hom A (first (first has-initial-tot-A)) b)
@@ -1515,7 +1515,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                   ( first (first has-initial-tot-A))
                   ( C)
                   ( is-covariant-C)
-                  ( second(first has-initial-tot-A))
+                  ( second (first has-initial-tot-A))
                   ( b))
                 ( v))
               ( axiom-choice
@@ -1530,7 +1530,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                         , t ≡ 1₂ ↦ b))
                     ( \ t →
                       recOR
-                        ( t ≡ 0₂ ↦ second(first has-initial-tot-A)
+                        ( t ≡ 0₂ ↦ second (first has-initial-tot-A)
                         , t ≡ 1₂ ↦ v)))
               ( total-equiv-family-of-equiv
                 ( hom A (first (first has-initial-tot-A)) b)
@@ -1541,7 +1541,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                     ( b)
                     ( f)
                     ( C)
-                    ( second(first has-initial-tot-A))
+                    ( second (first has-initial-tot-A))
                     ( v))
                 ( \ f →
                   covariant-transport
@@ -1551,7 +1551,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                     ( f)
                     ( C)
                     ( is-covariant-C)
-                    ( second(first has-initial-tot-A))
+                    ( second (first has-initial-tot-A))
                   = v)
                 ( \ f →
                     ( covariant-uniqueness-curried
@@ -1561,7 +1561,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                       ( f)
                       ( C)
                       ( is-covariant-C)
-                      ( second(first has-initial-tot-A))
+                      ( second (first has-initial-tot-A))
                       ( v)
                     , is-equiv-covariant-uniqueness-curried
                       ( A)
@@ -1570,7 +1570,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                       ( f)
                       ( C)
                       ( is-covariant-C)
-                      ( second(first has-initial-tot-A))
+                      ( second (first has-initial-tot-A))
                       ( v)))))
             ( second has-initial-tot-A (b , v)))))
 ```
@@ -1584,7 +1584,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
   : iff (is-representable-family A C) (has-initial-tot A C)
   :=
     ( \ is-rep-C →
-      has-initial-tot-is-representable-family-is-segal
+      has-initial-tot-is-representable-family
       ( A)
       ( is-segal-A)
       ( C)

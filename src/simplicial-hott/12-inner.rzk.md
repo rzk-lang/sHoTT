@@ -19,9 +19,9 @@ This is a literate `rzk` file:
 
 - `hott/*` - We require various prerequisites from homotopy type theory, for
   instance the axiom of function extensionality.
-- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+- `03-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and
   their subshapes.
-- `04-extension-types.rzk.md` — We use the fubini theorem and extension
+- `04-extension-types.rzk.md` — We use the Fubini theorem and extension
   extensionality.
 - `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types
 - `10-rezk-types.rzk.md`- We use Rezk types.

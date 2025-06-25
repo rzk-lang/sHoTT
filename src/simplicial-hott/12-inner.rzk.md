@@ -1,13 +1,13 @@
 # Cocartesian families
 
-This is a formalization of important feature of (iso-)inner families.
-In particular, we provide an interface for dependent composition,
-crucially needed for cocartesian families.
+This is a formalization of important feature of (iso-)inner families. In
+particular, we provide an interface for dependent composition, crucially needed
+for cocartesian families.
 
 We build on [BW23, §4].
 
-NB: We do not define them as orthogonal maps here but it would be desirable
-to provide this characterization in the future.
+NB: We do not define them as orthogonal maps here but it would be desirable to
+provide this characterization in the future.
 
 This is a literate `rzk` file:
 
@@ -81,9 +81,12 @@ An isoinner family is isoinner.
 
 ## Dependent composition
 
-In an inner family, we can dependently compose arrows. To make this precise, some coherence seems to be needed going through the axiom of choice for extension types.
+In an inner family, we can dependently compose arrows. To make this precise,
+some coherence seems to be needed going through the axiom of choice for
+extension types.
 
-We first record instances of the axiom of choice for dependent 1- and 2-dimensional hom types.
+We first record instances of the axiom of choice for dependent 1- and
+2-dimensional hom types.
 
 The axiom of choice and its inverse map for dependent homs:
 

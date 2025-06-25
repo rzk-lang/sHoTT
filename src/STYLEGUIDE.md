@@ -350,7 +350,6 @@ that is made. Finally, prepend the concluding type.
   ```
 
   applying the scheme we get
-
   1. `is-prop`, noting the assumption that `A` is a proposition. We do not
      include variable names in the entry's name.
   2. `is-prop-is-prop`, noting the assumption that `B` is a proposition.

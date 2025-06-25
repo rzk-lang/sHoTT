@@ -750,6 +750,7 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
 ```
 
 Rezk types are Segal.
+
 ```rzk
 #def is-segal-is-rezk
   ( A : U)

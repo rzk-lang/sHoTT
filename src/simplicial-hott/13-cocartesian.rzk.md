@@ -49,7 +49,6 @@ this is preferred for usage.
         , ( dhom2 B b b' b'' u v w sigma P e e' e'' f g h))
 ```
 
-
 ## Cocartesian lifts
 
 The following is the type of cocartesian lifts of a fixed arrow in the base with
@@ -70,8 +69,8 @@ a given starting point in the fiber.
 
 ## Cocartesian family
 
-A family is cocartesian if it is isoinner and any arrow in the has a
-cocartesian lift, given a point in the fiber over the domain.
+A family is cocartesian if it is isoinner and any arrow in the has a cocartesian
+lift, given a point in the fiber over the domain.
 
 ```rzk title="BW23, Definition 5.2.1"
 #def has-cocartesian-lifts

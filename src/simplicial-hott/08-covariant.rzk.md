@@ -2286,12 +2286,13 @@ commuting with the contravariant lifts.
 
 ## Discrete fibers
 
-The fibers of a covariant fibration over a Segal type are discrete types.
+The fibers of a covariant fibration are discrete types. Note the original
+statement asserted that the base type must be Segal, but this hypothesis is
+unnecessary.
 
 ```rzk title="RS17, Proposition 8.18"
-#def is-discrete-is-covariant-segal
+#def is-discrete-is-covariant
   ( A : U)
-  ( is-segal-A : is-segal A)
   ( C : A → U)
   ( is-cov-C : is-covariant A C)
   ( x : A)
@@ -2326,9 +2327,8 @@ are discrete.
   ( x y : A)
   : is-discrete (hom A x y)
   :=
-    is-discrete-is-covariant-segal
+    is-discrete-is-covariant
       ( A)
-      ( is-segal-A)
       ( hom A x)
       ( is-covariant-representable-is-segal A is-segal-A x)
       ( y)

@@ -872,6 +872,37 @@ arrows.
       ( e)
 ```
 
+## Isomorphisms Induction
+
+Since isomorphisms are equivalent to equalities in Rezk types, we can prove the
+same induction principle for them.
+
+```rzk
+#def iso-ind-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x : A)
+  ( C : (y : A) → (Iso A (π₁ is-rezk-A) x y) → U)
+  ( d : C x (iso-eq A (π₁ is-rezk-A) x x refl))
+  ( y : A)
+  ( f : Iso A (π₁ is-rezk-A) x y)
+  : C y f
+  :=
+  transport
+  ( Iso A (π₁ is-rezk-A) x y)
+  ( \ f → C y f)
+  ( iso-eq A (π₁ is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y f))
+  ( f)
+  ( iso-eq-iso-is-rezk' A is-rezk-A x y f)
+  ( ind-path
+    ( A)
+    ( x)
+    ( \ y p → C y (iso-eq A (π₁ is-rezk-A) x y p))
+    ( d)
+    ( y)
+    ( eq-iso-is-rezk A is-rezk-A x y f))
+```
+
 ## Isomorphisms in discrete types
 
 In a discrete type every arrow is an isomorphisms. This is a straightforward

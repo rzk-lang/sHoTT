@@ -769,6 +769,19 @@ The inverse to `#!rzk iso-eq` for a Rezk type.
     ( iso-eq A (first is-rezk-A) x y)
     ( ( second is-rezk-A) x y)
 
+#def iso-eq-iso-is-rezk'
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x y : A)
+  ( iso : Iso A (π₁ is-rezk-A) x y)
+  : iso-eq A (π₁ is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y iso) = iso
+  :=
+  ( second
+    ( has-section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
+      ( iso-eq A (first is-rezk-A) x y)
+      ( ( second is-rezk-A) x y)))
+  iso
+
 #def iso-eq-iso-is-rezk
   ( A : U)
   ( is-rezk-A : is-rezk A)
@@ -782,10 +795,7 @@ The inverse to `#!rzk iso-eq` for a Rezk type.
     ( iso-eq A (first is-rezk-A) x y
       ( eq-iso-is-rezk A is-rezk-A x y (e , is-iso-e)))
     ( ( e , is-iso-e))
-    ( ( second
-      ( has-section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
-        ( iso-eq A (first is-rezk-A) x y)
-        ( ( second is-rezk-A) x y))) (e , is-iso-e))
+    ( iso-eq-iso-is-rezk' A is-rezk-A x y (e , is-iso-e))
 ```
 
 The following results show how `#!rzk iso-eq` mediates between the

@@ -69,6 +69,13 @@ extensionality and weak function extensionality:
   ( x y : A)
   : U
   := Σ (f : hom A x y) , is-iso-arrow A is-segal-A x y f
+
+#def hom-iso
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y : A)
+  : Iso A is-segal-A x y → hom A x y
+  := \ (f , _) → f
 ```
 
 ## Invertible arrows

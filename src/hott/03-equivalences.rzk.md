@@ -293,6 +293,17 @@ invertible map to prove symmetry:
       , first (second (has-inverse-is-equiv A B (first e) (second e))))))
 ```
 
+As expected, it is an inverse of the original map:
+
+```rzk
+#def inv-equiv-cancel
+  ( A B : U)
+  ( ( f , is-equiv-f) : Equiv A B)
+  ( a : A)
+  : π₁ (inv-equiv A B (f , is-equiv-f)) (f a) = a
+  := π₂ (π₂ (π₂ (inv-equiv A B (f , is-equiv-f)))) a
+```
+
 ```rzk title="Composition of equivalences in diagrammatic order"
 #def equiv-comp
   ( A B C : U)

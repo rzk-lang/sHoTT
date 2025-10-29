@@ -20,6 +20,40 @@ This is a literate `rzk` file:
 #assume extext : ExtExt
 ```
 
+## find a place
+
+```rzk
+-- TODO: needs better name?
+#def dhom-fabricate-is-locally-contr-extext
+  ( A : Δ¹ → U)
+  ( is-contr-A : (t : Δ¹) → is-contr (A t))
+  ( x : A 0₂)
+  ( y : A 1₂)
+  : ( t : Δ¹) → A t [t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y]
+  :=
+  center-contraction
+  ( ( t : Δ¹) → A t [t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y])
+  ( weakextext-extext extext 2 Δ¹ ∂Δ¹ A is-contr-A
+    ( \ t → recOR(t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y)))
+```
+
+```rzk
+-- TODO: needs better name?
+#def eq-dhom-refl-is-locally-contr-extext uses (extext)
+  ( A : Δ¹ → U)
+  ( is-contr-A : (t : Δ¹) → is-contr (A t))
+  ( x : A 0₂)
+  ( y : A 1₂)
+  ( f g : (t : Δ¹) → A t [t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y])
+  : ( t : Δ¹) → (f t = g t) [t ≡ 0₂ ↦ refl , t ≡ 1₂ ↦ refl]
+  :=
+  dhom-fabricate-is-locally-contr-extext
+  ( \ t → f t = g t)
+  ( \ t → is-prop-is-contr (A t) (is-contr-A t) (f t) (g t))
+  ( refl)
+  ( refl)
+```
+
 ## Full Embeddings
 
 A full embedding is a map that is an equivalence on hom-types:
@@ -152,4 +186,142 @@ final objects can be detected by full embeddings:
   is-contr-equiv-is-contr' (hom A x a) (hom B (f x) (f a))
   ( ap-hom A B f x a , is-full-emb-f x a)
   ( is-final-fa (f x))
+```
+
+## The inclusion of isomorphisms into morphisms is a full embedding
+
+We opt to show a more general statement
+
+```rzk
+#def is-equiv-hom-iso-dhom
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y : arr A)
+  ( f : Iso A (is-segal-A) (x 0₂) (y 0₂))
+  ( g : Iso A (is-segal-A) (x 1₂) (y 1₂))
+  : is-equiv
+    ( ( t : Δ¹) → Iso A is-segal-A (x t) (y t) [t ≡ 0₂ ↦ f , t ≡ 1₂ ↦ g])
+    ( Σ ( F : (t : Δ¹) → hom A (x t) (y t) [t ≡ 0₂ ↦ first f , t ≡ 1₂ ↦ first g])
+      , ( t : Δ¹) → is-iso-arrow A is-segal-A (x t) (y t) (F t)
+        [ t ≡ 0₂ ↦ second f , t ≡ 1₂ ↦ second g])
+    ( \ σ → (\ t → first (σ t) , \ t → second (σ t)))
+  :=
+  is-equiv-has-inverse
+  ( ( t : Δ¹) → Iso A is-segal-A (x t) (y t) [t ≡ 0₂ ↦ f , t ≡ 1₂ ↦ g])
+  ( Σ ( F : (t : Δ¹) → hom A (x t) (y t) [t ≡ 0₂ ↦ first f , t ≡ 1₂ ↦ first g])
+    , ( t : Δ¹)
+      → is-iso-arrow A is-segal-A (x t) (y t) (F t)
+      [ t ≡ 0₂ ↦ second f , t ≡ 1₂ ↦ second g])
+  ( \ σ → (\ t → first (σ t) , \ t → second (σ t)))
+  ( \ (σ , is-iso-σ) t → (σ t , is-iso-σ t)
+    , ( ( \ _ → refl)
+      , ( \ _ → refl)))
+```
+
+```rzk
+#def is-contr-hom-is-iso-arrow-sides-iso-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x₁ y₁ x₂ y₂ : A)
+  ( f : hom A x₁ y₁)
+  ( g : hom A x₂ y₂)
+  ( h : Iso A (first is-rezk-A) x₁ x₂)
+  ( k : Iso A (first is-rezk-A) y₁ y₂)
+  ( F : (t : Δ¹) → hom A (f t) (g t) [t ≡ 0₂ ↦ first h , t ≡ 1₂ ↦ first k])
+  : is-contr
+    ( ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g t) (F t)
+      [ t ≡ 0₂ ↦ second h , t ≡ 1₂ ↦ second k])
+  :=
+  iso-ind-is-rezk A is-rezk-A x₁
+  ( \ x₂' h' →
+    ( g' : hom A x₂' y₂)
+    → ( F' : (t : Δ¹) → hom A (f t) (g' t) [t ≡ 0₂ ↦ first h' , t ≡ 1₂ ↦ first k])
+    → is-contr
+      ( ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g' t) (F' t)
+        [ t ≡ 0₂ ↦ second h' , t ≡ 1₂ ↦ second k]))
+  ( iso-ind-is-rezk A is-rezk-A y₁
+    ( \ y₂' k' →
+      ( g' : hom A x₁ y₂')
+      → ( F' : (t : Δ¹) → hom A (f t) (g' t)
+               [ t ≡ 0₂ ↦ id-hom A x₁ , t ≡ 1₂ ↦ first k'])
+      → is-contr
+        ( ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g' t) (F' t)
+          [ t ≡ 0₂ ↦ is-iso-arrow-id-hom A (first is-rezk-A) x₁
+          , t ≡ 1₂ ↦ second k']))
+    ( \ g' F' →
+      ind-curried-square-sides-id-is-segal A (first is-rezk-A) x₁ y₁ f
+      ( \ g'' F'' →
+        is-contr
+        ( ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g'' t) (F'' t)
+          [ t ≡ 0₂ ↦ is-iso-arrow-id-hom A (first is-rezk-A) x₁
+          , t ≡ 1₂ ↦ is-iso-arrow-id-hom A (first is-rezk-A) y₁]))
+      ( weakextext-extext extext 2 Δ¹ ∂Δ¹
+        ( \ t → is-iso-arrow A (first is-rezk-A) (f t) (f t) (\ (s : Δ¹) → (f t)))
+        ( \ t →
+          is-contr-is-inhabited-is-prop
+          ( is-iso-arrow A (first is-rezk-A) (f t) (f t) (\ (s : Δ¹) → (f t)))
+          ( is-prop-is-iso-arrow extext A (first is-rezk-A)
+            ( f t) (f t) (\ (s : Δ¹) → (f t)))
+          ( is-iso-arrow-id-hom A (first is-rezk-A) (f t)))
+        ( \ t →
+          recOR
+          ( t ≡ 0₂ ↦ is-iso-arrow-id-hom A (first is-rezk-A) x₁
+          , t ≡ 1₂ ↦ is-iso-arrow-id-hom A (first is-rezk-A) y₁)))
+      ( g')
+      ( \ t s → F' t s))
+    ( y₂)
+    ( k))
+  ( x₂)
+  ( h)
+  ( g)
+  ( F)
+```
+
+```rzk
+#def is-equiv-ap-hom-hom-iso uses (extext)
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x y : arr A)
+  ( f : Iso A (first is-rezk-A) (x 0₂) (y 0₂))
+  ( g : Iso A (first is-rezk-A) (x 1₂) (y 1₂))
+  : is-equiv
+    ( ( t : Δ¹) → Iso A (first is-rezk-A) (x t) (y t) [t ≡ 0₂ ↦ f , t ≡ 1₂ ↦ g])
+    ( ( t : Δ¹) → hom A (x t) (y t) [t ≡ 0₂ ↦ first f , t ≡ 1₂ ↦ first g])
+    ( \ σ t → hom-iso A (first is-rezk-A) (x t) (y t) (σ t))
+  :=
+  is-equiv-comp
+  ( ( t : Δ¹) → Iso A (first is-rezk-A) (x t) (y t) [t ≡ 0₂ ↦ f , t ≡ 1₂ ↦ g])
+  ( Σ ( F : (t : Δ¹) → hom A (x t) (y t) [t ≡ 0₂ ↦ first f , t ≡ 1₂ ↦ first g])
+    , ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (x t) (y t) (F t)
+      [ t ≡ 0₂ ↦ second f , t ≡ 1₂ ↦ second g])
+  ( ( t : Δ¹) → hom A (x t) (y t) [t ≡ 0₂ ↦ first f , t ≡ 1₂ ↦ first g])
+  ( \ σ → (\ t → first (σ t) , \ t → second (σ t)))
+  ( is-equiv-hom-iso-dhom A (first is-rezk-A) x y f g)
+  ( projection-total-type
+    ( ( t : Δ¹) → hom A (x t) (y t) [t ≡ 0₂ ↦ first f , t ≡ 1₂ ↦ first g])
+    ( \ F →
+      ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (x t) (y t) (F t)
+      [ t ≡ 0₂ ↦ second f , t ≡ 1₂ ↦ second g]))
+  ( is-equiv-projection-contractible-fibers
+    ( ( t : Δ¹) → hom A (x t) (y t) [t ≡ 0₂ ↦ first f , t ≡ 1₂ ↦ first g])
+    ( \ F →
+      ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (x t) (y t) (F t)
+      [ t ≡ 0₂ ↦ second f , t ≡ 1₂ ↦ second g])
+    ( is-contr-hom-is-iso-arrow-sides-iso-is-rezk A is-rezk-A
+      ( x 0₂) (x 1₂) (y 0₂) (y 1₂)
+      ( x) (y)
+      ( f) (g)))
+```
+
+```rzk
+#def is-full-emb-hom-iso uses (extext)
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x y : A)
+  : is-full-emb
+    ( Iso A (first is-rezk-A) x y)
+    ( hom A x y)
+    ( hom-iso A (first is-rezk-A) x y)
+  :=
+  \ f g → is-equiv-ap-hom-hom-iso A is-rezk-A (\ _ → x) (\ _ → y) f g
 ```

@@ -520,6 +520,35 @@ functions with these stronger hypotheses.
       ( is-equiv-comp B C D g is-equiv-g h is-equiv-h)
 ```
 
+```rzk title="A composition of four equivalences"
+#def equiv-quadruple-comp
+  ( A B C D E : U)
+  ( A≃B : Equiv A B)
+  ( B≃C : Equiv B C)
+  ( C≃D : Equiv C D)
+  ( D≃E : Equiv D E)
+  : Equiv A E
+  := equiv-triple-comp A B C E (A≃B) (B≃C) (equiv-comp C D E C≃D D≃E)
+
+#def is-equiv-quadruple-comp
+  ( A B C D E : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( g : B → C)
+  ( is-equiv-g : is-equiv B C g)
+  ( h : C → D)
+  ( is-equiv-h : is-equiv C D h)
+  ( i : D → E)
+  ( is-equiv-i : is-equiv D E i)
+  : is-equiv A E (quadruple-comp A B C D E i h g f)
+  :=
+  is-equiv-comp A B E
+    ( f)
+    ( is-equiv-f)
+    ( triple-comp B C D E i h g)
+    ( is-equiv-triple-comp B C D E g is-equiv-g h is-equiv-h i is-equiv-i)
+```
+
 ## Equivalences and homotopy
 
 If a map is homotopic to an equivalence it is an equivalence.

@@ -222,6 +222,21 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
   := Σ (f : A → B) , (is-equiv A B f)
 ```
 
+However, we can easily construct an equivalence given the data stored in
+`#!rzk has-inverse`. For convenience this definition unfolds that Sigma type to
+reduce the amount of nested parenthesis and indentation.
+
+```rzk
+#def equiv-has-inverse
+  ( A B : U)
+  ( f : A → B)
+  ( g : B → A)
+  ( h1 : homotopy A A (comp A B A g f) (identity A))
+  ( h2 : homotopy B B (comp B A B f g) (identity B))
+  : Equiv A B
+  := (f , ((g , h1) , (g , h2)))
+```
+
 ## Induction with section
 
 We have two variants of induction with section that say that if `f : A → B` has

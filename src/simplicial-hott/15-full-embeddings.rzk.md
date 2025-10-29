@@ -325,3 +325,38 @@ We opt to show a more general statement
   :=
   \ f g → is-equiv-ap-hom-hom-iso A is-rezk-A (\ _ → x) (\ _ → y) f g
 ```
+
+```rzk
+#def is-full-emb-total-type-hom-iso uses (extext)
+  ( A B : U)
+  ( is-rezk-A : is-rezk A)
+  ( x y : B → A)
+  : is-full-emb
+    ( Σ ( b : B) , Iso A (first is-rezk-A) (x b) (y b))
+    ( Σ ( b : B) , hom A (x b) (y b))
+    ( \ (b , f) → (b , hom-iso A (first is-rezk-A) (x b) (y b) f))
+  :=
+  \ (v , f) (w , g) →
+  is-equiv-triple-comp
+  ( hom (Σ (b : B) , Iso A (first is-rezk-A) (x b) (y b)) (v , f) (w , g))
+  ( Σ ( h : hom B v w)
+    , dhom B v w h (\ b → Iso A (first is-rezk-A) (x b) (y b)) f g)
+  ( Σ ( h : hom B v w)
+    , dhom B v w h (\ b → hom A (x b) (y b)) (first f) (first g))
+  ( hom (Σ (b : B) , hom A (x b) (y b)) (v , first f) (w , first g))
+  ( sigma-dhom-hom B (\ b → Iso A (first is-rezk-A) (x b) (y b)) (v , f) (w , g))
+  ( is-equiv-sigma-dhom-hom B (\ b → Iso A (first is-rezk-A) (x b) (y b))
+    ( v , f) (w , g))
+  ( \ (h , γ) → (h , \ t → first (γ t)))
+  ( is-equiv-total-is-equiv-fiberwise (hom B v w)
+    ( \ h → dhom B v w h (\ b → Iso A (first is-rezk-A) (x b) (y b)) f g)
+    ( \ h → dhom B v w h (\ b → hom A (x b) (y b)) (first f) (first g))
+    ( \ h γ → \ t → first (γ t))
+    ( \ h →
+      is-equiv-ap-hom-hom-iso A is-rezk-A
+      ( \ t → x (h t)) (\ t → y (h t))
+      ( f) (g)))
+  ( hom-sigma-dhom B (\ b → hom A (x b) (y b)) (v , first f) (w , first g))
+  ( is-equiv-hom-sigma-dhom B (\ b → hom A (x b) (y b))
+    ( v , first f) (w , first g))
+```

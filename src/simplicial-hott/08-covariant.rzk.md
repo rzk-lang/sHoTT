@@ -84,6 +84,81 @@ triangle.
       ]
 ```
 
+## Hom in sigma types
+
+The `hom` in a sigma type is equivalent to the sigma type of a hom in the index
+and then a dependent hom in the family.
+
+```rzk
+#def sigma-dhom-hom
+  ( A : U)
+  ( B : A → U)
+  ( x y : total-type A B)
+  ( f : hom (total-type A B) x y)
+  : Σ ( g : hom A (π₁ x) (π₁ y)) , dhom A (π₁ x) (π₁ y) g B (π₂ x) (π₂ y)
+  := (\ t → π₁ (f t) , \ t → π₂ (f t))
+
+#def hom-sigma-dhom
+  ( A : U)
+  ( B : A → U)
+  ( x y : total-type A B)
+  ( f : Σ (g : hom A (π₁ x) (π₁ y)) , dhom A (π₁ x) (π₁ y) g B (π₂ x) (π₂ y))
+  : hom (total-type A B) x y
+  := \ t → (π₁ f t , π₂ f t)
+```
+
+Their equivalence is obvious, as it is just currying under the hood.
+
+```rzk
+#def is-equiv-sigma-dhom-hom
+  ( A : U)
+  ( B : A → U)
+  ( x y : total-type A B)
+  : is-equiv
+    ( hom (total-type A B) x y)
+    ( Σ ( g : hom A (π₁ x) (π₁ y)) , dhom A (π₁ x) (π₁ y) g B (π₂ x) (π₂ y))
+    ( sigma-dhom-hom A B x y)
+  :=
+  is-equiv-has-inverse
+  ( hom (total-type A B) x y)
+  ( Σ ( f : hom A (π₁ x) (π₁ y)) , dhom A (π₁ x) (π₁ y) f B (π₂ x) (π₂ y))
+  ( sigma-dhom-hom A B x y)
+  ( hom-sigma-dhom A B x y , (\ _ → refl , \ _ → refl))
+
+#def is-equiv-hom-sigma-dhom
+  ( A : U)
+  ( B : A → U)
+  ( x y : total-type A B)
+  : is-equiv
+    ( Σ ( g : hom A (π₁ x) (π₁ y)) , dhom A (π₁ x) (π₁ y) g B (π₂ x) (π₂ y))
+    ( hom (total-type A B) x y)
+    ( hom-sigma-dhom A B x y)
+  :=
+  is-equiv-has-inverse
+  ( Σ ( f : hom A (π₁ x) (π₁ y)) , dhom A (π₁ x) (π₁ y) f B (π₂ x) (π₂ y))
+  ( hom (total-type A B) x y)
+  ( hom-sigma-dhom A B x y)
+  ( sigma-dhom-hom A B x y , (\ _ → refl , \ _ → refl))
+
+#def equiv-hom-sigma-dhom
+  ( A : U)
+  ( B : A → U)
+  ( x y : total-type A B)
+  : Equiv
+    ( hom (total-type A B) x y)
+    ( Σ ( g : hom A (π₁ x) (π₁ y)) , dhom A (π₁ x) (π₁ y) g B (π₂ x) (π₂ y))
+  := (sigma-dhom-hom A B x y , is-equiv-sigma-dhom-hom A B x y)
+
+#def equiv-sigma-dhom-hom
+  ( A : U)
+  ( B : A → U)
+  ( x y : total-type A B)
+  : Equiv
+    ( Σ ( g : hom A (π₁ x) (π₁ y)) , dhom A (π₁ x) (π₁ y) g B (π₂ x) (π₂ y))
+    ( hom (total-type A B) x y)
+  := (hom-sigma-dhom A B x y , is-equiv-hom-sigma-dhom A B x y)
+```
+
 ## Covariant families
 
 A family of types over a base type is covariant if every arrow in the base has a

@@ -584,6 +584,22 @@ equivalence of total spaces.
             ( is-contr-map-is-equiv A B f is-equiv-f (first z)))))
 ```
 
+```rzk
+#def equiv-product-equivs
+  ( A A' : U)
+  ( ( f , is-equiv-f) : Equiv A A')
+  ( B B' : U)
+  ( B≃B' : Equiv B B')
+  : Equiv (product A B) (product A' B')
+  :=
+  equiv-comp
+  ( product A B)
+  ( product A' B)
+  ( product A' B')
+  ( equiv-total-pullback-is-equiv A A' f is-equiv-f (\ _ → B))
+  ( total-equiv-family-of-equiv A' (\ _ → B) (\ _ → B') (\ _ → B≃B'))
+```
+
 ## Fundamental theorem of identity types
 
 The fundamental theorem of identity types concerns the following question: Given

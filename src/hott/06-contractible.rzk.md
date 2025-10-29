@@ -689,3 +689,28 @@ to the dependent type evaluated at any given term in the base.
         ( a)
         ( homotopy-contraction A is-contr-A a))
 ```
+
+Summing over elements in a type with a product of a path to a concrete element
+and an arbitrary family is equivalent to that family of the concrete element.
+This is a consequence of the contractibility of based paths.
+
+```rzk
+#def equiv-based-paths-family
+  ( A : U)
+  ( B : A → U)
+  ( a : A)
+  : Equiv
+    ( Σ ( x : A) , product (a = x) (B x))
+    ( B a)
+  :=
+  equiv-comp
+  ( Σ ( x : A) , product (a = x) (B x))
+  ( Σ ( ( x , p) : Σ (x : A) , a = x) , (B x))
+  ( B a)
+  ( associative-Σ A (\ x → a = x) (\ x _ → B x))
+  ( transport-equiv-center-fiber-total-type-is-contr-base
+    ( Σ ( x : A) , a = x)
+    ( is-contr-based-paths A a)
+    ( \ (x , _) → B x)
+    ( a , refl))
+```

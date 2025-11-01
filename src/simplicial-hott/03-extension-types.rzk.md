@@ -375,6 +375,98 @@ For each of these we provide a corresponding functorial instance
     ( axiom-choice I ψ ϕ X Y a b)
 ```
 
+## Propositional constraint
+
+The constraint of extension types is judgemental and a core part of the theory.
+This section shows that propositional constraints are equivalent to them.
+
+```rzk
+#def equiv-extension-subshape
+  ( I : CUBE)
+  ( X : I → TOPE)
+  ( Y : X → TOPE)
+  ( A : X → U)
+  : Equiv
+    ( ( x : X) → A x)
+    ( Σ ( f : (y : Y) → A y) , (x : X) → A x [Y x ↦ f x])
+  :=
+  equiv-has-inverse
+  ( ( x : X) → A x)
+  ( Σ ( f : (y : Y) → A y) , (x : X) → A x [Y x ↦ f x])
+  ( \ f → (\ t → f t , \ t → f t))
+  ( \ (_ , f) t → f t)
+  ( \ _ → refl)
+  ( \ _ → refl)
+```
+
+```rzk
+#def equiv-extension-homotopy-constraint
+  ( I : CUBE)
+  ( X : I → TOPE)
+  ( Y : X → TOPE)
+  ( A : X → U)
+  ( g : (y : Y) → A y)
+  : Equiv
+    ( Σ ( f : (x : X) → A x) , g =_{(y : Y) → A y} (\ y → f y))
+    ( ( x : X) → A x [Y x ↦ g x])
+  :=
+  equiv-quadruple-comp
+  ( Σ ( f : (x : X) → A x) , g =_{(y : Y) → A y} (\ y → f y))
+  ( Σ ( f : Σ (f' : (y : Y) → A y) , (x : X) → A x [Y x ↦ f' x]) , g =_{(y : Y) → A y} first f)
+  ( Σ ( f : (y : Y) → A y) , product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
+  ( Σ ( f : (y : Y) → A y) , product (g =_{(y : Y) → A y} f) ((x : X) → A x [Y x ↦ f x]))
+  ( ( x : X) → A x [Y x ↦ g x])
+  ( equiv-total-pullback-is-equiv
+    ( ( x : X) → A x)
+    ( Σ ( f : (y : Y) → A y) , (x : X) → A x [Y x ↦ f x])
+    ( first (equiv-extension-subshape I X Y A))
+    ( second (equiv-extension-subshape I X Y A))
+    ( \ f → g =_{(y : Y) → A y} first f))
+  ( inv-equiv
+    ( Σ ( f : (y : Y) → A y) , product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
+    ( Σ ( f : Σ (f' : (y : Y) → A y) , (x : X) → A x [Y x ↦ f' x]) , g =_{(y : Y) → A y} first f)
+    ( associative-Σ ((y : Y) → A y) (\ f → (x : X) → A x [Y x ↦ f x])
+      ( \ f _ → g =_{(y : Y) → A y} f)))
+  ( total-equiv-family-of-equiv ((y : Y) → A y)
+    ( \ f → product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
+    ( \ f → product (g =_{(y : Y) → A y} f) ((x : X) → A x [Y x ↦ f x]))
+    ( \ f → sym-product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f)))
+  ( equiv-based-paths-family ((y : Y) → A y) (\ f → ((x : X) → A x [Y x ↦ f x])) g)
+```
+
+```rzk
+#def equiv-extension-constraint-eq
+  ( I : CUBE)
+  ( X : I → TOPE)
+  ( Y : X → TOPE)
+  ( A : X → U)
+  ( g : (y : Y) → A y)
+  ( g' : (y : Y) → A y)
+  ( p : g = g')
+  : Equiv
+    ( ( x : X) → A x [Y x ↦ g x])
+    ( ( x : X) → A x [Y x ↦ g' x])
+  :=
+  equiv-triple-comp
+  ( ( x : X) → A x [Y x ↦ g x])
+  ( Σ ( f : (x : X) → A x) , g =_{(y : Y) → A y} (\ y → f y))
+  ( Σ ( f : (x : X) → A x) , g' =_{(y : Y) → A y} (\ y → f y))
+  ( ( x : X) → A x [Y x ↦ g' x])
+  ( inv-equiv
+    ( Σ ( f : (x : X) → A x) , g =_{(y : Y) → A y} (\ y → f y))
+    ( ( x : X) → A x [Y x ↦ g x])
+    ( equiv-extension-homotopy-constraint I X Y A g))
+  ( total-equiv-family-of-equiv ((x : X) → A x)
+    ( \ f → g =_{(y : Y) → A y} (\ y → f y))
+    ( \ f → g' =_{(y : Y) → A y} (\ y → f y))
+    ( \ f →
+      inv-equiv
+      ( g' =_{(y : Y) → A y} (\ y → f y))
+      ( g =_{(y : Y) → A y} (\ y → f y))
+      ( equiv-preconcat ((y : Y) → A y) g g' (\ y → f y) p)))
+  ( equiv-extension-homotopy-constraint I X Y A g')
+```
+
 ## Composites and unions of cofibrations
 
 The original form.

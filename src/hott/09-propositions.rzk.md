@@ -562,3 +562,29 @@ The subtype projection embedding reflects identifications.
   inv-ap-is-emb (total-type A P) A (projection-total-type A P)
   ( is-emb-subtype-projection A P is-predicate-P)
 ```
+
+## Equivalences between families of propositions
+
+```rzk
+#def equiv-family-of-props uses (funext)
+  ( A A' : U)
+  ( B : A → U)
+  ( is-prop-B : (a : A) → is-prop (B a))
+  ( B' : A' → U)
+  ( is-prop-B' : (a' : A') → is-prop (B' a'))
+  ( f : A → A')
+  ( F : (a : A) → (b' : B' (f a)) → B a)
+  ( g : A' → A)
+  ( G : (a' : A') → (b : B (g a')) → B' a')
+  : Equiv
+    ( ( a : A) → B a)
+    ( ( a' : A') → B' a')
+  :=
+  equiv-iff-is-prop-is-prop
+  ( ( a : A) → B a)
+  ( ( a' : A') → B' a')
+  ( is-prop-fiberwise-prop A B is-prop-B)
+  ( is-prop-fiberwise-prop A' B' is-prop-B')
+  ( \ b a' → G a' (b (g a'))
+  , \ b' a → F a (b' (f a)))
+```

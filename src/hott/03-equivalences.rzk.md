@@ -35,16 +35,6 @@ We define equivalences to be bi-invertible maps.
 #end is-equiv
 ```
 
-### The identity is an equivalence
-
-```rzk
-#def is-equiv-identity
-  ( A : U)
-  : is-equiv A A (\ a → a)
-  :=
-    ( ( \ a → a , \ _ → refl) , (\ a → a , \ _ → refl))
-```
-
 ## Equivalence data
 
 ```rzk
@@ -235,6 +225,23 @@ reduce the amount of nested parenthesis and indentation.
   ( h2 : homotopy B B (comp B A B f g) (identity B))
   : Equiv A B
   := (f , ((g , h1) , (g , h2)))
+```
+
+### The identity is an equivalence
+
+```rzk
+#def is-equiv-identity
+  ( A : U)
+  : is-equiv A A (\ a → a)
+  :=
+    ( ( \ a → a , \ _ → refl) , (\ a → a , \ _ → refl))
+```
+
+```rzk
+#def equiv-identity
+  ( A : U)
+  : Equiv A A
+  := (identity A , is-equiv-identity A)
 ```
 
 ## Induction with section

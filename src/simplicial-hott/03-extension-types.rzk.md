@@ -1658,3 +1658,70 @@ The following special case of extensions from `BOT` is also useful.
         ( \ t → b t)
         ( \ t → second (has-section-f t) (b t))))
 ```
+
+## More equivalences of relative extension types
+
+A relative extension type over the total type projecting to the base is
+equivalent to extending the fiber.
+
+```rzk
+#def equiv-relative-extension-type-direct-extension uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( B : (t : ψ) → A t → U)
+  ( a : (t : ϕ) → total-type (A t) (B t))
+  ( τ : (t : ψ) → A t [ϕ t ↦ projection-total-type (A t) (B t) (a t)])
+  : Equiv
+    ( relative-extension-type I ψ ϕ (\ t → total-type (A t) (B t)) A
+      ( \ t → projection-total-type (A t) (B t)) a τ)
+    ( ( t : ψ) → B t (τ t) [ϕ t ↦ second (a t)])
+  :=
+  equiv-comp
+  ( relative-extension-type I ψ ϕ (\ t → total-type (A t) (B t)) A
+    ( \ t → projection-total-type (A t) (B t)) a τ)
+  ( ( t : ψ) → (Σ (τ' : total-type (A t) (B t))
+                , ( projection-total-type (A t) (B t) τ' = τ t))
+    [ ϕ t ↦ (a t , refl)])
+  ( ( t : ψ) → B t (τ t) [ϕ t ↦ second (a t)])
+  ( inv-equiv-axiom-choice I ψ ϕ
+    ( \ t → total-type (A t) (B t))
+    ( \ t τ' → projection-total-type (A t) (B t) τ' = τ t)
+    ( a)
+    ( \ _ → refl))
+  ( equiv-extensions-equiv I ψ ϕ
+    ( \ t →
+      Σ ( τ' : total-type (A t) (B t))
+      , ( projection-total-type (A t) (B t) τ' = τ t))
+    ( \ t → B t (τ t))
+    ( \ t →
+      equiv-quadruple-comp
+      ( Σ ( τ' : total-type (A t) (B t))
+        , ( projection-total-type (A t) (B t) τ' = τ t))
+      ( Σ ( a : A t) , product (B t a) (a =_{A t} τ t))
+      ( Σ ( a : A t) , product (a =_{A t} τ t) (B t a))
+      ( Σ ( a : A t) , product (τ t =_{A t} a) (B t a))
+      ( B t (τ t))
+      ( inv-equiv
+        ( Σ ( a : A t)
+          , Σ ( b : B t a)
+            , ( projection-total-type (A t) (B t) (a , b) = τ t))
+        ( Σ ( τ' : total-type (A t) (B t))
+          , ( projection-total-type (A t) (B t) τ' = τ t))
+        ( associative-Σ (A t) (B t) (\ a _ → a =_{A t} τ t)))
+      ( total-equiv-family-of-equiv (A t)
+        ( \ a → product (B t a) (a =_{A t} τ t))
+        ( \ a → product (a =_{A t} τ t) (B t a))
+        ( \ a → sym-product (B t a) (a =_{A t} τ t)))
+      ( total-equiv-family-of-equiv (A t)
+        ( \ a → product (a =_{A t} τ t) (B t a))
+        ( \ a → product (τ t =_{A t} a) (B t a))
+        ( \ a →
+          equiv-total-pullback-is-equiv (a =_{A t} τ t) (τ t =_{A t} a)
+          ( rev (A t) a (τ t))
+          ( second (equiv-rev (A t) a (τ t)))
+          ( \ _ → B t a)))
+      ( equiv-based-paths-family (A t) (B t) (τ t)))
+    ( \ t → (a t , refl)))
+```

@@ -309,6 +309,13 @@ As expected, it is an inverse of the original map:
   ( a : A)
   : π₁ (inv-equiv A B (f , is-equiv-f)) (f a) = a
   := π₂ (π₂ (π₂ (inv-equiv A B (f , is-equiv-f)))) a
+
+#def inv-equiv-cancel'
+  ( A B : U)
+  ( ( f , is-equiv-f) : Equiv A B)
+  ( b : B)
+  : f (π₁ (inv-equiv A B (f , is-equiv-f)) b) = b
+  := π₂ (π₁ (π₂ (inv-equiv A B (f , is-equiv-f)))) b
 ```
 
 ```rzk title="Composition of equivalences in diagrammatic order"

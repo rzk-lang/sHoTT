@@ -252,6 +252,88 @@ dependent functions `#!rzk (x : A) → B x` is a proposition.
       ( ( x : A) → f x = g x)
       ( equiv-FunExt funext A B f g)
       ( weakfunext-funext funext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
+
+#def is-prop-fiberwise-prop2 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( fiberwise-prop-C : (a : A) → (b : B a) → is-prop (C a b))
+  : is-prop ((a : A) → (b : B a) → C a b)
+  :=
+  is-prop-fiberwise-prop A (\ a → (b : B a) → C a b)
+  ( \ a → is-prop-fiberwise-prop (B a) (C a) (fiberwise-prop-C a))
+
+#def is-prop-fiberwise-prop3 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D : (a : A) → (b : B a) → (c : C a b) → U)
+  ( fiberwise-prop-D : (a : A) → (b : B a) → (c : C a b) → is-prop (D a b c))
+  : is-prop ((a : A) → (b : B a) → (c : C a b) → D a b c)
+  :=
+  is-prop-fiberwise-prop A (\ a → (b : B a) → (c : C a b) → D a b c)
+  ( \ a → is-prop-fiberwise-prop2 (B a) (C a) (D a) (fiberwise-prop-D a))
+
+#def is-prop-fiberwise-prop4 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D : (a : A) → (b : B a) → (c : C a b) → U)
+  ( E : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → U)
+  ( fiberwise-prop-E
+ : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → is-prop (E a b c d))
+  : is-prop ((a : A) → (b : B a) → (c : C a b) → (d : D a b c) → E a b c d)
+  :=
+  is-prop-fiberwise-prop A
+  ( \ a → (b : B a) → (c : C a b) → (d : D a b c) → E a b c d)
+  ( \ a → is-prop-fiberwise-prop3 (B a) (C a) (D a) (E a) (fiberwise-prop-E a))
+
+#def is-prop-fiberwise-prop5 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D : (a : A) → (b : B a) → (c : C a b) → U)
+  ( E : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → U)
+  ( F : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d) → U)
+  ( fiberwise-prop-F
+ : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+    → is-prop (F a b c d e))
+  : is-prop
+    ( ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+    → F a b c d e)
+  :=
+  is-prop-fiberwise-prop A
+  ( \ a →
+    ( b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d) → F a b c d e)
+  ( \ a →
+    is-prop-fiberwise-prop4 (B a) (C a) (D a) (E a) (F a) (fiberwise-prop-F a))
+
+#def is-prop-fiberwise-prop6 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D : (a : A) → (b : B a) → (c : C a b) → U)
+  ( E : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → U)
+  ( F : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d) → U)
+  ( G
+ : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+    → ( f : F a b c d e) → U)
+  ( fiberwise-prop-G
+ : ( a : A) → (b : B a) → (c : C a b)
+    → ( d : D a b c) → (e : E a b c d) → (f : F a b c d e)
+    → is-prop (G a b c d e f))
+  : is-prop
+    ( ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+    → ( f : F a b c d e) → G a b c d e f)
+  :=
+  is-prop-fiberwise-prop A
+  ( \ a →
+    ( b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+    → ( f : F a b c d e) → G a b c d e f)
+  ( \ a →
+    is-prop-fiberwise-prop5 (B a) (C a) (D a) (E a) (F a) (G a)
+    ( fiberwise-prop-G a))
+
 ```
 
 ### Sum types over a propositions

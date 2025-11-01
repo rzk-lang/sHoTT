@@ -13,6 +13,7 @@ This is a literate `rzk` file:
 
 ```rzk
 #assume funext : FunExt
+#assume extext : ExtExt
 ```
 
 ## Definition of initial sections
@@ -47,6 +48,21 @@ This is a literate `rzk` file:
   → ( b' : B a')
   → ( f : hom A a a')
   → is-contr (dhom A a a' f B b b')
+
+#def is-prop-is-dependent-initial
+  ( A : U)
+  ( B : A → U)
+  ( a : A)
+  ( b : B a)
+  : is-prop (is-dependent-initial A B a b)
+  :=
+  is-prop-fiberwise-prop3 funext
+  ( A)
+  ( \ a' → B a')
+  ( \ a' b' → hom A a a')
+  ( \ a' b' f → is-contr (dhom A a a' f B b b'))
+  ( \ a' b' f → is-prop-is-contr-itself (weakfunext-funext funext)
+    ( dhom A a a' f B b b'))
 ```
 
 ```rzk
@@ -232,6 +248,66 @@ This is a literate `rzk` file:
 ```
 
 ## Closure properties
+
+```rzk
+#def is-dependent-initial-section-equiv-help
+  ( A : U)
+  ( B : A → U)
+  ( s : (a : A) → B a)
+  ( is-dependent-initial-section-s : is-dependent-initial-section A B s)
+  ( B' : A → U)
+  ( B≃B' : (a : A) → Equiv (B a) (B' a))
+  : is-dependent-initial-section A B' (\ a → (first (B≃B' a) (s a)))
+  :=
+  \ a a' b' f →
+  is-contr-equiv-is-contr
+  ( dhom A a a' f B (s a) (first (inv-equiv (B a') (B' a') (B≃B' a')) b'))
+  ( dhom A a a' f B'
+    ( first (B≃B' a) (s a))
+    ( b'))
+  ( equiv-comp
+    ( dhom A a a' f B (s a) (first (inv-equiv (B a') (B' a') (B≃B' a')) b'))
+    ( dhom A a a' f B'
+      ( first (B≃B' a) (s a))
+      ( first (B≃B' a') (first (inv-equiv (B a') (B' a') (B≃B' a')) b')))
+    ( dhom A a a' f B'
+      ( first (B≃B' a) (s a))
+      ( b'))
+    ( equiv-extensions-equiv extext 2 Δ¹ ∂Δ¹
+      ( \ t → B (f t))
+      ( \ t → B' (f t))
+      ( \ t → B≃B' (f t))
+      ( \ t →
+        recOR
+        ( t ≡ 0₂ ↦ s a
+        , t ≡ 1₂ ↦ first (inv-equiv (B a') (B' a') (B≃B' a')) b')))
+    ( equiv-extension-constraint-eq 2 Δ¹ ∂Δ¹ (\ t → B' (f t))
+      ( \ t →
+        recOR
+        ( t ≡ 0₂ ↦ first (B≃B' a) (s a)
+        , t ≡ 1₂ ↦ first (B≃B' a') (first (inv-equiv (B a') (B' a') (B≃B' a')) b')))
+      ( \ t →
+        recOR
+        ( t ≡ 0₂ ↦ first (B≃B' a) (s a)
+        , t ≡ 1₂ ↦ b'))
+      ( naiveextext-extext extext 2 ∂Δ¹ (\ _ → BOT)
+        ( \ t → B' (f t)) (\ _ → recBOT)
+        ( \ t →
+          recOR
+          ( t ≡ 0₂ ↦ first (B≃B' a) (s a)
+          , t ≡ 1₂ ↦ first (B≃B' a') (first (inv-equiv (B a') (B' a') (B≃B' a')) b')))
+        ( \ t →
+          recOR
+          ( t ≡ 0₂ ↦ first (B≃B' a) (s a)
+          , t ≡ 1₂ ↦ b'))
+        ( \ t →
+          recOR
+          ( t ≡ 0₂ ↦ refl_{first (B≃B' a) (s a) : B' a}
+          , t ≡ 1₂ ↦
+            inv-equiv-cancel' (B a') (B' a') (B≃B' a') b')))))
+  ( is-dependent-initial-section-s a a'
+    ( first (inv-equiv (B a') (B' a') (B≃B' a')) b') f)
+```
 
 ```rzk
 #def is-initial-section-product-is-initial-section

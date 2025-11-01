@@ -11,6 +11,7 @@ function extensionality:
 
 ```rzk
 #assume funext : FunExt
+#assume weakfunext : WeakFunExt
 ```
 
 ## Propositions
@@ -486,6 +487,35 @@ propositions.
   ( f : A → B)
   : iff (is-emb A B f) ((b : B) → is-prop (fib A B f b))
   := (is-prop-fib-is-emb A B f , is-emb-is-prop-fib A B f)
+```
+
+## Contractibility is a proposition
+
+```rzk
+#def is-prop-is-contr-itself
+  ( A : U)
+  : is-prop (is-contr A)
+  :=
+  is-prop-is-contr-is-inhabited
+  ( is-contr A)
+  ( \ is-contr-A →
+    is-contr-equiv-is-contr'
+    ( is-contr A)
+    ( ( y : A) → (center-contraction A is-contr-A) = y)
+    ( equiv-center-fiber-total-type-is-contr-base A is-contr-A
+      ( \ x → (y : A) → x = y))
+    ( weakfunext A (\ y → (center-contraction A is-contr-A) = y)
+      ( \ y →
+        is-prop-is-contr A is-contr-A (center-contraction A is-contr-A) y)))
+```
+
+```rzk
+#def is-prop-is-prop uses (weakfunext funext)
+  ( A : U)
+  : is-prop (is-prop A)
+  :=
+  is-prop-fiberwise-prop2 A (\ _ → A) (\ x y → is-contr (x = y))
+  ( \ x y → is-prop-is-contr-itself (x = y))
 ```
 
 ## Subtypes

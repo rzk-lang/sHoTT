@@ -11,7 +11,6 @@ function extensionality:
 
 ```rzk
 #assume funext : FunExt
-#assume weakfunext : WeakFunExt
 ```
 
 ## Propositions
@@ -241,7 +240,7 @@ If some family `#!rzk B : A → U` is fiberwise a proposition, then the type of
 dependent functions `#!rzk (x : A) → B x` is a proposition.
 
 ```rzk
-#def is-prop-fiberwise-prop uses (funext weakfunext)
+#def is-prop-fiberwise-prop uses (funext)
   ( A : U)
   ( B : A → U)
   ( fiberwise-prop-B : (x : A) → is-prop (B x))
@@ -252,7 +251,7 @@ dependent functions `#!rzk (x : A) → B x` is a proposition.
       ( f = g)
       ( ( x : A) → f x = g x)
       ( equiv-FunExt funext A B f g)
-      ( weakfunext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
+      ( weakfunext-funext funext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
 ```
 
 ### Sum types over a propositions

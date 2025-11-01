@@ -12,7 +12,6 @@ extensionality and weak function extensionality:
 ```rzk
 #assume funext : FunExt
 #assume extext : ExtExt
-#assume weakfunext : WeakFunExt
 ```
 
 ## Isomorphisms
@@ -596,7 +595,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
     ( ev-components-nat-trans-preserves-iso X A is-segal-A f g α
     , nat-trans-nat-trans-components-preserves-iso X A is-segal-A f g α)
 
-#def equiv-is-iso-pointwise-is-iso uses (extext funext weakfunext)
+#def equiv-is-iso-pointwise-is-iso uses (extext funext)
   ( X : U)
   ( A : X → U)
   ( is-segal-A : (x : X) → is-segal (A x))
@@ -631,7 +630,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
         ( f)
         ( g)
         ( α))
-      ( is-prop-fiberwise-prop funext weakfunext
+      ( is-prop-fiberwise-prop funext
         ( X)
         ( \ x →
           ( is-iso-arrow
@@ -651,7 +650,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
 ```
 
 ```rzk title="RS17, Corollary 10.4"
-#def iso-extensionality uses (extext funext weakfunext)
+#def iso-extensionality uses (extext funext)
   ( X : U)
   ( A : X → U)
   ( is-segal-A : (x : X) → is-segal (A x))

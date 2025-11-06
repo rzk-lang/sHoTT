@@ -253,7 +253,7 @@ types.
     ( equiv-square-sides-id-eq-is-segal A is-segal-A x y f g)
     ( σ))
   ( ind-path (hom A x y) f
-    ( \ g p → C g (square-id-hom-eq-is-segal A is-segal-A x y f g p))
+    ( \ g' p → C g' (square-id-hom-eq-is-segal A is-segal-A x y f g' p))
     ( d)
     ( g)
     ( eq-square-id-hom-is-segal A is-segal-A x y f g σ))

@@ -291,15 +291,6 @@ invertible map to prove symmetry:
       , first (second (has-inverse-is-equiv A B (first e) (second e))))))
 ```
 
-```rzk
-#def inv-equiv-cancel
-  ( A B : U)
-  ( ( f , is-equiv-f) : Equiv A B)
-  ( a : A)
-  : π₁ (inv-equiv A B (f , is-equiv-f)) (f a) = a
-  := π₂ (π₂ (π₂ (inv-equiv A B (f , is-equiv-f)))) a
-```
-
 ```rzk title="Composition of equivalences in diagrammatic order"
 #def equiv-comp
   ( A B C : U)
@@ -543,6 +534,16 @@ functions with these stronger hypotheses.
     ( is-equiv-f)
     ( triple-comp B C D E i h g)
     ( is-equiv-triple-comp B C D E g is-equiv-g h is-equiv-h i is-equiv-i)
+```
+
+## Equivalence Data
+
+```rzk
+#def inv-equiv-cancel
+  ( A B : U)
+  ( ( f , is-equiv-f) : Equiv A B)
+  : homotopy A A (comp A B A (section-is-equiv A B f is-equiv-f) f) (identity A)
+  := second (second (second (inv-equiv A B (f , is-equiv-f))))
 ```
 
 ## Equivalences and homotopy

@@ -222,8 +222,10 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
   := Σ (f : A → B) , (is-equiv A B f)
 ```
 
+In practice, many equivalences are constructed from invertible maps.
+
 ```rzk
-#def equiv-has-inverse
+#def equiv-inverse
   ( A B : U)
   ( f : A → B)
   ( g : B → A)

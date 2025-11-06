@@ -58,7 +58,7 @@ These two notions are trivially equivalent:
     ( square A x y z w f₁ g₁ f₂ g₂)
     ( curried-square A x y z w f₁ g₁ f₂ g₂)
   :=
-  equiv-has-inverse
+  equiv-inverse
   ( square A x y z w f₁ g₁ f₂ g₂)
   ( curried-square A x y z w f₁ g₁ f₂ g₂)
   ( \ σ t s → σ (t , s))
@@ -85,7 +85,7 @@ two triangles that agree on the diagonal.
         ( hom2 A x y w f₁ g₂ d)
         ( hom2 A x z w g₁ f₂ d))
   :=
-  equiv-has-inverse
+  equiv-inverse
   ( square A x y z w f₁ g₁ f₂ g₂)
   ( Σ ( d : hom A x w)
     , product
@@ -155,7 +155,7 @@ that squares with one side being the identity are equivalent to triangles.
         ( f₂ = d)
         ( hom2 A x x w (id-hom A x) f₂ d)
         ( equiv-homotopy-hom2-is-segal A is-segal-A x w f₂ d))))
-  ( equiv-has-inverse
+  ( equiv-inverse
     ( Σ ( d : hom A x w)
       , product
         ( hom2 A x y w f₁ g₂ d)

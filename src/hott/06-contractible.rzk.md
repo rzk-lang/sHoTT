@@ -704,9 +704,8 @@ to the dependent type evaluated at any given term in the base.
   ( Σ ( ( x , p) : Σ (x : A) , a = x) , (B x))
   ( B a)
   ( associative-Σ A (\ x → a = x) (\ x _ → B x))
-  ( transport-equiv-center-fiber-total-type-is-contr-base
+  ( equiv-center-fiber-total-type-is-contr-base
     ( Σ ( x : A) , a = x)
     ( is-contr-based-paths A a)
-    ( \ (x , _) → B x)
-    ( a , refl))
+    ( \ (x , _) → B x))
 ```

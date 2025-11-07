@@ -690,6 +690,10 @@ to the dependent type evaluated at any given term in the base.
         ( homotopy-contraction A is-contr-A a))
 ```
 
+When a type family over a type $A$ contains a path to a constant element $a$
+from $A$, the total type of that type family is equivalent to the remainder
+family at $a$.
+
 ```rzk
 #def equiv-based-paths-family
   ( A : U)

@@ -272,7 +272,7 @@ types.
   : C g σ
   :=
   ind-square-sides-id-is-segal A is-segal-A x y f
-  ( \ g σ → C g (\ t s → σ (t , s)))
+  ( \ g' σ' → C g' (\ t s → σ' (t , s)))
   ( d)
   ( g)
   ( \ (t , s) → σ t s)

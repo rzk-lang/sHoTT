@@ -876,14 +876,14 @@ arrows.
   :=
   transport
   ( Iso A (π₁ is-rezk-A) x y)
-  ( \ f → C y f)
+  ( C y)
   ( iso-eq A (π₁ is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y f))
   ( f)
   ( iso-eq-iso-is-rezk' A is-rezk-A x y f)
   ( ind-path
     ( A)
     ( x)
-    ( \ y p → C y (iso-eq A (π₁ is-rezk-A) x y p))
+    ( \ y' p → C y' (iso-eq A (π₁ is-rezk-A) x y' p))
     ( d)
     ( y)
     ( eq-iso-is-rezk A is-rezk-A x y f))

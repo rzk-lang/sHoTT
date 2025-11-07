@@ -539,11 +539,48 @@ functions with these stronger hypotheses.
 ## Equivalence Data
 
 ```rzk
-#def inv-equiv-cancel
-  ( A B : U)
-  ( ( f , is-equiv-f) : Equiv A B)
-  : homotopy A A (comp A B A (section-is-equiv A B f is-equiv-f) f) (identity A)
-  := second (second (second (inv-equiv A B (f , is-equiv-f))))
+#section equivalence-data
+
+#variables A B : U
+#variable e : Equiv A B
+```
+
+```rzk
+#def map-equiv
+  : A → B
+  := first e
+
+#def is-equiv-map-equiv
+  : is-equiv A B map-equiv
+  := second e
+```
+
+```rzk
+#def map-left-inverse-equiv
+  : B → A
+  := retraction-is-equiv A B map-equiv is-equiv-map-equiv
+
+#def map-right-inverse-equiv
+  : B → A
+  := section-is-equiv A B map-equiv is-equiv-map-equiv
+```
+
+```rzk
+#def homotopy-left-inverse-equiv
+  : homotopy A A
+    ( comp A B A map-left-inverse-equiv map-equiv)
+    ( identity A)
+  := second (first is-equiv-map-equiv)
+
+#def homotopy-right-inverse-equiv
+  : homotopy B B
+    ( comp B A B map-equiv map-right-inverse-equiv)
+    ( identity B)
+  := second (second is-equiv-map-equiv)
+```
+
+```rzk
+#end equivalence-data
 ```
 
 ## Equivalences and homotopy

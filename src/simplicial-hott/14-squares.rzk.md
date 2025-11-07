@@ -247,7 +247,7 @@ types.
   ( square-id-hom-eq-is-segal A is-segal-A x y f g
     ( eq-square-id-hom-is-segal A is-segal-A x y f g σ))
   ( σ)
-  ( inv-equiv-cancel
+  ( homotopy-left-inverse-equiv
     ( square A x y x y f (id-hom A x) g (id-hom A y))
     ( f = g)
     ( equiv-square-sides-id-eq-is-segal A is-segal-A x y f g)

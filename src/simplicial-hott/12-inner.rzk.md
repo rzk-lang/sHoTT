@@ -28,11 +28,13 @@ This is a literate `rzk` file:
 
 ## (Iso-)Inner familiess
 
-Inner families are (currently) defined as families where the base, the total type,
-and the fibers are required to be Segal. This will induce a dependent composition operation
-where we can fill (2,1)-horns in the total type over a given 2-simplex in the base.
+Inner families are (currently) defined as families where the base, the total
+type, and the fibers are required to be Segal. This will induce a dependent
+composition operation where we can fill (2,1)-horns in the total type over a
+given 2-simplex in the base.
 
-Isoinner families are inner families where the base, total type, and the fibers are Rezk-complete.
+Isoinner families are inner families where the base, total type, and the fibers
+are Rezk-complete.
 
 ```rzk
 #def is-inner-family
@@ -135,7 +137,6 @@ An isoinner family is isoinner.
       , ( is-segal-is-rezk (total-type B P) (second (first is-isoinner-P))))
      , ( \ b → (is-segal-is-rezk (P b) ((second is-isoinner-P) b))))
 ```
-
 
 ## Dependent composition
 
@@ -422,9 +423,6 @@ This now gives rise to a dependent composition operation:
   : U
   := Σ (u : Iso B (is-segal-base-is-inner B P is-inner-family-P) b b') , (dhom B b b' (first u) P e e')
 ```
-
-
-
 
 ```rzk
 #def vert-Iso

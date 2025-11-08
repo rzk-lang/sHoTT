@@ -1,4 +1,4 @@
-# Cocartesian families
+# Inner families
 
 This is a formalization of important feature of (iso-)inner families. In
 particular, we provide an interface for dependent composition, crucially needed
@@ -26,9 +26,13 @@ This is a literate `rzk` file:
 - `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types
 - `10-rezk-types.rzk.md`- We use Rezk types.
 
-## (Iso-)Inner families
+## (Iso-)Inner familiess
 
-Inner families are defined by
+Inner families are (currently) defined as families where the base, the total type,
+and the fibers are required to be Segal. This will induce a dependent composition operation
+where we can fill (2,1)-horns in the total type over a given 2-simplex in the base.
+
+Isoinner families are inner families where the base, total type, and the fibers are Rezk-complete.
 
 ```rzk
 #def is-inner-family
@@ -50,17 +54,72 @@ Inner families are defined by
     ( ( b : B) → (is-rezk (P b)))
 ```
 
-Some easy but useful facts about (iso)inner families:
+Some easy but useful facts about (iso)inner families regarding their bases:
 
-The base of an isoinner family is Segal.
+The base of an inner family is Segal.
+
+```rzk
+#def is-segal-base-is-inner
+ ( B : U)
+ ( P : B → U)
+ ( is-inner-family-P : is-inner-family B P)
+  : is-segal B
+  := (first (first is-inner-family-P))
+```
+
+The base of an isoinner family is Rezk.
+
+```rzk
+#def is-rezk-base-is-isoinner
+ ( B : U)
+ ( P : B → U)
+ ( is-isoinner-family-P : is-isoinner-family B P)
+  : is-rezk B
+  := (first (first is-isoinner-family-P))
+```
+
+The base of an isoinner family is isoinner.
 
 ```rzk
 #def is-segal-base-is-isoinner
  ( B : U)
  ( P : B → U)
- ( is-isoinner-P : is-isoinner-family B P)
+ ( is-isoinner-family-P : is-isoinner-family B P)
   : is-segal B
-  := (is-segal-is-rezk B (first (first is-isoinner-P)))
+  := (is-segal-is-rezk B (first (first is-isoinner-family-P)))
+```
+
+The total type of an inner family is Segal.
+
+```rzk
+#def is-segal-total-type-is-inner
+    ( B : U)
+    ( P : B → U)
+    ( is-inner-family-P : is-inner-family B P)
+  : is-segal (total-type B P)
+  := (second (first (is-inner-family-P)))
+```
+
+The total type of an isoinner family is Rezk.
+
+```rzk
+#def is-rezk-total-type-is-isoinner
+    ( B : U)
+    ( P : B → U)
+    ( is-isoinner-family-P : is-isoinner-family B P)
+  : is-rezk (total-type B P)
+  := (second (first is-isoinner-family-P))
+```
+
+The total type of an isoinner family is iosinner.
+
+```rzk
+#def is-segal-total-type-is-isoinner
+    ( B : U)
+    ( P : B → U)
+    ( is-isoinner-family-P : is-isoinner-family B P)
+  : is-segal (total-type B P)
+  := (is-segal-is-rezk (total-type B P) (is-rezk-total-type-is-isoinner B P is-isoinner-family-P))
 ```
 
 An isoinner family is isoinner.
@@ -73,11 +132,10 @@ An isoinner family is isoinner.
   : is-inner-family B P
   := (
       ( is-segal-is-rezk B (first (first is-isoinner-P))
-      , ( is-segal-is-rezk (total-type B P) (second (first is-isoinner-P)))
-        )
-    , ( \ b → (is-segal-is-rezk (P b) ((second is-isoinner-P) b)))
-    )
+      , ( is-segal-is-rezk (total-type B P) (second (first is-isoinner-P))))
+     , ( \ b → (is-segal-is-rezk (P b) ((second is-isoinner-P) b))))
 ```
+
 
 ## Dependent composition
 
@@ -100,8 +158,7 @@ The axiom of choice and its inverse map for dependent homs:
   : Equiv
     ( hom (total-type B P) (a , x) (b , y))
     ( Σ ( u' : hom B a b)
-      , ( dhom B a b u' P x y)
-    )
+      , ( dhom B a b u' P x y))
   :=
   ( axiom-choice
     2
@@ -110,8 +167,7 @@ The axiom of choice and its inverse map for dependent homs:
     ( \ t → B)
     ( \ t → \ c → (P c))
     ( \ t → recOR(t ≡ 0₂ ↦ a , t ≡ 1₂ ↦ b))
-    ( \ t → recOR(t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
-  )
+    ( \ t → recOR(t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y)))
 
 #def inv-axiom-choice-dhom
   ( B : U)
@@ -125,13 +181,11 @@ The axiom of choice and its inverse map for dependent homs:
     )
     ( hom (total-type B P) (a , x) (b , y))
   :=
-    ( inv-equiv
-      ( hom (total-type B P) (a , x) (b , y))
-      ( Σ ( u' : hom B a b)
-        , ( dhom B a b u' P x y)
-      )
-      ( axiom-choice-dhom B a b P x y)
-    )
+  ( inv-equiv
+    ( hom (total-type B P) (a , x) (b , y))
+    ( Σ ( u' : hom B a b)
+      , ( dhom B a b u' P x y))
+    ( axiom-choice-dhom B a b P x y))
 
 ```
 
@@ -153,10 +207,13 @@ The axiom of choice for dependent 2-simplices:
   ( g : dhom B b c v P y z)
   ( h : dhom B a c w P x z)
   : Equiv
-    ( hom2 (total-type B P) (a , x) (b , y) (c , z) (\ t → (u t , f t)) (\ t → (v t , g t)) (\ t → (w t , h t)))
+    ( hom2 (total-type B P)
+      ( a , x) (b , y) (c , z)
+      ( \ t → (u t , f t))
+      ( \ t → (v t , g t))
+      ( \ t → (w t , h t)))
     ( Σ ( α : hom2 B a b c u v w)
-      , ( dhom2 B a b c u v w α P x y z f g h)
-    )
+      , ( dhom2 B a b c u v w α P x y z f g h))
   :=
   ( axiom-choice
     ( 2 × 2)
@@ -165,8 +222,7 @@ The axiom of choice for dependent 2-simplices:
     ( \ (t , s) → B)
     ( \ (t , s) → \ k → (P k))
     ( \ (t , s) → recOR(s ≡ 0₂ ↦ u t , t ≡ 1₂ ↦ v s , s ≡ t ↦ w s))
-    ( \ (t , s) → recOR(s ≡ 0₂ ↦ f t , t ≡ 1₂ ↦ g s , s ≡ t ↦ h s))
-  )
+    ( \ (t , s) → recOR(s ≡ 0₂ ↦ f t , t ≡ 1₂ ↦ g s , s ≡ t ↦ h s)))
 ```
 
 We now capture composition of morphisms in the total type of an inner family:
@@ -186,16 +242,16 @@ We now capture composition of morphisms in the total type of an inner family:
   ( f : dhom B a b u P x y)
   ( g : dhom B b c v P y z)
   : hom (total-type B P) (a , x) (c , z)
-  := (
-    ( first (inv-axiom-choice-dhom B a c P x z))
-    (
-     ( first (axiom-choice-dhom B a c P x z))
-      ( comp-is-segal (total-type B P) is-segal-total-P (a , x) (b , y) (c , z)
-     ( ( first (inv-axiom-choice-dhom B a b P x y))((\ t → u t , \ t → f t)))
-     ( ( first (inv-axiom-choice-dhom B b c P y z))((\ t → v t , \ t → g t)))
-    )
-    )
-  )
+  := ((first (inv-axiom-choice-dhom B a c P x z))
+      (
+       ( first (axiom-choice-dhom B a c P x z))
+       ( comp-is-segal
+          ( total-type B P)
+          is-segal-total-P (a , x) (b , y) (c , z)
+          ( ( first (inv-axiom-choice-dhom B a b P x y))
+            ( ( \ t → u t , \ t → f t)))
+          ( ( first (inv-axiom-choice-dhom B b c P y z))
+            ( ( \ t → v t , \ t → g t))))))
 ```
 
 For dependent composition, we prove coherence first for the arrows in the base,
@@ -214,13 +270,9 @@ The following functions will be helpful along the way:
   ( f : dhom B a b u P x y)
   : ( hom B a b)
   := (first
-      ( ( first (axiom-choice-dhom B a b P x y))
-        ( ( \ t → (u t , f t)))
-      )
-  )
-```
+        ( ( first (axiom-choice-dhom B a b P x y))
+        ( ( \ t → (u t , f t)))))
 
-```rzk
 #def comp2-total-type-is-inner
   ( B : U)
   ( a b c : B)
@@ -239,12 +291,9 @@ The following functions will be helpful along the way:
     ( ( first (inv-axiom-choice-dhom B b c P y z))((\ t → v t , \ t → g t)))
     ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)
   := (witness-comp-is-segal (total-type B P) is-segal-total-P  (a , x) (b , y) (c , z)
-    ( ( first (inv-axiom-choice-dhom B a b P x y))((\ t → u t , \ t → f t)))
-    ( ( first (inv-axiom-choice-dhom B b c P y z))((\ t → v t , \ t → g t)))
-   )
-```
+      ( ( first (inv-axiom-choice-dhom B a b P x y))((\ t → u t , \ t → f t)))
+      ( ( first (inv-axiom-choice-dhom B b c P y z))((\ t → v t , \ t → g t))))
 
-```rzk
 #def hom2-base-hom2-total-is-inner
   ( B : U)
   ( a b c : B)
@@ -259,12 +308,8 @@ The following functions will be helpful along the way:
   ( f : dhom B a b u P x y)
   ( g : dhom B b c v P y z)
   : hom2 B a b c u v
-  (
-  ( first ((first (axiom-choice-dhom B a c P x z))
-    ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)
-  )
-  )
-  )
+    ( first ((first (axiom-choice-dhom B a c P x z))
+    ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)))
   :=
     ( ap-hom2
     ( total-type B P)
@@ -310,8 +355,7 @@ composition are identified:
     )
 ```
 
-This now gives rise to a dependent composition operation (using another getter
-in the proof for brevity):
+This now gives rise to a dependent composition operation:
 
 ```rzk
 #def proj2-comp-total-type-is-inner
@@ -332,9 +376,7 @@ in the proof for brevity):
   P x z
   :=
   ( second ((first (axiom-choice-dhom B a c P x z))
-    ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)
-  )
-  )
+    ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)))
 ```
 
 ```rzk
@@ -365,4 +407,33 @@ in the proof for brevity):
      ( proj2-comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P
        x y z f g)
     )
+```
+
+## Vertical morphisms
+
+```rzk
+#def vert-dhom
+    ( B : U)
+    ( b b' : B)
+    ( P : B → U)
+    ( is-inner-family-P : is-inner-family B P)
+    ( e : P b)
+    ( e' : P b')
+  : U
+  := Σ (u : Iso B (is-segal-base-is-inner B P is-inner-family-P) b b') , (dhom B b b' (first u) P e e')
+```
+
+
+
+
+```rzk
+#def vert-Iso
+    ( B : U)
+    ( b b' : B)
+    ( P : B → U)
+    ( is-inner-family-P : is-inner-family B P)
+    ( e : P b)
+    ( e' : P b')
+  : U
+  := Σ (u : Iso B (is-segal-base-is-inner B P is-inner-family-P) b b') , (dhom B b b' (first u) P e e')
 ```

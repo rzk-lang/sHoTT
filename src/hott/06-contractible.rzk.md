@@ -714,3 +714,24 @@ This is a consequence of the contractibility of based paths.
     ( \ (x , _) → B x)
     ( a , refl))
 ```
+
+The total type of a type family that is locally contractible is equivalent to
+the base via the projection map.
+
+```rzk
+#def is-equiv-projection-total-type-is-contr-fiber
+  ( A : U)
+  ( B : A → U)
+  ( is-contr-fiber : (a : A) → is-contr (B a))
+  : is-equiv (total-type A B) A (projection-total-type A B)
+  :=
+  is-equiv-has-inverse (total-type A B) A
+  ( projection-total-type A B)
+  ( \ a → (a , center-contraction (B a) (is-contr-fiber a))
+    , ( \ (a , b) →
+        eq-eq-fiber-Σ A B a
+        ( center-contraction (B a) (is-contr-fiber a))
+        ( b)
+        ( homotopy-contraction (B a) (is-contr-fiber a) b)
+      , \ _ → refl))
+```

@@ -22,32 +22,7 @@ This is a literate `rzk` file:
   extensionality.
 - `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types
 - `10-rezk-types.rzk.md`- We use Rezk types.
-
-## (Iso-)Inner families
-
-This is a (tentative and redundant) definition of (iso-)inner families. In the
-future, hopefully, these can be replaced by instances of orthogonal and LARI
-families.
-
-```rzk
-#def is-inner-family
-  ( B : U)
-  ( P : B → U)
-  : U
-  :=
-    product
-    ( product (is-segal B) (is-segal (Σ (b : B) , P b)))
-    ( ( b : B) → (is-segal (P b)))
-
-#def is-isoinner-family
-  ( B : U)
-  ( P : B → U)
-  : U
-  :=
-    product
-    ( product (is-rezk B) (is-rezk (Σ (b : B) , P b)))
-    ( ( b : B) → (is-rezk (P b)))
-```
+- `11-inner.rzk.md` - We use (iso)inner families.
 
 ## Cocartesian arrows
 
@@ -94,8 +69,8 @@ a given starting point in the fiber.
 
 ## Cocartesian family
 
-A family over cocartesian if it is isoinner and any arrow in the has a
-cocartesian lift, given a point in the fiber over the domain.
+A family is cocartesian if it is isoinner and any arrow in the has a cocartesian
+lift, given a point in the fiber over the domain.
 
 ```rzk title="BW23, Definition 5.2.1"
 #def has-cocartesian-lifts

@@ -749,6 +749,16 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
       → is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y))
 ```
 
+Rezk types are Segal.
+
+```rzk
+#def is-segal-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  : is-segal A
+  := (first (is-rezk-A))
+```
+
 The inverse to `#!rzk iso-eq` for a Rezk type.
 
 ```rzk

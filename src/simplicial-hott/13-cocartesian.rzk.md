@@ -80,7 +80,8 @@ lift, given a point in the fiber over the domain.
   :=
     ( b : B) → (b' : B) → (u : hom B b b')
     → ( e : P b) → (Σ (e' : P b')
-      , ( Σ ( f : dhom B b b' u P e e') , is-cocartesian-arrow B b b' u P e e' f))
+      , ( Σ ( f : dhom B b b' u P e e') , is-cocartesian-arrow B b b' u
+          P e e' f))
 ```
 
 ```rzk title="BW23, Definition 5.2.2"

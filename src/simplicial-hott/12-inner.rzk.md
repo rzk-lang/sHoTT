@@ -294,7 +294,8 @@ The following functions will be helpful along the way:
       ( \ t → u t , \ t → f t))
     ( ( first (inv-axiom-choice-dhom B b c P y z))
       ( \ t → v t , \ t → g t))
-    ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)
+    ( comp-total-type-is-inner
+     B a b c u v P is-segal-B is-segal-total-P x y z f g)
   :=
   witness-comp-is-segal (total-type B P) is-segal-total-P
   ( a , x) (b , y) (c , z)
@@ -319,7 +320,8 @@ The following functions will be helpful along the way:
   : hom2 B a b c u v
     ( first
       ( ( first (axiom-choice-dhom B a c P x z))
-        ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)))
+        ( comp-total-type-is-inner B a b c u v P is-segal-B
+          is-segal-total-P x y z f g)))
   :=
   ap-hom2
   ( total-type B P)
@@ -330,8 +332,10 @@ The following functions will be helpful along the way:
     ( \ t → u t , \ t → f t))
   ( ( first (inv-axiom-choice-dhom B b c P y z))
     ( \ t → v t , \ t → g t))
-  ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)
-  ( comp2-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)
+  ( comp-total-type-is-inner B a b c u v P is-segal-B
+    is-segal-total-P x y z f g)
+  ( comp2-total-type-is-inner B a b c u v P is-segal-B
+    is-segal-total-P x y z f g)
 ```
 
 Now we give the coherence proof that the two possible candidates for dependent
@@ -354,13 +358,16 @@ composition are identified:
   : ( comp-is-segal B is-segal-B a b c u v)
     = ( first
         ( ( first (axiom-choice-dhom B a c P x z))
-          ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)))
+          ( comp-total-type-is-inner B a b c u v P is-segal-B
+            is-segal-total-P x y z f g)))
   :=
   uniqueness-comp-is-segal B is-segal-B a b c u v
   ( first
     ( ( first (axiom-choice-dhom B a c P x z))
-      ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)))
-  ( hom2-base-hom2-total-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)
+      ( comp-total-type-is-inner B a b c u v P is-segal-B
+        is-segal-total-P x y z f g)))
+  ( hom2-base-hom2-total-is-inner B a b c u v P is-segal-B
+    is-segal-total-P x y z f g)
 ```
 
 This now gives rise to a dependent composition operation:
@@ -382,12 +389,14 @@ This now gives rise to a dependent composition operation:
   : dhom B a c
     ( first
       ( ( first (axiom-choice-dhom B a c P x z))
-        ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)))
+        ( comp-total-type-is-inner B a b c u v P
+          is-segal-B is-segal-total-P x y z f g)))
   P x z
   :=
   second
   ( ( first (axiom-choice-dhom B a c P x z))
-    ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g))
+    ( comp-total-type-is-inner B a b c u v P
+      is-segal-B is-segal-total-P x y z f g))
 ```
 
 ```rzk
@@ -409,18 +418,24 @@ This now gives rise to a dependent composition operation:
   transport (hom B a c) (\ w → dhom B a c w P x z)
   ( first
     ( ( first (axiom-choice-dhom B a c P x z))
-      ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)))
+      ( comp-total-type-is-inner B a b c u v P
+        is-segal-B is-segal-total-P x y z f g)))
   ( comp-is-segal B is-segal-B a b c u v)
   ( rev (hom B a c)
     ( comp-is-segal B is-segal-B a b c u v)
     ( first
       ( ( first (axiom-choice-dhom B a c P x z))
-        ( comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)))
-    ( coherence-comp-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g))
-  ( proj2-comp-total-type-is-inner B a b c u v P is-segal-B is-segal-total-P x y z f g)
+        ( comp-total-type-is-inner B a b c u v P is-segal-B
+          is-segal-total-P x y z f g)))
+    ( coherence-comp-is-inner B a b c u v P is-segal-B
+      is-segal-total-P x y z f g))
+  ( proj2-comp-total-type-is-inner B a b c u v P is-segal-B
+    is-segal-total-P x y z f g)
 ```
 
 ## Vertical morphisms
+
+Vertical morphisms are dependent morphisms over an identity.
 
 ```rzk
 #def vert-dhom

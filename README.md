@@ -43,10 +43,11 @@ rzk typecheck
 
 ## Discussing sHoTT, Rzk, and getting help
 
-A Zulip chat is available for all to join and chat about Rzk, including formalization projects such as this one, development of Rzk, and related projects:
-<https://rzk-lang.zulipchat.com/register/>
+A Zulip chat is available for all to join and chat about Rzk, including
+formalization projects such as this one, development of Rzk, and related
+projects: <https://rzk-lang.zulipchat.com/register/>
 
-## Style Guide 
+## Style Guide
 
 Please also have a look at our [style guide](src/STYLEGUIDE.md) before
 submitting your pull request.

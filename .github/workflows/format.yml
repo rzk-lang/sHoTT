@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Prettier
         uses: creyD/prettier_action@v4.3
         with:
           dry: true
-          prettier_options: --check **/*.{md,json,yaml,yml}
+          prettier_options: --write **/*.{md,json,yaml,yml}
 
       - name: Rzk formatter
         uses: rzk-lang/rzk-action@v1.2.0

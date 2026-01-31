@@ -394,6 +394,39 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
           ( second (second is-isof)))))
 ```
 
+Immediate corollary: two `Iso` values are equal if their first components are
+equal.
+
+```rzk
+#def eq-Iso-eq-first uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y : A)
+  ( iso1 iso2 : Iso A is-segal-A x y)
+  ( e : first iso1 = first iso2)
+  : iso1 = iso2
+  :=
+    path-of-pairs-pair-of-paths
+      ( hom A x y)
+      ( is-iso-arrow A is-segal-A x y)
+      ( first iso1)
+      ( first iso2)
+      ( e)
+      ( second iso1)
+      ( second iso2)
+      ( all-elements-equal-is-prop
+          ( is-iso-arrow A is-segal-A x y (first iso2))
+          ( is-prop-is-iso-arrow A is-segal-A x y (first iso2))
+          ( transport
+              ( hom A x y)
+              ( is-iso-arrow A is-segal-A x y)
+              ( first iso1)
+              ( first iso2)
+              ( e)
+              ( second iso1))
+          ( second iso2))
+```
+
 ## Isomorphism extensionality
 
 ```rzk title="RS17, Proposition 10.3"
@@ -848,39 +881,6 @@ arrows.
 
 If `A : X → U` is a family of Rezk types, then the function type `(x : X) → A x`
 is also Rezk.
-
-We then prove that two `Iso` values are equal if their first components are
-equal.
-
-```rzk
-#def eq-Iso-eq-first uses (extext)
-  ( A : U)
-  ( is-segal-A : is-segal A)
-  ( x y : A)
-  ( iso1 iso2 : Iso A is-segal-A x y)
-  ( e : first iso1 = first iso2)
-  : iso1 = iso2
-  :=
-    path-of-pairs-pair-of-paths
-      ( hom A x y)
-      ( is-iso-arrow A is-segal-A x y)
-      ( first iso1)
-      ( first iso2)
-      ( e)
-      ( second iso1)
-      ( second iso2)
-      ( all-elements-equal-is-prop
-          ( is-iso-arrow A is-segal-A x y (first iso2))
-          ( is-prop-is-iso-arrow A is-segal-A x y (first iso2))
-          ( transport
-              ( hom A x y)
-              ( is-iso-arrow A is-segal-A x y)
-              ( first iso1)
-              ( first iso2)
-              ( e)
-              ( second iso1))
-          ( second iso2))
-```
 
 We first prove that `iso-eq` for function types is equal to the triple
 composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.

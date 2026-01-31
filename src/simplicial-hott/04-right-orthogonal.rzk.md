@@ -1063,7 +1063,7 @@ of the restriction map `(ψ → A) → (ϕ → A)`.
 ### Function types into fiberwise local families are local
 
 We prove that if $A$ is a type and $C : A → U$ is such that every fiber $C (x)$
-is local with respect to a subshape inclusion, then so is $(x : X) → A (x)$.
+is local with respect to a subshape inclusion, then so is $(x : A) → C (x)$.
 This generalizes the proof of (RS17, Corollary 5.6).
 
 ```rzk

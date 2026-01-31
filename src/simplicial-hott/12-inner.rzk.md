@@ -4,7 +4,8 @@ This is a formalization of important feature of (iso-)inner families. In
 particular, we provide an interface for dependent composition, crucially needed
 for cocartesian families.
 
-We build on [Buchholtz and Weinberger (2023), Higher Structures 7, §4](https://doi.org/10.21136/HS.2023.04).
+We build on
+[Buchholtz and Weinberger (2023), Higher Structures 7, §4](https://doi.org/10.21136/HS.2023.04).
 
 NB: We do not define them as orthogonal maps here but it would be desirable to
 provide this characterization in the future.
@@ -433,7 +434,8 @@ This now gives rise to a dependent composition operation:
     is-segal-total-P x y z f g)
 ```
 
-For isoinner families, we can define dependent composition using the inner family structure:
+For isoinner families, we can define dependent composition using the inner
+family structure:
 
 ```rzk
 #def dep-comp-is-isoinner

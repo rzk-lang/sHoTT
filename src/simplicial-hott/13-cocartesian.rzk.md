@@ -1,6 +1,7 @@
 # Cocartesian families
 
-These formalizations capture cocartesian families as treated in [Buchholtz and Weinberger (2023), Higher Structures 7](https://doi.org/10.21136/HS.2023.04).
+These formalizations capture cocartesian families as treated in
+[Buchholtz and Weinberger (2023), Higher Structures 7](https://doi.org/10.21136/HS.2023.04).
 
 The goal, for now, is not to give a general structural account as in the paper
 but rather to provide the definitions and results that are necessary to prove

@@ -328,6 +328,16 @@ invertible map to prove symmetry:
               ( second (second (second B≃C)) c)))))
 ```
 
+```rzk title="Composition of three equivalences in diagrammatic order"
+#def equiv-comp-3
+  ( A B C D : U)
+  ( A≃B : Equiv A B)
+  ( B≃C : Equiv B C)
+  ( C≃D : Equiv C D)
+  : Equiv A D
+  := equiv-comp A B D (A≃B) (equiv-comp B C D B≃C C≃D)
+```
+
 Now we compose the functions that are equivalences.
 
 ```rzk

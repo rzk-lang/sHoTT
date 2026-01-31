@@ -494,6 +494,24 @@ functions with these stronger hypotheses.
       ( is-equiv-comp B C D g is-equiv-g h is-equiv-h)
 ```
 
+```rzk title="Composition of three equivalences is an equivalence"
+#def is-equiv-comp-3
+  ( A B C D : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( g : B → C)
+  ( is-equiv-g : is-equiv B C g)
+  ( h : C → D)
+  ( is-equiv-h : is-equiv C D h)
+  : is-equiv A D (triple-comp A B C D h g f)
+  :=
+    is-equiv-comp A C D
+      ( comp A B C g f)
+      ( is-equiv-comp A B C f is-equiv-f g is-equiv-g)
+      ( h)
+      ( is-equiv-h)
+```
+
 ## Equivalences and homotopy
 
 If a map is homotopic to an equivalence it is an equivalence.

@@ -844,6 +844,255 @@ arrows.
       ( e)
 ```
 
+## Rezk function types
+
+If `A : X → U` is a family of Rezk types, then the function type `(x : X) → A x` is also Rezk.
+
+We then prove that two `Iso` values are equal if their first components are equal.
+
+```rzk
+#def eq-Iso-eq-first uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y : A)
+  ( iso1 iso2 : Iso A is-segal-A x y)
+  ( e : first iso1 = first iso2)
+  : iso1 = iso2
+  :=
+    path-of-pairs-pair-of-paths
+      ( hom A x y)
+      ( is-iso-arrow A is-segal-A x y)
+      ( first iso1)
+      ( first iso2)
+      ( e)
+      ( second iso1)
+      ( second iso2)
+      ( all-elements-equal-is-prop
+          ( is-iso-arrow A is-segal-A x y (first iso2))
+          ( is-prop-is-iso-arrow A is-segal-A x y (first iso2))
+          ( transport
+              ( hom A x y)
+              ( is-iso-arrow A is-segal-A x y)
+              ( first iso1)
+              ( first iso2)
+              ( e)
+              ( second iso1))
+          ( second iso2))
+```
+
+We first prove that `iso-eq` for function types is equal to the triple composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
+
+```rzk
+#def compute-iso-eq-function-type uses (extext funext weakfunext)
+  ( X : U)
+  ( A : X → U)
+  ( fiberwise-is-rezk-A : (x : X) → is-rezk (A x))
+  ( f g : (x : X) → A x)
+  : ( iso-eq
+      ( ( x : X) → A x)
+      ( is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x)))
+      ( f)
+      ( g))
+  = ( triple-comp
+      ( f = g)
+      ( ( x : X) → f x = g x)
+      ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+      ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+      ( first (inv-equiv
+        ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+        ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+        ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g)))
+      ( first (equiv-function-equiv-family funext X
+        ( \ x → f x = g x)
+        ( \ x → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+        ( \ x →
+          ( iso-eq (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x)
+          , second (fiberwise-is-rezk-A x) (f x) (g x)))))
+      ( first (equiv-FunExt funext X A f g)))
+  :=
+    eq-htpy funext
+      ( f = g)
+      ( \ p →
+        Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+      ( iso-eq
+        ( ( x : X) → A x)
+        ( is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x)))
+        ( f)
+        ( g))
+      ( triple-comp
+        ( f = g)
+        ( ( x : X) → f x = g x)
+        ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+        ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+        ( first (inv-equiv
+          ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+          ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+          ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g)))
+        ( first (equiv-function-equiv-family funext X
+          ( \ x → f x = g x)
+          ( \ x → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+          ( \ x →
+            ( iso-eq (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x)
+            , second (fiberwise-is-rezk-A x) (f x) (g x)))))
+        ( first (equiv-FunExt funext X A f g)))
+      ( \ p →
+        eq-Iso-eq-first
+          ( ( x : X) → A x)
+          ( is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x)))
+          ( f)
+          ( g)
+          ( iso-eq
+            ( ( x : X) → A x)
+            ( is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x)))
+            ( f)
+            ( g)
+            ( p))
+          ( triple-comp
+            ( f = g)
+            ( ( x : X) → f x = g x)
+            ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+            ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+            ( first (inv-equiv
+              ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+              ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+              ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g)))
+            ( first (equiv-function-equiv-family funext X
+              ( \ x → f x = g x)
+              ( \ x → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+              ( \ x →
+                ( iso-eq (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x)
+                , second (fiberwise-is-rezk-A x) (f x) (g x)))))
+            ( first (equiv-FunExt funext X A f g))
+            ( p))
+          ( -- Need to show: first (iso-eq ... p) = first (triple-comp ... p)
+            -- This follows from the fact that both compute the same arrow from f to g
+            -- The left side: first (iso-eq ... p) = hom-eq ... p
+            -- The right side: first (triple-comp ... p) computes through the equivalences
+            -- and should also equal hom-eq ... p
+            ind-path
+              ( ( x : X) → A x)
+              ( f)
+              ( \ g' p' →
+                ( first
+                  ( iso-eq
+                    ( ( x : X) → A x)
+                    ( is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x)))
+                    ( f)
+                    ( g')
+                    ( p')))
+                = ( first
+                    ( triple-comp
+                      ( f = g')
+                      ( ( x : X) → f x = g' x)
+                      ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g' x))
+                      ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g')
+                      ( first (inv-equiv
+                        ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g')
+                        ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g' x))
+                        ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g')))
+                      ( first (equiv-function-equiv-family funext X
+                        ( \ x → f x = g' x)
+                        ( \ x → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g' x))
+                        ( \ x →
+                          ( iso-eq (A x) (first (fiberwise-is-rezk-A x)) (f x) (g' x)
+                          , second (fiberwise-is-rezk-A x) (f x) (g' x)))))
+                      ( first (equiv-FunExt funext X A f g'))
+                      ( p'))))
+              ( refl)
+              ( g)
+              ( p)))
+```
+
+```rzk title="RS17, Proposition 10.9"
+#def is-rezk-function-type uses (extext funext weakfunext)
+  ( X : U)
+  ( A : X → U)
+  ( fiberwise-is-rezk-A : (x : X) → is-rezk (A x))
+  : is-rezk ((x : X) → A x)
+  :=
+    ( is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))
+    , \ f g →
+      is-equiv-homotopy
+        ( f = g)
+        ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+        ( iso-eq
+          ( ( x : X) → A x)
+          ( is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x)))
+          ( f)
+          ( g))
+        ( triple-comp
+          ( f = g)
+          ( ( x : X) → f x = g x)
+          ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+          ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+          ( first (inv-equiv
+            ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+            ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+            ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g)))
+          ( first (equiv-function-equiv-family funext X
+            ( \ x → f x = g x)
+            ( \ x → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+            ( \ x →
+              ( iso-eq (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x)
+              , second (fiberwise-is-rezk-A x) (f x) (g x)))))
+          ( first (equiv-FunExt funext X A f g)))
+        ( htpy-eq
+          ( f = g)
+          ( \ p →
+            Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+          ( iso-eq
+            ( ( x : X) → A x)
+            ( is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x)))
+            ( f)
+            ( g))
+          ( triple-comp
+            ( f = g)
+            ( ( x : X) → f x = g x)
+            ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+            ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+            ( first (inv-equiv
+              ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+              ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+              ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g)))
+            ( first (equiv-function-equiv-family funext X
+              ( \ x → f x = g x)
+              ( \ x → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+              ( \ x →
+                ( iso-eq (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x)
+                , second (fiberwise-is-rezk-A x) (f x) (g x)))))
+            ( first (equiv-FunExt funext X A f g)))
+          ( compute-iso-eq-function-type X A fiberwise-is-rezk-A f g))
+        ( is-equiv-comp-3
+          ( f = g)
+          ( ( x : X) → f x = g x)
+          ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+          ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+          ( first (equiv-FunExt funext X A f g))
+          ( second (equiv-FunExt funext X A f g))
+          ( first (equiv-function-equiv-family funext X
+            ( \ x → f x = g x)
+            ( \ x → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+            ( \ x →
+              ( iso-eq (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x)
+              , second (fiberwise-is-rezk-A x) (f x) (g x)))))
+          ( second (equiv-function-equiv-family funext X
+            ( \ x → f x = g x)
+            ( \ x → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+            ( \ x →
+              ( iso-eq (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x)
+              , second (fiberwise-is-rezk-A x) (f x) (g x)))))
+          ( first
+            ( inv-equiv
+              ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+              ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+              ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g)))
+          ( second
+            ( inv-equiv
+              ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
+              ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
+              ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g)))))
+```
+
 ## Isomorphisms in discrete types
 
 In a discrete type every arrow is an isomorphisms. This is a straightforward

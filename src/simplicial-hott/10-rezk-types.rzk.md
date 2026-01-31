@@ -429,7 +429,7 @@ equal.
 
 ## Isomorphism extensionality
 
-```rzk title="RS17, Proposition 10.3"
+```rzk title="RS17, Proposition 10.3a (for types)"
 #def ev-components-nat-trans-preserves-iso uses (funext)
   ( X : U)
   ( A : X → U)
@@ -676,7 +676,7 @@ equal.
       ( iff-is-iso-pointwise-is-iso X A is-segal-A f g α)
 ```
 
-```rzk title="RS17, Corollary 10.4"
+```rzk title="RS17, Corollary 10.4a (isomorphism extensionality)"
 #def iso-extensionality uses (extext funext weakfunext)
   ( X : U)
   ( A : X → U)

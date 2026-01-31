@@ -984,7 +984,7 @@ composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
         ( triple-comp-iso-eq-function-type X A fiberwise-is-rezk-A f g)
         ( compute-iso-eq-function-type X A fiberwise-is-rezk-A f g)
         ( second
-          ( equiv-comp-3
+          ( equiv-triple-comp
             ( f = g)
             ( ( x : X) → f x = g x)
             ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))

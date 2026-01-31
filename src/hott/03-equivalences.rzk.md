@@ -328,16 +328,6 @@ invertible map to prove symmetry:
               ( second (second (second B≃C)) c)))))
 ```
 
-```rzk title="Composition of three equivalences in diagrammatic order"
-#def equiv-comp-3
-  ( A B C D : U)
-  ( A≃B : Equiv A B)
-  ( B≃C : Equiv B C)
-  ( C≃D : Equiv C D)
-  : Equiv A D
-  := equiv-comp A B D (A≃B) (equiv-comp B C D B≃C C≃D)
-```
-
 Now we compose the functions that are equivalences.
 
 ```rzk
@@ -502,24 +492,6 @@ functions with these stronger hypotheses.
       ( is-equiv-f)
       ( comp B C D h g)
       ( is-equiv-comp B C D g is-equiv-g h is-equiv-h)
-```
-
-```rzk title="Composition of three equivalences is an equivalence"
-#def is-equiv-comp-3
-  ( A B C D : U)
-  ( f : A → B)
-  ( is-equiv-f : is-equiv A B f)
-  ( g : B → C)
-  ( is-equiv-g : is-equiv B C g)
-  ( h : C → D)
-  ( is-equiv-h : is-equiv C D h)
-  : is-equiv A D (triple-comp A B C D h g f)
-  :=
-    is-equiv-comp A C D
-      ( comp A B C g f)
-      ( is-equiv-comp A B C f is-equiv-f g is-equiv-g)
-      ( h)
-      ( is-equiv-h)
 ```
 
 ## Equivalences and homotopy

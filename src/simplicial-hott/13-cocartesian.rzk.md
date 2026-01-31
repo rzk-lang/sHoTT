@@ -22,7 +22,7 @@ This is a literate `rzk` file:
   extensionality.
 - `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types
 - `10-rezk-types.rzk.md`- We use Rezk types.
-- `11-inner.rzk.md` - We use (iso)inner families.
+- `12-inner.rzk.md` - We use (iso)inner families.
 
 ## Cocartesian arrows
 

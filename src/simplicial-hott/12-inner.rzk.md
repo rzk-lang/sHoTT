@@ -113,7 +113,7 @@ The total type of an isoinner family is Rezk.
   := second (first is-isoinner-family-P)
 ```
 
-The total type of an isoinner family is iosinner.
+The total type of an isoinner family is isoinner.
 
 ```rzk
 #def is-segal-total-type-is-isoinner
@@ -431,6 +431,30 @@ This now gives rise to a dependent composition operation:
       is-segal-total-P x y z f g))
   ( proj2-comp-total-type-is-inner B a b c u v P is-segal-B
     is-segal-total-P x y z f g)
+```
+
+For isoinner families, we can define dependent composition using the inner family structure:
+
+```rzk
+#def dep-comp-is-isoinner
+  ( B : U)
+  ( a b c : B)
+  ( u : hom B a b)
+  ( v : hom B b c)
+  ( P : B → U)
+  ( is-isoinner-family-P : is-isoinner-family B P)
+  ( x : P a)
+  ( y : P b)
+  ( z : P c)
+  ( f : dhom B a b u P x y)
+  ( g : dhom B b c v P y z)
+  : dhom B a c (comp-is-segal B (is-segal-base-is-isoinner B P is-isoinner-family-P) a b c u v) P x z
+  :=
+  dep-comp-is-inner
+    B a b c u v P
+    ( is-segal-base-is-isoinner B P is-isoinner-family-P)
+    ( is-segal-total-type-is-isoinner B P is-isoinner-family-P)
+    x y z f g
 ```
 
 ## Vertical morphisms

@@ -4,7 +4,7 @@ This is a formalization of important feature of (iso-)inner families. In
 particular, we provide an interface for dependent composition, crucially needed
 for cocartesian families.
 
-We build on [BW23, §4].
+We build on [Buchholtz and Weinberger (2023), Higher Structures 7, §4](https://doi.org/10.21136/HS.2023.04).
 
 NB: We do not define them as orthogonal maps here but it would be desirable to
 provide this characterization in the future.

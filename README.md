@@ -34,12 +34,19 @@ highlighting supplied by
 ## Checking the formalisations locally
 
 Install the
-[`rzk`](https://rzk-lang.github.io/rzk/latest/getting-started/install/) proof
+[`rzk`](https://rzk-lang.github.io/rzk/en/latest/getting-started/install/) proof
 assistant. Then run the following command from the root of this repository:
 
 ```sh
 rzk typecheck
 ```
+
+## Discussing sHoTT, Rzk, and getting help
+
+A Zulip chat is available for all to join and chat about Rzk, including formalization projects such as this one, development of Rzk, and related projects:
+<https://rzk-lang.zulipchat.com/register/>
+
+## Style Guide 
 
 Please also have a look at our [style guide](src/STYLEGUIDE.md) before
 submitting your pull request.

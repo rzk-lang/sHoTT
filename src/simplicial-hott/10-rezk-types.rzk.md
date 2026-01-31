@@ -946,12 +946,7 @@ composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
             ( g)
             ( p))
           ( triple-comp-iso-eq-function-type X A fiberwise-is-rezk-A f g p)
-          ( -- Need to show: first (iso-eq ... p) = first (triple-comp ... p)
-            -- This follows from the fact that both compute the same arrow from f to g
-            -- The left side: first (iso-eq ... p) = hom-eq ... p
-            -- The right side: first (triple-comp ... p) computes through the equivalences
-            -- and should also equal hom-eq ... p
-            ind-path
+          ( ind-path
               ( ( x : X) → A x)
               ( f)
               ( \ g' p' →
@@ -969,7 +964,7 @@ composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
               ( p)))
 ```
 
-```rzk title="RS17, Proposition 10.9"
+```rzk title="RS17, Proposition 10.9a (dependent function types into Rezk types are Rezk)"
 #def is-rezk-function-type uses (extext funext weakfunext)
   ( X : U)
   ( A : X → U)

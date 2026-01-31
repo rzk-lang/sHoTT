@@ -846,9 +846,11 @@ arrows.
 
 ## Rezk function types
 
-If `A : X → U` is a family of Rezk types, then the function type `(x : X) → A x` is also Rezk.
+If `A : X → U` is a family of Rezk types, then the function type `(x : X) → A x`
+is also Rezk.
 
-We then prove that two `Iso` values are equal if their first components are equal.
+We then prove that two `Iso` values are equal if their first components are
+equal.
 
 ```rzk
 #def eq-Iso-eq-first uses (extext)
@@ -880,7 +882,8 @@ We then prove that two `Iso` values are equal if their first components are equa
           ( second iso2))
 ```
 
-We first prove that `iso-eq` for function types is equal to the triple composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
+We first prove that `iso-eq` for function types is equal to the triple
+composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
 
 ```rzk
 #def compute-iso-eq-function-type uses (extext funext weakfunext)

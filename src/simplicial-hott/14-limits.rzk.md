@@ -16,6 +16,20 @@ extensionality.
 #assume extext : ExtExt
 ```
 
+## Prerequisites
+
+- `hott/*` - We require various prerequisites from homotopy type theory, for
+  instance the notion of equivalence (`#!rzk is-equiv`).
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and
+  their subshapes.
+- `03-extension-types.rzk.md` — We use extension extensionality.
+- `05-segal-types.rzk.md` - We use Segal types (`#!rzk hom`, `#!rzk is-segal`,
+  `#!rzk constant`).
+- `06-2cat-of-segal-types.rzk.md` - We use natural transformations
+  (`#!rzk vertical-comp-nat-trans`).
+- `09-yoneda.rzk.md` - We use initial and final objects (`#!rzk is-initial`,
+  `#!rzk is-final`).
+
 ## Definition limits and colimits
 
 Given a function `#!rzk f : A → B` and `#!rzk b:B` we define the type of cones

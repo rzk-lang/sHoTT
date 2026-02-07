@@ -8,6 +8,9 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
+- `02-simplicial-type-theory.rzk.md` — We rely on the type of shapes
+  (`#!rzk TOPE`, shape inclusions).
+
 Some of the definitions in this file rely on extension extensionality or
 function extensionality:
 

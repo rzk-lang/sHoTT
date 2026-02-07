@@ -10,7 +10,7 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
-- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and
   their subshapes.
 - `03-extension-types.rzk.md` — We use extension extensionality.
 - `05-segal-types.rzk.md` - We use the notion of hom types.

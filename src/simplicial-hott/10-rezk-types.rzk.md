@@ -12,7 +12,6 @@ extensionality and weak function extensionality:
 ```rzk
 #assume funext : FunExt
 #assume extext : ExtExt
-#assume weakfunext : WeakFunExt
 ```
 
 ## Isomorphisms
@@ -69,6 +68,13 @@ extensionality and weak function extensionality:
   ( x y : A)
   : U
   := Σ (f : hom A x y) , is-iso-arrow A is-segal-A x y f
+
+#def hom-iso
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y : A)
+  : Iso A is-segal-A x y → hom A x y
+  := \ (f , _) → f
 ```
 
 ## Invertible arrows
@@ -589,7 +595,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
     ( ev-components-nat-trans-preserves-iso X A is-segal-A f g α
     , nat-trans-nat-trans-components-preserves-iso X A is-segal-A f g α)
 
-#def equiv-is-iso-pointwise-is-iso uses (extext funext weakfunext)
+#def equiv-is-iso-pointwise-is-iso uses (extext funext)
   ( X : U)
   ( A : X → U)
   ( is-segal-A : (x : X) → is-segal (A x))
@@ -624,7 +630,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
         ( f)
         ( g)
         ( α))
-      ( is-prop-fiberwise-prop funext weakfunext
+      ( is-prop-fiberwise-prop funext
         ( X)
         ( \ x →
           ( is-iso-arrow
@@ -644,7 +650,7 @@ The predicate `#!rzk is-iso-arrow` is a proposition.
 ```
 
 ```rzk title="RS17, Corollary 10.4"
-#def iso-extensionality uses (extext funext weakfunext)
+#def iso-extensionality uses (extext funext)
   ( X : U)
   ( A : X → U)
   ( is-segal-A : (x : X) → is-segal (A x))
@@ -772,6 +778,20 @@ The inverse to `#!rzk iso-eq` for a Rezk type.
     ( iso-eq A (first is-rezk-A) x y)
     ( ( second is-rezk-A) x y)
 
+-- TODO: is this the best name? I feel like the other one should be renamed?
+#def iso-eq-iso-is-rezk'
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x y : A)
+  ( iso : Iso A (π₁ is-rezk-A) x y)
+  : iso-eq A (π₁ is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y iso) = iso
+  :=
+  ( second
+    ( has-section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
+      ( iso-eq A (first is-rezk-A) x y)
+      ( ( second is-rezk-A) x y)))
+  iso
+
 #def iso-eq-iso-is-rezk
   ( A : U)
   ( is-rezk-A : is-rezk A)
@@ -785,10 +805,7 @@ The inverse to `#!rzk iso-eq` for a Rezk type.
     ( iso-eq A (first is-rezk-A) x y
       ( eq-iso-is-rezk A is-rezk-A x y (e , is-iso-e)))
     ( ( e , is-iso-e))
-    ( ( second
-      ( has-section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
-        ( iso-eq A (first is-rezk-A) x y)
-        ( ( second is-rezk-A) x y))) (e , is-iso-e))
+    ( iso-eq-iso-is-rezk' A is-rezk-A x y (e , is-iso-e))
 ```
 
 The following results show how `#!rzk iso-eq` mediates between the
@@ -852,6 +869,37 @@ arrows.
       ( refl)
       ( y)
       ( e)
+```
+
+## Isomorphisms Induction
+
+Since isomorphisms are equivalent to equalities in Rezk types, we can prove the
+same induction principle for them.
+
+```rzk
+#def iso-ind-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x : A)
+  ( C : (y : A) → (Iso A (π₁ is-rezk-A) x y) → U)
+  ( d : C x (iso-eq A (π₁ is-rezk-A) x x refl))
+  ( y : A)
+  ( f : Iso A (π₁ is-rezk-A) x y)
+  : C y f
+  :=
+  transport
+  ( Iso A (π₁ is-rezk-A) x y)
+  ( \ f → C y f)
+  ( iso-eq A (π₁ is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y f))
+  ( f)
+  ( iso-eq-iso-is-rezk' A is-rezk-A x y f)
+  ( ind-path
+    ( A)
+    ( x)
+    ( \ y p → C y (iso-eq A (π₁ is-rezk-A) x y p))
+    ( d)
+    ( y)
+    ( eq-iso-is-rezk A is-rezk-A x y f))
 ```
 
 ## Isomorphisms in discrete types

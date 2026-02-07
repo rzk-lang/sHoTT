@@ -1,4 +1,4 @@
-# 13. Limits and colimits
+# Limits and colimits
 
 These formalisations correspond in part to Section 3 of the BM22 paper.
 

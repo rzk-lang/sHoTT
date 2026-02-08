@@ -375,6 +375,105 @@ For each of these we provide a corresponding functorial instance
     ( axiom-choice I ψ ϕ X Y a b)
 ```
 
+## Propositional constraint
+
+The constraint of extension types is judgemental and a core part of the theory.
+This section shows that propositional constraints are equivalent to them.
+
+```rzk
+#def equiv-extension-subshape
+  ( I : CUBE)
+  ( X : I → TOPE)
+  ( Y : X → TOPE)
+  ( A : X → U)
+  : Equiv
+    ( ( x : X) → A x)
+    ( Σ ( f : (y : Y) → A y) , (x : X) → A x [Y x ↦ f x])
+  :=
+  equiv-has-inverse
+  ( ( x : X) → A x)
+  ( Σ ( f : (y : Y) → A y) , (x : X) → A x [Y x ↦ f x])
+  ( \ f → (\ t → f t , \ t → f t))
+  ( \ (_ , f) t → f t)
+  ( \ _ → refl)
+  ( \ _ → refl)
+```
+
+```rzk
+#def equiv-extension-homotopy-constraint
+  ( I : CUBE)
+  ( X : I → TOPE)
+  ( Y : X → TOPE)
+  ( A : X → U)
+  ( g : (y : Y) → A y)
+  : Equiv
+    ( Σ ( f : (x : X) → A x) , g =_{(y : Y) → A y} (\ y → f y))
+    ( ( x : X) → A x [Y x ↦ g x])
+  :=
+  equiv-quadruple-comp
+  ( Σ ( f : (x : X) → A x) , g =_{(y : Y) → A y} (\ y → f y))
+  ( Σ ( f : Σ (f' : (y : Y) → A y) , (x : X) → A x [Y x ↦ f' x])
+    , g =_{(y : Y) → A y} first f)
+  ( Σ ( f : (y : Y) → A y)
+    , product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
+  ( Σ ( f : (y : Y) → A y)
+    , product (g =_{(y : Y) → A y} f) ((x : X) → A x [Y x ↦ f x]))
+  ( ( x : X) → A x [Y x ↦ g x])
+  ( equiv-total-pullback-is-equiv
+    ( ( x : X) → A x)
+    ( Σ ( f : (y : Y) → A y) , (x : X) → A x [Y x ↦ f x])
+    ( first (equiv-extension-subshape I X Y A))
+    ( second (equiv-extension-subshape I X Y A))
+    ( \ f → g =_{(y : Y) → A y} first f))
+  ( inv-equiv
+    ( Σ ( f : (y : Y) → A y)
+      , product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
+    ( Σ ( f : Σ (f' : (y : Y) → A y) , (x : X) → A x [Y x ↦ f' x])
+      , g =_{(y : Y) → A y} first f)
+    ( associative-Σ ((y : Y) → A y) (\ f → (x : X) → A x [Y x ↦ f x])
+      ( \ f _ → g =_{(y : Y) → A y} f)))
+  ( total-equiv-family-of-equiv ((y : Y) → A y)
+    ( \ f → product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
+    ( \ f → product (g =_{(y : Y) → A y} f) ((x : X) → A x [Y x ↦ f x]))
+    ( \ f → sym-product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f)))
+  ( equiv-based-paths-family ((y : Y) → A y)
+    ( \ f → ((x : X) → A x [Y x ↦ f x]))
+    ( g))
+```
+
+```rzk
+#def equiv-extension-constraint-eq
+  ( I : CUBE)
+  ( X : I → TOPE)
+  ( Y : X → TOPE)
+  ( A : X → U)
+  ( g : (y : Y) → A y)
+  ( g' : (y : Y) → A y)
+  ( p : g = g')
+  : Equiv
+    ( ( x : X) → A x [Y x ↦ g x])
+    ( ( x : X) → A x [Y x ↦ g' x])
+  :=
+  equiv-triple-comp
+  ( ( x : X) → A x [Y x ↦ g x])
+  ( Σ ( f : (x : X) → A x) , g =_{(y : Y) → A y} (\ y → f y))
+  ( Σ ( f : (x : X) → A x) , g' =_{(y : Y) → A y} (\ y → f y))
+  ( ( x : X) → A x [Y x ↦ g' x])
+  ( inv-equiv
+    ( Σ ( f : (x : X) → A x) , g =_{(y : Y) → A y} (\ y → f y))
+    ( ( x : X) → A x [Y x ↦ g x])
+    ( equiv-extension-homotopy-constraint I X Y A g))
+  ( total-equiv-family-of-equiv ((x : X) → A x)
+    ( \ f → g =_{(y : Y) → A y} (\ y → f y))
+    ( \ f → g' =_{(y : Y) → A y} (\ y → f y))
+    ( \ f →
+      inv-equiv
+      ( g' =_{(y : Y) → A y} (\ y → f y))
+      ( g =_{(y : Y) → A y} (\ y → f y))
+      ( equiv-preconcat ((y : Y) → A y) g g' (\ y → f y) p)))
+  ( equiv-extension-homotopy-constraint I X Y A g')
+```
+
 ## Composites and unions of cofibrations
 
 The original form.
@@ -1657,4 +1756,71 @@ The following special case of extensions from `BOT` is also useful.
         ( \ t → f t (first (has-section-f t) (b t)))
         ( \ t → b t)
         ( \ t → second (has-section-f t) (b t))))
+```
+
+## More equivalences of relative extension types
+
+A relative extension type over the total type projecting to the base is
+equivalent to extending the fiber.
+
+```rzk
+#def equiv-relative-extension-type-direct-extension uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( B : (t : ψ) → A t → U)
+  ( a : (t : ϕ) → total-type (A t) (B t))
+  ( τ : (t : ψ) → A t [ϕ t ↦ projection-total-type (A t) (B t) (a t)])
+  : Equiv
+    ( relative-extension-type I ψ ϕ (\ t → total-type (A t) (B t)) A
+      ( \ t → projection-total-type (A t) (B t)) a τ)
+    ( ( t : ψ) → B t (τ t) [ϕ t ↦ second (a t)])
+  :=
+  equiv-comp
+  ( relative-extension-type I ψ ϕ (\ t → total-type (A t) (B t)) A
+    ( \ t → projection-total-type (A t) (B t)) a τ)
+  ( ( t : ψ) → (Σ (τ' : total-type (A t) (B t))
+                , ( projection-total-type (A t) (B t) τ' = τ t))
+    [ ϕ t ↦ (a t , refl)])
+  ( ( t : ψ) → B t (τ t) [ϕ t ↦ second (a t)])
+  ( inv-equiv-axiom-choice I ψ ϕ
+    ( \ t → total-type (A t) (B t))
+    ( \ t τ' → projection-total-type (A t) (B t) τ' = τ t)
+    ( a)
+    ( \ _ → refl))
+  ( equiv-extensions-equiv I ψ ϕ
+    ( \ t →
+      Σ ( τ' : total-type (A t) (B t))
+      , ( projection-total-type (A t) (B t) τ' = τ t))
+    ( \ t → B t (τ t))
+    ( \ t →
+      equiv-quadruple-comp
+      ( Σ ( τ' : total-type (A t) (B t))
+        , ( projection-total-type (A t) (B t) τ' = τ t))
+      ( Σ ( a : A t) , product (B t a) (a =_{A t} τ t))
+      ( Σ ( a : A t) , product (a =_{A t} τ t) (B t a))
+      ( Σ ( a : A t) , product (τ t =_{A t} a) (B t a))
+      ( B t (τ t))
+      ( inv-equiv
+        ( Σ ( a : A t)
+          , Σ ( b : B t a)
+            , ( projection-total-type (A t) (B t) (a , b) = τ t))
+        ( Σ ( τ' : total-type (A t) (B t))
+          , ( projection-total-type (A t) (B t) τ' = τ t))
+        ( associative-Σ (A t) (B t) (\ a _ → a =_{A t} τ t)))
+      ( total-equiv-family-of-equiv (A t)
+        ( \ a → product (B t a) (a =_{A t} τ t))
+        ( \ a → product (a =_{A t} τ t) (B t a))
+        ( \ a → sym-product (B t a) (a =_{A t} τ t)))
+      ( total-equiv-family-of-equiv (A t)
+        ( \ a → product (a =_{A t} τ t) (B t a))
+        ( \ a → product (τ t =_{A t} a) (B t a))
+        ( \ a →
+          equiv-total-pullback-is-equiv (a =_{A t} τ t) (τ t =_{A t} a)
+          ( rev (A t) a (τ t))
+          ( second (equiv-rev (A t) a (τ t)))
+          ( \ _ → B t a)))
+      ( equiv-based-paths-family (A t) (B t) (τ t)))
+    ( \ t → (a t , refl)))
 ```

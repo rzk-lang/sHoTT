@@ -241,7 +241,7 @@ If some family `#!rzk B : A → U` is fiberwise a proposition, then the type of
 dependent functions `#!rzk (x : A) → B x` is a proposition.
 
 ```rzk
-#def is-prop-fiberwise-prop uses (funext weakfunext)
+#def is-prop-fiberwise-prop uses (funext)
   ( A : U)
   ( B : A → U)
   ( fiberwise-prop-B : (x : A) → is-prop (B x))
@@ -252,7 +252,89 @@ dependent functions `#!rzk (x : A) → B x` is a proposition.
       ( f = g)
       ( ( x : A) → f x = g x)
       ( equiv-FunExt funext A B f g)
-      ( weakfunext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
+      ( weakfunext-funext funext A (\ x → f x = g x) (\ x → fiberwise-prop-B x (f x) (g x)))
+
+#def is-prop-fiberwise-prop2 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( fiberwise-prop-C : (a : A) → (b : B a) → is-prop (C a b))
+  : is-prop ((a : A) → (b : B a) → C a b)
+  :=
+  is-prop-fiberwise-prop A (\ a → (b : B a) → C a b)
+  ( \ a → is-prop-fiberwise-prop (B a) (C a) (fiberwise-prop-C a))
+
+#def is-prop-fiberwise-prop3 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D : (a : A) → (b : B a) → (c : C a b) → U)
+  ( fiberwise-prop-D : (a : A) → (b : B a) → (c : C a b) → is-prop (D a b c))
+  : is-prop ((a : A) → (b : B a) → (c : C a b) → D a b c)
+  :=
+  is-prop-fiberwise-prop A (\ a → (b : B a) → (c : C a b) → D a b c)
+  ( \ a → is-prop-fiberwise-prop2 (B a) (C a) (D a) (fiberwise-prop-D a))
+
+#def is-prop-fiberwise-prop4 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D : (a : A) → (b : B a) → (c : C a b) → U)
+  ( E : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → U)
+  ( fiberwise-prop-E
+    : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → is-prop (E a b c d))
+  : is-prop ((a : A) → (b : B a) → (c : C a b) → (d : D a b c) → E a b c d)
+  :=
+  is-prop-fiberwise-prop A
+  ( \ a → (b : B a) → (c : C a b) → (d : D a b c) → E a b c d)
+  ( \ a → is-prop-fiberwise-prop3 (B a) (C a) (D a) (E a) (fiberwise-prop-E a))
+
+#def is-prop-fiberwise-prop5 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D : (a : A) → (b : B a) → (c : C a b) → U)
+  ( E : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → U)
+  ( F : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d) → U)
+  ( fiberwise-prop-F
+    : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+      → is-prop (F a b c d e))
+  : is-prop
+    ( ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+    → F a b c d e)
+  :=
+  is-prop-fiberwise-prop A
+  ( \ a →
+    ( b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d) → F a b c d e)
+  ( \ a →
+    is-prop-fiberwise-prop4 (B a) (C a) (D a) (E a) (F a) (fiberwise-prop-F a))
+
+#def is-prop-fiberwise-prop6 uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D : (a : A) → (b : B a) → (c : C a b) → U)
+  ( E : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → U)
+  ( F : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d) → U)
+  ( G
+    : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+      → ( f : F a b c d e) → U)
+  ( fiberwise-prop-G
+    : ( a : A) → (b : B a) → (c : C a b)
+      → ( d : D a b c) → (e : E a b c d) → (f : F a b c d e)
+      → is-prop (G a b c d e f))
+  : is-prop
+    ( ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+    → ( f : F a b c d e) → G a b c d e f)
+  :=
+  is-prop-fiberwise-prop A
+  ( \ a →
+    ( b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+    → ( f : F a b c d e) → G a b c d e f)
+  ( \ a →
+    is-prop-fiberwise-prop5 (B a) (C a) (D a) (E a) (F a) (G a)
+    ( fiberwise-prop-G a))
+
 ```
 
 ### Sum types over a propositions
@@ -407,6 +489,35 @@ propositions.
   := (is-prop-fib-is-emb A B f , is-emb-is-prop-fib A B f)
 ```
 
+## Contractibility is a proposition
+
+```rzk
+#def is-prop-is-contr-itself
+  ( A : U)
+  : is-prop (is-contr A)
+  :=
+  is-prop-is-contr-is-inhabited
+  ( is-contr A)
+  ( \ is-contr-A →
+    is-contr-equiv-is-contr'
+    ( is-contr A)
+    ( ( y : A) → (center-contraction A is-contr-A) = y)
+    ( equiv-center-fiber-total-type-is-contr-base A is-contr-A
+      ( \ x → (y : A) → x = y))
+    ( weakfunext A (\ y → (center-contraction A is-contr-A) = y)
+      ( \ y →
+        is-prop-is-contr A is-contr-A (center-contraction A is-contr-A) y)))
+```
+
+```rzk
+#def is-prop-is-prop uses (weakfunext funext)
+  ( A : U)
+  : is-prop (is-prop A)
+  :=
+  is-prop-fiberwise-prop2 A (\ _ → A) (\ x y → is-contr (x = y))
+  ( \ x y → is-prop-is-contr-itself (x = y))
+```
+
 ## Subtypes
 
 A family of propositions `#!rzk P : A → U` over a type `#!rzk A` may be thought
@@ -450,4 +561,30 @@ The subtype projection embedding reflects identifications.
   :=
   inv-ap-is-emb (total-type A P) A (projection-total-type A P)
   ( is-emb-subtype-projection A P is-predicate-P)
+```
+
+## Equivalences between families of propositions
+
+```rzk
+#def equiv-family-of-props uses (funext)
+  ( A A' : U)
+  ( B : A → U)
+  ( is-prop-B : (a : A) → is-prop (B a))
+  ( B' : A' → U)
+  ( is-prop-B' : (a' : A') → is-prop (B' a'))
+  ( f : A → A')
+  ( F : (a : A) → (b' : B' (f a)) → B a)
+  ( g : A' → A)
+  ( G : (a' : A') → (b : B (g a')) → B' a')
+  : Equiv
+    ( ( a : A) → B a)
+    ( ( a' : A') → B' a')
+  :=
+  equiv-iff-is-prop-is-prop
+  ( ( a : A) → B a)
+  ( ( a' : A') → B' a')
+  ( is-prop-fiberwise-prop A B is-prop-B)
+  ( is-prop-fiberwise-prop A' B' is-prop-B')
+  ( \ b a' → G a' (b (g a'))
+  , \ b' a → F a (b' (f a)))
 ```

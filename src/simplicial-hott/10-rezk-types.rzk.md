@@ -783,8 +783,8 @@ The inverse to `#!rzk iso-eq` for a Rezk type.
   ( A : U)
   ( is-rezk-A : is-rezk A)
   ( x y : A)
-  ( iso : Iso A (π₁ is-rezk-A) x y)
-  : iso-eq A (π₁ is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y iso) = iso
+  ( iso : Iso A (first is-rezk-A) x y)
+  : iso-eq A (first is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y iso) = iso
   :=
   ( second
     ( has-section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
@@ -881,22 +881,22 @@ same induction principle for them.
   ( A : U)
   ( is-rezk-A : is-rezk A)
   ( x : A)
-  ( C : (y : A) → (Iso A (π₁ is-rezk-A) x y) → U)
-  ( d : C x (iso-eq A (π₁ is-rezk-A) x x refl))
+  ( C : (y : A) → (Iso A (first is-rezk-A) x y) → U)
+  ( d : C x (iso-eq A (first is-rezk-A) x x refl))
   ( y : A)
-  ( f : Iso A (π₁ is-rezk-A) x y)
+  ( f : Iso A (first is-rezk-A) x y)
   : C y f
   :=
   transport
-  ( Iso A (π₁ is-rezk-A) x y)
+  ( Iso A (first is-rezk-A) x y)
   ( \ f → C y f)
-  ( iso-eq A (π₁ is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y f))
+  ( iso-eq A (first is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y f))
   ( f)
   ( iso-eq-iso-is-rezk' A is-rezk-A x y f)
   ( ind-path
     ( A)
     ( x)
-    ( \ y p → C y (iso-eq A (π₁ is-rezk-A) x y p))
+    ( \ y p → C y (iso-eq A (first is-rezk-A) x y p))
     ( d)
     ( y)
     ( eq-iso-is-rezk A is-rezk-A x y f))

@@ -412,9 +412,12 @@ This section shows that propositional constraints are equivalent to them.
   :=
   equiv-quadruple-comp
   ( Σ ( f : (x : X) → A x) , g =_{(y : Y) → A y} (\ y → f y))
-  ( Σ ( f : Σ (f' : (y : Y) → A y) , (x : X) → A x [Y x ↦ f' x]) , g =_{(y : Y) → A y} first f)
-  ( Σ ( f : (y : Y) → A y) , product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
-  ( Σ ( f : (y : Y) → A y) , product (g =_{(y : Y) → A y} f) ((x : X) → A x [Y x ↦ f x]))
+  ( Σ ( f : Σ (f' : (y : Y) → A y) , (x : X) → A x [Y x ↦ f' x])
+    , g =_{(y : Y) → A y} first f)
+  ( Σ ( f : (y : Y) → A y)
+    , product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
+  ( Σ ( f : (y : Y) → A y)
+    , product (g =_{(y : Y) → A y} f) ((x : X) → A x [Y x ↦ f x]))
   ( ( x : X) → A x [Y x ↦ g x])
   ( equiv-total-pullback-is-equiv
     ( ( x : X) → A x)
@@ -423,15 +426,19 @@ This section shows that propositional constraints are equivalent to them.
     ( second (equiv-extension-subshape I X Y A))
     ( \ f → g =_{(y : Y) → A y} first f))
   ( inv-equiv
-    ( Σ ( f : (y : Y) → A y) , product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
-    ( Σ ( f : Σ (f' : (y : Y) → A y) , (x : X) → A x [Y x ↦ f' x]) , g =_{(y : Y) → A y} first f)
+    ( Σ ( f : (y : Y) → A y)
+      , product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
+    ( Σ ( f : Σ (f' : (y : Y) → A y) , (x : X) → A x [Y x ↦ f' x])
+      , g =_{(y : Y) → A y} first f)
     ( associative-Σ ((y : Y) → A y) (\ f → (x : X) → A x [Y x ↦ f x])
       ( \ f _ → g =_{(y : Y) → A y} f)))
   ( total-equiv-family-of-equiv ((y : Y) → A y)
     ( \ f → product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f))
     ( \ f → product (g =_{(y : Y) → A y} f) ((x : X) → A x [Y x ↦ f x]))
     ( \ f → sym-product ((x : X) → A x [Y x ↦ f x]) (g =_{(y : Y) → A y} f)))
-  ( equiv-based-paths-family ((y : Y) → A y) (\ f → ((x : X) → A x [Y x ↦ f x])) g)
+  ( equiv-based-paths-family ((y : Y) → A y)
+    ( \ f → ((x : X) → A x [Y x ↦ f x]))
+    ( g))
 ```
 
 ```rzk

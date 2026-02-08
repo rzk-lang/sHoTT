@@ -282,7 +282,7 @@ dependent functions `#!rzk (x : A) → B x` is a proposition.
   ( D : (a : A) → (b : B a) → (c : C a b) → U)
   ( E : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → U)
   ( fiberwise-prop-E
- : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → is-prop (E a b c d))
+    : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → is-prop (E a b c d))
   : is-prop ((a : A) → (b : B a) → (c : C a b) → (d : D a b c) → E a b c d)
   :=
   is-prop-fiberwise-prop A
@@ -297,8 +297,8 @@ dependent functions `#!rzk (x : A) → B x` is a proposition.
   ( E : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → U)
   ( F : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d) → U)
   ( fiberwise-prop-F
- : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
-    → is-prop (F a b c d e))
+    : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+      → is-prop (F a b c d e))
   : is-prop
     ( ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
     → F a b c d e)
@@ -317,12 +317,12 @@ dependent functions `#!rzk (x : A) → B x` is a proposition.
   ( E : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → U)
   ( F : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d) → U)
   ( G
- : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
-    → ( f : F a b c d e) → U)
+    : ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
+      → ( f : F a b c d e) → U)
   ( fiberwise-prop-G
- : ( a : A) → (b : B a) → (c : C a b)
-    → ( d : D a b c) → (e : E a b c d) → (f : F a b c d e)
-    → is-prop (G a b c d e f))
+    : ( a : A) → (b : B a) → (c : C a b)
+      → ( d : D a b c) → (e : E a b c d) → (f : F a b c d e)
+      → is-prop (G a b c d e f))
   : is-prop
     ( ( a : A) → (b : B a) → (c : C a b) → (d : D a b c) → (e : E a b c d)
     → ( f : F a b c d e) → G a b c d e f)

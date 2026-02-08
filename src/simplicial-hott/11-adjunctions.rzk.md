@@ -1354,7 +1354,7 @@ of `#!rzk is-transposing-right-adj A B u`
     ( all-left-adjoint-components-equal-is-rezk-is-segal))
   = to-left-adjoint-components-is-rezk-is-segal
   :=
-  iso-eq-iso-is-rezk B is-rezk-B fa fa'
+  compute-first-iso-eq-eq-iso-is-rezk B is-rezk-B fa fa'
   ( to-left-adjoint-components-is-rezk-is-segal
 
   , ( ( from-left-adjoint-components-is-rezk-is-segal

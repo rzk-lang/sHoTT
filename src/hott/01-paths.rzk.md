@@ -616,6 +616,17 @@ Application of a function to homotopic paths yields homotopic paths.
   := ind-path (A) (x) (\ y' p' → B y') (u) (y) (p)
 ```
 
+### Backwards transport in a type family along a path in the base
+
+```rzk
+#def transport-rev
+  ( x y : A)
+  ( p : x = y)
+  ( u : B y)
+  : B x
+  := transport y x (rev A x y p) u
+```
+
 ### The lift of a base path to a path from a term in the total space to its transport
 
 ```rzk

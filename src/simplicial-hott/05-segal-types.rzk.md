@@ -11,12 +11,12 @@ This is a literate `rzk` file:
 ## Prerequisites
 
 - `hott/01-paths.rzk.md` - We require basic path algebra.
-- `hott/02-contractible.rzk.md` - We require the notion of contractible types
+- `hott/06-contractible.rzk.md` - We require the notion of contractible types
   and their data.
-- `hott/total-space.md` — We rely on
+- `hott/10-trivial-fibrations.rzk.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk projection-total-type` in the proof of Theorem 5.5.
-- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplicies and
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and
   their subshapes.
 - `03-extension-types.rzk.md` — We use the fubini theorem and extension
   extensionality.

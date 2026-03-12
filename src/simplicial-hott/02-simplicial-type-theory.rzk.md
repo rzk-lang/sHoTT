@@ -200,6 +200,77 @@ The union of shapes is defined by disjunction on topes.
   := \ t → ψ t ∨ χ t
 ```
 
+### Gluing of shapes in low dimensions
+
+We now define instances of the “gluing” construction from RS17, Definition 3.8,
+for all pairs of dimensions with \(0 \leq n \leq 2\) and \(0 \leq m \leq 2\).
+For each \(n,m\), the shapes \(A : 2^{1+n+1} → \mathrm{TOPE}\) and \(B :
+2^{1+m+1} → \mathrm{TOPE}\) are glued to a shape in \(2^{1+n+1+m+1}\) by
+precomposing with the appropriate coordinate maps and then taking a conjunction
+of the resulting topes, as in the paper.
+
+```rzk
+#def shape-gluing-0-0
+  ( A B : (2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := \ ((t- , u) , s+) →
+    A (t- , u) ∧ B (u , s+)
+
+#def shape-gluing-1-0
+  ( A : (2 × 2 × 2) → TOPE)
+  ( B : (2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := \ (((t- , t1) , u) , s+) →
+    A ((t- , t1) , u) ∧ B (u , s+)
+
+#def shape-gluing-0-1
+  ( A : (2 × 2) → TOPE)
+  ( B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := \ (((t- , u) , s1) , s+) →
+    A (t- , u) ∧ B ((u , s1) , s+)
+
+#def shape-gluing-2-0
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  ( B : (2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((t- , t1) , t2) , u) , s+) →
+    A (((t- , t1) , t2) , u) ∧ B (u , s+)
+
+#def shape-gluing-0-2
+  ( A : (2 × 2) → TOPE)
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((t- , u) , s1) , s2) , s+) →
+    A (t- , u) ∧ B (((u , s1) , s2) , s+)
+
+#def shape-gluing-1-1
+  ( A B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((t- , t1) , u) , s1) , s+) →
+    A ((t- , t1) , u) ∧ B ((u , s1) , s+)
+
+#def shape-gluing-1-2
+  ( A : (2 × 2 × 2) → TOPE)
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ (((((t- , t1) , u) , s1) , s2) , s+) →
+    A ((t- , t1) , u) ∧ B (((u , s1) , s2) , s+)
+
+#def shape-gluing-2-1
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  ( B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ (((((t- , t1) , t2) , u) , s1) , s+) →
+    A (((t- , t1) , t2) , u) ∧ B ((u , s1) , s+)
+
+#def shape-gluing-2-2
+  ( A B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((((t- , t1) , t2) , u) , s1) , s2) , s+) →
+    A (((t- , t1) , t2) , u) ∧ B (((u , s1) , s2) , s+)
+```
+
 ### Connection squares
 
 <!-- This is manually adjusted diagram (hopefully fully supported in the future by rzk) -->

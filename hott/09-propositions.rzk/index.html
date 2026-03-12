@@ -736,9 +736,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#contractibility-is-a-proposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contractibility is a proposition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#subtypes" class="md-nav__link">
     <span class="md-ellipsis">
       Subtypes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalences-between-families-of-propositions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equivalences between families of propositions
     </span>
   </a>
   
@@ -1245,9 +1263,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#contractibility-is-a-proposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contractibility is a proposition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#subtypes" class="md-nav__link">
     <span class="md-ellipsis">
       Subtypes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalences-between-families-of-propositions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equivalences between families of propositions
     </span>
   </a>
   
@@ -1472,7 +1508,7 @@ invoking <code>is-prop-is-contr</code>.</p>
 <h3 id="product-types">Product types<a class="headerlink" href="#product-types" title="Permanent link">&para;</a></h3>
 <p>If some family <code class="language-rzk highlight"><span class="err">B : A → U</span></code> is fiberwise a proposition, then the type of
 dependent functions <code class="language-rzk highlight"><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → B x</span></code> is a proposition.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-fiberwise-prop" id="define:is-prop-fiberwise-prop" style="visibility: visible; position: relative; color: inherit">is-prop-fiberwise-prop</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext weakfunext<span class="p">)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-fiberwise-prop" id="define:is-prop-fiberwise-prop" style="visibility: visible; position: relative; color: inherit">is-prop-fiberwise-prop</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="err">  </span><span class="p">( </span>fiberwise-prop-B <span class="p">:</span><span class="err"> </span><span class="p">(</span>x <span class="p">:</span><span class="err"> A) → is-prop (B x))</span>
@@ -1483,7 +1519,88 @@ dependent functions <code class="language-rzk highlight"><span class="p">(</span
 </span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="err">      ( f = g)</span>
 </span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="err">      </span><span class="p">( </span>( x <span class="p">:</span><span class="err"> A) → f x = g x)</span>
 </span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="err">      ( equiv-FunExt funext A B f g)</span>
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="err">      ( weakfunext A (</span><span class="p">\ </span>x <span class="err">→ f x = g x) (</span><span class="p">\ </span>x <span class="err">→ fiberwise-prop-B x (f x) (g x)))</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="err">      ( weakfunext-funext funext A (</span><span class="p">\ </span>x <span class="err">→ f x = g x) (</span><span class="p">\ </span>x <span class="err">→ fiberwise-prop-B x (f x) (g x)))</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-fiberwise-prop2" id="define:is-prop-fiberwise-prop2" style="visibility: visible; position: relative; color: inherit">is-prop-fiberwise-prop2</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → B a → U)</span>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="err">  </span><span class="p">( </span>fiberwise-prop-C <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → is-prop (C a b))</span>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="err">  : is-prop </span><span class="p">(</span>(a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → C a b)</span>
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="err">  :=</span>
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="err">  is-prop-fiberwise-prop A </span><span class="p">(</span>\ a → (b <span class="p">:</span><span class="err"> B a) → C a b)</span>
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="err">  ( </span><span class="p">\ </span>a <span class="err">→ is-prop-fiberwise-prop (B a) (C a) (fiberwise-prop-C a))</span>
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-fiberwise-prop3" id="define:is-prop-fiberwise-prop3" style="visibility: visible; position: relative; color: inherit">is-prop-fiberwise-prop3</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-13-26"><a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-13-27"><a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → B a → U)</span>
+</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a><span class="err">  </span><span class="p">( </span>D <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → U)</span>
+</span><span id="__span-13-29"><a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a><span class="err">  </span><span class="p">( </span>fiberwise-prop-D <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → is-prop (D a b c))</span>
+</span><span id="__span-13-30"><a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a><span class="err">  : is-prop </span><span class="p">(</span>(a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → D a b c)</span>
+</span><span id="__span-13-31"><a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a><span class="err">  :=</span>
+</span><span id="__span-13-32"><a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a><span class="err">  is-prop-fiberwise-prop A </span><span class="p">(</span>\ a → (b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → D a b c)</span>
+</span><span id="__span-13-33"><a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a><span class="err">  ( </span><span class="p">\ </span>a <span class="err">→ is-prop-fiberwise-prop2 (B a) (C a) (D a) (fiberwise-prop-D a))</span>
+</span><span id="__span-13-34"><a id="__codelineno-13-34" name="__codelineno-13-34" href="#__codelineno-13-34"></a>
+</span><span id="__span-13-35"><a id="__codelineno-13-35" name="__codelineno-13-35" href="#__codelineno-13-35"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-fiberwise-prop4" id="define:is-prop-fiberwise-prop4" style="visibility: visible; position: relative; color: inherit">is-prop-fiberwise-prop4</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-13-36"><a id="__codelineno-13-36" name="__codelineno-13-36" href="#__codelineno-13-36"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-13-37"><a id="__codelineno-13-37" name="__codelineno-13-37" href="#__codelineno-13-37"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-13-38"><a id="__codelineno-13-38" name="__codelineno-13-38" href="#__codelineno-13-38"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → B a → U)</span>
+</span><span id="__span-13-39"><a id="__codelineno-13-39" name="__codelineno-13-39" href="#__codelineno-13-39"></a><span class="err">  </span><span class="p">( </span>D <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → U)</span>
+</span><span id="__span-13-40"><a id="__codelineno-13-40" name="__codelineno-13-40" href="#__codelineno-13-40"></a><span class="err">  </span><span class="p">( </span>E <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → U)</span>
+</span><span id="__span-13-41"><a id="__codelineno-13-41" name="__codelineno-13-41" href="#__codelineno-13-41"></a><span class="err">  </span><span class="p">( </span>fiberwise-prop-E
+</span><span id="__span-13-42"><a id="__codelineno-13-42" name="__codelineno-13-42" href="#__codelineno-13-42"></a> <span class="p">:</span><span class="err"> </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → is-prop (E a b c d))</span>
+</span><span id="__span-13-43"><a id="__codelineno-13-43" name="__codelineno-13-43" href="#__codelineno-13-43"></a><span class="err">  : is-prop </span><span class="p">(</span>(a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → E a b c d)</span>
+</span><span id="__span-13-44"><a id="__codelineno-13-44" name="__codelineno-13-44" href="#__codelineno-13-44"></a><span class="err">  :=</span>
+</span><span id="__span-13-45"><a id="__codelineno-13-45" name="__codelineno-13-45" href="#__codelineno-13-45"></a><span class="err">  is-prop-fiberwise-prop A</span>
+</span><span id="__span-13-46"><a id="__codelineno-13-46" name="__codelineno-13-46" href="#__codelineno-13-46"></a><span class="err">  </span><span class="p">( </span>\ a → (b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → E a b c d)</span>
+</span><span id="__span-13-47"><a id="__codelineno-13-47" name="__codelineno-13-47" href="#__codelineno-13-47"></a><span class="err">  ( </span><span class="p">\ </span>a <span class="err">→ is-prop-fiberwise-prop3 (B a) (C a) (D a) (E a) (fiberwise-prop-E a))</span>
+</span><span id="__span-13-48"><a id="__codelineno-13-48" name="__codelineno-13-48" href="#__codelineno-13-48"></a>
+</span><span id="__span-13-49"><a id="__codelineno-13-49" name="__codelineno-13-49" href="#__codelineno-13-49"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-fiberwise-prop5" id="define:is-prop-fiberwise-prop5" style="visibility: visible; position: relative; color: inherit">is-prop-fiberwise-prop5</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-13-50"><a id="__codelineno-13-50" name="__codelineno-13-50" href="#__codelineno-13-50"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-13-51"><a id="__codelineno-13-51" name="__codelineno-13-51" href="#__codelineno-13-51"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-13-52"><a id="__codelineno-13-52" name="__codelineno-13-52" href="#__codelineno-13-52"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → B a → U)</span>
+</span><span id="__span-13-53"><a id="__codelineno-13-53" name="__codelineno-13-53" href="#__codelineno-13-53"></a><span class="err">  </span><span class="p">( </span>D <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → U)</span>
+</span><span id="__span-13-54"><a id="__codelineno-13-54" name="__codelineno-13-54" href="#__codelineno-13-54"></a><span class="err">  </span><span class="p">( </span>E <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → U)</span>
+</span><span id="__span-13-55"><a id="__codelineno-13-55" name="__codelineno-13-55" href="#__codelineno-13-55"></a><span class="err">  </span><span class="p">( </span>F <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → </span><span class="p">(</span>e <span class="p">:</span><span class="err"> E a b c d) → U)</span>
+</span><span id="__span-13-56"><a id="__codelineno-13-56" name="__codelineno-13-56" href="#__codelineno-13-56"></a><span class="err">  </span><span class="p">( </span>fiberwise-prop-F
+</span><span id="__span-13-57"><a id="__codelineno-13-57" name="__codelineno-13-57" href="#__codelineno-13-57"></a> <span class="p">:</span><span class="err"> </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → </span><span class="p">(</span>e <span class="p">:</span><span class="err"> E a b c d)</span>
+</span><span id="__span-13-58"><a id="__codelineno-13-58" name="__codelineno-13-58" href="#__codelineno-13-58"></a><span class="err">      → is-prop (F a b c d e))</span>
+</span><span id="__span-13-59"><a id="__codelineno-13-59" name="__codelineno-13-59" href="#__codelineno-13-59"></a><span class="err">  : is-prop</span>
+</span><span id="__span-13-60"><a id="__codelineno-13-60" name="__codelineno-13-60" href="#__codelineno-13-60"></a><span class="err">    </span><span class="p">( </span>( a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → </span><span class="p">(</span>e <span class="p">:</span><span class="err"> E a b c d)</span>
+</span><span id="__span-13-61"><a id="__codelineno-13-61" name="__codelineno-13-61" href="#__codelineno-13-61"></a><span class="err">    → F a b c d e)</span>
+</span><span id="__span-13-62"><a id="__codelineno-13-62" name="__codelineno-13-62" href="#__codelineno-13-62"></a><span class="err">  :=</span>
+</span><span id="__span-13-63"><a id="__codelineno-13-63" name="__codelineno-13-63" href="#__codelineno-13-63"></a><span class="err">  is-prop-fiberwise-prop A</span>
+</span><span id="__span-13-64"><a id="__codelineno-13-64" name="__codelineno-13-64" href="#__codelineno-13-64"></a><span class="err">  </span><span class="p">( </span>\ a →
+</span><span id="__span-13-65"><a id="__codelineno-13-65" name="__codelineno-13-65" href="#__codelineno-13-65"></a>    ( b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → </span><span class="p">(</span>e <span class="p">:</span><span class="err"> E a b c d) → F a b c d e)</span>
+</span><span id="__span-13-66"><a id="__codelineno-13-66" name="__codelineno-13-66" href="#__codelineno-13-66"></a><span class="err">  ( </span><span class="p">\ </span>a <span class="err">→</span>
+</span><span id="__span-13-67"><a id="__codelineno-13-67" name="__codelineno-13-67" href="#__codelineno-13-67"></a><span class="err">    is-prop-fiberwise-prop4 (B a) (C a) (D a) (E a) (F a) (fiberwise-prop-F a))</span>
+</span><span id="__span-13-68"><a id="__codelineno-13-68" name="__codelineno-13-68" href="#__codelineno-13-68"></a>
+</span><span id="__span-13-69"><a id="__codelineno-13-69" name="__codelineno-13-69" href="#__codelineno-13-69"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-fiberwise-prop6" id="define:is-prop-fiberwise-prop6" style="visibility: visible; position: relative; color: inherit">is-prop-fiberwise-prop6</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-13-70"><a id="__codelineno-13-70" name="__codelineno-13-70" href="#__codelineno-13-70"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-13-71"><a id="__codelineno-13-71" name="__codelineno-13-71" href="#__codelineno-13-71"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-13-72"><a id="__codelineno-13-72" name="__codelineno-13-72" href="#__codelineno-13-72"></a><span class="err">  </span><span class="p">( </span>C <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → B a → U)</span>
+</span><span id="__span-13-73"><a id="__codelineno-13-73" name="__codelineno-13-73" href="#__codelineno-13-73"></a><span class="err">  </span><span class="p">( </span>D <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → U)</span>
+</span><span id="__span-13-74"><a id="__codelineno-13-74" name="__codelineno-13-74" href="#__codelineno-13-74"></a><span class="err">  </span><span class="p">( </span>E <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → U)</span>
+</span><span id="__span-13-75"><a id="__codelineno-13-75" name="__codelineno-13-75" href="#__codelineno-13-75"></a><span class="err">  </span><span class="p">( </span>F <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → </span><span class="p">(</span>e <span class="p">:</span><span class="err"> E a b c d) → U)</span>
+</span><span id="__span-13-76"><a id="__codelineno-13-76" name="__codelineno-13-76" href="#__codelineno-13-76"></a><span class="err">  </span><span class="p">( </span>G
+</span><span id="__span-13-77"><a id="__codelineno-13-77" name="__codelineno-13-77" href="#__codelineno-13-77"></a> <span class="p">:</span><span class="err"> </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → </span><span class="p">(</span>e <span class="p">:</span><span class="err"> E a b c d)</span>
+</span><span id="__span-13-78"><a id="__codelineno-13-78" name="__codelineno-13-78" href="#__codelineno-13-78"></a><span class="err">      → </span><span class="p">( </span>f <span class="p">:</span><span class="err"> F a b c d e) → U)</span>
+</span><span id="__span-13-79"><a id="__codelineno-13-79" name="__codelineno-13-79" href="#__codelineno-13-79"></a><span class="err">  </span><span class="p">( </span>fiberwise-prop-G
+</span><span id="__span-13-80"><a id="__codelineno-13-80" name="__codelineno-13-80" href="#__codelineno-13-80"></a> <span class="p">:</span><span class="err"> </span><span class="p">( </span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b)</span>
+</span><span id="__span-13-81"><a id="__codelineno-13-81" name="__codelineno-13-81" href="#__codelineno-13-81"></a><span class="err">      → </span><span class="p">( </span>d <span class="p">:</span><span class="err"> D a b c) → </span><span class="p">(</span>e <span class="p">:</span><span class="err"> E a b c d) → </span><span class="p">(</span>f <span class="p">:</span><span class="err"> F a b c d e)</span>
+</span><span id="__span-13-82"><a id="__codelineno-13-82" name="__codelineno-13-82" href="#__codelineno-13-82"></a><span class="err">      → is-prop (G a b c d e f))</span>
+</span><span id="__span-13-83"><a id="__codelineno-13-83" name="__codelineno-13-83" href="#__codelineno-13-83"></a><span class="err">  : is-prop</span>
+</span><span id="__span-13-84"><a id="__codelineno-13-84" name="__codelineno-13-84" href="#__codelineno-13-84"></a><span class="err">    </span><span class="p">( </span>( a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → </span><span class="p">(</span>e <span class="p">:</span><span class="err"> E a b c d)</span>
+</span><span id="__span-13-85"><a id="__codelineno-13-85" name="__codelineno-13-85" href="#__codelineno-13-85"></a><span class="err">    → </span><span class="p">( </span>f <span class="p">:</span><span class="err"> F a b c d e) → G a b c d e f)</span>
+</span><span id="__span-13-86"><a id="__codelineno-13-86" name="__codelineno-13-86" href="#__codelineno-13-86"></a><span class="err">  :=</span>
+</span><span id="__span-13-87"><a id="__codelineno-13-87" name="__codelineno-13-87" href="#__codelineno-13-87"></a><span class="err">  is-prop-fiberwise-prop A</span>
+</span><span id="__span-13-88"><a id="__codelineno-13-88" name="__codelineno-13-88" href="#__codelineno-13-88"></a><span class="err">  </span><span class="p">( </span>\ a →
+</span><span id="__span-13-89"><a id="__codelineno-13-89" name="__codelineno-13-89" href="#__codelineno-13-89"></a>    ( b <span class="p">:</span><span class="err"> B a) → </span><span class="p">(</span>c <span class="p">:</span><span class="err"> C a b) → </span><span class="p">(</span>d <span class="p">:</span><span class="err"> D a b c) → </span><span class="p">(</span>e <span class="p">:</span><span class="err"> E a b c d)</span>
+</span><span id="__span-13-90"><a id="__codelineno-13-90" name="__codelineno-13-90" href="#__codelineno-13-90"></a><span class="err">    → </span><span class="p">( </span>f <span class="p">:</span><span class="err"> F a b c d e) → G a b c d e f)</span>
+</span><span id="__span-13-91"><a id="__codelineno-13-91" name="__codelineno-13-91" href="#__codelineno-13-91"></a><span class="err">  ( </span><span class="p">\ </span>a <span class="err">→</span>
+</span><span id="__span-13-92"><a id="__codelineno-13-92" name="__codelineno-13-92" href="#__codelineno-13-92"></a><span class="err">    is-prop-fiberwise-prop5 (B a) (C a) (D a) (E a) (F a) (G a)</span>
+</span><span id="__span-13-93"><a id="__codelineno-13-93" name="__codelineno-13-93" href="#__codelineno-13-93"></a><span class="err">    ( fiberwise-prop-G a))</span>
 </span></code></pre></div>
 <h3 id="sum-types-over-a-propositions">Sum types over a propositions<a class="headerlink" href="#sum-types-over-a-propositions" title="Permanent link">&para;</a></h3>
 <p>We consider a type family <code>C : A → U</code> over a proposition <code>A</code>.</p>
@@ -1623,40 +1740,87 @@ propositions.</p>
 </span><span id="__span-17-91"><a id="__codelineno-17-91" name="__codelineno-17-91" href="#__codelineno-17-91"></a><span class="err">  : iff (is-emb A B f) </span><span class="p">(</span>(b <span class="p">:</span><span class="err"> B) → is-prop (fib A B f b))</span>
 </span><span id="__span-17-92"><a id="__codelineno-17-92" name="__codelineno-17-92" href="#__codelineno-17-92"></a><span class="err">  := (is-prop-fib-is-emb A B f , is-emb-is-prop-fib A B f)</span>
 </span></code></pre></div>
+<h2 id="contractibility-is-a-proposition">Contractibility is a proposition<a class="headerlink" href="#contractibility-is-a-proposition" title="Permanent link">&para;</a></h2>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-is-contr-itself" id="define:is-prop-is-contr-itself" style="visibility: visible; position: relative; color: inherit">is-prop-is-contr-itself</a></span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="err">  : is-prop (is-contr A)</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="err">  :=</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="err">  is-prop-is-contr-is-inhabited</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="err">  ( is-contr A)</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="err">  ( </span><span class="p">\ </span>is-contr-A <span class="err">→</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="err">    is-contr-equiv-is-contr&#39;</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="err">    ( is-contr A)</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="err">    </span><span class="p">( </span>( y <span class="p">:</span><span class="err"> A) → (center-contraction A is-contr-A) = y)</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="err">    </span><span class="p">( </span>equiv-center-fiber-total-type-is-contr-base A is-contr-A
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>      ( \ x → (y <span class="p">:</span><span class="err"> A) → x = y))</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="err">    ( weakfunext A (</span><span class="p">\ </span>y <span class="err">→ (center-contraction A is-contr-A) = y)</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="err">      ( </span><span class="p">\ </span>y <span class="err">→</span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="err">        is-prop-is-contr A is-contr-A (center-contraction A is-contr-A) y)))</span>
+</span></code></pre></div>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-prop-is-prop" id="define:is-prop-is-prop" style="visibility: visible; position: relative; color: inherit">is-prop-is-prop</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakfunext funext<span class="p">)</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  : is-prop (is-prop A)</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="err">  :=</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="err">  is-prop-fiberwise-prop2 A (</span><span class="p">\ </span>_ <span class="err">→ A) (</span><span class="p">\ </span>x y <span class="err">→ is-contr (x = y))</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="err">  ( </span><span class="p">\ </span>x y <span class="err">→ is-prop-is-contr-itself (x = y))</span>
+</span></code></pre></div>
 <h2 id="subtypes">Subtypes<a class="headerlink" href="#subtypes" title="Permanent link">&para;</a></h2>
 <p>A family of propositions <code class="language-rzk highlight"><span class="err">P : A → U</span></code> over a type <code class="language-rzk highlight"><span class="err">A</span></code> may be thought
 of as a predicate.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-predicate" id="define:is-predicate" style="visibility: visible; position: relative; color: inherit">is-predicate</a></span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="err">  : U</span>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="err">  := </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → is-prop (P a)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-predicate" id="define:is-predicate" style="visibility: visible; position: relative; color: inherit">is-predicate</a></span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="err">  : U</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="err">  := </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → is-prop (P a)</span>
 </span></code></pre></div>
 <p>When <code class="language-rzk highlight"><span class="err">P</span></code> is a predicate on <code class="language-rzk highlight"><span class="err">A</span></code> then <code class="language-rzk highlight"><span class="err">total-type A P</span></code> is
 referred to a subtype of <code class="language-rzk highlight"><span class="err">A</span></code>.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-emb-subtype-projection" id="define:is-emb-subtype-projection" style="visibility: visible; position: relative; color: inherit">is-emb-subtype-projection</a></span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="err">  </span><span class="p">( </span>is-predicate-P <span class="p">:</span><span class="err"> is-predicate A P)</span>
-</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="err">  : is-emb (total-type A P) A (projection-total-type A P)</span>
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="err">  :=</span>
-</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="err">  is-emb-is-prop-fib (total-type A P) A (projection-total-type A P)</span>
-</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="err">  ( </span><span class="p">\ </span>a <span class="err">→</span>
-</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="err">    is-prop-Equiv-is-prop&#39;</span>
-</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="err">    ( P a) (fib (total-type A P) A (projection-total-type A P) a)</span>
-</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="err">    ( equiv-homotopy-fiber-strict-fiber A P a) (is-predicate-P a))</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-emb-subtype-projection" id="define:is-emb-subtype-projection" style="visibility: visible; position: relative; color: inherit">is-emb-subtype-projection</a></span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="err">  </span><span class="p">( </span>is-predicate-P <span class="p">:</span><span class="err"> is-predicate A P)</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="err">  : is-emb (total-type A P) A (projection-total-type A P)</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="err">  :=</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="err">  is-emb-is-prop-fib (total-type A P) A (projection-total-type A P)</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="err">  ( </span><span class="p">\ </span>a <span class="err">→</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="err">    is-prop-Equiv-is-prop&#39;</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="err">    ( P a) (fib (total-type A P) A (projection-total-type A P) a)</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="err">    ( equiv-homotopy-fiber-strict-fiber A P a) (is-predicate-P a))</span>
 </span></code></pre></div>
 <p>The subtype projection embedding reflects identifications.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:subtype-eq-reflection" id="define:subtype-eq-reflection" style="visibility: visible; position: relative; color: inherit">subtype-eq-reflection</a></span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> A → U)</span>
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="err">  </span><span class="p">( </span>is-predicate-P <span class="p">:</span><span class="err"> is-predicate A P)</span>
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="err">  : ( ( a , p) : total-type A P)</span>
-</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="err">    → ( ( b , q) : total-type A P)</span>
-</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="err">    → ( a = b) → (a , p) =_{total-type A P} (b , q)</span>
-</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="err">  :=</span>
-</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="err">  inv-ap-is-emb (total-type A P) A (projection-total-type A P)</span>
-</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="err">  ( is-emb-subtype-projection A P is-predicate-P)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:subtype-eq-reflection" id="define:subtype-eq-reflection" style="visibility: visible; position: relative; color: inherit">subtype-eq-reflection</a></span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="err">  </span><span class="p">( </span>P <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="err">  </span><span class="p">( </span>is-predicate-P <span class="p">:</span><span class="err"> is-predicate A P)</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="err">  : ( ( a , p) : total-type A P)</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="err">    → ( ( b , q) : total-type A P)</span>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="err">    → ( a = b) → (a , p) =_{total-type A P} (b , q)</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="err">  :=</span>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="err">  inv-ap-is-emb (total-type A P) A (projection-total-type A P)</span>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="err">  ( is-emb-subtype-projection A P is-predicate-P)</span>
+</span></code></pre></div>
+<h2 id="equivalences-between-families-of-propositions">Equivalences between families of propositions<a class="headerlink" href="#equivalences-between-families-of-propositions" title="Permanent link">&para;</a></h2>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-family-of-props" id="define:equiv-family-of-props" style="visibility: visible; position: relative; color: inherit">equiv-family-of-props</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="err">  </span><span class="p">( </span>A A&#39; <span class="p">:</span><span class="err"> U)</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="err">  </span><span class="p">( </span>B <span class="p">:</span><span class="err"> A → U)</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="err">  </span><span class="p">( </span>is-prop-B <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → is-prop (B a))</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="err">  </span><span class="p">( </span>B&#39; <span class="p">:</span><span class="err"> A&#39; → U)</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="err">  </span><span class="p">( </span>is-prop-B&#39; <span class="p">:</span><span class="err"> </span><span class="p">(</span>a&#39; <span class="p">:</span><span class="err"> A&#39;) → is-prop (B&#39; a&#39;))</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="err">  </span><span class="p">( </span>f <span class="p">:</span><span class="err"> A → A&#39;)</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="err">  </span><span class="p">( </span>F <span class="p">:</span><span class="err"> </span><span class="p">(</span>a <span class="p">:</span><span class="err"> A) → </span><span class="p">(</span>b&#39; <span class="p">:</span><span class="err"> B&#39; (f a)) → B a)</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="err">  </span><span class="p">( </span>g <span class="p">:</span><span class="err"> A&#39; → A)</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="err">  </span><span class="p">( </span>G <span class="p">:</span><span class="err"> </span><span class="p">(</span>a&#39; <span class="p">:</span><span class="err"> A&#39;) → </span><span class="p">(</span>b <span class="p">:</span><span class="err"> B (g a&#39;)) → B&#39; a&#39;)</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="err">  : Equiv</span>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="err">    </span><span class="p">( </span>( a <span class="p">:</span><span class="err"> A) → B a)</span>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="err">    </span><span class="p">( </span>( a&#39; <span class="p">:</span><span class="err"> A&#39;) → B&#39; a&#39;)</span>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="err">  :=</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="err">  equiv-iff-is-prop-is-prop</span>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="err">  </span><span class="p">( </span>( a <span class="p">:</span><span class="err"> A) → B a)</span>
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="err">  </span><span class="p">( </span>( a&#39; <span class="p">:</span><span class="err"> A&#39;) → B&#39; a&#39;)</span>
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="err">  ( is-prop-fiberwise-prop A B is-prop-B)</span>
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a><span class="err">  ( is-prop-fiberwise-prop A&#39; B&#39; is-prop-B&#39;)</span>
+</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a><span class="err">  ( </span><span class="p">\ </span>b a&#39; <span class="err">→ G a&#39; (b (g a&#39;))</span>
+</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a><span class="err">  , </span><span class="p">\ </span>b&#39; a <span class="err">→ F a (b&#39; (f a)))</span>
 </span></code></pre></div>
 
 

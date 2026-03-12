@@ -939,6 +939,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#transposing-adjunctions" class="md-nav__link">
     <span class="md-ellipsis">
       Transposing adjunctions
@@ -1107,6 +1116,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#transposing-adjunctions" class="md-nav__link">
     <span class="md-ellipsis">
       Transposing adjunctions
@@ -1200,6 +1218,21 @@
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">#assume</span><span class="p"> </span>funext<span class="err"> : FunExt</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kr">#assume</span><span class="p"> </span>extext<span class="err"> : ExtExt</span>
 </span></code></pre></div>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>hott/*</code> - We require various prerequisites from homotopy type theory, for
+  instance the notion of equivalence (<code class="language-rzk highlight"><span class="err">Equiv</span></code>, <code class="language-rzk highlight"><span class="err">is-equiv</span></code>).</li>
+<li><code>02-simplicial-type-theory.rzk.md</code> — We rely on definitions of simplices and
+  their subshapes.</li>
+<li><code>03-extension-types.rzk.md</code> — We use extension extensionality.</li>
+<li><code>05-segal-types.rzk.md</code> - We make use of Segal types (hom types, composition,
+  <code class="language-rzk highlight"><span class="err">is-segal</span></code>).</li>
+<li><code>09-yoneda.rzk.md</code> - We use the Yoneda lemma (<code class="language-rzk highlight"><span class="err">yoneda-lemma</span></code>,
+  <code class="language-rzk highlight"><span class="err">inv-yoneda-lemma</span></code>, and the contravariant variants) and the notion of
+  representable (co)variant families.</li>
+<li><code>10-rezk-types.rzk.md</code> - We use Rezk types in the "Adjunctions between Rezk
+  types" section.</li>
+</ul>
 <h2 id="transposing-adjunctions">Transposing adjunctions<a class="headerlink" href="#transposing-adjunctions" title="Permanent link">&para;</a></h2>
 <p>Transposing adjunctions are defined by opposing functors <code class="language-rzk highlight"><span class="err">f : A → B</span></code> and
 <code class="language-rzk highlight"><span class="err">u : B → A</span></code> together with a family of "transposing equivalences" between

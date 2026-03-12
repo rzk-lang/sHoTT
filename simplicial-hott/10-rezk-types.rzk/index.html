@@ -918,6 +918,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#isomorphisms" class="md-nav__link">
     <span class="md-ellipsis">
       Isomorphisms
@@ -1122,6 +1131,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#isomorphisms" class="md-nav__link">
     <span class="md-ellipsis">
       Isomorphisms
@@ -1232,6 +1250,21 @@ extensionality and weak function extensionality:</p>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kr">#assume</span><span class="p"> </span>extext<span class="err"> : ExtExt</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kr">#assume</span><span class="p"> </span>weakfunext<span class="err"> : WeakFunExt</span>
 </span></code></pre></div>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>hott/*</code> - We require various prerequisites from homotopy type theory, for
+  instance function extensionality.</li>
+<li><code>hott/10-trivial-fibrations.rzk.md</code> — We use
+  <code class="language-rzk highlight"><span class="err">is-equiv-projection-contractible-fibers</span></code> in the "Discrete types are
+  Rezk" section.</li>
+<li><code>02-simplicial-type-theory.rzk.md</code> — We rely on definitions of simplices and
+  their subshapes.</li>
+<li><code>03-extension-types.rzk.md</code> — We use extension extensionality.</li>
+<li><code>05-segal-types.rzk.md</code> - We make heavy use of the notion of Segal types (hom
+  types, composition, <code class="language-rzk highlight"><span class="err">is-segal</span></code>).</li>
+<li><code>07-discrete.rzk.md</code> - We use discrete types, <code class="language-rzk highlight"><span class="err">hom-eq</span></code>, and
+  <code class="language-rzk highlight"><span class="err">is-segal-is-discrete</span></code> in the "Isomorphisms in discrete types" section.</li>
+</ul>
 <h2 id="isomorphisms">Isomorphisms<a class="headerlink" href="#isomorphisms" title="Permanent link">&para;</a></h2>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-retraction-arrow" id="define:has-retraction-arrow" style="visibility: visible; position: relative; color: inherit">has-retraction-arrow</a></span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>

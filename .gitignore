@@ -300,6 +300,7 @@ TSWLatexianTemp*
 
 # Octave
 octave_workspace
+octave-workspace
 
 # Lean
 *.olean

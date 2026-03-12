@@ -12,8 +12,22 @@ extensionality and weak function extensionality:
 ```rzk
 #assume funext : FunExt
 #assume extext : ExtExt
-#assume weakfunext : WeakFunExt
 ```
+
+## Prerequisites
+
+- `hott/*` - We require various prerequisites from homotopy type theory, for
+  instance function extensionality.
+- `hott/10-trivial-fibrations.rzk.md` — We use
+  `#!rzk is-equiv-projection-contractible-fibers` in the "Discrete types are
+  Rezk" section.
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and
+  their subshapes.
+- `03-extension-types.rzk.md` — We use extension extensionality.
+- `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types (hom
+  types, composition, `#!rzk is-segal`).
+- `07-discrete.rzk.md` - We use discrete types, `#!rzk hom-eq`, and
+  `#!rzk is-segal-is-discrete` in the "Isomorphisms in discrete types" section.
 
 ## Isomorphisms
 
@@ -69,6 +83,13 @@ extensionality and weak function extensionality:
   ( x y : A)
   : U
   := Σ (f : hom A x y) , is-iso-arrow A is-segal-A x y f
+
+#def hom-iso
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( x y : A)
+  : Iso A is-segal-A x y → hom A x y
+  := \ (f , _) → f
 ```
 
 ## Invertible arrows
@@ -622,7 +643,7 @@ equal.
     ( ev-components-nat-trans-preserves-iso X A is-segal-A f g α
     , nat-trans-nat-trans-components-preserves-iso X A is-segal-A f g α)
 
-#def equiv-is-iso-pointwise-is-iso uses (extext funext weakfunext)
+#def equiv-is-iso-pointwise-is-iso uses (extext funext)
   ( X : U)
   ( A : X → U)
   ( is-segal-A : (x : X) → is-segal (A x))
@@ -657,7 +678,7 @@ equal.
         ( f)
         ( g)
         ( α))
-      ( is-prop-fiberwise-prop funext weakfunext
+      ( is-prop-fiberwise-prop funext
         ( X)
         ( \ x →
           ( is-iso-arrow
@@ -677,7 +698,7 @@ equal.
 ```
 
 ```rzk title="RS17, Corollary 10.4a (isomorphism extensionality)"
-#def iso-extensionality uses (extext funext weakfunext)
+#def iso-extensionality uses (extext funext)
   ( X : U)
   ( A : X → U)
   ( is-segal-A : (x : X) → is-segal (A x))
@@ -782,6 +803,16 @@ map from `#!rzk x = y` to `#!rzk Iso A is-segal-A x y` is an equivalence.
       → is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y))
 ```
 
+Rezk types are Segal.
+
+```rzk
+#def is-segal-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  : is-segal A
+  := (first (is-rezk-A))
+```
+
 The inverse to `#!rzk iso-eq` for a Rezk type.
 
 ```rzk
@@ -795,7 +826,20 @@ The inverse to `#!rzk iso-eq` for a Rezk type.
     ( iso-eq A (first is-rezk-A) x y)
     ( ( second is-rezk-A) x y)
 
-#def iso-eq-iso-is-rezk
+#def compute-iso-eq-eq-iso-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x y : A)
+  ( iso : Iso A (first is-rezk-A) x y)
+  : iso-eq A (first is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y iso) = iso
+  :=
+  ( second
+    ( has-section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
+      ( iso-eq A (first is-rezk-A) x y)
+      ( ( second is-rezk-A) x y)))
+  iso
+
+#def compute-first-iso-eq-eq-iso-is-rezk
   ( A : U)
   ( is-rezk-A : is-rezk A)
   ( x y : A)
@@ -808,10 +852,7 @@ The inverse to `#!rzk iso-eq` for a Rezk type.
     ( iso-eq A (first is-rezk-A) x y
       ( eq-iso-is-rezk A is-rezk-A x y (e , is-iso-e)))
     ( ( e , is-iso-e))
-    ( ( second
-      ( has-section-is-equiv (x = y) (Iso A (first is-rezk-A) x y)
-        ( iso-eq A (first is-rezk-A) x y)
-        ( ( second is-rezk-A) x y))) (e , is-iso-e))
+    ( compute-iso-eq-eq-iso-is-rezk A is-rezk-A x y (e , is-iso-e))
 ```
 
 The following results show how `#!rzk iso-eq` mediates between the
@@ -886,7 +927,7 @@ We first prove that `iso-eq` for function types is equal to the triple
 composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
 
 ```rzk
-#def triple-comp-iso-eq-function-type uses (funext weakfunext extext)
+#def triple-comp-iso-eq-function-type uses (funext extext)
   ( X : U)
   ( A : X → U)
   ( fiberwise-is-rezk-A : (x : X) → is-rezk (A x))
@@ -911,7 +952,7 @@ composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
           , second (fiberwise-is-rezk-A x) (f x) (g x)))))
       ( first (equiv-FunExt funext X A f g))
 
-#def compute-iso-eq-function-type uses (extext funext weakfunext)
+#def compute-iso-eq-function-type uses (extext funext)
   ( X : U)
   ( A : X → U)
   ( fiberwise-is-rezk-A : (x : X) → is-rezk (A x))
@@ -965,7 +1006,7 @@ composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
 ```
 
 ```rzk title="RS17, Proposition 10.9a (dependent function types into Rezk types are Rezk)"
-#def is-rezk-function-type uses (extext funext weakfunext)
+#def is-rezk-function-type uses (extext funext)
   ( X : U)
   ( A : X → U)
   ( fiberwise-is-rezk-A : (x : X) → is-rezk (A x))
@@ -1000,6 +1041,37 @@ composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
               ( Iso ((x : X) → A x) (is-segal-function-type funext X A (\ x → first (fiberwise-is-rezk-A x))) f g)
               ( ( x : X) → Iso (A x) (first (fiberwise-is-rezk-A x)) (f x) (g x))
               ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g)))))
+```
+
+## Isomorphisms Induction
+
+Since isomorphisms are equivalent to equalities in Rezk types, we can prove the
+same induction principle for them.
+
+```rzk
+#def iso-ind-is-rezk
+  ( A : U)
+  ( is-rezk-A : is-rezk A)
+  ( x : A)
+  ( C : (y : A) → (Iso A (first is-rezk-A) x y) → U)
+  ( d : C x (iso-eq A (first is-rezk-A) x x refl))
+  ( y : A)
+  ( f : Iso A (first is-rezk-A) x y)
+  : C y f
+  :=
+  transport
+  ( Iso A (first is-rezk-A) x y)
+  ( \ f → C y f)
+  ( iso-eq A (first is-rezk-A) x y (eq-iso-is-rezk A is-rezk-A x y f))
+  ( f)
+  ( compute-iso-eq-eq-iso-is-rezk A is-rezk-A x y f)
+  ( ind-path
+    ( A)
+    ( x)
+    ( \ y p → C y (iso-eq A (first is-rezk-A) x y p))
+    ( d)
+    ( y)
+    ( eq-iso-is-rezk A is-rezk-A x y f))
 ```
 
 ## Isomorphisms in discrete types

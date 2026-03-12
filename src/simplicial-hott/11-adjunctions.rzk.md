@@ -13,6 +13,21 @@ Some of the definitions in this file rely on function extensionality:
 #assume extext : ExtExt
 ```
 
+## Prerequisites
+
+- `hott/*` - We require various prerequisites from homotopy type theory, for
+  instance the notion of equivalence (`#!rzk Equiv`, `#!rzk is-equiv`).
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and
+  their subshapes.
+- `03-extension-types.rzk.md` — We use extension extensionality.
+- `05-segal-types.rzk.md` - We make use of Segal types (hom types, composition,
+  `#!rzk is-segal`).
+- `09-yoneda.rzk.md` - We use the Yoneda lemma (`#!rzk yoneda-lemma`,
+  `#!rzk inv-yoneda-lemma`, and the contravariant variants) and the notion of
+  representable (co)variant families.
+- `10-rezk-types.rzk.md` - We use Rezk types in the "Adjunctions between Rezk
+  types" section.
+
 ## Transposing adjunctions
 
 Transposing adjunctions are defined by opposing functors `#!rzk f : A → B` and
@@ -1354,7 +1369,7 @@ of `#!rzk is-transposing-right-adj A B u`
     ( all-left-adjoint-components-equal-is-rezk-is-segal))
   = to-left-adjoint-components-is-rezk-is-segal
   :=
-  iso-eq-iso-is-rezk B is-rezk-B fa fa'
+  compute-first-iso-eq-eq-iso-is-rezk B is-rezk-B fa fa'
   ( to-left-adjoint-components-is-rezk-is-segal
 
   , ( ( from-left-adjoint-components-is-rezk-is-segal

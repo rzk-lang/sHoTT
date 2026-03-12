@@ -8,6 +8,9 @@ This is a literate `rzk` file:
 
 ## Prerequisites
 
+- `02-simplicial-type-theory.rzk.md` — We rely on the type of shapes
+  (`#!rzk TOPE`, shape inclusions).
+
 Some of the definitions in this file rely on extension extensionality or
 function extensionality:
 
@@ -1058,6 +1061,108 @@ of the restriction map `(ψ → A) → (ϕ → A)`.
             ( σ))
 
 #end has-unique-extensions
+```
+
+### Function types into fiberwise local families are local
+
+We prove that if $A$ is a type and $C : A → U$ is such that every fiber $C (x)$
+is local with respect to a subshape inclusion, then so is $(x : A) → C (x)$.
+This generalizes the proof of (RS17, Corollary 5.6).
+
+```rzk
+#def subshape-restriction
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : U)
+  : ( ψ → A) → (ϕ → A)
+  := \ f t → f t
+
+#def is-local-function-type-fiberwise-is-local uses (funext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : U)
+  ( C : A → U)
+  ( fiberwise-is-local-C : (x : A) → (is-local-type I ψ ϕ (C x)))
+  : is-local-type I ψ ϕ ((x : A) → C x)
+  :=
+    is-equiv-triple-comp
+      ( ψ → ((x : A) → C x))
+      ( ( x : A) → ψ → C x)
+      ( ( x : A) → ϕ → C x)
+      ( ϕ → ((x : A) → C x))
+      ( \ g x t → g t x) -- first equivalence
+      ( second (flip-ext-fun
+        ( I)
+        ( ψ)
+        ( \ t → BOT)
+        ( A)
+        ( \ t → C)
+        ( \ t → recBOT)))
+      ( \ h x t → h x t) -- second equivalence
+      ( second (equiv-function-equiv-family
+        ( funext)
+        ( A)
+        ( \ x → (ψ → C x))
+        ( \ x → (ϕ → C x))
+        ( \ x → (subshape-restriction I ψ ϕ (C x) , fiberwise-is-local-C x))))
+      ( \ h t x → (h x) t) -- third equivalence
+      ( second (flip-ext-fun-inv
+        ( I)
+        ( \ t → ϕ t)
+        ( \ t → BOT)
+        ( A)
+        ( \ t → C)
+        ( \ t → recBOT)))
+```
+
+We can prove the same thing when $X$ is a shape and $C : X → U$ is fiberwise
+local.
+
+```rzk
+#def is-local-subshape-inclusion-extension-type uses (extext)
+  ( I J : CUBE)
+  ( χ : I → TOPE)
+  ( ψ : J → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : χ → U)
+  ( fiberwise-is-local-A : (s : χ) → is-local-type J ψ ϕ (A s))
+  : is-local-type J ψ ϕ ((s : χ) → A s)
+  :=
+    is-equiv-triple-comp
+      ( ψ → (s : χ) → A s)
+      ( ( s : χ) → ψ → A s)
+      ( ( s : χ) → ϕ → A s)
+      ( ϕ → (s : χ) → A s)
+      ( \ g s t → g t s)  -- first equivalence
+      ( second
+        ( fubini
+          ( J)
+          ( I)
+          ( \ t → ψ t)
+          ( \ t → BOT)
+          ( χ)
+          ( \ s → BOT)
+          ( \ t s → A s)
+          ( \ u → recBOT)))
+      ( \ h s t → h s t) -- second equivalence
+      ( second (equiv-extensions-equiv extext I χ (\ _ → BOT)
+        ( \ s → ψ → A s)
+        ( \ s → ϕ → A s)
+        ( \ s → (subshape-restriction J ψ ϕ (A s) , fiberwise-is-local-A s))
+        ( \ _ → recBOT)))
+      ( \ h t s → (h s) t) -- third equivalence
+      ( second
+        ( fubini
+          ( I)
+          ( J)
+          ( χ)
+          ( \ s → BOT)
+          ( \ t → ϕ t)
+          ( \ t → BOT)
+          ( \ s t → A s)
+          ( \ u → recBOT)))
 ```
 
 ### Properties of local types / unique extension types

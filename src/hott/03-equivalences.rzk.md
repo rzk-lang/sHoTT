@@ -35,16 +35,6 @@ We define equivalences to be bi-invertible maps.
 #end is-equiv
 ```
 
-### The identity is an equivalence
-
-```rzk
-#def is-equiv-identity
-  ( A : U)
-  : is-equiv A A (\ a → a)
-  :=
-    ( ( \ a → a , \ _ → refl) , (\ a → a , \ _ → refl))
-```
-
 ## Equivalence data
 
 ```rzk
@@ -222,6 +212,38 @@ The type of equivalences between types uses `#!rzk is-equiv` rather than
   := Σ (f : A → B) , (is-equiv A B f)
 ```
 
+However, we can easily construct an equivalence given the data stored in
+`#!rzk has-inverse`. For convenience this definition unfolds that Sigma type to
+reduce the amount of nested parentheses and indentation.
+
+```rzk
+#def equiv-has-inverse
+  ( A B : U)
+  ( f : A → B)
+  ( g : B → A)
+  ( h1 : homotopy A A (comp A B A g f) (identity A))
+  ( h2 : homotopy B B (comp B A B f g) (identity B))
+  : Equiv A B
+  := (f , ((g , h1) , (g , h2)))
+```
+
+### The identity is an equivalence
+
+```rzk
+#def is-equiv-identity
+  ( A : U)
+  : is-equiv A A (\ a → a)
+  :=
+    ( ( \ a → a , \ _ → refl) , (\ a → a , \ _ → refl))
+```
+
+```rzk
+#def equiv-identity
+  ( A : U)
+  : Equiv A A
+  := (identity A , is-equiv-identity A)
+```
+
 ## Induction with section
 
 We have two variants of induction with section that say that if `f : A → B` has
@@ -276,6 +298,24 @@ invertible map to prove symmetry:
         , second (second (has-inverse-is-equiv A B (first e) (second e))))
       , ( first e
       , first (second (has-inverse-is-equiv A B (first e) (second e))))))
+```
+
+As expected, it is an inverse of the original map:
+
+```rzk
+#def inv-equiv-cancel
+  ( A B : U)
+  ( ( f , is-equiv-f) : Equiv A B)
+  ( a : A)
+  : first (inv-equiv A B (f , is-equiv-f)) (f a) = a
+  := second (second (second (inv-equiv A B (f , is-equiv-f)))) a
+
+#def inv-equiv-cancel'
+  ( A B : U)
+  ( ( f , is-equiv-f) : Equiv A B)
+  ( b : B)
+  : f (first (inv-equiv A B (f , is-equiv-f)) b) = b
+  := second (first (second (inv-equiv A B (f , is-equiv-f)))) b
 ```
 
 ```rzk title="Composition of equivalences in diagrammatic order"
@@ -492,6 +532,35 @@ functions with these stronger hypotheses.
       ( is-equiv-f)
       ( comp B C D h g)
       ( is-equiv-comp B C D g is-equiv-g h is-equiv-h)
+```
+
+```rzk title="A composition of four equivalences"
+#def equiv-quadruple-comp
+  ( A B C D E : U)
+  ( A≃B : Equiv A B)
+  ( B≃C : Equiv B C)
+  ( C≃D : Equiv C D)
+  ( D≃E : Equiv D E)
+  : Equiv A E
+  := equiv-triple-comp A B C E (A≃B) (B≃C) (equiv-comp C D E C≃D D≃E)
+
+#def is-equiv-quadruple-comp
+  ( A B C D E : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  ( g : B → C)
+  ( is-equiv-g : is-equiv B C g)
+  ( h : C → D)
+  ( is-equiv-h : is-equiv C D h)
+  ( i : D → E)
+  ( is-equiv-i : is-equiv D E i)
+  : is-equiv A E (quadruple-comp A B C D E i h g f)
+  :=
+  is-equiv-comp A B E
+    ( f)
+    ( is-equiv-f)
+    ( triple-comp B C D E i h g)
+    ( is-equiv-triple-comp B C D E g is-equiv-g h is-equiv-h i is-equiv-i)
 ```
 
 ## Equivalences and homotopy

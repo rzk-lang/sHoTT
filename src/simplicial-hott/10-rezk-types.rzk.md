@@ -15,6 +15,21 @@ extensionality and weak function extensionality:
 #assume weakfunext : WeakFunExt
 ```
 
+## Prerequisites
+
+- `hott/*` - We require various prerequisites from homotopy type theory, for
+  instance function extensionality.
+- `hott/10-trivial-fibrations.rzk.md` — We use
+  `#!rzk is-equiv-projection-contractible-fibers` in the "Discrete types are
+  Rezk" section.
+- `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and
+  their subshapes.
+- `03-extension-types.rzk.md` — We use extension extensionality.
+- `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types (hom
+  types, composition, `#!rzk is-segal`).
+- `07-discrete.rzk.md` - We use discrete types, `#!rzk hom-eq`, and
+  `#!rzk is-segal-is-discrete` in the "Isomorphisms in discrete types" section.
+
 ## Isomorphisms
 
 ```rzk

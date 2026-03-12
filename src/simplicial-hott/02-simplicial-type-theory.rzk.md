@@ -300,6 +300,77 @@ shapes in `2ⁿ`.
   ( A : (2 × 2 × 2 × 2 × 2) → TOPE)
   : ( 2 × 2 × 2) → TOPE
   := \ ((t1 , t2) , t3) → A ((((1₂ , t1) , t2) , t3) , 0₂)
+
+#def shape-restriction-4
+  ( A : (2 × 2 × 2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := \ (((t1 , t2) , t3) , t4) →
+    A (((((1₂ , t1) , t2) , t3) , t4) , 0₂)
+
+#def shape-restriction-5
+  ( A : (2 × 2 × 2 × 2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((t1 , t2) , t3) , t4) , t5) →
+    A ((((((1₂ , t1) , t2) , t3) , t4) , t5) , 0₂)
+```
+
+### Joins of shapes in low dimensions
+
+Using the gluing and restriction operations above, we now define low-dimensional
+instances of the join construction from RS17, Definition 3.13, for the cases
+`0 ≤ n ≤ 2` and `0 ≤ m ≤ 2`.
+
+```rzk
+#def shape-join-0-0
+  ( A B : (2 × 2) → TOPE)
+  : 2 → TOPE
+  := shape-restriction-1 (shape-gluing-0-0 A B)
+
+#def shape-join-0-1
+  ( A : (2 × 2) → TOPE)
+  ( B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2) → TOPE
+  := shape-restriction-2 (shape-gluing-0-1 A B)
+
+#def shape-join-0-2
+  ( A : (2 × 2) → TOPE)
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-restriction-3 (shape-gluing-0-2 A B)
+
+#def shape-join-1-0
+  ( A : (2 × 2 × 2) → TOPE)
+  ( B : (2 × 2) → TOPE)
+  : ( 2 × 2) → TOPE
+  := shape-restriction-2 (shape-gluing-1-0 A B)
+
+#def shape-join-1-1
+  ( A B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-restriction-3 (shape-gluing-1-1 A B)
+
+#def shape-join-1-2
+  ( A : (2 × 2 × 2) → TOPE)
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := shape-restriction-4 (shape-gluing-1-2 A B)
+
+#def shape-join-2-0
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  ( B : (2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-restriction-3 (shape-gluing-2-0 A B)
+
+#def shape-join-2-1
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  ( B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := shape-restriction-4 (shape-gluing-2-1 A B)
+
+#def shape-join-2-2
+  ( A B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := shape-restriction-5 (shape-gluing-2-2 A B)
 ```
 
 ### Connection squares

@@ -373,6 +373,103 @@ instances of the join construction from RS17, Definition 3.13, for the cases
   := shape-restriction-5 (shape-gluing-2-2 A B)
 ```
 
+### Pushout joins in low dimensions
+
+Finally, we combine joins and unions to obtain low-dimensional instances of the
+pushout join construction from RS17, Definition 3.15. Given inclusions of
+augmented shapes `A ⊂ B` and `C ⊂ D`, the pushout join is the subshape
+`(A ⋆ D) ∪ (B ⋆ C)` of `B ⋆ D`. At the level of topes, this is expressed by
+`shape-union` of the corresponding joins.
+
+```rzk
+#def shape-pushout-join-0-0
+  ( B D : (2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : 2 → TOPE
+  := shape-union 2
+       ( shape-join-0-0 A D)
+       ( shape-join-0-0 B C)
+
+#def shape-pushout-join-0-1
+  ( B : (2 × 2) → TOPE)
+  ( D : (2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2) → TOPE
+  := shape-union (2 × 2)
+       ( shape-join-0-1 A D)
+       ( shape-join-0-1 B C)
+
+#def shape-pushout-join-0-2
+  ( B : (2 × 2) → TOPE)
+  ( D : (2 × 2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2)
+       ( shape-join-0-2 A D)
+       ( shape-join-0-2 B C)
+
+#def shape-pushout-join-1-0
+  ( B : (2 × 2 × 2) → TOPE)
+  ( D : (2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2) → TOPE
+  := shape-union (2 × 2)
+       ( shape-join-1-0 A D)
+       ( shape-join-1-0 B C)
+
+#def shape-pushout-join-1-1
+  ( B D : (2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2)
+       ( shape-join-1-1 A D)
+       ( shape-join-1-1 B C)
+
+#def shape-pushout-join-1-2
+  ( B : (2 × 2 × 2) → TOPE)
+  ( D : (2 × 2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2 × 2)
+       ( shape-join-1-2 A D)
+       ( shape-join-1-2 B C)
+
+#def shape-pushout-join-2-0
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  ( D : (2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2)
+       ( shape-join-2-0 A D)
+       ( shape-join-2-0 B C)
+
+#def shape-pushout-join-2-1
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  ( D : (2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2 × 2)
+       ( shape-join-2-1 A D)
+       ( shape-join-2-1 B C)
+
+#def shape-pushout-join-2-2
+  ( B D : (2 × 2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2 × 2 × 2)
+       ( shape-join-2-2 A D)
+       ( shape-join-2-2 B C)
+```
+
 ### Connection squares
 
 <!-- This is manually adjusted diagram (hopefully fully supported in the future by rzk) -->

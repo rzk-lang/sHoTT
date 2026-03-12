@@ -271,6 +271,37 @@ of the resulting topes, as in the paper.
     A (((t- , t1) , t2) , u) ∧ B (((u , s1) , s2) , s+)
 ```
 
+### Restrictions of shapes in low dimensions
+
+Following RS17, Definition 3.11, we define the restriction of a shape in
+`2^{1+n+1}` by fixing the “bottom” coordinate to `1₂` and the “top” coordinate
+to `0₂` and then forgetting these coordinates.
+
+For `n = 0` we obtain an unrestricted shape, and for `1 ≤ n ≤ 3` we obtain
+shapes in `2ⁿ`.
+
+```rzk
+#def shape-restriction-0
+  ( A : (2 × 2) → TOPE)
+  : TOPE
+  := A (1₂ , 0₂)
+
+#def shape-restriction-1
+  ( A : (2 × 2 × 2) → TOPE)
+  : 2 → TOPE
+  := \ t1 → A ((1₂ , t1) , 0₂)
+
+#def shape-restriction-2
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2) → TOPE
+  := \ (t1 , t2) → A (((1₂ , t1) , t2) , 0₂)
+
+#def shape-restriction-3
+  ( A : (2 × 2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := \ ((t1 , t2) , t3) → A ((((1₂ , t1) , t2) , t3) , 0₂)
+```
+
 ### Connection squares
 
 <!-- This is manually adjusted diagram (hopefully fully supported in the future by rzk) -->

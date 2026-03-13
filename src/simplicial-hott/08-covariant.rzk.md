@@ -2526,13 +2526,102 @@ Since C is covariant in the first variable, we can "drop" the first component:
         ( u)))
 ```
 
+We now show that all these are contractible:
+
+```rzk
+#def is-contr-ext2-covariant-product-as-square-extension-B
+  ( A B : U)
+  ( C : A → B → U)
+  ( is-covariant-C : is-covariant-product A B C)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  : is-contr (ext2-covariant-product-as-square-extension-B A B C p p' f u
+      ( covariant-lift A (first p) (first p')
+        ( hom-A-of-product-hom A B p p' f)
+        ( \ a → C a (second p))
+        ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+        ( u)))
+  :=
+  weakextext-extext extext
+    ( 2)
+    ( Δ¹)
+    ( \ _ → BOT)
+    ( \ t →
+      ( s : 2) → C (first (f t)) (second (f s)) [ s ≡ 0₂ ↦
+        covariant-lift A (first p) (first p')
+          ( hom-A-of-product-hom A B p p' f)
+          ( \ a → C a (second p))
+          ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+          ( u) t ])
+    ( \ t →
+      has-unique-fixed-domain-lifts-is-covariant
+        ( B)
+        ( \ b → C (first (f t)) b)
+        ( is-covariant-fiber-B-is-covariant-product A B C is-covariant-C (first (f t)))
+        ( second p)
+        ( second p')
+        ( hom-B-of-product-hom A B p p' f)
+        ( covariant-lift A (first p) (first p')
+          ( hom-A-of-product-hom A B p p' f)
+          ( \ a → C a (second p))
+          ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+          ( u) t))
+    ( \ _ → recBOT)
+
+#def is-contr-ext2-covariant-product-as-square-extension uses (extext)
+  ( A B : U)
+  ( C : A → B → U)
+  ( is-covariant-C : is-covariant-product A B C)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  : is-contr (ext2-covariant-product-as-square-extension A B C p p' f u)
+  :=
+    is-contr-equiv-is-contr'
+      ( ext2-covariant-product-as-square-extension A B C p p' f u)
+      ( ext2-covariant-product-as-square-extension-B A B C p p' f u
+        ( covariant-lift A (first p) (first p')
+          ( hom-A-of-product-hom A B p p' f)
+          ( \ a → C a (second p))
+          ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+          ( u)))
+      ( equiv-center-fiber-total-type-is-contr-base
+        ( ( t : 2) → C (first (f t)) (second p) [ t ≡ 0₂ ↦ u ])
+        ( has-unique-fixed-domain-lifts-is-covariant
+          ( A)
+          ( \ a → C a (second p))
+          ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+          ( first p) (first p')
+          ( hom-A-of-product-hom A B p p' f)
+          ( u))
+        ( \ phi → ext2-covariant-product-as-square-extension-B A B C p p' f u phi))
+      ( is-contr-ext2-covariant-product-as-square-extension-B A B C is-covariant-C p p' f u)
+
+#def is-contr-ext2-covariant-product uses (extext)
+  ( A B : U)
+  ( C : A → B → U)
+  ( is-covariant-C : is-covariant-product A B C)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  : is-contr (ext2-covariant-product A B C p p' f u)
+  :=
+    is-contr-equiv-is-contr'
+      ( ext2-covariant-product A B C p p' f u)
+      ( ext2-covariant-product-as-square-extension A B C p p' f u)
+      ( equiv-ext2-covariant-product-as-square-extension A B C p p' f u)
+      ( is-contr-ext2-covariant-product-as-square-extension A B C is-covariant-C p p' f u)
+```
+
 Assuming that each one-variable slice of `C : A → B → U` is covariant, the paper
 proves that the uncurried family over the product is also covariant. We record
 this as an axiom for now; a formal proof would follow RS17, Proposition 8.21.
 
-```rzk title="RS17, Proposition 8.21 — if: each slice covariant ⇒ product covariant (axiom)"
+```title="RS17, Proposition 8.21 — if: each slice covariant ⇒ product covariant (axiom)"
 #assume is-covariant-product-is-covariant-fibers
- : ( A B : U)
+ : ( A : U)
+  → ( B : U)
   → ( C : A → B → U)
   → ( is-covariant-fiber-B : (b : B) → is-covariant A (\ a → C a b))
   → ( is-covariant-fiber-A : (a : A) → is-covariant B (\ b → C a b))

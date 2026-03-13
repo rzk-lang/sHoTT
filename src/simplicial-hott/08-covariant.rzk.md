@@ -2420,6 +2420,16 @@ Using theorems 4.2 and 4.4 we rewrite `ext2-covariant-product` as the following
 type:
 
 ```rzk
+#def ext2-covariant-product-as-square-extension-B
+  ( A B : U)
+  ( C : A → B → U)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  ( phi : (t : 2) → C (first (f t)) (second p) [ t ≡ 0₂ ↦ u ])
+  : U
+  := (t : 2) → (s : 2) → C (first (f t)) (second (f s)) [ s ≡ 0₂ ↦ phi t ]
+
 #def ext2-covariant-product-as-square-extension
   ( A B : U)
   ( C : A → B → U)
@@ -2428,7 +2438,7 @@ type:
   ( u : C (first p) (second p))
   : U
   := Σ (phi : (t : 2) → C (first (f t)) (second p) [ t ≡ 0₂ ↦ u ])
-    , ( t : 2) → (s : 2) → C (first (f t)) (second (f s)) [ s ≡ 0₂ ↦ phi t ]
+    , ext2-covariant-product-as-square-extension-B A B C p p' f u phi
 
 #def equiv-ext2-covariant-product-as-square-extension
   ( A B : U)
@@ -2445,6 +2455,75 @@ type:
         , \ _ → refl)
       , ( \ (phi , psi) (t , s) → psi t s
         , \ _ → refl)))
+```
+
+Since C is covariant in the first variable, we can "drop" the first component:
+
+```rzk
+#def equiv-ext2-covariant-product-as-square-extension-B
+  ( A B : U)
+  ( C : A → B → U)
+  ( is-covariant-C : is-covariant-product A B C)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  ( phi : (t : 2) → C (first (f t)) (second p) [ t ≡ 0₂ ↦ u ])
+  : Equiv
+    ( ext2-covariant-product-as-square-extension A B C p p' f u)
+    ( ext2-covariant-product-as-square-extension-B A B C p p' f u
+      ( covariant-lift A (first p) (first p')
+        ( hom-A-of-product-hom A B p p' f)
+        ( \ a → C a (second p))
+        ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+        ( u)))
+  :=
+    transport-equiv-center-fiber-total-type-is-contr-base
+      ( ( t : 2) → C (first (f t)) (second p) [ t ≡ 0₂ ↦ u ])
+      ( has-unique-fixed-domain-lifts-is-covariant
+        ( A)
+        ( \ a → C a (second p))
+        ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+        ( first p) (first p')
+        ( hom-A-of-product-hom A B p p' f)
+        ( u))
+      ( \ phi' → ext2-covariant-product-as-square-extension-B A B C p p' f u phi')
+      ( covariant-lift A (first p) (first p')
+        ( hom-A-of-product-hom A B p p' f)
+        ( \ a → C a (second p))
+        ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+        ( u))
+
+#def equiv-ext2-covariant-product-as-square-extension-B-2
+  ( A B : U)
+  ( C : A → B → U)
+  ( is-covariant-C : is-covariant-product A B C)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  : Equiv
+    ( ext2-covariant-product A B C p p' f u)
+    ( ext2-covariant-product-as-square-extension-B A B C p p' f u
+      ( covariant-lift A (first p) (first p')
+        ( hom-A-of-product-hom A B p p' f)
+        ( \ a → C a (second p))
+        ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+        ( u)))
+  := equiv-comp
+    ( ext2-covariant-product A B C p p' f u)
+    ( ext2-covariant-product-as-square-extension A B C p p' f u)
+    ( ext2-covariant-product-as-square-extension-B A B C p p' f u
+      ( covariant-lift A (first p) (first p')
+        ( hom-A-of-product-hom A B p p' f)
+        ( \ a → C a (second p))
+        ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+        ( u)))
+    ( equiv-ext2-covariant-product-as-square-extension A B C p p' f u)
+    ( equiv-ext2-covariant-product-as-square-extension-B A B C is-covariant-C p p' f u
+      ( covariant-lift A (first p) (first p')
+        ( hom-A-of-product-hom A B p p' f)
+        ( \ a → C a (second p))
+        ( is-covariant-fiber-A-is-covariant-product A B C is-covariant-C (second p))
+        ( u)))
 ```
 
 Assuming that each one-variable slice of `C : A → B → U` is covariant, the paper

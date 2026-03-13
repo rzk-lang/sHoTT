@@ -2284,6 +2284,53 @@ commuting with the contravariant lifts.
 
 ```
 
+## Multivariable covariance (Section 8.5)
+
+A type family dependent on multiple types is **covariant** if it is covariant when
+regarded as dependent on the product type. For example, `C : A → B → U` is
+covariant if its uncurried version over `product A B` is covariant.
+
+```rzk title="RS17, Section 8.5 — covariance for two-variable families"
+#def is-covariant-product
+  ( A B : U)
+  ( C : A → B → U)
+  : U
+  := is-covariant (product A B) (\ p → C (first p) (second p))
+```
+
+**Proposition 8.21.** `C : A → B → U` is covariant (over the product) if and only
+if `C(a, −)` is covariant for each `a : A` and `C(−, b)` is covariant for each
+`b : B`. The "only if" direction follows from Remark 8.3 (stability under
+substitution) by substituting along the two inclusions into the product.
+
+```rzk title="RS17, Proposition 8.21 — only if: product covariant ⇒ each slice covariant"
+#def is-covariant-fiber-A-is-covariant-product
+  ( A B : U)
+  ( C : A → B → U)
+  ( is-covariant-C : is-covariant-product A B C)
+  ( b : B)
+  : is-covariant A (\ a → C a b)
+  :=
+    is-covariant-substitution-is-covariant
+      ( product A B) (A)
+      ( \ p → C (first p) (second p))
+      ( is-covariant-C)
+      ( \ a → (a , b))
+
+#def is-covariant-fiber-B-is-covariant-product
+  ( A B : U)
+  ( C : A → B → U)
+  ( is-covariant-C : is-covariant-product A B C)
+  ( a : A)
+  : is-covariant B (\ b → C a b)
+  :=
+    is-covariant-substitution-is-covariant
+      ( product A B) (B)
+      ( \ p → C (first p) (second p))
+      ( is-covariant-C)
+      ( \ b → (a , b))
+```
+
 ## Discrete fibers
 
 The fibers of a covariant fibration are discrete types. Note the original

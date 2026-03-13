@@ -2368,16 +2368,95 @@ swapped order.
 
 ### RS17 Proposition 8.21 (if direction)
 
+To prepare for the "if" direction, it is convenient to name the extension type
+that appears in the definition of `is-covariant-product`.
+
+```rzk title="Extension type for covariant product (8.22)"
+#def ext1-covariant-product
+  ( A B : U)
+  ( C : A → B → U)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  : U
+  :=
+    ( t : Δ¹)
+  → C (first (f t)) (second (f t)) [ t ≡ 0₂ ↦ u ]
+```
+
+```rzk
+#def hom-A-of-product-hom
+  ( A B : U)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  : hom A (first p) (first p')
+  := \ t → first (f t)
+
+#def hom-B-of-product-hom
+  ( A B : U)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  : hom B (second p) (second p')
+  := \ t → second (f t)
+```
+
+```rzk title="Extension type for covariant product (8.23)"
+#def ext2-covariant-product
+  ( A B : U)
+  ( C : A → B → U)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  : U
+  :=
+    ( ( t , s) : 2 × 2)
+  → C
+      ( hom-A-of-product-hom A B p p' f t)
+      ( hom-B-of-product-hom A B p p' f s)
+      [ t ≡ 0₂ ∧ s ≡ 0₂ ↦ u ]
+```
+
+Using theorems 4.2 and 4.4 we rewrite `ext2-covariant-product` as the following
+type:
+
+```rzk
+#def ext2-covariant-product-as-square-extension
+  ( A B : U)
+  ( C : A → B → U)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  : U
+  := Σ (phi : (t : 2) → C (first (f t)) (second p) [ t ≡ 0₂ ↦ u ])
+    , ( t : 2) → (s : 2) → C (first (f t)) (second (f s)) [ s ≡ 0₂ ↦ phi t ]
+
+#def equiv-ext2-covariant-product-as-square-extension
+  ( A B : U)
+  ( C : A → B → U)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  : Equiv (ext2-covariant-product A B C p p' f u) (ext2-covariant-product-as-square-extension A B C p p' f u)
+  :=
+    ( ( \ h →
+        ( ( \ t → h (t , 0₂))
+        , \ t s → h (t , s)))
+    , ( ( \ (phi , psi) (t , s) → psi t s
+        , \ _ → refl)
+      , ( \ (phi , psi) (t , s) → psi t s
+        , \ _ → refl)))
+```
+
 Assuming that each one-variable slice of `C : A → B → U` is covariant, the paper
 proves that the uncurried family over the product is also covariant. We record
 this as an axiom for now; a formal proof would follow RS17, Proposition 8.21.
 
 ```rzk title="RS17, Proposition 8.21 — if: each slice covariant ⇒ product covariant (axiom)"
 #assume is-covariant-product-is-covariant-fibers
-  : ( A B : U)
+ : ( A B : U)
   → ( C : A → B → U)
-  → ( (b : B) → is-covariant A (\ a → C a b))
-  → ( (a : A) → is-covariant B (\ b → C a b))
+  → ( is-covariant-fiber-B : (b : B) → is-covariant A (\ a → C a b))
+  → ( is-covariant-fiber-A : (a : A) → is-covariant B (\ b → C a b))
   → is-covariant-product A B C
 ```
 

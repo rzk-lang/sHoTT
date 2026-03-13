@@ -2366,6 +2366,21 @@ swapped order.
       ( a)
 ```
 
+### RS17 Proposition 8.21 (if direction)
+
+Assuming that each one-variable slice of `C : A → B → U` is covariant, the paper
+proves that the uncurried family over the product is also covariant. We record
+this as an axiom for now; a formal proof would follow RS17, Proposition 8.21.
+
+```rzk title="RS17, Proposition 8.21 — if: each slice covariant ⇒ product covariant (axiom)"
+#assume is-covariant-product-is-covariant-fibers
+  : ( A B : U)
+  → ( C : A → B → U)
+  → ( (b : B) → is-covariant A (\ a → C a b))
+  → ( (a : A) → is-covariant B (\ b → C a b))
+  → is-covariant-product A B C
+```
+
 ## Discrete fibers
 
 The fibers of a covariant fibration are discrete types. Note the original

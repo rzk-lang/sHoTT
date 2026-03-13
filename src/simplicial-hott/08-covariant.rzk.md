@@ -2368,6 +2368,8 @@ swapped order.
 
 ### RS17 Proposition 8.21 (if direction)
 
+#### Preparation
+
 To prepare for the "if" direction, it is convenient to name the extension type
 that appears in the definition of `is-covariant-product`.
 
@@ -2456,6 +2458,8 @@ type:
       , ( \ (phi , psi) (t , s) → psi t s
         , \ _ → refl)))
 ```
+
+#### Contractibility
 
 Since C is covariant in the first variable, we can "drop" the first component:
 
@@ -2613,6 +2617,26 @@ We now show that all these are contractible:
       ( equiv-ext2-covariant-product-as-square-extension A B C p p' f u)
       ( is-contr-ext2-covariant-product-as-square-extension A B C is-covariant-C p p' f u)
 ```
+
+#### Retract
+
+What remains is to show that `ext1-covariant-product` is a retract of `ext2-covariant-product`.
+The retraction is just evaluation on the diagonal `#!rzk phi ↦ \t → phi (t, t)`.
+
+```rzk
+#def is-retract-ext1-covariant-product-ext2-covariant-product
+  ( A B : U)
+  ( C : A → B → U)
+  ( p p' : product A B)
+  ( f : hom (product A B) p p')
+  ( u : C (first p) (second p))
+  : is-retract-of (ext1-covariant-product A B C p p' f u) (ext2-covariant-product A B C p p' f u)
+  := U
+```
+
+
+
+#### Main result
 
 Assuming that each one-variable slice of `C : A → B → U` is covariant, the paper
 proves that the uncurried family over the product is also covariant. We record

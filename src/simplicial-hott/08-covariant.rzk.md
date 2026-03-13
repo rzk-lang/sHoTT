@@ -2286,8 +2286,8 @@ commuting with the contravariant lifts.
 
 ## Multivariable covariance (Section 8.5)
 
-A type family dependent on multiple types is **covariant** if it is covariant when
-regarded as dependent on the product type. For example, `C : A → B → U` is
+A type family dependent on multiple types is **covariant** if it is covariant
+when regarded as dependent on the product type. For example, `C : A → B → U` is
 covariant if its uncurried version over `product A B` is covariant.
 
 ```rzk title="RS17, Section 8.5 — covariance for two-variable families"
@@ -2298,10 +2298,43 @@ covariant if its uncurried version over `product A B` is covariant.
   := is-covariant (product A B) (\ p → C (first p) (second p))
 ```
 
-**Proposition 8.21.** `C : A → B → U` is covariant (over the product) if and only
-if `C(a, −)` is covariant for each `a : A` and `C(−, b)` is covariant for each
-`b : B`. The "only if" direction follows from Remark 8.3 (stability under
-substitution) by substituting along the two inclusions into the product.
+Similarly, a family `C : (x : A) → B x → U` is **covariant over the Σ-type**
+when its uncurried version over `Σ A B` is covariant.
+
+```rzk title="Covariance for families over Σ-types"
+#def is-covariant-sigma
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  : U
+  := is-covariant (Σ (x : A) , B x) (\ p → C (first p) (second p))
+```
+
+If `C` is covariant over the total type `Σ (x : A) , B x`, then for each `a : A`
+the slice `C(a, −)` is covariant over `B a`, by Remark 8.3 (substitution along
+`b ↦ (a , b)`).
+
+```rzk title="Sigma covariant ⇒ each fiber covariant"
+#def is-covariant-fiber-is-covariant-sigma
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( is-covariant-C : is-covariant-sigma A B C)
+  ( a : A)
+  : is-covariant (B a) (\ b → C a b)
+  :=
+    is-covariant-substitution-is-covariant
+      ( Σ ( x : A) , B x) (B a)
+      ( \ p → C (first p) (second p))
+      ( is-covariant-C)
+      ( \ b → (a , b))
+```
+
+**Proposition 8.21.** `C : A → B → U` is covariant (over the product) if and
+only if `C(a, −)` is covariant for each `a : A` and `C(−, b)` is covariant for
+each `b : B`. The "only if" direction follows from the sigma versions:
+`product A B` is `Σ (x : A) , B`, and `Σ (y : B) , A` is the same base with
+swapped order.
 
 ```rzk title="RS17, Proposition 8.21 — only if: product covariant ⇒ each slice covariant"
 #def is-covariant-fiber-A-is-covariant-product
@@ -2311,11 +2344,14 @@ substitution) by substituting along the two inclusions into the product.
   ( b : B)
   : is-covariant A (\ a → C a b)
   :=
-    is-covariant-substitution-is-covariant
-      ( product A B) (A)
-      ( \ p → C (first p) (second p))
-      ( is-covariant-C)
-      ( \ a → (a , b))
+    is-covariant-fiber-is-covariant-sigma
+      ( B) (\ _ → A) (\ y a → C a y)
+      ( is-covariant-substitution-is-covariant
+          ( product A B) (product B A)
+          ( \ p → C (first p) (second p))
+          ( is-covariant-C)
+          ( \ q → (second q , first q)))
+      ( b)
 
 #def is-covariant-fiber-B-is-covariant-product
   ( A B : U)
@@ -2324,11 +2360,10 @@ substitution) by substituting along the two inclusions into the product.
   ( a : A)
   : is-covariant B (\ b → C a b)
   :=
-    is-covariant-substitution-is-covariant
-      ( product A B) (B)
-      ( \ p → C (first p) (second p))
+    is-covariant-fiber-is-covariant-sigma
+      ( A) (\ _ → B) (\ x y → C x y)
       ( is-covariant-C)
-      ( \ b → (a , b))
+      ( a)
 ```
 
 ## Discrete fibers

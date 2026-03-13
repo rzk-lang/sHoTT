@@ -232,6 +232,18 @@ Equivalently , natural transformations can be determined by their **components**
   := \ t x → η x t
 ```
 
+```rzk
+#def ev-components-nat-trans-extension-type
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( f g : (s : ψ) → A s)
+  ( α : hom ((s : ψ) → A s) f g)
+  : ( s : ψ) → hom (A s) (f s) (g s)
+  := \ s t → α t s
+
+```
+
 ### Natural transformation extensionality
 
 ```rzk title="RS17, Proposition 6.3"
@@ -420,6 +432,44 @@ components of the natural transformation defined by composing in the Segal type
     ( ( x : A) → (B x)) (B a)
     ( is-segal-function-type (funext) (A) (B) (is-segal-B)) (is-segal-B a)
     ( \ s → s a) (f) (g) (h) (α) (β)
+```
+
+The same statements hold for extension types.
+
+```rzk title="RS17, Proposition 6.5, extension type case"
+#def id-arr-components-id-nat-trans-extension-type
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( f : (s : ψ) → A s)
+  ( s : ψ)
+  : ( ev-components-nat-trans-extension-type I ψ A f f
+      ( id-hom ((s : ψ) → A s) f)) s
+  = id-hom (A s) (f s)
+  := refl
+
+#def comp-components-comp-nat-trans-is-segal-extension-type uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( is-segal-A : (s : ψ) → is-segal (A s))
+  ( f g h : (s : ψ) → A s)
+  ( α : hom ((s : ψ) → A s) f g)
+  ( β : hom ((s : ψ) → A s) g h)
+  ( s : ψ)
+  : ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (h s)
+      ( ev-components-nat-trans-extension-type I ψ A f g α s)
+      ( ev-components-nat-trans-extension-type I ψ A g h β s))
+  = ( ev-components-nat-trans-extension-type I ψ A f h
+      ( comp-is-segal
+        ( ( s' : ψ) → A s')
+        ( is-segal-extension-type extext I ψ A is-segal-A)
+        ( f) (g) (h) (α) (β)) s)
+  :=
+    functors-pres-comp
+    ( ( s' : ψ) → A s') (A s)
+    ( is-segal-extension-type extext I ψ A is-segal-A) (is-segal-A s)
+    ( \ σ → σ s) (f) (g) (h) (α) (β)
 ```
 
 ### Horizontal composition

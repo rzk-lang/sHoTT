@@ -14,7 +14,7 @@ results from the following papers:
   [1]
 - "[Synthetic fibered (∞,1)-category theory](https://doi.org/10.21136/HS.2023.04)"
   [2]
-- "[Limits and colimits of synthetic ∞-categories](https://arxiv.org/abs/2202.12386)"
+- "[Limits and colimits of synthetic ∞-categories](https://doi.org/10.1017/S0960129525100248)"
   [3]
 
 This formalization project follows the philosophy laid out in the article
@@ -62,7 +62,7 @@ submitting your pull request.
    <https://doi.org/10.21136/HS.2023.04>
 
 3. César Bardomiano Martínez. Limits and colimits of synthetic ∞-categories.
-   1-33, 2022. <https://arxiv.org/abs/2202.12386>
+   Mathematical Structures in Computer Science, vol. 35, p. e24, 2025. <https://doi.org/10.1017/S0960129525100248>
 
 4. Emily Riehl. Could ∞-category theory be taught to undergraduates? Notices of
    the AMS. May 2023.

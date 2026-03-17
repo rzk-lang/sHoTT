@@ -697,6 +697,231 @@ equal.
       ( iff-is-iso-pointwise-is-iso X A is-segal-A f g α)
 ```
 
+```rzk title="RS17, Proposition 10.3b (for shapes)"
+#def ev-components-nat-trans-preserves-iso-extension-type uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( is-segal-A : (s : ψ) → is-segal (A s))
+  ( f g : (s : ψ) → A s)
+  ( α : hom ((s : ψ) → A s) f g)
+  : ( is-iso-arrow
+      ( ( s : ψ) → A s)
+      ( is-segal-extension-type extext I ψ A is-segal-A) f g α)
+  → ( s : ψ)
+  → ( is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
+      ( ev-components-nat-trans-extension-type I ψ A f g α s))
+  :=
+    \ ((β , p) , (γ , q)) →
+    \ s →
+    ( ( ( \ t → β t s)
+    -- we prove
+    -- αₛ ∘ βₛ = (α ∘ β)ₛ = id_(f s) = (id_f)ₛ
+    -- the last equality is automatic (refl), so we omit it in the formalization
+    , ( concat
+        ( hom (A s) (f s) (f s))
+        ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (f s)
+            ( \ t → α t s)
+            ( \ t → β t s))
+        ( \ t →
+          comp-is-segal
+            ( ( s' : ψ) → A s')
+            ( is-segal-extension-type extext I ψ A is-segal-A)
+            ( f) (g) (f) (α) (β) t s)
+        ( id-hom (A s) (f s))
+        ( comp-components-comp-nat-trans-is-segal-extension-type
+          extext I ψ A is-segal-A f g f α β s)
+        ( ap
+          ( hom ((s : ψ) → A s) f f)
+          ( hom (A s) (f s) (f s))
+          ( comp-is-segal
+                ( ( s' : ψ) → A s')
+                ( is-segal-extension-type extext I ψ A is-segal-A)
+                ( f) (g) (f) (α) (β))
+          ( id-hom ((s : ψ) → A s) f)
+          ( \ c t → c t s)
+          p)))
+    , ( ( \ t → γ t s)
+    -- we prove
+    -- γₛ ∘ αₛ ≡ (γ ∘ α)ₛ ≡ id_(g s) ≡ (id_g)ₛ
+    -- the last equality is automatic (refl), so we omit it in the formalization
+      , ( concat
+          ( hom (A s) (g s) (g s))
+          ( comp-is-segal (A s) (is-segal-A s) (g s) (f s) (g s)
+            ( \ t → γ t s)
+            ( \ t → α t s))
+          ( \ t →
+            comp-is-segal
+              ( ( s' : ψ) → A s')
+              ( is-segal-extension-type extext I ψ A is-segal-A)
+              ( g) (f) (g) (γ) (α) t s)
+          ( id-hom (A s) (g s))
+          ( comp-components-comp-nat-trans-is-segal-extension-type
+            extext I ψ A is-segal-A g f g γ α s)
+          ( ap
+            ( hom ((s' : ψ) → A s') g g)
+            ( hom (A s) (g s) (g s))
+            ( comp-is-segal
+              ( ( s' : ψ) → A s')
+              ( is-segal-extension-type extext I ψ A is-segal-A)
+              ( g) (f) (g) (γ) (α))
+            ( id-hom ((s' : ψ) → A s') g)
+            ( \ c → \ t → c t s)
+            ( q)))))
+
+#def nat-trans-nat-trans-components-preserves-iso-helper-extension-type
+  uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( is-segal-A : (s : ψ) → is-segal (A s))
+  ( f g : (s : ψ) → A s)
+  ( α : hom ((s : ψ) → A s) f g)
+  ( β : hom ((s : ψ) → A s) g f)
+  : ( ( s : ψ)
+    → ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (f s)
+        ( ev-components-nat-trans-extension-type I ψ A f g α s)
+        ( ev-components-nat-trans-extension-type I ψ A g f β s))
+    = ( id-hom (A s) (f s)))
+  → ( comp-is-segal
+      ( ( s : ψ) → A s)
+      ( is-segal-extension-type extext I ψ A is-segal-A)
+      f g f α β)
+  = ( id-hom ((s : ψ) → A s) f)
+  :=
+    \ H →
+    ap
+      ( ( s : ψ) → hom (A s) (f s) (f s))
+      ( hom ((s : ψ) → A s) f f)
+      ( \ s → \ t →
+        comp-is-segal
+          ( ( s' : ψ) → A s')
+          ( is-segal-extension-type extext I ψ A is-segal-A)
+          ( f) (g) (f) (α) (β) t s)
+      ( \ s → id-hom (A s) (f s))
+      ( \ ξ → \ t s → ξ s t)
+      ( naiveextext-extext extext I ψ (\ _ → ⊥)
+        ( \ s → hom (A s) (f s) (f s))
+        ( \ _ → recBOT)
+        ( \ s → \ t →
+          comp-is-segal
+            ( ( s' : ψ) → A s')
+            ( is-segal-extension-type extext I ψ A is-segal-A)
+            ( f) (g) (f) (α) (β) t s)
+        ( \ s → id-hom (A s) (f s))
+        ( \ s →
+          concat
+            ( hom (A s) (f s) (f s))
+            ( \ t →
+              comp-is-segal
+                ( ( s' : ψ) → A s')
+                ( is-segal-extension-type extext I ψ A is-segal-A)
+                ( f) (g) (f) (α) (β) t s)
+            ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (f s)
+              ( \ t → α t s)
+              ( \ t → β t s))
+            ( id-hom (A s) (f s))
+            ( rev
+              ( hom (A s) (f s) (f s))
+              ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (f s)
+                ( \ t → α t s)
+                ( \ t → β t s))
+              ( \ t →
+                comp-is-segal
+                  ( ( s' : ψ) → A s')
+                  ( is-segal-extension-type extext I ψ A is-segal-A)
+                  ( f) (g) (f) (α) (β) t s)
+              ( comp-components-comp-nat-trans-is-segal-extension-type
+                extext I ψ A is-segal-A f g f α β s))
+            ( H s)))
+
+#def nat-trans-nat-trans-components-preserves-iso-extension-type uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( is-segal-A : (s : ψ) → is-segal (A s))
+  ( f g : (s : ψ) → A s)
+  ( α : hom ((s : ψ) → A s) f g)
+  : ( ( s : ψ)
+    → ( is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
+        ( ev-components-nat-trans-extension-type I ψ A f g α s)))
+  → ( is-iso-arrow
+      ( ( s : ψ) → A s)
+      ( is-segal-extension-type extext I ψ A is-segal-A) f g α)
+  :=
+    \ H →
+    ( ( \ t s → first (first (H s)) t
+      , nat-trans-nat-trans-components-preserves-iso-helper-extension-type
+          I ψ A is-segal-A f g α
+          ( \ t s → first (first (H s)) t)
+          ( \ s → second (first (H s))))
+    , ( \ t s → first (second (H s)) t
+      , nat-trans-nat-trans-components-preserves-iso-helper-extension-type
+          I ψ A is-segal-A g f
+          ( \ t s → first (second (H s)) t)
+          ( α)
+          ( \ s → second (second (H s)))))
+
+#def iff-is-iso-pointwise-is-iso-extension-type uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( is-segal-A : (s : ψ) → is-segal (A s))
+  ( f g : (s : ψ) → A s)
+  ( α : hom ((s : ψ) → A s) f g)
+  : iff
+    ( is-iso-arrow
+      ( ( s : ψ) → A s)
+      ( is-segal-extension-type extext I ψ A is-segal-A) f g α)
+    ( ( s : ψ)
+    → ( is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
+        ( ev-components-nat-trans-extension-type I ψ A f g α s)))
+  :=
+    ( ev-components-nat-trans-preserves-iso-extension-type
+        I ψ A is-segal-A f g α
+    , nat-trans-nat-trans-components-preserves-iso-extension-type
+        I ψ A is-segal-A f g α)
+
+#def equiv-is-iso-pointwise-is-iso-extension-type uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( is-segal-A : (s : ψ) → is-segal (A s))
+  ( f g : (s : ψ) → A s)
+  ( α : hom ((s : ψ) → A s) f g)
+  : Equiv
+    ( is-iso-arrow
+      ( ( s : ψ) → A s)
+      ( is-segal-extension-type extext I ψ A is-segal-A) f g α)
+    ( ( s : ψ)
+    → ( is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
+        ( ev-components-nat-trans-extension-type I ψ A f g α s)))
+  :=
+    equiv-iff-is-prop-is-prop
+      ( is-iso-arrow
+        ( ( s : ψ) → A s)
+        ( is-segal-extension-type extext I ψ A is-segal-A)
+        ( f) (g) (α))
+      ( ( s : ψ)
+      → ( is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
+          ( ev-components-nat-trans-extension-type I ψ A f g α s)))
+      ( is-prop-is-iso-arrow
+        ( ( s : ψ) → A s)
+        ( is-segal-extension-type extext I ψ A is-segal-A)
+        ( f) (g) (α))
+      ( is-prop-shape-type-is-locally-prop
+        ( naiveextext-extext extext)
+        ( I) (ψ)
+        ( \ s →
+          is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
+          ( ev-components-nat-trans-extension-type I ψ A f g α s))
+        ( \ s →
+          is-prop-is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
+          ( ev-components-nat-trans-extension-type I ψ A f g α s)))
+      ( iff-is-iso-pointwise-is-iso-extension-type
+          I ψ A is-segal-A f g α)
+```
+
 ```rzk title="RS17, Corollary 10.4a (isomorphism extensionality)"
 #def iso-extensionality uses (extext funext)
   ( X : U)

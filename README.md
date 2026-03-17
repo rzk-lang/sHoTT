@@ -62,7 +62,8 @@ submitting your pull request.
    <https://doi.org/10.21136/HS.2023.04>
 
 3. César Bardomiano Martínez. Limits and colimits of synthetic ∞-categories.
-   Mathematical Structures in Computer Science, vol. 35, p. e24, 2025. <https://doi.org/10.1017/S0960129525100248>
+   Mathematical Structures in Computer Science, vol. 35, p. e24, 2025.
+   <https://doi.org/10.1017/S0960129525100248>
 
 4. Emily Riehl. Could ∞-category theory be taught to undergraduates? Notices of
    the AMS. May 2023.

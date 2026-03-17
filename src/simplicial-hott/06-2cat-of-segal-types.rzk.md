@@ -232,7 +232,7 @@ Equivalently , natural transformations can be determined by their **components**
   := \ t x → η x t
 ```
 
-```rzk
+```rzk title="A version of ev-components-nat-trans for extension types"
 #def ev-components-nat-trans-extension-type
   ( I : CUBE)
   ( ψ : I → TOPE)
@@ -241,7 +241,6 @@ Equivalently , natural transformations can be determined by their **components**
   ( α : hom ((s : ψ) → A s) f g)
   : ( s : ψ) → hom (A s) (f s) (g s)
   := \ s t → α t s
-
 ```
 
 ### Natural transformation extensionality
@@ -436,7 +435,7 @@ components of the natural transformation defined by composing in the Segal type
 
 The same statements hold for extension types.
 
-```rzk title="RS17, Proposition 6.5, extension type case"
+```rzk title="RS17, Proposition 6.5(ii), extension type case"
 #def id-arr-components-id-nat-trans-extension-type
   ( I : CUBE)
   ( ψ : I → TOPE)
@@ -447,7 +446,9 @@ The same statements hold for extension types.
       ( id-hom ((s : ψ) → A s) f)) s
   = id-hom (A s) (f s)
   := refl
+```
 
+```rzk title="RS17, Proposition 6.5(i), extension type case"
 #def comp-components-comp-nat-trans-is-segal-extension-type uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)

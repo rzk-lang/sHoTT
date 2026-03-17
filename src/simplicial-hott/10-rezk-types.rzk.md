@@ -715,33 +715,37 @@ equal.
     \ ((β , p) , (γ , q)) →
     \ s →
     ( ( ( \ t → β t s)
-      , ( triple-concat
-          ( hom (A s) (f s) (f s))
-          ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (f s)
+    -- we prove
+    -- αₛ ∘ βₛ = (α ∘ β)ₛ = id_(f s) = (id_f)ₛ
+    -- the last equality is automatic (refl), so we omit it in the formalization
+    , ( concat
+        ( hom (A s) (f s) (f s))
+        ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (f s)
             ( \ t → α t s)
             ( \ t → β t s))
-          ( \ t →
-            comp-is-segal
-              ( ( s' : ψ) → A s')
-              ( is-segal-extension-type extext I ψ A is-segal-A)
-              ( f) (g) (f) (α) (β) t s)
-          ( \ t → id-hom ((s' : ψ) → A s') f t s)
-          ( id-hom (A s) (f s))
-          ( comp-components-comp-nat-trans-is-segal-extension-type
-            extext I ψ A is-segal-A f g f α β s)
-          ( ap
-            ( hom ((s' : ψ) → A s') f f)
-            ( hom (A s) (f s) (f s))
-            ( comp-is-segal
-              ( ( s' : ψ) → A s')
-              ( is-segal-extension-type extext I ψ A is-segal-A)
-              ( f) (g) (f) (α) (β))
-            ( id-hom ((s' : ψ) → A s') f)
-            ( \ c → \ t → c t s)
-            ( p))
-          ( refl)))
+        ( \ t →
+          comp-is-segal
+            ( ( s' : ψ) → A s')
+            ( is-segal-extension-type extext I ψ A is-segal-A)
+            ( f) (g) (f) (α) (β) t s)
+        ( id-hom (A s) (f s))
+        ( comp-components-comp-nat-trans-is-segal-extension-type
+          extext I ψ A is-segal-A f g f α β s)
+        ( ap
+          ( hom ((s : ψ) → A s) f f)
+          ( hom (A s) (f s) (f s))
+          ( comp-is-segal
+                ( ( s' : ψ) → A s')
+                ( is-segal-extension-type extext I ψ A is-segal-A)
+                ( f) (g) (f) (α) (β))
+          ( id-hom ((s : ψ) → A s) f)
+          ( \ c t → c t s)
+          p)))
     , ( ( \ t → γ t s)
-      , ( triple-concat
+    -- we prove
+    -- γₛ ∘ αₛ ≡ (γ ∘ α)ₛ ≡ id_(g s) ≡ (id_g)ₛ
+    -- the last equality is automatic (refl), so we omit it in the formalization
+      , ( concat
           ( hom (A s) (g s) (g s))
           ( comp-is-segal (A s) (is-segal-A s) (g s) (f s) (g s)
             ( \ t → γ t s)
@@ -751,7 +755,6 @@ equal.
               ( ( s' : ψ) → A s')
               ( is-segal-extension-type extext I ψ A is-segal-A)
               ( g) (f) (g) (γ) (α) t s)
-          ( \ t → id-hom ((s' : ψ) → A s') g t s)
           ( id-hom (A s) (g s))
           ( comp-components-comp-nat-trans-is-segal-extension-type
             extext I ψ A is-segal-A g f g γ α s)
@@ -764,8 +767,7 @@ equal.
               ( g) (f) (g) (γ) (α))
             ( id-hom ((s' : ψ) → A s') g)
             ( \ c → \ t → c t s)
-            ( q))
-          ( refl))))
+            ( q)))))
 
 #def nat-trans-nat-trans-components-preserves-iso-helper-extension-type
   uses (extext)

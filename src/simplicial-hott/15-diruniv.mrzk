@@ -1,0 +1,100 @@
+#lang rzk-1
+
+#def Δ¹_b
+  : <| _b | 2 → TOPE |>
+  := mod _b (\ t → TOP)
+
+#def dhom'
+  ( A : 2 → U)
+  ( x : A 0₂)
+  ( y : A 1₂)
+  : U
+  :=
+    ( t : 2)
+  → ( A t) [ t ≡ 0₂ ↦ x
+          , t ≡ 1₂ ↦ y]
+
+#def dhom_b
+  : <| _b | (A : 2 → U) → (x : A 0₂) → (y : A 1₂) → U |>
+  := mod _b (\ (A : 2 → U) → \ (x : A 0₂) → \ (y : A 1₂) → (t : \ (i : 2) → TOP) → (A t) [ t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y])
+
+#def equiv-to-iff (A B : U) (e : Equiv A B)
+  : iff A B
+  :=
+  ( first e , first (first (second e)))
+
+#def ^I (A : U)
+  : U
+  := 2 → A
+
+#def ^I_b ((mod _b A) : <| _b | U |>)
+  : <| _b | U |>
+  := mod _b (2 → A)
+
+#postulate I-is-tiny ((mod _b A) : <| _b | U |>)
+  :
+  Σ ( ( mod _b A_i) : <| _b | U |> , eps : (2 → A_i) → A)
+  , ( ( mod _b B) : <| _b | U |>) → Equiv <| _b | B → A_i |> <| _b | (2 → B) → A |>
+
+#def _I (A : <| _b | U |>)
+  : <| _b | U |>
+  :=
+  first (first (I-is-tiny A))
+
+#def I-eta (A : <| _b | U |>) (x : ^I (extract _b (_I A)))
+  : extract _b A
+  :=
+  ( second (first (I-is-tiny A))) x
+
+#def I-transpose (A B : <| _b | U |>)
+  : iff <| _b | extract _b B → extract _b (_I A) |> <| _b | (extract _b (^I_b B)) → extract _b A |>
+  :=
+  equiv-to-iff <| _b | extract _b B → extract _b (_I A) |> <| _b | (extract _b (^I_b B)) → extract _b A |> ((second (I-is-tiny A)) B)
+
+#def is-contr_b
+  : <| _b | U → U |>
+  := mod _b (\ (A : U) → Σ (x : A) , ((y : A) → x = y))
+
+#def is-cov (X : U) (A : X → U)
+  : U
+  := (x : 2 → X) → (a_0 : A (x 0₂)) → is-contr (Σ (a_1 : A (x 1₂)) , dhom' (\ i → A (x i)) a_0 a_1)
+
+#def is-cov-i (A : 2 → U)
+  : U
+  := (a_0 : A 0₂) → is-contr (Σ (a_1 : A (1₂)) , dhom' (\ i → A i) a_0 a_1)
+
+#def U_b
+  : <| _b | U |>
+  := mod _b U
+
+#def is-cov-i_b
+  : <| _b | (extract _b (^I_b U_b)) → U |>
+  := mod _b (\ (A : extract _b (^I_b U_b)) → (a_0 : A 0₂) → (extract _b is-contr_b) (Σ (a_1 : A (1₂)) , (extract _b dhom_b) (\ i → A i) a_0 a_1))
+
+-- extract _b (_I U_b)
+
+#def is-a-cov (X : U)
+  : U
+  := I-eta U_b (\ (i : 2) → ((extract _b (second (I-transpose U_b U_b) is-cov-i_b)) X))
+
+#def S
+  : U
+  := Σ (A : U) , is-a-cov A
+
+#def coe (X : U) (A : X → U) (phi : is-cov X A) (x0 x1 : X) (f : hom X x0 x1)
+  : A x0 → A x1
+  :=
+  \ a0 → first (first (phi f a0))
+
+#def coe-i (A : 2 → U) (phi : is-cov-i A)
+  : A 0₂ → A 1₂
+  :=
+  \ a0 → first (first (phi a0))
+
+#postulate s-is-cov-i (F : 2 → S)
+  : is-cov-i (\ b → first (F b))
+
+#def mor2fun (f : 2 → S)
+  : Σ ( A : S) , (Σ (B : S) , (first A) → (first B))
+  :=
+  ( f 0₂ , (f 1₂ , coe-i (\ x → first (f x)) (s-is-cov-i f)))

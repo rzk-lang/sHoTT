@@ -202,6 +202,18 @@ transformation** from `#!rzk f` to `#!rzk g` is an arrow
   := hom ((x : A) → (B x)) f g
 ```
 
+The same definition applies to extension types.
+
+```rzk title="RS17, Definition 6.2, for extension types"
+#def nat-trans-extension-type
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( f g : (s : ψ) → A s)
+  : U
+  := hom ((s : ψ) → A s) f g
+```
+
 Equivalently , natural transformations can be determined by their **components**
 , i.e. as a family of arrows `#!rzk (x : A) → hom (B x) (f x) (g x)`.
 
@@ -232,15 +244,35 @@ Equivalently , natural transformations can be determined by their **components**
   := \ t x → η x t
 ```
 
-```rzk title="A version of ev-components-nat-trans for extension types"
+In the same way, natural transformations of extension types can be defined via
+their components.
+
+```rzk
+#def nat-trans-components-extension-type
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( f g : (s : ψ) → A s)
+  : U
+  := (s : ψ) → hom (A s) (f s) (g s)
+
 #def ev-components-nat-trans-extension-type
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( A : ψ → U)
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
-  : ( s : ψ) → hom (A s) (f s) (g s)
-  := \ s t → α t s
+  ( η : nat-trans-extension-type I ψ A f g)
+  : nat-trans-components-extension-type I ψ A f g
+  := \ s t → η t s
+
+#def nat-trans-nat-trans-components-extension-type
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( f g : (s : ψ) → A s)
+  ( η : nat-trans-components-extension-type I ψ A f g)
+  : nat-trans-extension-type I ψ A f g
+  := \ t x → η x t
 ```
 
 ### Natural transformation extensionality
@@ -266,6 +298,31 @@ Equivalently , natural transformations can be determined by their **components**
   :=
     ( ev-components-nat-trans A B f g
     , is-equiv-ev-components-nat-trans A B f g)
+```
+
+```rzk title="RS17, Proposition 6.3 for extension types"
+#def is-equiv-ev-components-nat-trans-extension-type
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( f g : (s : ψ) → A s)
+  : is-equiv
+      ( nat-trans-extension-type I ψ A f g)
+      ( nat-trans-components-extension-type I ψ A f g)
+      ( ev-components-nat-trans-extension-type I ψ A f g)
+  :=
+    ( ( \ η t s → η s t , \ _ → refl)
+    , ( \ η t s → η s t , \ _ → refl))
+
+#def equiv-components-nat-trans-extension-type
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( f g : (s : ψ) → A s)
+  : Equiv (nat-trans-extension-type I ψ A f g) (nat-trans-components-extension-type I ψ A f g)
+  :=
+    ( ev-components-nat-trans-extension-type I ψ A f g
+    , is-equiv-ev-components-nat-trans-extension-type I ψ A f g)
 ```
 
 ### Naturality square
@@ -455,8 +512,8 @@ The same statements hold for extension types.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g h : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
-  ( β : hom ((s : ψ) → A s) g h)
+  ( α : nat-trans-extension-type I ψ A f g)
+  ( β : nat-trans-extension-type I ψ A g h)
   ( s : ψ)
   : ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (h s)
       ( ev-components-nat-trans-extension-type I ψ A f g α s)

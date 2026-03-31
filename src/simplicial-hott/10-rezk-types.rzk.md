@@ -704,7 +704,7 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
+  ( α : nat-trans-extension-type I ψ A f g)
   : ( is-iso-arrow
       ( ( s : ψ) → A s)
       ( is-segal-extension-type extext I ψ A is-segal-A) f g α)
@@ -776,8 +776,8 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
-  ( β : hom ((s : ψ) → A s) g f)
+  ( α : nat-trans-extension-type I ψ A f g)
+  ( β : nat-trans-extension-type I ψ A g f)
   : ( ( s : ψ)
     → ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (f s)
         ( ev-components-nat-trans-extension-type I ψ A f g α s)
@@ -841,7 +841,7 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
+  ( α : nat-trans-extension-type I ψ A f g)
   : ( ( s : ψ)
     → ( is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
         ( ev-components-nat-trans-extension-type I ψ A f g α s)))
@@ -868,7 +868,7 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
+  ( α : nat-trans-extension-type I ψ A f g)
   : iff
     ( is-iso-arrow
       ( ( s : ψ) → A s)
@@ -888,7 +888,7 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
+  ( α : nat-trans-extension-type I ψ A f g)
   : Equiv
     ( is-iso-arrow
       ( ( s : ψ) → A s)

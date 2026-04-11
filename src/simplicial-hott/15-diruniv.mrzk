@@ -31,25 +31,20 @@
   : <| _b | U |>
   := mod _b (2 → A)
 
-#postulate I-is-tiny ((mod _b A) : <| _b | U |>)
-  :
-  Σ ( ( mod _b A_i) : <| _b | U |> , eps : (2 → A_i) → A)
-  , ( ( mod _b B) : <| _b | U |>) → Equiv <| _b | B → A_i |> <| _b | (2 → B) → A |>
-
-#def _I (A : <| _b | U |>)
+#postulate _I (A : <| _b | U |>)
   : <| _b | U |>
-  :=
-  first (first (I-is-tiny A))
 
-#def I-eta (A : <| _b | U |>) (x : ^I (extract _b (_I A)))
+#postulate I-eta (A : <| _b | U |>) (x : ^I (extract _b (_I A)))
   : extract _b A
-  :=
-  ( second (first (I-is-tiny A))) x
+
+#postulate I-transpose-equiv ((mod _b A) : <| _b | U |>) ((mod _b B) : <| _b | U |>)
+  : Equiv <| _b | B → (extract _b (_I (mod _b A))) |> <| _b | (2 → B) → A |>
 
 #def I-transpose (A B : <| _b | U |>)
   : iff <| _b | extract _b B → extract _b (_I A) |> <| _b | (extract _b (^I_b B)) → extract _b A |>
   :=
-  equiv-to-iff <| _b | extract _b B → extract _b (_I A) |> <| _b | (extract _b (^I_b B)) → extract _b A |> ((second (I-is-tiny A)) B)
+  equiv-to-iff <| _b | extract _b B → extract _b (_I A) |> <| _b | (extract _b
+  (^I_b B)) → extract _b A |> (I-transpose-equiv A B)
 
 #def is-contr_b
   : <| _b | U → U |>
@@ -73,9 +68,19 @@
 
 -- extract _b (_I U_b)
 
+#def dep_i : <| _b | (extract _b (_I U_b)) -> U |> :=
+  #let transpose : <| _b | Unit -> extract _b (_I U_b) |> -> <| _b | (2 -> Unit) -> U |> :=
+    first (
+      I-transpose
+        (mod _b U)
+        (mod _b Unit)
+    )
+  #in
+  mod _b (\x -> (extract _b (transpose (mod _b (\u -> x)))) (\i -> unit))
+
 #def is-a-cov (X : U)
   : U
-  := I-eta U_b (\ (i : 2) → ((extract _b (second (I-transpose U_b U_b) is-cov-i_b)) X))
+  := (extract _b dep_i) ((extract _b ((second (I-transpose U_b U_b)) is-cov-i_b)) X)
 
 #def S
   : U
@@ -90,6 +95,15 @@
   : A 0₂ → A 1₂
   :=
   \ a0 → first (first (phi a0))
+
+#compute-nf is-a-cov
+
+#def what-i-need (pr : <| _b | ( s : S) → is-a-cov (first s) |>) : <| _b | (F : 2 → S) → is-cov-i (\ i → first (F
+  i)) |> :=
+  #let dep-transpose := \(A : U) -> \(B : A -> U) ->
+    \((a : A) -> B a) -> (extract _b (first (I-transpose (B a) A))) a
+  #in
+  dep-transpose (S) (\(s : S) -> is-a-cov (first s)) pr
 
 #postulate s-is-cov-i (F : 2 → S)
   : is-cov-i (\ b → first (F b))

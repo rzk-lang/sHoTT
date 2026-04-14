@@ -1827,14 +1827,14 @@ equivalent to extending the fiber.
 
 ## Tope disjunction elimination along identity paths
 
-\(\mathsf{rec}_{\lor}^{\psi,\phi}(a_\psi, a_\phi)\) (written
-`recOR(psi, phi, a_psi, a_phi)` in the code) is well-typed when \(a_\psi\) and
-\(a_\phi\) are _definitionally_ equal on \(\psi \land \phi\). Sometimes this is
+\(\mathsf{rec}_{\lor}^{\psi,\phi}(a_\psi, a*\phi)\) (written
+`recOR(psi, phi, a_psi, a_phi)` in the code) is well-typed when \(a*\psi\) and
+\(a*\phi\) are \_definitionally* equal on \(\psi \land \phi\). Sometimes this is
 too strong since many terms are not _definitionally_ equal, but only equal up to
 a path. Luckily, assuming relative function extensionality, we can define a
-weaker version of \(rec_{\lor}\) (`recOR`), which we call `rec-path`, that can work
-in presence of a witness of type \(\prod_{t : I \mid \psi \land \phi} a_\psi =
-a_\phi\).
+weaker version of \(rec*{\lor}\) (`recOR`), which we call `rec-path`, that can
+work in presence of a witness of type \(\prod*{t : I \mid \psi \land \phi}
+a*\psi = a*\phi\).
 
 ### Construction of `rec-path`
 
@@ -1937,8 +1937,8 @@ Finally, we bring everything together into `rec-path`:
 
 ### Gluing extension types
 
-An application of `rec-path` is gluing together extension types, whenever
-we can show that they are equal on the intersection of shapes.
+An application of `rec-path` is gluing together extension types, whenever we can
+show that they are equal on the intersection of shapes.
 
 The latter can be easily shown when the intersection maps to a set:
 

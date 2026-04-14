@@ -1,4 +1,4 @@
-# 12. Propositions
+# 12. Sets
 
 This is a literate `rzk` file:
 

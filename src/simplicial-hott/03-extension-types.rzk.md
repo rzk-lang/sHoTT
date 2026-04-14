@@ -1825,18 +1825,18 @@ equivalent to extending the fiber.
     ( \ t → (a t , refl)))
 ```
 
-## Tope disjuction elimination along identity paths
+## Tope disjunction elimination along identity paths
 
 \(\mathsf{rec}_{\lor}^{\psi,\phi}(a_\psi, a_\phi)\) (written
 `recOR(psi, phi, a_psi, a_phi)` in the code) is well-typed when \(a_\psi\) and
-\(a_\phi\) are \_definitionally equal* on \(\psi \land \phi\). Sometimes this is
+\(a_\phi\) are _definitionally_ equal on \(\psi \land \phi\). Sometimes this is
 too strong since many terms are not _definitionally_ equal, but only equal up to
 a path. Luckily, assuming relative function extensionality, we can define a
-weaker version of \(rec_{\lor}\) (`recOR`), which we call `recId`, that can work
+weaker version of \(rec_{\lor}\) (`recOR`), which we call `rec-path`, that can work
 in presence of a witness of type \(\prod_{t : I \mid \psi \land \phi} a_\psi =
 a_\phi\).
 
-### Construction of `recId`
+### Construction of `rec-path`
 
 The idea is straightforward. We ask for a proof that `a = b` for all points in
 `ψ ∧ φ`. Then, by relative function extensionality (`relfunext2`), we can show
@@ -1847,21 +1847,19 @@ the path connecting two restrictions and apply `recOR`.
 First, we define how to restrict an extension type to a subshape:
 
 ```rzk
-#section construction-of-recId
+#section construction-of-rec-path
 
 #variable I : CUBE
 #variables ψ φ : I → TOPE
 #variable A : (t : I | ψ t ∨ φ t) → U
 
 -- Restrict extension type to a subshape.
--- TODO: should be a local-only definition (use let-binding when it exists)
 #define restrict-phi
   ( a : (t : φ) → A t)
   : ( t : I | ψ t ∧ φ t) → A t
   := \ t → a t
 
 -- Restrict extension type to a subshape.
--- TODO: should be a local-only definition (use let-binding when it exists)
 #define restrict-psi
   ( a : (t : ψ) → A t)
   : ( t : I | ψ t ∧ φ t) → A t
@@ -1872,7 +1870,6 @@ Then, how to reformulate an `a` (or `b`) as an extension of its restriction:
 
 ```rzk
 -- Reformulate extension type as an extension of a restriction.
--- TODO: should be a local-only definition (use let-binding when it exists)
 #define ext-of-restrict-psi
   ( a : (t : ψ) → A t)
   : ( t : ψ)
@@ -1880,7 +1877,6 @@ Then, how to reformulate an `a` (or `b`) as an extension of its restriction:
   := a  -- type is coerced automatically here
 
 -- Reformulate extension type as an extension of a restriction.
--- TODO: should be a local-only definition (use let-binding when it exists)
 #define ext-of-restrict-phi
   ( a : (t : φ) → A t)
   : ( t : φ)
@@ -1893,7 +1889,6 @@ restrictions:
 
 ```rzk
 -- Transform extension of an identity into an identity of restrictions.
--- TODO: should be a local-only definition (use let-binding when it exists)
 #define restricts-path
   ( a-in-ψ : (t : ψ) → A t)
   ( a-in-φ : (t : φ) → A t)
@@ -1937,13 +1932,13 @@ Finally, we bring everything together into `rec-path`:
           ext-of-restrict-phi a-in-φ t
       )
 
-#end construction-of-recId
+#end construction-of-rec-path
 ```
 
 ### Gluing extension types
 
-An application of of `rec-path` is gluing together extension types, whenever we can
-show that they are equal on the intersection of shapes.
+An application of `rec-path` is gluing together extension types, whenever
+we can show that they are equal on the intersection of shapes.
 
 The latter can be easily shown when the intersection maps to a set:
 

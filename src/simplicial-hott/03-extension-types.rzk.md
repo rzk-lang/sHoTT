@@ -1827,14 +1827,14 @@ equivalent to extending the fiber.
 
 ## Tope disjuction elimination along identity paths
 
-\(\mathsf{rec}_{\lor}^{\psi,\phi}(a_\psi, a*\phi)\) (written
-`recOR(psi, phi, a_psi, a_phi)` in the code) is well-typed when \(a*\psi\) and
-\(a*\phi\) are \_definitionally equal* on \(\psi \land \phi\). Sometimes this is
+\(\mathsf{rec}_{\lor}^{\psi,\phi}(a_\psi, a_\phi)\) (written
+`recOR(psi, phi, a_psi, a_phi)` in the code) is well-typed when \(a_\psi\) and
+\(a_\phi\) are \_definitionally equal* on \(\psi \land \phi\). Sometimes this is
 too strong since many terms are not _definitionally_ equal, but only equal up to
 a path. Luckily, assuming relative function extensionality, we can define a
-weaker version of \(rec*{\lor}\) (`recOR`), which we call `recId`, that can work
-in presence of a witness of type \(\prod*{t : I \mid \psi \land \phi} a*\psi =
-a*\phi\).
+weaker version of \(rec_{\lor}\) (`recOR`), which we call `recId`, that can work
+in presence of a witness of type \(\prod_{t : I \mid \psi \land \phi} a_\psi =
+a_\phi\).
 
 ### Construction of `recId`
 
@@ -1854,13 +1854,15 @@ First, we define how to restrict an extension type to a subshape:
 #variable A : (t : I | ψ t ∨ φ t) → U
 
 -- Restrict extension type to a subshape.
-#define restrict_phi
+-- TODO: should be a local-only definition (use let-binding when it exists)
+#define restrict-phi
   ( a : (t : φ) → A t)
   : ( t : I | ψ t ∧ φ t) → A t
   := \ t → a t
 
 -- Restrict extension type to a subshape.
-#define restrict_psi
+-- TODO: should be a local-only definition (use let-binding when it exists)
+#define restrict-psi
   ( a : (t : ψ) → A t)
   : ( t : I | ψ t ∧ φ t) → A t
   := \ t → a t
@@ -1870,17 +1872,19 @@ Then, how to reformulate an `a` (or `b`) as an extension of its restriction:
 
 ```rzk
 -- Reformulate extension type as an extension of a restriction.
-#define ext-of-restrict_psi
+-- TODO: should be a local-only definition (use let-binding when it exists)
+#define ext-of-restrict-psi
   ( a : (t : ψ) → A t)
   : ( t : ψ)
-  → A t [ ψ t ∧ φ t ↦ restrict_psi a t ]
+  → A t [ ψ t ∧ φ t ↦ restrict-psi a t ]
   := a  -- type is coerced automatically here
 
 -- Reformulate extension type as an extension of a restriction.
-#define ext-of-restrict_phi
+-- TODO: should be a local-only definition (use let-binding when it exists)
+#define ext-of-restrict-phi
   ( a : (t : φ) → A t)
   : ( t : φ)
-  → A t [ ψ t ∧ φ t ↦ restrict_phi a t ]
+  → A t [ ψ t ∧ φ t ↦ restrict-phi a t ]
   := a  -- type is coerced automatically here
 ```
 
@@ -1889,11 +1893,12 @@ restrictions:
 
 ```rzk
 -- Transform extension of an identity into an identity of restrictions.
+-- TODO: should be a local-only definition (use let-binding when it exists)
 #define restricts-path
-  ( a_psi : (t : ψ) → A t)
-  ( a_phi : (t : φ) → A t)
-  : ( e : (t : I | ψ t ∧ φ t) → a_psi t = a_phi t)
-  → restrict_psi a_psi = restrict_phi a_phi
+  ( a-in-ψ : (t : ψ) → A t)
+  ( a-in-φ : (t : φ) → A t)
+  : ( e : (t : I | ψ t ∧ φ t) → a-in-ψ t = a-in-φ t)
+  → restrict-psi a-in-ψ = restrict-phi a-in-φ
   :=
   first
   ( second
@@ -1902,33 +1907,34 @@ restrictions:
       ( \ t → BOT)
       ( \ t → A t)
       ( \ t → recBOT)
-      ( \ t → a_psi t)
-      ( \ t → a_phi t)))
+      ( \ t → a-in-ψ t)
+      ( \ t → a-in-φ t)))
 ```
 
-Finally, we bring everything together into `recId`:
+Finally, we bring everything together into `rec-path`:
 
 ```rzk
 -- A weaker version of recOR, demanding only a path between a and b:
 -- recOR(ψ, φ, a, b) demands that for ψ ∧ φ we have a == b (definitionally)
--- (recId ψ φ a b e) demands that e is the proof that a = b (intensionally) for ψ ∧ φ
-#define recId uses (extext) -- we declare that recId is using extext on purpose
-  ( a_psi : (t : ψ) → A t)
-  ( a_phi : (t : φ) → A t)
-  ( e : (t : I | ψ t ∧ φ t) → a_psi t = a_phi t)
+-- (rec-path ψ φ a b e) demands that
+-- e is the proof that a = b (intensionally) for ψ ∧ φ
+#define rec-path uses (extext)
+  ( a-in-ψ : (t : ψ) → A t)
+  ( a-in-φ : (t : φ) → A t)
+  ( e : (t : I | ψ t ∧ φ t) → a-in-ψ t = a-in-φ t)
   : ( t : I | ψ t ∨ φ t) → A t
   := \ t → recOR(
         ψ t ↦
           transport
           ( ( s : I | ψ s ∧ φ s) → A s)
           ( \ ra → (s : ψ) → A s [ ψ s ∧ φ s ↦ ra s ])
-          ( restrict_psi a_psi)
-          ( restrict_phi a_phi)
-          ( restricts-path a_psi a_phi e)
-          ( ext-of-restrict_psi a_psi)
+          ( restrict-psi a-in-ψ)
+          ( restrict-phi a-in-φ)
+          ( restricts-path a-in-ψ a-in-φ e)
+          ( ext-of-restrict-psi a-in-ψ)
           ( t)
       , φ t ↦
-          ext-of-restrict_phi a_phi t
+          ext-of-restrict-phi a-in-φ t
       )
 
 #end construction-of-recId
@@ -1936,7 +1942,7 @@ Finally, we bring everything together into `recId`:
 
 ### Gluing extension types
 
-An application of of `recId` is gluing together extension types, whenever we can
+An application of of `rec-path` is gluing together extension types, whenever we can
 show that they are equal on the intersection of shapes.
 
 The latter can be easily shown when the intersection maps to a set:
@@ -1944,20 +1950,20 @@ The latter can be easily shown when the intersection maps to a set:
 ```rzk
 -- If two extension types are equal along two subshapes,
 -- then they are also equal along their union.
-#define id-along-border uses (extext)
+#define id-along-set-border uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( φ : I → TOPE)
   ( A : (t : I | ψ t ∨ φ t) → U)
   ( a b : (t : I | ψ t ∨ φ t) → A t)
-  ( e_psi : (t : ψ) → a t = b t)
-  ( e_phi : (t : φ) → a t = b t)
+  ( e-in-ψ : (t : ψ) → a t = b t)
+  ( e-in-φ : (t : φ) → a t = b t)
   ( border-is-a-set : (t : I | ψ t ∧ φ t) → is-set (A t))
   : ( t : I | ψ t ∨ φ t) → a t = b t
   :=
-  recId I ψ φ
+  rec-path I ψ φ
   ( \ t → a t = b t)
-  ( e_psi)
-  ( e_phi)
-  ( \ t → border-is-a-set t (a t) (b t) (e_psi t) (e_phi t))
+  ( e-in-ψ)
+  ( e-in-φ)
+  ( \ t → border-is-a-set t (a t) (b t) (e-in-ψ t) (e-in-φ t))
 ```

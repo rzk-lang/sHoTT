@@ -1836,20 +1836,20 @@ The idea is straightforward. We ask for a proof that `a = b` for all points in \
 First, we define how to restrict an extension type to a subshape:
 
 ```rzk
-#section construction-of-rec-path
+#section rec-path-construction
 
 #variable I : CUBE
 #variables ψ φ : I → TOPE
 #variable A : (t : I | ψ t ∨ φ t) → U
 
 -- Restrict extension type to a subshape.
-#define restrict-phi
+#define rec-path-restrict-phi
   ( a : (t : φ) → A t)
   : ( t : I | ψ t ∧ φ t) → A t
   := \ t → a t
 
 -- Restrict extension type to a subshape.
-#define restrict-psi
+#define rec-path-restrict-psi
   ( a : (t : ψ) → A t)
   : ( t : I | ψ t ∧ φ t) → A t
   := \ t → a t
@@ -1859,17 +1859,17 @@ Then, how to reformulate an `a` (or `b`) as an extension of its restriction:
 
 ```rzk
 -- Reformulate extension type as an extension of a restriction.
-#define ext-of-restrict-psi
+#define rec-path-ext-of-restrict-psi
   ( a : (t : ψ) → A t)
   : ( t : ψ)
-  → A t [ ψ t ∧ φ t ↦ restrict-psi a t ]
+  → A t [ ψ t ∧ φ t ↦ rec-path-restrict-psi a t ]
   := a  -- type is coerced automatically here
 
 -- Reformulate extension type as an extension of a restriction.
-#define ext-of-restrict-phi
+#define rec-path-ext-of-restrict-phi
   ( a : (t : φ) → A t)
   : ( t : φ)
-  → A t [ ψ t ∧ φ t ↦ restrict-phi a t ]
+  → A t [ ψ t ∧ φ t ↦ rec-path-restrict-phi a t ]
   := a  -- type is coerced automatically here
 ```
 
@@ -1878,11 +1878,11 @@ restrictions:
 
 ```rzk
 -- Transform extension of an identity into an identity of restrictions.
-#define restricts-path
+#define rec-path-restrict-eq
   ( a-in-ψ : (t : ψ) → A t)
   ( a-in-φ : (t : φ) → A t)
   : ( e : (t : I | ψ t ∧ φ t) → a-in-ψ t = a-in-φ t)
-  → restrict-psi a-in-ψ = restrict-phi a-in-φ
+  → rec-path-restrict-psi a-in-ψ = rec-path-restrict-phi a-in-φ
   :=
   first
   ( second
@@ -1912,16 +1912,16 @@ Finally, we bring everything together into `rec-path`:
           transport
           ( ( s : I | ψ s ∧ φ s) → A s)
           ( \ ra → (s : ψ) → A s [ ψ s ∧ φ s ↦ ra s ])
-          ( restrict-psi a-in-ψ)
-          ( restrict-phi a-in-φ)
-          ( restricts-path a-in-ψ a-in-φ e)
-          ( ext-of-restrict-psi a-in-ψ)
+          ( rec-path-restrict-psi a-in-ψ)
+          ( rec-path-restrict-phi a-in-φ)
+          ( rec-path-restrict-eq a-in-ψ a-in-φ e)
+          ( rec-path-ext-of-restrict-psi a-in-ψ)
           ( t)
       , φ t ↦
-          ext-of-restrict-phi a-in-φ t
+          rec-path-ext-of-restrict-phi a-in-φ t
       )
 
-#end construction-of-rec-path
+#end rec-path-construction
 ```
 
 ### Gluing extension types
@@ -1929,12 +1929,13 @@ Finally, we bring everything together into `rec-path`:
 An application of `rec-path` is gluing together extension types, whenever we can
 show that they are equal on the intersection of shapes.
 
-The latter can be easily shown when the intersection maps to a set:
+The latter can be easily shown when the intersection maps to a set; we record
+the resulting homotopy as `htpy-eq-eq-is-set-on-conjunction` below.
 
 ```rzk
 -- If two extension types are equal along two subshapes,
 -- then they are also equal along their union.
-#define id-along-set-border uses (extext)
+#define htpy-eq-eq-is-set-on-conjunction uses (extext)
   ( I : CUBE)
   ( ψ : I → TOPE)
   ( φ : I → TOPE)

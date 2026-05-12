@@ -1827,22 +1827,11 @@ equivalent to extending the fiber.
 
 ## Tope disjunction elimination along identity paths
 
-\(\mathsf{rec}_{\lor}^{\psi,\phi}(a_\psi, a*\phi)\) (written
-`recOR(psi, phi, a_psi, a_phi)` in the code) is well-typed when \(a*\psi\) and
-\(a*\phi\) are \_definitionally* equal on \(\psi \land \phi\). Sometimes this is
-too strong since many terms are not _definitionally_ equal, but only equal up to
-a path. Luckily, assuming relative function extensionality, we can define a
-weaker version of \(rec*{\lor}\) (`recOR`), which we call `rec-path`, that can
-work in presence of a witness of type \(\prod*{t : I \mid \psi \land \phi}
-a*\psi = a*\phi\).
+\(\mathsf{rec}_{\lor}^{\psi,\phi}(a_\psi, a_\phi)\) (written `recOR(psi, phi, a_psi, a_phi)` in the code) is well-typed when \(a_\psi\) and \(a_\phi\) are _definitionally_ equal on \(\psi \land \phi\). Sometimes this is too strong since many terms are not _definitionally_ equal, but only equal up to a path. Luckily, assuming relative function extensionality, we can define a weaker version of \(\mathsf{rec}_{\lor}\) (`recOR`), which we call `rec-path`, that can work in presence of a witness of type \(\prod_{t : I \mid \psi \land \phi} a_\psi(t) = a_\phi(t)\).
 
 ### Construction of `rec-path`
 
-The idea is straightforward. We ask for a proof that `a = b` for all points in
-`ψ ∧ φ`. Then, by relative function extensionality (`relfunext2`), we can show
-that restrictions of `a` and `b` to `ψ ∧ φ` are equal. If we reformulate `a` as
-extension of its restriction, then we can `transport` such reformulation along
-the path connecting two restrictions and apply `recOR`.
+The idea is straightforward. We ask for a proof that `a = b` for all points in \(\psi \land \phi\). Then, by relative function extensionality (`relfunext2`), we can show that restrictions of `a` and `b` to \(\psi \land \phi\) are equal. If we reformulate `a` as extension of its restriction, then we can `transport` this reformulation along the path connecting two restrictions and apply `recOR`.
 
 First, we define how to restrict an extension type to a subshape:
 

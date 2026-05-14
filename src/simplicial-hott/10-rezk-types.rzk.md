@@ -704,7 +704,7 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
+  ( α : nat-trans-extension-type I ψ A f g)
   : ( is-iso-arrow
       ( ( s : ψ) → A s)
       ( is-segal-extension-type extext I ψ A is-segal-A) f g α)
@@ -776,8 +776,8 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
-  ( β : hom ((s : ψ) → A s) g f)
+  ( α : nat-trans-extension-type I ψ A f g)
+  ( β : nat-trans-extension-type I ψ A g f)
   : ( ( s : ψ)
     → ( comp-is-segal (A s) (is-segal-A s) (f s) (g s) (f s)
         ( ev-components-nat-trans-extension-type I ψ A f g α s)
@@ -841,7 +841,7 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
+  ( α : nat-trans-extension-type I ψ A f g)
   : ( ( s : ψ)
     → ( is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
         ( ev-components-nat-trans-extension-type I ψ A f g α s)))
@@ -868,7 +868,7 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
+  ( α : nat-trans-extension-type I ψ A f g)
   : iff
     ( is-iso-arrow
       ( ( s : ψ) → A s)
@@ -888,7 +888,7 @@ equal.
   ( A : ψ → U)
   ( is-segal-A : (s : ψ) → is-segal (A s))
   ( f g : (s : ψ) → A s)
-  ( α : hom ((s : ψ) → A s) f g)
+  ( α : nat-trans-extension-type I ψ A f g)
   : Equiv
     ( is-iso-arrow
       ( ( s : ψ) → A s)
@@ -967,6 +967,58 @@ equal.
         ( equiv-choice X
           ( \ x → hom (A x) (f x) (g x))
           ( \ x αₓ → is-iso-arrow (A x) (is-segal-A x) (f x) (g x) αₓ)))
+```
+
+```rzk title="RS17, Corollary 10.4b (isomorphism extensionality for shapes)"
+#def iso-extensionality-extension-type uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( is-segal-A : (s : ψ) → is-segal (A s))
+  ( f g : (s : ψ) → A s)
+  : Equiv
+      ( Iso
+          ( ( s : ψ) → A s)
+          ( is-segal-extension-type extext I ψ A is-segal-A)
+          f g)
+      ( ( s : ψ) → Iso (A s) (is-segal-A s) (f s) (g s))
+  :=
+    equiv-triple-comp
+      ( Iso
+          ( ( s : ψ) → A s)
+          ( is-segal-extension-type extext I ψ A is-segal-A)
+          f g)
+      ( Σ ( α : nat-trans-extension-type I ψ A f g)
+      , ( s : ψ)
+      → ( is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
+          ( ev-components-nat-trans-extension-type I ψ A f g α s)))
+      ( Σ ( α' : nat-trans-components-extension-type I ψ A f g)
+      , ( s : ψ) → is-iso-arrow (A s) (is-segal-A s) (f s) (g s) (α' s))
+      ( ( s : ψ) → Iso (A s) (is-segal-A s) (f s) (g s))
+      ( total-equiv-family-of-equiv
+        ( nat-trans-extension-type I ψ A f g)
+        ( \ α →
+          ( is-iso-arrow
+            ( ( s : ψ) → A s)
+            ( is-segal-extension-type extext I ψ A is-segal-A)
+            f g α))
+        ( \ α →
+          ( s : ψ)
+        → ( is-iso-arrow (A s) (is-segal-A s) (f s) (g s)
+            ( ev-components-nat-trans-extension-type I ψ A f g α s)))
+        ( equiv-is-iso-pointwise-is-iso-extension-type I ψ A is-segal-A f g))
+      ( equiv-total-pullback-is-equiv
+        ( nat-trans-extension-type I ψ A f g)
+        ( nat-trans-components-extension-type I ψ A f g)
+        ( ev-components-nat-trans-extension-type I ψ A f g)
+        ( is-equiv-ev-components-nat-trans-extension-type I ψ A f g)
+        ( \ α' →
+          ( s : ψ) → is-iso-arrow (A s) (is-segal-A s) (f s) (g s) (α' s)))
+      ( inv-equiv-axiom-choice I ψ (\ _ → ⊥)
+        ( \ s → hom (A s) (f s) (g s))
+        ( \ s αₛ → is-iso-arrow (A s) (is-segal-A s) (f s) (g s) αₛ)
+        ( \ _ → recBOT)
+        ( \ _ → recBOT))
 ```
 
 ## Rezk types

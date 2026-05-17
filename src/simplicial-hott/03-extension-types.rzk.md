@@ -953,6 +953,42 @@ extension extensionality that we get by extracting the fiberwise equivalence.
   := extext-weakextext'
 ```
 
+### RS17 Proposition 4.12 (extension types preserve n-types)
+
+Assuming Axiom 4.6 (weak extension extensionality), if `A : (t : ψ) → U` and
+`a : (t : ϕ) → A t` are such that each `A(t)` is an n-type, then the extension
+type `(t : ψ) → A t [ϕ t ↦ a t]` is also an n-type. We formalize the cases **n =
+−2 (contractible)** and **n = −1 (proposition)**.
+
+```rzk title="RS17 Proposition 4.12 (contractible case)"
+#def is-contr-extension-type-is-fiberwise-contr
+  ( weakextext : WeakExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-fiberwise-contr-A : (t : ψ) → is-contr (A t))
+  ( a : (t : ϕ) → A t)
+  : is-contr ((t : ψ) → A t [ϕ t ↦ a t])
+  := weakextext I ψ ϕ A is-fiberwise-contr-A a
+```
+
+```rzk title="RS17 Proposition 4.12 (proposition case)"
+#def is-prop-extension-type-is-fiberwise-prop
+  ( weakextext : WeakExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-fiberwise-prop-A : (t : ψ) → is-prop (A t))
+  ( a : (t : ϕ) → A t)
+  : is-prop ((t : ψ) → A t [ϕ t ↦ a t])
+  :=
+    is-prop-extension-type-is-locally-prop
+      ( naiveextext-extext (extext-weakextext weakextext))
+      ( I) (ψ) (ϕ) (A) (is-fiberwise-prop-A) (a)
+```
+
 ## Homotopy extension property
 
 The homotopy extension property has the following signature. We state this

@@ -1,4 +1,4 @@
 include:
   - src/hott/**/*.rzk.md
   - src/simplicial-hott/**/*.rzk.md
-  - src/simplicial-hott/**/*.rzk
+  - src/triangulated/**/*.rzk.md

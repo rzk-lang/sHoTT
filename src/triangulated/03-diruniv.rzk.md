@@ -1,0 +1,518 @@
+# 3. Directed universe
+
+This is a literate `rzk` file:
+
+```rzk
+#lang rzk-1
+```
+
+## Prerequisites
+
+- `hott/*` — HoTT library.
+- `01-modalities.rzk.md` — Modality operations and type aliases.
+- `02-axioms.rzk.md` — Arrow, right adjoint, and transpose adjunction.
+
+```rzk
+#postulate funext
+  : FunExt
+#postulate weakfunext
+  : WeakFunExt
+#postulate extext
+  : ExtExt
+#postulate ua
+  : UA
+```
+
+## Covariant families
+
+```rzk
+#def dhom'
+  ( A : 2 → U)
+  ( x : A 0₂)
+  ( y : A 1₂)
+  : U
+  :=
+    ( t : 2)
+  → ( A t) [ t ≡ 0₂ ↦ x
+          , t ≡ 1₂ ↦ y]
+
+#def is-cov-i (A : 2 → U)
+  : U
+  := (a_0 : A 0₂) → is-contr (Σ (a_1 : A (1₂)) , dhom' (\ i → A i) a_0 a_1)
+
+#postulate is-prop-is-cov-i
+  : ( A : 2 → U) → is-prop (is-cov-i A)
+
+#def Unit-prop
+  : prop
+  := (Unit , is-prop-Unit)
+
+#def is-cov-i-prop (A : 2 → U)
+  : prop
+  := (is-cov-i A , is-prop-is-cov-i A)
+```
+
+## Universal family
+
+```rzk
+#def univ-family-proj-1
+  : univ-family-prop → prop
+  :=
+  \ x → first x
+
+#def univ-family-proj-1_i
+  : b-extract U-b (rar univ-family-prop-b) → b-extract U-b (rar prop-b)
+  :=
+    b-extract
+      ( mod ♭ (b-extract U-b (rar univ-family-prop-b) → b-extract U-b (rar prop-b)))
+      ( rar-functorial-fmap univ-family-prop-b prop-b (mod ♭ (\ x → first x)))
+
+#def univ-family-rar
+  : ( b-extract U-b (rar prop-b)) → U
+  :=
+  \ b →
+    fib
+      ( b-extract U-b (rar univ-family-prop-b))
+      ( b-extract U-b (rar prop-b))
+      ( univ-family-proj-1_i)
+      ( b)
+```
+
+## Transposed helpers
+
+```rzk
+#def is-cov-i-tr
+  : U → b-extract U-b (rar prop-b)
+  :=
+    b-extract
+      ( mod ♭ (U → b-extract U-b (rar prop-b)))
+      ( ( untranspose-ar prop-b U-b) (mod ♭ is-cov-i-prop))
+
+#def is-a-cov (X : U)
+  : U
+  :=
+    univ-family-rar (is-cov-i-tr X)
+
+#def S
+  : U
+  := Σ (A : U) , is-a-cov A
+
+#def S-b
+  : <| ♭ | U |>
+  := mod ♭ S
+
+#def const-Unit-prop-S-tr
+  : S → b-extract U-b (rar prop-b)
+  :=
+    b-extract
+      ( mod ♭ (S → b-extract U-b (rar prop-b)))
+      ( ( untranspose-ar prop-b S-b) (mod ♭ (\ h → Unit-prop)))
+
+#def const-Unit-prop-ufp-tr
+  : b-extract U-b (rar univ-family-prop-b) → b-extract U-b (rar prop-b)
+  :=
+    b-extract
+      ( mod ♭ (b-extract U-b (rar univ-family-prop-b) → b-extract U-b (rar prop-b)))
+      ( ( untranspose-ar prop-b (rar univ-family-prop-b)) (mod ♭ (\ h → Unit-prop)))
+```
+
+## Covariance transport
+
+```rzk
+#def coe-i (A : 2 → U) (phi : is-cov-i A)
+  : A 0₂ → A 1₂
+  :=
+  \ a0 → first (first (phi a0))
+```
+
+## Contractibility of universal family
+
+```rzk
+#def univ-family-prop-is-contr
+  : is-contr (univ-family-prop)
+  :=
+    ( ( Unit-prop , unit)
+    , \ x →
+      let A := first (first x) in
+      let p := second (first x) in
+      let a := second x in
+      let path-UA :=
+        first (ua Unit A)
+          ( \ _ → a
+          , ( ( \ _ → unit , \ _ → refl)
+            , ( \ _ → unit , \ y → first (p a y))))
+      in
+      let path-prop :=
+        eq-pair U (\ T → is-prop T) Unit-prop (first x)
+          ( path-UA
+          , first (is-prop-is-prop funext weakfunext A
+              ( transport U (\ T → is-prop T) Unit A path-UA is-prop-Unit)
+              ( p)))
+      in
+        eq-pair prop (\ Q → first Q) (Unit-prop , unit) x
+          ( path-prop
+          , first (p
+              ( transport prop (\ Q → first Q) Unit-prop (first x)
+                  path-prop unit)
+              ( a))))
+
+#def ufp-first-eq-const-Unit
+  :
+    ( \ (x : univ-family-prop) → first x)
+    = ( \ (x : univ-family-prop) → Unit-prop)
+  :=
+    eq-htpy funext univ-family-prop (\ _ → prop)
+      ( \ x → first x) (\ x → Unit-prop)
+      ( \ x →
+        rev prop Unit-prop (first x)
+          ( ap univ-family-prop prop
+            ( Unit-prop , unit) x
+            ( \ y → first y)
+            ( second univ-family-prop-is-contr x)))
+
+
+#def ufp-proj_1-i-eq-const-Unit-tr
+  :
+    univ-family-proj-1_i
+  = b-extract
+      ( mod ♭ (b-extract U-b (rar univ-family-prop-b) → b-extract U-b (rar prop-b)))
+      ( ( untranspose-ar prop-b (rar univ-family-prop-b)) (mod ♭ (\ h → Unit-prop)))
+  :=
+    ap
+      <| ♭ | univ-family-prop → prop |>
+      ( b-extract U-b (rar univ-family-prop-b) → b-extract U-b (rar prop-b))
+      ( mod ♭ (\ x → first x))
+      ( mod ♭ (\ x → Unit-prop))
+      ( \ f →
+        let mod ♭ fmap := rar-functorial-fmap univ-family-prop-b prop-b f
+        in fmap)
+      ( crisp-induction-flat
+        ( mod ♭ (univ-family-prop → prop))
+        ( mod ♭ (\ x → first x))
+        ( mod ♭ (\ x → Unit-prop))
+        ( mod ♭ ufp-first-eq-const-Unit))
+```
+
+## Equality chain
+
+```rzk
+#def is-cov-i-eq-ufp-const-Unit (s : S)
+  : ( is-cov-i-tr (first s))
+    = ( const-Unit-prop-ufp-tr (first (second s)))
+  :=
+    concat
+      ( b-extract U-b (rar prop-b))
+      ( is-cov-i-tr (first s))
+      ( univ-family-proj-1_i (first (second s)))
+      ( const-Unit-prop-ufp-tr (first (second s)))
+      ( rev (b-extract U-b (rar prop-b))
+        ( univ-family-proj-1_i (first (second s)))
+        ( is-cov-i-tr (first s))
+        ( second (second s)))
+      ( htpy-eq
+        ( b-extract U-b (rar univ-family-prop-b))
+        ( \ _ → b-extract U-b (rar prop-b))
+        ( univ-family-proj-1_i)
+        ( const-Unit-prop-ufp-tr)
+        ( ufp-proj_1-i-eq-const-Unit-tr)
+        ( first (second s)))
+
+
+#def ufp-const-Unit-eq-S-const-Unit (s : S)
+  : ( const-Unit-prop-ufp-tr (first (second s)))
+    = ( const-Unit-prop-S-tr s)
+  :=
+      let lhs-inverse=const-unit
+        : ( transpose-ar prop-b S-b) (mod ♭ (\ sh → const-Unit-prop-ufp-tr (first (second sh))))
+        = mod ♭ (\ (_ : 2 → S) → Unit-prop)
+      := transpose-untranspose-ar-precompose
+           prop-b (rar univ-family-prop-b) S-b
+           ( mod ♭ (\ s → first (second s)))
+           ( mod ♭ (\ _ → Unit-prop))
+      in
+      let rhs-inverse=const-unit
+ : ( transpose-ar prop-b S-b) (mod ♭ const-Unit-prop-S-tr)
+        = mod ♭ (\ (_ : 2 → S) → Unit-prop)
+      := transpose-untranspose-ar prop-b S-b
+           ( mod ♭ (\ _ → Unit-prop))
+      in
+      let transpose-f=transpose-g
+        := concat
+            <| ♭ | (2 → S) → prop |>
+            ( ( transpose-ar prop-b S-b) (mod ♭ (\ sh → const-Unit-prop-ufp-tr (first (second sh)))))
+            ( mod ♭ (\ (_ : 2 → S) → Unit-prop))
+            ( ( transpose-ar prop-b S-b) (mod ♭ const-Unit-prop-S-tr))
+            lhs-inverse=const-unit
+            ( rev <| ♭ | (2 → S) → prop |>
+              ( ( transpose-ar prop-b S-b) (mod ♭ const-Unit-prop-S-tr))
+              ( mod ♭ (\ (_ : 2 → S) → Unit-prop))
+              rhs-inverse=const-unit)
+      in
+      let f=g
+        := inv-ap-is-emb
+            <| ♭ | S → b-extract U-b (rar prop-b) |>
+            <| ♭ | (2 → S) → prop |>
+            ( transpose-ar prop-b S-b)
+            ( is-emb-is-equiv
+              <| ♭ | S → b-extract U-b (rar prop-b) |>
+              <| ♭ | (2 → S) → prop |>
+              ( transpose-ar prop-b S-b)
+              ( transpose-ar-is-equiv prop-b S-b))
+            ( mod ♭ (\ sh → const-Unit-prop-ufp-tr (first (second sh))))
+            ( mod ♭ const-Unit-prop-S-tr)
+            transpose-f=transpose-g
+      in
+      ap
+        <| ♭ | S → b-extract U-b (rar prop-b) |>
+        ( b-extract U-b (rar prop-b))
+        ( mod ♭ (\ sh → const-Unit-prop-ufp-tr (first (second sh))))
+        ( mod ♭ const-Unit-prop-S-tr)
+        ( \ F → let mod ♭ f := F in f s)
+        f=g
+
+#def is-cov-i-eq-S-const-Unit (s : S)
+  : ( is-cov-i-tr (first s))
+    = ( const-Unit-prop-S-tr s)
+  :=
+    concat
+      ( b-extract U-b (rar prop-b))
+      ( is-cov-i-tr (first s))
+      ( const-Unit-prop-ufp-tr (first (second s)))
+      ( const-Unit-prop-S-tr s)
+      ( is-cov-i-eq-ufp-const-Unit s)
+      ( ufp-const-Unit-eq-S-const-Unit s)
+```
+
+## Transpose equalities
+
+```rzk
+#def transpose-eq-is-cov_b
+  :
+  ( ( transpose-ar prop-b S-b) (mod ♭ (\ (s : S) → is-cov-i-tr (first s)))
+  = mod ♭ (\ (h : (2 → S)) → (is-cov-i-prop (\ b → first (h b)))))
+  := transpose-untranspose-ar-precompose
+    prop-b U-b S-b
+    ( mod ♭ (\ s → first s))
+    ( mod ♭ is-cov-i-prop)
+
+
+#def transpose-eq-is-cov
+  : ( let mod ♭ lhs := (transpose-ar prop-b S-b) (mod ♭ (\ (s : S) → is-cov-i-tr (first s))) in lhs)
+  = ( \ h → (is-cov-i-prop (\ b → first (h b))))
+  := b-extract-eq
+      ( mod ♭ ((2 → S) → prop))
+      ( ( transpose-ar prop-b S-b) (mod ♭ (\ (s : S) → is-cov-i-tr (first s))))
+      ( mod ♭ (\ (h : (2 → S)) → (is-cov-i-prop (\ b → first (h b)))))
+      transpose-eq-is-cov_b
+
+
+#def transpose-eq-is-pure_b
+  : transpose-ar prop-b S-b (mod ♭ const-Unit-prop-S-tr)
+  = ( mod ♭ (\ h → Unit-prop))
+  := transpose-untranspose-ar prop-b S-b (mod ♭ (\ h → Unit-prop))
+
+#def transpose-eq-pure
+  : ( let mod ♭ lhs := transpose-ar prop-b S-b (mod ♭ const-Unit-prop-S-tr) in lhs)
+  = ( \ _ → Unit-prop)
+  := b-extract-eq
+      ( mod ♭ ((2 → S) → prop))
+      ( transpose-ar prop-b S-b (mod ♭ const-Unit-prop-S-tr))
+      ( mod ♭ (\ (_ : (2 → S)) → Unit-prop))
+      transpose-eq-is-pure_b
+```
+
+## S is covariant
+
+```rzk
+#def s-is-cov-i (f : 2 → S)
+  : is-cov-i (\ b → first (f b))
+  :=
+    let f0 := mod ♭ (\ (s : S) → is-cov-i-tr (first s)) in
+    let f1 := mod ♭ const-Unit-prop-S-tr in
+    let S-is-pullback
+      : let mod ♭ g := f0 in let mod ♭ h := f1 in <| ♭ | (s : S) → (g) s = (h) s |>
+      := mod ♭ (\ s → is-cov-i-eq-S-const-Unit s)
+    in
+    let f0=f1
+      : f0 = f1
+      :=
+        let mod ♭ g := f0 in
+        let mod ♭ h := f1 in
+        let mod ♭ p := S-is-pullback in
+        crisp-induction-flat
+          ( mod ♭ (S → b-extract U-b (rar prop-b)))
+          ( f0) (f1)
+          ( mod ♭ (eq-htpy funext S (\ _ → b-extract U-b (rar prop-b)) (g) (h) (p)))
+    in
+    let mod ♭ tr-f0 := (transpose-ar prop-b S-b f0) in
+    let mod ♭ tr-f1 := (transpose-ar prop-b S-b f1) in
+    let transposed-eq
+      : ( \ (h : (2 → S)) → (is-cov-i-prop (\ b → first (h b)))) =_{(2 → S) → prop} (\ (h : (2 → S)) → Unit-prop)
+      := concat
+          ( ( 2 → S) → prop)
+          ( \ h → (is-cov-i-prop (\ b → first (h b))))
+          ( tr-f0)
+          ( \ _ → Unit-prop)
+          ( rev
+            ( ( 2 → S) → prop)
+            ( tr-f0)
+            ( \ h → (is-cov-i-prop (\ b → first (h b))))
+            transpose-eq-is-cov)
+          ( concat
+            ( ( 2 → S) → prop)
+            ( tr-f0)
+            ( tr-f1)
+            ( \ _ → Unit-prop)
+            ( ap
+              ( <| ♭ | S → b-extract U-b (rar prop-b) |>)
+              ( ( 2 → S) → prop)
+              f0 f1
+              ( \ f → let mod ♭ tr := (transpose-ar prop-b S-b f) in tr)
+              f0=f1)
+            transpose-eq-pure)
+    in
+    transport U (\ A → A)
+      Unit (is-cov-i (\ b → first (f b)))
+      ( rev U
+        ( is-cov-i (\ b → first (f b)))
+        Unit
+        ( ap prop U
+          ( is-cov-i-prop (\ b → first (f b)))
+          Unit-prop
+          ( \ p → first p)
+          ( htpy-eq
+            ( 2 → S)
+            ( \ _ → prop)
+            ( \ h → (is-cov-i-prop (\ b → first (h b))))
+            ( \ _ → Unit-prop)
+            transposed-eq
+            f)))
+      unit
+```
+
+## Morphisms
+
+```rzk
+#def mor2fun (f : 2 → S)
+  : Σ ( A : S) , (Σ (B : S) , (first A) → (first B))
+  :=
+  ( f 0₂ , (f 1₂ , coe-i (\ x → first (f x)) (s-is-cov-i f)))
+```
+
+## Directed gluing
+
+```rzk
+#postulate shape-function
+  : ( \ (i : 2) → (i ≡ 0₂)) → U
+
+#postulate is-a-cov-sigma-closed (A B : U) (is-a-cov-A : is-a-cov A) (is-a-cov-B : is-a-cov B)
+  : is-a-cov (product A B)
+
+#postulate is-a-cov-id (A : U) (is-a-cov-A : is-a-cov A) (x y : A)
+  : is-a-cov (x = y)
+
+#postulate dirglue-is-acov (A B : S) (f : (first A) → (first B)) (i : 2)
+  :
+  is-a-cov (
+    Σ ( b : (first B))
+  , ( \ (t : 2) → t ≡ 0₂ ∧ i ≡ 0₂) → fib (first A) (first B) f b
+  )
+
+#def dirglue (A B : S) (f : (first A) → (first B))
+  : 2 → S
+  :=
+    \ i →
+      ( Σ ( b : (first B))
+      , ( \ (t : 2) → t ≡ 0₂ ∧ i ≡ 0₂) → fib (first A) (first B) f b
+    , dirglue-is-acov A B f i)
+
+#postulate is-prop-is-a-cov (A : U)
+  : is-prop (is-a-cov A)
+
+#def equiv-extent-0 (X : U)
+  : Equiv ((\ (t : 2) → t ≡ 0₂ ∧ 0₂ ≡ 0₂) → X) X
+  :=
+    ( ( \ h → h 0₂)
+    , ( ( ( \ x _ → x
+          , \ h →
+              naiveextext-extext extext
+                2 (\ t → t ≡ 0₂ ∧ 0₂ ≡ 0₂) (\ _ → BOT) (\ _ → X) (\ _ → recBOT)
+                ( \ _ → h 0₂) h
+                ( \ _ → refl))
+        , ( \ x _ → x , \ _ → refl))))
+
+#def is-contr-extent-1 (X : U)
+  : is-contr ((\ (t : 2) → t ≡ 0₂ ∧ 1₂ ≡ 0₂) → X)
+  :=
+    ( ( \ _ → recBot)
+    , \ f →
+        naiveextext-extext extext
+          2 (\ t → t ≡ 0₂ ∧ 1₂ ≡ 0₂) (\ _ → BOT) (\ _ → X) (\ _ → recBOT)
+          ( \ _ → recBot) f
+          ( \ _ → recBOT))
+
+#def dirglue_0=A (A B : S) (f : (first A) → (first B))
+  : dirglue A B f 0₂ = A
+  :=
+    let equiv-0
+      : Equiv (first (dirglue A B f 0₂)) (first A)
+      := equiv-comp
+           ( first (dirglue A B f 0₂))
+           ( total-type (first B) (fib (first A) (first B) f))
+           ( first A)
+           ( total-equiv-family-of-equiv
+               ( first B)
+               ( \ b → (\ (t : 2) → t ≡ 0₂ ∧ 0₂ ≡ 0₂) → fib (first A) (first B) f b)
+               ( fib (first A) (first B) f)
+               ( \ b → equiv-extent-0 (fib (first A) (first B) f b)))
+           ( ( \ (_ , (a , _)) → a)
+           , is-equiv-domain-sum-of-fibers (first A) (first B) f)
+    in
+    let path-types
+      : first (dirglue A B f 0₂) = first A
+      := first (ua (first (dirglue A B f 0₂)) (first A)) equiv-0
+    in
+    eq-pair U is-a-cov
+      ( dirglue A B f 0₂) A
+      ( path-types
+      , first
+          ( is-prop-is-a-cov (first A)
+            ( transport U is-a-cov
+                ( first (dirglue A B f 0₂)) (first A)
+                path-types
+                ( second (dirglue A B f 0₂)))
+            ( second A)))
+
+#def dirglue_1=B (A B : S) (f : (first A) → (first B))
+  : dirglue A B f 1₂ = B
+  :=
+    let equiv-1
+      : Equiv (first (dirglue A B f 1₂)) (first B)
+      := equiv-total-type-is-contr-fiber
+           ( first B)
+           ( \ b → (\ (t : 2) → t ≡ 0₂ ∧ 1₂ ≡ 0₂) → fib (first A) (first B) f b)
+           ( \ b → is-contr-extent-1 (fib (first A) (first B) f b))
+    in
+    let path-types
+      : first (dirglue A B f 1₂) = first B
+      := first (ua (first (dirglue A B f 1₂)) (first B)) equiv-1
+    in
+    eq-pair U is-a-cov
+      ( dirglue A B f 1₂) B
+      ( path-types
+      , first
+          ( is-prop-is-a-cov (first B)
+            ( transport U is-a-cov
+                ( first (dirglue A B f 1₂)) (first B)
+                path-types
+                ( second (dirglue A B f 1₂)))
+            ( second B)))
+
+#postulate mor2fun-dirglue=f (A B : S) (f : (first A) → (first B))
+  : mor2fun (dirglue A B f) = (A , (B , f))
+
+#postulate nat-transform-is-eq (f g : 2 → S) (a : (i : 2) → first (f i) → first (g i))
+  : iff
+    ( ( i : 2) → (is-equiv (first (f i)) (first (g i)) (a i)))
+    ( product (is-equiv (first (f 0₂)) (first (g 0₂)) (a 0₂)) (is-equiv (first (f 1₂)) (first (g 1₂)) (a 1₂)))
+```

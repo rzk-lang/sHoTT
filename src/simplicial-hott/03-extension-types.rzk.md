@@ -1824,3 +1824,142 @@ equivalent to extending the fiber.
       ( equiv-based-paths-family (A t) (B t) (τ t)))
     ( \ t → (a t , refl)))
 ```
+
+## Tope disjunction elimination along identity paths
+
+\(\mathsf{rec}_{\lor}^{\psi,\phi}(a_\psi, a*\phi)\) (written
+`recOR(psi, phi, a_psi, a_phi)` in the code) is well-typed when \(a*\psi\) and
+\(a*\phi\) are \_definitionally* equal on \(\psi \land \phi\). Sometimes this is
+too strong since many terms are not _definitionally_ equal, but only equal up to
+a path. Luckily, assuming relative function extensionality, we can define a
+weaker version of \(\mathsf{rec}_{\lor}\) (`recOR`), which we call `rec-path`,
+that can work in presence of a witness of type \(\prod_{t : I \mid \psi \land
+\phi} a*\psi(t) = a*\phi(t)\).
+
+### Construction of `rec-path`
+
+The idea is straightforward. We ask for a proof that `a = b` for all points in
+\(\psi \land \phi\). Then, by relative function extensionality (`relfunext2`),
+we can show that restrictions of `a` and `b` to \(\psi \land \phi\) are equal.
+If we reformulate `a` as extension of its restriction, then we can `transport`
+this reformulation along the path connecting two restrictions and apply `recOR`.
+
+First, we define how to restrict an extension type to a subshape:
+
+```rzk
+#section rec-path-construction
+
+#variable I : CUBE
+#variables ψ φ : I → TOPE
+#variable A : (t : I | ψ t ∨ φ t) → U
+
+-- Restrict extension type to a subshape.
+#define rec-path-restrict-phi
+  ( a : (t : φ) → A t)
+  : ( t : I | ψ t ∧ φ t) → A t
+  := \ t → a t
+
+-- Restrict extension type to a subshape.
+#define rec-path-restrict-psi
+  ( a : (t : ψ) → A t)
+  : ( t : I | ψ t ∧ φ t) → A t
+  := \ t → a t
+```
+
+Then, how to reformulate an `a` (or `b`) as an extension of its restriction:
+
+```rzk
+-- Reformulate extension type as an extension of a restriction.
+#define rec-path-ext-of-restrict-psi
+  ( a : (t : ψ) → A t)
+  : ( t : ψ)
+  → A t [ ψ t ∧ φ t ↦ rec-path-restrict-psi a t ]
+  := a  -- type is coerced automatically here
+
+-- Reformulate extension type as an extension of a restriction.
+#define rec-path-ext-of-restrict-phi
+  ( a : (t : φ) → A t)
+  : ( t : φ)
+  → A t [ ψ t ∧ φ t ↦ rec-path-restrict-phi a t ]
+  := a  -- type is coerced automatically here
+```
+
+Now, assuming relative function extensionality, we construct a path between
+restrictions:
+
+```rzk
+-- Transform extension of an identity into an identity of restrictions.
+#define rec-path-restrict-eq
+  ( a-in-ψ : (t : ψ) → A t)
+  ( a-in-φ : (t : φ) → A t)
+  : ( e : (t : I | ψ t ∧ φ t) → a-in-ψ t = a-in-φ t)
+  → rec-path-restrict-psi a-in-ψ = rec-path-restrict-phi a-in-φ
+  :=
+  first
+  ( second
+    ( extext I
+      ( \ t → ψ t ∧ φ t)
+      ( \ t → BOT)
+      ( \ t → A t)
+      ( \ t → recBOT)
+      ( \ t → a-in-ψ t)
+      ( \ t → a-in-φ t)))
+```
+
+Finally, we bring everything together into `rec-path`:
+
+```rzk
+-- A weaker version of recOR, demanding only a path between a and b:
+-- recOR(ψ, φ, a, b) demands that for ψ ∧ φ we have a == b (definitionally)
+-- (rec-path ψ φ a b e) demands that
+-- e is the proof that a = b (intensionally) for ψ ∧ φ
+#define rec-path uses (extext)
+  ( a-in-ψ : (t : ψ) → A t)
+  ( a-in-φ : (t : φ) → A t)
+  ( e : (t : I | ψ t ∧ φ t) → a-in-ψ t = a-in-φ t)
+  : ( t : I | ψ t ∨ φ t) → A t
+  := \ t → recOR(
+        ψ t ↦
+          transport
+          ( ( s : I | ψ s ∧ φ s) → A s)
+          ( \ ra → (s : ψ) → A s [ ψ s ∧ φ s ↦ ra s ])
+          ( rec-path-restrict-psi a-in-ψ)
+          ( rec-path-restrict-phi a-in-φ)
+          ( rec-path-restrict-eq a-in-ψ a-in-φ e)
+          ( rec-path-ext-of-restrict-psi a-in-ψ)
+          ( t)
+      , φ t ↦
+          rec-path-ext-of-restrict-phi a-in-φ t
+      )
+
+#end rec-path-construction
+```
+
+### Gluing extension types
+
+An application of `rec-path` is gluing together extension types, whenever we can
+show that they are equal on the intersection of shapes.
+
+The latter can be easily shown when the intersection maps to a set; we record
+the resulting homotopy as `htpy-eq-eq-is-set-on-conjunction` below.
+
+```rzk
+-- If two extension types are equal along two subshapes,
+-- then they are also equal along their union.
+#define htpy-eq-eq-is-set-on-conjunction uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( φ : I → TOPE)
+  ( A : (t : I | ψ t ∨ φ t) → U)
+  ( a b : (t : I | ψ t ∨ φ t) → A t)
+  ( e-in-ψ : (t : ψ) → a t = b t)
+  ( e-in-φ : (t : φ) → a t = b t)
+  ( border-is-a-set : (t : I | ψ t ∧ φ t) → is-set (A t))
+  : ( t : I | ψ t ∨ φ t) → a t = b t
+  :=
+  rec-path I ψ φ
+  ( \ t → a t = b t)
+  ( e-in-ψ)
+  ( e-in-φ)
+  ( \ t → border-is-a-set t (a t) (b t) (e-in-ψ t) (e-in-φ t))
+```

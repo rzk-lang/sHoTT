@@ -59,10 +59,10 @@ This is a literate `rzk` file:
 
 ### The 3 dimensional inner horns
 
-For `Δ³` with coordinates `((t₁, t₂), t₃)` and `t₃ ≤ t₂ ≤ t₁`, faces are numbered
-as in `hom3` (RS17): face 3 is `t₃ ≡ 0₂`, face 2 is `t₂ ≡ t₃`, face 1 is
-`t₁ ≡ t₂`, face 0 is `t₁ ≡ 1₂`. The inner horn `Λ³_k` is the union of all faces
-except face `k`.
+For `Δ³` with coordinates `((t₁, t₂), t₃)` and `t₃ ≤ t₂ ≤ t₁`, faces are
+numbered as in `hom3` (RS17): face 3 is `t₃ ≡ 0₂`, face 2 is `t₂ ≡ t₃`, face 1
+is `t₁ ≡ t₂`, face 0 is `t₁ ≡ 1₂`. The inner horn `Λ³_k` is the union of all
+faces except face `k`.
 
 ```rzk
 #def Λ³₁

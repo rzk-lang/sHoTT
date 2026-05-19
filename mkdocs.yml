@@ -1,6 +1,6 @@
 site_name: 'Simplicial HoTT'
-repo_url: https://github.com/rzk-lang/sHoTT
-repo_name: rzk-lang/sHoTT
+repo_url: https://github.com/LIshy2/sHoTT
+repo_name: LIshy2/sHoTT
 edit_uri: edit/main/src
 
 docs_dir: src

@@ -200,6 +200,276 @@ The union of shapes is defined by disjunction on topes.
   := \ t → ψ t ∨ χ t
 ```
 
+### Gluing of shapes in low dimensions
+
+We now define instances of the “gluing” construction from RS17, Definition 3.8,
+for all pairs of dimensions with \(0 \leq n \leq 2\) and \(0 \leq m \leq 2\).
+For each \(n,m\), the shapes \(A : 2^{1+n+1} → \mathrm{TOPE}\) and \(B :
+2^{1+m+1} → \mathrm{TOPE}\) are glued to a shape in \(2^{1+n+1+m+1}\) by
+precomposing with the appropriate coordinate maps and then taking a conjunction
+of the resulting topes, as in the paper.
+
+```rzk
+#def shape-gluing-0-0
+  ( A B : (2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := \ ((t- , u) , s+) →
+    A (t- , u) ∧ B (u , s+)
+
+#def shape-gluing-1-0
+  ( A : (2 × 2 × 2) → TOPE)
+  ( B : (2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := \ (((t- , t1) , u) , s+) →
+    A ((t- , t1) , u) ∧ B (u , s+)
+
+#def shape-gluing-0-1
+  ( A : (2 × 2) → TOPE)
+  ( B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := \ (((t- , u) , s1) , s+) →
+    A (t- , u) ∧ B ((u , s1) , s+)
+
+#def shape-gluing-2-0
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  ( B : (2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((t- , t1) , t2) , u) , s+) →
+    A (((t- , t1) , t2) , u) ∧ B (u , s+)
+
+#def shape-gluing-0-2
+  ( A : (2 × 2) → TOPE)
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((t- , u) , s1) , s2) , s+) →
+    A (t- , u) ∧ B (((u , s1) , s2) , s+)
+
+#def shape-gluing-1-1
+  ( A B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((t- , t1) , u) , s1) , s+) →
+    A ((t- , t1) , u) ∧ B ((u , s1) , s+)
+
+#def shape-gluing-1-2
+  ( A : (2 × 2 × 2) → TOPE)
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ (((((t- , t1) , u) , s1) , s2) , s+) →
+    A ((t- , t1) , u) ∧ B (((u , s1) , s2) , s+)
+
+#def shape-gluing-2-1
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  ( B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ (((((t- , t1) , t2) , u) , s1) , s+) →
+    A (((t- , t1) , t2) , u) ∧ B ((u , s1) , s+)
+
+#def shape-gluing-2-2
+  ( A B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((((t- , t1) , t2) , u) , s1) , s2) , s+) →
+    A (((t- , t1) , t2) , u) ∧ B (((u , s1) , s2) , s+)
+```
+
+### Restrictions of shapes in low dimensions
+
+Following RS17, Definition 3.11, we define the restriction of a shape in
+`2^{1+n+1}` by fixing the “bottom” coordinate to `1₂` and the “top” coordinate
+to `0₂` and then forgetting these coordinates.
+
+For `n = 0` we obtain an unrestricted shape, and for `1 ≤ n ≤ 3` we obtain
+shapes in `2ⁿ`.
+
+```rzk
+#def shape-restriction-0
+  ( A : (2 × 2) → TOPE)
+  : TOPE
+  := A (1₂ , 0₂)
+
+#def shape-restriction-1
+  ( A : (2 × 2 × 2) → TOPE)
+  : 2 → TOPE
+  := \ t1 → A ((1₂ , t1) , 0₂)
+
+#def shape-restriction-2
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2) → TOPE
+  := \ (t1 , t2) → A (((1₂ , t1) , t2) , 0₂)
+
+#def shape-restriction-3
+  ( A : (2 × 2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := \ ((t1 , t2) , t3) → A ((((1₂ , t1) , t2) , t3) , 0₂)
+
+#def shape-restriction-4
+  ( A : (2 × 2 × 2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := \ (((t1 , t2) , t3) , t4) →
+    A (((((1₂ , t1) , t2) , t3) , t4) , 0₂)
+
+#def shape-restriction-5
+  ( A : (2 × 2 × 2 × 2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := \ ((((t1 , t2) , t3) , t4) , t5) →
+    A ((((((1₂ , t1) , t2) , t3) , t4) , t5) , 0₂)
+```
+
+### Joins of shapes in low dimensions
+
+Using the gluing and restriction operations above, we now define low-dimensional
+instances of the join construction from RS17, Definition 3.13, for the cases
+`0 ≤ n ≤ 2` and `0 ≤ m ≤ 2`.
+
+```rzk
+#def shape-join-0-0
+  ( A B : (2 × 2) → TOPE)
+  : 2 → TOPE
+  := shape-restriction-1 (shape-gluing-0-0 A B)
+
+#def shape-join-0-1
+  ( A : (2 × 2) → TOPE)
+  ( B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2) → TOPE
+  := shape-restriction-2 (shape-gluing-0-1 A B)
+
+#def shape-join-0-2
+  ( A : (2 × 2) → TOPE)
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-restriction-3 (shape-gluing-0-2 A B)
+
+#def shape-join-1-0
+  ( A : (2 × 2 × 2) → TOPE)
+  ( B : (2 × 2) → TOPE)
+  : ( 2 × 2) → TOPE
+  := shape-restriction-2 (shape-gluing-1-0 A B)
+
+#def shape-join-1-1
+  ( A B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-restriction-3 (shape-gluing-1-1 A B)
+
+#def shape-join-1-2
+  ( A : (2 × 2 × 2) → TOPE)
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := shape-restriction-4 (shape-gluing-1-2 A B)
+
+#def shape-join-2-0
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  ( B : (2 × 2) → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-restriction-3 (shape-gluing-2-0 A B)
+
+#def shape-join-2-1
+  ( A : (2 × 2 × 2 × 2) → TOPE)
+  ( B : (2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := shape-restriction-4 (shape-gluing-2-1 A B)
+
+#def shape-join-2-2
+  ( A B : (2 × 2 × 2 × 2) → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := shape-restriction-5 (shape-gluing-2-2 A B)
+```
+
+### Pushout joins in low dimensions
+
+Finally, we combine joins and unions to obtain low-dimensional instances of the
+pushout join construction from RS17, Definition 3.15. Given inclusions of
+augmented shapes `A ⊂ B` and `C ⊂ D`, the pushout join is the subshape
+`(A ⋆ D) ∪ (B ⋆ C)` of `B ⋆ D`. At the level of topes, this is expressed by
+`shape-union` of the corresponding joins.
+
+```rzk
+#def shape-pushout-join-0-0
+  ( B D : (2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : 2 → TOPE
+  := shape-union 2
+       ( shape-join-0-0 A D)
+       ( shape-join-0-0 B C)
+
+#def shape-pushout-join-0-1
+  ( B : (2 × 2) → TOPE)
+  ( D : (2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2) → TOPE
+  := shape-union (2 × 2)
+       ( shape-join-0-1 A D)
+       ( shape-join-0-1 B C)
+
+#def shape-pushout-join-0-2
+  ( B : (2 × 2) → TOPE)
+  ( D : (2 × 2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2)
+       ( shape-join-0-2 A D)
+       ( shape-join-0-2 B C)
+
+#def shape-pushout-join-1-0
+  ( B : (2 × 2 × 2) → TOPE)
+  ( D : (2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2) → TOPE
+  := shape-union (2 × 2)
+       ( shape-join-1-0 A D)
+       ( shape-join-1-0 B C)
+
+#def shape-pushout-join-1-1
+  ( B D : (2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2)
+       ( shape-join-1-1 A D)
+       ( shape-join-1-1 B C)
+
+#def shape-pushout-join-1-2
+  ( B : (2 × 2 × 2) → TOPE)
+  ( D : (2 × 2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2 × 2)
+       ( shape-join-1-2 A D)
+       ( shape-join-1-2 B C)
+
+#def shape-pushout-join-2-0
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  ( D : (2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2)
+       ( shape-join-2-0 A D)
+       ( shape-join-2-0 B C)
+
+#def shape-pushout-join-2-1
+  ( B : (2 × 2 × 2 × 2) → TOPE)
+  ( D : (2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2 × 2)
+       ( shape-join-2-1 A D)
+       ( shape-join-2-1 B C)
+
+#def shape-pushout-join-2-2
+  ( B D : (2 × 2 × 2 × 2) → TOPE)
+  ( A : B → TOPE)
+  ( C : D → TOPE)
+  : ( 2 × 2 × 2 × 2 × 2) → TOPE
+  := shape-union (2 × 2 × 2 × 2 × 2)
+       ( shape-join-2-2 A D)
+       ( shape-join-2-2 B C)
+```
+
 ### Connection squares
 
 <!-- This is manually adjusted diagram (hopefully fully supported in the future by rzk) -->

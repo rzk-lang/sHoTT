@@ -38,6 +38,10 @@ nav:
       - Inner Families: simplicial-hott/12-inner.rzk.md
       - Cocartesian Families: simplicial-hott/13-cocartesian.rzk.md
       - Limits and Colimits: simplicial-hott/14-limits.rzk.md
+  - Triangulated Type Theory:
+      - Modalities: triangulated/01-modalities.rzk.md
+      - Axioms: triangulated/02-axioms.rzk.md
+      - Directed Univalence in S: triangulated/03-diruniv.rzk.md
 
 markdown_extensions:
   - admonition

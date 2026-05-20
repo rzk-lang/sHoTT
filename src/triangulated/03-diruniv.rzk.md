@@ -9,8 +9,8 @@ This is a literate `rzk` file:
 ## Prerequisites
 
 - `hott/*` — HoTT library.
-- `01-modalities.rzk.md` — Modality operations and type aliases.
-- `02-axioms.rzk.md` — Arrow, right adjoint, and transpose adjunction.
+- `01-modalities.rzk.md` — Modality operations.
+- `02-axioms.rzk.md` — right adjoint, and transpose adjunction.
 
 ```rzk
 #postulate funext
@@ -78,7 +78,7 @@ This is a literate `rzk` file:
       ( b)
 ```
 
-## Transposed helpers
+## Amazing covariance
 
 ```rzk
 #def is-cov-i-tr
@@ -114,18 +114,14 @@ This is a literate `rzk` file:
     b-extract
       ( mod ♭ (b-extract U-b (rar univ-family-prop-b) → b-extract U-b (rar prop-b)))
       ( ( untranspose-ar prop-b (rar univ-family-prop-b)) (mod ♭ (\ h → Unit-prop)))
-```
 
-## Covariance transport
-
-```rzk
 #def coe-i (A : 2 → U) (phi : is-cov-i A)
   : A 0₂ → A 1₂
   :=
   \ a0 → first (first (phi a0))
 ```
 
-## Contractibility of universal family
+## S is covariant
 
 ```rzk
 #def univ-family-prop-is-contr
@@ -191,11 +187,7 @@ This is a literate `rzk` file:
         ( mod ♭ (\ x → first x))
         ( mod ♭ (\ x → Unit-prop))
         ( mod ♭ ufp-first-eq-const-Unit))
-```
 
-## Equality chain
-
-```rzk
 #def is-cov-i-eq-ufp-const-Unit (s : S)
   : ( is-cov-i-tr (first s))
     = ( const-Unit-prop-ufp-tr (first (second s)))
@@ -281,11 +273,7 @@ This is a literate `rzk` file:
       ( const-Unit-prop-S-tr s)
       ( is-cov-i-eq-ufp-const-Unit s)
       ( ufp-const-Unit-eq-S-const-Unit s)
-```
 
-## Transpose equalities
-
-```rzk
 #def transpose-eq-is-cov_b
   :
   ( ( transpose-ar prop-b S-b) (mod ♭ (\ (s : S) → is-cov-i-tr (first s)))
@@ -295,7 +283,6 @@ This is a literate `rzk` file:
     ( mod ♭ (\ s → first s))
     ( mod ♭ is-cov-i-prop)
 
-
 #def transpose-eq-is-cov
   : ( let mod ♭ lhs := (transpose-ar prop-b S-b) (mod ♭ (\ (s : S) → is-cov-i-tr (first s))) in lhs)
   = ( \ h → (is-cov-i-prop (\ b → first (h b))))
@@ -304,7 +291,6 @@ This is a literate `rzk` file:
       ( ( transpose-ar prop-b S-b) (mod ♭ (\ (s : S) → is-cov-i-tr (first s))))
       ( mod ♭ (\ (h : (2 → S)) → (is-cov-i-prop (\ b → first (h b)))))
       transpose-eq-is-cov_b
-
 
 #def transpose-eq-is-pure_b
   : transpose-ar prop-b S-b (mod ♭ const-Unit-prop-S-tr)
@@ -319,11 +305,7 @@ This is a literate `rzk` file:
       ( transpose-ar prop-b S-b (mod ♭ const-Unit-prop-S-tr))
       ( mod ♭ (\ (_ : (2 → S)) → Unit-prop))
       transpose-eq-is-pure_b
-```
 
-## S is covariant
-
-```rzk
 #def s-is-cov-i (f : 2 → S)
   : is-cov-i (\ b → first (f b))
   :=
@@ -390,7 +372,7 @@ This is a literate `rzk` file:
       unit
 ```
 
-## Morphisms
+## mor2fun
 
 ```rzk
 #def mor2fun (f : 2 → S)
@@ -399,12 +381,9 @@ This is a literate `rzk` file:
   ( f 0₂ , (f 1₂ , coe-i (\ x → first (f x)) (s-is-cov-i f)))
 ```
 
-## Directed gluing
+## dirglue
 
 ```rzk
-#postulate shape-function
-  : ( \ (i : 2) → (i ≡ 0₂)) → U
-
 #postulate is-a-cov-sigma-closed (A B : U) (is-a-cov-A : is-a-cov A) (is-a-cov-B : is-a-cov B)
   : is-a-cov (product A B)
 

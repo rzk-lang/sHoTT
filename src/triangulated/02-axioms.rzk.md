@@ -10,7 +10,7 @@ This is a literate `rzk` file:
 
 - `01-modalities.rzk.md` — Modality operations and type aliases.
 
-## Arrow and right adjoint
+## Right adjoint
 
 ```rzk
 #def ar (A : U)
@@ -29,11 +29,7 @@ This is a literate `rzk` file:
   recOR(
     ( i ≡ 0₂) ↦ x
   , ( i ≡ 1₂) ↦ y)
-```
 
-## Transpose adjunction
-
-```rzk
 #def transpose-ar (A B : ♭ U)
   : <| ♭ | B → (b-extract U-b (rar (mod ♭ A))) |> → <| ♭ | (ar B) → A |>
   :=
@@ -69,11 +65,7 @@ This is a literate `rzk` file:
   :=
   ( transpose-ar (mod ♭ A) (mod ♭ B)
   , transpose-ar-is-equiv (mod ♭ A) (mod ♭ B))
-```
 
-## Functoriality of rar
-
-```rzk
 #def rar-functorial-pure (A : ♭ U) (a : ♭ A)
   : b-extract U-b (rar (mod ♭ A))
   :=
@@ -85,11 +77,7 @@ This is a literate `rzk` file:
   :=
   (untranspose-ar (mod ♭ B) (rar (mod ♭ A)))
     (mod ♭ (\ (p : 2 → b-extract U-b (rar (mod ♭ A))) → let mod ♭ eta := ar-rar-counit in f (eta (mod ♭ A) p)))
-```
 
-## Transpose naturality
-
-```rzk
 #def transpose-ar-natural
   ( A B C : ♭ U)
   ( h : ♭ C → B)

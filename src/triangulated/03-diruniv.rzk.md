@@ -1,4 +1,4 @@
-# 3. Directed universe
+# 3. Directed univalence
 
 This is a literate `rzk` file:
 

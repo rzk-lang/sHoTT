@@ -60,7 +60,7 @@ This is a literate `rzk` file:
   mod ♯ (x_2)
 ```
 
-## Usefull modal aliases
+## Useful modal aliases
 
 ```rzk
 #def U-b

@@ -1320,6 +1320,181 @@ composition of `funext`, pointwise `iso-eq`, and `iso-extensionality`.
               ( iso-extensionality X A (\ x → first (fiberwise-is-rezk-A x)) f g)))))
 ```
 
+## Rezk extension types
+
+If `A : ψ → U` is a family of Rezk types indexed over a shape `ψ`, then the
+extension type `(s : ψ) → A s` is also Rezk. The proof mirrors that of
+`is-rezk-function-type`, replacing function extensionality and pointwise
+equivalences of function types by their extension-type analogues `equiv-ExtExt`
+and `equiv-extensions-equiv`.
+
+```rzk
+#def triple-comp-iso-eq-extension-type uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( fiberwise-is-rezk-A : (s : ψ) → is-rezk (A s))
+  ( f g : (s : ψ) → A s)
+  : ( f = g)
+  → Iso
+      ( ( s : ψ) → A s)
+      ( is-segal-extension-type extext I ψ A
+        ( \ s → first (fiberwise-is-rezk-A s)))
+      ( f) (g)
+  :=
+    triple-comp
+      ( f = g)
+      ( ( s : ψ) → f s = g s)
+      ( ( s : ψ) → Iso (A s) (first (fiberwise-is-rezk-A s)) (f s) (g s))
+      ( Iso
+        ( ( s : ψ) → A s)
+        ( is-segal-extension-type extext I ψ A
+          ( \ s → first (fiberwise-is-rezk-A s)))
+        ( f) (g))
+      ( first
+        ( inv-equiv
+          ( Iso
+            ( ( s : ψ) → A s)
+            ( is-segal-extension-type extext I ψ A
+              ( \ s → first (fiberwise-is-rezk-A s)))
+            ( f) (g))
+          ( ( s : ψ) → Iso (A s) (first (fiberwise-is-rezk-A s)) (f s) (g s))
+          ( iso-extensionality-extension-type I ψ A
+            ( \ s → first (fiberwise-is-rezk-A s))
+            ( f) (g))))
+      ( first
+        ( equiv-extensions-equiv extext I ψ (\ _ → BOT)
+          ( \ s → f s = g s)
+          ( \ s → Iso (A s) (first (fiberwise-is-rezk-A s)) (f s) (g s))
+          ( \ s →
+            ( iso-eq (A s) (first (fiberwise-is-rezk-A s)) (f s) (g s)
+            , second (fiberwise-is-rezk-A s) (f s) (g s)))
+          ( \ _ → recBOT)))
+      ( first (equiv-ExtExt extext I ψ (\ _ → BOT) A (\ _ → recBOT) f g))
+
+#def compute-iso-eq-extension-type uses (extext funext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( fiberwise-is-rezk-A : (s : ψ) → is-rezk (A s))
+  ( f g : (s : ψ) → A s)
+  : ( iso-eq
+      ( ( s : ψ) → A s)
+      ( is-segal-extension-type extext I ψ A
+        ( \ s → first (fiberwise-is-rezk-A s)))
+      ( f) (g))
+  = ( triple-comp-iso-eq-extension-type I ψ A fiberwise-is-rezk-A f g)
+  :=
+    eq-htpy funext
+      ( f = g)
+      ( \ _ →
+        Iso
+          ( ( s : ψ) → A s)
+          ( is-segal-extension-type extext I ψ A
+            ( \ s → first (fiberwise-is-rezk-A s)))
+          ( f) (g))
+      ( iso-eq
+        ( ( s : ψ) → A s)
+        ( is-segal-extension-type extext I ψ A
+          ( \ s → first (fiberwise-is-rezk-A s)))
+        ( f) (g))
+      ( triple-comp-iso-eq-extension-type I ψ A fiberwise-is-rezk-A f g)
+      ( \ p →
+        eq-Iso-eq-first
+          ( ( s : ψ) → A s)
+          ( is-segal-extension-type extext I ψ A
+            ( \ s → first (fiberwise-is-rezk-A s)))
+          ( f) (g)
+          ( iso-eq
+            ( ( s : ψ) → A s)
+            ( is-segal-extension-type extext I ψ A
+              ( \ s → first (fiberwise-is-rezk-A s)))
+            ( f) (g) (p))
+          ( triple-comp-iso-eq-extension-type I ψ A
+            fiberwise-is-rezk-A f g p)
+          ( ind-path
+            ( ( s : ψ) → A s)
+            ( f)
+            ( \ g' p' →
+              ( first
+                ( iso-eq
+                  ( ( s : ψ) → A s)
+                  ( is-segal-extension-type extext I ψ A
+                    ( \ s → first (fiberwise-is-rezk-A s)))
+                  ( f) (g') (p')))
+              = ( first
+                  ( triple-comp-iso-eq-extension-type I ψ A
+                    fiberwise-is-rezk-A f g' p')))
+            ( refl)
+            ( g) (p)))
+```
+
+```rzk title="RS17, Proposition 10.9b"
+#def is-rezk-extension-type uses (extext funext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( A : ψ → U)
+  ( fiberwise-is-rezk-A : (s : ψ) → is-rezk (A s))
+  : is-rezk ((s : ψ) → A s)
+  :=
+    ( is-segal-extension-type extext I ψ A
+      ( \ s → first (fiberwise-is-rezk-A s))
+    , \ f g →
+      transport-rev
+        ( ( f = g)
+        → Iso
+            ( ( s : ψ) → A s)
+            ( is-segal-extension-type extext I ψ A
+              ( \ s → first (fiberwise-is-rezk-A s)))
+            ( f) (g))
+        ( \ h →
+          is-equiv
+            ( f = g)
+            ( Iso
+              ( ( s : ψ) → A s)
+              ( is-segal-extension-type extext I ψ A
+                ( \ s → first (fiberwise-is-rezk-A s)))
+              ( f) (g))
+            ( h))
+        ( iso-eq
+          ( ( s : ψ) → A s)
+          ( is-segal-extension-type extext I ψ A
+            ( \ s → first (fiberwise-is-rezk-A s)))
+          ( f) (g))
+        ( triple-comp-iso-eq-extension-type I ψ A fiberwise-is-rezk-A f g)
+        ( compute-iso-eq-extension-type I ψ A fiberwise-is-rezk-A f g)
+        ( second
+          ( equiv-triple-comp
+            ( f = g)
+            ( ( s : ψ) → f s = g s)
+            ( ( s : ψ)
+            → Iso (A s) (first (fiberwise-is-rezk-A s)) (f s) (g s))
+            ( Iso
+              ( ( s : ψ) → A s)
+              ( is-segal-extension-type extext I ψ A
+                ( \ s → first (fiberwise-is-rezk-A s)))
+              ( f) (g))
+            ( equiv-ExtExt extext I ψ (\ _ → BOT) A (\ _ → recBOT) f g)
+            ( equiv-extensions-equiv extext I ψ (\ _ → BOT)
+              ( \ s → f s = g s)
+              ( \ s → Iso (A s) (first (fiberwise-is-rezk-A s)) (f s) (g s))
+              ( \ s →
+                ( iso-eq (A s) (first (fiberwise-is-rezk-A s)) (f s) (g s)
+                , second (fiberwise-is-rezk-A s) (f s) (g s)))
+              ( \ _ → recBOT))
+            ( inv-equiv
+              ( Iso
+                ( ( s : ψ) → A s)
+                ( is-segal-extension-type extext I ψ A
+                  ( \ s → first (fiberwise-is-rezk-A s)))
+                ( f) (g))
+              ( ( s : ψ)
+              → Iso (A s) (first (fiberwise-is-rezk-A s)) (f s) (g s))
+              ( iso-extensionality-extension-type I ψ A
+                ( \ s → first (fiberwise-is-rezk-A s))
+                ( f) (g))))))
+```
+
 ## Isomorphisms Induction
 
 Since isomorphisms are equivalent to equalities in Rezk types, we can prove the

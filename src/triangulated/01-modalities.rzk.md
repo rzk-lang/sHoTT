@@ -67,21 +67,13 @@ This is a literate `rzk` file:
   : <| ♭ | U |>
   := mod ♭ U
 
-#def prop
-  : U
-  := Σ (A : U) , is-prop A
-
-#def prop-b
+#def Prop-b
   : <| ♭ | U |>
-  := mod ♭ prop
+  := mod ♭ Prop
 
-#def univ-family-prop
-  : U
-  := Σ (A : prop) , (first A)
-
-#def univ-family-prop-b
+#def univ-family-Prop-b
   : <| ♭ | U |>
-  := mod ♭ univ-family-prop
+  := mod ♭ univ-family-Prop
 
 #def Unit-b
   : <| ♭ | U |>

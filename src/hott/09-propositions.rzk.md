@@ -32,6 +32,18 @@ this is true for every contractible type.
 #def is-prop-Unit
   : is-prop Unit
   := \ x y → (is-contr-path-types-Unit x y)
+
+#def Prop
+  : U
+  := Σ (A : U) , is-prop A
+
+#def Unit-Prop
+  : Prop
+  := (Unit , is-prop-Unit)
+
+#def univ-family-Prop
+  : U
+  := Σ (A : Prop) , (first A)
 ```
 
 ## Alternative characterizations: definitions
@@ -516,6 +528,54 @@ propositions.
   :=
   is-prop-fiberwise-prop2 A (\ _ → A) (\ x y → is-contr (x = y))
   ( \ x y → is-prop-is-contr-itself (x = y))
+```
+
+## Contractibility of pointed propositions
+
+```rzk
+#assume ua : UA
+
+#def univ-family-Prop-is-contr uses (funext weakfunext ua)
+  : is-contr (univ-family-Prop)
+  :=
+    ( ( Unit-Prop , unit)
+    , \ x →
+      let A := first (first x) in
+      let p := second (first x) in
+      let a := second x in
+      let path-UA :=
+        first (ua Unit A)
+          ( \ _ → a
+          , ( ( \ _ → unit , \ _ → refl)
+            , ( \ _ → unit , \ y → first (p a y))))
+      in
+      let path-Prop :=
+        eq-pair U (\ T → is-prop T) Unit-Prop (first x)
+          ( path-UA
+          , first (is-prop-is-prop A
+              ( transport U (\ T → is-prop T) Unit A path-UA is-prop-Unit)
+              ( p)))
+      in
+        eq-pair Prop (\ Q → first Q) (Unit-Prop , unit) x
+          ( path-Prop
+          , first (p
+              ( transport Prop (\ Q → first Q) Unit-Prop (first x)
+                  path-Prop unit)
+              ( a))))
+
+#def ufp-first-eq-const-Unit uses (funext weakfunext ua)
+  :
+    ( \ (x : univ-family-Prop) → first x)
+    = ( \ (x : univ-family-Prop) → Unit-Prop)
+  :=
+    eq-htpy funext univ-family-Prop (\ _ → Prop)
+      ( \ x → first x) (\ x → Unit-Prop)
+      ( \ x →
+        rev Prop Unit-Prop (first x)
+          ( ap univ-family-Prop Prop
+            ( Unit-Prop , unit) x
+            ( \ y → first y)
+            ( second univ-family-Prop-is-contr x)))
 ```
 
 ## Subtypes

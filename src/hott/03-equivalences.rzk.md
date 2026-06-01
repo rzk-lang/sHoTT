@@ -1136,3 +1136,11 @@ dependent function types.
   : is-equiv A' A α → is-equiv B' B β
   := is-equiv-equiv-is-equiv' A' A α B' B β S is-equiv-s' is-equiv-s
 ```
+
+## Univalence
+
+```rzk
+#def UA
+  : U
+  := (A : U) → (B : U) → Equiv (Equiv A B) (A = B)
+```

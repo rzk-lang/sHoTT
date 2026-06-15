@@ -1347,10 +1347,10 @@ clean.</p>
 the code and aids in understanding the structure of every. The general format of
 a definition is as follows:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:concat" id="define:concat" style="visibility: visible; position: relative; color: inherit">concat</a></span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="err">  </span><span class="p">( </span>p <span class="p">:</span><span class="err"> x = y)</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="err">  </span><span class="p">( </span>q <span class="p">:</span><span class="err"> y = z)</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="err">  : (x = z)</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="err">  := ind-path A y (</span><span class="p">\ </span>z&#39; q&#39; <span class="err">→ (x = z&#39;)) p z q</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  <span class="p">( </span>p <span class="p">:</span> x = y)
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  <span class="p">( </span>q <span class="p">:</span> y = z)
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  : (x = z)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  := ind-path A y (<span class="p">\ </span>z&#39; q&#39; → (x = z&#39;)) p z q
 </span></code></pre></div>
 <ul>
 <li>
@@ -1380,43 +1380,43 @@ allows the reader to follow the branches of the tree, and to visually grasp the
 scope of each operation and argument. Consider the following example about Segal
 types:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-is-local-horn-inclusion" id="define:is-segal-is-local-horn-inclusion" style="visibility: visible; position: relative; color: inherit">is-segal-is-local-horn-inclusion</a></span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="err">  </span><span class="p">( </span>is-local-horn-inclusion-A <span class="p">:</span><span class="err"> is-local-horn-inclusion A)</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="err">  : is-segal A</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="err">  :=</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="err">  </span><span class="p">\ </span>x y z f g <span class="err">→</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="err">  contractible-fibers-is-equiv-projection</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="err">  ( Λ → A)</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="err">  </span><span class="p">( </span>\ k →
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    Σ ( h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">)))</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="err">    , ( hom2 A</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="err">        ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="err">        ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="err">        ( h)))</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="err">  </span><span class="p">( </span>second
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  <span class="p">( </span>is-local-horn-inclusion-A <span class="p">:</span> is-local-horn-inclusion A)
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  : is-segal A
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  :=
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  <span class="p">\ </span>x y z f g →
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  contractible-fibers-is-equiv-projection
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  ( Λ → A)
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  <span class="p">( </span>\ k →
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    Σ ( h <span class="p">:</span> hom A (k (<span class="m">0₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">1₂</span>)))
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    , ( hom2 A
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        ( k (<span class="m">0₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">1₂</span>))
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        ( <span class="p">\ </span>t → k (t , <span class="m">0₂</span>))
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        ( <span class="p">\ </span>t → k (<span class="m">1₂</span> , t))
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        ( h)))
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>  <span class="p">( </span>second
 </span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    ( equiv-comp
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>      ( Σ ( k <span class="p">:</span><span class="err"> Λ → A)</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="err">        , </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">)))</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="err">          , ( hom2 A</span>
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="err">              ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="err">              ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="err">              ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="err">              ( h)))</span>
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="err">      ( Δ² → A)</span>
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="err">      ( Λ  → A)</span>
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="err">      ( inv-equiv</span>
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="err">        ( Δ² → A)</span>
-</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="err">        </span><span class="p">( </span>Σ ( k <span class="p">:</span><span class="err"> Λ → A)</span>
-</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="err">          , </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>h <span class="p">:</span><span class="err"> hom A (k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">)))</span>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="err">            , ( hom2 A</span>
-</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="err">                ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="err">                ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
-</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="err">                ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
-</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="err">                ( h)))</span>
-</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="err">        ( equiv-horn-restriction A))</span>
-</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="err">      ( horn-restriction A , is-local-horn-inclusion-A)))</span>
-</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="err">  ( horn A x y z f g)</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>      ( Σ ( k <span class="p">:</span> Λ → A)
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        , <span class="kt">Σ</span> <span class="p">( </span>h <span class="p">:</span> hom A (k (<span class="m">0₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">1₂</span>)))
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>          , ( hom2 A
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>              ( k (<span class="m">0₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">1₂</span>))
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>              ( <span class="p">\ </span>t → k (t , <span class="m">0₂</span>))
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>              ( <span class="p">\ </span>t → k (<span class="m">1₂</span> , t))
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>              ( h)))
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>      ( Δ² → A)
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>      ( Λ  → A)
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>      ( inv-equiv
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>        ( Δ² → A)
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>        <span class="p">( </span>Σ ( k <span class="p">:</span> Λ → A)
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>          , <span class="kt">Σ</span> <span class="p">( </span>h <span class="p">:</span> hom A (k (<span class="m">0₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">1₂</span>)))
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>            , ( hom2 A
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>                ( k (<span class="m">0₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">1₂</span>))
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>                ( <span class="p">\ </span>t → k (t , <span class="m">0₂</span>))
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>                ( <span class="p">\ </span>t → k (<span class="m">1₂</span> , t))
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>                ( h)))
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>        ( equiv-horn-restriction A))
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>      ( horn-restriction A , is-local-horn-inclusion-A)))
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>  ( horn A x y z f g)
 </span></code></pre></div>
 <p>The root in this instance is the function
 <code>projection-equiv-contractible-fibers</code>. It takes four arguments, each starting
@@ -1436,11 +1436,11 @@ two-space indentation level increases.</p>
 depend on context, and we ask that contributors practice common sense when
 determining this. For instance, it may be sensible to group some arguments
 together on a line. Already in our example above we wrote</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="err">  hom2 A</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="err">  ( k (</span><span class="m">0₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">0₂</span><span class="err">)) (k (</span><span class="m">1₂</span><span class="err"> , </span><span class="m">1₂</span><span class="err">))</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="err">  ( </span><span class="p">\ </span>t <span class="err">→ k (t , </span><span class="m">0₂</span><span class="err">))</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="err">  ( </span><span class="p">\ </span>t <span class="err">→ k (</span><span class="m">1₂</span><span class="err"> , t))</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="err">  ( h)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>  hom2 A
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  ( k (<span class="m">0₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">0₂</span>)) (k (<span class="m">1₂</span> , <span class="m">1₂</span>))
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  ( <span class="p">\ </span>t → k (t , <span class="m">0₂</span>))
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  ( <span class="p">\ </span>t → k (<span class="m">1₂</span> , t))
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>  ( h)
 </span></code></pre></div>
 <p>visually grouping together <code>hom2</code> and <code>A</code>, and again the next three arguments,
 emphasizing their connection to eachother. When in doubt, it is generally better
@@ -1461,9 +1461,9 @@ to break lines sooner rather than later.</p>
   parenthization and indentation rules. Consider for instance the following
   sample code:</li>
 </ul>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="err">( moderately-long-name-of-a-function-A</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="err">  ( a-very-complicated-term-with-a-very-long-name-or-description-B</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="err">  , another-long-and-complicated-expression-for-another-term-C))</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>( moderately-long-name-of-a-function-A
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  ( a-very-complicated-term-with-a-very-long-name-or-description-B
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  , another-long-and-complicated-expression-for-another-term-C))
 </span></code></pre></div>
 <p>Our indentation convention has the beautiful feature that we can determine the
   structure of the code simply by scanning the left edge of the code block. The
@@ -1471,8 +1471,8 @@ to break lines sooner rather than later.</p>
   since we can immediately see that <code>function-A</code> is applied to the pair
   <code>(term-B , term-C)</code> by scanning the left edge of the code.</p>
 <p>Similarly, consider also</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="err">( ( a-long-and-complicated-arithmetic-expression-involving-many-operations)</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="err">* ( another-complicated-and-long-expression-with-symbols-and-numbers))</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>( ( a-long-and-complicated-arithmetic-expression-involving-many-operations)
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>* ( another-complicated-and-long-expression-with-symbols-and-numbers))
 </span></code></pre></div>
 <p>By having the multiplication symbol on the start of the line we can
   immediately see that we are multiplying the two long expressions together, as
@@ -1480,12 +1480,12 @@ to break lines sooner rather than later.</p>
 <p>Similarly, we also place function type formation arrows at the start of the
   next line. E.g.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:function" id="define:function" style="visibility: visible; position: relative; color: inherit">function</a></span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="err">  </span><span class="p">( </span>parameter-1 <span class="p">:</span><span class="err"> type-1)</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="err">  </span><span class="p">( </span>parameter-2 <span class="p">:</span><span class="err"> type-2)</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="err">  : type-with-a-name-3</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="err">  → type-with-a-longer-name-4</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="err">  → short-type-5</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="err">  := undefined</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  <span class="p">( </span>parameter-1 <span class="p">:</span> type-1)
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  <span class="p">( </span>parameter-2 <span class="p">:</span> type-2)
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  : type-with-a-name-3
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  → type-with-a-longer-name-4
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  → short-type-5
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  := undefined
 </span></code></pre></div>
 <p>!!! warning</p>
 <div class="language-text highlight"><pre><span></span><code>  This should not be confused with the convention for placement of arrows
@@ -1496,9 +1496,9 @@ to break lines sooner rather than later.</p>
   for the walrus separator (<code>:=</code>) and identity type formation with explicitly
   passed underlying type (<code>=_{...}</code>), we insert a new line directly after the
   operator as well. I.e.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="err">( ( a-term-of-a-type)</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="err">=_{ the-name-of-the-type}</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="err">  ( another-term-of-that-type))</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>( ( a-term-of-a-type)
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>=_{ the-name-of-the-type}
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  ( another-term-of-that-type))
 </span></code></pre></div>
 <ul>
 <li>The <code>uses</code>-keyword and the accompanying list of variables is placed on their
@@ -1506,30 +1506,30 @@ to break lines sooner rather than later.</p>
 </ul>
 <p>In the base case, write</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:my-name" id="define:my-name" style="visibility: visible; position: relative; color: inherit">my-name</a></span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="err">  uses (my-variable-1 my-variable-2 ...)</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="err">  ...</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  uses (my-variable-1 my-variable-2 ...)
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  ...
 </span></code></pre></div>
 <p>If the variable list (<code>(my-variable-1 my-variable-2 ...)</code>) does not fit on the
   first line together with <code>uses</code>, insert a line break directly after <code>uses</code> and
   write:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:my-name" id="define:my-name" style="visibility: visible; position: relative; color: inherit">my-name</a></span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="err">  uses</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="err">    ( my-variable-1 my-variable-2 ...)</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="err">  ...</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  uses
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    ( my-variable-1 my-variable-2 ...)
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  ...
 </span></code></pre></div>
 <p>If the list still does not fit on a single line, start insert line breaks
   between variables. Here, there is some room for common sense in where the line
   breaks should be inserted, allowing for certain variable names to be grouped
   together:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:my-name" id="define:my-name" style="visibility: visible; position: relative; color: inherit">my-name</a></span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="err">  uses</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="err">    ( my-variable-1</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="err">      my-variable-2</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="err">      ...)</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="err">  ...</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  uses
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    ( my-variable-1
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>      my-variable-2
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>      ...)
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  ...
 </span></code></pre></div>
 <ul>
 <li>If you find that the separation between the type signature of a definition and
@@ -1594,7 +1594,7 @@ special name, that name should probably be used.</p>
 <ul>
 <li>As an example, the canonical function with type signature</li>
 </ul>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="err">(A → B → C) → (A × B → C)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>(A → B → C) → (A × B → C)
 </span></code></pre></div>
 <p>should be called <code>uncurry</code>, using the <code>descriptor</code>-pattern. It should not, for
   instance, be called <code>map-from-product-map-of-maps</code>.</p>
@@ -1620,13 +1620,13 @@ that is made. Finally, prepend the concluding type.</p>
 <ul>
 <li>For example, consider an entry with the following signature</li>
 </ul>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="err">#def ?????</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="err">  </span><span class="p">( </span>is-prop-A <span class="p">:</span><span class="err"> is-prop A)</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="err">  </span><span class="p">( </span>is-prop-B <span class="p">:</span><span class="err"> is-prop B)</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="err">  ( (f , g) : iff A B)</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="err">  : is-equiv A B f</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="err">  := ...</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>#def <span class="bp">?????</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  <span class="p">( </span>is-prop-A <span class="p">:</span> is-prop A)
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>  <span class="p">( </span>is-prop-B <span class="p">:</span> is-prop B)
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>  ( (f , g) : iff A B)
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  : is-equiv A B f
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  := ...
 </span></code></pre></div>
 <p>applying the scheme we get
   1. <code>is-prop</code>, noting the assumption that <code>A</code> is a proposition. We do not
@@ -1637,12 +1637,12 @@ that is made. Finally, prepend the concluding type.</p>
   4. <code>is-equiv-iff-is-prop-is-prop</code>, finally prepending the concluding type.</p>
 <p>Hence our final definition will be</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-iff-is-prop-is-prop" id="define:is-equiv-iff-is-prop-is-prop" style="visibility: visible; position: relative; color: inherit">is-equiv-iff-is-prop-is-prop</a></span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="err">  </span><span class="p">( </span>A B <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="err">  </span><span class="p">( </span>is-prop-A <span class="p">:</span><span class="err"> is-prop A)</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="err">  </span><span class="p">( </span>is-prop-B <span class="p">:</span><span class="err"> is-prop B)</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="err">  ( (f , g) : iff A B)</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="err">  : is-equiv A B f</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="err">  := ...</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>  <span class="p">( </span>is-prop-A <span class="p">:</span> is-prop A)
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>  <span class="p">( </span>is-prop-B <span class="p">:</span> is-prop B)
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>  ( (f , g) : iff A B)
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>  : is-equiv A B f
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>  := ...
 </span></code></pre></div>
 <p>Observe how it is immediately clear what the elements that go into the entry
   are, in which order they go, and what you get out if applying it!</p>
@@ -1814,13 +1814,13 @@ please consider the following:</p>
 <p>For example:</p>
 <div class="language-md highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="sb">```rzk</span><span class="w"> </span>title=&quot;RS17, Definition 10.6&quot;
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-rezk" id="define:is-rezk" style="visibility: visible; position: relative; color: inherit">is-rezk</a></span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="err">  </span><span class="p">( </span>A <span class="p">:</span><span class="err"> U)</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="err">  : U</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="err">  :=</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="err">  </span><span class="kt">Σ</span><span class="err"> </span><span class="p">( </span>is-segal-A <span class="p">:</span><span class="err"> is-segal A)</span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="err">  , </span><span class="p">( </span>(x <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="err">    → </span><span class="p">(</span>y <span class="p">:</span><span class="err"> A)</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="err">    → is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y))</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>  : <span class="kt">U</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>  :=
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>  <span class="kt">Σ</span> <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>  , <span class="p">( </span>(x <span class="p">:</span> A)
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>    → <span class="p">(</span>y <span class="p">:</span> A)
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>    → is-equiv (x = y) (Iso A is-segal-A x y) (iso-eq A is-segal-A x y))
 </span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="sb">```</span>
 </span></code></pre></div>
 <p>The <code>title</code>-field may also be used to give descriptive headers to sections of
@@ -1939,7 +1939,6 @@ for more inspiration, have a look at:</p>
       <script src="../assets/javascripts/bundle.3220b9d7.min.js"></script>
       
         <script src="../javascript/mathjax.js"></script>
-      
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

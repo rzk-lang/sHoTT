@@ -151,7 +151,7 @@ We start over from a stronger hypothesis of a half adjoint equivalence.
   : ( projection-hae-inverse (first w)) = w
   := (first (second (first proj-B-to-A-is-half-adjoint-equivalence))) w
 
-#def projection-hae-fibered-htpy
+#def projection-hae-fibered-htpy uses (proj-B-to-A-is-half-adjoint-equivalence)
   : ( transport A B (first ((projection-hae-inverse (first w)))) (first w)
     ( first-path-Σ A B
       ( projection-hae-inverse (first w)) w
@@ -168,7 +168,7 @@ We start over from a stronger hypothesis of a half adjoint equivalence.
       ( projection-hae-total-htpy))
   := (second proj-B-to-A-is-half-adjoint-equivalence) w
 
-#def projection-hae-transport-coherence
+#def projection-hae-transport-coherence uses (proj-B-to-A-is-half-adjoint-equivalence)
   : ( projection-hae-section (first w))
   = ( transport A B (first ((projection-hae-inverse (first w)))) (first w)
       ( first-path-Σ A B
@@ -183,7 +183,7 @@ We start over from a stronger hypothesis of a half adjoint equivalence.
     ( projection-hae-base-coherence)
     ( second (projection-hae-inverse (first w)))
 
-#def projection-hae-fibered-homotopy-contraction
+#def projection-hae-fibered-homotopy-contraction uses (proj-B-to-A-is-half-adjoint-equivalence)
   : ( projection-hae-section (first w)) =_{B (first w)} (second w)
   :=
     concat (B (first w))

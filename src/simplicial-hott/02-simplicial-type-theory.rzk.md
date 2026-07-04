@@ -787,7 +787,7 @@ We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following settin
       → ( α : A' → A)
       → ( σ' : (t : I | χ t ∧ ϕ t) → A')
       → ( ( \ (t : I | ϕ t) → α (s A' σ' t))
-        =_{ ϕ → A}
+        =_{ (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)]}
           ( s A (\ t → α (σ' t)))))
     , ( ( A' : U)
       → ( A : U)
@@ -801,7 +801,7 @@ We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following settin
             ( \ t → s A (\ t' → α (σ' t')) t)
             ( h A' A α σ')
             ( \ t → α (S A' σ' τ' t)))
-        =_{ (t : ψ) → A [ϕ t ↦ s A (\ t' → α (τ' t')) t]}
+        =_{ (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ s A (\ t' → α (σ' t')) t]}
           ( S A (\ t → α (σ' t)) (\ t → α (τ' t)))))
 
 #end retracts-shape-inclusions

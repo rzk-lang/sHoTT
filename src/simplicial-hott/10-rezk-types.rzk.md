@@ -1428,11 +1428,11 @@ equivalence with no extra data, and then define some helpers.
   : ( x : A) → (hom A a' x) → (hom A a x)
   := \ x → first (inverse-representable-equiv x)
 
-#def arr-map-representable-equiv
+#def arr-map-representable-equiv uses (ψ)
   : hom A a' a
   := evid A a (hom A a') (map-representable-equiv)
 
-#def arr-inv-map-representable-equiv
+#def arr-inv-map-representable-equiv uses (ψ)
   : hom A a a'
   := evid A a' (hom A a) (inv-map-representable-equiv)
 ```
@@ -1558,7 +1558,7 @@ We compute the required paths for the section of
         ( a)
         ( id-hom A a)))
 
-#def compute-htpy-inv-map-fib-equiv-map-fib-equiv-id
+#def compute-htpy-inv-map-fib-equiv-map-fib-equiv-id uses (ψ a')
   : inv-map-representable-equiv a (map-representable-equiv a (id-hom A a))
   =_{ hom A a a}
     id-hom A a

@@ -6,6 +6,12 @@ This is a literate `rzk` file:
 #lang rzk-1
 ```
 
+## Natural numbers
+
+```rzk
+#data nat := zero | suc (n : nat)
+```
+
 ## products of types
 
 ```rzk

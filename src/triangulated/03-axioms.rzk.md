@@ -433,6 +433,149 @@ Naturality of transpositions.
     , crisp-induction-flat-section A x y)
   , ( crisp-induction-flat-rev A x y
     , crisp-induction-flat-retraction A x y))
+
+#def flat-equiv (A B :♭ U) (e :♭ Equiv A B)
+  : Equiv (♭ A) (♭ B)
+  :=
+    ( b-map A B (first e)
+    , ( ( b-map B A (first (first (second e)))
+        , \ x →
+            flat-convoy A
+              (\ z → b-map B A (first (first (second e))) (b-map A B (first e) z) = z) x
+              (\ (a :_b A) → \ _ →
+                crisp-induction-flat A
+                  ( first (first (second e)) (first e a))
+                  a
+                  ( mod ♭ (second (first (second e)) a))))
+      , ( b-map B A (first (second (second e)))
+        , \ y →
+            flat-convoy B
+              (\ z → b-map A B (first e) (b-map B A (first (second (second e))) z) = z) y
+              (\ (b :_b B) → \ _ →
+                crisp-induction-flat B
+                  ( first e (first (second (second e)) b))
+                  b
+                  ( mod ♭ (second (second (second e)) b))))))
+
+#def is-equiv-b-map-via-splits
+  ( A' A :♭ U)
+  ( f :_b A' → A)
+  ( B' B : U)
+  ( eA' : Equiv (♭ A') B')
+  ( eA : Equiv (♭ A) B)
+  ( eB : Equiv B' B)
+  ( η : (a :_b A') →
+      first eB (first eA' (mod ♭ a))
+      = first eA (b-map A' A f (mod ♭ a)))
+  : is-equiv (♭ A') (♭ A) (b-map A' A f)
+  :=
+    is-equiv-Equiv-is-equiv
+      ( ♭ A') ( ♭ A) ( b-map A' A f)
+      ( B') ( B) ( first eB)
+      ( ( ( first eA' , first eA)
+        , \ w →
+            flat-convoy A'
+              ( \ z →
+                  first eB (first eA' z)
+                  = first eA (b-map A' A f z))
+              w
+              ( \ (a :_b A') → \ _ → η a))
+      , ( second eA' , second eA))
+      ( second eB)
+
+#def total-equiv-flat-family
+  ( A :♭ U)
+  ( P Q : ♭ A → U)
+  ( e : (a :_b A) → Equiv (P (mod ♭ a)) (Q (mod ♭ a)))
+  : Equiv (Σ (x : ♭ A) , P x) (Σ (x : ♭ A) , Q x)
+  :=
+    total-equiv-family-of-equiv
+      ( ♭ A)
+      ( P)
+      ( Q)
+      ( \ x →
+          flat-convoy A
+            ( \ x' → Equiv (P x') (Q x'))
+            x
+            ( \ (a :_b A) → \ _ → e a))
+
+#def total-equiv-flat-family2
+  ( A :♭ U)
+  ( B :♭ A → U)
+  ( C C' : (a :_b A) → (b :_b B a) → U)
+  ( e : (a :_b A) → (b :_b B a) → Equiv (C a b) (C' a b))
+  : Equiv
+      ( Σ (a : ♭ A)
+      , ( let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in C a0 b0)))
+      ( Σ (a : ♭ A)
+      , ( let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in C' a0 b0)))
+  :=
+    total-equiv-flat-family A
+      ( \ a →
+          let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in C a0 b0))
+      ( \ a →
+          let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in C' a0 b0))
+      ( \ (a0 :_b A) →
+          total-equiv-flat-family (B a0)
+            ( \ b → let mod ♭ b0 := b in C a0 b0)
+            ( \ b → let mod ♭ b0 := b in C' a0 b0)
+            ( \ (b0 :_b B a0) → e a0 b0))
+
+#def total-equiv-flat-family3
+  ( A :♭ U)
+  ( B :♭ A → U)
+  ( C :♭ (a : A) → B a → U)
+  ( D D' : (a :_b A) → (b :_b B a) → (c :_b C a b) → U)
+  ( e : (a :_b A) → (b :_b B a) → (c :_b C a b) → Equiv (D a b c) (D' a b c))
+  : Equiv
+      ( Σ (a : ♭ A)
+      , ( let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in
+              Σ (c : ♭ (C a0 b0))
+              , ( let mod ♭ c0 := c in D a0 b0 c0))))
+      ( Σ (a : ♭ A)
+      , ( let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in
+              Σ (c : ♭ (C a0 b0))
+              , ( let mod ♭ c0 := c in D' a0 b0 c0))))
+  :=
+    total-equiv-flat-family2 A B
+      ( \ (a0 :_b A) → \ (b0 :_b B a0) →
+          Σ (c : ♭ (C a0 b0))
+          , ( let mod ♭ c0 := c in D a0 b0 c0))
+      ( \ (a0 :_b A) → \ (b0 :_b B a0) →
+          Σ (c : ♭ (C a0 b0))
+          , ( let mod ♭ c0 := c in D' a0 b0 c0))
+      ( \ (a0 :_b A) → \ (b0 :_b B a0) →
+          total-equiv-flat-family (C a0 b0)
+            ( \ c → let mod ♭ c0 := c in D a0 b0 c0)
+            ( \ c → let mod ♭ c0 := c in D' a0 b0 c0)
+            ( \ (c0 :_b C a0 b0) → e a0 b0 c0))
+
+#def is-prop-flat
+  ( A :♭ U)
+  ( p : ♭ (is-prop A))
+  : is-prop (♭ A)
+  :=
+    is-prop-all-elements-equal (♭ A)
+      (\ x y →
+        flat-convoy A (\ z → z =_{♭ A} y) x
+          (\ (a :_b A) → \ _ →
+            flat-convoy A (\ z → mod ♭ a =_{♭ A} z) y
+              (\ (b :_b A) → \ _ →
+                let mod ♭ p0 := p in
+                crisp-induction-flat A a b
+                  ( mod ♭ (all-elements-equal-is-prop A p0 a b)))))
 ```
 
 ### Sharp modality
@@ -491,6 +634,17 @@ Naturality of transpositions.
     , crisp-induction-op-section A x y)
   , ( crisp-induction-op-rev A x y
     , crisp-induction-op-retraction A x y))
+
+#def is-contr-of-op
+  ( A :ᵒᵖ U)
+  ( ic : ᵒᵖ (is-contr A))
+  : is-contr (ᵒᵖ A)
+  :=
+    let mod ᵒᵖ (center , contr) := ic in
+      ( mod ᵒᵖ center
+      , \ y →
+          let mod ᵒᵖ y0 := y in
+            crisp-induction-op A center y0 (mod ᵒᵖ (contr y0)))
 ```
 
 ## Axiom 6: Interval detects discreteness
@@ -506,25 +660,89 @@ Naturality of transpositions.
 The discrete interval is equivalent to Bool.
 
 ```rzk
-#def discrete-I-elim (i :♭ 𝕀) (A : U) (x y : A)
-  : A
+#data Bool := false | true
+
+#def discrete-I-elim (i :♭ 𝕀) (A : 𝕀 → U) (x : A 0ᵢ) (y : A 1ᵢ)
+  : A i
   :=
   recOR(
     ( i ≡ 0ᵢ) ↦ x
   , ( i ≡ 1ᵢ) ↦ y)
+
+#def is-equiv-discrete-I
+  ( i :♭ 𝕀)
+  ( A B : 𝕀 → U)
+  ( f : (j : 𝕀) → A j → B j)
+  ( e0 : is-equiv (A 0ᵢ) (B 0ᵢ) (f 0ᵢ))
+  ( e1 : is-equiv (A 1ᵢ) (B 1ᵢ) (f 1ᵢ))
+  : is-equiv (A i) (B i) (f i)
+  :=
+  discrete-I-elim i
+    ( \ j → is-equiv (A j) (B j) (f j))
+    ( e0)
+    ( e1)
+
+#def shape-♭𝕀
+  : U
+  := shape (_ : (_b 𝕀) | TOP)
+
+#def crisp-I-to-Bool (i :_b 𝕀)
+  : Bool
+  := discrete-I-elim i (\ _ → Bool) false true
+
+#def shape-♭𝕀-to-Bool
+  : shape-♭𝕀 → Bool
+  := \ p → let mod _b i := unform p in crisp-I-to-Bool i
+
+#def Bool-to-shape-♭𝕀
+  : Bool → shape-♭𝕀
+  := \ b → match b (false ⇒ form (mod _b 0ᵢ) | true ⇒ form (mod _b 1ᵢ))
+
+#def form-♭𝕀 (i :_b 𝕀)
+  : shape-♭𝕀
+  := form (mod _b i)
+
+#def retr-shape-♭𝕀-Bool (i :_b 𝕀)
+  : Bool-to-shape-♭𝕀 (crisp-I-to-Bool i) =_{shape-♭𝕀} form-♭𝕀 i
+  :=
+  recOR(
+    ( i ≡ 0ᵢ) ↦ refl
+  , ( i ≡ 1ᵢ) ↦ refl)
+
+#def equiv-shape-♭𝕀-Bool
+  : Equiv shape-♭𝕀 Bool
+  :=
+    equiv-has-inverse
+      shape-♭𝕀
+      Bool
+      shape-♭𝕀-to-Bool
+      Bool-to-shape-♭𝕀
+      ( \ p →
+          let mod _b i := unform p
+            into
+              ( \ (i : (_b 𝕀)) →
+                  Bool-to-shape-♭𝕀 (shape-♭𝕀-to-Bool (form i)) =_{shape-♭𝕀} form i)
+          in
+            retr-shape-♭𝕀-Bool i)
+      ( \ b → match b (false ⇒ refl | true ⇒ refl))
 ```
 
 ## Axiom 8: Cubes separate
 
 ```rzk
-#def I-power (n : nat) (A : U)
-  : U
+#def I^n (n : nat)
+  : CUBE
   := match n
-      (zero ⇒ A
-      | suc k ih ⇒ 𝕀 → ih)
+      (zero ⇒ 1
+      | suc k ih ⇒ 𝕀 × ih)
+
+#def zero-vec-I^n
+  ( m : nat)
+  : shape (_ : I^n m | TOP)
+  := match m (zero ⇒ form *₁ | suc k ih ⇒ form (0₂ , unform ih))
 
 #postulate cubes-separate (A B :♭ U) (f :♭ A → B)
-  : iff (is-equiv A B f) ((n : nat) → Equiv (♭ (I-power n A)) (♭ (I-power n B)))
+  : iff (is-equiv A B f) ((n :_b nat) → is-equiv (♭ (I^n n → A)) (♭ (I^n n → B)) (b-map (I^n n → A) (I^n n → B) (\ p t → f (p t))))
 ```
 
 ## Extensionalities

@@ -283,6 +283,30 @@ For example, we prove that based path spaces are contractible.
       ( q)
 ```
 
+```rzk title="Transport in the space of paths ending at a is zag-zig concatenation"
+#def concat-as-endpoint-transport
+  ( A : U)
+  ( a x y : A)
+  ( p : x = y)
+  ( q : x = a)
+  : ( transport A (\ z → (z = a)) x y p q)
+  = ( concat A y x a (rev A x y p) q)
+  :=
+    ind-path
+      ( A)
+      ( x)
+      ( \ y' p' →
+        ( transport A (\ z → (z = a)) x y' p' q)
+      = ( concat A y' x a (rev A x y' p') q))
+      ( rev
+          ( x = a)
+          ( concat A x x a refl q)
+          ( q)
+          ( left-unit-concat A x a q))
+      ( y)
+      ( p)
+```
+
 The center of contraction in the based path space is `#!rzk (a , refl)`.
 
 ```rzk title="The center of contraction in the based path space"

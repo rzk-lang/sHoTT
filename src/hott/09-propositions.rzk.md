@@ -159,6 +159,125 @@ If two propositions are logically equivalent, then they are equivalent:
   := (first e , is-equiv-iff-is-prop-is-prop A B is-prop-A is-prop-B e)
 ```
 
+Being an equivalence is a proposition. The proof shows that if `f` is an
+equivalence, then both `has-retraction f` and `has-section f` are contractible
+(as fibres of pre-/post-composition with `f` at the identity), hence so is their
+product `is-equiv A B f`.
+
+```rzk
+#def is-equiv-postcomp-is-equiv uses (funext)
+  ( A B C : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : is-equiv (C → A) (C → B) (\ h c → f (h c))
+  :=
+    is-equiv-function-is-equiv-family funext C (\ _ → A) (\ _ → B) (\ _ → f)
+      (\ _ → is-equiv-f)
+
+#def is-equiv-precomp-is-equiv uses (funext)
+  ( A B C : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : is-equiv (B → C) (A → C) (\ h a → h (f a))
+  :=
+    is-equiv-has-inverse (B → C) (A → C)
+      (\ h a → h (f a))
+      ( (\ k b → k (first (has-inverse-is-equiv A B f is-equiv-f) b))
+      , ( (\ h →
+            eq-htpy funext B (\ _ → C)
+              (\ b → h (f (first (has-inverse-is-equiv A B f is-equiv-f) b)))
+              h
+              (\ b →
+                ap B C
+                  ( f (first (has-inverse-is-equiv A B f is-equiv-f) b))
+                  b
+                  h
+                  ( second (second (has-inverse-is-equiv A B f is-equiv-f)) b)))
+        , (\ k →
+            eq-htpy funext A (\ _ → C)
+              (\ a → k (first (has-inverse-is-equiv A B f is-equiv-f) (f a)))
+              k
+              (\ a →
+                ap A C
+                  ( first (has-inverse-is-equiv A B f is-equiv-f) (f a))
+                  a
+                  k
+                  ( first (second (has-inverse-is-equiv A B f is-equiv-f)) a)))))
+
+#def equiv-has-section-fib uses (funext)
+  ( A B : U)
+  ( f : A → B)
+  : Equiv
+      ( has-section A B f)
+      ( fib (B → A) (B → B) (\ s → comp B A B f s) (identity B))
+  :=
+    total-equiv-family-of-equiv (B → A)
+      (\ s → homotopy B B (comp B A B f s) (identity B))
+      (\ s → (comp B A B f s) = identity B)
+      (\ s →
+        inv-equiv
+          ( (comp B A B f s) = identity B)
+          ( homotopy B B (comp B A B f s) (identity B))
+          ( equiv-FunExt funext B (\ _ → B) (comp B A B f s) (identity B)))
+
+#def equiv-has-retraction-fib uses (funext)
+  ( A B : U)
+  ( f : A → B)
+  : Equiv
+      ( has-retraction A B f)
+      ( fib (B → A) (A → A) (\ r → comp A B A r f) (identity A))
+  :=
+    total-equiv-family-of-equiv (B → A)
+      (\ r → homotopy A A (comp A B A r f) (identity A))
+      (\ r → (comp A B A r f) = identity A)
+      (\ r →
+        inv-equiv
+          ( (comp A B A r f) = identity A)
+          ( homotopy A A (comp A B A r f) (identity A))
+          ( equiv-FunExt funext A (\ _ → A) (comp A B A r f) (identity A)))
+
+#def is-contr-has-section-is-equiv uses (funext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : is-contr (has-section A B f)
+  :=
+    is-contr-equiv-is-contr'
+      ( has-section A B f)
+      ( fib (B → A) (B → B) (\ s → comp B A B f s) (identity B))
+      ( equiv-has-section-fib A B f)
+      ( is-contr-map-is-equiv (B → A) (B → B) (\ s → comp B A B f s)
+          ( is-equiv-postcomp-is-equiv A B B f is-equiv-f)
+          ( identity B))
+
+#def is-contr-has-retraction-is-equiv uses (funext)
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : is-contr (has-retraction A B f)
+  :=
+    is-contr-equiv-is-contr'
+      ( has-retraction A B f)
+      ( fib (B → A) (A → A) (\ r → comp A B A r f) (identity A))
+      ( equiv-has-retraction-fib A B f)
+      ( is-contr-map-is-equiv (B → A) (A → A) (\ r → comp A B A r f)
+          ( is-equiv-precomp-is-equiv A B A f is-equiv-f)
+          ( identity A))
+
+#def is-prop-is-equiv uses (funext)
+  ( A B : U)
+  ( f : A → B)
+  : is-prop (is-equiv A B f)
+  :=
+    is-prop-is-contr-is-inhabited (is-equiv A B f)
+      (\ is-equiv-f →
+        is-contr-product
+          ( has-retraction A B f)
+          ( has-section A B f)
+          ( is-contr-has-retraction-is-equiv A B f is-equiv-f)
+          ( is-contr-has-section-is-equiv A B f is-equiv-f))
+```
+
 Every contractible type is a proposition:
 
 ```rzk

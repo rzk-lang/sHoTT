@@ -189,6 +189,73 @@ thus an equivalence) on total spaces.
     ( total-type A B) (total-type A C) (total-map A B C f)
     ( has-inverse-total-is-equiv-fiberwise A B C f familyequiv)
 
+#def is-equiv-total-is-equiv-fiberwise1
+  ( A : U)
+  ( B C : A → U)
+  ( f : (a : A) → (B a) → (C a))
+  ( familyequiv : (a : A) → is-equiv (B a) (C a) (f a))
+  : is-equiv (Σ (a : A) , B a) (Σ (a : A) , C a)
+      ( \ (a , b) → (a , f a b))
+  := is-equiv-total-is-equiv-fiberwise A B C f familyequiv
+
+#def total-map2
+  ( A : U)
+  ( B : A → U)
+  ( C C' : (a : A) → B a → U)
+  ( f : (a : A) → (b : B a) → C a b → C' a b)
+  : ( Σ (a : A) , Σ (b : B a) , C a b) → (Σ (a : A) , Σ (b : B a) , C' a b)
+  := \ (a , (b , c)) → (a , (b , f a b c))
+
+#def is-equiv-total-is-equiv-fiberwise2
+  ( A : U)
+  ( B : A → U)
+  ( C C' : (a : A) → B a → U)
+  ( f : (a : A) → (b : B a) → C a b → C' a b)
+  ( familyequiv : (a : A) → (b : B a) → is-equiv (C a b) (C' a b) (f a b))
+  : is-equiv
+      ( Σ (a : A) , Σ (b : B a) , C a b)
+      ( Σ (a : A) , Σ (b : B a) , C' a b)
+      ( total-map2 A B C C' f)
+  :=
+    is-equiv-total-is-equiv-fiberwise A
+      ( \ a → Σ (b : B a) , C a b)
+      ( \ a → Σ (b : B a) , C' a b)
+      ( \ a → \ (b , c) → (b , f a b c))
+      ( \ a →
+          is-equiv-total-is-equiv-fiberwise (B a)
+            ( C a) (C' a) (f a) (familyequiv a))
+
+#def total-map3
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D D' : (a : A) → (b : B a) → C a b → U)
+  ( f : (a : A) → (b : B a) → (c : C a b) → D a b c → D' a b c)
+  : ( Σ (a : A) , Σ (b : B a) , Σ (c : C a b) , D a b c)
+    → ( Σ (a : A) , Σ (b : B a) , Σ (c : C a b) , D' a b c)
+  := \ (a , (b , (c , d))) → (a , (b , (c , f a b c d)))
+
+#def is-equiv-total-is-equiv-fiberwise3
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D D' : (a : A) → (b : B a) → C a b → U)
+  ( f : (a : A) → (b : B a) → (c : C a b) → D a b c → D' a b c)
+  ( familyequiv
+    : ( a : A) → (b : B a) → (c : C a b) → is-equiv (D a b c) (D' a b c) (f a b c))
+  : is-equiv
+      ( Σ (a : A) , Σ (b : B a) , Σ (c : C a b) , D a b c)
+      ( Σ (a : A) , Σ (b : B a) , Σ (c : C a b) , D' a b c)
+      ( total-map3 A B C D D' f)
+  :=
+    is-equiv-total-is-equiv-fiberwise A
+      ( \ a → Σ (b : B a) , Σ (c : C a b) , D a b c)
+      ( \ a → Σ (b : B a) , Σ (c : C a b) , D' a b c)
+      ( \ a → \ (b , (c , d)) → (b , (c , f a b c d)))
+      ( \ a →
+          is-equiv-total-is-equiv-fiberwise2 (B a)
+            ( C a) (D a) (D' a) (f a) (familyequiv a))
+
 #def total-equiv-family-of-equiv
   ( A : U)
   ( B C : A → U)
@@ -199,6 +266,33 @@ thus an equivalence) on total spaces.
     , is-equiv-total-is-equiv-fiberwise A B C
       ( \ a → first (familyeq a))
       ( \ a → second (familyeq a)))
+
+#def total-equiv-family-of-equiv2
+  ( A : U)
+  ( B : A → U)
+  ( C C' : (a : A) → B a → U)
+  ( familyeq : (a : A) → (b : B a) → Equiv (C a b) (C' a b))
+  : Equiv (Σ (a : A) , Σ (b : B a) , C a b) (Σ (a : A) , Σ (b : B a) , C' a b)
+  :=
+    ( total-map2 A B C C' (\ a b → first (familyeq a b))
+    , is-equiv-total-is-equiv-fiberwise2 A B C C'
+        ( \ a b → first (familyeq a b))
+        ( \ a b → second (familyeq a b)))
+
+#def total-equiv-family-of-equiv3
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  ( D D' : (a : A) → (b : B a) → C a b → U)
+  ( familyeq : (a : A) → (b : B a) → (c : C a b) → Equiv (D a b c) (D' a b c))
+  : Equiv
+      ( Σ (a : A) , Σ (b : B a) , Σ (c : C a b) , D a b c)
+      ( Σ (a : A) , Σ (b : B a) , Σ (c : C a b) , D' a b c)
+  :=
+    ( total-map3 A B C D D' (\ a b c → first (familyeq a b c))
+    , is-equiv-total-is-equiv-fiberwise3 A B C D D'
+        ( \ a b c → first (familyeq a b c))
+        ( \ a b c → second (familyeq a b c)))
 ```
 
 For the converse, we make use of our calculation on fibers. The first

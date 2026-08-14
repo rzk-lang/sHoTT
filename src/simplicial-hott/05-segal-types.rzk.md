@@ -1926,8 +1926,8 @@ Proposition 5.16]:
 #def is-contr-fill-Λ³₁-Δ³-is-segal uses (weakextext)
   ( A : U)
   ( is-segal-A : is-segal A)
-  ( h : Λ³₂ → A)
-  : is-contr ((t : Δ³) → A[ Λ³₂ t ↦ h t ])
+  ( h : Λ³₁ → A)
+  : is-contr ((t : Δ³) → A[ Λ³₁ t ↦ h t ])
   := is-weak-inner-anodyne-Δ³-Λ³₁ A is-segal-A h
 ```
 

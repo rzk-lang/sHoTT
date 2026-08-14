@@ -1819,23 +1819,26 @@ general statements about weak anodyne shape inclusions.
         ( \ s t → h (s , t)))
 ```
 
-The following argument from RS17 proves that `Λ³₂ ⊂ Δ³` is weakly inner anodyne.
-It should be easy to adapt it to prove that it is actually inner anodyne.
+The following argument from RS17 proves that `Λ³₁ ⊂ Δ³` is weakly inner anodyne.
+The dual inner horn `Λ³₂` is weakly inner anodyne by the same pushout-product
+argument with a face-1 (`t₁ ≡ t₂`) case split; we formalise the `Λ³₁` case here
+since it is the one used in the retract below. It should be easy to adapt either
+argument to show that the inclusions are actually inner anodyne.
 
-```rzk title="RS17, lemma 5.21"
-#section retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
+```rzk title="RS17, lemma 5.21 (inner horn Λ³₁)"
+#section retraction-Λ³₁-Δ³-pushout-product-Λ²₁-Δ²
 
--- Δ³×Λ²₁ ∪_{Λ³₂×Λ²₁} Λ³₂×Δ²
-#def pushout-prod-Λ³₂-Λ²₁
+-- Δ³×Λ²₁ ∪_{Λ³₁×Λ²₁} Λ³₁×Δ²
+#def pushout-prod-Λ³₁-Λ²₁
   : ( Δ³×Δ²) → TOPE
-  := shape-pushout-prod (2 × 2 × 2) (2 × 2) Δ³ Λ³₂ Δ² Λ²₁
+  := shape-pushout-prod (2 × 2 × 2) (2 × 2) Δ³ Λ³₁ Δ² Λ²₁
 
 
 #variable A : U
-#variable h : Λ³₂ → A
+#variable h : Λ³₁ → A
 
 #def h^
-  : pushout-prod-Λ³₂-Λ²₁ → A
+  : pushout-prod-Λ³₁-Λ²₁ → A
   := \ (((t1 , t2) , t3) , (s1 , s2)) →
     recOR
       ( s1 ≤ t1 ∧ t2 ≤ s2 ↦ h ((t1 , t2) , t3)
@@ -1846,22 +1849,22 @@ It should be easy to adapt it to prove that it is actually inner anodyne.
       , t1 ≤ s1 ∧ s2 ≤ t3 ↦ h ((s1 , s2) , s2))
 
 
-#def extend-against-Λ³₂-Δ³
+#def extend-against-Λ³₁-Δ³
   : U
-  := (t : Δ³) → A[ Λ³₂ t ↦ h t ]
+  := (t : Δ³) → A[ Λ³₁ t ↦ h t ]
 
-#def extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (h)
+#def extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² uses (h)
   : U
-  := (x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
+  := (x : Δ³×Δ²) → A[ pushout-prod-Λ³₁-Λ²₁ x ↦ h^ x]
 
-#def retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
-  ( f : extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
-  : extend-against-Λ³₂-Δ³
+#def retract-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² uses (A h)
+  ( f : extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²)
+  : extend-against-Λ³₁-Δ³
   := \ ((t1 , t2) , t3) → f (((t1 , t2) , t3) , (t1 , t2))
 
-#def section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
-  ( g : (t : Δ³) → A[ Λ³₂ t ↦ h t ])
-  : ( x : Δ³×Δ²) → A[ pushout-prod-Λ³₂-Λ²₁ x ↦ h^ x]
+#def section-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² uses (A h)
+  ( g : (t : Δ³) → A[ Λ³₁ t ↦ h t ])
+  : ( x : Δ³×Δ²) → A[ pushout-prod-Λ³₁-Λ²₁ x ↦ h^ x]
   :=
     \ (((t1 , t2) , t3) , (s1 , s2)) →
     recOR
@@ -1872,41 +1875,41 @@ It should be easy to adapt it to prove that it is actually inner anodyne.
       , s1 ≤ t1 ∧ s2 ≤ t3 ↦ g ((t1 , s2) , s2)
       , t1 ≤ s1 ∧ s2 ≤ t3 ↦ g ((s1 , s2) , s2))
 
-#def homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² uses (A h)
-  : homotopy extend-against-Λ³₂-Δ³ extend-against-Λ³₂-Δ³
+#def homotopy-retraction-section-id-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² uses (A h)
+  : homotopy extend-against-Λ³₁-Δ³ extend-against-Λ³₁-Δ³
     ( comp
-      ( extend-against-Λ³₂-Δ³)
-      ( extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
-      ( extend-against-Λ³₂-Δ³)
-      ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²)
-      ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
-    ( identity extend-against-Λ³₂-Δ³)
+      ( extend-against-Λ³₁-Δ³)
+      ( extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²)
+      ( extend-against-Λ³₁-Δ³)
+      ( retract-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²)
+      ( section-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²))
+    ( identity extend-against-Λ³₁-Δ³)
   := \ t → refl
 
 #def is-retract-of-Δ³-Δ³×Δ² uses (A h)
   : is-retract-of
-      extend-against-Λ³₂-Δ³
-      extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
+      extend-against-Λ³₁-Δ³
+      extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²
   :=
-    ( section-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
-    , ( retract-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²
-      , homotopy-retraction-section-id-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ²))
+    ( section-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²
+    , ( retract-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²
+      , homotopy-retraction-section-id-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²))
 
-#end retraction-Λ³₂-Δ³-pushout-product-Λ²₁-Δ²
+#end retraction-Λ³₁-Δ³-pushout-product-Λ²₁-Δ²
 
-#def is-weak-inner-anodyne-Δ³-Λ³₂ uses (weakextext)
-  : is-weak-inner-anodyne (2 × 2 × 2) Δ³ Λ³₂
+#def is-weak-inner-anodyne-Δ³-Λ³₁ uses (weakextext)
+  : is-weak-inner-anodyne (2 × 2 × 2) Δ³ Λ³₁
   :=
     \ A is-segal-A h →
     is-contr-is-retract-of-is-contr
-      ( extend-against-Λ³₂-Δ³ A h)
-      ( extend-against-pushout-prod-Λ³₂-Λ²₁-Δ³×Δ² A h)
+      ( extend-against-Λ³₁-Δ³ A h)
+      ( extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² A h)
       ( is-retract-of-Δ³-Δ³×Δ² A h)
       ( is-weak-inner-anodyne-pushout-product-right-is-weak-inner-anodyne
         ( 2 × 2 × 2)
         ( 2 × 2)
         ( Δ³)
-        ( Λ³₂)
+        ( Λ³₁)
         ( Δ²)
         ( Λ²₁)
         ( is-weak-inner-anodyne-Λ²₁)

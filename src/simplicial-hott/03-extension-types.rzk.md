@@ -648,12 +648,12 @@ We refer to another form as an "extension extensionality" axiom.
   ( a : (t : ϕ) → A t)
   ( f g : (t : ψ) → A t [ϕ t ↦ a t])
   ( p : f = g)
-  : ( t : ψ) → (f t = g t) [ϕ t ↦ refl]
+  : ( t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl]
   :=
     ind-path
       ( ( t : ψ) → A t [ϕ t ↦ a t])
       ( f)
-      ( \ g' p' → (t : ψ) → (f t = g' t) [ϕ t ↦ refl])
+      ( \ g' p' → (t : ψ) → (f t =_{A t} g' t) [ϕ t ↦ refl])
       ( \ _ → refl)
       ( g)
       ( p)
@@ -672,7 +672,7 @@ We refer to another form as an "extension extensionality" axiom.
     → ( g : (t : ψ) → A t [ϕ t ↦ a t])
     → is-equiv
       ( f = g)
-      ( ( t : ψ) → (f t = g t) [ϕ t ↦ refl])
+      ( ( t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])
       ( ext-htpy-eq I ψ ϕ A a f g))
 ```
 
@@ -685,7 +685,7 @@ We refer to another form as an "extension extensionality" axiom.
   ( A : ψ → U)
   ( a : (t : ϕ) → A t)
   ( f g : (t : ψ) → A t [ϕ t ↦ a t])
-  : Equiv (f = g) ((t : ψ) → (f t = g t) [ϕ t ↦ refl])
+  : Equiv (f = g) ((t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
 ```
 
@@ -706,7 +706,7 @@ fact, sometimes only this weaker form of the axiom is needed.
   → ( a : (t : ϕ) → A t)
   → ( f : (t : ψ) → A t [ϕ t ↦ a t])
   → ( g : (t : ψ) → A t [ϕ t ↦ a t])
-  → ( ( t : ψ) → (f t = g t) [ϕ t ↦ refl])
+  → ( ( t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])
   → ( f = g))
 
 #def naiveextext-extext
@@ -833,37 +833,37 @@ cases an extension type to a function type.
 #define is-contr-ext-based-paths uses (weakextext f)
   : is-contr
     ( ( t : ψ)
-    → ( Σ ( y : A t) , ((ext-projection-temp) t = y))
+    → ( Σ ( y : A t) , ((ext-projection-temp) t =_{A t} y))
       [ ϕ t ↦ (a t , refl)])
   :=
     weakextext I ψ ϕ
-    ( \ t → (Σ (y : A t) , ((ext-projection-temp) t = y)))
+    ( \ t → (Σ (y : A t) , ((ext-projection-temp) t =_{A t} y)))
     ( \ t → is-contr-based-paths (A t) ((ext-projection-temp) t))
     ( \ t → (a t , refl))
 
 #define is-contr-ext-endpoint-based-paths uses (weakextext f)
   : is-contr
     ( ( t : ψ)
-    → ( Σ ( y : A t) , (y = ext-projection-temp t))
+    → ( Σ ( y : A t) , (y =_{A t} ext-projection-temp t))
       [ ϕ t ↦ (a t , refl)])
   :=
     weakextext I ψ ϕ
-    ( \ t → (Σ (y : A t) , y = ext-projection-temp t))
+    ( \ t → (Σ (y : A t) , y =_{A t} ext-projection-temp t))
     ( \ t → is-contr-endpoint-based-paths (A t) (ext-projection-temp t))
     ( \ t → (a t , refl))
 
 #define is-contr-based-paths-ext uses (weakextext)
   : is-contr
     ( Σ ( g : (t : ψ) → A t [ϕ t ↦ a t])
-      , ( ( t : ψ) → (f t = g t) [ϕ t ↦ refl]))
+      , ( ( t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl]))
   :=
     is-contr-equiv-is-contr
     ( ( t : ψ) → (Σ (y : A t)
-                   , ( ( ext-projection-temp) t = y)) [ϕ t ↦ (a t , refl)])
+                   , ( ( ext-projection-temp) t =_{A t} y)) [ϕ t ↦ (a t , refl)])
     ( Σ ( g : (t : ψ) → A t [ϕ t ↦ a t])
-              , ( t : ψ) → (f t = g t) [ϕ t ↦ refl])
+              , ( t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])
     ( axiom-choice I ψ ϕ A
-      ( \ t y → (ext-projection-temp) t = y)
+      ( \ t y → (ext-projection-temp) t =_{A t} y)
       ( a)
       ( \ t → refl))
     ( is-contr-ext-based-paths)
@@ -883,12 +883,12 @@ The map that defines extension extensionality
   ( f : (t : ψ) → A t [ϕ t ↦ a t])
   : ( ( Σ ( g : (t : ψ) → A t [ϕ t ↦ a t]) , (f = g))
     → ( Σ ( g : (t : ψ) → A t [ϕ t ↦ a t])
-      , ( ( t : ψ) → (f t = g t) [ϕ t ↦ refl])))
+      , ( ( t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])))
   :=
     total-map
     ( ( t : ψ) → A t [ϕ t ↦ a t])
     ( \ g → (f = g))
-    ( \ g → (t : ψ) → (f t = g t) [ϕ t ↦ refl])
+    ( \ g → (t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])
     ( ext-htpy-eq I ψ ϕ A a f)
 ```
 
@@ -906,13 +906,13 @@ The total bundle version of extension extensionality
   : is-equiv
     ( ( Σ ( g : (t : ψ) → A t [ϕ t ↦ a t]) , (f = g)))
     ( Σ ( g : (t : ψ) → A t [ϕ t ↦ a t])
-      , ( ( t : ψ) → (f t = g t) [ϕ t ↦ refl]))
+      , ( ( t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl]))
     ( extext-weakextext-map I ψ ϕ A a f)
   :=
     is-equiv-are-contr
     ( Σ ( g : (t : ψ) → A t [ϕ t ↦ a t]) , (f = g))
     ( Σ ( g : (t : ψ) → A t [ϕ t ↦ a t])
-    , ( ( t : ψ) → (f t = g t) [ϕ t ↦ refl]))
+    , ( ( t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl]))
     ( is-contr-based-paths ((t : ψ) → A t [ϕ t ↦ a t]) (f))
     ( is-contr-based-paths-ext weakextext I ψ ϕ A a f)
     ( extext-weakextext-map I ψ ϕ A a f)
@@ -934,12 +934,12 @@ extensionality. The following is statement the as proved in RS17.
   : ( ( g : (t : ψ) → A t [ϕ t ↦ a t])
     → is-equiv
         ( f = g)
-        ( ( t : ψ) → (f t = g t) [ϕ t ↦ refl])
+        ( ( t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])
         ( ext-htpy-eq I ψ ϕ A a f g))
   := is-equiv-fiberwise-is-equiv-total
       ( ( t : ψ) → A t [ϕ t ↦ a t])
       ( \ g → (f = g))
-      ( \ g → (t : ψ) → (f t = g t) [ϕ t ↦ refl])
+      ( \ g → (t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])
       ( ext-htpy-eq I ψ ϕ A a f)
       ( extext-weakextext-bundle-version weakextext I ψ ϕ A a f)
 ```
@@ -951,6 +951,42 @@ extension extensionality that we get by extracting the fiberwise equivalence.
 #define extext-weakextext
   : WeakExtExt → ExtExt
   := extext-weakextext'
+```
+
+### RS17 Proposition 4.12 (extension types preserve n-types)
+
+Assuming Axiom 4.6 (weak extension extensionality), if `A : (t : ψ) → U` and
+`a : (t : ϕ) → A t` are such that each `A(t)` is an n-type, then the extension
+type `(t : ψ) → A t [ϕ t ↦ a t]` is also an n-type. We formalize the cases **n =
+−2 (contractible)** and **n = −1 (proposition)**.
+
+```rzk title="RS17 Proposition 4.12 (contractible case)"
+#def is-contr-extension-type-is-fiberwise-contr
+  ( weakextext : WeakExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-fiberwise-contr-A : (t : ψ) → is-contr (A t))
+  ( a : (t : ϕ) → A t)
+  : is-contr ((t : ψ) → A t [ϕ t ↦ a t])
+  := weakextext I ψ ϕ A is-fiberwise-contr-A a
+```
+
+```rzk title="RS17 Proposition 4.12 (proposition case)"
+#def is-prop-extension-type-is-fiberwise-prop
+  ( weakextext : WeakExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-fiberwise-prop-A : (t : ψ) → is-prop (A t))
+  ( a : (t : ϕ) → A t)
+  : is-prop ((t : ψ) → A t [ϕ t ↦ a t])
+  :=
+    is-prop-extension-type-is-locally-prop
+      ( naiveextext-extext (extext-weakextext weakextext))
+      ( I) (ψ) (ϕ) (A) (is-fiberwise-prop-A) (a)
 ```
 
 ## Homotopy extension property
@@ -1120,7 +1156,8 @@ generality is needed.
   ( is-contr-fiberwise-A : (t : ψ) → is-contr (A t))
   : ( t : ψ)
   → ( f t
-    = first
+    =_{ A t}
+      first
       ( htpy-ext-prop-is-fiberwise-contr
         htpy-ext-prop
         I ψ ϕ A a
@@ -1153,8 +1190,8 @@ slightly more general statement.
   ( a : (t : ϕ) → A t)
   ( f : (t : ψ) → A t [ϕ t ↦ a t])
   ( a' : (t : ψ) → A t [ϕ t ↦ a t])
-  ( c : (t : ψ) → (f t = a' t))
-  : ( t : ϕ) → (refl =_{f t = a' t} c t)
+  ( c : (t : ψ) → (f t =_{A t} a' t))
+  : ( t : ϕ) → (refl =_{f t =_{A t} a' t} c t)
   := \ t →
     all-paths-equal-is-contr
     ( A t) (is-fiberwise-contr t)
@@ -1176,7 +1213,7 @@ f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
   ( a : (t : ϕ) → A t)
   ( f : (t : ψ) → A t [ϕ t ↦ a t])
   : ( t : ψ)
-    → ( f t = (first
+    → ( f t =_{A t} (first
               ( htpy-ext-prop-is-fiberwise-contr
                 htpy-ext-prop I ψ ϕ A a is-contr-fiberwise-A)) t)[ϕ t ↦ refl]
   :=
@@ -1184,7 +1221,8 @@ f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
     htpy-ext-prop I ψ ϕ
     ( \ t →
       ( ( f t)
-      = first
+      =_{ A t}
+        first
         ( htpy-ext-prop-is-fiberwise-contr
           htpy-ext-prop
           I ψ ϕ A a

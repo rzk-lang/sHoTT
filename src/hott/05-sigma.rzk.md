@@ -112,7 +112,7 @@ A path in a fiber defines a path in the total space.
   ( u v : B x)
   ( p : u = v)
   : ( x , u) =_{Σ (a : A) , B a} (x , v)
-  := ind-path (B x) (u) (\ v' p' → (x , u) = (x , v')) (refl) (v) (p)
+  := ind-path (B x) (u) (\ v' p' → (x , u) =_{Σ (a : A) , B a} (x , v')) (refl) (v) (p)
 ```
 
 The following is essentially `#!rzk eq-pair` but with explicit arguments.

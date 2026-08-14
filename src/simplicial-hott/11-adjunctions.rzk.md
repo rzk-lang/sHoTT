@@ -1446,7 +1446,7 @@ of `#!rzk is-transposing-right-adj A B u`
     ( ηa))
   ( triangle-to-left-adjoint-components-is-rezk-is-segal)
 
-#def all-unit-components-equal-is-rezk-is-segal uses (extext A is-segal-A u a ω ω')
+#def all-unit-components-equal-is-rezk-is-segal uses (extext A is-segal-A u a ω ω' is-rezk-B)
   : ( fa , ηa) =_{Σ (b : B) , hom A a (u b)} (fa' , ηa')
   :=
   path-of-pairs-pair-of-paths B (\ b → hom A a (u b)) (fa) (fa')

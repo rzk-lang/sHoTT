@@ -1919,16 +1919,16 @@ argument to show that the inclusions are actually inner anodyne.
 ```
 
 As an immediate corollary, Segal types admit contractible fillers for the
-3-dimensional inner horn `Λ³₂ ⊂ Δ³`. This can be seen as a version of [RS17,
+3-dimensional inner horn `Λ³₁ ⊂ Δ³`. This can be seen as a version of [RS17,
 Proposition 5.16]:
 
-```rzk title="Contractible fillers for the inner horn Λ³₂ in Segal types"
-#def is-contr-fill-Λ³₂-Δ³-is-segal uses (weakextext)
+```rzk title="Contractible fillers for the inner horn Λ³₁ in Segal types"
+#def is-contr-fill-Λ³₁-Δ³-is-segal uses (weakextext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( h : Λ³₂ → A)
   : is-contr ((t : Δ³) → A[ Λ³₂ t ↦ h t ])
-  := is-weak-inner-anodyne-Δ³-Λ³₂ A is-segal-A h
+  := is-weak-inner-anodyne-Δ³-Λ³₁ A is-segal-A h
 ```
 
 ## Products of Segal types

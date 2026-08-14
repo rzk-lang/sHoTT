@@ -1010,6 +1010,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#tope-disjunction-elimination-along-identity-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tope disjunction elimination along identity paths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tope disjunction elimination along identity paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#construction-of-rec-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Construction of rec-path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gluing-extension-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gluing extension types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1520,6 +1553,39 @@
       More equivalences of relative extension types
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tope-disjunction-elimination-along-identity-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tope disjunction elimination along identity paths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tope disjunction elimination along identity paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#construction-of-rec-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Construction of rec-path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gluing-extension-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gluing extension types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3223,6 +3289,124 @@ equivalent to extending the fiber.</p>
 </span><span id="__span-56-57"><a id="__codelineno-56-57" name="__codelineno-56-57" href="#__codelineno-56-57"></a>          ( <span class="p">\ </span>_ → B t a)))
 </span><span id="__span-56-58"><a id="__codelineno-56-58" name="__codelineno-56-58" href="#__codelineno-56-58"></a>      ( equiv-based-paths-family (A t) (B t) (τ t)))
 </span><span id="__span-56-59"><a id="__codelineno-56-59" name="__codelineno-56-59" href="#__codelineno-56-59"></a>    ( <span class="p">\ </span>t → (a t , <span class="s">refl</span>)))
+</span></code></pre></div>
+<h2 id="tope-disjunction-elimination-along-identity-paths">Tope disjunction elimination along identity paths<a class="headerlink" href="#tope-disjunction-elimination-along-identity-paths" title="Permanent link">&para;</a></h2>
+<p><span class="arithmatex">\(\mathsf{rec}_{\lor}^{\psi,\phi}(a_\psi, a*\phi)\)</span> (written
+<code>recOR(psi, phi, a_psi, a_phi)</code> in the code) is well-typed when <span class="arithmatex">\(a*\psi\)</span> and
+<span class="arithmatex">\(a*\phi\)</span> are _definitionally* equal on <span class="arithmatex">\(\psi \land \phi\)</span>. Sometimes this is
+too strong since many terms are not <em>definitionally</em> equal, but only equal up to
+a path. Luckily, assuming relative function extensionality, we can define a
+weaker version of <span class="arithmatex">\(\mathsf{rec}_{\lor}\)</span> (<code>recOR</code>), which we call <code>rec-path</code>,
+that can work in presence of a witness of type <span class="arithmatex">\(\prod_{t : I \mid \psi \land
+\phi} a*\psi(t) = a*\phi(t)\)</span>.</p>
+<h3 id="construction-of-rec-path">Construction of <code>rec-path</code><a class="headerlink" href="#construction-of-rec-path" title="Permanent link">&para;</a></h3>
+<p>The idea is straightforward. We ask for a proof that <code>a = b</code> for all points in
+<span class="arithmatex">\(\psi \land \phi\)</span>. Then, by relative function extensionality (<code>relfunext2</code>),
+we can show that restrictions of <code>a</code> and <code>b</code> to <span class="arithmatex">\(\psi \land \phi\)</span> are equal.
+If we reformulate <code>a</code> as extension of its restriction, then we can <code>transport</code>
+this reformulation along the path connecting two restrictions and apply <code>recOR</code>.</p>
+<p>First, we define how to restrict an extension type to a subshape:</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="nd">#section</span><span class="n"> rec-path-construction</span>
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="kr">#variable</span><span class="p"> </span>I : <span class="kt">CUBE</span>
+</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a><span class="kr">#variables</span><span class="p"> </span>ψ φ : I → <span class="kt">TOPE</span>
+</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a><span class="kr">#variable</span><span class="p"> </span>A : <span class="p">(</span>t <span class="p">:</span> I | ψ t <span class="sx">∨</span> φ t) → <span class="kt">U</span>
+</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>
+</span><span id="__span-57-7"><a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a><span class="c">-- Restrict extension type to a subshape.</span>
+</span><span id="__span-57-8"><a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:rec-path-restrict-phi" id="define:rec-path-restrict-phi" style="visibility: visible; position: relative; color: inherit">rec-path-restrict-phi</a></span>
+</span><span id="__span-57-9"><a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a>  <span class="p">( </span>a <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> φ) → A t)
+</span><span id="__span-57-10"><a id="__codelineno-57-10" name="__codelineno-57-10" href="#__codelineno-57-10"></a>  : <span class="p">( </span>t <span class="p">:</span> I | ψ t <span class="sx">∧</span> φ t) → A t
+</span><span id="__span-57-11"><a id="__codelineno-57-11" name="__codelineno-57-11" href="#__codelineno-57-11"></a>  := <span class="p">\ </span>t → a t
+</span><span id="__span-57-12"><a id="__codelineno-57-12" name="__codelineno-57-12" href="#__codelineno-57-12"></a>
+</span><span id="__span-57-13"><a id="__codelineno-57-13" name="__codelineno-57-13" href="#__codelineno-57-13"></a><span class="c">-- Restrict extension type to a subshape.</span>
+</span><span id="__span-57-14"><a id="__codelineno-57-14" name="__codelineno-57-14" href="#__codelineno-57-14"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:rec-path-restrict-psi" id="define:rec-path-restrict-psi" style="visibility: visible; position: relative; color: inherit">rec-path-restrict-psi</a></span>
+</span><span id="__span-57-15"><a id="__codelineno-57-15" name="__codelineno-57-15" href="#__codelineno-57-15"></a>  <span class="p">( </span>a <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> ψ) → A t)
+</span><span id="__span-57-16"><a id="__codelineno-57-16" name="__codelineno-57-16" href="#__codelineno-57-16"></a>  : <span class="p">( </span>t <span class="p">:</span> I | ψ t <span class="sx">∧</span> φ t) → A t
+</span><span id="__span-57-17"><a id="__codelineno-57-17" name="__codelineno-57-17" href="#__codelineno-57-17"></a>  := <span class="p">\ </span>t → a t
+</span></code></pre></div>
+<p>Then, how to reformulate an <code>a</code> (or <code>b</code>) as an extension of its restriction:</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="c">-- Reformulate extension type as an extension of a restriction.</span>
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:rec-path-ext-of-restrict-psi" id="define:rec-path-ext-of-restrict-psi" style="visibility: visible; position: relative; color: inherit">rec-path-ext-of-restrict-psi</a></span>
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>  <span class="p">( </span>a <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> ψ) → A t)
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>  : <span class="p">( </span>t <span class="p">:</span> ψ)
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>  → A t [ ψ t <span class="sx">∧</span> φ t ↦ rec-path-restrict-psi a t ]
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>  := a  <span class="c">-- type is coerced automatically here</span>
+</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>
+</span><span id="__span-58-8"><a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a><span class="c">-- Reformulate extension type as an extension of a restriction.</span>
+</span><span id="__span-58-9"><a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:rec-path-ext-of-restrict-phi" id="define:rec-path-ext-of-restrict-phi" style="visibility: visible; position: relative; color: inherit">rec-path-ext-of-restrict-phi</a></span>
+</span><span id="__span-58-10"><a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a>  <span class="p">( </span>a <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> φ) → A t)
+</span><span id="__span-58-11"><a id="__codelineno-58-11" name="__codelineno-58-11" href="#__codelineno-58-11"></a>  : <span class="p">( </span>t <span class="p">:</span> φ)
+</span><span id="__span-58-12"><a id="__codelineno-58-12" name="__codelineno-58-12" href="#__codelineno-58-12"></a>  → A t [ ψ t <span class="sx">∧</span> φ t ↦ rec-path-restrict-phi a t ]
+</span><span id="__span-58-13"><a id="__codelineno-58-13" name="__codelineno-58-13" href="#__codelineno-58-13"></a>  := a  <span class="c">-- type is coerced automatically here</span>
+</span></code></pre></div>
+<p>Now, assuming relative function extensionality, we construct a path between
+restrictions:</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="c">-- Transform extension of an identity into an identity of restrictions.</span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:rec-path-restrict-eq" id="define:rec-path-restrict-eq" style="visibility: visible; position: relative; color: inherit">rec-path-restrict-eq</a></span>
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>  <span class="p">( </span>a-in-ψ <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> ψ) → A t)
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a>  <span class="p">( </span>a-in-φ <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> φ) → A t)
+</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>  : <span class="p">( </span>e <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> I | ψ t <span class="sx">∧</span> φ t) → a-<span class="k">in</span>-ψ t = a-<span class="k">in</span>-φ t)
+</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a>  → rec-path-restrict-psi a-<span class="k">in</span>-ψ = rec-path-restrict-phi a-<span class="k">in</span>-φ
+</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a>  :=
+</span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a>  <span class="s">first</span>
+</span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a>  ( <span class="s">second</span>
+</span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a>    ( extext I
+</span><span id="__span-59-11"><a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a>      ( <span class="p">\ </span>t → ψ t <span class="sx">∧</span> φ t)
+</span><span id="__span-59-12"><a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a>      ( <span class="p">\ </span>t → <span class="m">BOT</span>)
+</span><span id="__span-59-13"><a id="__codelineno-59-13" name="__codelineno-59-13" href="#__codelineno-59-13"></a>      ( <span class="p">\ </span>t → A t)
+</span><span id="__span-59-14"><a id="__codelineno-59-14" name="__codelineno-59-14" href="#__codelineno-59-14"></a>      ( <span class="p">\ </span>t → <span class="s">recBOT</span>)
+</span><span id="__span-59-15"><a id="__codelineno-59-15" name="__codelineno-59-15" href="#__codelineno-59-15"></a>      ( <span class="p">\ </span>t → a-<span class="k">in</span>-ψ t)
+</span><span id="__span-59-16"><a id="__codelineno-59-16" name="__codelineno-59-16" href="#__codelineno-59-16"></a>      ( <span class="p">\ </span>t → a-<span class="k">in</span>-φ t)))
+</span></code></pre></div>
+<p>Finally, we bring everything together into <code>rec-path</code>:</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="c">-- A weaker version of recOR, demanding only a path between a and b:</span>
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a><span class="c">-- recOR(ψ, φ, a, b) demands that for ψ ∧ φ we have a == b (definitionally)</span>
+</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="c">-- (rec-path ψ φ a b e) demands that</span>
+</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="c">-- e is the proof that a = b (intensionally) for ψ ∧ φ</span>
+</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:rec-path" id="define:rec-path" style="visibility: visible; position: relative; color: inherit">rec-path</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-60-6"><a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a>  <span class="p">( </span>a-in-ψ <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> ψ) → A t)
+</span><span id="__span-60-7"><a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a>  <span class="p">( </span>a-in-φ <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> φ) → A t)
+</span><span id="__span-60-8"><a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a>  <span class="p">( </span>e <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> I | ψ t <span class="sx">∧</span> φ t) → a-<span class="k">in</span>-ψ t = a-<span class="k">in</span>-φ t)
+</span><span id="__span-60-9"><a id="__codelineno-60-9" name="__codelineno-60-9" href="#__codelineno-60-9"></a>  : <span class="p">( </span>t <span class="p">:</span> I | ψ t <span class="sx">∨</span> φ t) → A t
+</span><span id="__span-60-10"><a id="__codelineno-60-10" name="__codelineno-60-10" href="#__codelineno-60-10"></a>  := <span class="p">\ </span>t → <span class="s">recOR</span><span class="p">(</span>
+</span><span id="__span-60-11"><a id="__codelineno-60-11" name="__codelineno-60-11" href="#__codelineno-60-11"></a><span class="p">        </span>ψ t ↦
+</span><span id="__span-60-12"><a id="__codelineno-60-12" name="__codelineno-60-12" href="#__codelineno-60-12"></a>          transport
+</span><span id="__span-60-13"><a id="__codelineno-60-13" name="__codelineno-60-13" href="#__codelineno-60-13"></a>          ( ( s <span class="p">:</span> I | ψ s <span class="sx">∧</span> φ s) → A s)
+</span><span id="__span-60-14"><a id="__codelineno-60-14" name="__codelineno-60-14" href="#__codelineno-60-14"></a>          <span class="p">( </span>\ ra → (s <span class="p">:</span> ψ) → A s [ ψ s <span class="sx">∧</span> φ s ↦ ra s ])
+</span><span id="__span-60-15"><a id="__codelineno-60-15" name="__codelineno-60-15" href="#__codelineno-60-15"></a>          ( rec-path-restrict-psi a-<span class="k">in</span>-ψ)
+</span><span id="__span-60-16"><a id="__codelineno-60-16" name="__codelineno-60-16" href="#__codelineno-60-16"></a>          ( rec-path-restrict-phi a-<span class="k">in</span>-φ)
+</span><span id="__span-60-17"><a id="__codelineno-60-17" name="__codelineno-60-17" href="#__codelineno-60-17"></a>          ( rec-path-restrict-eq a-<span class="k">in</span>-ψ a-<span class="k">in</span>-φ e)
+</span><span id="__span-60-18"><a id="__codelineno-60-18" name="__codelineno-60-18" href="#__codelineno-60-18"></a>          ( rec-path-ext-of-restrict-psi a-<span class="k">in</span>-ψ)
+</span><span id="__span-60-19"><a id="__codelineno-60-19" name="__codelineno-60-19" href="#__codelineno-60-19"></a>          ( t)
+</span><span id="__span-60-20"><a id="__codelineno-60-20" name="__codelineno-60-20" href="#__codelineno-60-20"></a>      , φ t ↦
+</span><span id="__span-60-21"><a id="__codelineno-60-21" name="__codelineno-60-21" href="#__codelineno-60-21"></a>          rec-path-ext-of-restrict-phi a-<span class="k">in</span>-φ t
+</span><span id="__span-60-22"><a id="__codelineno-60-22" name="__codelineno-60-22" href="#__codelineno-60-22"></a>      )
+</span><span id="__span-60-23"><a id="__codelineno-60-23" name="__codelineno-60-23" href="#__codelineno-60-23"></a>
+</span><span id="__span-60-24"><a id="__codelineno-60-24" name="__codelineno-60-24" href="#__codelineno-60-24"></a><span class="nd">#end</span><span class="n"> rec-path-construction</span>
+</span></code></pre></div>
+<h3 id="gluing-extension-types">Gluing extension types<a class="headerlink" href="#gluing-extension-types" title="Permanent link">&para;</a></h3>
+<p>An application of <code>rec-path</code> is gluing together extension types, whenever we can
+show that they are equal on the intersection of shapes.</p>
+<p>The latter can be easily shown when the intersection maps to a set; we record
+the resulting homotopy as <code>htpy-eq-eq-is-set-on-conjunction</code> below.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="c">-- If two extension types are equal along two subshapes,</span>
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a><span class="c">-- then they are also equal along their union.</span>
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a><span class="kr">#define</span><span class="p"> </span><span class="nf"><a href="#define:htpy-eq-eq-is-set-on-conjunction" id="define:htpy-eq-eq-is-set-on-conjunction" style="visibility: visible; position: relative; color: inherit">htpy-eq-eq-is-set-on-conjunction</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>  <span class="p">( </span>I <span class="p">:</span> <span class="kt">CUBE</span>)
+</span><span id="__span-61-5"><a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>  <span class="p">( </span>ψ <span class="p">:</span> I → <span class="kt">TOPE</span>)
+</span><span id="__span-61-6"><a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>  <span class="p">( </span>φ <span class="p">:</span> I → <span class="kt">TOPE</span>)
+</span><span id="__span-61-7"><a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> I | ψ t <span class="sx">∨</span> φ t) → <span class="kt">U</span>)
+</span><span id="__span-61-8"><a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>  <span class="p">( </span>a b <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> I | ψ t <span class="sx">∨</span> φ t) → A t)
+</span><span id="__span-61-9"><a id="__codelineno-61-9" name="__codelineno-61-9" href="#__codelineno-61-9"></a>  <span class="p">( </span>e-in-ψ <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> ψ) → a t = b t)
+</span><span id="__span-61-10"><a id="__codelineno-61-10" name="__codelineno-61-10" href="#__codelineno-61-10"></a>  <span class="p">( </span>e-in-φ <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> φ) → a t = b t)
+</span><span id="__span-61-11"><a id="__codelineno-61-11" name="__codelineno-61-11" href="#__codelineno-61-11"></a>  <span class="p">( </span>border-is-a-set <span class="p">:</span> <span class="p">(</span>t <span class="p">:</span> I | ψ t <span class="sx">∧</span> φ t) → is-set (A t))
+</span><span id="__span-61-12"><a id="__codelineno-61-12" name="__codelineno-61-12" href="#__codelineno-61-12"></a>  : <span class="p">( </span>t <span class="p">:</span> I | ψ t <span class="sx">∨</span> φ t) → a t = b t
+</span><span id="__span-61-13"><a id="__codelineno-61-13" name="__codelineno-61-13" href="#__codelineno-61-13"></a>  :=
+</span><span id="__span-61-14"><a id="__codelineno-61-14" name="__codelineno-61-14" href="#__codelineno-61-14"></a>  rec-path I ψ φ
+</span><span id="__span-61-15"><a id="__codelineno-61-15" name="__codelineno-61-15" href="#__codelineno-61-15"></a>  ( <span class="p">\ </span>t → a t = b t)
+</span><span id="__span-61-16"><a id="__codelineno-61-16" name="__codelineno-61-16" href="#__codelineno-61-16"></a>  ( e-<span class="k">in</span>-ψ)
+</span><span id="__span-61-17"><a id="__codelineno-61-17" name="__codelineno-61-17" href="#__codelineno-61-17"></a>  ( e-<span class="k">in</span>-φ)
+</span><span id="__span-61-18"><a id="__codelineno-61-18" name="__codelineno-61-18" href="#__codelineno-61-18"></a>  ( <span class="p">\ </span>t → border-is-a-set t (a t) (b t) (e-<span class="k">in</span>-ψ t) (e-<span class="k">in</span>-φ t))
 </span></code></pre></div>
 
 

@@ -1771,7 +1771,7 @@ Weak inner anodyne shape inclusions are preserved under pushout product. This is
 the direct proof from RS17. One could also deduce it from the corresponding
 general statements about weak anodyne shape inclusions.
 
-```rzk title="RS17, lemma 5.20"
+```rzk title="RS17, Proposition 5.20"
 #def is-weak-inner-anodyne-pushout-product-left-is-weak-inner-anodyne uses (weakextext)
   ( I J : CUBE)
   ( ψ : I → TOPE)
@@ -1825,7 +1825,7 @@ argument with a face-1 (`t₁ ≡ t₂`) case split; we formalise the `Λ³₁` 
 since it is the one used in the retract below. It should be easy to adapt either
 argument to show that the inclusions are actually inner anodyne.
 
-```rzk title="RS17, lemma 5.21 (inner horn Λ³₁)"
+```rzk
 #section retraction-Λ³₁-Δ³-pushout-product-Λ²₁-Δ²
 
 -- Δ³×Λ²₁ ∪_{Λ³₁×Λ²₁} Λ³₁×Δ²
@@ -1896,7 +1896,9 @@ argument to show that the inclusions are actually inner anodyne.
       , homotopy-retraction-section-id-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²))
 
 #end retraction-Λ³₁-Δ³-pushout-product-Λ²₁-Δ²
+```
 
+```rzk title="RS17, Proposition 5.21 (inner horn Λ³₁)"
 #def is-weak-inner-anodyne-Δ³-Λ³₁ uses (weakextext)
   : is-weak-inner-anodyne (2 × 2 × 2) Δ³ Λ³₁
   :=

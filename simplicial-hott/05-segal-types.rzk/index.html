@@ -2873,7 +2873,7 @@ of weak anodyne introduced earlier.</p>
 <p>Weak inner anodyne shape inclusions are preserved under pushout product. This is
 the direct proof from RS17. One could also deduce it from the corresponding
 general statements about weak anodyne shape inclusions.</p>
-<div class="language-rzk highlight"><span class="filename">RS17, lemma 5.20</span><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-weak-inner-anodyne-pushout-product-left-is-weak-inner-anodyne" id="define:is-weak-inner-anodyne-pushout-product-left-is-weak-inner-anodyne" style="visibility: visible; position: relative; color: inherit">is-weak-inner-anodyne-pushout-product-left-is-weak-inner-anodyne</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 5.20</span><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-weak-inner-anodyne-pushout-product-left-is-weak-inner-anodyne" id="define:is-weak-inner-anodyne-pushout-product-left-is-weak-inner-anodyne" style="visibility: visible; position: relative; color: inherit">is-weak-inner-anodyne-pushout-product-left-is-weak-inner-anodyne</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
 </span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>  <span class="p">( </span>I J <span class="p">:</span> <span class="kt">CUBE</span>)
 </span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>  <span class="p">( </span>ψ <span class="p">:</span> I → <span class="kt">TOPE</span>)
 </span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>  <span class="p">( </span>Φ <span class="p">:</span> ψ → <span class="kt">TOPE</span>)
@@ -2924,7 +2924,7 @@ The dual inner horn <code>Λ³₂</code> is weakly inner anodyne by the same pus
 argument with a face-1 (<code>t₁ ≡ t₂</code>) case split; we formalise the <code>Λ³₁</code> case here
 since it is the one used in the retract below. It should be easy to adapt either
 argument to show that the inclusions are actually inner anodyne.</p>
-<div class="language-rzk highlight"><span class="filename">RS17, lemma 5.21 (inner horn Λ³₁)</span><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="nd">#section</span><span class="n"> retraction-Λ³₁-Δ³-pushout-product-Λ²₁-Δ²</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="nd">#section</span><span class="n"> retraction-Λ³₁-Δ³-pushout-product-Λ²₁-Δ²</span>
 </span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>
 </span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a><span class="c">-- Δ³×Λ²₁ ∪_{Λ³₁×Λ²₁} Λ³₁×Δ²</span>
 </span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:pushout-prod-Λ³₁-Λ²₁" id="define:pushout-prod-Λ³₁-Λ²₁" style="visibility: visible; position: relative; color: inherit">pushout-prod-Λ³₁-Λ²₁</a></span>
@@ -2994,100 +2994,100 @@ argument to show that the inclusions are actually inner anodyne.</p>
 </span><span id="__span-62-68"><a id="__codelineno-62-68" name="__codelineno-62-68" href="#__codelineno-62-68"></a>      , homotopy-retraction-section-id-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ²))
 </span><span id="__span-62-69"><a id="__codelineno-62-69" name="__codelineno-62-69" href="#__codelineno-62-69"></a>
 </span><span id="__span-62-70"><a id="__codelineno-62-70" name="__codelineno-62-70" href="#__codelineno-62-70"></a><span class="nd">#end</span><span class="n"> retraction-Λ³₁-Δ³-pushout-product-Λ²₁-Δ²</span>
-</span><span id="__span-62-71"><a id="__codelineno-62-71" name="__codelineno-62-71" href="#__codelineno-62-71"></a>
-</span><span id="__span-62-72"><a id="__codelineno-62-72" name="__codelineno-62-72" href="#__codelineno-62-72"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-weak-inner-anodyne-Δ³-Λ³₁" id="define:is-weak-inner-anodyne-Δ³-Λ³₁" style="visibility: visible; position: relative; color: inherit">is-weak-inner-anodyne-Δ³-Λ³₁</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
-</span><span id="__span-62-73"><a id="__codelineno-62-73" name="__codelineno-62-73" href="#__codelineno-62-73"></a>  : is-weak-inner-anodyne (<span class="kt">2</span> × <span class="kt">2</span> × <span class="kt">2</span>) Δ³ Λ³₁
-</span><span id="__span-62-74"><a id="__codelineno-62-74" name="__codelineno-62-74" href="#__codelineno-62-74"></a>  :=
-</span><span id="__span-62-75"><a id="__codelineno-62-75" name="__codelineno-62-75" href="#__codelineno-62-75"></a>    <span class="p">\ </span>A is-segal-A h →
-</span><span id="__span-62-76"><a id="__codelineno-62-76" name="__codelineno-62-76" href="#__codelineno-62-76"></a>    is-contr-is-retract-of-is-contr
-</span><span id="__span-62-77"><a id="__codelineno-62-77" name="__codelineno-62-77" href="#__codelineno-62-77"></a>      ( extend-against-Λ³₁-Δ³ A h)
-</span><span id="__span-62-78"><a id="__codelineno-62-78" name="__codelineno-62-78" href="#__codelineno-62-78"></a>      ( extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² A h)
-</span><span id="__span-62-79"><a id="__codelineno-62-79" name="__codelineno-62-79" href="#__codelineno-62-79"></a>      ( is-retract-of-Δ³-Δ³×Δ² A h)
-</span><span id="__span-62-80"><a id="__codelineno-62-80" name="__codelineno-62-80" href="#__codelineno-62-80"></a>      ( is-weak-inner-anodyne-pushout-product-right-is-weak-inner-anodyne
-</span><span id="__span-62-81"><a id="__codelineno-62-81" name="__codelineno-62-81" href="#__codelineno-62-81"></a>        ( <span class="kt">2</span> × <span class="kt">2</span> × <span class="kt">2</span>)
-</span><span id="__span-62-82"><a id="__codelineno-62-82" name="__codelineno-62-82" href="#__codelineno-62-82"></a>        ( <span class="kt">2</span> × <span class="kt">2</span>)
-</span><span id="__span-62-83"><a id="__codelineno-62-83" name="__codelineno-62-83" href="#__codelineno-62-83"></a>        ( Δ³)
-</span><span id="__span-62-84"><a id="__codelineno-62-84" name="__codelineno-62-84" href="#__codelineno-62-84"></a>        ( Λ³₁)
-</span><span id="__span-62-85"><a id="__codelineno-62-85" name="__codelineno-62-85" href="#__codelineno-62-85"></a>        ( Δ²)
-</span><span id="__span-62-86"><a id="__codelineno-62-86" name="__codelineno-62-86" href="#__codelineno-62-86"></a>        ( Λ²₁)
-</span><span id="__span-62-87"><a id="__codelineno-62-87" name="__codelineno-62-87" href="#__codelineno-62-87"></a>        ( is-weak-inner-anodyne-Λ²₁)
-</span><span id="__span-62-88"><a id="__codelineno-62-88" name="__codelineno-62-88" href="#__codelineno-62-88"></a>        ( A)
-</span><span id="__span-62-89"><a id="__codelineno-62-89" name="__codelineno-62-89" href="#__codelineno-62-89"></a>        ( is-segal-A)
-</span><span id="__span-62-90"><a id="__codelineno-62-90" name="__codelineno-62-90" href="#__codelineno-62-90"></a>        ( h^ A h))
+</span></code></pre></div>
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 5.21 (inner horn Λ³₁)</span><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-weak-inner-anodyne-Δ³-Λ³₁" id="define:is-weak-inner-anodyne-Δ³-Λ³₁" style="visibility: visible; position: relative; color: inherit">is-weak-inner-anodyne-Δ³-Λ³₁</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>  : is-weak-inner-anodyne (<span class="kt">2</span> × <span class="kt">2</span> × <span class="kt">2</span>) Δ³ Λ³₁
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>  :=
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>    <span class="p">\ </span>A is-segal-A h →
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>    is-contr-is-retract-of-is-contr
+</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>      ( extend-against-Λ³₁-Δ³ A h)
+</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a>      ( extend-against-pushout-prod-Λ³₁-Λ²₁-Δ³×Δ² A h)
+</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a>      ( is-retract-of-Δ³-Δ³×Δ² A h)
+</span><span id="__span-63-9"><a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a>      ( is-weak-inner-anodyne-pushout-product-right-is-weak-inner-anodyne
+</span><span id="__span-63-10"><a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a>        ( <span class="kt">2</span> × <span class="kt">2</span> × <span class="kt">2</span>)
+</span><span id="__span-63-11"><a id="__codelineno-63-11" name="__codelineno-63-11" href="#__codelineno-63-11"></a>        ( <span class="kt">2</span> × <span class="kt">2</span>)
+</span><span id="__span-63-12"><a id="__codelineno-63-12" name="__codelineno-63-12" href="#__codelineno-63-12"></a>        ( Δ³)
+</span><span id="__span-63-13"><a id="__codelineno-63-13" name="__codelineno-63-13" href="#__codelineno-63-13"></a>        ( Λ³₁)
+</span><span id="__span-63-14"><a id="__codelineno-63-14" name="__codelineno-63-14" href="#__codelineno-63-14"></a>        ( Δ²)
+</span><span id="__span-63-15"><a id="__codelineno-63-15" name="__codelineno-63-15" href="#__codelineno-63-15"></a>        ( Λ²₁)
+</span><span id="__span-63-16"><a id="__codelineno-63-16" name="__codelineno-63-16" href="#__codelineno-63-16"></a>        ( is-weak-inner-anodyne-Λ²₁)
+</span><span id="__span-63-17"><a id="__codelineno-63-17" name="__codelineno-63-17" href="#__codelineno-63-17"></a>        ( A)
+</span><span id="__span-63-18"><a id="__codelineno-63-18" name="__codelineno-63-18" href="#__codelineno-63-18"></a>        ( is-segal-A)
+</span><span id="__span-63-19"><a id="__codelineno-63-19" name="__codelineno-63-19" href="#__codelineno-63-19"></a>        ( h^ A h))
 </span></code></pre></div>
 <p>As an immediate corollary, Segal types admit contractible fillers for the
 3-dimensional inner horn <code>Λ³₁ ⊂ Δ³</code>. This can be seen as a version of [RS17,
 Proposition 5.16]:</p>
-<div class="language-rzk highlight"><span class="filename">Contractible fillers for the inner horn Λ³₁ in Segal types</span><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-fill-Λ³₁-Δ³-is-segal" id="define:is-contr-fill-Λ³₁-Δ³-is-segal" style="visibility: visible; position: relative; color: inherit">is-contr-fill-Λ³₁-Δ³-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
-</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
-</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>  <span class="p">( </span>h <span class="p">:</span> Λ³₁ → A)
-</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>  : is-contr <span class="p">(</span>(t <span class="p">:</span> Δ³) → A[ Λ³₁ t ↦ h t ])
-</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>  := is-weak-inner-anodyne-Δ³-Λ³₁ A is-segal-A h
+<div class="language-rzk highlight"><span class="filename">Contractible fillers for the inner horn Λ³₁ in Segal types</span><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-fill-Λ³₁-Δ³-is-segal" id="define:is-contr-fill-Λ³₁-Δ³-is-segal" style="visibility: visible; position: relative; color: inherit">is-contr-fill-Λ³₁-Δ³-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakextext<span class="p">)</span>
+</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
+</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a>  <span class="p">( </span>h <span class="p">:</span> Λ³₁ → A)
+</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>  : is-contr <span class="p">(</span>(t <span class="p">:</span> Δ³) → A[ Λ³₁ t ↦ h t ])
+</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a>  := is-weak-inner-anodyne-Δ³-Λ³₁ A is-segal-A h
 </span></code></pre></div>
 <h2 id="products-of-segal-types">Products of Segal types<a class="headerlink" href="#products-of-segal-types" title="Permanent link">&para;</a></h2>
 <p>This is an additional section which describes morphisms in products of types as
 products of morphisms. It is implicitly stated in Proposition 8.21.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="nd">#section</span><span class="n"> morphisms-of-products-is-products-of-morphisms</span>
-</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a><span class="kr">#variables</span><span class="p"> </span>A B : <span class="kt">U</span>
-</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a><span class="kr">#variable</span><span class="p"> </span>p : (product A B)
-</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a><span class="kr">#variable</span><span class="p"> </span>p&#39; : (product A B)
-</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>
-</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:morphism-in-product-to-product-of-morphism" id="define:morphism-in-product-to-product-of-morphism" style="visibility: visible; position: relative; color: inherit">morphism-in-product-to-product-of-morphism</a></span>
-</span><span id="__span-64-7"><a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a>  : hom (product A B) p p&#39;
-</span><span id="__span-64-8"><a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a>  → product (hom A (<span class="s">first</span> p) (<span class="s">first</span> p&#39;)) (hom B (<span class="s">second</span> p) (<span class="s">second</span> p&#39;))
-</span><span id="__span-64-9"><a id="__codelineno-64-9" name="__codelineno-64-9" href="#__codelineno-64-9"></a>  := <span class="p">\ </span>f → <span class="p">(</span>\ (t <span class="p">:</span> Δ¹) → <span class="s">first</span> (f t) , \ <span class="p">(</span>t <span class="p">:</span> Δ¹) → <span class="s">second</span> (f t))
-</span><span id="__span-64-10"><a id="__codelineno-64-10" name="__codelineno-64-10" href="#__codelineno-64-10"></a>
-</span><span id="__span-64-11"><a id="__codelineno-64-11" name="__codelineno-64-11" href="#__codelineno-64-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:product-of-morphism-to-morphism-in-product" id="define:product-of-morphism-to-morphism-in-product" style="visibility: visible; position: relative; color: inherit">product-of-morphism-to-morphism-in-product</a></span>
-</span><span id="__span-64-12"><a id="__codelineno-64-12" name="__codelineno-64-12" href="#__codelineno-64-12"></a>  : product (hom A (<span class="s">first</span> p) (<span class="s">first</span> p&#39;)) (hom B (<span class="s">second</span> p) (<span class="s">second</span> p&#39;))
-</span><span id="__span-64-13"><a id="__codelineno-64-13" name="__codelineno-64-13" href="#__codelineno-64-13"></a>  → hom (product A B) p p&#39;
-</span><span id="__span-64-14"><a id="__codelineno-64-14" name="__codelineno-64-14" href="#__codelineno-64-14"></a>  := \ (f , g) <span class="p">(</span>t <span class="p">:</span> Δ¹) → (f t , g t)
-</span><span id="__span-64-15"><a id="__codelineno-64-15" name="__codelineno-64-15" href="#__codelineno-64-15"></a>
-</span><span id="__span-64-16"><a id="__codelineno-64-16" name="__codelineno-64-16" href="#__codelineno-64-16"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id" id="define:morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id" style="visibility: visible; position: relative; color: inherit">morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id</a></span>
-</span><span id="__span-64-17"><a id="__codelineno-64-17" name="__codelineno-64-17" href="#__codelineno-64-17"></a>  : <span class="p">( </span>f <span class="p">:</span> product (hom A (<span class="s">first</span> p) (<span class="s">first</span> p&#39;)) (hom B (<span class="s">second</span> p) (<span class="s">second</span> p&#39;)))
-</span><span id="__span-64-18"><a id="__codelineno-64-18" name="__codelineno-64-18" href="#__codelineno-64-18"></a>  → ( morphism-<span class="k">in</span>-product-to-product-of-morphism)
-</span><span id="__span-64-19"><a id="__codelineno-64-19" name="__codelineno-64-19" href="#__codelineno-64-19"></a>    ( ( product-of-morphism-to-morphism-<span class="k">in</span>-product)
-</span><span id="__span-64-20"><a id="__codelineno-64-20" name="__codelineno-64-20" href="#__codelineno-64-20"></a>      f) = f
-</span><span id="__span-64-21"><a id="__codelineno-64-21" name="__codelineno-64-21" href="#__codelineno-64-21"></a>  := <span class="p">\ </span>f → <span class="s">refl</span>
-</span><span id="__span-64-22"><a id="__codelineno-64-22" name="__codelineno-64-22" href="#__codelineno-64-22"></a>
-</span><span id="__span-64-23"><a id="__codelineno-64-23" name="__codelineno-64-23" href="#__codelineno-64-23"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id" id="define:product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id" style="visibility: visible; position: relative; color: inherit">product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id</a></span>
-</span><span id="__span-64-24"><a id="__codelineno-64-24" name="__codelineno-64-24" href="#__codelineno-64-24"></a>  : <span class="p">( </span>f <span class="p">:</span> hom (product A B) p p&#39;)
-</span><span id="__span-64-25"><a id="__codelineno-64-25" name="__codelineno-64-25" href="#__codelineno-64-25"></a>  → ( product-of-morphism-to-morphism-<span class="k">in</span>-product)
-</span><span id="__span-64-26"><a id="__codelineno-64-26" name="__codelineno-64-26" href="#__codelineno-64-26"></a>    ( ( morphism-<span class="k">in</span>-product-to-product-of-morphism)
-</span><span id="__span-64-27"><a id="__codelineno-64-27" name="__codelineno-64-27" href="#__codelineno-64-27"></a>      f) = f
-</span><span id="__span-64-28"><a id="__codelineno-64-28" name="__codelineno-64-28" href="#__codelineno-64-28"></a>  := <span class="p">\ </span>f → <span class="s">refl</span>
-</span><span id="__span-64-29"><a id="__codelineno-64-29" name="__codelineno-64-29" href="#__codelineno-64-29"></a>
-</span><span id="__span-64-30"><a id="__codelineno-64-30" name="__codelineno-64-30" href="#__codelineno-64-30"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:morphism-in-product-equiv-product-of-morphism" id="define:morphism-in-product-equiv-product-of-morphism" style="visibility: visible; position: relative; color: inherit">morphism-in-product-equiv-product-of-morphism</a></span>
-</span><span id="__span-64-31"><a id="__codelineno-64-31" name="__codelineno-64-31" href="#__codelineno-64-31"></a>  : Equiv
-</span><span id="__span-64-32"><a id="__codelineno-64-32" name="__codelineno-64-32" href="#__codelineno-64-32"></a>    ( hom (product A B) p p&#39;)
-</span><span id="__span-64-33"><a id="__codelineno-64-33" name="__codelineno-64-33" href="#__codelineno-64-33"></a>    ( product (hom A (<span class="s">first</span> p) (<span class="s">first</span> p&#39;)) (hom B (<span class="s">second</span> p) (<span class="s">second</span> p&#39;)))
-</span><span id="__span-64-34"><a id="__codelineno-64-34" name="__codelineno-64-34" href="#__codelineno-64-34"></a>  :=
-</span><span id="__span-64-35"><a id="__codelineno-64-35" name="__codelineno-64-35" href="#__codelineno-64-35"></a>    ( ( morphism-<span class="k">in</span>-product-to-product-of-morphism)
-</span><span id="__span-64-36"><a id="__codelineno-64-36" name="__codelineno-64-36" href="#__codelineno-64-36"></a>    , ( ( ( product-of-morphism-to-morphism-<span class="k">in</span>-product)
-</span><span id="__span-64-37"><a id="__codelineno-64-37" name="__codelineno-64-37" href="#__codelineno-64-37"></a>        , ( product-of-morphism-to-morphisms-<span class="k">in</span>-product-to-product-of-morphism-is-id))
-</span><span id="__span-64-38"><a id="__codelineno-64-38" name="__codelineno-64-38" href="#__codelineno-64-38"></a>      , ( ( product-of-morphism-to-morphism-<span class="k">in</span>-product)
-</span><span id="__span-64-39"><a id="__codelineno-64-39" name="__codelineno-64-39" href="#__codelineno-64-39"></a>        , ( morphisms-<span class="k">in</span>-product-to-product-of-morphism-to-morphism-<span class="k">in</span>-product-is-id))))
-</span><span id="__span-64-40"><a id="__codelineno-64-40" name="__codelineno-64-40" href="#__codelineno-64-40"></a>
-</span><span id="__span-64-41"><a id="__codelineno-64-41" name="__codelineno-64-41" href="#__codelineno-64-41"></a><span class="nd">#end</span><span class="n"> morphisms-of-products-is-products-of-morphisms</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="nd">#section</span><span class="n"> morphisms-of-products-is-products-of-morphisms</span>
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a><span class="kr">#variables</span><span class="p"> </span>A B : <span class="kt">U</span>
+</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a><span class="kr">#variable</span><span class="p"> </span>p : (product A B)
+</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a><span class="kr">#variable</span><span class="p"> </span>p&#39; : (product A B)
+</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>
+</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:morphism-in-product-to-product-of-morphism" id="define:morphism-in-product-to-product-of-morphism" style="visibility: visible; position: relative; color: inherit">morphism-in-product-to-product-of-morphism</a></span>
+</span><span id="__span-65-7"><a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a>  : hom (product A B) p p&#39;
+</span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a>  → product (hom A (<span class="s">first</span> p) (<span class="s">first</span> p&#39;)) (hom B (<span class="s">second</span> p) (<span class="s">second</span> p&#39;))
+</span><span id="__span-65-9"><a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a>  := <span class="p">\ </span>f → <span class="p">(</span>\ (t <span class="p">:</span> Δ¹) → <span class="s">first</span> (f t) , \ <span class="p">(</span>t <span class="p">:</span> Δ¹) → <span class="s">second</span> (f t))
+</span><span id="__span-65-10"><a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a>
+</span><span id="__span-65-11"><a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:product-of-morphism-to-morphism-in-product" id="define:product-of-morphism-to-morphism-in-product" style="visibility: visible; position: relative; color: inherit">product-of-morphism-to-morphism-in-product</a></span>
+</span><span id="__span-65-12"><a id="__codelineno-65-12" name="__codelineno-65-12" href="#__codelineno-65-12"></a>  : product (hom A (<span class="s">first</span> p) (<span class="s">first</span> p&#39;)) (hom B (<span class="s">second</span> p) (<span class="s">second</span> p&#39;))
+</span><span id="__span-65-13"><a id="__codelineno-65-13" name="__codelineno-65-13" href="#__codelineno-65-13"></a>  → hom (product A B) p p&#39;
+</span><span id="__span-65-14"><a id="__codelineno-65-14" name="__codelineno-65-14" href="#__codelineno-65-14"></a>  := \ (f , g) <span class="p">(</span>t <span class="p">:</span> Δ¹) → (f t , g t)
+</span><span id="__span-65-15"><a id="__codelineno-65-15" name="__codelineno-65-15" href="#__codelineno-65-15"></a>
+</span><span id="__span-65-16"><a id="__codelineno-65-16" name="__codelineno-65-16" href="#__codelineno-65-16"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id" id="define:morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id" style="visibility: visible; position: relative; color: inherit">morphisms-in-product-to-product-of-morphism-to-morphism-in-product-is-id</a></span>
+</span><span id="__span-65-17"><a id="__codelineno-65-17" name="__codelineno-65-17" href="#__codelineno-65-17"></a>  : <span class="p">( </span>f <span class="p">:</span> product (hom A (<span class="s">first</span> p) (<span class="s">first</span> p&#39;)) (hom B (<span class="s">second</span> p) (<span class="s">second</span> p&#39;)))
+</span><span id="__span-65-18"><a id="__codelineno-65-18" name="__codelineno-65-18" href="#__codelineno-65-18"></a>  → ( morphism-<span class="k">in</span>-product-to-product-of-morphism)
+</span><span id="__span-65-19"><a id="__codelineno-65-19" name="__codelineno-65-19" href="#__codelineno-65-19"></a>    ( ( product-of-morphism-to-morphism-<span class="k">in</span>-product)
+</span><span id="__span-65-20"><a id="__codelineno-65-20" name="__codelineno-65-20" href="#__codelineno-65-20"></a>      f) = f
+</span><span id="__span-65-21"><a id="__codelineno-65-21" name="__codelineno-65-21" href="#__codelineno-65-21"></a>  := <span class="p">\ </span>f → <span class="s">refl</span>
+</span><span id="__span-65-22"><a id="__codelineno-65-22" name="__codelineno-65-22" href="#__codelineno-65-22"></a>
+</span><span id="__span-65-23"><a id="__codelineno-65-23" name="__codelineno-65-23" href="#__codelineno-65-23"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id" id="define:product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id" style="visibility: visible; position: relative; color: inherit">product-of-morphism-to-morphisms-in-product-to-product-of-morphism-is-id</a></span>
+</span><span id="__span-65-24"><a id="__codelineno-65-24" name="__codelineno-65-24" href="#__codelineno-65-24"></a>  : <span class="p">( </span>f <span class="p">:</span> hom (product A B) p p&#39;)
+</span><span id="__span-65-25"><a id="__codelineno-65-25" name="__codelineno-65-25" href="#__codelineno-65-25"></a>  → ( product-of-morphism-to-morphism-<span class="k">in</span>-product)
+</span><span id="__span-65-26"><a id="__codelineno-65-26" name="__codelineno-65-26" href="#__codelineno-65-26"></a>    ( ( morphism-<span class="k">in</span>-product-to-product-of-morphism)
+</span><span id="__span-65-27"><a id="__codelineno-65-27" name="__codelineno-65-27" href="#__codelineno-65-27"></a>      f) = f
+</span><span id="__span-65-28"><a id="__codelineno-65-28" name="__codelineno-65-28" href="#__codelineno-65-28"></a>  := <span class="p">\ </span>f → <span class="s">refl</span>
+</span><span id="__span-65-29"><a id="__codelineno-65-29" name="__codelineno-65-29" href="#__codelineno-65-29"></a>
+</span><span id="__span-65-30"><a id="__codelineno-65-30" name="__codelineno-65-30" href="#__codelineno-65-30"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:morphism-in-product-equiv-product-of-morphism" id="define:morphism-in-product-equiv-product-of-morphism" style="visibility: visible; position: relative; color: inherit">morphism-in-product-equiv-product-of-morphism</a></span>
+</span><span id="__span-65-31"><a id="__codelineno-65-31" name="__codelineno-65-31" href="#__codelineno-65-31"></a>  : Equiv
+</span><span id="__span-65-32"><a id="__codelineno-65-32" name="__codelineno-65-32" href="#__codelineno-65-32"></a>    ( hom (product A B) p p&#39;)
+</span><span id="__span-65-33"><a id="__codelineno-65-33" name="__codelineno-65-33" href="#__codelineno-65-33"></a>    ( product (hom A (<span class="s">first</span> p) (<span class="s">first</span> p&#39;)) (hom B (<span class="s">second</span> p) (<span class="s">second</span> p&#39;)))
+</span><span id="__span-65-34"><a id="__codelineno-65-34" name="__codelineno-65-34" href="#__codelineno-65-34"></a>  :=
+</span><span id="__span-65-35"><a id="__codelineno-65-35" name="__codelineno-65-35" href="#__codelineno-65-35"></a>    ( ( morphism-<span class="k">in</span>-product-to-product-of-morphism)
+</span><span id="__span-65-36"><a id="__codelineno-65-36" name="__codelineno-65-36" href="#__codelineno-65-36"></a>    , ( ( ( product-of-morphism-to-morphism-<span class="k">in</span>-product)
+</span><span id="__span-65-37"><a id="__codelineno-65-37" name="__codelineno-65-37" href="#__codelineno-65-37"></a>        , ( product-of-morphism-to-morphisms-<span class="k">in</span>-product-to-product-of-morphism-is-id))
+</span><span id="__span-65-38"><a id="__codelineno-65-38" name="__codelineno-65-38" href="#__codelineno-65-38"></a>      , ( ( product-of-morphism-to-morphism-<span class="k">in</span>-product)
+</span><span id="__span-65-39"><a id="__codelineno-65-39" name="__codelineno-65-39" href="#__codelineno-65-39"></a>        , ( morphisms-<span class="k">in</span>-product-to-product-of-morphism-to-morphism-<span class="k">in</span>-product-is-id))))
+</span><span id="__span-65-40"><a id="__codelineno-65-40" name="__codelineno-65-40" href="#__codelineno-65-40"></a>
+</span><span id="__span-65-41"><a id="__codelineno-65-41" name="__codelineno-65-41" href="#__codelineno-65-41"></a><span class="nd">#end</span><span class="n"> morphisms-of-products-is-products-of-morphisms</span>
 </span></code></pre></div>
 <h2 id="fibers-of-maps-between-segal-types">Fibers of maps between Segal types<a class="headerlink" href="#fibers-of-maps-between-segal-types" title="Permanent link">&para;</a></h2>
 <p>For any map <code>f : A → B</code> between Segal types, each fiber <code>fib A B f b</code> is again a
 Segal type. This is an instance of a general statement about types with unique
 extensions for the shape inclusion <code>Λ ⊂ Δ²</code>.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-fiberwise-segal-are-segal" id="define:is-fiberwise-segal-are-segal" style="visibility: visible; position: relative; color: inherit">is-fiberwise-segal-are-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
-</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
-</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
-</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
-</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>  <span class="p">( </span>b <span class="p">:</span> B)
-</span><span id="__span-65-7"><a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a>  : is-segal (fib A B f b)
-</span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a>  :=
-</span><span id="__span-65-9"><a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a>    is-segal-has-unique-inner-extensions (fib A B f b)
-</span><span id="__span-65-10"><a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a>    ( has-fiberwise-unique-extensions-have-unique-extensions extext
-</span><span id="__span-65-11"><a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a>      ( <span class="kt">2</span> × <span class="kt">2</span>) (Δ²) (<span class="p">\ </span>t → Λ t) A B f
-</span><span id="__span-65-12"><a id="__codelineno-65-12" name="__codelineno-65-12" href="#__codelineno-65-12"></a>      ( has-unique-inner-extensions-is-segal A is-segal-A)
-</span><span id="__span-65-13"><a id="__codelineno-65-13" name="__codelineno-65-13" href="#__codelineno-65-13"></a>      ( has-unique-inner-extensions-is-segal B is-segal-B)
-</span><span id="__span-65-14"><a id="__codelineno-65-14" name="__codelineno-65-14" href="#__codelineno-65-14"></a>      ( b))
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-fiberwise-segal-are-segal" id="define:is-fiberwise-segal-are-segal" style="visibility: visible; position: relative; color: inherit">is-fiberwise-segal-are-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
+</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
+</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
+</span><span id="__span-66-6"><a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a>  <span class="p">( </span>b <span class="p">:</span> B)
+</span><span id="__span-66-7"><a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a>  : is-segal (fib A B f b)
+</span><span id="__span-66-8"><a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a>  :=
+</span><span id="__span-66-9"><a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a>    is-segal-has-unique-inner-extensions (fib A B f b)
+</span><span id="__span-66-10"><a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a>    ( has-fiberwise-unique-extensions-have-unique-extensions extext
+</span><span id="__span-66-11"><a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a>      ( <span class="kt">2</span> × <span class="kt">2</span>) (Δ²) (<span class="p">\ </span>t → Λ t) A B f
+</span><span id="__span-66-12"><a id="__codelineno-66-12" name="__codelineno-66-12" href="#__codelineno-66-12"></a>      ( has-unique-inner-extensions-is-segal A is-segal-A)
+</span><span id="__span-66-13"><a id="__codelineno-66-13" name="__codelineno-66-13" href="#__codelineno-66-13"></a>      ( has-unique-inner-extensions-is-segal B is-segal-B)
+</span><span id="__span-66-14"><a id="__codelineno-66-14" name="__codelineno-66-14" href="#__codelineno-66-14"></a>      ( b))
 </span></code></pre></div>
 
 

@@ -2769,8 +2769,8 @@ f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle\)</span></p>
 <h3 id="rs17-proposition-412-extension-types-preserve-n-types">RS17 Proposition 4.12 (extension types preserve n-types)<a class="headerlink" href="#rs17-proposition-412-extension-types-preserve-n-types" title="Permanent link">&para;</a></h3>
 <p>Assuming Axiom 4.6 (weak extension extensionality), if <code>A : (t : ψ) → U</code> and
 <code>a : (t : ϕ) → A t</code> are such that each <code>A(t)</code> is an n-type, then the extension
-type <code>(t : ψ) → A t [ϕ t ↦ a t]</code> is also an n-type. We formalize the cases
-<strong>n = −2 (contractible)</strong> and <strong>n = −1 (proposition)</strong>.</p>
+type <code>(t : ψ) → A t [ϕ t ↦ a t]</code> is also an n-type. We formalize the cases <strong>n =
+−2 (contractible)</strong> and <strong>n = −1 (proposition)</strong>.</p>
 <div class="language-rzk highlight"><span class="filename">RS17 Proposition 4.12 (contractible case)</span><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contr-extension-type-is-fiberwise-contr" id="define:is-contr-extension-type-is-fiberwise-contr" style="visibility: visible; position: relative; color: inherit">is-contr-extension-type-is-fiberwise-contr</a></span>
 </span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>  <span class="p">( </span>weakextext <span class="p">:</span> WeakExtExt)
 </span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>  <span class="p">( </span>I <span class="p">:</span> <span class="kt">CUBE</span>)

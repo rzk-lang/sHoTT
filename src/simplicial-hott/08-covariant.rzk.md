@@ -57,29 +57,6 @@ but varying codomain.
   := (Σ (v : C y) , dhom A x y f C u v)
 ```
 
-The same but generalized to `𝕀` with untotal order.
-
-```rzk
-#def 𝕀-dhom
-  ( A : U)
-  ( x y : A)
-  ( f : 𝕀-hom A x y)
-  ( C : A → U)
-  ( u : C x)
-  ( v : C y)
-  : U
-  := (t : 𝕀) → C (f t) [t ≡ 0₂ ↦ u , t ≡ 1₂ ↦ v]
-
-#def 𝕀-dhom-from
-  ( A : U)
-  ( x y : A)
-  ( f : 𝕀-hom A x y)
-  ( C : A → U)
-  ( u : C x)
-  : U
-  := (Σ (v : C y) , 𝕀-dhom A x y f C u v)
-```
-
 There is also a type of dependent commutative triangles over a base commutative
 triangle.
 
@@ -118,8 +95,8 @@ unique lift with specified domain.
   ( C : A → U)
   : U
   :=
-    ( x : A) → (y : A) → (f : 𝕀-hom A x y) → (u : C x)
-  → is-contr (𝕀-dhom-from A x y f C u)
+    ( x : A) → (y : A) → (f : hom A x y) → (u : C x)
+  → is-contr (dhom-from A x y f C u)
 ```
 
 ```rzk title="The type of covariant families over a fixed type"

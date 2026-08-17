@@ -1305,7 +1305,8 @@ We now assume extension extensionality and derive a few consequences.
 
 ### Pointwise homotopy extension types
 
-Using `ExtExt` we can write the homotopy in the homotopy extension type pointwise.
+Using `ExtExt` we can write the homotopy in the homotopy extension type
+pointwise.
 
 ```rzk
 #section pointwise-homotopy-extension-type

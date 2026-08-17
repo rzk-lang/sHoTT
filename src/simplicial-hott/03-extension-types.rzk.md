@@ -1353,9 +1353,6 @@ pointwise.
 #end pointwise-homotopy-extension-type
 ```
 
-
-
-
 ## Relative extension types
 
 Given a map `α : A' → A`, there is also a notion of relative extension types.

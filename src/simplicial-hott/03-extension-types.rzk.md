@@ -699,8 +699,7 @@ We refer to another form as an "extension extensionality" axiom.
 For readability of code, it is useful to name the function that supplies an
 equality between terms of an extension type from a pointwise equality extending
 refl. In fact, sometimes only this weaker form of the axiom is needed, which we
-call "naive extension extensionality". This is immediately implied by
-extension extensionality.
+call "naive extension extensionality". This is immediately implied by extension extensionality.
 
 ```rzk
 #def NaiveExtExt

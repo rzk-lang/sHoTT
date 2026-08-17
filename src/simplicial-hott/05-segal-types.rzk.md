@@ -52,6 +52,20 @@ Extension types are used to define the type of arrows between fixed terms:
 
 ```
 
+The same hom type but generalized to `𝕀` with untotal order.
+
+```rzk
+#def 𝕀-hom
+  ( A : U)
+  ( x y : A)
+  : U
+  :=
+    ( t : 𝕀)
+  → A [ t ≡ 0₂ ↦ x
+      , t ≡ 1₂ ↦ y]
+
+```
+
 For each `a : A`, the total types of the representables `\ z → hom A a z` and
 `\ z → hom A z a` are called the coslice and slice, respectively.
 

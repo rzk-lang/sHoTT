@@ -353,6 +353,37 @@ Every contractible type is automatically discrete.
   := is-discrete-is-contr Unit (is-contr-Unit)
 ```
 
+## Closure properties of discreteness
+
+Function types and extension types into discrete families are already discrete:
+`#!rzk is-discrete-function-type`, `#!rzk is-discrete-extension-type` above.
+
+```rzk
+-- Opposite modality preserves discreteness (cf. `is-contr-of-op` in triangulated axioms).
+#def is-discrete-op uses (extext)
+  ( A :ᵒᵖ U)
+  ( is-discrete-A : ᵒᵖ (is-discrete A))
+  : is-discrete (ᵒᵖ A)
+  := ?is-discrete-op
+
+-- Σ of discrete types is discrete (same pattern as is-discrete-function-type).
+#def is-discrete-Σ uses (extext)
+  ( A : U)
+  ( B : A → U)
+  ( is-discrete-A : is-discrete A)
+  ( is-discrete-B : (a : A) → is-discrete (B a))
+  : is-discrete (Σ (a : A) , B a)
+  := ?is-discrete-Σ
+
+-- Path types in a discrete type are discrete.
+#def is-discrete-Id uses (extext)
+  ( A : U)
+  ( is-discrete-A : is-discrete A)
+  ( x y : A)
+  : is-discrete (x = y)
+  := ?is-discrete-Id
+```
+
 ## Discrete types are Segal types
 
 Recall that we can characterize discrete type either as those local for

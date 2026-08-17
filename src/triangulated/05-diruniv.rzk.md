@@ -19,6 +19,7 @@ This is a literate `rzk` file:
 - `hott/10-trivial-fibrations.rzk.md` — `is-equiv-domain-sum-of-fibers`.
 - `simplicial-hott/03-extension-types.rzk.md` — `ExtExt`, `naiveextext-extext`.
 - `simplicial-hott/04-right-orthogonal.rzk.md` — RS17 Thm 8.5 / pullback via right orthogonality.
+- `simplicial-hott/07-discrete.rzk.md` — `is-discrete`, `is-discrete-function-type`, `is-discrete-extension-type`, `is-discrete-Σ`, `is-discrete-Id`, `is-discrete-op`.
 - `01-cubical-shapes.rzk.md` — `equiv-fun-curry`, `choice-sigma3`, `equiv-fun-cube-shape-TOP`.
 - `02-modalities.rzk.md` — Modality operations and type aliases.
 - `03-axioms.rzk.md` — Right adjoint, transpose adjunction, `I^n`, `zero-vec-I^n`, flat helpers.
@@ -91,8 +92,10 @@ This is a literate `rzk` file:
       ( \ _ → refl)
       ( \ _ → refl)
 
-#postulate is-prop-is-cov-i
-  : ( A : 𝕀 → U) → is-prop (is-cov-i A)
+#def is-prop-is-cov-i
+  ( A : 𝕀 → U)
+  : is-prop (is-cov-i A)
+  := ?is-prop-is-cov-i
 
 #def is-cov-i-Prop (A : 𝕀 → U)
   : Prop
@@ -106,6 +109,13 @@ This is a literate `rzk` file:
 #def is-a-cov (X : U)
   : U
   := amazing-predicate is-cov-i-Prop X
+
+-- Amazing covariance implies discreteness (RS-style: cov ⇒ discrete fibers).
+#def is-discrete-is-a-cov uses (extext)
+  ( A : U)
+  ( is-a-cov-A : is-a-cov A)
+  : is-discrete A
+  := ?is-discrete-is-a-cov
 
 #def S
   : U
@@ -248,6 +258,213 @@ This is a literate `rzk` file:
         x
         ( \ _ → x)
 
+-- Degenerate case of H's line at j=1: `\k → form (inf i (sup 1 k))` (= const i).
+#def coe-i-line-const-1-sup
+  ( A : 𝕀 → U)
+  ( is-a-cov-A : (i : 𝕀) → is-a-cov (A i))
+  ( i : 𝕀)
+  ( x : A i)
+  : coe-i-line A is-a-cov-A (\ k → form (inf i (sup 1₂ k))) x = x
+  := coe-i-line-const A is-a-cov-A i x
+
+-- Same collapse: coe along ℓ_{0,1} via either packaging.
+#def coe-i-line-const-0-sup-1
+  ( A : 𝕀 → U)
+  ( is-a-cov-A : (i : 𝕀) → is-a-cov (A i))
+  ( x : A 0₂)
+  : coe-i-line-const-0-sup A is-a-cov-A 1₂ x
+    = coe-i-line-const-1-sup A is-a-cov-A 0₂ x
+  := refl
+
+-- transport in (λ φ. φ 0 = f0) along b unfolds as ap(eval0)(b)⁻¹ ∙ α.
+#def transport-eval0-endpoint
+  ( E : 𝕀 → U)
+  ( f0 : E 0₂)
+  ( φ ψ : (i : 𝕀) → E i)
+  ( b : φ = ψ)
+  ( α : φ 0₂ = f0)
+  : transport
+      ( (i : 𝕀) → E i)
+      ( \ χ → χ 0₂ = f0)
+      φ ψ b α
+    = concat
+        ( E 0₂)
+        ( ψ 0₂)
+        ( φ 0₂)
+        f0
+        ( rev (E 0₂) (φ 0₂) (ψ 0₂)
+            ( ap ((i : 𝕀) → E i) (E 0₂) φ ψ (\ χ → χ 0₂) b))
+        α
+  :=
+    concat
+      ( ψ 0₂ = f0)
+      ( transport ((i : 𝕀) → E i) (\ χ → χ 0₂ = f0) φ ψ b α)
+      ( transport (E 0₂) (\ z → z = f0) (φ 0₂) (ψ 0₂)
+          ( ap ((i : 𝕀) → E i) (E 0₂) φ ψ (\ χ → χ 0₂) b)
+          α)
+      ( concat (E 0₂) (ψ 0₂) (φ 0₂) f0
+          ( rev (E 0₂) (φ 0₂) (ψ 0₂)
+              ( ap ((i : 𝕀) → E i) (E 0₂) φ ψ (\ χ → χ 0₂) b))
+          α)
+      ( transport-substitution
+          ( (i : 𝕀) → E i)
+          ( E 0₂)
+          ( \ z → z = f0)
+          ( \ χ → χ 0₂)
+          φ ψ b α)
+      ( concat-as-endpoint-transport (E 0₂) f0 (φ 0₂) (ψ 0₂)
+          ( ap ((i : 𝕀) → E i) (E 0₂) φ ψ (\ χ → χ 0₂) b)
+          α)
+
+-- Given d1 = ap(eval0)(b), cancel: transport b (d1 ∙ q) = q.
+#def pack1-transport-cancel
+  ( E : 𝕀 → U)
+  ( f0 : E 0₂)
+  ( φ ψ : (i : 𝕀) → E i)
+  ( b : φ = ψ)
+  ( d1 : φ 0₂ = ψ 0₂)
+  ( q : ψ 0₂ = f0)
+  ( d1=ap : d1
+      = ap ((i : 𝕀) → E i) (E 0₂) φ ψ (\ χ → χ 0₂) b)
+  : transport
+      ( (i : 𝕀) → E i)
+      ( \ χ → χ 0₂ = f0)
+      φ ψ b
+      ( concat (E 0₂) (φ 0₂) (ψ 0₂) f0 d1 q)
+    = q
+  :=
+    let apb
+      := ap ((i : 𝕀) → E i) (E 0₂) φ ψ (\ χ → χ 0₂) b
+    in
+    let α
+      := concat (E 0₂) (φ 0₂) (ψ 0₂) f0 d1 q
+    in
+      concat
+        ( ψ 0₂ = f0)
+        ( transport ((i : 𝕀) → E i) (\ χ → χ 0₂ = f0) φ ψ b α)
+        ( concat (E 0₂) (ψ 0₂) (φ 0₂) f0 (rev (E 0₂) (φ 0₂) (ψ 0₂) apb) α)
+        q
+        ( transport-eval0-endpoint E f0 φ ψ b α)
+        ( concat
+            ( ψ 0₂ = f0)
+            ( concat (E 0₂) (ψ 0₂) (φ 0₂) f0
+                ( rev (E 0₂) (φ 0₂) (ψ 0₂) apb)
+                ( concat (E 0₂) (φ 0₂) (ψ 0₂) f0 d1 q))
+            ( concat (E 0₂) (ψ 0₂) (φ 0₂) f0
+                ( rev (E 0₂) (φ 0₂) (ψ 0₂) apb)
+                ( concat (E 0₂) (φ 0₂) (ψ 0₂) f0 apb q))
+            q
+            ( ap
+                ( φ 0₂ = ψ 0₂)
+                ( ψ 0₂ = f0)
+                d1 apb
+                ( \ u →
+                    concat (E 0₂) (ψ 0₂) (φ 0₂) f0
+                      ( rev (E 0₂) (φ 0₂) (ψ 0₂) apb)
+                      ( concat (E 0₂) (φ 0₂) (ψ 0₂) f0 u q))
+                d1=ap)
+            ( retraction-preconcat (E 0₂) (φ 0₂) (ψ 0₂) f0 apb q))
+
+-- ap(eval x0)(funext-section h) = h x0.
+#def ap-eval-funext-section uses (funext)
+  ( X : U)
+  ( A : X → U)
+  ( f g : (x : X) → A x)
+  ( h : (x : X) → f x = g x)
+  ( x0 : X)
+  : ap
+      ( (x : X) → A x)
+      ( A x0)
+      f g
+      ( \ φ → φ x0)
+      ( first (second (funext X A f g)) h)
+    = h x0
+  :=
+    let s
+      : ( (x : X) → f x = g x) → (f = g)
+      := first (second (funext X A f g))
+    in
+    let η
+      : htpy-eq X A f g (s h) = h
+      := second (second (funext X A f g)) h
+    in
+    let ap=htpy
+      : ap ((x : X) → A x) (A x0) f g (\ φ → φ x0) (s h)
+        = htpy-eq X A f g (s h) x0
+      :=
+        ind-path
+          ( (x : X) → A x)
+          f
+          ( \ g' p' →
+              ap ((x : X) → A x) (A x0) f g' (\ φ → φ x0) p'
+            = htpy-eq X A f g' p' x0)
+          ( refl)
+          g
+          ( s h)
+    in
+      concat
+        ( f x0 = g x0)
+        ( ap ((x : X) → A x) (A x0) f g (\ φ → φ x0) (s h))
+        ( htpy-eq X A f g (s h) x0)
+        ( h x0)
+        ap=htpy
+        ( ap
+            ( (x : X) → f x = g x)
+            ( f x0 = g x0)
+            ( htpy-eq X A f g (s h))
+            h
+            ( \ k → k x0)
+            η)
+
+-- Same β for cube maps via ExtExt on (I | TOP) with empty boundary.
+#def ap-eval0-extext uses (extext)
+  ( A : 𝕀 → U)
+  ( f g : (i : 𝕀) → A i)
+  ( h : (i : 𝕀) → f i = g i)
+  : ap
+      ( (i : 𝕀) → A i)
+      ( A 0₂)
+      f g
+      ( \ φ → φ 0₂)
+      ( first (second (extext 𝕀 (\ _ → TOP) (\ _ → BOT) A (\ _ → recBOT) f g)) h)
+    = h 0₂
+  :=
+    let s
+      : ( (i : 𝕀) → f i = g i) → (f = g)
+      := first (second (extext 𝕀 (\ _ → TOP) (\ _ → BOT) A (\ _ → recBOT) f g))
+    in
+    let η
+      : ext-htpy-eq 𝕀 (\ _ → TOP) (\ _ → BOT) A (\ _ → recBOT) f g (s h) = h
+      := second (second (extext 𝕀 (\ _ → TOP) (\ _ → BOT) A (\ _ → recBOT) f g)) h
+    in
+    let ap=htpy
+      : ap ((i : 𝕀) → A i) (A 0₂) f g (\ φ → φ 0₂) (s h)
+        = ext-htpy-eq 𝕀 (\ _ → TOP) (\ _ → BOT) A (\ _ → recBOT) f g (s h) 0₂
+      :=
+        ind-path
+          ( (i : 𝕀) → A i)
+          f
+          ( \ g' p' →
+              ap ((i : 𝕀) → A i) (A 0₂) f g' (\ φ → φ 0₂) p'
+            = ext-htpy-eq 𝕀 (\ _ → TOP) (\ _ → BOT) A (\ _ → recBOT) f g' p' 0₂)
+          ( refl)
+          g
+          ( s h)
+    in
+      concat
+        ( f 0₂ = g 0₂)
+        ( ap ((i : 𝕀) → A i) (A 0₂) f g (\ φ → φ 0₂) (s h))
+        ( ext-htpy-eq 𝕀 (\ _ → TOP) (\ _ → BOT) A (\ _ → recBOT) f g (s h) 0₂)
+        ( h 0₂)
+        ap=htpy
+        ( ap
+            ( (i : 𝕀) → f i = g i)
+            ( f 0₂ = g 0₂)
+            ( ext-htpy-eq 𝕀 (\ _ → TOP) (\ _ → BOT) A (\ _ → recBOT) f g (s h))
+            h
+            ( \ k → k 0₂)
+            η)
+
 -- transport along l from fiber(l 1) to fiber(l 0), reversing inside op via flip_op.
 -- packed gives pointwise (X, is-a-cov X); op-fun-I-const-bwd flips the index.
 #def coe-i-line-inv
@@ -307,14 +524,7 @@ This is a literate `rzk` file:
           ( \ (_ , cA') → cA'))
       ( \ _ → (A , is-a-cov-A))
 
--- Σ of discrete types is discrete (same pattern as is-discrete-function-type).
-#def is-discrete-Σ uses (extext)
-  ( A : U)
-  ( B : A → U)
-  ( is-discrete-A : is-discrete A)
-  ( is-discrete-B : (a : A) → is-discrete (B a))
-  : is-discrete (Σ (a : A) , B a)
-  := ?is-discrete-Σ
+-- Σ of discrete types is discrete: see simplicial-hott/07-discrete (`is-discrete-Σ`).
 
 #def is-cov-sigma-closed
   ( A : 𝕀 → U)
@@ -685,18 +895,6 @@ This is a literate `rzk` file:
       ( equiv-is-cov-i-coslice A a0)
       ( cov a0)
 
--- ⟨op | isCov C⟩ → (c₁ : ⟨op|C0⟩) → isContr(Σ_{c : Π_i ⟨op|C(¬i)⟩} c(1)=c₁)
--- along (1) Def → (2) singleton → (3) modal Π → (4) isContr → (5) Σ → (6) Axiom 2 → (7) Id
-#def is-cov-i-op-flip
-  ( C :ᵒᵖ (i : 𝕀) → U)
-  ( cov :ᵒᵖ is-cov-i C)
-  : (c1 : ᵒᵖ (C 0₂))
-      → is-contr
-          ( Σ ( c : (i : 𝕀) → (let mod ᵒᵖ j := flipᵒᵖ i in ᵒᵖ (C j)))
-          , (c 1₂ = c1))
-  :=
-    ?is-cov-i-op-flip
-
 #def is-a-cov-ext uses (funext extext)
   ( phi : ᵒᵖ TOPE)
   ( shape-is-a-cov :
@@ -873,48 +1071,7 @@ This is a literate `rzk` file:
                               coe-i-line D is-a-cov-D l
                                 ( p (inf i j) (unform s-mid))
                       in
-                      let r
-                        : (j : 𝕀)
-                          → ( \ (t : 1 | uninvᵒᵖ (phi-i 0₂)) →
-                                H 0₂ j (mod ᵒᵖ (form *₁)))
-                            = f0
-                        :=
-                          \ j →
-                            ap
-                              ( (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) → D 0₂)
-                              ( (t : 1 | uninvᵒᵖ (phi-i 0₂)) → D 0₂)
-                              ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
-                                  H 0₂ j (mod ᵒᵖ (form *₁)))
-                              ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
-                                  f0 (unform s))
-                              ( \ pre t → pre (form t))
-                              ( eq-htpy funext
-                                  ( shape (_ : 1 | uninvᵒᵖ (phi-i 0₂)))
-                                  ( \ _ → D 0₂)
-                                  ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
-                                      H 0₂ j (mod ᵒᵖ (form *₁)))
-                                  ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
-                                      f0 (unform s))
-                                  ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
-                                      concat
-                                        ( D 0₂)
-                                        ( H 0₂ j (mod ᵒᵖ (form *₁)))
-                                        ( p 0₂ (unform s))
-                                        ( f0 (unform s))
-                                        ( coe-i-line-const-0-sup
-                                            D is-a-cov-D j
-                                            ( p 0₂ (unform s)))
-                                        ( ap
-                                            ( E 0₂)
-                                            ( D 0₂)
-                                            ( p 0₂)
-                                            ( f0)
-                                            ( \ f → f (unform s))
-                                            ( q))))
-                      in
-                      -- Pack H(-,j) with endpoint witness r j into the coslice fiber.
-                      -- Endpoints: pack 0 ∼ center (phi), pack 1 ∼ (p, q);
-                      -- `\t → pack t` is then a hom, and discreteness turns it into =.
+                      -- Ĥ j :≡ H(-,j) at the constant shape code.
                       let H-sec
                         : (j : 𝕀) → (i : 𝕀) → E i
                         :=
@@ -928,20 +1085,80 @@ This is a literate `rzk` file:
                               in
                                 c)
                       in
+                      -- d: i=0 row collapses (ℓ_{0,j} prop-const at 0 ⇒ coe = id).
+                      -- d j : (Ĥ j) 0 = g 0.
+                      let d
+                        : (j : 𝕀) → H-sec j 0₂ = p 0₂
+                        :=
+                          \ j →
+                            ap
+                              ( (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) → D 0₂)
+                              ( (t : 1 | uninvᵒᵖ (phi-i 0₂)) → D 0₂)
+                              ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                  H-sec j 0₂ (unform s))
+                              ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                  p 0₂ (unform s))
+                              ( \ pre t → pre (form t))
+                              ( eq-htpy funext
+                                  ( shape (_ : 1 | uninvᵒᵖ (phi-i 0₂)))
+                                  ( \ _ → D 0₂)
+                                  ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                      H-sec j 0₂ (unform s))
+                                  ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                      p 0₂ (unform s))
+                                  ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                      coe-i-line-const-0-sup
+                                        D is-a-cov-D j
+                                        ( p 0₂ (unform s))))
+                      in
+                      -- r :≡ λj. d j ∙ q  (only: collapse to g0, then q to f0).
+                      let r
+                        : (j : 𝕀) → H-sec j 0₂ = f0
+                        :=
+                          \ j →
+                            concat (E 0₂) (H-sec j 0₂) (p 0₂) f0 (d j) q
+                      in
+                      -- Pack H(-,j) with endpoint witness r j into the coslice fiber.
+                      -- Endpoints: pack 0 ∼ center (phi), pack 1 ∼ (p, q);
+                      -- `\t → pack t` is then a hom, and discreteness turns it into =.
                       let pack
                         : (j : 𝕀)
                           → Σ (φ : (i : 𝕀) → E i) , φ 0₂ = f0
                         := \ j → (H-sec j , r j)
                       in
                       -- discrete = hom ≃ Id; total = is-discrete-Σ of the two pieces
+                      let is-discrete-E-i
+                        : (i : 𝕀) → is-discrete (E i)
+                        :=
+                          \ i →
+                            is-discrete-extension-type
+                              extext
+                              ( 1)
+                              ( \ _ → uninvᵒᵖ (phi-i i))
+                              ( \ _ → D i)
+                              ( \ _ →
+                                  is-discrete-is-a-cov (D i) (is-a-cov-D i))
+                      in
                       let is-discrete-E-I
                         : is-discrete ((i : 𝕀) → E i)
-                        := ?is-discrete-E-I
+                        :=
+                          is-discrete-extension-type
+                            extext
+                            ( 𝕀)
+                            ( \ _ → TOP)
+                            ( \ i → E i)
+                            ( is-discrete-E-i)
                       in
                       let is-discrete-fib
                         : ( φ : (i : 𝕀) → E i)
                           → is-discrete (φ 0₂ = f0)
-                        := ?is-discrete-fib
+                        :=
+                          \ φ →
+                            is-discrete-Id
+                              ( E 0₂)
+                              ( is-discrete-E-i 0₂)
+                              ( φ 0₂)
+                              f0
                       in
                       let is-discrete-total
                         : is-discrete
@@ -956,70 +1173,184 @@ This is a literate `rzk` file:
                       let pack0-eq
                         : pack 0₂ = contr-center
                         :=
-                          let H-sec0=phi
-                            : H-sec 0₂ = phi
-                            :=
-                              naiveextext-extext extext
-                                ( 𝕀)
-                                ( \ _ → TOP)
-                                ( \ _ → BOT)
-                                ( \ i → E i)
-                                ( \ _ → recBOT)
-                                ( H-sec 0₂)
-                                ( phi)
-                                ( \ i →
+                          -- J on q: take f0' := p 0, q' := refl. Then Ĥ 0 ≡ phi'
+                          -- (same coe along ℓ_i from g0), so the j=0 corner is free.
+                          ind-path
+                            ( E 0₂)
+                            ( p 0₂)
+                            ( \ f0' q' →
+                                let phi'
+                                  : (i : 𝕀) → E i
+                                  :=
+                                    \ i _ →
+                                      let l : 𝕀 → shape (_ : 𝕀 | TOP)
+                                        := \ k → form (inf i k)
+                                      in
+                                      let s-op
+                                        : let mod ᵒᵖ p' := phi-i 0₂ in
+                                            ᵒᵖ (shape (_ : 1 | p'))
+                                        :=
+                                          coe-i-line-inv packed-S l (mod ᵒᵖ (form *₁))
+                                      in
+                                      let s0
+                                        := first (equiv-op-shape-uninv (phi-i 0₂)) s-op
+                                      in
+                                        coe-i-line D is-a-cov-D l
+                                          ( f0' (unform s0))
+                                in
+                                let phi0'
+                                  : phi' 0₂ = f0'
+                                  :=
                                     ap
-                                      ( (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) → D i)
-                                      ( (t : 1 | uninvᵒᵖ (phi-i i)) → D i)
-                                      ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
-                                          H-sec 0₂ i (unform s))
-                                      ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
-                                          phi i (unform s))
+                                      ( (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) → D 0₂)
+                                      ( (t : 1 | uninvᵒᵖ (phi-i 0₂)) → D 0₂)
+                                      ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                          phi' 0₂ (unform s))
+                                      ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                          f0' (unform s))
                                       ( \ pre t → pre (form t))
                                       ( eq-htpy funext
-                                          ( shape (_ : 1 | uninvᵒᵖ (phi-i i)))
-                                          ( \ _ → D i)
-                                          ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
-                                              H-sec 0₂ i (unform s))
-                                          ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
-                                              phi i (unform s))
-                                          ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
-                                              let l : 𝕀 → shape (_ : 𝕀 | TOP)
-                                                := \ k → form (inf i (sup 0₂ k))
-                                              in
-                                              let s-mid
-                                                :=
-                                                  first
-                                                    ( equiv-op-shape-uninv (phi-i (inf i 0₂)))
-                                                    ( coe-i-line-inv packed-S l
-                                                        ( mod ᵒᵖ (form *₁)))
-                                              in
-                                                ap
-                                                  ( D (inf i 0₂))
-                                                  ( D i)
-                                                  ( p (inf i 0₂) (unform s-mid))
-                                                  ( f0 (unform s-mid))
-                                                  ( \ x →
-                                                      coe-i-line D is-a-cov-D l x)
-                                                  ( ap
-                                                      ( E 0₂)
-                                                      ( D 0₂)
-                                                      ( p 0₂)
-                                                      ( f0)
-                                                      ( \ f → f (unform s-mid))
-                                                      ( q)))))
+                                          ( shape (_ : 1 | uninvᵒᵖ (phi-i 0₂)))
+                                          ( \ _ → D 0₂)
+                                          ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                              phi' 0₂ (unform s))
+                                          ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                              f0' (unform s))
+                                          ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i 0₂))) →
+                                              coe-i-line-const-at-0 D is-a-cov-D
+                                                ( f0'
+                                                    ( unform
+                                                        ( first
+                                                            ( equiv-op-shape-uninv (phi-i 0₂))
+                                                            ( coe-i-line-inv packed-S
+                                                                ( \ k → form (inf 0₂ k))
+                                                                ( mod ᵒᵖ (form *₁))))))))
+                                in
+                                let r'
+                                  : (j : 𝕀) → H-sec j 0₂ = f0'
+                                  :=
+                                    \ j →
+                                      concat
+                                        ( E 0₂)
+                                        ( H-sec j 0₂)
+                                        ( p 0₂)
+                                        ( f0')
+                                        ( d j)
+                                        ( q')
+                                in
+                                  ( H-sec 0₂ , r' 0₂)
+                                  =_{Σ (φ : (i : 𝕀) → E i) , φ 0₂ = f0'}
+                                    ( phi' , phi0'))
+                            ( refl)
+                            ( f0)
+                            ( q)
+                      in
+                      let pack1-eq
+                        : pack 1₂ = (p , q)
+                        :=
+                          let ptwise
+                            : (i : 𝕀) → H-sec 1₂ i = p i
+                            :=
+                              \ i →
+                                ap
+                                  ( (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) → D i)
+                                  ( (t : 1 | uninvᵒᵖ (phi-i i)) → D i)
+                                  ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
+                                      H-sec 1₂ i (unform s))
+                                  ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
+                                      p i (unform s))
+                                  ( \ pre t → pre (form t))
+                                  ( eq-htpy funext
+                                      ( shape (_ : 1 | uninvᵒᵖ (phi-i i)))
+                                      ( \ _ → D i)
+                                      ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
+                                          H-sec 1₂ i (unform s))
+                                      ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
+                                          p i (unform s))
+                                      ( \ (s : shape (_ : 1 | uninvᵒᵖ (phi-i i))) →
+                                          coe-i-line-const-1-sup
+                                            D is-a-cov-D i
+                                            ( p i (unform s))))
+                          in
+                          let H-sec1=p
+                            : H-sec 1₂ = p
+                            :=
+                              first
+                                ( second
+                                    ( extext
+                                        ( 𝕀)
+                                        ( \ _ → TOP)
+                                        ( \ _ → BOT)
+                                        ( \ i → E i)
+                                        ( \ _ → recBOT)
+                                        ( H-sec 1₂)
+                                        ( p)))
+                                ( ptwise)
+                          in
+                          let d1=ap-eval
+                            : d 1₂
+                              = ap
+                                  ( (i : 𝕀) → E i)
+                                  ( E 0₂)
+                                  ( H-sec 1₂)
+                                  ( p)
+                                  ( \ φ → φ 0₂)
+                                  ( H-sec1=p)
+                            :=
+                              concat
+                                ( H-sec 1₂ 0₂ = p 0₂)
+                                ( d 1₂)
+                                ( ptwise 0₂)
+                                ( ap
+                                    ( (i : 𝕀) → E i)
+                                    ( E 0₂)
+                                    ( H-sec 1₂)
+                                    ( p)
+                                    ( \ φ → φ 0₂)
+                                    ( H-sec1=p))
+                                ( refl)
+                                ( rev
+                                    ( H-sec 1₂ 0₂ = p 0₂)
+                                    ( ap
+                                        ( (i : 𝕀) → E i)
+                                        ( E 0₂)
+                                        ( H-sec 1₂)
+                                        ( p)
+                                        ( \ φ → φ 0₂)
+                                        ( H-sec1=p))
+                                    ( ptwise 0₂)
+                                    ( ap-eval0-extext
+                                        ( \ i → E i)
+                                        ( H-sec 1₂)
+                                        ( p)
+                                        ( ptwise)))
+                          in
+                          let pack1-eq-second
+                            : transport
+                                ( (i : 𝕀) → E i)
+                                ( \ φ → φ 0₂ = f0)
+                                ( H-sec 1₂)
+                                ( p)
+                                ( H-sec1=p)
+                                ( r 1₂)
+                              = q
+                            :=
+                              pack1-transport-cancel
+                                E f0
+                                ( H-sec 1₂)
+                                p
+                                ( H-sec1=p)
+                                ( d 1₂)
+                                q
+                                ( d1=ap-eval)
                           in
                             eq-pair
                               ( (i : 𝕀) → E i)
                               ( \ φ → φ 0₂ = f0)
-                              ( pack 0₂)
-                              ( contr-center)
-                              ( H-sec0=phi
-                              , ?pack0-eq-second)
-                      in
-                      let pack1-eq
-                        : pack 1₂ = (p , q)
-                        := ?pack1-eq
+                              ( pack 1₂)
+                              ( p , q)
+                              ( H-sec1=p
+                              , pack1-eq-second)
                       in
                       let arrow-pack
                         : hom
@@ -1110,8 +1441,9 @@ This is a literate `rzk` file:
 First part of equivalence mor2fun (dirglue f) is f.
 
 ```rzk
-#postulate is-prop-is-a-cov (A : U)
+#def is-prop-is-a-cov (A : U)
   : is-prop (is-a-cov A)
+  := ?is-prop-is-a-cov
 
 #def equiv-extent-0 (X : U)
   : Equiv ((t : 1 | 0₂ ≡ 0₂) → X) X

@@ -730,16 +730,19 @@ The discrete interval is equivalent to Bool.
 ## Axiom 8: Cubes separate
 
 ```rzk
+-- The n-cube as a *type*: the cube layer must not depend on term-level
+-- dependent types, so we cannot build a `CUBE` by `nat`-recursion. Instead we
+-- iterate the Σ (product) of the interval shape type `shape (_ : 𝕀 | TOP)`.
 #def I^n (n : nat)
-  : CUBE
+  : U
   := match n
-      (zero ⇒ 1
-      | suc k ih ⇒ 𝕀 × ih)
+      (zero ⇒ shape (_ : 1 | TOP)
+      | suc k ih ⇒ product (shape (_ : 𝕀 | TOP)) ih)
 
 #def zero-vec-I^n
   ( m : nat)
-  : shape (_ : I^n m | TOP)
-  := match m (zero ⇒ form *₁ | suc k ih ⇒ form (0₂ , unform ih))
+  : I^n m
+  := match m (zero ⇒ form *₁ | suc k ih ⇒ (form 0₂ , ih))
 
 #postulate cubes-separate (A B :♭ U) (f :♭ A → B)
   : iff (is-equiv A B f) ((n :_b nat) → is-equiv (♭ (I^n n → A)) (♭ (I^n n → B)) (b-map (I^n n → A) (I^n n → B) (\ p t → f (p t))))

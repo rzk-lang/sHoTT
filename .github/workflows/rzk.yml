@@ -1,4 +1,4 @@
-name: Typecheck with latest Rzk
+name: Typecheck with Rzk (modal-let-rework branch)
 
 # Controls when the workflow will run
 on:
@@ -6,23 +6,58 @@ on:
   push:
     branches:
       - main
+      - diruniv
   # and pull request events
   pull_request:
     branches:
       - main
+      - diruniv
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+env:
+  # rzk source: PR rzk-lang/rzk#334
+  RZK_REPO: rzk-lang/rzk
+  RZK_REF: lishy2-modal-let-rework
 
 jobs:
   check:
     runs-on: ubuntu-latest
     name: Check formalisations
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout formalisations
+        uses: actions/checkout@v4
+
+      - name: Checkout rzk (${{ env.RZK_REF }})
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.RZK_REPO }}
+          ref: ${{ env.RZK_REF }}
+          path: rzk-src
+
+      - name: Set up Haskell/Stack
+        uses: haskell-actions/setup@v2
+        with:
+          enable-stack: true
+          stack-version: latest
+
+      - name: Cache Stack
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.stack
+            rzk-src/.stack-work
+          key: ${{ runner.os }}-stack-${{ hashFiles('rzk-src/stack.yaml.lock', 'rzk-src/stack.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-stack-
+
+      - name: Build and install rzk
+        working-directory: rzk-src
+        run: stack install rzk:exe:rzk --local-bin-path "$HOME/.local/bin"
 
       - name: Typecheck Rzk files
-        uses: rzk-lang/rzk-action@v1
-        with:
-          rzk-version: latest
-          # rzk-version: v0.4.1.1   # example of a specific version
+        run: |
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/rzk" version
+          "$HOME/.local/bin/rzk" typecheck --allow-holes

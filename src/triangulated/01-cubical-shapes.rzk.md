@@ -51,7 +51,7 @@ Simpliciality predicate
   : ᵒᵖ ((t : 2) → B [ t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y ])
   :=
     mod ᵒᵖ (\ (t : 2) →
-      let mod ᵒᵖ / ᵒᵖ b := forget-op-hom B y x k (unflipᵒᵖ (mod ᵒᵖ t)) in
+      let ᵒᵖ mod ᵒᵖ b := forget-op-hom B y x k (unflipᵒᵖ (mod ᵒᵖ t)) in
         b)
 
 -- Same for extension types over I (endpoints swap under flip)
@@ -80,7 +80,7 @@ Simpliciality predicate
   : ᵒᵖ ((t : 𝕀) → B [ t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y ])
   :=
     mod ᵒᵖ (\ (t : 𝕀) →
-      let mod ᵒᵖ / ᵒᵖ b := forget-op-ext-I B y x k (unflipᵒᵖ (mod ᵒᵖ t)) in
+      let ᵒᵖ mod ᵒᵖ b := forget-op-ext-I B y x k (unflipᵒᵖ (mod ᵒᵖ t)) in
         b)
 ```
 
@@ -89,22 +89,22 @@ Simpliciality predicate
 ```rzk
 
 #def equiv-fun-curry
-  ( I J : CUBE)
+  ( I J : U)
   ( A : I → J → U)
   : Equiv
       ( ( i : I) → (j : J) → A i j)
-      ( ( p : I × J) → A (first p) (second p))
+      ( ( p : product I J) → A (first p) (second p))
   :=
     equiv-has-inverse
       ( ( i : I) → (j : J) → A i j)
-      ( ( p : I × J) → A (first p) (second p))
+      ( ( p : product I J) → A (first p) (second p))
       ( \ f p → f (first p) (second p))
       ( \ g i j → g (i , j))
       ( \ _ → refl)
       ( \ _ → refl)
 
 #def choice-sigma3
-  ( I : CUBE)
+  ( I : U)
   ( A : U)
   ( B : A → U)
   ( C : (a : A) → B a → U)

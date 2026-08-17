@@ -36,7 +36,7 @@ This is a literate `rzk` file:
   : A
   :=
   let mod ᵒᵖ x_1 := x in
-  let mod ᵒᵖ / ᵒᵖ x_2 := x_1 in
+  let ᵒᵖ mod ᵒᵖ x_2 := x_1 in
   x_2
 
 -- ᵒᵖ ((ᵒᵖ A) → B) → (A → ᵒᵖ B)
@@ -60,8 +60,8 @@ This is a literate `rzk` file:
   : ᵒᵖ ((ᵒᵖ A) → B)
   :=
     mod ᵒᵖ (\ (x : ᵒᵖ A) →
-      let mod _id / ᵒᵖ a := x in
-      let mod ᵒᵖ / ᵒᵖ b := g a in
+      let mod ᵒᵖ a := x in
+      let ᵒᵖ mod ᵒᵖ b := g a in
         b)
 
 -- ᵒᵖ ((ᵒᵖ A) → B) ≃ (A → ᵒᵖ B)
@@ -155,7 +155,7 @@ This is a literate `rzk` file:
   : ᵒᵖ ((i : 𝕀) → C i)
   :=
     mod ᵒᵖ (\ (i : 𝕀) →
-      let mod ᵒᵖ / ᵒᵖ b := k (unflipᵒᵖ (mod ᵒᵖ i)) in
+      let ᵒᵖ mod ᵒᵖ b := k (unflipᵒᵖ (mod ᵒᵖ i)) in
         b)
 
 #def equiv-op-fun-I
@@ -189,7 +189,7 @@ This is a literate `rzk` file:
   : ᵒᵖ (𝕀 → B)
   :=
     mod ᵒᵖ (\ (i : 𝕀) →
-      let mod ᵒᵖ / ᵒᵖ b := g (unflipᵒᵖ (mod ᵒᵖ i)) in
+      let ᵒᵖ mod ᵒᵖ b := g (unflipᵒᵖ (mod ᵒᵖ i)) in
         b)
 
 #def equiv-op-fun-I-const
@@ -229,7 +229,7 @@ This is a literate `rzk` file:
   : ( ♯ A)
   :=
   let mod ♯ x_1 := a in
-  let mod ♯ / ♯ x_2 := x_1 in
+  let ♯ mod ♯ x_2 := x_1 in
   mod ♯ (x_2)
 ```
 
@@ -272,7 +272,7 @@ This is a literate `rzk` file:
   ( t :_b ♭ A)
   ( d : (x :_b A) → (♭ (mod ♭ x =_{♭ A} t)) → C (mod ♭ x))
   : C t
-  := ( let mod ♭ / ♭ x := t
+  := ( let ♭ mod ♭ x := t
          into (\ (z :_b ♭ A) → (♭ (z =_{♭ A} t)) → C z)
        in (\ (e : ♭ (mod ♭ x =_{♭ A} t)) → d x e))
      ( mod ♭ refl)

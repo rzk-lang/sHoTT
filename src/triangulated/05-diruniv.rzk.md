@@ -1615,35 +1615,37 @@ First part of equivalence mor2fun (dirglue f) is f.
       ( A , (B , f))
       ( dirglue_0=A A B f , (dirglue_1=B A B f , (coe-dirglue-is-f A B f)))
 
--- data at the zero corner: base map c : I^m → shape(Γ′) plus fiber of F0
+-- data at the zero corner: base map c : I^m → Γ′ plus fiber of F0.
+-- Γ′ is now the U-level product of the I^n n shape-type and the interval
+-- shape-type (the cube layer must not depend on term-level types).
 #def orthogonality-pullback-fiber
   ( n m : nat)
-  ( F0 : ((I^n n) × 𝕀) → S)
+  ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : U
   :=
-    Σ ( c : I^n m → shape (_ : (I^n n) × 𝕀 | TOP))
-    , first (F0 (unform (c (unform (zero-vec-I^n m)))))
+    Σ ( c : I^n m → product (I^n n) (shape (_ : 𝕀 | TOP)))
+    , first (F0 (c (zero-vec-I^n m)))
 
 -- (I^m → F̃) ≃ orthogonality-pullback-fiber , for any m and F0
 #def orthogonality-pullback-fwd
   ( n m : nat)
-  ( F0 : ((I^n n) × 𝕀) → S)
+  ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : ( I^n m
-      → Σ ( t : shape (_ : (I^n n) × 𝕀 | TOP))
-        , first (F0 (unform t)))
+      → Σ ( t : product (I^n n) (shape (_ : 𝕀 | TOP)))
+        , first (F0 t))
     → orthogonality-pullback-fiber n m F0
   :=
     \ f →
       ( \ t → first (f t)
-      , second (f (unform (zero-vec-I^n m))))
+      , second (f (zero-vec-I^n m)))
 
 #def orthogonality-pullback
   ( n m : nat)
-  ( F0 : ((I^n n) × 𝕀) → S)
+  ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : Equiv
       ( I^n m
-        → Σ ( t : shape (_ : (I^n n) × 𝕀 | TOP))
-          , first (F0 (unform t)))
+        → Σ ( t : product (I^n n) (shape (_ : 𝕀 | TOP)))
+          , first (F0 t))
       ( orthogonality-pullback-fiber n m F0)
   :=
     ( orthogonality-pullback-fwd n m F0
@@ -1652,135 +1654,69 @@ First part of equivalence mor2fun (dirglue f) is f.
 -- same fiber after splitting c ↦ (v , theta) by choice
 #def orthogonality-pullback-split
   ( n m : nat)
-  ( F0 : ((I^n n) × 𝕀) → S)
+  ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : U
   :=
-    Σ ( v : I^n m → shape (_ : I^n n | TOP))
+    Σ ( v : I^n m → I^n n)
     , Σ ( theta : I^n m → shape (_ : 𝕀 | TOP))
     , first
         ( F0
-            ( unform (v (unform (zero-vec-I^n m)))
-            , unform (theta (unform (zero-vec-I^n m)))))
+            ( v (zero-vec-I^n m)
+            , theta (zero-vec-I^n m)))
 
 #def equiv-orthogonality-pullback-split
   ( n m : nat)
-  ( F0 : ((I^n n) × 𝕀) → S)
+  ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : Equiv (orthogonality-pullback-fiber n m F0) (orthogonality-pullback-split n m F0)
   :=
-    let e-shape
-      : Equiv
-          ( I^n m → shape (_ : (I^n n) × 𝕀 | TOP))
-          ( I^n m → product (shape (_ : I^n n | TOP)) (shape (_ : 𝕀 | TOP)))
-      :=
-        equiv-has-inverse
-          ( I^n m → shape (_ : (I^n n) × 𝕀 | TOP))
-          ( I^n m → product (shape (_ : I^n n | TOP)) (shape (_ : 𝕀 | TOP)))
-          ( \ c t → (form (first (unform (c t))) , form (second (unform (c t)))))
-          ( \ d t → form (unform (first (d t)) , unform (second (d t))))
-          ( \ _ → refl)
-          ( \ _ → refl) in
-    let e-choice
-      : Equiv
-          ( I^n m → product (shape (_ : I^n n | TOP)) (shape (_ : 𝕀 | TOP)))
-          ( product
-              ( I^n m → shape (_ : I^n n | TOP))
-              ( I^n m → shape (_ : 𝕀 | TOP)))
-      :=
-        axiom-choice (I^n m) (\ _ → TOP) (\ _ → BOT)
-          ( \ _ → shape (_ : I^n n | TOP))
-          ( \ _ _ → shape (_ : 𝕀 | TOP))
-          ( \ _ → recBOT)
-          ( \ _ → recBOT) in
-    let mid : U
-      :=
-        Σ ( c : I^n m → product (shape (_ : I^n n | TOP)) (shape (_ : 𝕀 | TOP)))
-        , first
-            ( F0
-                ( unform (first (c (unform (zero-vec-I^n m))))
-                , unform (second (c (unform (zero-vec-I^n m)))))) in
-    equiv-comp
+    -- Both sides are Σ over `I^n m → product (I^n n) 𝕀-shape`; splitting the
+    -- pair pointwise is a definitional isomorphism (Σ-η).
+    equiv-has-inverse
       ( orthogonality-pullback-fiber n m F0)
-      ( mid)
       ( orthogonality-pullback-split n m F0)
-      ( equiv-total-pullback-is-equiv
-          ( I^n m → shape (_ : (I^n n) × 𝕀 | TOP))
-          ( I^n m → product (shape (_ : I^n n | TOP)) (shape (_ : 𝕀 | TOP)))
-          ( first e-shape)
-          ( second e-shape)
-          ( \ c →
-              first
-                ( F0
-                    ( unform (first (c (unform (zero-vec-I^n m))))
-                    , unform (second (c (unform (zero-vec-I^n m))))))))
-      ( equiv-comp
-          ( mid)
-          ( Σ ( vt : product
-                      ( I^n m → shape (_ : I^n n | TOP))
-                      ( I^n m → shape (_ : 𝕀 | TOP)))
-          , first
-              ( F0
-                  ( unform ((first vt) (unform (zero-vec-I^n m)))
-                  , unform ((second vt) (unform (zero-vec-I^n m))))))
-          ( orthogonality-pullback-split n m F0)
-          ( equiv-total-pullback-is-equiv
-              ( I^n m → product (shape (_ : I^n n | TOP)) (shape (_ : 𝕀 | TOP)))
-              ( product
-                  ( I^n m → shape (_ : I^n n | TOP))
-                  ( I^n m → shape (_ : 𝕀 | TOP)))
-              ( first e-choice)
-              ( second e-choice)
-              ( \ vt →
-                  first
-                    ( F0
-                        ( unform ((first vt) (unform (zero-vec-I^n m)))
-                        , unform ((second vt) (unform (zero-vec-I^n m)))))))
-          ( equiv-has-inverse
-              ( Σ ( vt : product
-                          ( I^n m → shape (_ : I^n n | TOP))
-                          ( I^n m → shape (_ : 𝕀 | TOP)))
-              , first
-                  ( F0
-                      ( unform ((first vt) (unform (zero-vec-I^n m)))
-                      , unform ((second vt) (unform (zero-vec-I^n m))))))
-              ( orthogonality-pullback-split n m F0)
-              ( \ (vt , p) → (first vt , (second vt , p)))
-              ( \ (v , (theta , p)) → ((v , theta) , p))
-              ( \ _ → refl)
-              ( \ _ → refl)))
+      ( \ (c , p) →
+          ( \ t → first (c t)
+          , ( \ t → second (c t)
+            , p)))
+      ( \ (v , (theta , p)) →
+          ( \ t → (v t , theta t)
+          , p))
+      ( \ _ → refl)
+      ( \ _ → refl)
 
 #def orthogonality-pullback-flat-commute
   ( n m :♭ nat)
-  ( F0 :♭ ((I^n n) × 𝕀) → S)
+  ( F0 :♭ product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : Equiv
       ( ♭ ( orthogonality-pullback-split n m F0))
-      ( Σ ( v : ♭ (I^n m → shape (_ : I^n n | TOP)))
+      ( Σ ( v : ♭ (I^n m → I^n n))
       , ( let mod ♭ v' := v in
           Σ ( theta : ♭ (I^n m → shape (_ : 𝕀 | TOP)))
           , ( let mod ♭ theta' := theta in
               ♭
                 ( first
                     ( F0
-                        ( unform (v' (unform (zero-vec-I^n m)))
-                        , unform (theta' (unform (zero-vec-I^n m)))))))))
+                        ( v' (zero-vec-I^n m)
+                        , theta' (zero-vec-I^n m)))))))
   :=
     flat-sigma2-commute
-      ( I^n m → shape (_ : I^n n | TOP))
+      ( I^n m → I^n n)
       ( I^n m → shape (_ : 𝕀 | TOP))
       ( \ v theta →
           first
             ( F0
-                ( unform (v (unform (zero-vec-I^n m)))
-                , unform (theta (unform (zero-vec-I^n m))))))
+                ( v (zero-vec-I^n m)
+                , theta (zero-vec-I^n m))))
 
 -- ♭(I^m → F̃) ≃ ♭(orthogonality-pullback-split)
 #def equiv-orthogonality-to-flat
   ( n m :♭ nat)
-  ( F0 :♭ ((I^n n) × 𝕀) → S)
+  ( F0 :♭ product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : Equiv
       ( ♭
           ( I^n m
-            → Σ ( t : shape (_ : (I^n n) × 𝕀 | TOP))
-              , first (F0 (unform t))))
+            → Σ ( t : product (I^n n) (shape (_ : 𝕀 | TOP)))
+              , first (F0 t)))
       ( ♭ ( orthogonality-pullback-split n m F0))
   :=
     let mod ♭ F-uncurried :=
@@ -1789,13 +1725,13 @@ First part of equivalence mor2fun (dirglue f) is f.
       mod ♭ (equiv-orthogonality-pullback-split n m F0) in
     flat-equiv
       ( I^n m
-        → Σ ( t : shape (_ : (I^n n) × 𝕀 | TOP))
-          , first (F0 (unform t)))
+        → Σ ( t : product (I^n n) (shape (_ : 𝕀 | TOP)))
+          , first (F0 t))
       ( orthogonality-pullback-split n m F0)
       ( equiv-comp
           ( I^n m
-            → Σ ( t : shape (_ : (I^n n) × 𝕀 | TOP))
-              , first (F0 (unform t)))
+            → Σ ( t : product (I^n n) (shape (_ : 𝕀 | TOP)))
+              , first (F0 t))
           ( F-uncurried)
           ( orthogonality-pullback-split n m F0)
           ( orthogonality-pullback n m F0)
@@ -1811,14 +1747,14 @@ First part of equivalence mor2fun (dirglue f) is f.
     let Y-to-X-is-equiv : is-equiv Y X Y-to-X :=
       second (cubes-separate Y X Y-to-X) (\ n →
         let mod ♭ Gamma := mod ♭ ((I^n n)) in
-        let mod ♭ Gamma' := mod ♭ ((I^n n) × 𝕀) in
+        let mod ♭ Gamma' := mod ♭ (product (I^n n) (shape (_ : 𝕀 | TOP))) in
         let mod ♭ Hom-in-S := mod ♭ (\ (F : Gamma' → S) → \ (G : Gamma' → S) → (((v , i) : Gamma') → first (F (v , i)) → first (G (v , i)))) in
         let mod ♭ E-X := mod ♭ (\ (F : Gamma' → S) → \ (G : Gamma' → S) → \ (alpha : Hom-in-S F G) →
           ( ( v : I^n n) → product
-              ( is-equiv (first (F (v , 0₂))) (first (G (v , 0₂))) (alpha (v , 0₂)))
-              ( is-equiv (first (F (v , 1₂))) (first (G (v , 1₂))) (alpha (v , 1₂))))) in
+              ( is-equiv (first (F (v , form 0₂))) (first (G (v , form 0₂))) (alpha (v , form 0₂)))
+              ( is-equiv (first (F (v , form 1₂))) (first (G (v , form 1₂))) (alpha (v , form 1₂))))) in
         let mod ♭ E-Y := mod ♭ (\ (F : Gamma' → S) → \ (G : Gamma' → S) → \ (alpha : Hom-in-S F G) →
-          ( ( ( v , i) : (I^n n) × 𝕀) → is-equiv (first (F (v , i))) (first (G (v , i))) (alpha (v , i)))) in
+          ( ( ( v , i) : product (I^n n) (shape (_ : 𝕀 | TOP))) → is-equiv (first (F (v , i))) (first (G (v , i))) (alpha (v , i)))) in
         let mod ♭ X-cube :=
           mod ♭ (Σ (F : Gamma' → S) , Σ (G : Gamma' → S) , Σ (alpha : Hom-in-S F G) , E-X F G alpha) in
         let mod ♭ Y-cube :=
@@ -1841,22 +1777,22 @@ First part of equivalence mor2fun (dirglue f) is f.
  : ( F : Gamma' → S) → (G : Gamma' → S) → (alpha : Hom-in-S F G) → is-prop (E-Y F G alpha)
           :=
             mod ♭ (\ F G alpha →
-              is-prop-shape-type-is-locally-prop (naiveextext-extext extext) Gamma' (\ _ → ⊤)
+              is-prop-fiberwise-prop funext Gamma'
                 ( \ (v , i) → is-equiv (first (F (v , i))) (first (G (v , i))) (alpha (v , i)))
                 ( \ (v , i) → is-prop-is-equiv funext (first (F (v , i))) (first (G (v , i))) (alpha (v , i)))) in
         let mod ♭ E-X-is-prop
  : ( F : Gamma' → S) → (G : Gamma' → S) → (alpha : Hom-in-S F G) → is-prop (E-X F G alpha)
           :=
             mod ♭ (\ F G alpha →
-              is-prop-shape-type-is-locally-prop (naiveextext-extext extext) (I^n n) (\ _ → ⊤)
+              is-prop-fiberwise-prop funext (I^n n)
                 ( \ v → product
-                    ( is-equiv (first (F (v , 0₂))) (first (G (v , 0₂))) (alpha (v , 0₂)))
-                    ( is-equiv (first (F (v , 1₂))) (first (G (v , 1₂))) (alpha (v , 1₂))))
+                    ( is-equiv (first (F (v , form 0₂))) (first (G (v , form 0₂))) (alpha (v , form 0₂)))
+                    ( is-equiv (first (F (v , form 1₂))) (first (G (v , form 1₂))) (alpha (v , form 1₂))))
                 ( \ v → is-prop-total-type-is-fiberwise-prop-is-prop-base
-                    ( is-equiv (first (F (v , 0₂))) (first (G (v , 0₂))) (alpha (v , 0₂)))
-                    ( is-prop-is-equiv funext (first (F (v , 0₂))) (first (G (v , 0₂))) (alpha (v , 0₂)))
-                    ( \ _ → is-equiv (first (F (v , 1₂))) (first (G (v , 1₂))) (alpha (v , 1₂)))
-                    ( \ _ → is-prop-is-equiv funext (first (F (v , 1₂))) (first (G (v , 1₂))) (alpha (v , 1₂))))) in
+                    ( is-equiv (first (F (v , form 0₂))) (first (G (v , form 0₂))) (alpha (v , form 0₂)))
+                    ( is-prop-is-equiv funext (first (F (v , form 0₂))) (first (G (v , form 0₂))) (alpha (v , form 0₂)))
+                    ( \ _ → is-equiv (first (F (v , form 1₂))) (first (G (v , form 1₂))) (alpha (v , form 1₂)))
+                    ( \ _ → is-prop-is-equiv funext (first (F (v , form 1₂))) (first (G (v , form 1₂))) (alpha (v , form 1₂))))) in
         let to-X-split : Equiv (♭ (I^n n → X)) X-split :=
           let mod ♭ X-uncurried :=
             mod ♭ (Σ (fa : (v : I^n n) → 𝕀 → S)
@@ -1869,21 +1805,14 @@ First part of equivalence mor2fun (dirglue f) is f.
             mod ♭ (equiv-has-inverse
               ( X-uncurried) (X-cube)
               ( \ (fa , (fb , (fc , last))) →
-                ( first (equiv-fun-curry (I^n n) 𝕀 (\ _ _ → S)) fa
-                , ( first (equiv-fun-curry (I^n n) 𝕀 (\ _ _ → S)) fb
-                  , ( first (equiv-fun-curry (I^n n) 𝕀
-                          ( \ v i → first (fa v i) → first (fb v i))) fc
+                ( \ (v , t) → fa v (unform t)
+                , ( \ (v , t) → fb v (unform t)
+                  , ( \ (v , t) → fc v (unform t)
                     , last))))
               ( \ (F , (G , (alpha , e))) →
-                ( first (inv-equiv ((v : I^n n) → 𝕀 → S) (Gamma' → S)
-                    ( equiv-fun-curry (I^n n) 𝕀 (\ _ _ → S))) F
-                , ( first (inv-equiv ((v : I^n n) → 𝕀 → S) (Gamma' → S)
-                      ( equiv-fun-curry (I^n n) 𝕀 (\ _ _ → S))) G
-                  , ( first (inv-equiv
-                          ( ( v : I^n n) → (i : 𝕀) → first (F (v , i)) → first (G (v , i)))
-                          ( Hom-in-S F G)
-                          ( equiv-fun-curry (I^n n) 𝕀
-                              ( \ v i → first (F (v , i)) → first (G (v , i))))) alpha
+                ( \ v j → F (v , form j)
+                , ( \ v j → G (v , form j)
+                  , ( \ v j → alpha (v , form j)
                     , e))))
               ( \ _ → refl) (\ _ → refl)) in
           equiv-comp (♭ (I^n n → X)) (♭ X-cube) X-split
@@ -1906,28 +1835,15 @@ First part of equivalence mor2fun (dirglue f) is f.
             mod ♭ (equiv-has-inverse
               ( Y-uncurried) (Y-cube)
               ( \ (fa , (fb , (fc , nlast))) →
-                ( first (equiv-fun-curry (I^n n) 𝕀 (\ _ _ → S)) fa
-                , ( first (equiv-fun-curry (I^n n) 𝕀 (\ _ _ → S)) fb
-                  , ( first (equiv-fun-curry (I^n n) 𝕀
-                          ( \ v i → first (fa v i) → first (fb v i))) fc
-                    , first (equiv-fun-curry (I^n n) 𝕀
-                          ( \ v i → is-equiv (first (fa v i)) (first (fb v i)) (fc v i))) nlast))))
+                ( \ (v , t) → fa v (unform t)
+                , ( \ (v , t) → fb v (unform t)
+                  , ( \ (v , t) → fc v (unform t)
+                    , \ (v , i) → nlast v (unform i)))))
               ( \ (F , (G , (alpha , e))) →
-                ( first (inv-equiv ((v : I^n n) → 𝕀 → S) (Gamma' → S)
-                    ( equiv-fun-curry (I^n n) 𝕀 (\ _ _ → S))) F
-                , ( first (inv-equiv ((v : I^n n) → 𝕀 → S) (Gamma' → S)
-                      ( equiv-fun-curry (I^n n) 𝕀 (\ _ _ → S))) G
-                  , ( first (inv-equiv
-                          ( ( v : I^n n) → (i : 𝕀) → first (F (v , i)) → first (G (v , i)))
-                          ( Hom-in-S F G)
-                          ( equiv-fun-curry (I^n n) 𝕀
-                              ( \ v i → first (F (v , i)) → first (G (v , i))))) alpha
-                    , first (inv-equiv
-                          ( ( v : I^n n) → (i : 𝕀)
-                            → is-equiv (first (F (v , i))) (first (G (v , i))) (alpha (v , i)))
-                          ( E-Y F G alpha)
-                          ( equiv-fun-curry (I^n n) 𝕀
-                              ( \ v i → is-equiv (first (F (v , i))) (first (G (v , i))) (alpha (v , i))))) e))))
+                ( \ v j → F (v , form j)
+                , ( \ v j → G (v , form j)
+                  , ( \ v j → alpha (v , form j)
+                    , \ v j → e (v , form j)))))
               ( \ _ → refl) (\ _ → refl)) in
           equiv-comp (♭ (I^n n → Y)) (♭ Y-cube) Y-split
             ( flat-equiv (I^n n → Y) Y-cube
@@ -1951,33 +1867,33 @@ First part of equivalence mor2fun (dirglue f) is f.
                   ( is-prop-flat (E-Y F0 G0 a0) (mod ♭ (E-Y-is-prop F0 G0 a0)))
                   ( is-prop-flat (E-X F0 G0 a0) (mod ♭ (E-X-is-prop F0 G0 a0)))
                   ( ( b-map (E-Y F0 G0 a0) (E-X F0 G0 a0)
-                        ( \ e v → (e (v , 0₂) , e (v , 1₂))))
+                        ( \ e v → (e (v , form 0₂) , e (v , form 1₂))))
                   , ( \ e →
                         let mod ♭ e0 := e in
                         let mod ♭ F̃ :=
-                          mod ♭ (Σ (t : shape (_ : Gamma' | TOP)) , first (F0 (unform t))) in
+                          mod ♭ (Σ (t : Gamma') , first (F0 t)) in
                         let mod ♭ G̃ :=
-                          mod ♭ (Σ (t : shape (_ : Gamma' | TOP)) , first (G0 (unform t))) in
+                          mod ♭ (Σ (t : Gamma') , first (G0 t)) in
                         let mod ♭ ã : F̃ → G̃ :=
                           mod ♭ (total-map
-                            ( shape (_ : Gamma' | TOP))
-                            ( \ t → first (F0 (unform t)))
-                            ( \ t → first (G0 (unform t)))
-                            ( \ t → a0 (unform t))) in
+                            ( Gamma')
+                            ( \ t → first (F0 t))
+                            ( \ t → first (G0 t))
+                            ( \ t → a0 t)) in
                         let mod ♭ fiberwise-is-equiv :=
-                          mod ♭ ((t : shape (_ : Gamma' | TOP))
-                          → is-equiv (first (F0 (unform t))) (first (G0 (unform t))) (a0 (unform t))) in
+                          mod ♭ ((t : Gamma')
+                          → is-equiv (first (F0 t)) (first (G0 t)) (a0 t)) in
                         let mod ♭ fiberwise-is-equiv-is-prop
  : is-prop fiberwise-is-equiv
                           :=
                             mod ♭ (is-prop-fiberwise-prop funext
-                              ( shape (_ : Gamma' | TOP))
-                              ( \ t → is-equiv (first (F0 (unform t)))
-                                  ( first (G0 (unform t))) (a0 (unform t)))
+                              ( Gamma')
+                              ( \ t → is-equiv (first (F0 t))
+                                  ( first (G0 t)) (a0 t))
                               ( \ t → is-prop-is-equiv funext
-                                  ( first (F0 (unform t)))
-                                  ( first (G0 (unform t)))
-                                  ( a0 (unform t)))) in
+                                  ( first (F0 t))
+                                  ( first (G0 t))
+                                  ( a0 t))) in
                         let mod ♭ total-is-equiv-is-prop
  : is-prop (is-equiv F̃ G̃ ã)
                           :=
@@ -1990,63 +1906,62 @@ First part of equivalence mor2fun (dirglue f) is f.
                                 ( E-Y F0 G0 a0)
                                 ( fiberwise-is-equiv)
                                 ( is-equiv F̃ G̃ ã)
-                                ( equiv-fun-cube-shape-TOP Gamma'
-                                    ( \ x → is-equiv (first (F0 x)) (first (G0 x)) (a0 x)))
+                                ( equiv-identity (E-Y F0 G0 a0))
                                 ( equiv-iff-is-prop-is-prop
                                     ( fiberwise-is-equiv)
                                     ( is-equiv F̃ G̃ ã)
                                     ( fiberwise-is-equiv-is-prop)
                                     ( total-is-equiv-is-prop)
                                     ( is-equiv-total-iff-is-equiv-fiberwise
-                                        ( shape (_ : Gamma' | TOP))
-                                        ( \ t → first (F0 (unform t)))
-                                        ( \ t → first (G0 (unform t)))
-                                        ( \ t → a0 (unform t))))))) in
+                                        ( Gamma')
+                                        ( \ t → first (F0 t))
+                                        ( \ t → first (G0 t))
+                                        ( \ t → a0 t)))))) in
                         b-map (is-equiv F̃ G̃ ã) (E-Y F0 G0 a0) to-E-Y
                           ( mod ♭ (second (cubes-separate F̃ G̃ ã)
                               ( \ (m :♭ nat) →
                                 let fixed-F
- : ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) → U
+ : ( v : ♭ (I^n m → I^n n)) → U
                                   :=
                                     \ v →
                                       let mod ♭ v' := v in
                                       Σ ( theta : ♭ (I^n m → shape (_ : 𝕀 | TOP)))
                                       , ( let mod ♭ theta' := theta in
                                           let mod ♭ vc :=
-                                            mod ♭ (unform (v' (unform (zero-vec-I^n m)))) in
+                                            mod ♭ (v' (zero-vec-I^n m)) in
                                           let mod ♭ i :=
-                                            mod ♭ (unform (theta' (unform (zero-vec-I^n m)))) in
-                                          ♭ ( first (F0 (vc , i)))) in
+                                            mod ♭ (unform (theta' (zero-vec-I^n m))) in
+                                          ♭ ( first (F0 (vc , form i)))) in
                                 let fixed-G
- : ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) → U
+ : ( v : ♭ (I^n m → I^n n)) → U
                                   :=
                                     \ v →
                                       let mod ♭ v' := v in
                                       Σ ( theta : ♭ (I^n m → shape (_ : 𝕀 | TOP)))
                                       , ( let mod ♭ theta' := theta in
                                           let mod ♭ vc :=
-                                            mod ♭ (unform (v' (unform (zero-vec-I^n m)))) in
+                                            mod ♭ (v' (zero-vec-I^n m)) in
                                           let mod ♭ i :=
-                                            mod ♭ (unform (theta' (unform (zero-vec-I^n m)))) in
-                                          ♭ ( first (G0 (vc , i)))) in
+                                            mod ♭ (unform (theta' (zero-vec-I^n m))) in
+                                          ♭ ( first (G0 (vc , form i)))) in
                                 let to-F-split
  : Equiv
-                                      ( ♭ ( I^n m → Σ (t : shape (_ : (I^n n) × 𝕀 | TOP)) , first (F0 (unform t))))
-                                      ( Σ ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) , fixed-F v)
+                                      ( ♭ ( I^n m → Σ (t : product (I^n n) (shape (_ : 𝕀 | TOP))) , first (F0 t)))
+                                      ( Σ ( v : ♭ (I^n m → I^n n)) , fixed-F v)
                                   :=
                                     let mod ♭ F-uncurried :=
                                       mod ♭ (orthogonality-pullback-fiber n m F0) in
                                     let mod ♭ curry-F :=
                                       mod ♭ (equiv-orthogonality-pullback-split n m F0) in
                                     equiv-comp
-                                      ( ♭ ( I^n m → Σ (t : shape (_ : (I^n n) × 𝕀 | TOP)) , first (F0 (unform t))))
+                                      ( ♭ ( I^n m → Σ (t : product (I^n n) (shape (_ : 𝕀 | TOP))) , first (F0 t)))
                                       ( ♭ ( orthogonality-pullback-split n m F0))
-                                      ( Σ ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) , fixed-F v)
+                                      ( Σ ( v : ♭ (I^n m → I^n n)) , fixed-F v)
                                       ( flat-equiv
-                                          ( I^n m → Σ (t : shape (_ : (I^n n) × 𝕀 | TOP)) , first (F0 (unform t)))
+                                          ( I^n m → Σ (t : product (I^n n) (shape (_ : 𝕀 | TOP))) , first (F0 t))
                                           ( orthogonality-pullback-split n m F0)
                                           ( equiv-comp
-                                              ( I^n m → Σ (t : shape (_ : (I^n n) × 𝕀 | TOP)) , first (F0 (unform t)))
+                                              ( I^n m → Σ (t : product (I^n n) (shape (_ : 𝕀 | TOP))) , first (F0 t))
                                               ( F-uncurried)
                                               ( orthogonality-pullback-split n m F0)
                                               ( orthogonality-pullback n m F0)
@@ -2054,22 +1969,22 @@ First part of equivalence mor2fun (dirglue f) is f.
                                       ( orthogonality-pullback-flat-commute n m F0) in
                                 let to-G-split
  : Equiv
-                                      ( ♭ ( I^n m → Σ (t : shape (_ : (I^n n) × 𝕀 | TOP)) , first (G0 (unform t))))
-                                      ( Σ ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) , fixed-G v)
+                                      ( ♭ ( I^n m → Σ (t : product (I^n n) (shape (_ : 𝕀 | TOP))) , first (G0 t)))
+                                      ( Σ ( v : ♭ (I^n m → I^n n)) , fixed-G v)
                                   :=
                                     let mod ♭ G-uncurried :=
                                       mod ♭ (orthogonality-pullback-fiber n m G0) in
                                     let mod ♭ curry-G :=
                                       mod ♭ (equiv-orthogonality-pullback-split n m G0) in
                                     equiv-comp
-                                      ( ♭ ( I^n m → Σ (t : shape (_ : (I^n n) × 𝕀 | TOP)) , first (G0 (unform t))))
+                                      ( ♭ ( I^n m → Σ (t : product (I^n n) (shape (_ : 𝕀 | TOP))) , first (G0 t)))
                                       ( ♭ ( orthogonality-pullback-split n m G0))
-                                      ( Σ ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) , fixed-G v)
+                                      ( Σ ( v : ♭ (I^n m → I^n n)) , fixed-G v)
                                       ( flat-equiv
-                                          ( I^n m → Σ (t : shape (_ : (I^n n) × 𝕀 | TOP)) , first (G0 (unform t)))
+                                          ( I^n m → Σ (t : product (I^n n) (shape (_ : 𝕀 | TOP))) , first (G0 t))
                                           ( orthogonality-pullback-split n m G0)
                                           ( equiv-comp
-                                              ( I^n m → Σ (t : shape (_ : (I^n n) × 𝕀 | TOP)) , first (G0 (unform t)))
+                                              ( I^n m → Σ (t : product (I^n n) (shape (_ : 𝕀 | TOP))) , first (G0 t))
                                               ( G-uncurried)
                                               ( orthogonality-pullback-split n m G0)
                                               ( orthogonality-pullback n m G0)
@@ -2077,47 +1992,47 @@ First part of equivalence mor2fun (dirglue f) is f.
                                       ( orthogonality-pullback-flat-commute n m G0) in
                                 let fixed-equiv
  : Equiv
-                                      ( Σ ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) , fixed-F v)
-                                      ( Σ ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) , fixed-G v)
+                                      ( Σ ( v : ♭ (I^n m → I^n n)) , fixed-F v)
+                                      ( Σ ( v : ♭ (I^n m → I^n n)) , fixed-G v)
                                   :=
                                     total-equiv-flat-family2
-                                      ( I^n m → shape (_ : I^n n | TOP))
+                                      ( I^n m → I^n n)
                                       ( \ _ → I^n m → shape (_ : 𝕀 | TOP))
-                                      ( \ (v' :♭ (I^n m → shape (_ : I^n n | TOP)))
+                                      ( \ (v' :♭ (I^n m → I^n n))
                                         → \ (theta' :♭ (I^n m → shape (_ : 𝕀 | TOP)))
                                           → let mod ♭ vc :=
-                                              mod ♭ (unform (v' (unform (zero-vec-I^n m)))) in
+                                              mod ♭ (v' (zero-vec-I^n m)) in
                                             let mod ♭ i :=
-                                              mod ♭ (unform (theta' (unform (zero-vec-I^n m)))) in
-                                            ♭ ( first (F0 (vc , i))))
-                                      ( \ (v' :♭ (I^n m → shape (_ : I^n n | TOP)))
+                                              mod ♭ (unform (theta' (zero-vec-I^n m))) in
+                                            ♭ ( first (F0 (vc , form i))))
+                                      ( \ (v' :♭ (I^n m → I^n n))
                                         → \ (theta' :♭ (I^n m → shape (_ : 𝕀 | TOP)))
                                           → let mod ♭ vc :=
-                                              mod ♭ (unform (v' (unform (zero-vec-I^n m)))) in
+                                              mod ♭ (v' (zero-vec-I^n m)) in
                                             let mod ♭ i :=
-                                              mod ♭ (unform (theta' (unform (zero-vec-I^n m)))) in
-                                            ♭ ( first (G0 (vc , i))))
-                                      ( \ (v' :♭ (I^n m → shape (_ : I^n n | TOP)))
+                                              mod ♭ (unform (theta' (zero-vec-I^n m))) in
+                                            ♭ ( first (G0 (vc , form i))))
+                                      ( \ (v' :♭ (I^n m → I^n n))
                                         → \ (theta' :♭ (I^n m → shape (_ : 𝕀 | TOP)))
                                           → let mod ♭ vc :=
-                                              mod ♭ (unform (v' (unform (zero-vec-I^n m)))) in
+                                              mod ♭ (v' (zero-vec-I^n m)) in
                                             let mod ♭ i :=
-                                              mod ♭ (unform (theta' (unform (zero-vec-I^n m)))) in
+                                              mod ♭ (unform (theta' (zero-vec-I^n m))) in
                                             flat-equiv
-                                              ( first (F0 (vc , i)))
-                                              ( first (G0 (vc , i)))
-                                              ( a0 (vc , i)
+                                              ( first (F0 (vc , form i)))
+                                              ( first (G0 (vc , form i)))
+                                              ( a0 (vc , form i)
                                               , is-equiv-discrete-I i
-                                                  ( \ j → first (F0 (vc , j)))
-                                                  ( \ j → first (G0 (vc , j)))
-                                                  ( \ j → a0 (vc , j))
+                                                  ( \ j → first (F0 (vc , form j)))
+                                                  ( \ j → first (G0 (vc , form j)))
+                                                  ( \ j → a0 (vc , form j))
                                                   ( first (e0 vc))
                                                   ( second (e0 vc)))) in
                                 is-equiv-b-map-via-splits
                                   ( I^n m → F̃) (I^n m → G̃)
                                   ( \ p t → ã (p t))
-                                  ( Σ ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) , fixed-F v)
-                                  ( Σ ( v : ♭ (I^n m → shape (_ : I^n n | TOP))) , fixed-G v)
+                                  ( Σ ( v : ♭ (I^n m → I^n n)) , fixed-F v)
+                                  ( Σ ( v : ♭ (I^n m → I^n n)) , fixed-G v)
                                   ( to-F-split) (to-G-split) (fixed-equiv)
                                   ( \ _ → refl))))))) in
         is-equiv-b-map-via-splits

@@ -699,7 +699,7 @@ We refer to another form as an "extension extensionality" axiom.
 For readability of code, it is useful to name the function that supplies an
 equality between terms of an extension type from a pointwise equality extending
 refl. In fact, sometimes only this weaker form of the axiom is needed, which we
-call "naive extension extensionality." This is immediately implied by
+call "naive extension extensionality". This is immediately implied by
 extension extensionality.
 
 ```rzk
@@ -1263,8 +1263,8 @@ f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
 
 Assuming Axiom 4.6 (weak extension extensionality), if `A : (t : ψ) → U` and
 `a : (t : ϕ) → A t` are such that each `A(t)` is an n-type, then the extension
-type `(t : ψ) → A t [ϕ t ↦ a t]` is also an n-type. We formalize the cases **n =
-−2 (contractible)** and **n = −1 (proposition)**.
+type `(t : ψ) → A t [ϕ t ↦ a t]` is also an n-type. We formalize the cases
+**n = −2 (contractible)** and **n = −1 (proposition)**.
 
 ```rzk title="RS17 Proposition 4.12 (contractible case)"
 #def is-contr-extension-type-is-fiberwise-contr

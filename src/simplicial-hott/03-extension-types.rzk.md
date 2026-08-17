@@ -625,9 +625,14 @@ Another variant is the following:
 ## Extension extensionality
 
 There are various equivalent forms of the relative function extensionality axiom
-for extension types. One form corresponds to the standard weak function
-extensionality. As suggested by footnote 8, we refer to this as a "weak
-extension extensionality" axiom.
+for extension types. We will introduce three types `ExtExt`, `WeakExtExt`, and
+`NaiveExtExt` which will be used to assert the "extension extensionality", the
+"weak extension extensionality", and the "naive extension extensionality"
+axioms. In fact, despite this naming, we will see that all three axioms are
+logically equivalent.
+
+One form corresponds to the standard weak function extensionality. As suggested
+by footnote 8, we refer to this as a "weak extension extensionality" axiom.
 
 ```rzk title="RS17, Axiom 4.6, Weak extension extensionality"
 #define WeakExtExt
@@ -689,11 +694,13 @@ We refer to another form as an "extension extensionality" axiom.
   := (ext-htpy-eq I ψ ϕ A a f g , extext I ψ ϕ A a f g)
 ```
 
-### Naive extension extensionality
+### Extension extensionality implies naive extension extensionality
 
-For readability of code, it is useful to the function that supplies an equality
-between terms of an extension type from a pointwise equality extending refl. In
-fact, sometimes only this weaker form of the axiom is needed.
+For readability of code, it is useful to name the function that supplies an
+equality between terms of an extension type from a pointwise equality extending
+refl. In fact, sometimes only this weaker form of the axiom is needed, which we
+call "naive extension extensionality." This is immediately implied by
+extension extensionality.
 
 ```rzk
 #def NaiveExtExt
@@ -714,6 +721,8 @@ fact, sometimes only this weaker form of the axiom is needed.
   : NaiveExtExt
   := \ I ψ ϕ A a f g → (first (first (extext I ψ ϕ A a f g)))
 ```
+
+### Naive extension extensionality implies weak extension extensionality
 
 We show that naive extension extensionality implies weak extension
 extensionality. On the way, we obtain another useful version of extension
@@ -953,40 +962,20 @@ extension extensionality that we get by extracting the fiberwise equivalence.
   := extext-weakextext'
 ```
 
-### RS17 Proposition 4.12 (extension types preserve n-types)
+For convenience we also provide the other composite implications:
 
-Assuming Axiom 4.6 (weak extension extensionality), if `A : (t : ψ) → U` and
-`a : (t : ϕ) → A t` are such that each `A(t)` is an n-type, then the extension
-type `(t : ψ) → A t [ϕ t ↦ a t]` is also an n-type. We formalize the cases **n =
-−2 (contractible)** and **n = −1 (proposition)**.
-
-```rzk title="RS17 Proposition 4.12 (contractible case)"
-#def is-contr-extension-type-is-fiberwise-contr
-  ( weakextext : WeakExtExt)
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
-  ( A : ψ → U)
-  ( is-fiberwise-contr-A : (t : ψ) → is-contr (A t))
-  ( a : (t : ϕ) → A t)
-  : is-contr ((t : ψ) → A t [ϕ t ↦ a t])
-  := weakextext I ψ ϕ A is-fiberwise-contr-A a
-```
-
-```rzk title="RS17 Proposition 4.12 (proposition case)"
-#def is-prop-extension-type-is-fiberwise-prop
-  ( weakextext : WeakExtExt)
-  ( I : CUBE)
-  ( ψ : I → TOPE)
-  ( ϕ : ψ → TOPE)
-  ( A : ψ → U)
-  ( is-fiberwise-prop-A : (t : ψ) → is-prop (A t))
-  ( a : (t : ϕ) → A t)
-  : is-prop ((t : ψ) → A t [ϕ t ↦ a t])
+```rzk
+#def extext-naiveexteext
+  : NaiveExtExt → ExtExt
   :=
-    is-prop-extension-type-is-locally-prop
-      ( naiveextext-extext (extext-weakextext weakextext))
-      ( I) (ψ) (ϕ) (A) (is-fiberwise-prop-A) (a)
+    comp NaiveExtExt WeakExtExt ExtExt
+    ( extext-weakextext) (weakextext-naiveextext)
+
+#def naiveextext-weakextext
+  : WeakExtExt → NaiveExtExt
+  :=
+    comp WeakExtExt ExtExt NaiveExtExt
+    ( naiveextext-extext) (extext-weakextext)
 ```
 
 ## Homotopy extension property
@@ -1270,6 +1259,42 @@ f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
         ( f))))
 ```
 
+### RS17 Proposition 4.12 (extension types preserve n-types)
+
+Assuming Axiom 4.6 (weak extension extensionality), if `A : (t : ψ) → U` and
+`a : (t : ϕ) → A t` are such that each `A(t)` is an n-type, then the extension
+type `(t : ψ) → A t [ϕ t ↦ a t]` is also an n-type. We formalize the cases **n =
+−2 (contractible)** and **n = −1 (proposition)**.
+
+```rzk title="RS17 Proposition 4.12 (contractible case)"
+#def is-contr-extension-type-is-fiberwise-contr
+  ( weakextext : WeakExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-fiberwise-contr-A : (t : ψ) → is-contr (A t))
+  ( a : (t : ϕ) → A t)
+  : is-contr ((t : ψ) → A t [ϕ t ↦ a t])
+  := weakextext I ψ ϕ A is-fiberwise-contr-A a
+```
+
+```rzk title="RS17 Proposition 4.12 (proposition case)"
+#def is-prop-extension-type-is-fiberwise-prop
+  ( weakextext : WeakExtExt)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( is-fiberwise-prop-A : (t : ψ) → is-prop (A t))
+  ( a : (t : ϕ) → A t)
+  : is-prop ((t : ψ) → A t [ϕ t ↦ a t])
+  :=
+    is-prop-extension-type-is-locally-prop
+      ( naiveextext-extext (extext-weakextext weakextext))
+      ( I) (ψ) (ϕ) (A) (is-fiberwise-prop-A) (a)
+```
+
 ## Applications of extension extensionality
 
 We now assume extension extensionality and derive a few consequences.
@@ -1280,8 +1305,7 @@ We now assume extension extensionality and derive a few consequences.
 
 ### Pointwise homotopy extension types
 
-Using `ExtExt` we can write the homotopy in the homotopy extension type
-pointwise.
+Using `ExtExt` we can write the homotopy in the homotopy extension type pointwise.
 
 ```rzk
 #section pointwise-homotopy-extension-type
@@ -1325,9 +1349,11 @@ pointwise.
     ( extension-type-weakening I ψ ϕ A σ)
     ( equiv-pointwise-homotopy-extension-type σ)
 
-
 #end pointwise-homotopy-extension-type
 ```
+
+
+
 
 ## Relative extension types
 

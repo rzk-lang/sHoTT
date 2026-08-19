@@ -660,7 +660,7 @@ describe this isomorphism on representables.
   :=
   Σ ( ( f , F) : isomorphism-shape-inclusions I ψ ϕ J χ ζ)
   , ( Σ ( e
- : ( A' : U)
+      : ( A' : U)
         → ( A : U)
         → ( α : A' → A)
         → ( σ' : ζ → A')
@@ -688,6 +688,11 @@ For example, consider the two shape inclusions `{0} ⊂ Δ¹` (subshapes of `2`)
 `{1} ⊂ right-leg-of-Λ` (subshapes of `2 × 2`), where
 
 ```rzk
+
+#def left-leg-of-Λ
+  : Λ → TOPE
+  := \ (t , s) → s ≡ 0₂
+
 #def right-leg-of-Λ
   : Λ → TOPE
   := \ (t , s) → t ≡ 1₂
@@ -709,6 +714,21 @@ Unfortunately we have to repeat the same formula multiple times, leading to some
 ugly boilerplate code.
 
 ```rzk
+
+#def isomorphism-1-Δ¹-1-left-leg-of-Λ
+  : isomorphism-shape-inclusions
+    ( 2 × 2) (\ ts → left-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+    2 Δ¹ (\ t → t ≡ 1₂)
+  :=
+    ( \ A →
+      ( \ τ (t , s) → τ t
+      , ( ( \ υ s → υ (s , 0₂) , \ _ → refl)
+        , ( \ υ s → υ (s , 0₂) , \ _ → refl)))
+    , \ A _ →
+      ( \ τ (t , s) → τ t
+      , ( ( \ υ s → υ (s , 0₂) , \ _ → refl)
+        , ( \ υ s → υ (s , 0₂) , \ _ → refl))))
+
 #def isomorphism-0-Δ¹-1-right-leg-of-Λ
   : isomorphism-shape-inclusions
     ( 2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
@@ -722,6 +742,14 @@ ugly boilerplate code.
       ( \ τ (t , s) → τ s
       , ( ( \ υ s → υ (1₂ , s) , \ _ → refl)
         , ( \ υ s → υ (1₂ , s) , \ _ → refl))))
+
+#def functorial-isomorphism-1-Δ¹-1-left-leg-of-Λ
+  : functorial-isomorphism-shape-inclusions
+    ( 2 × 2) (\ ts → left-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+    2 Δ¹ (\ t → t ≡ 1₂)
+  :=
+    ( isomorphism-1-Δ¹-1-left-leg-of-Λ
+    , ( \ _ _ _ _ → refl , \ _ _ _ _ _ → refl))
 
 #def functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ
   : functorial-isomorphism-shape-inclusions
@@ -767,7 +795,7 @@ We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following settin
   : U
   :=
   Σ ( s
- : ( A : U)
+      : ( A : U)
     → ( σ : (t : I | χ t ∧ ϕ t) → A)
     → ( t : ϕ)
     → A [ χ t ∧ ϕ t ↦ σ t])
@@ -782,13 +810,13 @@ We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following settin
   :=
   Σ ( ( s , S) : retract-shape-inclusion)
   , Σ ( h
- : ( A' : U)
+        : ( A' : U)
       → ( A : U)
       → ( α : A' → A)
       → ( σ' : (t : I | χ t ∧ ϕ t) → A')
       → ( ( \ (t : I | ϕ t) → α (s A' σ' t))
         =_{ (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)]}
-          ( s A (\ t → α (σ' t)))))
+  ( s A (\ t → α (σ' t)))))
     , ( ( A' : U)
       → ( A : U)
       → ( α : A' → A)
@@ -802,7 +830,7 @@ We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following settin
             ( h A' A α σ')
             ( \ t → α (S A' σ' τ' t)))
         =_{ (t : ψ) → A [χ t ↦ α (τ' t) , ϕ t ↦ s A (\ t' → α (σ' t')) t]}
-          ( S A (\ t → α (σ' t)) (\ t → α (τ' t)))))
+  ( S A (\ t → α (σ' t)) (\ t → α (τ' t)))))
 
 #end retracts-shape-inclusions
 ```

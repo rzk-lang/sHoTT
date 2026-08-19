@@ -471,7 +471,7 @@ Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the pro
          2 Δ¹ (\ s → s ≡ 1₂) 2 Δ¹
 ```
 
-Next , we use the left cancellation of left anodyne shape inclusions to deduce
+Next, we use the left cancellation of left anodyne shape inclusions to deduce
 that `Λ ⊂ Δ¹×Δ¹` is left anodyne.
 
 ```rzk
@@ -536,8 +536,8 @@ which we can unpack to get the desired implication
 ### Left/right fibrations and Segal types
 
 Since the Segal types are precisely the local types with respect to `Λ ⊂ Δ²`, we
-immediately deduce that in any left/right fibration `α : A' → A`, if `A` is a Segal
-type, then so is `A'`.
+immediately deduce that in any left/right fibration `α : A' → A`, if `A` is a
+Segal type, then so is `A'`.
 
 ```rzk title="RS 17, Theorem 8.8, categorical version"
 #def is-segal-domain-left-fibration-is-segal-codomain uses (extext)

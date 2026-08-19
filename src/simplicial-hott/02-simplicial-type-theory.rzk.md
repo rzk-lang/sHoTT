@@ -660,7 +660,7 @@ describe this isomorphism on representables.
   :=
   Σ ( ( f , F) : isomorphism-shape-inclusions I ψ ϕ J χ ζ)
   , ( Σ ( e
-      : ( A' : U)
+    : ( A' : U)
         → ( A : U)
         → ( α : A' → A)
         → ( σ' : ζ → A')
@@ -795,7 +795,7 @@ We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following settin
   : U
   :=
   Σ ( s
-      : ( A : U)
+    : ( A : U)
     → ( σ : (t : I | χ t ∧ ϕ t) → A)
     → ( t : ϕ)
     → A [ χ t ∧ ϕ t ↦ σ t])
@@ -810,13 +810,13 @@ We observe that we must have `ζ = χ ∧ ϕ`. Thus we have the following settin
   :=
   Σ ( ( s , S) : retract-shape-inclusion)
   , Σ ( h
-        : ( A' : U)
+      : ( A' : U)
       → ( A : U)
       → ( α : A' → A)
       → ( σ' : (t : I | χ t ∧ ϕ t) → A')
       → ( ( \ (t : I | ϕ t) → α (s A' σ' t))
         =_{ (t : ϕ) → A [χ t ∧ ϕ t ↦ α (σ' t)]}
-  ( s A (\ t → α (σ' t)))))
+          ( s A (\ t → α (σ' t)))))
     , ( ( A' : U)
       → ( A : U)
       → ( α : A' → A)

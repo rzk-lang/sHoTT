@@ -473,7 +473,7 @@ itself.
 ```
 
 Next, we use the left cancellation of left/right anodyne shape inclusions to
-deduce that `Λ ⊂ Δ¹×Δ¹` is left/rights anodyne.
+deduce that `Λ ⊂ Δ¹×Δ¹` is left/right anodyne.
 
 ```rzk
 #def is-left-anodyne-Λ-Δ¹×Δ¹ uses (extext)

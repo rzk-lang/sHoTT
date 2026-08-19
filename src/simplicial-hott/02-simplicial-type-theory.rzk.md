@@ -688,7 +688,6 @@ For example, consider the two shape inclusions `{0} ⊂ Δ¹` (subshapes of `2`)
 `{1} ⊂ right-leg-of-Λ` (subshapes of `2 × 2`), where
 
 ```rzk
-
 #def left-leg-of-Λ
   : Λ → TOPE
   := \ (t , s) → s ≡ 0₂

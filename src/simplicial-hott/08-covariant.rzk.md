@@ -2383,6 +2383,7 @@ be a left fibration.
       p (slice-fun Ĉ A p)
 
 ```
+
 As a sanity check we unpack the definition of `is-naive-right-fibration`.
 
 ```rzk

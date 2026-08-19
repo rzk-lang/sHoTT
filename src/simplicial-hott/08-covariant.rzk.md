@@ -2369,7 +2369,7 @@ preservation of local types by equivalences.
 ## Naive right fibrations
 
 For any functor `p : Ĉ → A`, we can make a naive definition of what it means to
-be a left fibration.
+be a right fibration.
 
 ```rzk
 #def is-naive-right-fibration

@@ -396,10 +396,10 @@ we introduce covariant and contravariant type families.
   := is-anodyne-for-shape 2 Δ¹ (\ s → s ≡ 1₂) I ψ ϕ
 ```
 
-### Left fibrations are inner fibrations
+### Left/right fibrations are inner fibrations
 
-We aim to show that every left fibration is an inner fibration, i.e. that the
-inner horn inclusion `Λ ⊂ Δ²` is left anodyne.
+We aim to show that every left/right fibration is an inner fibration, i.e. that
+the inner horn inclusion `Λ ⊂ Δ²` is left/right anodyne.
 
 The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
 `{1} ⊂ right-leg-of-Λ` of `Λ`.
@@ -451,7 +451,8 @@ that the pair `left-leg-of-Λ ⊂ Λ` is left anodyne.
 ```
 
 Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the product of
-`Δ¹` with the left anodyne pair `{0} ⊂ Δ¹`, hence left anodyne itself.
+`Δ¹` with the left/right anodyne pair `{0} ⊂ Δ¹`, hence left/right anodyne
+itself.
 
 ```rzk
 #def is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹ uses (extext)
@@ -471,8 +472,8 @@ Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the pro
          2 Δ¹ (\ s → s ≡ 1₂) 2 Δ¹
 ```
 
-Next, we use the left cancellation of left anodyne shape inclusions to deduce
-that `Λ ⊂ Δ¹×Δ¹` is left anodyne.
+Next, we use the left cancellation of left/right anodyne shape inclusions to
+deduce that `Λ ⊂ Δ¹×Δ¹` is left/rights anodyne.
 
 ```rzk
 #def is-left-anodyne-Λ-Δ¹×Δ¹ uses (extext)
@@ -495,7 +496,7 @@ that `Λ ⊂ Δ¹×Δ¹` is left anodyne.
 ```
 
 Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹` to obtain the
-desired left anodyne shape inclusion `Λ ⊂ Δ²`.
+desired left/right anodyne shape inclusion `Λ ⊂ Δ²`.
 
 ```rzk
 #def is-left-anodyne-Λ-Δ² uses (extext)

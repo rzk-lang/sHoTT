@@ -714,7 +714,6 @@ Unfortunately we have to repeat the same formula multiple times, leading to some
 ugly boilerplate code.
 
 ```rzk
-
 #def isomorphism-1-Δ¹-1-left-leg-of-Λ
   : isomorphism-shape-inclusions
     ( 2 × 2) (\ ts → left-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)

@@ -914,7 +914,7 @@ The `#!rzk witness-square-comp-is-segal` as an arrow in the arrow type:
 </svg>
 
 ```rzk
-#def witness-asociative-is-segal uses (extext)
+#def witness-associative-is-segal uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( w x y z : A)
@@ -969,7 +969,7 @@ middle-simplex map $((t , s) , r) ↦ ((t , r) , s)$ from $Δ³$ to $Δ²×Δ¹$
   : Δ³ → A
   :=
     \ ((t , s) , r) →
-    ( witness-asociative-is-segal A is-segal-A w x y z f g h) (t , r) s
+    ( witness-associative-is-segal A is-segal-A w x y z f g h) (t , r) s
 ```
 
 <svg style="float: right" viewBox="0 0 200 250" width="150" height="200">
@@ -1029,7 +1029,7 @@ The diagonal composite of three arrows extracted from the
 </svg>
 
 ```rzk
-#def left-witness-asociative-is-segal uses (extext)
+#def left-witness-associative-is-segal uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( w x y z : A)
@@ -1069,7 +1069,7 @@ The front face:
 </svg>
 
 ```rzk
-#def right-witness-asociative-is-segal uses (extext)
+#def right-witness-associative-is-segal uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( w x y z : A)
@@ -1100,7 +1100,7 @@ The front face:
     uniqueness-comp-is-segal
       A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h
       ( triple-comp-is-segal A is-segal-A w x y z f g h)
-      ( left-witness-asociative-is-segal A is-segal-A w x y z f g h)
+      ( left-witness-associative-is-segal A is-segal-A w x y z f g h)
 
 #def right-associative-is-segal uses (extext)
   ( A : U)
@@ -1115,7 +1115,7 @@ The front face:
     uniqueness-comp-is-segal
       ( A) (is-segal-A) (w) (x) (z) (f) (comp-is-segal A is-segal-A x y z g h)
       ( triple-comp-is-segal A is-segal-A w x y z f g h)
-      ( right-witness-asociative-is-segal A is-segal-A w x y z f g h)
+      ( right-witness-associative-is-segal A is-segal-A w x y z f g h)
 ```
 
 We conclude that Segal composition is associative.

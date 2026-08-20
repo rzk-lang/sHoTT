@@ -74,7 +74,7 @@ extension types.
 
 #def is-right-orthogonal-to-shape-has-contr-relative-extension-types uses (extext)
   ( are-contr-relext-α
- : has-contr-relative-extension-types I ψ ϕ
+    : has-contr-relative-extension-types I ψ ϕ
       ( \ _ → A') (\ _ → A) (\ _ → α))
   : is-right-orthogonal-to-shape I ψ ϕ A' A α
   :=
@@ -755,7 +755,7 @@ follows for the former.
   ( σB' : ϕ → relative-product A A' α B f)
   ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
   ( ( τA' , hA)
- : general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
+    : general-relative-extension-type I ψ ϕ (\ _ → A') (\ _ → A) (\ _ → α)
       ( \ t → first-relative-product A A' α B f (σB' t))
       ( \ t → f (τB t))
       ( \ t → homotopy-relative-product A A' α B f (σB' t)))
@@ -771,7 +771,7 @@ follows for the former.
   ( σB' : ϕ → relative-product A A' α B f)
   ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
   ( ( τB' , hB)
- : relative-extension-type I ψ ϕ
+    : relative-extension-type I ψ ϕ
       ( \ _ → relative-product A A' α B f) (\ _ → B)
       ( \ _ → second-relative-product A A' α B f)
       ( σB') (τB))
@@ -796,7 +796,7 @@ follows for the former.
   ( σB' : ϕ → relative-product A A' α B f)
   ( τB : (t : ψ) → B [ϕ t ↦ second-relative-product A A' α B f (σB' t)])
   : ( τhB
- : relative-extension-type I ψ ϕ
+      : relative-extension-type I ψ ϕ
         ( \ _ → relative-product A A' α B f) (\ _ → B)
         ( \ _ → second-relative-product A A' α B f)
         ( σB') (τB))
@@ -955,7 +955,7 @@ map on dependent products `Π α : Π A' → Π A`.
   ( A' A : X → U)
   ( α : (x : X) → (A' x) → (A x))
   ( are-right-orth-ψ-ϕ-α
- : ( x : X) → is-right-orthogonal-to-shape I ψ ϕ (A' x) (A x) (α x))
+    : ( x : X) → is-right-orthogonal-to-shape I ψ ϕ (A' x) (A x) (α x))
   : is-right-orthogonal-to-shape I ψ ϕ
     ( ( x : X) → A' x)
     ( ( x : X) → A x)
@@ -1563,7 +1563,7 @@ analog fo weak anodyne shape inclusions.
   ( χ : J → TOPE)
   ( ζ : χ → TOPE)
   ( impl
- : ( A' : U) → (A : U) → (α : A' → A)
+    : ( A' : U) → (A : U) → (α : A' → A)
     → is-right-orthogonal-to-shape I ψ ϕ A' A α
     → is-right-orthogonal-to-shape J χ ζ A' A α)
   ( A : U)

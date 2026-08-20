@@ -710,7 +710,7 @@ biimplication between them.
   ( A B : U)
   ( s : A → B)
   ( ( ( A' , r) , ((rec-rs , η-rs) , _))
- : has-external-retraction A B s)
+    : has-external-retraction A B s)
   : has-retraction A B s
   := (comp B A' A rec-rs r , η-rs)
 
@@ -718,7 +718,7 @@ biimplication between them.
   ( B A' : U)
   ( r : B → A')
   ( ( ( A , s) , (_ , (sec-rs , ε-rs)))
- : has-external-section B A' r)
+    : has-external-section B A' r)
   : has-section B A' r
   := (comp A' A B s sec-rs , ε-rs)
 ```

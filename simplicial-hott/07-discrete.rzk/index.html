@@ -934,18 +934,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#left-fibrations-are-inner-fibrations" class="md-nav__link">
+  <a href="#leftright-fibrations-are-inner-fibrations" class="md-nav__link">
     <span class="md-ellipsis">
-      Left fibrations are inner fibrations
+      Left/right fibrations are inner fibrations
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#left-fibrations-and-segal-types" class="md-nav__link">
+  <a href="#leftright-fibrations-and-segal-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Left fibrations and Segal types
+      Left/right fibrations and Segal types
     </span>
   </a>
   
@@ -1252,18 +1252,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#left-fibrations-are-inner-fibrations" class="md-nav__link">
+  <a href="#leftright-fibrations-are-inner-fibrations" class="md-nav__link">
     <span class="md-ellipsis">
-      Left fibrations are inner fibrations
+      Left/right fibrations are inner fibrations
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#left-fibrations-and-segal-types" class="md-nav__link">
+  <a href="#leftright-fibrations-and-segal-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Left fibrations and Segal types
+      Left/right fibrations and Segal types
     </span>
   </a>
   
@@ -1664,9 +1664,9 @@ we introduce covariant and contravariant type families.</p>
 </span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>  : <span class="kt">U</span>
 </span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>  := is-anodyne-for-shape <span class="kt">2</span> Δ¹ (<span class="p">\ </span>s → s <span class="sx">≡</span> <span class="m">1₂</span>) I ψ ϕ
 </span></code></pre></div>
-<h3 id="left-fibrations-are-inner-fibrations">Left fibrations are inner fibrations<a class="headerlink" href="#left-fibrations-are-inner-fibrations" title="Permanent link">&para;</a></h3>
-<p>We aim to show that every left fibration is an inner fibration, i.e. that the
-inner horn inclusion <code>Λ ⊂ Δ²</code> is left anodyne.</p>
+<h3 id="leftright-fibrations-are-inner-fibrations">Left/right fibrations are inner fibrations<a class="headerlink" href="#leftright-fibrations-are-inner-fibrations" title="Permanent link">&para;</a></h3>
+<p>We aim to show that every left/right fibration is an inner fibration, i.e. that
+the inner horn inclusion <code>Λ ⊂ Δ²</code> is left/right anodyne.</p>
 <p>The first step is to identify the pair <code>{0} ⊂ Δ¹</code> with the pair of subshapes
 <code>{1} ⊂ right-leg-of-Λ</code> of <code>Λ</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-left-anodyne-1-right-leg-of-Λ" id="define:is-left-anodyne-1-right-leg-of-Λ" style="visibility: visible; position: relative; color: inherit">is-left-anodyne-1-right-leg-of-Λ</a></span>
@@ -1678,24 +1678,40 @@ inner horn inclusion <code>Λ ⊂ Δ²</code> is left anodyne.</p>
 </span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>  ( <span class="kt">2</span> × <span class="kt">2</span>) (<span class="p">\ </span>ts → right-leg-of-Λ ts) (\ (t , s) → t <span class="sx">≡</span> <span class="m">1₂</span> <span class="sx">∧</span> s <span class="sx">≡</span> <span class="m">0₂</span>)
 </span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>  ( <span class="kt">2</span>) (Δ¹) (<span class="p">\ </span>t → t <span class="sx">≡</span> <span class="m">0₂</span>)
 </span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>  ( functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ)
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-anodyne-1-left-leg-of-Λ" id="define:is-right-anodyne-1-left-leg-of-Λ" style="visibility: visible; position: relative; color: inherit">is-right-anodyne-1-left-leg-of-Λ</a></span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>  : is-right-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>    ( <span class="p">\ </span>ts → left-leg-of-Λ ts) (\ (t , _) → t <span class="sx">≡</span> <span class="m">1₂</span>)
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>  :=
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>  <span class="p">\ </span>A&#39; A α →
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>  is-right-orthogonal-to-shape-isomorphism A&#39; A α
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>  ( <span class="kt">2</span> × <span class="kt">2</span>) (<span class="p">\ </span>ts → left-leg-of-Λ ts) (\ (t , s) → t <span class="sx">≡</span> <span class="m">1₂</span> <span class="sx">∧</span> s <span class="sx">≡</span> <span class="m">0₂</span>)
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>  ( <span class="kt">2</span>) (Δ¹) (<span class="p">\ </span>t → t <span class="sx">≡</span> <span class="m">1₂</span>)
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>  ( functorial-isomorphism-1-Δ¹-1-left-leg-of-Λ)
 </span></code></pre></div>
 <p>Next we use that <code>Λ</code> is the pushout of its left leg and its right leg to deduce
 that the pair <code>left-leg-of-Λ ⊂ Λ</code> is left anodyne.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:left-leg-of-Λ" id="define:left-leg-of-Λ" style="visibility: visible; position: relative; color: inherit">left-leg-of-Λ</a></span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  : Λ → <span class="kt">TOPE</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  := \ (t , s) → s <span class="sx">≡</span> <span class="m">0₂</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-left-anodyne-left-leg-of-Λ-Λ" id="define:is-left-anodyne-left-leg-of-Λ-Λ" style="visibility: visible; position: relative; color: inherit">is-left-anodyne-left-leg-of-Λ-Λ</a></span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>  : is-left-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>    ( <span class="p">\ </span>ts → Λ ts) (<span class="p">\ </span>ts → left-leg-of-Λ ts)
-</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>  :=
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>  <span class="p">\ </span>A&#39; A α is-left-fib-α →
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>    is-right-orthogonal-to-shape-pushout A&#39; A α
-</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>    ( <span class="kt">2</span> × <span class="kt">2</span>) (<span class="p">\ </span>ts → right-leg-of-Λ ts) (<span class="p">\ </span>ts → left-leg-of-Λ ts)
-</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>    ( is-left-anodyne-1-right-leg-of-Λ A&#39; A α is-left-fib-α)
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-left-anodyne-left-leg-of-Λ-Λ" id="define:is-left-anodyne-left-leg-of-Λ-Λ" style="visibility: visible; position: relative; color: inherit">is-left-anodyne-left-leg-of-Λ-Λ</a></span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  : is-left-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>    ( <span class="p">\ </span>ts → Λ ts) (<span class="p">\ </span>ts → left-leg-of-Λ ts)
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>  :=
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>  <span class="p">\ </span>A&#39; A α is-left-fib-α →
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>    is-right-orthogonal-to-shape-pushout A&#39; A α
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>    ( <span class="kt">2</span> × <span class="kt">2</span>) (<span class="p">\ </span>ts → right-leg-of-Λ ts) (<span class="p">\ </span>ts → left-leg-of-Λ ts)
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>    ( is-left-anodyne-1-right-leg-of-Λ A&#39; A α is-left-fib-α)
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-anodyne-right-leg-of-Λ-Λ" id="define:is-right-anodyne-right-leg-of-Λ-Λ" style="visibility: visible; position: relative; color: inherit">is-right-anodyne-right-leg-of-Λ-Λ</a></span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>  : is-right-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>    ( <span class="p">\ </span>ts → Λ ts) (<span class="p">\ </span>ts → right-leg-of-Λ ts)
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>  :=
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>  <span class="p">\ </span>A&#39; A α is-right-fib-α →
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>    is-right-orthogonal-to-shape-pushout A&#39; A α
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>    ( <span class="kt">2</span> × <span class="kt">2</span>) (<span class="p">\ </span>ts → left-leg-of-Λ ts) (<span class="p">\ </span>ts → right-leg-of-Λ ts)
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>    ( is-right-anodyne-1-left-leg-of-Λ A&#39; A α is-right-fib-α)
 </span></code></pre></div>
 <p>Furthermore, we observe that the pair <code>left-leg-of-Δ ⊂ Δ¹×Δ¹</code> is the product of
-<code>Δ¹</code> with the left anodyne pair <code>{0} ⊂ Δ¹</code>, hence left anodyne itself.</p>
+<code>Δ¹</code> with the left/right anodyne pair <code>{0} ⊂ Δ¹</code>, hence left/right anodyne
+itself.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹" id="define:is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  : is-left-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    ( <span class="p">\ </span>ts → Δ¹×Δ¹ ts) (<span class="p">\ </span>ts → left-leg-of-Λ ts)
@@ -1703,9 +1719,17 @@ that the pair <code>left-leg-of-Λ ⊂ Λ</code> is left anodyne.</p>
 </span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>  <span class="p">\ </span>A&#39; A α →
 </span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>    is-right-orthogonal-to-shape-product extext A&#39; A α
 </span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>      <span class="kt">2</span> Δ¹ <span class="kt">2</span> Δ¹ (<span class="p">\ </span>s → s <span class="sx">≡</span> <span class="m">0₂</span>)
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-anodyne-right-leg-of-Λ-Δ¹×Δ¹" id="define:is-right-anodyne-right-leg-of-Λ-Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">is-right-anodyne-right-leg-of-Λ-Δ¹×Δ¹</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>  : is-right-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>      ( <span class="p">\ </span>ts → Δ¹×Δ¹ ts) (<span class="p">\ </span>ts → right-leg-of-Λ ts)
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>  :=
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>     <span class="p">\ </span>A&#39; A α →
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>       is-right-orthogonal-to-shape-product&#39; extext A&#39; A α
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>         <span class="kt">2</span> Δ¹ (<span class="p">\ </span>s → s <span class="sx">≡</span> <span class="m">1₂</span>) <span class="kt">2</span> Δ¹
 </span></code></pre></div>
-<p>Next, we use the left cancellation of left anodyne shape inclusions to deduce
-that <code>Λ ⊂ Δ¹×Δ¹</code> is left anodyne.</p>
+<p>Next, we use the left cancellation of left/right anodyne shape inclusions to
+deduce that <code>Λ ⊂ Δ¹×Δ¹</code> is left/right anodyne.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-left-anodyne-Λ-Δ¹×Δ¹" id="define:is-left-anodyne-Λ-Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">is-left-anodyne-Λ-Δ¹×Δ¹</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>  : is-left-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    ( <span class="p">\ </span>ts → Δ¹×Δ¹ ts) (<span class="p">\ </span>ts → Λ ts)
@@ -1714,9 +1738,18 @@ that <code>Λ ⊂ Δ¹×Δ¹</code> is left anodyne.</p>
 </span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>  ( <span class="kt">2</span> × <span class="kt">2</span>) (<span class="p">\ </span>ts → Δ¹×Δ¹ ts) (<span class="p">\ </span>ts → Λ ts) (<span class="p">\ </span>ts → left-leg-of-Λ ts)
 </span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>  ( is-left-anodyne-left-leg-of-Λ-Λ)
 </span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>  ( is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹)
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-anodyne-Λ-Δ¹×Δ¹" id="define:is-right-anodyne-Λ-Δ¹×Δ¹" style="visibility: visible; position: relative; color: inherit">is-right-anodyne-Λ-Δ¹×Δ¹</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>  : is-right-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>    ( <span class="p">\ </span>ts → Δ¹×Δ¹ ts) (<span class="p">\ </span>ts → Λ ts)
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>  :=
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>  is-anodyne-left-cancel-for-shape <span class="kt">2</span> Δ¹ (<span class="p">\ </span>t → t <span class="sx">≡</span> <span class="m">1₂</span>)
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>  ( <span class="kt">2</span> × <span class="kt">2</span>) (<span class="p">\ </span>ts → Δ¹×Δ¹ ts) (<span class="p">\ </span>ts → Λ ts) (<span class="p">\ </span>ts → right-leg-of-Λ ts)
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>  ( is-right-anodyne-right-leg-of-Λ-Λ)
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>  ( is-right-anodyne-right-leg-of-Λ-Δ¹×Δ¹)
 </span></code></pre></div>
 <p>Finally, we right cancel the functorial retract <code>Δ² ⊂ Δ¹×Δ¹</code> to obtain the
-desired left anodyne shape inclusion <code>Λ ⊂ Δ²</code>.</p>
+desired left/right anodyne shape inclusion <code>Λ ⊂ Δ²</code>.</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-left-anodyne-Λ-Δ²" id="define:is-left-anodyne-Λ-Δ²" style="visibility: visible; position: relative; color: inherit">is-left-anodyne-Λ-Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>  : is-left-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    Δ² (<span class="p">\ </span>t → Λ t)
@@ -1725,6 +1758,15 @@ desired left anodyne shape inclusion <code>Λ ⊂ Δ²</code>.</p>
 </span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>  ( <span class="kt">2</span> × <span class="kt">2</span>) (<span class="p">\ </span>ts → Δ¹×Δ¹ ts) (<span class="p">\ </span>ts → Δ² ts) (<span class="p">\ </span>ts → Λ ts)
 </span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>  ( is-functorial-retract-Δ²-Δ¹×Δ¹)
 </span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>  ( is-left-anodyne-Λ-Δ¹×Δ¹)
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-anodyne-Λ-Δ²" id="define:is-right-anodyne-Λ-Δ²" style="visibility: visible; position: relative; color: inherit">is-right-anodyne-Λ-Δ²</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>  : is-right-anodyne (<span class="kt">2</span> × <span class="kt">2</span>)
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>    Δ² (<span class="p">\ </span>t → Λ t)
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>  :=
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>  is-anodyne-right-cancel-retract-for-shape <span class="kt">2</span> Δ¹ (<span class="p">\ </span>t → t <span class="sx">≡</span> <span class="m">1₂</span>)
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>  ( <span class="kt">2</span> × <span class="kt">2</span>) (<span class="p">\ </span>ts → Δ¹×Δ¹ ts) (<span class="p">\ </span>ts → Δ² ts) (<span class="p">\ </span>ts → Λ ts)
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>  ( is-functorial-retract-Δ²-Δ¹×Δ¹)
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>  ( is-right-anodyne-Λ-Δ¹×Δ¹)
 </span></code></pre></div>
 <p>which we can unpack to get the desired implication</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-fibration-is-left-fibration" id="define:is-inner-fibration-is-left-fibration" style="visibility: visible; position: relative; color: inherit">is-inner-fibration-is-left-fibration</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
@@ -1732,11 +1774,17 @@ desired left anodyne shape inclusion <code>Λ ⊂ Δ²</code>.</p>
 </span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>  <span class="p">( </span>α <span class="p">:</span> A&#39; → A)
 </span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>  : is-left-fibration A&#39; A α → is-inner-fibration A&#39; A α
 </span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>  := is-left-anodyne-Λ-Δ² A&#39; A α
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-inner-fibration-is-right-fibration" id="define:is-inner-fibration-is-right-fibration" style="visibility: visible; position: relative; color: inherit">is-inner-fibration-is-right-fibration</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>  <span class="p">( </span>A&#39; A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>  <span class="p">( </span>α <span class="p">:</span> A&#39; → A)
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>  : is-right-fibration A&#39; A α → is-inner-fibration A&#39; A α
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>  := is-right-anodyne-Λ-Δ² A&#39; A α
 </span></code></pre></div>
-<h3 id="left-fibrations-and-segal-types">Left fibrations and Segal types<a class="headerlink" href="#left-fibrations-and-segal-types" title="Permanent link">&para;</a></h3>
+<h3 id="leftright-fibrations-and-segal-types">Left/right fibrations and Segal types<a class="headerlink" href="#leftright-fibrations-and-segal-types" title="Permanent link">&para;</a></h3>
 <p>Since the Segal types are precisely the local types with respect to <code>Λ ⊂ Δ²</code>, we
-immediately deduce that in any left fibration <code>α : A' → A</code>, if <code>A</code> is a Segal
-type, then so is <code>A'</code>.</p>
+immediately deduce that in any left/right fibration <code>α : A' → A</code>, if <code>A</code> is a
+Segal type, then so is <code>A'</code>.</p>
 <div class="language-rzk highlight"><span class="filename">RS 17, Theorem 8.8, categorical version</span><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-domain-left-fibration-is-segal-codomain" id="define:is-segal-domain-left-fibration-is-segal-codomain" style="visibility: visible; position: relative; color: inherit">is-segal-domain-left-fibration-is-segal-codomain</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>  <span class="p">( </span>A&#39; A <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>  <span class="p">( </span>α <span class="p">:</span> A&#39; → A)
@@ -1749,6 +1797,19 @@ type, then so is <code>A'</code>.</p>
 </span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>        ( <span class="kt">2</span> × <span class="kt">2</span>) Δ² (<span class="p">\ </span>ts → Λ ts) A&#39; A α
 </span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>        ( is-inner-fibration-is-left-fibration A&#39; A α is-left-fib-α)
 </span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>        ( is-local-horn-inclusion-is-segal A is-segal-A))
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-domain-right-fibration-is-segal-codomain" id="define:is-segal-domain-right-fibration-is-segal-codomain" style="visibility: visible; position: relative; color: inherit">is-segal-domain-right-fibration-is-segal-codomain</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>  <span class="p">( </span>A&#39; A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>  <span class="p">( </span>α <span class="p">:</span> A&#39; → A)
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>  <span class="p">( </span>is-right-fib-α <span class="p">:</span> is-right-fibration A&#39; A α)
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>  : is-segal A&#39;
+</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>  :=
+</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a>    is-segal-is-local-horn-inclusion A&#39;
+</span><span id="__span-23-22"><a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a>      ( is-local-type-right-orthogonal-is-local-type
+</span><span id="__span-23-23"><a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a>        ( <span class="kt">2</span> × <span class="kt">2</span>) Δ² (<span class="p">\ </span>ts → Λ ts) A&#39; A α
+</span><span id="__span-23-24"><a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a>        ( is-inner-fibration-is-right-fibration A&#39; A α is-right-fib-α)
+</span><span id="__span-23-25"><a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a>        ( is-local-horn-inclusion-is-segal A is-segal-A))
 </span></code></pre></div>
 <h3 id="discrete-types-are-segal-types_1">Discrete types are Segal types<a class="headerlink" href="#discrete-types-are-segal-types_1" title="Permanent link">&para;</a></h3>
 <p>Another immediate corollary is that every discrete type is Segal.</p>

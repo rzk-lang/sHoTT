@@ -2093,7 +2093,7 @@ that the type of arrows in a Segal type is itself a Segal type.</p>
   <text x="185" y="100">g</text>
   <text x="90" y="150">h</text>
 </svg></p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:witness-asociative-is-segal" id="define:witness-asociative-is-segal" style="visibility: visible; position: relative; color: inherit">witness-asociative-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:witness-associative-is-segal" id="define:witness-associative-is-segal" style="visibility: visible; position: relative; color: inherit">witness-associative-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
 </span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>  <span class="p">( </span>w x y z <span class="p">:</span> A)
@@ -2144,7 +2144,7 @@ middle-simplex map <span class="arithmatex">\(((t , s) , r) ↦ ((t , r) , s)\)<
 </span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>  : Δ³ → A
 </span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>  :=
 </span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a>    \ ((t , s) , r) →
-</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>    ( witness-asociative-is-segal A is-segal-A w x y z f g h) (t , r) s
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>    ( witness-associative-is-segal A is-segal-A w x y z f g h) (t , r) s
 </span></code></pre></div>
 <p><svg style="float: right" viewBox="0 0 200 250" width="150" height="200">
   <path style="fill: rgb(128,128,128,0.5); stroke-cap: round;"
@@ -2197,7 +2197,7 @@ middle-simplex map <span class="arithmatex">\(((t , s) , r) ↦ ((t , r) , s)\)<
   <text x="100" y="15">f</text>
   <text x="140" y="205">h</text>
 </svg></p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:left-witness-asociative-is-segal" id="define:left-witness-asociative-is-segal" style="visibility: visible; position: relative; color: inherit">left-witness-asociative-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:left-witness-associative-is-segal" id="define:left-witness-associative-is-segal" style="visibility: visible; position: relative; color: inherit">left-witness-associative-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
 </span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>  <span class="p">( </span>w x y z <span class="p">:</span> A)
@@ -2233,7 +2233,7 @@ middle-simplex map <span class="arithmatex">\(((t , s) , r) ↦ ((t , r) , s)\)<
   <text x="100" y="15">f</text>
   <text x="140" y="205">h</text>
 </svg></p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:right-witness-asociative-is-segal" id="define:right-witness-asociative-is-segal" style="visibility: visible; position: relative; color: inherit">right-witness-asociative-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:right-witness-associative-is-segal" id="define:right-witness-associative-is-segal" style="visibility: visible; position: relative; color: inherit">right-witness-associative-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
 </span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>  <span class="p">( </span>w x y z <span class="p">:</span> A)
@@ -2262,7 +2262,7 @@ middle-simplex map <span class="arithmatex">\(((t , s) , r) ↦ ((t , r) , s)\)<
 </span><span id="__span-40-11"><a id="__codelineno-40-11" name="__codelineno-40-11" href="#__codelineno-40-11"></a>    uniqueness-comp-is-segal
 </span><span id="__span-40-12"><a id="__codelineno-40-12" name="__codelineno-40-12" href="#__codelineno-40-12"></a>      A is-segal-A w y z (comp-is-segal A is-segal-A w x y f g) h
 </span><span id="__span-40-13"><a id="__codelineno-40-13" name="__codelineno-40-13" href="#__codelineno-40-13"></a>      ( triple-comp-is-segal A is-segal-A w x y z f g h)
-</span><span id="__span-40-14"><a id="__codelineno-40-14" name="__codelineno-40-14" href="#__codelineno-40-14"></a>      ( left-witness-asociative-is-segal A is-segal-A w x y z f g h)
+</span><span id="__span-40-14"><a id="__codelineno-40-14" name="__codelineno-40-14" href="#__codelineno-40-14"></a>      ( left-witness-associative-is-segal A is-segal-A w x y z f g h)
 </span><span id="__span-40-15"><a id="__codelineno-40-15" name="__codelineno-40-15" href="#__codelineno-40-15"></a>
 </span><span id="__span-40-16"><a id="__codelineno-40-16" name="__codelineno-40-16" href="#__codelineno-40-16"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:right-associative-is-segal" id="define:right-associative-is-segal" style="visibility: visible; position: relative; color: inherit">right-associative-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-40-17"><a id="__codelineno-40-17" name="__codelineno-40-17" href="#__codelineno-40-17"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
@@ -2277,7 +2277,7 @@ middle-simplex map <span class="arithmatex">\(((t , s) , r) ↦ ((t , r) , s)\)<
 </span><span id="__span-40-26"><a id="__codelineno-40-26" name="__codelineno-40-26" href="#__codelineno-40-26"></a>    uniqueness-comp-is-segal
 </span><span id="__span-40-27"><a id="__codelineno-40-27" name="__codelineno-40-27" href="#__codelineno-40-27"></a>      ( A) (is-segal-A) (w) (x) (z) (f) (comp-is-segal A is-segal-A x y z g h)
 </span><span id="__span-40-28"><a id="__codelineno-40-28" name="__codelineno-40-28" href="#__codelineno-40-28"></a>      ( triple-comp-is-segal A is-segal-A w x y z f g h)
-</span><span id="__span-40-29"><a id="__codelineno-40-29" name="__codelineno-40-29" href="#__codelineno-40-29"></a>      ( right-witness-asociative-is-segal A is-segal-A w x y z f g h)
+</span><span id="__span-40-29"><a id="__codelineno-40-29" name="__codelineno-40-29" href="#__codelineno-40-29"></a>      ( right-witness-associative-is-segal A is-segal-A w x y z f g h)
 </span></code></pre></div>
 <p>We conclude that Segal composition is associative.</p>
 <div class="language-rzk highlight"><span class="filename">RS17, Proposition 5.9</span><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:associative-is-segal" id="define:associative-is-segal" style="visibility: visible; position: relative; color: inherit">associative-is-segal</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>

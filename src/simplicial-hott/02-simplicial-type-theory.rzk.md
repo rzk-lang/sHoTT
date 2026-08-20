@@ -688,6 +688,10 @@ For example, consider the two shape inclusions `{0} ⊂ Δ¹` (subshapes of `2`)
 `{1} ⊂ right-leg-of-Λ` (subshapes of `2 × 2`), where
 
 ```rzk
+#def left-leg-of-Λ
+  : Λ → TOPE
+  := \ (t , s) → s ≡ 0₂
+
 #def right-leg-of-Λ
   : Λ → TOPE
   := \ (t , s) → t ≡ 1₂
@@ -709,6 +713,20 @@ Unfortunately we have to repeat the same formula multiple times, leading to some
 ugly boilerplate code.
 
 ```rzk
+#def isomorphism-1-Δ¹-1-left-leg-of-Λ
+  : isomorphism-shape-inclusions
+    ( 2 × 2) (\ ts → left-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+    2 Δ¹ (\ t → t ≡ 1₂)
+  :=
+    ( \ A →
+      ( \ τ (t , s) → τ t
+      , ( ( \ υ s → υ (s , 0₂) , \ _ → refl)
+        , ( \ υ s → υ (s , 0₂) , \ _ → refl)))
+    , \ A _ →
+      ( \ τ (t , s) → τ t
+      , ( ( \ υ s → υ (s , 0₂) , \ _ → refl)
+        , ( \ υ s → υ (s , 0₂) , \ _ → refl))))
+
 #def isomorphism-0-Δ¹-1-right-leg-of-Λ
   : isomorphism-shape-inclusions
     ( 2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
@@ -722,6 +740,14 @@ ugly boilerplate code.
       ( \ τ (t , s) → τ s
       , ( ( \ υ s → υ (1₂ , s) , \ _ → refl)
         , ( \ υ s → υ (1₂ , s) , \ _ → refl))))
+
+#def functorial-isomorphism-1-Δ¹-1-left-leg-of-Λ
+  : functorial-isomorphism-shape-inclusions
+    ( 2 × 2) (\ ts → left-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+    2 Δ¹ (\ t → t ≡ 1₂)
+  :=
+    ( isomorphism-1-Δ¹-1-left-leg-of-Λ
+    , ( \ _ _ _ _ → refl , \ _ _ _ _ _ → refl))
 
 #def functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ
   : functorial-isomorphism-shape-inclusions

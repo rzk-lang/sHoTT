@@ -2038,7 +2038,7 @@ biimplication between them.</p>
 </span><span id="__span-37-30"><a id="__codelineno-37-30" name="__codelineno-37-30" href="#__codelineno-37-30"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-37-31"><a id="__codelineno-37-31" name="__codelineno-37-31" href="#__codelineno-37-31"></a>  <span class="p">( </span>s <span class="p">:</span> A → B)
 </span><span id="__span-37-32"><a id="__codelineno-37-32" name="__codelineno-37-32" href="#__codelineno-37-32"></a>  ( ( ( A&#39; , r) , ((rec-rs , η-rs) , _))
-</span><span id="__span-37-33"><a id="__codelineno-37-33" name="__codelineno-37-33" href="#__codelineno-37-33"></a> : has-external-retraction A B s)
+</span><span id="__span-37-33"><a id="__codelineno-37-33" name="__codelineno-37-33" href="#__codelineno-37-33"></a>    : has-external-retraction A B s)
 </span><span id="__span-37-34"><a id="__codelineno-37-34" name="__codelineno-37-34" href="#__codelineno-37-34"></a>  : has-retraction A B s
 </span><span id="__span-37-35"><a id="__codelineno-37-35" name="__codelineno-37-35" href="#__codelineno-37-35"></a>  := (comp B A&#39; A rec-rs r , η-rs)
 </span><span id="__span-37-36"><a id="__codelineno-37-36" name="__codelineno-37-36" href="#__codelineno-37-36"></a>
@@ -2046,7 +2046,7 @@ biimplication between them.</p>
 </span><span id="__span-37-38"><a id="__codelineno-37-38" name="__codelineno-37-38" href="#__codelineno-37-38"></a>  <span class="p">( </span>B A&#39; <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-37-39"><a id="__codelineno-37-39" name="__codelineno-37-39" href="#__codelineno-37-39"></a>  <span class="p">( </span>r <span class="p">:</span> B → A&#39;)
 </span><span id="__span-37-40"><a id="__codelineno-37-40" name="__codelineno-37-40" href="#__codelineno-37-40"></a>  ( ( ( A , s) , (_ , (sec-rs , ε-rs)))
-</span><span id="__span-37-41"><a id="__codelineno-37-41" name="__codelineno-37-41" href="#__codelineno-37-41"></a> : has-external-section B A&#39; r)
+</span><span id="__span-37-41"><a id="__codelineno-37-41" name="__codelineno-37-41" href="#__codelineno-37-41"></a>    : has-external-section B A&#39; r)
 </span><span id="__span-37-42"><a id="__codelineno-37-42" name="__codelineno-37-42" href="#__codelineno-37-42"></a>  : has-section B A&#39; r
 </span><span id="__span-37-43"><a id="__codelineno-37-43" name="__codelineno-37-43" href="#__codelineno-37-43"></a>  := (comp A&#39; A B s sec-rs , ε-rs)
 </span></code></pre></div>

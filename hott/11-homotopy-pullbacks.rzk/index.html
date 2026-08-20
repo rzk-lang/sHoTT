@@ -1636,7 +1636,7 @@ corresponding statements about equivalences established above.</p>
 </span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>
 </span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-homotopy-cartesian-upper-from-fibers" id="define:is-homotopy-cartesian-upper-from-fibers" style="visibility: visible; position: relative; color: inherit">is-homotopy-cartesian-upper-from-fibers</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>A<span class="p">)</span>
 </span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>  <span class="p">( </span>is-fiberwise-hc-γ-δ
-</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a> <span class="p">:</span> <span class="p">( </span>a&#39; <span class="p">:</span> A&#39;)
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>    <span class="p">:</span> <span class="p">( </span>a&#39; <span class="p">:</span> A&#39;)
 </span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>    → is-homotopy-cartesian (C&#39; a&#39;) (D&#39; a&#39;) (C (α a&#39;)) (D (α a&#39;)) (γ a&#39;) (δ a&#39;))
 </span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a>  : is-homotopy-cartesian-upper
 </span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a>  :=
@@ -1664,7 +1664,7 @@ corresponding statements about equivalences established above.</p>
 </span><span id="__span-8-57"><a id="__codelineno-8-57" name="__codelineno-8-57" href="#__codelineno-8-57"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-homotopy-cartesian-vertical-pasting-from-fibers" id="define:is-homotopy-cartesian-vertical-pasting-from-fibers" style="visibility: visible; position: relative; color: inherit">is-homotopy-cartesian-vertical-pasting-from-fibers</a></span>
 </span><span id="__span-8-58"><a id="__codelineno-8-58" name="__codelineno-8-58" href="#__codelineno-8-58"></a>  <span class="p">( </span>is-hc-α-γ <span class="p">:</span> is-homotopy-cartesian A&#39; C&#39; A C α γ)
 </span><span id="__span-8-59"><a id="__codelineno-8-59" name="__codelineno-8-59" href="#__codelineno-8-59"></a>  <span class="p">( </span>is-fiberwise-hc-γ-δ
-</span><span id="__span-8-60"><a id="__codelineno-8-60" name="__codelineno-8-60" href="#__codelineno-8-60"></a> <span class="p">:</span> <span class="p">( </span>a&#39; <span class="p">:</span> A&#39;)
+</span><span id="__span-8-60"><a id="__codelineno-8-60" name="__codelineno-8-60" href="#__codelineno-8-60"></a>    <span class="p">:</span> <span class="p">( </span>a&#39; <span class="p">:</span> A&#39;)
 </span><span id="__span-8-61"><a id="__codelineno-8-61" name="__codelineno-8-61" href="#__codelineno-8-61"></a>    → is-homotopy-cartesian (C&#39; a&#39;) (D&#39; a&#39;) (C (α a&#39;)) (D (α a&#39;)) (γ a&#39;) (δ a&#39;))
 </span><span id="__span-8-62"><a id="__codelineno-8-62" name="__codelineno-8-62" href="#__codelineno-8-62"></a>  : is-homotopy-cartesian-vertical-pasted
 </span><span id="__span-8-63"><a id="__codelineno-8-63" name="__codelineno-8-63" href="#__codelineno-8-63"></a>  :=
@@ -1792,10 +1792,10 @@ from composition and cancelling laws for equivalences.</p>
 </span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-homotopy-cartesian-left-cancel-with-section&#39;" id="define:is-homotopy-cartesian-left-cancel-with-section&#39;" style="visibility: visible; position: relative; color: inherit">is-homotopy-cartesian-left-cancel-with-section&#39;</a></span>
 </span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>  ( ( sec-f&#39; , ε-f&#39;) : has-section A&#39;&#39; A&#39; f&#39;)
 </span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>  <span class="p">( </span>has-sections-F&#39;
-</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a> <span class="p">:</span> <span class="p">( </span>a&#39; <span class="p">:</span> A&#39;)
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>    <span class="p">:</span> <span class="p">( </span>a&#39; <span class="p">:</span> A&#39;)
 </span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>    → has-section (C&#39;&#39; (sec-f&#39; a&#39;)) (C&#39; (f&#39; (sec-f&#39; a&#39;))) (F&#39; (sec-f&#39; a&#39;)))
 </span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>  <span class="p">( </span>ihc&#39;&#39;
-</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a> <span class="p">:</span> is-homotopy-cartesian A&#39;&#39; C&#39;&#39; A C
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>    <span class="p">:</span> is-homotopy-cartesian A&#39;&#39; C&#39;&#39; A C
 </span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>      ( comp A&#39;&#39; A&#39; A f f&#39;)
 </span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>      ( <span class="p">\ </span>a&#39;&#39; →
 </span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>        comp (C&#39;&#39; a&#39;&#39;) (C&#39; (f&#39; a&#39;&#39;)) (C (f (f&#39; a&#39;&#39;)))
@@ -2405,7 +2405,7 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
 </span><span id="__span-32-41"><a id="__codelineno-32-41" name="__codelineno-32-41" href="#__codelineno-32-41"></a>        ( map-of-fibers-map-of-maps A&#39; A α B&#39; B β ((s&#39; , s) , ηs) a
 </span><span id="__span-32-42"><a id="__codelineno-32-42" name="__codelineno-32-42" href="#__codelineno-32-42"></a>          ( a&#39;p))
 </span><span id="__span-32-43"><a id="__codelineno-32-43" name="__codelineno-32-43" href="#__codelineno-32-43"></a>      =_{ fib C&#39; C γ (t (s a))}
-</span><span id="__span-32-44"><a id="__codelineno-32-44" name="__codelineno-32-44" href="#__codelineno-32-44"></a>        ( map-of-fibers-map-of-maps A&#39; A α C&#39; C γ
+</span><span id="__span-32-44"><a id="__codelineno-32-44" name="__codelineno-32-44" href="#__codelineno-32-44"></a>  ( map-of-fibers-map-of-maps A&#39; A α C&#39; C γ
 </span><span id="__span-32-45"><a id="__codelineno-32-45" name="__codelineno-32-45" href="#__codelineno-32-45"></a>          ( comp-map-of-maps A&#39; A α B&#39; B β C&#39; C γ
 </span><span id="__span-32-46"><a id="__codelineno-32-46" name="__codelineno-32-46" href="#__codelineno-32-46"></a>            ( ( t&#39; , t) , ηt) ((s&#39; , s) , ηs))
 </span><span id="__span-32-47"><a id="__codelineno-32-47" name="__codelineno-32-47" href="#__codelineno-32-47"></a>          ( a) (a&#39;p))))
@@ -2446,7 +2446,7 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
 </span><span id="__span-33-31"><a id="__codelineno-33-31" name="__codelineno-33-31" href="#__codelineno-33-31"></a>  <span class="p">( </span>B&#39; B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-33-32"><a id="__codelineno-33-32" name="__codelineno-33-32" href="#__codelineno-33-32"></a>  <span class="p">( </span>β <span class="p">:</span> B&#39; → B)
 </span><span id="__span-33-33"><a id="__codelineno-33-33" name="__codelineno-33-33" href="#__codelineno-33-33"></a>  ( ( ( ( s&#39; , s) , ηs) , ((((C&#39; , C) , γ) , ((r&#39; , r) , ηr)) , (is-s-r&#39; , is-s-r)))
-</span><span id="__span-33-34"><a id="__codelineno-33-34" name="__codelineno-33-34" href="#__codelineno-33-34"></a> : is-external-retract-of-Map ((A&#39; , A) , α) ((B&#39; , B) , β))
+</span><span id="__span-33-34"><a id="__codelineno-33-34" name="__codelineno-33-34" href="#__codelineno-33-34"></a>    : is-external-retract-of-Map ((A&#39; , A) , α) ((B&#39; , B) , β))
 </span><span id="__span-33-35"><a id="__codelineno-33-35" name="__codelineno-33-35" href="#__codelineno-33-35"></a>  <span class="p">( </span>a <span class="p">:</span> A)
 </span><span id="__span-33-36"><a id="__codelineno-33-36" name="__codelineno-33-36" href="#__codelineno-33-36"></a>  : is-retract-of (fib A&#39; A α a) (fib B&#39; B β (s a))
 </span><span id="__span-33-37"><a id="__codelineno-33-37" name="__codelineno-33-37" href="#__codelineno-33-37"></a>  :=
@@ -2481,7 +2481,7 @@ that an equivalence of maps induces an equivalence of fibers at each base point.
 </span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>  <span class="p">( </span>B&#39; B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>  <span class="p">( </span>β <span class="p">:</span> B&#39; → B)
 </span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>  ( ( ( ( s&#39; , s) , ηs) , has-ext-retr-S)
-</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a> : is-external-retract-of-Map ((A&#39; , A) , α) ((B&#39; , B) , β))
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>    : is-external-retract-of-Map ((A&#39; , A) , α) ((B&#39; , B) , β))
 </span><span id="__span-34-8"><a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>  <span class="p">( </span>is-equiv-β <span class="p">:</span> is-equiv B&#39; B β)
 </span><span id="__span-34-9"><a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a>  : is-equiv A&#39; A α
 </span><span id="__span-34-10"><a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>  :=

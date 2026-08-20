@@ -210,7 +210,7 @@ implication could be proven similarly.
   ( B C : A → U)
   ( f : (a : A) → (B a) → (C a))
   ( totalcontrmap
- : is-contr-map (total-type A B) (total-type A C) (total-map A B C f))
+    : is-contr-map (total-type A B) (total-type A C) (total-map A B C f))
   ( a : A)
   : is-contr-map (B a) (C a) (f a)
   :=
@@ -226,7 +226,7 @@ implication could be proven similarly.
   ( B C : A → U)
   ( f : (a : A) → (B a) → (C a))
   ( totalequiv
- : is-equiv (total-type A B) (total-type A C) (total-map A B C f))
+    : is-equiv (total-type A B) (total-type A C) (total-map A B C f))
   ( a : A)
   : is-equiv (B a) (C a) (f a)
   :=
@@ -242,7 +242,7 @@ implication could be proven similarly.
   ( B C : A → U)
   ( f : (a : A) → (B a) → (C a))
   ( totalequiv
- : is-equiv (total-type A B) (total-type A C) (total-map A B C f))
+    : is-equiv (total-type A B) (total-type A C) (total-map A B C f))
   ( a : A)
   : Equiv (B a) (C a)
   := (f a , is-equiv-fiberwise-is-equiv-total A B C f totalequiv a)
@@ -877,7 +877,7 @@ types over a product type.
 
 #def pullback-is-equiv-base-is-equiv-total-is-equiv
   ( is-equiv-total
- : is-equiv
+    : is-equiv
       ( Σ ( a : A) , (Σ (b : B) , C a b))
       ( Σ ( a' : A') , (Σ (b' : B') , C' a' b'))
       ( total-map-fibered-map-over-product))
@@ -902,7 +902,7 @@ types over a product type.
 
 #def pullback-is-equiv-bases-are-equiv-total-is-equiv
   ( is-equiv-total
- : is-equiv
+    : is-equiv
       ( Σ ( a : A) , (Σ (b : B) , C a b))
       ( Σ ( a' : A') , (Σ (b' : B') , C' a' b'))
       ( total-map-fibered-map-over-product))
@@ -933,7 +933,7 @@ types over a product type.
 
 #def fibered-map-is-equiv-bases-are-equiv-total-map-is-equiv
   ( is-equiv-total
- : is-equiv
+    : is-equiv
       ( Σ ( a : A) , (Σ (b : B) , C a b))
       ( Σ ( a' : A') , (Σ (b' : B') , C' a' b'))
       ( total-map-fibered-map-over-product))

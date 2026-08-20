@@ -283,7 +283,7 @@ corresponding statements about equivalences established above.
 
 #def is-homotopy-cartesian-upper-from-fibers uses (A)
   ( is-fiberwise-hc-γ-δ
- : ( a' : A')
+    : ( a' : A')
     → is-homotopy-cartesian (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a'))
   : is-homotopy-cartesian-upper
   :=
@@ -311,7 +311,7 @@ corresponding statements about equivalences established above.
 #def is-homotopy-cartesian-vertical-pasting-from-fibers
   ( is-hc-α-γ : is-homotopy-cartesian A' C' A C α γ)
   ( is-fiberwise-hc-γ-δ
- : ( a' : A')
+    : ( a' : A')
     → is-homotopy-cartesian (C' a') (D' a') (C (α a')) (D (α a')) (γ a') (δ a'))
   : is-homotopy-cartesian-vertical-pasted
   :=
@@ -450,10 +450,10 @@ In fact, it suffices to assume that the left square has horizontal sections.
 #def is-homotopy-cartesian-left-cancel-with-section'
   ( ( sec-f' , ε-f') : has-section A'' A' f')
   ( has-sections-F'
- : ( a' : A')
+    : ( a' : A')
     → has-section (C'' (sec-f' a')) (C' (f' (sec-f' a'))) (F' (sec-f' a')))
   ( ihc''
- : is-homotopy-cartesian A'' C'' A C
+    : is-homotopy-cartesian A'' C'' A C
       ( comp A'' A' A f f')
       ( \ a'' →
         comp (C'' a'') (C' (f' a'')) (C (f (f' a'')))
@@ -1136,7 +1136,7 @@ The map induced on fibers respects composition up to homotopy.
         ( map-of-fibers-map-of-maps A' A α B' B β ((s' , s) , ηs) a
           ( a'p))
       =_{ fib C' C γ (t (s a))}
-        ( map-of-fibers-map-of-maps A' A α C' C γ
+  ( map-of-fibers-map-of-maps A' A α C' C γ
           ( comp-map-of-maps A' A α B' B β C' C γ
             ( ( t' , t) , ηt) ((s' , s) , ηs))
           ( a) (a'p))))
@@ -1181,7 +1181,7 @@ Every retract of types induces a retract on fibers.
   ( B' B : U)
   ( β : B' → B)
   ( ( ( ( s' , s) , ηs) , ((((C' , C) , γ) , ((r' , r) , ηr)) , (is-s-r' , is-s-r)))
- : is-external-retract-of-Map ((A' , A) , α) ((B' , B) , β))
+    : is-external-retract-of-Map ((A' , A) , α) ((B' , B) , β))
   ( a : A)
   : is-retract-of (fib A' A α a) (fib B' B β (s a))
   :=
@@ -1220,7 +1220,7 @@ As an immediate corollary we obtain that equivalences are closed under retracts.
   ( B' B : U)
   ( β : B' → B)
   ( ( ( ( s' , s) , ηs) , has-ext-retr-S)
- : is-external-retract-of-Map ((A' , A) , α) ((B' , B) , β))
+    : is-external-retract-of-Map ((A' , A) , α) ((B' , B) , β))
   ( is-equiv-β : is-equiv B' B β)
   : is-equiv A' A α
   :=

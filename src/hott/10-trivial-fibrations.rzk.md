@@ -208,7 +208,7 @@ Finally, we have:
   ( A : U)
   ( B : A → U)
   ( proj-B-to-A-is-half-adjoint-equivalence
- : is-half-adjoint-equiv (Σ (x : A) , B x) A (projection-total-type A B))
+    : is-half-adjoint-equiv (Σ (x : A) , B x) A (projection-total-type A B))
   : contractible-fibers A B
   :=
     \ x →
@@ -223,7 +223,7 @@ Finally, we have:
   ( A : U)
   ( B : A → U)
   ( proj-B-to-A-is-equiv
- : is-equiv (Σ (x : A) , B x) A (projection-total-type A B))
+    : is-equiv (Σ (x : A) , B x) A (projection-total-type A B))
   : contractible-fibers A B
   :=
     contractible-fibers-is-half-adjoint-equiv-projection A B

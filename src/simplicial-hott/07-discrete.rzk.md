@@ -396,10 +396,10 @@ we introduce covariant and contravariant type families.
   := is-anodyne-for-shape 2 Δ¹ (\ s → s ≡ 1₂) I ψ ϕ
 ```
 
-### Left fibrations are inner fibrations
+### Left/right fibrations are inner fibrations
 
-We aim to show that every left fibration is an inner fibration, i.e. that the
-inner horn inclusion `Λ ⊂ Δ²` is left anodyne.
+We aim to show that every left/right fibration is an inner fibration, i.e. that
+the inner horn inclusion `Λ ⊂ Δ²` is left/right anodyne.
 
 The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
 `{1} ⊂ right-leg-of-Λ` of `Λ`.
@@ -414,15 +414,22 @@ The first step is to identify the pair `{0} ⊂ Δ¹` with the pair of subshapes
   ( 2 × 2) (\ ts → right-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
   ( 2) (Δ¹) (\ t → t ≡ 0₂)
   ( functorial-isomorphism-0-Δ¹-1-right-leg-of-Λ)
+
+#def is-right-anodyne-1-left-leg-of-Λ
+  : is-right-anodyne (2 × 2)
+    ( \ ts → left-leg-of-Λ ts) (\ (t , _) → t ≡ 1₂)
+  :=
+  \ A' A α →
+  is-right-orthogonal-to-shape-isomorphism A' A α
+  ( 2 × 2) (\ ts → left-leg-of-Λ ts) (\ (t , s) → t ≡ 1₂ ∧ s ≡ 0₂)
+  ( 2) (Δ¹) (\ t → t ≡ 1₂)
+  ( functorial-isomorphism-1-Δ¹-1-left-leg-of-Λ)
 ```
 
 Next we use that `Λ` is the pushout of its left leg and its right leg to deduce
 that the pair `left-leg-of-Λ ⊂ Λ` is left anodyne.
 
 ```rzk
-#def left-leg-of-Λ
-  : Λ → TOPE
-  := \ (t , s) → s ≡ 0₂
 
 #def is-left-anodyne-left-leg-of-Λ-Λ
   : is-left-anodyne (2 × 2)
@@ -432,10 +439,20 @@ that the pair `left-leg-of-Λ ⊂ Λ` is left anodyne.
     is-right-orthogonal-to-shape-pushout A' A α
     ( 2 × 2) (\ ts → right-leg-of-Λ ts) (\ ts → left-leg-of-Λ ts)
     ( is-left-anodyne-1-right-leg-of-Λ A' A α is-left-fib-α)
+
+#def is-right-anodyne-right-leg-of-Λ-Λ
+  : is-right-anodyne (2 × 2)
+    ( \ ts → Λ ts) (\ ts → right-leg-of-Λ ts)
+  :=
+  \ A' A α is-right-fib-α →
+    is-right-orthogonal-to-shape-pushout A' A α
+    ( 2 × 2) (\ ts → left-leg-of-Λ ts) (\ ts → right-leg-of-Λ ts)
+    ( is-right-anodyne-1-left-leg-of-Λ A' A α is-right-fib-α)
 ```
 
 Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the product of
-`Δ¹` with the left anodyne pair `{0} ⊂ Δ¹`, hence left anodyne itself.
+`Δ¹` with the left/right anodyne pair `{0} ⊂ Δ¹`, hence left/right anodyne
+itself.
 
 ```rzk
 #def is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹ uses (extext)
@@ -445,10 +462,18 @@ Furthermore, we observe that the pair `left-leg-of-Δ ⊂ Δ¹×Δ¹` is the pro
   \ A' A α →
     is-right-orthogonal-to-shape-product extext A' A α
       2 Δ¹ 2 Δ¹ (\ s → s ≡ 0₂)
+
+#def is-right-anodyne-right-leg-of-Λ-Δ¹×Δ¹ uses (extext)
+  : is-right-anodyne (2 × 2)
+      ( \ ts → Δ¹×Δ¹ ts) (\ ts → right-leg-of-Λ ts)
+  :=
+     \ A' A α →
+       is-right-orthogonal-to-shape-product' extext A' A α
+         2 Δ¹ (\ s → s ≡ 1₂) 2 Δ¹
 ```
 
-Next, we use the left cancellation of left anodyne shape inclusions to deduce
-that `Λ ⊂ Δ¹×Δ¹` is left anodyne.
+Next, we use the left cancellation of left/right anodyne shape inclusions to
+deduce that `Λ ⊂ Δ¹×Δ¹` is left/right anodyne.
 
 ```rzk
 #def is-left-anodyne-Λ-Δ¹×Δ¹ uses (extext)
@@ -459,10 +484,19 @@ that `Λ ⊂ Δ¹×Δ¹` is left anodyne.
   ( 2 × 2) (\ ts → Δ¹×Δ¹ ts) (\ ts → Λ ts) (\ ts → left-leg-of-Λ ts)
   ( is-left-anodyne-left-leg-of-Λ-Λ)
   ( is-left-anodyne-left-leg-of-Λ-Δ¹×Δ¹)
+
+#def is-right-anodyne-Λ-Δ¹×Δ¹ uses (extext)
+  : is-right-anodyne (2 × 2)
+    ( \ ts → Δ¹×Δ¹ ts) (\ ts → Λ ts)
+  :=
+  is-anodyne-left-cancel-for-shape 2 Δ¹ (\ t → t ≡ 1₂)
+  ( 2 × 2) (\ ts → Δ¹×Δ¹ ts) (\ ts → Λ ts) (\ ts → right-leg-of-Λ ts)
+  ( is-right-anodyne-right-leg-of-Λ-Λ)
+  ( is-right-anodyne-right-leg-of-Λ-Δ¹×Δ¹)
 ```
 
 Finally, we right cancel the functorial retract `Δ² ⊂ Δ¹×Δ¹` to obtain the
-desired left anodyne shape inclusion `Λ ⊂ Δ²`.
+desired left/right anodyne shape inclusion `Λ ⊂ Δ²`.
 
 ```rzk
 #def is-left-anodyne-Λ-Δ² uses (extext)
@@ -473,6 +507,15 @@ desired left anodyne shape inclusion `Λ ⊂ Δ²`.
   ( 2 × 2) (\ ts → Δ¹×Δ¹ ts) (\ ts → Δ² ts) (\ ts → Λ ts)
   ( is-functorial-retract-Δ²-Δ¹×Δ¹)
   ( is-left-anodyne-Λ-Δ¹×Δ¹)
+
+#def is-right-anodyne-Λ-Δ² uses (extext)
+  : is-right-anodyne (2 × 2)
+    Δ² (\ t → Λ t)
+  :=
+  is-anodyne-right-cancel-retract-for-shape 2 Δ¹ (\ t → t ≡ 1₂)
+  ( 2 × 2) (\ ts → Δ¹×Δ¹ ts) (\ ts → Δ² ts) (\ ts → Λ ts)
+  ( is-functorial-retract-Δ²-Δ¹×Δ¹)
+  ( is-right-anodyne-Λ-Δ¹×Δ¹)
 ```
 
 which we can unpack to get the desired implication
@@ -483,13 +526,19 @@ which we can unpack to get the desired implication
   ( α : A' → A)
   : is-left-fibration A' A α → is-inner-fibration A' A α
   := is-left-anodyne-Λ-Δ² A' A α
+
+#def is-inner-fibration-is-right-fibration uses (extext)
+  ( A' A : U)
+  ( α : A' → A)
+  : is-right-fibration A' A α → is-inner-fibration A' A α
+  := is-right-anodyne-Λ-Δ² A' A α
 ```
 
-### Left fibrations and Segal types
+### Left/right fibrations and Segal types
 
 Since the Segal types are precisely the local types with respect to `Λ ⊂ Δ²`, we
-immediately deduce that in any left fibration `α : A' → A`, if `A` is a Segal
-type, then so is `A'`.
+immediately deduce that in any left/right fibration `α : A' → A`, if `A` is a
+Segal type, then so is `A'`.
 
 ```rzk title="RS 17, Theorem 8.8, categorical version"
 #def is-segal-domain-left-fibration-is-segal-codomain uses (extext)
@@ -503,6 +552,19 @@ type, then so is `A'`.
       ( is-local-type-right-orthogonal-is-local-type
         ( 2 × 2) Δ² (\ ts → Λ ts) A' A α
         ( is-inner-fibration-is-left-fibration A' A α is-left-fib-α)
+        ( is-local-horn-inclusion-is-segal A is-segal-A))
+
+#def is-segal-domain-right-fibration-is-segal-codomain uses (extext)
+  ( A' A : U)
+  ( α : A' → A)
+  ( is-right-fib-α : is-right-fibration A' A α)
+  ( is-segal-A : is-segal A)
+  : is-segal A'
+  :=
+    is-segal-is-local-horn-inclusion A'
+      ( is-local-type-right-orthogonal-is-local-type
+        ( 2 × 2) Δ² (\ ts → Λ ts) A' A α
+        ( is-inner-fibration-is-right-fibration A' A α is-right-fib-α)
         ( is-local-horn-inclusion-is-segal A is-segal-A))
 ```
 

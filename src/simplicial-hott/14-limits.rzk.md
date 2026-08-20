@@ -254,7 +254,7 @@ In a Segal type, final objects are isomorphic.
 
 ## Uniqueness up to isomophism of (co)limits.
 
-The type of cocones of a function with codomain a Segal type is a Segal type.
+The type of (co)cones of a function with codomain a Segal type is a Segal type.
 
 ```rzk title="BM22, Remark 4 (i)"
 #def is-covariant-family-cone-is-segal
@@ -277,6 +277,27 @@ The type of cocones of a function with codomain a Segal type is a Segal type.
         ( f))
     ( \ b → constant A B b)
 
+#def is-contravariant-family-cone-is-segal
+  ( A B : U)
+  ( is-segal-B : is-segal B)
+  ( f : A → B)
+  : is-contravariant B (\ b → family-cone A B f b)
+  :=
+    is-contravariant-substitution-is-contravariant
+    ( A → B)
+    ( B)
+    ( \ g → hom (A → B) g f)
+    ( is-contravariant-representable-is-segal
+        ( A → B)
+        ( is-segal-function-type
+          ( funext)
+          ( A)
+          ( \ _ → B)
+          ( \ _ → is-segal-B))
+        ( f))
+    ( \ b → constant A B b)
+
+
 #def is-segal-cocone-is-segal uses (funext extext)
   ( A B : U)
   ( is-segal-B : is-segal B)
@@ -288,6 +309,23 @@ The type of cocones of a function with codomain a Segal type is a Segal type.
     ( B)
     ( family-cocone A B f)
     ( is-covariant-family-cone-is-segal
+      ( A)
+      ( B)
+      ( is-segal-B)
+      ( f))
+    ( is-segal-B)
+
+#def is-segal-cone-is-segal uses (funext extext)
+  ( A B : U)
+  ( is-segal-B : is-segal B)
+  ( f : A → B)
+  : is-segal (cone A B f)
+  :=
+    is-segal-total-type-contravariant-family-is-segal-base
+    ( extext)
+    ( B)
+    ( family-cone A B f)
+    ( is-contravariant-family-cone-is-segal
       ( A)
       ( B)
       ( is-segal-B)
@@ -312,6 +350,27 @@ Colimits are unique up to isomorphism.
     iso-initial
     ( cocone A B f)
     ( is-segal-cocone-is-segal A B is-segal-B f)
+    ( first x)
+    ( first y)
+    ( second x)
+    ( second y)
+```
+
+```rzk
+#def iso-limit-is-segal uses (extext funext)
+  ( A B : U)
+  ( is-segal-B : is-segal B)
+  ( f : A → B)
+  ( x y : limit A B f)
+  : Iso
+    ( cone A B f)
+    ( is-segal-cone-is-segal A B is-segal-B f)
+    ( first x)
+    ( first y)
+  :=
+    iso-final
+    ( cone A B f)
+    ( is-segal-cone-is-segal A B is-segal-B f)
     ( first x)
     ( first y)
     ( second x)

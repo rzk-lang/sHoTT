@@ -1692,7 +1692,7 @@ We compute the required paths for the section of
       arr-inv-map-representable-equiv
       arr-map-representable-equiv
   =_{ hom A a a}
-    comp-is-segal A is-segal-A a a a
+  comp-is-segal A is-segal-A a a a
       ( comp-is-segal A is-segal-A a a' a
           arr-inv-map-representable-equiv
           arr-map-representable-equiv)
@@ -1721,7 +1721,7 @@ We compute the required paths for the section of
          arr-map-representable-equiv)
       ( id-hom A a)
   =_{ hom A a a}
-    comp-is-segal A is-segal-A a a' a
+  comp-is-segal A is-segal-A a a' a
       ( arr-inv-map-representable-equiv)
       ( comp-is-segal A is-segal-A a' a a
         ( arr-map-representable-equiv)
@@ -1740,7 +1740,7 @@ We compute the required paths for the section of
         ( arr-map-representable-equiv)
         ( id-hom A a))
   =_{ hom A a a}
-    inv-map-representable-equiv a
+  inv-map-representable-equiv a
     ( comp-is-segal A is-segal-A a' a a
       ( arr-map-representable-equiv)
       ( id-hom A a))
@@ -1765,7 +1765,7 @@ We compute the required paths for the section of
       ( arr-map-representable-equiv)
       ( id-hom A a))
   =_{ hom A a a}
-    inv-map-representable-equiv a (map-representable-equiv a (id-hom A a))
+  inv-map-representable-equiv a (map-representable-equiv a (id-hom A a))
   :=
   ap
   ( hom A a' a)
@@ -1788,7 +1788,7 @@ We compute the required paths for the section of
 #def compute-htpy-inv-map-fib-equiv-map-fib-equiv-id uses (ψ a')
   : inv-map-representable-equiv a (map-representable-equiv a (id-hom A a))
   =_{ hom A a a}
-    id-hom A a
+  id-hom A a
   := htpy-inv-map-fib-equiv-map-fib-equiv-id a (id-hom A a)
 ```
 
@@ -1801,7 +1801,7 @@ Concatenate all the paths above.
       arr-inv-map-representable-equiv
       arr-map-representable-equiv
   =_{ hom A a a}
-    id-hom A a
+  id-hom A a
   :=
   quintuple-concat
   ( hom A a a)
@@ -1865,7 +1865,7 @@ We compute the required paths for the retraction of
       arr-map-representable-equiv
       arr-inv-map-representable-equiv
   =_{ hom A a' a'}
-    map-representable-equiv a' arr-inv-map-representable-equiv
+  map-representable-equiv a' arr-inv-map-representable-equiv
   :=
   rev
   ( hom A a' a')
@@ -1882,7 +1882,7 @@ We compute the required paths for the retraction of
   uses (A is-segal-A a a' ψ)
   : map-representable-equiv a' arr-inv-map-representable-equiv
   =_{ hom A a' a'}
-    map-representable-equiv a'
+  map-representable-equiv a'
     ( comp-is-segal A is-segal-A a a' a'
       ( arr-inv-map-representable-equiv)
       ( id-hom A a'))
@@ -1909,7 +1909,7 @@ We compute the required paths for the retraction of
       ( arr-inv-map-representable-equiv)
       ( id-hom A a'))
   =_{ hom A a' a'}
-    map-representable-equiv a' (inv-map-representable-equiv a' (id-hom A a'))
+  map-representable-equiv a' (inv-map-representable-equiv a' (id-hom A a'))
   :=
   ap
   ( hom A a a')
@@ -1933,7 +1933,7 @@ We compute the required paths for the retraction of
 #def compute-htpy-comp-map-fib-equiv-inv-map-fib-equiv uses (A a a' ψ)
   : map-representable-equiv a' (inv-map-representable-equiv a' (id-hom A a'))
   =_{ hom A a' a'}
-    id-hom A a'
+  id-hom A a'
   := htpy-comp-map-fib-equiv-inv-map-fib-equiv a' (id-hom A a')
 ```
 
@@ -1946,7 +1946,7 @@ Concatenate all the paths above.
       arr-map-representable-equiv
       arr-inv-map-representable-equiv
   =_{ hom A a' a'}
-    id-hom A a'
+  id-hom A a'
   :=
   quadruple-concat
   ( hom A a' a')

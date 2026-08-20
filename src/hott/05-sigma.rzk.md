@@ -173,7 +173,7 @@ Here we've decomposed `#!rzk e : Eq-Σ s t` as `#!rzk (e0, e1)` and decomposed
   → ( e1 : (transport A B s0 t0 e0 s1) = t1)
   → ( ( pair-eq (s0 , s1) (t0 , t1) (eq-pair (s0 , s1) (t0 , t1) (e0 , e1)))
       =_{Eq-Σ (s0 , s1) (t0 , t1)}
-      ( e0 , e1))
+  ( e0 , e1))
   :=
     ind-path
       ( A)
@@ -183,7 +183,7 @@ Here we've decomposed `#!rzk e : Eq-Σ s t` as `#!rzk (e0, e1)` and decomposed
       → ( e1 : (transport A B s0 t0' e0' s1) = t1)
       → ( pair-eq (s0 , s1) (t0' , t1) (eq-pair (s0 , s1) (t0' , t1) (e0' , e1)))
         =_{Eq-Σ (s0 , s1) (t0' , t1)}
-        ( e0' , e1))
+  ( e0' , e1))
       ( ind-path
         ( B s0)
         ( s1)
@@ -193,7 +193,7 @@ Here we've decomposed `#!rzk e : Eq-Σ s t` as `#!rzk (e0, e1)` and decomposed
             ( s0 , t1')
             ( eq-pair (s0 , s1) (s0 , t1') (refl , e1')))
           =_{Eq-Σ (s0 , s1) (s0 , t1')}
-          ( refl , e1'))
+  ( refl , e1'))
         ( refl))
       ( t0)
       ( e0)

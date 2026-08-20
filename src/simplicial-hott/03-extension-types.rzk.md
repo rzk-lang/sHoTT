@@ -1146,7 +1146,7 @@ generality is needed.
   : ( t : ψ)
   → ( f t
     =_{ A t}
-      first
+  first
       ( htpy-ext-prop-is-fiberwise-contr
         htpy-ext-prop
         I ψ ϕ A a
@@ -1211,7 +1211,7 @@ f(t) = a'(t) \biggr|^\phi_{\lambda t.refl} \right\rangle$
     ( \ t →
       ( ( f t)
       =_{ A t}
-        first
+  first
         ( htpy-ext-prop-is-fiberwise-contr
           htpy-ext-prop
           I ψ ϕ A a

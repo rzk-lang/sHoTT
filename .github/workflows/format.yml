@@ -24,6 +24,6 @@ jobs:
       - name: Rzk formatter
         uses: rzk-lang/rzk-action@v1.2.0
         with:
-          rzk-version: v0.7.2
+          rzk-version: v0.11.2
           typecheck: false
           check-formatting: true

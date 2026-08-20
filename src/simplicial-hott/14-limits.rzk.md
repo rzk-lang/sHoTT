@@ -113,7 +113,7 @@ definitions coincide. Define cone as a family.
 Another definition of limit.
 
 ```rzk
-#def limit2
+#def is-equiv-cone-precomposition-Segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -159,7 +159,7 @@ definitions coincide. Define cocone as a family.
 Another definition of colimit.
 
 ```rzk
-#def colimit2
+#def is-equiv-cocone-postcomposition-Segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -177,13 +177,13 @@ The following alternative definition does not require a Segalness condition.
 When `#!rzk is-segal B` then definitions 1 and 3 coincide.
 
 ```rzk
-#def limit3
+#def representing-element-family-cone
   ( A B : U)
   ( f : A → B)
   : U
   := Σ (b : B) , (x : B) → Equiv (hom B b x) (family-cone A B f x)
 
-#def colimit3
+#def representing-element-family-cocone
   ( A B : U)
   ( f : A → B)
   : U

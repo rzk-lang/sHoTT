@@ -264,20 +264,20 @@ In a Segal type, an object isomorphic to an initial object is also initial.
   : is-initial A b
   :=
   \ x →
-  is-contr-equiv-is-contr'
-  ( hom A b x)
-  ( hom A a x)
-  ( precomp-is-segal A is-segal-A a b
-    ( first is-iso-a-b)
-    x
+    is-contr-equiv-is-contr'
+    ( hom A b x)
+    ( hom A a x)
+    ( precomp-is-segal A is-segal-A a b
+      ( first is-iso-a-b)
+      ( x)
     , is-equiv-precomp-is-iso extext A is-segal-A a b
-        ( first is-iso-a-b)
-        ( first (first (second is-iso-a-b)))
-        ( second (first (second is-iso-a-b)))
-        ( first (second (second is-iso-a-b)))
-        ( second (second (second is-iso-a-b)))
-        x)
-  ( is-initial-a x)
+      ( first is-iso-a-b)
+      ( first (first (second is-iso-a-b)))
+      ( second (first (second is-iso-a-b)))
+      ( first (second (second is-iso-a-b)))
+      ( second (second (second is-iso-a-b)))
+      ( x))
+    ( is-initial-a x)
 
 #def final-iso uses (extext)
   ( A : U)
@@ -288,20 +288,20 @@ In a Segal type, an object isomorphic to an initial object is also initial.
   : is-final A b
   :=
   \ x →
-  is-contr-equiv-is-contr
-  ( hom A x a)
-  ( hom A x b)
-  ( postcomp-is-segal A is-segal-A a b
-    ( first is-iso-a-b)
-    x
+    is-contr-equiv-is-contr
+    ( hom A x a)
+    ( hom A x b)
+    ( postcomp-is-segal A is-segal-A a b
+      ( first is-iso-a-b)
+      ( x)
     , is-equiv-postcomp-is-iso extext A is-segal-A a b
-        ( first is-iso-a-b)
-        ( first (first (second is-iso-a-b)))
-        ( second (first (second is-iso-a-b)))
-        ( first (second (second is-iso-a-b)))
-        ( second (second (second is-iso-a-b)))
-        x)
-  ( is-final-a x)
+      ( first is-iso-a-b)
+      ( first (first (second is-iso-a-b)))
+      ( second (first (second is-iso-a-b)))
+      ( first (second (second is-iso-a-b)))
+      ( second (second (second is-iso-a-b)))
+      ( x))
+    ( is-final-a x)
 ```
 
 ## Uniqueness up to isomophism of (co)limits.

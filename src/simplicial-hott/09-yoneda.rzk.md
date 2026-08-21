@@ -165,10 +165,10 @@ By `#!rzk funext`, these are equals as functions of `#!rzk f` pointwise in
   :=
     eq-htpy funext
       ( hom A a x)
-      ( \ f → C x)
-      ( \ f → ((yon A is-segal-A a C is-covariant-C) ((evid A a C) ϕ)) x f)
-      ( \ f → (ϕ x f))
-      ( \ f → yon-evid-twice-pointwise ϕ x f)
+      ( \ _ → C x)
+      ( ( ( yon A is-segal-A a C is-covariant-C) ((evid A a C) ϕ)) x)
+      ( ϕ x)
+      ( yon-evid-twice-pointwise ϕ x)
 ```
 
 By `#!rzk funext` again, these are equal as functions of `#!rzk x` and
@@ -182,9 +182,9 @@ By `#!rzk funext` again, these are equal as functions of `#!rzk x` and
     eq-htpy funext
       ( A)
       ( \ x → (hom A a x → C x))
-      ( \ x → ((yon A is-segal-A a C is-covariant-C) ((evid A a C) ϕ)) x)
-      ( \ x → (ϕ x))
-      ( \ x → yon-evid-once-pointwise ϕ x)
+      ( ( yon A is-segal-A a C is-covariant-C) ((evid A a C) ϕ))
+      ( ϕ)
+      ( yon-evid-once-pointwise ϕ)
 
 #end yon-evid
 ```
@@ -703,12 +703,11 @@ By `#!rzk funext`, these are equals as functions of `#!rzk f` pointwise in
   :=
     eq-htpy funext
       ( hom A x a)
-      ( \ f → C x)
-      ( \ f →
-        ( ( contra-yon A is-segal-A a C is-contravariant-C)
-          ( ( contra-evid A a C) ϕ)) x f)
-      ( \ f → (ϕ x f))
-      ( \ f → contra-yon-evid-twice-pointwise ϕ x f)
+      ( \ _ → C x)
+      ( ( ( contra-yon A is-segal-A a C is-contravariant-C)
+          ( ( contra-evid A a C) ϕ)) x)
+      ( ϕ x)
+      ( contra-yon-evid-twice-pointwise ϕ x)
 ```
 
 By `#!rzk funext` again, these are equal as functions of `#!rzk x` and

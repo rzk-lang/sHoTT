@@ -385,6 +385,198 @@ The type of (co)cones of a function with codomain a Segal type is a Segal type.
     ( is-segal-B)
 ```
 
+The same also holds for Rezk-ness, (co)cones over(/under) a Rezk type also form
+a Rezk type.
+
+```rzk
+#def concat3
+  ( A : U)
+  ( x y z w : A)
+  ( p : x = y)
+  ( q : y = z)
+  ( r : z = w)
+  : x = w
+  :=
+  concat A x z w
+    ( concat A x y z p q)
+    r
+#def ap-iso uses (extext)
+  ( A B : U)
+  ( is-segal-A : is-segal A)
+  ( is-segal-B : is-segal B)
+  ( F : A → B)
+  ( x y : A)
+  : ( Iso A is-segal-A x y) → (Iso B is-segal-B (F x) (F y))
+  := \ φ →
+      let f : hom A x y :=
+        first φ in
+      let F∘f : hom B (F x) (F y) :=
+        ap-hom A B F x y f in
+    ( F∘f
+    , (
+        let g : hom A y x :=
+          first (first (second φ)) in
+        let F∘g : hom B (F y) (F x) :=
+          ap-hom A B F y x g in
+        ( F∘g
+      , let base-eq :=
+        ap
+          ( hom A x x)
+          ( hom B (F x) (F x))
+          ( comp-is-segal A is-segal-A x y x f g)
+          ( id-hom A x)
+          ( ap-hom A B F x x)
+          ( second (first (second φ))) in
+        concat3
+          ( hom B (F x) (F x))
+          ( comp-is-segal
+            B
+            is-segal-B
+            ( F x)
+            ( F y)
+            ( F x)
+            F∘f
+            F∘g)
+          ( ap-hom A B F x x
+            ( comp-is-segal
+              A
+              is-segal-A
+              x
+              y
+              x
+              f
+              g))
+          ( ap-hom A B F x x
+            ( id-hom A x))
+          ( id-hom B (F x))
+          ( functors-pres-comp A B
+            is-segal-A
+            is-segal-B
+            F
+            x
+            y
+            x
+            f
+            g)
+          base-eq
+          ( functors-pres-id
+            extext
+            A
+            B
+            F
+            x))
+      , let h : hom A y x :=
+          first (second (second φ)) in
+        let F∘h : hom B (F y) (F x) :=
+          ap-hom A B F y x h in
+        ( F∘h
+      , let base-eq :=
+        ap
+          ( hom A y y)
+          ( hom B (F y) (F y))
+          ( comp-is-segal A is-segal-A y x y h f)
+          ( id-hom A y)
+          ( ap-hom A B F y y)
+          ( second (second (second φ))) in
+        concat3
+          ( hom B (F y) (F y))
+          ( comp-is-segal
+            B
+            is-segal-B
+            ( F y)
+            ( F x)
+            ( F y)
+            F∘h
+            F∘f)
+          ( ap-hom A B F y y
+            ( comp-is-segal
+              A
+              is-segal-A
+              y
+              x
+              y
+              h
+              f))
+          ( ap-hom A B F y y
+            ( id-hom A y))
+          ( id-hom B (F y))
+          ( functors-pres-comp A B
+            is-segal-A
+            is-segal-B
+            F
+            y
+            x
+            y
+            h
+            f)
+          base-eq
+          ( functors-pres-id
+            extext
+            A
+            B
+            F
+            y))))
+#def is-rezk-total-type-covariant-family-is-rezk-base uses (funext extext)
+  ( A : U)
+  ( C : A → U)
+  ( is-covariant-C : is-covariant A C)
+  : is-rezk A → is-rezk (total-type A C)
+  := \ is-rezk-A →
+    let is-segal-A : is-segal A := (
+      is-segal-is-rezk A is-rezk-A
+    ) in
+    let is-segal-total-type : is-segal (Σ (a : A) , C a) :=
+      ( is-segal-total-type-covariant-family-is-segal-base
+        ( extext)
+        A
+        C
+        is-covariant-C
+        is-segal-A) in
+    ( is-segal-total-type
+      , \ x → \ y →
+        let eq-iso : (Iso (total-type A C) is-segal-total-type x y) → (x = y) :=
+          \ f →
+          eq-pair A C x y
+            ( eq-iso-is-rezk
+                A
+                is-rezk-A
+                ( first x)
+                ( first y)
+                ( ap-iso
+                  ( total-type A C)
+                  A
+                  is-segal-total-type
+                  is-segal-A
+                  ( \ p → first p)
+                  x
+                  y
+                  f)
+            , ?) in
+        is-equiv-has-inverse
+          ( x = y)
+          ( Iso (total-type A C) is-segal-total-type x y)
+          ( iso-eq (total-type A C) is-segal-total-type x y)
+          ( eq-iso
+          , ( ?
+            , ?)))
+
+#def is-rezk-cocone-is-rezk uses (funext extext)
+  ( A B : U)
+  ( is-rezk-B : is-rezk B)
+  ( f : A → B)
+  : is-rezk (cocone A B f)
+  :=
+  is-rezk-total-type-covariant-family-is-rezk-base
+    B
+    ( family-cocone A B f)
+    ( is-covariant-family-cone-is-segal
+      ( A)
+      ( B)
+      ( is-segal-is-rezk B is-rezk-B)
+      ( f))
+    ( is-rezk-B)
+```
+
 Colimits are unique up to isomorphism.
 
 ```rzk title="BM, Corollary 1 (i)"
@@ -428,3 +620,5 @@ Colimits are unique up to isomorphism.
     ( second x)
     ( second y)
 ```
+
+(Co)limits in Rezk types are unique up to equality.

@@ -8,6 +8,7 @@ Formalizations were contributed by the following people (listed alphabetically):
 - [Jonathan Campbell](https://github.com/jonalfcam),
 - [Robin Carlier](https://github.com/robin-carlier),
 - [Theofanis Chatzidiamantis-Christoforidis](https://github.com/thchatzidiamantis),
+- [Garrett Credi](https://github.com/ddxtanx),
 - [Aras Ergus](https://www.aergus.net/),
 - [Matthias Hutzler](https://github.com/MatthiasHu),
 - [Nikolai Kudasov](https://fizruk.github.io/),
@@ -16,6 +17,7 @@ Formalizations were contributed by the following people (listed alphabetically):
 - [Stiéphen Pradal](https://stiephenpradal.github.io/),
 - [Nima Rasekh](https://guests.mpim-bonn.mpg.de/rasekh/),
 - [Emily Riehl](https://emilyriehl.github.io/),
+- [Judah Towery](https://github.com/jjtowery),
 - [Florrie Verity](https://github.com/floverity),
 - [Tashi Walde](https://www.math.cit.tum.de/en/algebra/personen/walde/), and
 - [Jonathan Weinberger](https://sites.google.com/view/jonathanweinberger).

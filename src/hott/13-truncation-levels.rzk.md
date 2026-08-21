@@ -1,4 +1,4 @@
-# 13. Higher Truncations Levels
+# 13. Higher Truncation Levels
 
 This is a literate `rzk` file:
 
@@ -10,19 +10,22 @@ This is a literate `rzk` file:
 
 ```rzk
 #data 𝕋
-  :=
-    neg-two-𝕋 |
-    succ-𝕋 (k : 𝕋)
+  := neg-two-𝕋
+  |  succ-𝕋 (k : 𝕋)
 ```
 
-## Truncation levels Type
+## Definition of truncatedness
+
 ```rzk
 #def is-trunc
   ( k : 𝕋)
   : U → U
   :=
-  match k (neg-two-𝕋 ⇒ \ A → is-contr A | succ-𝕋 _ ih ⇒ \ A → (x y : A) → ih (x = y))
+  match k
+    ( neg-two-𝕋 ⇒ \ A → is-contr A
+    | succ-𝕋 _ ih ⇒ \ A → (x y : A) → ih (x = y))
 ```
+
 ## k-truncated types are (k+1)-trunctated
 
 ```rzk
@@ -38,7 +41,8 @@ This is a literate `rzk` file:
       \ A H x y →
         ih (x = y) (H x y))
 ```
-## Proposition are (-1)-truncated types
+
+## Propositions are (-1)-truncated types
 
 ```rzk
 #def is-neg-one-trunc-is-prop
@@ -67,7 +71,7 @@ This is a literate `rzk` file:
   := refl
 ```
 
-## Unit type is (-2)-trunctated
+## The unit type is (-2)-trunctated
 
 ```rzk
 #def is-neg-two-trunc-Unit

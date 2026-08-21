@@ -255,7 +255,7 @@ In a Segal type, final objects are isomorphic.
 In a Segal type, an object isomorphic to an initial object is also initial.
 
 ```rzk
-#def initial-iso uses (extext)
+#def is-initial-iso-is-initial uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a b : A)
@@ -279,7 +279,7 @@ In a Segal type, an object isomorphic to an initial object is also initial.
       ( x))
     ( is-initial-a x)
 
-#def final-iso uses (extext)
+#def is-final-iso-is-final uses (extext)
   ( A : U)
   ( is-segal-A : is-segal A)
   ( a b : A)

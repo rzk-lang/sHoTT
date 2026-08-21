@@ -252,6 +252,58 @@ In a Segal type, final objects are isomorphic.
             ( id-hom A b))))
 ```
 
+In a Segal type, an object isomorphic to an initial object is also initial.
+
+```rzk
+#def initial-iso uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a b : A)
+  ( is-initial-a : is-initial A a)
+  ( is-iso-a-b : Iso A is-segal-A a b)
+  : is-initial A b
+  :=
+  \ x →
+  is-contr-equiv-is-contr'
+  ( hom A b x)
+  ( hom A a x)
+  ( precomp-is-segal A is-segal-A a b
+    ( first is-iso-a-b)
+    x
+    , is-equiv-precomp-is-iso extext A is-segal-A a b
+        ( first is-iso-a-b)
+        ( first (first (second is-iso-a-b)))
+        ( second (first (second is-iso-a-b)))
+        ( first (second (second is-iso-a-b)))
+        ( second (second (second is-iso-a-b)))
+        x)
+  ( is-initial-a x)
+
+#def final-iso uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( a b : A)
+  ( is-final-a : is-final A a)
+  ( is-iso-a-b : Iso A is-segal-A a b)
+  : is-final A b
+  :=
+  \ x →
+  is-contr-equiv-is-contr
+  ( hom A x a)
+  ( hom A x b)
+  ( postcomp-is-segal A is-segal-A a b
+    ( first is-iso-a-b)
+    x
+    , is-equiv-postcomp-is-iso extext A is-segal-A a b
+        ( first is-iso-a-b)
+        ( first (first (second is-iso-a-b)))
+        ( second (first (second is-iso-a-b)))
+        ( first (second (second is-iso-a-b)))
+        ( second (second (second is-iso-a-b)))
+        x)
+  ( is-final-a x)
+```
+
 ## Uniqueness up to isomophism of (co)limits.
 
 The type of (co)cones of a function with codomain a Segal type is a Segal type.

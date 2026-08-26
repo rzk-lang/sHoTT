@@ -619,19 +619,6 @@ cocartesian lift, given a point in the fiber over the domain.
       has-cocartesian-lifts-P (f 0₂) (f 1₂) (\ t → f t) e)
     ( \ _ → refl)
     ( \ _ → refl))
-
-{-
-#def is-cocartesian-family-equiv-is-naive-cocartesian-family
-  ( B : U)
-  ( P : B → U)
-  ( is-inner-family-P : is-inner-family B P)
-  : Equiv (is-cocartesian-family B P) (is-naive-cocartesian-family B P)
-  :=
-  equiv-has-inverse
-  ( is-cocartesian-family B P)
-  ( is-naive-cocartesian-family B P)
-  ( \ is-cocartesian-family-P → (is-inner-family-P, )
--}
 ```
 
 ## Closure Properties

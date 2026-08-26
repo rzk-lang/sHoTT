@@ -11,11 +11,6 @@ This is a literate `rzk` file:
 - `hott/*` -
 -
 
-```rzk
--- #assume funext : FunExt
--- #assume extext : ExtExt
-```
-
 ## Definition of LARI adjunctions
 
 LARI adjunctions (abbreviation for left adjoint right inverse adjunctions) are

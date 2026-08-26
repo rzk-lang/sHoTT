@@ -98,6 +98,13 @@ situations where it is easier to induct on the first path.
   :=
     ind-path
     ( A) (x) (\ y' p' → (rev A y' x (rev A x y' p')) = p') (refl) (y) (p)
+
+#def rev-rev'
+  ( p : x = y)
+  : p = rev A y x (rev A x y p)
+  :=
+    ind-path
+    ( A) (x) (\ y' p' → p' = (rev A y' x (rev A x y' p'))) (refl) (y) (p)
 ```
 
 ### Left unit law for path concatenation
@@ -815,6 +822,17 @@ For convenience, we record lemmas for higher-order concatenation here.
   ( p5 : a4 = a5)
   : a0 = a5
   := quadruple-concat a0 a1 a2 a3 a5 p1 p2 p3 (concat A a3 a4 a5 p4 p5)
+
+#def sextuple-concat
+  ( a0 a1 a2 a3 a4 a5 a6 : A)
+  ( p1 : a0 = a1)
+  ( p2 : a1 = a2)
+  ( p3 : a2 = a3)
+  ( p4 : a3 = a4)
+  ( p5 : a4 = a5)
+  ( p6 : a5 = a6)
+  : a0 = a6
+  := quintuple-concat a0 a1 a2 a3 a4 a6 p1 p2 p3 p4 (concat A a4 a5 a6 p5 p6)
 
 #def alternating-quintuple-concat
   ( a0 : A)

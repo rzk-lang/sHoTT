@@ -601,6 +601,20 @@ If a map is homotopic to an equivalence it is an equivalence.
   := is-equiv-homotopy A B g f (rev-homotopy A B f g H) is-equiv-f
 ```
 
+## Reversing paths
+
+```rzk
+#def is-equiv-rev
+  ( A : U)
+  ( x y : A)
+  : is-equiv (x = y) (y = x) (rev A x y)
+  :=
+  is-equiv-has-inverse (x = y) (y = x) (rev A x y)
+    ( rev A y x
+    , ( \ p → rev-rev A x y p
+      , \ p → rev-rev A y x p))
+```
+
 ## Reversing equivalences
 
 The section associated with an equivalence is an equivalence.

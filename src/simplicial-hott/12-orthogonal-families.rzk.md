@@ -28,6 +28,7 @@ This is a literate `rzk` file:
 - `05-segal-types.rzk.md` - We make heavy use of the notion of Segal types
 
 ```rzk
+#assume funext : FunExt
 #assume extext : ExtExt
 ```
 
@@ -47,6 +48,24 @@ We use the defining property given in BW Corollary 3.1.2 for orthogonal families
     ( a : ψ → A)
   → ( f : (t : φ) → C (a t))
   → is-contr ((t : ψ) → C (a t) [φ t ↦ f t])
+```
+
+```rzk
+#def is-right-orthogonal-family-is-prop
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( φ : ψ → TOPE)
+  ( A : U)
+  ( C : A → U)
+  : is-prop (is-right-orthogonal-family I ψ φ A C)
+  :=
+  is-prop-fiberwise-prop2 funext
+  ( ψ → A)
+  ( \ a → (t : φ) → C (a t))
+  ( \ a f → is-contr ((t : ψ) → C (a t) [φ t ↦ f t]))
+  ( \ a f → is-prop-is-contr-itself
+    ( weakfunext-funext funext)
+    ( (t : ψ) → C (a t) [φ t ↦ f t]))
 ```
 
 ## Equivalence to `is-right-orthogonal-to-shape`
@@ -250,6 +269,12 @@ composing dependent morphisms.
   ( B : A → U)
   : U
   := is-right-orthogonal-family (2 × 2) Δ² Λ²₁ A B
+
+#def is-inner-family-is-prop uses (funext)
+  ( A : U)
+  ( B : A → U)
+  : is-prop (is-inner-family A B)
+  := is-right-orthogonal-family-is-prop (2 × 2) Δ² Λ²₁ A B
 ```
 
 Each fiber of an inner family is Segal, since being inner is a stronger notion.

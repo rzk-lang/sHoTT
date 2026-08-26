@@ -19,8 +19,9 @@ Formalizations were contributed by the following people (listed alphabetically):
 - [Emily Riehl](https://emilyriehl.github.io/),
 - [Judah Towery](https://github.com/jjtowery),
 - [Florrie Verity](https://github.com/floverity),
-- [Tashi Walde](https://www.math.cit.tum.de/en/algebra/personen/walde/), and
-- [Jonathan Weinberger](https://sites.google.com/view/jonathanweinberger).
+- [Tashi Walde](https://www.math.cit.tum.de/en/algebra/personen/walde/),
+- [Jonathan Weinberger](https://sites.google.com/view/jonathanweinberger), and
+- [Benno Lossin](https://benno-lossin.de).
 
 You may see actual contributed commits in the
 [Contributors page on GitHub](https://github.com/rzk-lang/sHoTT/graphs/contributors).

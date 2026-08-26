@@ -1,0 +1,95 @@
+{
+  "nodes": {
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "mkdocs-plugin-rzk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1698933829,
+        "narHash": "sha256-iUYWk708alXjB3NT/VNJ0V6JWQsD/s1CRVeMrm7xlS8=",
+        "owner": "rzk-lang",
+        "repo": "mkdocs-plugin-rzk",
+        "rev": "b5b112e66c57aab92f5348c2b4ec742d95b2b70b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rzk-lang",
+        "repo": "mkdocs-plugin-rzk",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1787498568,
+        "narHash": "sha256-9i/VTdusq/+NM/tz+J1Re+ojkMB8MBf0QshnYfzHz30=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "56c02bc00adcf003215cc4bd996d6efaf4cff188",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "pygments-rzk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780210084,
+        "narHash": "sha256-SE0vQuqi4MYgY2+3oGDYC6FHlq7maqeRqEUU0TJFbz8=",
+        "owner": "rzk-lang",
+        "repo": "pygments-rzk",
+        "rev": "48d1e6b6375d2b301e7b3d3b49319c70fb7f228f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rzk-lang",
+        "repo": "pygments-rzk",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "mkdocs-plugin-rzk": "mkdocs-plugin-rzk",
+        "nixpkgs": "nixpkgs",
+        "pygments-rzk": "pygments-rzk"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

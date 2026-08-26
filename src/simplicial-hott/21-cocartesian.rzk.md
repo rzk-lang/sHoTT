@@ -17,7 +17,7 @@ This is a literate `rzk` file:
   their subshapes.
 - `04-extension-types.rzk.md` — We use extension extensionality.
 - `12-orthogonal-families.rzk.md` - We make use of inner families.
-- `./20-lari-families.rzk.md` - We make use of LARI families.
+- `20-lari-families.rzk.md` - We make use of LARI families.
 
 ```rzk
 #assume funext : FunExt
@@ -629,7 +629,7 @@ cocartesian lift, given a point in the fiber over the domain.
   ( B : I → U)
   ( P : (i : I) → (b : B i) → U)
   ( is-cocartesian-family-P : (i : I) → is-cocartesian-family (B i) (P i))
-  : is-cocartesian-family ((i : I) → B i) (\ (b : (i : I) → B i) → ((i : I) → P i (b i)))
+  : is-cocartesian-family (section I B) (\ b → ((i : I) → P i (b i)))
   :=
   is-LARI-family-product-is-LARI-family funext 2 Δ¹ (\ t → t ≡ 0₂) I B P
   ( is-cocartesian-family-P)
@@ -650,7 +650,7 @@ cocartesian lift, given a point in the fiber over the domain.
   ( is-cocartesian-family-P : is-cocartesian-family B P)
   ( R : (total-type B P) → U)
   ( is-cocartesian-family-R : is-cocartesian-family (total-type B P) R)
-  : is-cocartesian-family B (\ b → Σ (p : P b) , R (b , p))
+  : is-cocartesian-family B (type-family-comp B P R)
   :=
   is-LARI-family-comp-is-LARI-family extext 2 Δ¹ (\ t → t ≡ 0₂) B
   ( P) is-cocartesian-family-P

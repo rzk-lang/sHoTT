@@ -36,9 +36,14 @@ nav:
       - The Yoneda Lemma: simplicial-hott/09-yoneda.rzk.md
       - Rezk Types: simplicial-hott/10-rezk-types.rzk.md
       - Adjunctions: simplicial-hott/11-adjunctions.rzk.md
-      - Inner Families: simplicial-hott/12-inner.rzk.md
-      - Cocartesian Families: simplicial-hott/13-cocartesian.rzk.md
+      - Orthogonal Families: simplicial-hott/12-orthogonal-families.rzk.md
       - Limits and Colimits: simplicial-hott/14-limits.rzk.md
+      - Squares: simplicial-hott/15-squares.rzk.md
+      - Full Embeddings: simplicial-hott/16-full-embeddings.rzk.md
+      - Initial Sections: simplicial-hott/18-initial-sections.rzk.md
+      - LARI Adjunctions: simplicial-hott/19-lari-adjunctions.rzk.md
+      - LARI Families: simplicial-hott/20-lari-families.rzk.md
+      - Cocartesian Families: simplicial-hott/21-cocartesian.rzk.md
 
 markdown_extensions:
   - admonition

@@ -681,7 +681,7 @@ Due to this definition, we can prove the following facts via unfolding it:
   ( P : B → U)
   ( s : ((g , f₀) : LARI-family-domain B P) → LARI-family-codomain B P (g , f₀))
   ( is-dependent-initial-section-s
- : is-dependent-initial-section
+    : is-dependent-initial-section
       ( LARI-family-domain B P)
       ( LARI-family-codomain B P)
       ( s))

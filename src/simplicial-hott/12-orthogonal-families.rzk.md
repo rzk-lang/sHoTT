@@ -65,7 +65,7 @@ We use the defining property given in BW Corollary 3.1.2 for orthogonal families
   ( \ a f → is-contr ((t : ψ) → C (a t) [φ t ↦ f t]))
   ( \ a f → is-prop-is-contr-itself
     ( weakfunext-funext funext)
-    ( (t : ψ) → C (a t) [φ t ↦ f t]))
+    ( ( t : ψ) → C (a t) [φ t ↦ f t]))
 ```
 
 ## Equivalence to `is-right-orthogonal-to-shape`

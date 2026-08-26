@@ -282,7 +282,7 @@ we can transfer the induction principle to squares.
   ( x y : A)
   ( f : hom A x y)
   ( C : (g : hom A x y)
-      → (curried-square A x y x y f (id-hom A x) g (id-hom A y))
+      → ( curried-square A x y x y f (id-hom A x) g (id-hom A y))
       → U)
   ( d : C f (\ t _ → f t))
   ( g : hom A x y)
@@ -307,25 +307,25 @@ we can transfer the induction principle to squares.
   ( h : Iso A (first is-rezk-A) x₁ x₂)
   ( k : Iso A (first is-rezk-A) y₁ y₂)
   ( σ : curried-square A x₁ y₁ x₂ y₂ f (π₁ h) g (π₁ k))
-  : (t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g t) (\ s → σ t s)
-    [ t ≡ 0₂ ↦ second h, t ≡ 1₂ ↦ second k]
+  : ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g t) (\ s → σ t s)
+    [ t ≡ 0₂ ↦ second h , t ≡ 1₂ ↦ second k]
   :=
   iso-ind-is-rezk A is-rezk-A x₁
   ( \ x₂ h →
     ( ( g : hom A x₂ y₂)
     → ( k : Iso A (first is-rezk-A) y₁ y₂)
     → ( σ : curried-square A x₁ y₁ x₂ y₂ f (π₁ h) g (π₁ k))
-    → ( (t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g t) (\ s → σ t s)
-        [ t ≡ 0₂ ↦ second h, t ≡ 1₂ ↦ second k])))
-  ( \ (g : hom A x₁ y₂) ( k : Iso A (first is-rezk-A) y₁ y₂) →
+    → ( ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g t) (\ s → σ t s)
+        [ t ≡ 0₂ ↦ second h , t ≡ 1₂ ↦ second k])))
+  ( \ (g : hom A x₁ y₂) (k : Iso A (first is-rezk-A) y₁ y₂) →
     iso-ind-is-rezk A is-rezk-A y₁
     ( \ y₂ k →
       ( ( g : hom A x₁ y₂)
       → ( σ : curried-square A x₁ y₁ x₁ y₂ f (id-hom A x₁) g (π₁ k))
-      → ( (t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g t) (\ s → σ t s)
-          [ t ≡ 0₂ ↦ is-iso-arrow-id-hom A (first is-rezk-A) x₁, t ≡ 1₂ ↦ second k])))
+      → ( ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g t) (\ s → σ t s)
+          [ t ≡ 0₂ ↦ is-iso-arrow-id-hom A (first is-rezk-A) x₁ , t ≡ 1₂ ↦ second k])))
     ( ind-curried-square-sides-id-is-segal A (first is-rezk-A) x₁ y₁ f
-      ( \ ( g : hom A x₁ y₁)
+      ( \ (g : hom A x₁ y₁)
           ( σ : curried-square A x₁ y₁ x₁ y₁ f (id-hom A x₁) g (id-hom A y₁)) →
         ( ( t : Δ¹) → is-iso-arrow A (first is-rezk-A) (f t) (g t) (\ s → σ t s)
           [ t ≡ 0₂ ↦ is-iso-arrow-id-hom A (first is-rezk-A) x₁

@@ -302,7 +302,7 @@ Now we note that this adjunction is a LARI adjunction since it sends
   ( a : A)
   : ( f a , id-hom B (f a))
   =_{coslice B (f a)}
-  (temp-7828-embedding a (section-is-transposing-LARI-adj a))
+  ( temp-7828-embedding a (section-is-transposing-LARI-adj a))
   :=
   path-of-pairs-pair-of-paths B (\ b → hom B (f a) b)
   ( f a)

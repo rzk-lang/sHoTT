@@ -1381,6 +1381,12 @@ family is covariant or not.
   ( C : A → U)
   : U
   := Σ (a : A) , (x : A) → (Equiv (hom A a x) (C x))
+
+#def is-contravariant-representable-family
+  ( A : U)
+  ( C : A → U)
+  : U
+  := Σ (a : A) , (x : A) → (Equiv (hom A x a) (C x))
 ```
 
 The definition makes it slightly awkward to access the actual equivalence, so we
@@ -1393,6 +1399,14 @@ give a helper function.
   ( is-rep-C : is-representable-family A C)
   : ( x : A) → (hom A (first is-rep-C) x) → (C x)
   := \ x → first((second (is-rep-C)) x)
+
+#def equiv-for-is-contravariant-representable-family
+  ( A : U)
+  ( C : A → U)
+  ( is-rep-C : is-contravariant-representable-family A C)
+  : ( x : A) → (hom A x (first is-rep-C) → C x)
+  := \ x → first((second (is-rep-C)) x)
+
 ```
 
 RS Proposition 9.10 gives an if and only if condition for a covariant family
@@ -1407,6 +1421,13 @@ condition a name.
   : U
   := Σ ((a , u) : Σ (x : A) , (C x))
       , is-initial (Σ (x : A) , (C x)) (a , u)
+
+#def has-final-tot
+  ( A : U)
+  ( C : A → U)
+  : U
+  := Σ ((a , u) : Σ (x : A) , C x)
+      , is-final (Σ (x : A) , C x) (a , u)
 ```
 
 As a representable family is fiberwise equivalent to a `#!rzk Σ (x : A) , C x`,
@@ -1437,6 +1458,30 @@ initial object by `#!rzk is-initial-id-hom-is-segal`.
           ( second is-rep-C))
         ( ( first is-rep-C , id-hom A (first is-rep-C)))
         ( is-initial-id-hom-is-segal A is-segal-A (first is-rep-C)))
+
+#def has-final-tot-is-contravariant-representable-family uses (extext)
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-rep-C : is-contravariant-representable-family A C)
+  : has-final-tot A C
+  :=
+    ( ( first is-rep-C
+      , contra-evid
+          ( A)
+          ( first is-rep-C)
+          ( C)
+          ( equiv-for-is-contravariant-representable-family A C is-rep-C))
+    , is-final-equiv-is-final
+        ( slice A (first is-rep-C))
+        ( Σ ( x : A) , C x)
+        ( total-equiv-family-of-equiv
+          ( A)
+          ( \ x → hom A x (first is-rep-C))
+          ( C)
+          ( second is-rep-C))
+        ( ( first is-rep-C , id-hom A (first is-rep-C)))
+        ( is-final-id-hom-is-segal A is-segal-A (first is-rep-C)))
 
 ```
 
@@ -1572,6 +1617,135 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                       ( second (first has-initial-tot-A))
                       ( v)))))
             ( second has-initial-tot-A (b , v)))))
+
+#def is-contravariant-representable-family-has-final-tot
+  ( A : U)
+  ( is-segal-A : is-segal A)
+  ( C : A → U)
+  ( is-contravariant-C : is-contravariant A C)
+  ( has-final-tot-A : has-final-tot A C)
+  : ( is-contravariant-representable-family A C)
+  :=
+    ( first (first has-final-tot-A)
+    , \ x →
+      ( ( contra-yon
+          ( A)
+          ( is-segal-A)
+          ( first (first has-final-tot-A))
+          ( C)
+          ( is-contravariant-C))
+        ( second (first has-final-tot-A))
+        ( x)
+      , is-equiv-is-contr-map
+        ( hom A x (first (first has-final-tot-A)))
+        ( C x)
+        ( ( contra-yon
+            ( A)
+            ( is-segal-A)
+            ( first (first has-final-tot-A))
+            ( C)
+            ( is-contravariant-C))
+          ( second (first has-final-tot-A))
+          ( x))
+        ( \ v →
+          is-contr-equiv-is-contr
+            ( hom
+              ( Σ ( z : A) , C z)
+              ( x , v)
+              ( first has-final-tot-A))
+            ( fib
+              ( hom A x (first (first has-final-tot-A)))
+              ( C x)
+              ( ( contra-yon
+                  ( A)
+                  ( is-segal-A)
+                  ( first (first has-final-tot-A))
+                  ( C)
+                  ( is-contravariant-C))
+                ( second (first has-final-tot-A))
+                ( x))
+              ( v))
+            ( equiv-comp
+              ( hom
+                ( Σ ( z : A) , C z)
+                ( x , v)
+                ( first has-final-tot-A))
+              ( Σ ( h : hom A x (first (first has-final-tot-A)))
+                , dhom
+                    ( A)
+                    ( x)
+                    ( first (first has-final-tot-A))
+                    ( h)
+                    ( C)
+                    ( v)
+                    ( second (first has-final-tot-A)))
+              ( fib
+                ( hom A x (first (first has-final-tot-A)))
+                ( C x)
+                ( ( contra-yon
+                    ( A)
+                    ( is-segal-A)
+                    ( first (first has-final-tot-A))
+                    ( C)
+                    ( is-contravariant-C))
+                  ( second (first has-final-tot-A))
+                  ( x))
+                ( v))
+              ( axiom-choice
+                ( 2)
+                ( Δ¹)
+                ( ∂Δ¹)
+                ( \ _ → A)
+                ( \ _ z → C z)
+                ( \ t →
+                  recOR
+                    ( t ≡ 0₂ ↦ x
+                    , t ≡ 1₂ ↦ first (first has-final-tot-A)))
+                ( \ t →
+                  recOR
+                    ( t ≡ 0₂ ↦ v
+                    , t ≡ 1₂ ↦ second (first has-final-tot-A))))
+              ( total-equiv-family-of-equiv
+                ( hom A x (first (first has-final-tot-A)))
+                ( \ h →
+                  dhom
+                    ( A)
+                    ( x)
+                    ( first (first has-final-tot-A))
+                    ( h)
+                    ( C)
+                    ( v)
+                    ( second (first has-final-tot-A)))
+                ( \ h →
+                  contravariant-transport
+                    ( A)
+                    ( x)
+                    ( first (first has-final-tot-A))
+                    ( h)
+                    ( C)
+                    ( is-contravariant-C)
+                    ( second (first has-final-tot-A))
+                  = v)
+                ( \ h →
+                  ( contravariant-uniqueness-curried
+                      ( A)
+                      ( x)
+                      ( first (first has-final-tot-A))
+                      ( h)
+                      ( C)
+                      ( is-contravariant-C)
+                      ( second (first has-final-tot-A))
+                      ( v)
+                  , is-equiv-contravariant-uniqueness-curried
+                      ( A)
+                      ( x)
+                      ( first (first has-final-tot-A))
+                      ( h)
+                      ( C)
+                      ( is-contravariant-C)
+                      ( second (first has-final-tot-A))
+                      ( v)))))
+            ( second has-final-tot-A (x , v)))))
 ```
 
 ```rzk title="RS17, Proposition 9.10"

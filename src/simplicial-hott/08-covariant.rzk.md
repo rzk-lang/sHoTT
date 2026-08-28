@@ -2175,6 +2175,75 @@ transported along an arrow f : hom A x y to give a term in C x.
       ( dhom-to A x y f C v)
       ( is-contravariant-C x y f v)
       ( lift))
+
+#def contravariant-uniqueness-curried
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-contravariant-C : is-contravariant A C)
+  ( v : C y)
+  : ( u : C x)
+  → ( dhom A x y f C u v)
+  → ( contravariant-transport A x y f C is-contravariant-C v) = u
+  :=
+    \ u g → contravariant-uniqueness A x y f C is-contravariant-C v (u , g)
+```
+
+We show that for each `v : C y`, the map `contravariant-uniqueness` is an
+equivalence. This follows from the fact that the total types (summed over
+`u : C x`) of both sides are contractible.
+
+```rzk title="RS17, Lemma 8.15, dual"
+#def is-equiv-total-map-contravariant-uniqueness-curried
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-contravariant-C : is-contravariant A C)
+  ( v : C y)
+  : is-equiv
+      ( Σ ( u : C x) , dhom A x y f C u v)
+      ( Σ ( u : C x)
+        , contravariant-transport A x y f C is-contravariant-C v = u)
+      ( total-map (C x)
+        ( \ u → dhom A x y f C u v)
+        ( \ u → contravariant-transport A x y f C is-contravariant-C v = u)
+        ( contravariant-uniqueness-curried A x y f C is-contravariant-C v))
+  :=
+    is-equiv-are-contr
+      ( Σ ( u : C x) , dhom A x y f C u v)
+      ( Σ ( u : C x)
+        , contravariant-transport A x y f C is-contravariant-C v = u)
+      ( is-contravariant-C x y f v)
+      ( is-contr-based-paths (C x)
+        ( contravariant-transport A x y f C is-contravariant-C v))
+      ( total-map (C x)
+        ( \ u → dhom A x y f C u v)
+        ( \ u → contravariant-transport A x y f C is-contravariant-C v = u)
+        ( contravariant-uniqueness-curried A x y f C is-contravariant-C v))
+
+#def is-equiv-contravariant-uniqueness-curried
+  ( A : U)
+  ( x y : A)
+  ( f : hom A x y)
+  ( C : A → U)
+  ( is-contravariant-C : is-contravariant A C)
+  ( v : C y)
+  ( u : C x)
+  : is-equiv
+      ( dhom A x y f C u v)
+      ( contravariant-transport A x y f C is-contravariant-C v = u)
+      ( contravariant-uniqueness-curried A x y f C is-contravariant-C v u)
+  :=
+    is-equiv-fiberwise-is-equiv-total
+      ( C x)
+      ( \ u' → dhom A x y f C u' v)
+      ( \ u' → contravariant-transport A x y f C is-contravariant-C v = u')
+      ( contravariant-uniqueness-curried A x y f C is-contravariant-C v)
+      ( is-equiv-total-map-contravariant-uniqueness-curried
+        A x y f C is-contravariant-C v)
+      u
 ```
 
 ## Contravariant functoriality

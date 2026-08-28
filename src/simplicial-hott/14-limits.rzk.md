@@ -609,7 +609,7 @@ The universal property of limits and colimits.
 
 Left/right adjoints preserve co/limits.
 
-```rzk title="BM22, Theorem 3.8, 3.9"
+```rzk title="Bar22, Theorem 3.8, 3.9"
 #def left-adjoint-preserves-colimit uses (funext extext)
   ( A B J : U)
   ( is-segal-A : is-segal A)

@@ -444,7 +444,7 @@ The universal property of limits and colimits.
       ( is-covariant-family-cone-is-segal J B is-segal-B g)
       colim-g
 
-#def colimit-is-colimit3 uses (extext)
+#def colimit-colimit3 uses (extext)
   ( J B : U)
   ( is-segal-B : is-segal B)
   ( g : J → B)

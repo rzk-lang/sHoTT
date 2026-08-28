@@ -17,6 +17,10 @@ This is a literate `rzk` file:
   their subshapes.
 - `03-extension-types.rzk.md` — We use extension extensionality.
 - `05-segal-types.rzk.md` - We use the notion of hom types.
+- `hott/04-modalities.rzk.md` — `op-path-commute-fwd`, `op-sigma-commute-bwd`.
+- `hott/06-sigma.rzk.md` — `total-type`.
+- `hott/07-contractible.rzk.md` — `is-contr`, `is-contr-based-paths`, `is-contr-endpoint-based-paths`, `is-contr-equiv-is-contr`.
+- `hott/09-families-of-maps.rzk.md` — `total-map`, `total-equiv-family-of-equiv`, `is-equiv-fiberwise-is-equiv-total`, `is-equiv-are-contr`.
 
 Some of the definitions in this file rely on function extensionality and
 extension extensionality:
@@ -359,13 +363,6 @@ Function types and extension types into discrete families are already discrete:
 `#!rzk is-discrete-function-type`, `#!rzk is-discrete-extension-type` above.
 
 ```rzk
--- Opposite modality preserves discreteness (cf. `is-contr-of-op` in triangulated axioms).
-#def is-discrete-op uses (extext)
-  ( A :ᵒᵖ U)
-  ( is-discrete-A : ᵒᵖ (is-discrete A))
-  : is-discrete (ᵒᵖ A)
-  := ?is-discrete-op
-
 -- Σ of discrete types is discrete (same pattern as is-discrete-function-type).
 #def is-discrete-Σ uses (extext)
   ( A : U)
@@ -382,6 +379,70 @@ Function types and extension types into discrete families are already discrete:
   ( x y : A)
   : is-discrete (x = y)
   := ?is-discrete-Id
+```
+
+## Opposite modality
+
+```rzk
+#def is-contr-of-op
+  ( A :ᵒᵖ U)
+  ( ic : ᵒᵖ (is-contr A))
+  : is-contr (ᵒᵖ A)
+  :=
+    let mod ᵒᵖ (center , contr) := ic in
+      ( mod ᵒᵖ center
+      , \ y →
+          let mod ᵒᵖ y0 := y in
+            op-path-commute-fwd A center y0 (mod ᵒᵖ (contr y0)))
+
+#def is-discrete-op
+  ( A :ᵒᵖ U)
+  ( is-discrete-A : ᵒᵖ (is-discrete A))
+  : is-discrete (ᵒᵖ A)
+  :=
+    \ X Y →
+      is-equiv-fiberwise-is-equiv-total
+        ( ᵒᵖ A)
+        ( \ Y' → X = Y')
+        ( \ Y' → hom (ᵒᵖ A) X Y')
+        ( \ Y' → hom-eq (ᵒᵖ A) X Y')
+        ( is-equiv-are-contr
+            ( total-type (ᵒᵖ A) (\ Y' → X = Y'))
+            ( total-type (ᵒᵖ A) (\ Y' → hom (ᵒᵖ A) X Y'))
+            ( is-contr-based-paths (ᵒᵖ A) X)
+            ( is-contr-equiv-is-contr'
+                ( Σ (Y' : ᵒᵖ A) , hom (ᵒᵖ A) X Y')
+                ( let mod ᵒᵖ x := X in ᵒᵖ (Σ (y : A) , hom A y x))
+                ( equiv-has-inverse
+                    ( Σ (Y' : ᵒᵖ A) , hom (ᵒᵖ A) X Y')
+                    ( let mod ᵒᵖ x := X in ᵒᵖ (Σ (y : A) , hom A y x))
+                    ( \ (Y' , h) →
+                        let mod ᵒᵖ x := X in
+                          op-sigma-commute-bwd A (\ y → hom A y x)
+                            ( Y' , let mod ᵒᵖ y := Y' in hom-to-op-hom A y x h))
+                    ( \ w →
+                        let mod ᵒᵖ x := X in
+                        let mod ᵒᵖ (y , hh) := w in
+                          ( mod ᵒᵖ y
+                          , op-hom-to-hom A y x hh))
+                    ( \ _ → refl)
+                    ( \ _ → refl))
+                ( let mod ᵒᵖ x := X in
+                    is-contr-of-op
+                      ( Σ (y : A) , hom A y x)
+                      ( let mod ᵒᵖ disc := is-discrete-A in
+                          mod ᵒᵖ
+                            ( is-contr-equiv-is-contr
+                                ( Σ (y : A) , y = x)
+                                ( Σ (y : A) , hom A y x)
+                                ( total-equiv-family-of-equiv A
+                                    ( \ y → y = x)
+                                    ( \ y → hom A y x)
+                                    ( \ y → (hom-eq A y x , disc y x)))
+                                ( is-contr-endpoint-based-paths A x)))))
+            ( total-map (ᵒᵖ A) (\ Y' → X = Y') (\ Y' → hom (ᵒᵖ A) X Y')
+                ( \ Y' → hom-eq (ᵒᵖ A) X Y')))
+        ( Y)
 ```
 
 ## Discrete types are Segal types
@@ -1206,4 +1267,12 @@ Finally, we conclude:
       ( functors-pres-id extext A B f x)
       ( y)
       ( p)
+```
+
+## I-detects-discreteness
+
+```rzk
+#postulate I-detects-discreteness
+  ( A :♭ U)
+  : iff (Equiv A (♭ A)) (Equiv A (𝕀 → A))
 ```

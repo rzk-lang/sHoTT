@@ -1,4 +1,4 @@
-# 6. Contractible
+# 7. Contractible
 
 This is a literate `rzk` file:
 
@@ -305,6 +305,104 @@ For example, we prove that based path spaces are contractible.
           ( left-unit-concat A x a q))
       ( y)
       ( p)
+```
+
+## Transport along paths between sections with fixed endpoint
+
+For a family `E : X → U`, a point `x0 : X`, and a fixed value `a : E x0`,
+consider transport in the family `\φ → φ x0 = a` along a path between sections.
+
+```rzk
+#def transport-section-eq-at
+  ( X : U)
+  ( E : X → U)
+  ( x0 : X)
+  ( a : E x0)
+  ( φ ψ : (x : X) → E x)
+  ( b : φ = ψ)
+  ( α : φ x0 = a)
+  : transport
+      ( (x : X) → E x)
+      ( \ χ → χ x0 = a)
+      φ ψ b α
+    = concat
+        ( E x0)
+        ( ψ x0)
+        ( φ x0)
+        a
+        ( rev (E x0) (φ x0) (ψ x0)
+            ( ap ((x : X) → E x) (E x0) φ ψ (\ χ → χ x0) b))
+        α
+  :=
+    concat
+      ( ψ x0 = a)
+      ( transport ((x : X) → E x) (\ χ → χ x0 = a) φ ψ b α)
+      ( transport (E x0) (\ z → z = a) (φ x0) (ψ x0)
+          ( ap ((x : X) → E x) (E x0) φ ψ (\ χ → χ x0) b)
+          α)
+      ( concat (E x0) (ψ x0) (φ x0) a
+          ( rev (E x0) (φ x0) (ψ x0)
+              ( ap ((x : X) → E x) (E x0) φ ψ (\ χ → χ x0) b))
+          α)
+      ( transport-substitution
+          ( (x : X) → E x)
+          ( E x0)
+          ( \ z → z = a)
+          ( \ χ → χ x0)
+          φ ψ b α)
+      ( concat-as-endpoint-transport (E x0) a (φ x0) (ψ x0)
+          ( ap ((x : X) → E x) (E x0) φ ψ (\ χ → χ x0) b)
+          α)
+
+#def transport-section-eq-at-cancel
+  ( X : U)
+  ( E : X → U)
+  ( x0 : X)
+  ( a : E x0)
+  ( φ ψ : (x : X) → E x)
+  ( b : φ = ψ)
+  ( d : φ x0 = ψ x0)
+  ( q : ψ x0 = a)
+  ( d=ap : d
+      = ap ((x : X) → E x) (E x0) φ ψ (\ χ → χ x0) b)
+  : transport
+      ( (x : X) → E x)
+      ( \ χ → χ x0 = a)
+      φ ψ b
+      ( concat (E x0) (φ x0) (ψ x0) a d q)
+    = q
+  :=
+    let apb
+      := ap ((x : X) → E x) (E x0) φ ψ (\ χ → χ x0) b
+    in
+    let α
+      := concat (E x0) (φ x0) (ψ x0) a d q
+    in
+      concat
+        ( ψ x0 = a)
+        ( transport ((x : X) → E x) (\ χ → χ x0 = a) φ ψ b α)
+        ( concat (E x0) (ψ x0) (φ x0) a (rev (E x0) (φ x0) (ψ x0) apb) α)
+        q
+        ( transport-section-eq-at X E x0 a φ ψ b α)
+        ( concat
+            ( ψ x0 = a)
+            ( concat (E x0) (ψ x0) (φ x0) a
+                ( rev (E x0) (φ x0) (ψ x0) apb)
+                ( concat (E x0) (φ x0) (ψ x0) a d q))
+            ( concat (E x0) (ψ x0) (φ x0) a
+                ( rev (E x0) (φ x0) (ψ x0) apb)
+                ( concat (E x0) (φ x0) (ψ x0) a apb q))
+            q
+            ( ap
+                ( φ x0 = ψ x0)
+                ( ψ x0 = a)
+                d apb
+                ( \ u →
+                    concat (E x0) (ψ x0) (φ x0) a
+                      ( rev (E x0) (φ x0) (ψ x0) apb)
+                      ( concat (E x0) (φ x0) (ψ x0) a u q))
+                d=ap)
+            ( retraction-preconcat (E x0) (φ x0) (ψ x0) a apb q))
 ```
 
 The center of contraction in the based path space is `#!rzk (a , refl)`.

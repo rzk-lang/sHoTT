@@ -10,6 +10,8 @@ This is a literate `rzk` file:
 
 ```rzk
 #data nat := zero | suc (n : nat)
+
+#data Bool := false | true
 ```
 
 ## products of types

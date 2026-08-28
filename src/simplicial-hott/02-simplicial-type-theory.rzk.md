@@ -555,3 +555,197 @@ For completeness we verify that the intesection `Δ² ∧ {0}×Δ¹` is indeed `
     = ( ( ( t , s) : 2 × 2 | t ≡ 0₂ ∧ s ≡ 0₂) → A))
   := refl
 ```
+
+## Cubical shapes
+
+```rzk title="The 1-cube"
+#def □¹
+  : 𝕀 → TOPE
+  := \ i → TOP
+
+#def ∂□¹
+  : 𝕀 → TOPE
+  := \ t → (t ≡ 0₂ ∨ t ≡ 1₂)
+```
+
+## n-shapes
+
+```rzk
+#def I^n (n : nat)
+  : U
+  := match n
+      (zero ⇒ shape (_ : 1 | TOP)
+      | suc k ih ⇒ product (shape (_ : 𝕀 | TOP)) ih)
+
+#def zero-vec-I^n
+  ( m : nat)
+  : I^n m
+  := match m (zero ⇒ form *₁ | suc k ih ⇒ (form 0₂ , ih))
+```
+
+## Shapes at endpoint 1
+
+```rzk
+#def shape-at-1
+  ( t : shape (_ : 𝕀 | TOP))
+  : U
+  := shape (_ : 1 | unform t ≡ 1₂)
+
+#def equiv-shape-1-op-uninv
+  ( psi : ᵒᵖ TOPE)
+  : Equiv
+      ( let mod ᵒᵖ p := psi in ᵒᵖ (shape (_ : 1 | p)))
+      ( shape (_ : 1 | uninvᵒᵖ psi))
+  :=
+    equiv-has-inverse
+      ( let mod ᵒᵖ p := psi in ᵒᵖ (shape (_ : 1 | p)))
+      ( shape (_ : 1 | uninvᵒᵖ psi))
+      ( \ s →
+          let mod ᵒᵖ s0 := s in
+            form *₁)
+      ( \ t → mod ᵒᵖ (form *₁))
+      ( \ _ → refl)
+      ( \ _ → refl)
+
+#def shape-at-1-of-eq-form-1
+  ( t : shape (_ : 𝕀 | TOP))
+  ( e : t = form (1₂))
+  : shape-at-1 t
+  :=
+    transport
+      ( shape (_ : 𝕀 | TOP))
+      ( shape-at-1)
+      ( form (1₂))
+      ( t)
+      ( rev (shape (_ : 𝕀 | TOP)) t (form (1₂)) e)
+      ( form (*₁))
+
+#def eq-form-1-of-shape-at-1
+  ( t : shape (_ : 𝕀 | TOP))
+  (_ : shape-at-1 t)
+  : t = form (1₂)
+  := refl
+
+#def is-prop-shape-at-1
+  ( t : shape (_ : 𝕀 | TOP))
+  : is-prop (shape-at-1 t)
+  :=
+    \ a b →
+      is-prop-is-contr
+        ( shape-at-1 t)
+        ( form (*₁)
+        , \ x →
+            rev
+              ( shape-at-1 t)
+              ( x)
+              ( form (*₁))
+              ( refl))
+        ( a)
+        ( b)
+```
+
+## Monotonicity of maps out of 𝕀
+
+Maps `𝕀 → shape (_ : 𝕀 | TOP)` are monotone: if the shape at `0` is `form 1₂`, then every shape on the line is `form 1₂`.
+
+```rzk
+#postulate fun-monotonicity-at
+  ( f : 𝕀 → shape (_ : 𝕀 | TOP))
+  ( e : (f 0₂) = (form 1₂))
+  ( t : 𝕀)
+  : (f t) = form (1₂)
+
+#def fun-monotonicity
+  ( f : 𝕀 → shape (_ : 𝕀 | TOP))
+  ( e : (f 0₂) = (form 1₂))
+  : (f 1₂) = form (1₂)
+  := fun-monotonicity-at f e 1₂
+```
+
+## Sections along the form line
+
+```rzk
+#def sec-shape-at-1-along-form
+  ( f : 𝕀 → shape (_ : 𝕀 | TOP))
+  ( e0 : (f 0₂) = form (1₂))
+  : ( j : 𝕀) → shape-at-1 (f j)
+  := \ j → shape-at-1-of-eq-form-1 (f j) (fun-monotonicity-at f e0 j)
+
+#def dhom-II-form-line-shape-at-1
+  ( f : 𝕀 → shape (_ : 𝕀 | TOP))
+  ( a0 : shape-at-1 (f 0₂))
+  ( a1 : shape-at-1 (f 1₂))
+  ( e0 : (f 0₂) = form (1₂))
+  : dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) a0 a1
+  :=
+    let a0'
+      : shape-at-1 (f 0₂)
+      := sec-shape-at-1-along-form f e0 0₂
+    in
+    let a1'
+      : shape-at-1 (f 1₂)
+      := sec-shape-at-1-along-form f e0 1₂
+    in
+    let h'
+      : dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) a0' a1'
+      := sec-shape-at-1-along-form f e0
+    in
+    let p0
+      : a0' = a0
+      := first (is-prop-shape-at-1 (f 0₂) a0' a0)
+    in
+    let p1
+      : a1' = a1
+      := first (is-prop-shape-at-1 (f 1₂) a1' a1)
+    in
+    let h1
+      : dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) a0' a1
+      :=
+        transport
+          ( shape-at-1 (f 1₂))
+          ( \ y → dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) a0' y)
+          ( a1')
+          ( a1)
+          ( p1)
+          ( h')
+    in
+      transport
+        ( shape-at-1 (f 0₂))
+        ( \ x → dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) x a1)
+        ( a0')
+        ( a0)
+        ( p0)
+        ( h1)
+
+#def is-prop-dhom-II-form-line-shape-at-1 uses (extext)
+  ( f : 𝕀 → shape (_ : 𝕀 | TOP))
+  ( a0 : shape-at-1 (f 0₂))
+  ( a1 : shape-at-1 (f 1₂))
+  : is-prop (dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) a0 a1)
+  :=
+    is-prop-all-elements-equal
+      ( dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) a0 a1)
+      ( \ h h' →
+          naiveextext-extext extext
+            ( 𝕀)
+            ( \ _ → TOP)
+            ( \ t → (t ≡ 0₂) ∨ (t ≡ 1₂))
+            ( \ j → shape-at-1 (f j))
+            ( \ t → h t)
+            ( h)
+            ( h')
+            ( \ t → first (is-prop-shape-at-1 (f t) (h t) (h' t))))
+
+#def is-prop-Σ-dhom-II-form-line-shape-at-1 uses (extext)
+  ( f : 𝕀 → shape (_ : 𝕀 | TOP))
+  ( a0 : shape-at-1 (f 0₂))
+  : is-prop (
+      Σ ( a1 : shape-at-1 (f 1₂))
+    , dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) a0 a1)
+  :=
+    is-prop-total-type-is-fiberwise-prop-is-prop-base
+      ( shape-at-1 (f 1₂))
+      ( is-prop-shape-at-1 (f 1₂))
+      ( \ a1 → dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) a0 a1)
+      ( \ a1 → is-prop-dhom-II-form-line-shape-at-1 f a0 a1)
+```

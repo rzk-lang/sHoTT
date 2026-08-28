@@ -883,7 +883,77 @@ identifications. This defines `#!rzk eq-htpy` to be the retraction to
   ( f g : (x : X) → A x)
   : ( ( x : X) → f x = g x) → (f = g)
   := first (first (funext X A f g))
+```
 
+Application of `eq-htpy` commutes with evaluation at a point.
+
+```rzk
+#def ap-eq-htpy-at uses (funext)
+  ( X : U)
+  ( A : X → U)
+  ( f g : (x : X) → A x)
+  ( h : (x : X) → f x = g x)
+  ( x0 : X)
+  : ap
+      ( (x : X) → A x)
+      ( A x0)
+      f g
+      ( \ φ → φ x0)
+      ( eq-htpy X A f g h)
+    = h x0
+  :=
+    let is-equiv-htpy-eq
+      : is-equiv (f = g) ((x : X) → f x = g x) (htpy-eq X A f g)
+      := funext X A f g
+    in
+    let s
+      : ( (x : X) → f x = g x) → (f = g)
+      := eq-htpy X A f g
+    in
+    let sec
+      : ( (x : X) → f x = g x) → (f = g)
+      := section-is-equiv (f = g) ((x : X) → f x = g x) (htpy-eq X A f g) is-equiv-htpy-eq
+    in
+    let η
+      : htpy-eq X A f g (s h) = h
+      := concat
+          ( (x : X) → f x = g x)
+          ( htpy-eq X A f g (s h))
+          ( htpy-eq X A f g (sec h))
+          ( h)
+          ( rev ((x : X) → f x = g x) (htpy-eq X A f g (sec h)) (htpy-eq X A f g (s h)) (ap (f = g) ((x : X) → f x = g x) (sec h) (s h) (htpy-eq X A f g) (homotopy-section-retraction-is-equiv (f = g) ((x : X) → f x = g x) (htpy-eq X A f g) is-equiv-htpy-eq h)))
+          ( second (has-section-is-equiv (f = g) ((x : X) → f x = g x) (htpy-eq X A f g) is-equiv-htpy-eq) h)
+    in
+    let ap=htpy
+      : ap ((x : X) → A x) (A x0) f g (\ φ → φ x0) (s h)
+        = htpy-eq X A f g (s h) x0
+      :=
+        ind-path
+          ( (x : X) → A x)
+          f
+          ( \ g' p' →
+              ap ((x : X) → A x) (A x0) f g' (\ φ → φ x0) p'
+            = htpy-eq X A f g' p' x0)
+          ( refl)
+          g
+          ( s h)
+    in
+      concat
+        ( f x0 = g x0)
+        ( ap ((x : X) → A x) (A x0) f g (\ φ → φ x0) (s h))
+        ( htpy-eq X A f g (s h) x0)
+        ( h x0)
+        ap=htpy
+        ( ap
+            ( (x : X) → f x = g x)
+            ( f x0 = g x0)
+            ( htpy-eq X A f g (s h))
+            h
+            ( \ k → k x0)
+            η)
+```
+
+```rzk
 #def left-cancel-is-equiv uses (funext)
   ( A B : U)
   ( f : A → B)
@@ -1143,4 +1213,24 @@ dependent function types.
 #def UA
   : U
   := (A : U) → (B : U) → Equiv (Equiv A B) (A = B)
+
+#def idtoeqv (A B : U) (p : A = B)
+  : Equiv A B
+  := equiv-transport U (\ Z → Z) A B p
+
+#postulate univalence (A B : U)
+  : is-equiv (A = B) (Equiv A B) (idtoeqv A B)
+
+#def ua
+  : UA
+  := \ A B → inv-equiv (A = B) (Equiv A B) (idtoeqv A B , univalence A B)
+
+#def transport-ua
+  ( X Y : U) (e : Equiv X Y) (x : X)
+  : transport U (\ Z → Z) X Y (first (ua X Y) e) x = first e x
+  :=
+    ap ( Equiv X Y) Y
+      ( idtoeqv X Y (first (ua X Y) e)) e
+      ( \ ee → first ee x)
+      ( inv-equiv-cancel' (X = Y) (Equiv X Y) (idtoeqv X Y , univalence X Y) e)
 ```

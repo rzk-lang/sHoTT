@@ -11,9 +11,9 @@ This is a literate `rzk` file:
 ## Prerequisites
 
 - `hott/01-paths.rzk.md` - We require basic path algebra.
-- `hott/06-contractible.rzk.md` - We require the notion of contractible types
+- `hott/07-contractible.rzk.md` - We require the notion of contractible types
   and their data.
-- `hott/10-trivial-fibrations.rzk.md` — We rely on
+- `hott/11-trivial-fibrations.rzk.md` — We rely on
   `#!rzk is-equiv-projection-contractible-fibers` and
   `#!rzk projection-total-type` in the proof of Theorem 5.5.
 - `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and
@@ -55,7 +55,7 @@ Extension types are used to define the type of arrows between fixed terms:
 The same hom type but generalized to `𝕀` with untotal order.
 
 ```rzk
-#def 𝕀-hom
+#def hom-II
   ( A : U)
   ( x y : A)
   : U
@@ -64,6 +64,128 @@ The same hom type but generalized to `𝕀` with untotal order.
   → A [ t ≡ 0₂ ↦ x
       , t ≡ 1₂ ↦ y]
 
+#def dhom-II
+  ( A : U)
+  ( x y : A)
+  ( f : hom-II A x y)
+  ( C : A → U)
+  ( u : C x)
+  ( v : C y)
+  : U
+  := (t : 𝕀) → C (f t) [ t ≡ 0₂ ↦ u , t ≡ 1₂ ↦ v ]
+
+#def dhom-from-II
+  ( A : U)
+  ( x y : A)
+  ( f : hom-II A x y)
+  ( C : A → U)
+  ( u : C x)
+  : U
+  := dhom-from-II A x y f C u v
+```
+
+## Directed paths along the form line
+
+```rzk
+#def equiv-dhom-II-form-line-Σ
+  ( A : 𝕀 → U)
+  ( x : A 0₂)
+  ( y : A 1₂)
+  : Equiv
+      ( dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → A (unform s)) x y)
+      ( Σ (φ : (i : 𝕀) → A i) , product (φ 0₂ = x) (φ 1₂ = y))
+  :=
+    equiv-has-inverse
+      ( dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → A (unform s)) x y)
+      ( Σ (φ : (i : 𝕀) → A i) , product (φ 0₂ = x) (φ 1₂ = y))
+      ( \ h → (\ t → h t , (refl , refl)))
+      ( \ (φ , (p , q)) →
+          ind-path (A 0₂) (φ 0₂) (\ x' _ → dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → A (unform s)) x' y) (
+            ind-path (A 1₂) (φ 1₂) (\ y' _ → dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → A (unform s)) (φ 0₂) y') (
+              \ t → φ t
+            ) y q
+          ) x p)
+      ( \ h → refl)
+      ( \ (φ , (p , q)) →
+          ind-path (A 0₂) (φ 0₂)
+            ( \ x' p' →
+                ( \ t →
+                    ind-path (A 0₂) (φ 0₂) (\ x'' _ → dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → A (unform s)) x'' y) (
+                      ind-path (A 1₂) (φ 1₂) (\ y' _ → dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → A (unform s)) (φ 0₂) y') (
+                        \ t' → φ t'
+                      ) y q
+                    ) x' p' t
+                , (refl , refl))
+                =_{Σ (ψ : (i : 𝕀) → A i) , product (ψ 0₂ = x') (ψ 1₂ = y)}
+                  (φ , (p' , q)))
+            ( ind-path (A 1₂) (φ 1₂)
+                ( \ y' q' →
+                    ( \ t →
+                        ind-path (A 1₂) (φ 1₂) (\ y'' _ → dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → A (unform s)) (φ 0₂) y'') (
+                          \ t' → φ t'
+                        ) y' q' t
+                    , (refl , refl))
+                    =_{Σ (ψ : (i : 𝕀) → A i) , product (ψ 0₂ = φ 0₂) (ψ 1₂ = y')}
+                      (φ , (refl , q)))
+                ( refl)
+                y q)
+            x p)
+```
+
+## Homomorphism flip
+
+```rzk
+#def op-hom-to-hom
+  ( B :ᵒᵖ U)
+  ( x y :ᵒᵖ B)
+  ( h :ᵒᵖ (hom B x y))
+  : hom (ᵒᵖ B) (mod ᵒᵖ y) (mod ᵒᵖ x)
+  :=
+    op-ext-flip-2-fwd
+      Δ¹
+      ∂Δ¹
+      ( \ (t : 2 | Δ¹ t) → B)
+      ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+      h
+
+#def hom-to-op-hom
+  ( B :ᵒᵖ U)
+  ( x y :ᵒᵖ B)
+  ( k : hom (ᵒᵖ B) (mod ᵒᵖ y) (mod ᵒᵖ x))
+  : ᵒᵖ (hom B x y)
+  :=
+    op-ext-flip-2-bwd
+      Δ¹
+      ∂Δ¹
+      ( \ (t : 2 | Δ¹ t) → B)
+      ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+      k
+
+#def op-hom-II-to-hom-II
+  ( B :ᵒᵖ U)
+  ( x y :ᵒᵖ B)
+  ( h :ᵒᵖ (hom-II B x y))
+  : hom-II (ᵒᵖ B) (mod ᵒᵖ y) (mod ᵒᵖ x)
+  :=
+    op-ext-flip-fwd
+      □¹
+      ∂□¹
+      ( \ (t : 𝕀 | □¹ t) → B)
+      ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+      h
+
+#def hom-II-to-op-hom-II
+  ( B :ᵒᵖ U)
+  ( x y :ᵒᵖ B)
+  ( k : hom-II (ᵒᵖ B) (mod ᵒᵖ y) (mod ᵒᵖ x))
+  : ᵒᵖ (hom-II B x y)
+  :=
+    op-ext-flip-bwd
+      □¹
+      ∂□¹
+      ( \ (t : 𝕀 | □¹ t) → B)
+      ( \ t → recOR (t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y))
+      k
 ```
 
 For each `a : A`, the total types of the representables `\ z → hom A a z` and

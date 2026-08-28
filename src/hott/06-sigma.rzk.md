@@ -1,4 +1,4 @@
-# 5. Sigma types
+# 6. Sigma types
 
 This is a literate `rzk` file:
 
@@ -232,6 +232,31 @@ Here we've decomposed `#!rzk e : Eq-Σ s t` as `#!rzk (e0, e1)` and decomposed
       ( pair-eq-eq-pair A B (a , b) (a' , b') (e0 , e1))
 ```
 
+Transport along the first projection of a dependent pair type.
+
+```rzk
+#def transport-first-eq-pair
+  ( B : U → U)
+  ( X Y : Σ (A : U) , B A)
+  ( e : Eq-Σ U B X Y)
+  ( w : first X)
+  : transport (Σ (A : U) , B A) (\ s → first s) X Y (eq-pair U B X Y e) w
+    = transport U (\ Z → Z) (first X) (first Y) (first e) w
+  :=
+    concat (first Y)
+      ( transport (Σ (A : U) , B A) (\ s → first s) X Y (eq-pair U B X Y e) w)
+      ( transport U (\ Z → Z) (first X) (first Y)
+          ( ap (Σ (A : U) , B A) U X Y (\ z → first z) (eq-pair U B X Y e)) w)
+      ( transport U (\ Z → Z) (first X) (first Y) (first e) w)
+      ( transport-substitution (Σ (A : U) , B A) U (\ Z → Z) (\ z → first z) X Y
+          ( eq-pair U B X Y e) w)
+      ( ap ((first X) = (first Y)) (first Y)
+          ( ap (Σ (A : U) , B A) U X Y (\ z → first z) (eq-pair U B X Y e))
+          ( first e)
+          ( \ pth → transport U (\ Z → Z) (first X) (first Y) pth w)
+          ( first-path-Σ-eq-pair U B X Y e))
+```
+
 ## Identity types of Sigma types over a product
 
 ```rzk
@@ -255,6 +280,29 @@ Here we've decomposed `#!rzk e : Eq-Σ s t` as `#!rzk (e0, e1)` and decomposed
       ( ind-path (A) (a) (\ a'' p' → C a'' b) (c) (a') (p))
       ( b')
       ( q)
+
+#def product-transport-fun
+  ( W : U) (el : W → U)
+  ( X X' Y Y' : W)
+  ( p : X = X') (q : Y = Y')
+  ( g : el X → el Y)
+  : product-transport W W (\ S T → el S → el T) X X' Y Y' p q g
+    = ( \ (x' : el X') →
+        transport W el Y Y' q (g (transport-rev W el X X' p x')))
+  :=
+    ind-path W Y
+      ( \ Y'' q' →
+        product-transport W W (\ S T → el S → el T) X X' Y Y'' p q' g
+        = ( \ (x' : el X') →
+            transport W el Y Y'' q' (g (transport-rev W el X X' p x'))))
+      ( ind-path W X
+          ( \ X'' p' →
+            product-transport W W (\ S T → el S → el T) X X'' Y Y p' refl g
+            = ( \ (x' : el X'') →
+                transport W el Y Y refl (g (transport-rev W el X X'' p' x'))))
+          ( refl)
+          ( X') p)
+      ( Y') q
 
 #def Eq-Σ-over-product
   ( s t : Σ (a : A) , (Σ (b : B) , C a b))
@@ -495,6 +543,19 @@ This is the dependent version of the currying equivalence.
           , \ f → refl)
         , ( \ f (a , b) → f a b
           , \ s → refl))))
+
+#def inv-equiv-dependent-curry
+  ( A : U)
+  ( B : A → U)
+  ( C : (a : A) → B a → U)
+  : Equiv
+      ( ( a : A) → (b : B a) → C a b)
+      ( ( p : Σ (a : A) , (B a)) → C (first p) (second p))
+  :=
+    inv-equiv
+      ( ( p : Σ (a : A) , (B a)) → C (first p) (second p))
+      ( ( a : A) → (b : B a) → C a b)
+      ( equiv-dependent-curry A B C)
 ```
 
 ## Type theoretic principle of choice
@@ -552,4 +613,136 @@ This is the dependent version of the currying equivalence.
   ( ( x : A) → Σ (y : B x) , C x y)
   ( Σ ( f : (x : A) → B x) , (x : A) → C x (f x))
   ( equiv-choice A B C)
+```
+
+```rzk
+#def choice2
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  : ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , D x y z)
+  → ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , (x : A) → D x (f x) (g x))
+  :=
+    \ h →
+      ( \ x → first (h x)
+      , ( \ x → first (second (h x))
+        , \ x → second (second (h x))))
+
+#def choice2-inverse
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  : ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , (x : A) → D x (f x) (g x))
+  → ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , D x y z)
+  := \ (f , (g , d)) → \ x → (f x , (g x , d x))
+
+#def is-equiv-choice2
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  : is-equiv
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , D x y z)
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , (x : A) → D x (f x) (g x))
+      ( choice2 A B C D)
+  :=
+    is-equiv-has-inverse
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , D x y z)
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , (x : A) → D x (f x) (g x))
+      ( choice2 A B C D)
+      ( choice2-inverse A B C D , (\ h → refl , \ s → refl))
+
+#def equiv-choice2
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  : Equiv
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , D x y z)
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , (x : A) → D x (f x) (g x))
+  := (choice2 A B C D , is-equiv-choice2 A B C D)
+
+#def inv-equiv-choice2
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  : Equiv
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , (x : A) → D x (f x) (g x))
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , D x y z)
+  :=
+    inv-equiv
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , D x y z)
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , (x : A) → D x (f x) (g x))
+      ( equiv-choice2 A B C D)
+
+#def choice3
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  ( E : (x : A) → (y : B x) → (z : C x y) → D x y z → U)
+  : ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , Σ (w : D x y z) , E x y z w)
+  → ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , Σ ( h : (x : A) → D x (f x) (g x)) , (x : A) → E x (f x) (g x) (h x))
+  :=
+    \ h →
+      ( \ x → first (h x)
+      , ( \ x → first (second (h x))
+        , ( \ x → first (second (second (h x)))
+          , \ x → second (second (second (h x))))))
+
+#def choice3-inverse
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  ( E : (x : A) → (y : B x) → (z : C x y) → D x y z → U)
+  : ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , Σ ( h : (x : A) → D x (f x) (g x)) , (x : A) → E x (f x) (g x) (h x))
+  → ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , Σ (w : D x y z) , E x y z w)
+  := \ (f , (g , (h , e))) → \ x → (f x , (g x , (h x , e x)))
+
+#def is-equiv-choice3
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  ( E : (x : A) → (y : B x) → (z : C x y) → D x y z → U)
+  : is-equiv
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , Σ (w : D x y z) , E x y z w)
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , Σ ( h : (x : A) → D x (f x) (g x)) , (x : A) → E x (f x) (g x) (h x))
+      ( choice3 A B C D E)
+  :=
+    is-equiv-has-inverse
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , Σ (w : D x y z) , E x y z w)
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , Σ ( h : (x : A) → D x (f x) (g x)) , (x : A) → E x (f x) (g x) (h x))
+      ( choice3 A B C D E)
+      ( choice3-inverse A B C D E , (\ h → refl , \ s → refl))
+
+#def equiv-choice3
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  ( E : (x : A) → (y : B x) → (z : C x y) → D x y z → U)
+  : Equiv
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , Σ (w : D x y z) , E x y z w)
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , Σ ( h : (x : A) → D x (f x) (g x)) , (x : A) → E x (f x) (g x) (h x))
+  := (choice3 A B C D E , is-equiv-choice3 A B C D E)
+
+#def inv-equiv-choice3
+  ( A : U)
+  ( B : A → U)
+  ( C : (x : A) → B x → U)
+  ( D : (x : A) → (y : B x) → C x y → U)
+  ( E : (x : A) → (y : B x) → (z : C x y) → D x y z → U)
+  : Equiv
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , Σ ( h : (x : A) → D x (f x) (g x)) , (x : A) → E x (f x) (g x) (h x))
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , Σ (w : D x y z) , E x y z w)
+  :=
+    inv-equiv
+      ( ( x : A) → Σ (y : B x) , Σ (z : C x y) , Σ (w : D x y z) , E x y z w)
+      ( Σ ( f : (x : A) → B x) , Σ ( g : (x : A) → C x (f x)) , Σ ( h : (x : A) → D x (f x) (g x)) , (x : A) → E x (f x) (g x) (h x))
+      ( equiv-choice3 A B C D E)
 ```

@@ -1,4 +1,4 @@
-# 3. Internal Universe
+# 2. Internal Universe
 
 This is a literate `rzk` file:
 
@@ -12,13 +12,13 @@ Type Theory" (arXiv:1801.07664).
 ## Prerequisites
 
 - `hott/01-paths.rzk.md` — `ap`, `rev`, `concat`, `transport`.
-- `hott/03-equivalences.rzk.md` — `Equiv`, `is-equiv`, `UA`.
-- `hott/04-half-adjoint-equivalences.rzk.md` — `is-emb-is-equiv`.
-- `hott/05-sigma.rzk.md` — `eq-pair`.
-- `hott/07-fibers.rzk.md` — `fib`.
-- `hott/09-propositions.rzk.md` — `Prop`, `Unit-Prop`, `univ-family-Prop`, `ufp-first-eq-const-Unit`.
-- `01-modalities.rzk.md` — Modality operations, `Prop-b`, `univ-family-Prop-b`.
-- `02-axioms.rzk.md` — Right adjoint, transpose adjunction, crisp induction.
+- `hott/03-equivalences.rzk.md` — `Equiv`, `is-equiv`, `UA`, `ua`, `transport-ua`.
+- `hott/05-half-adjoint-equivalences.rzk.md` — `is-emb-is-equiv`.
+- `hott/06-sigma.rzk.md` — `eq-pair`.
+- `hott/08-fibers.rzk.md` — `fib`.
+- `hott/10-propositions.rzk.md` — `Prop`, `Unit-Prop`, `univ-family-Prop`, `ufp-first-eq-const-Unit`.
+- `hott/04-modalities.rzk.md` — Modality operations, `Prop-b`, `univ-family-Prop-b`.
+- `triangulated/01-tiny.rzk.md` — Right adjoint, transpose adjunction.
 
 ## Amazing predicate
 
@@ -86,7 +86,7 @@ via the right adjoint `rar`.
         let mod ♭ f0 := f in
         let mod ♭ fmap := rar-fmap univ-family-Prop Prop f0
         in fmap)
-      ( crisp-induction-flat
+      ( b-path-commute-fwd
         ( univ-family-Prop → Prop)
         ( \ x → first x)
         ( \ x → Unit-Prop)
@@ -138,7 +138,7 @@ via the right adjoint `rar`.
            ( \ (_ : 𝕀 → b-extract U (rar univ-family-Prop-b)) → Unit-Prop) in
     let B-L
       : ( b-extract (A → b-extract U (rar Prop-b)) F-inner) a = const-Unit-Prop-ufp-tr (first (f a))
-      := flat-convoy
+      := b-elim
            ( b-extract U (rar univ-family-Prop-b) → b-extract U (rar Prop-b))
            ( \ (z : ♭ (b-extract U (rar univ-family-Prop-b) → b-extract U (rar Prop-b)))
            → ( b-extract (A → b-extract U (rar Prop-b)) (let mod ♭ sec := z in mod ♭ (\ (x : A) → sec (first (f x))))) a
@@ -156,7 +156,7 @@ via the right adjoint `rar`.
           ( let mod ♭ g := F-inner in g a)
           ( ( b-extract (A → b-extract U (rar Prop-b)) F-inner) a)
           ( const-Unit-Prop-ufp-tr (first (f a)))
-          ( flat-let-commute
+          ( b-let-commute
             ( A → b-extract U (rar Prop-b)) (b-extract U (rar Prop-b))
             ( \ (g : A → b-extract U (rar Prop-b)) → g a) F-inner)
           ( B-L)))
@@ -168,7 +168,7 @@ via the right adjoint `rar`.
           F-inner V
           ( \ (F : ♭ (A → b-extract U (rar Prop-b))) → let mod ♭ g := F in g a)
           key)
-        ( flat-let-commute
+        ( b-let-commute
           ( A → b-extract U (rar Prop-b)) (b-extract U (rar Prop-b))
           ( \ (g : A → b-extract U (rar Prop-b)) → g a) V))
 
@@ -204,7 +204,7 @@ arrow predicate.
   : transpose-ar Prop A (mod ♭ (\ (a : A) → amazing-tr pred (h a)))
   =_{♭ ((ar A) → Prop)}
   (let mod ♭ sec := untranspose-ar Prop U (mod ♭ pred) in transpose-ar Prop A (mod ♭ (\ (x : A) → sec (h x))))
-  := flat-flat-convoy
+  := b-b-elim
        ( U → b-extract U (rar Prop-b))
        ( \ (z : ♭ (U → b-extract U (rar Prop-b)))
          → transpose-ar Prop A (mod ♭ (\ (a : A) → amazing-tr pred (h a)))
@@ -217,7 +217,7 @@ arrow predicate.
              ( mod ♭ (\ (a : A) → amazing-tr pred (h a)))
              ( mod ♭ (\ (x : A) → g (h x)))
              ( transpose-ar Prop A)
-             ( crisp-induction-flat (A → b-extract U (rar Prop-b))
+             ( b-path-commute-fwd (A → b-extract U (rar Prop-b))
                  ( \ (a : A) → amazing-tr pred (h a)) (\ (x : A) → g (h x))
                  ( let mod ♭ e0 := e in
                    mod ♭ (rev (A → b-extract U (rar Prop-b))
@@ -234,7 +234,7 @@ arrow predicate.
   : transpose-ar Prop A (mod ♭ (const-Unit-Prop-tr A))
   =_{♭ ((ar A) → Prop)}
   transpose-ar Prop A (untranspose-ar Prop A (mod ♭ (\ (_ : 𝕀 → A) → Unit-Prop)))
-  := flat-flat-convoy
+  := b-b-elim
        ( A → b-extract U (rar Prop-b))
        ( \ (z : ♭ (A → b-extract U (rar Prop-b)))
          → transpose-ar Prop A (mod ♭ (const-Unit-Prop-tr A)) =_{♭ ((ar A) → Prop)} transpose-ar Prop A z)
@@ -244,7 +244,7 @@ arrow predicate.
          → ap (♭ (A → b-extract U (rar Prop-b))) (♭ ((ar A) → Prop))
              ( mod ♭ (const-Unit-Prop-tr A)) (mod ♭ g)
              ( transpose-ar Prop A)
-             ( crisp-induction-flat (A → b-extract U (rar Prop-b)) (const-Unit-Prop-tr A) g
+             ( b-path-commute-fwd (A → b-extract U (rar Prop-b)) (const-Unit-Prop-tr A) g
                  ( let mod ♭ e0 := e in
                    mod ♭ (rev (A → b-extract U (rar Prop-b))
                             ( g) (const-Unit-Prop-tr A)
@@ -264,7 +264,7 @@ arrow predicate.
         mod ♭ (\ (a : A) → pred-tr-eq-A-const-Unit pred A h f a)
     in
     let mod ♭ f0=f1 :=
-        mod ♭ (crisp-induction-flat
+        mod ♭ (b-path-commute-fwd
           ( A → b-extract U (rar Prop-b))
           ( f0) (f1)
           ( mod ♭ (eq-htpy funext A (\ _ → b-extract U (rar Prop-b)) (f0) (f1) (A-is-pullback))))
@@ -373,7 +373,7 @@ arrow predicate.
                 let mod ♭ k := untranspose-ar univ-family-Prop A (mod ♭ t) in
                 mod ♭ (\ (x : A) → fmap (k x))) a)
             ( amazing-tr pred (h a))
-            ( flat-convoy
+            ( b-elim
                 ( b-extract U (rar univ-family-Prop-b) → b-extract U (rar Prop-b))
                 ( \ (z1 : ♭ (b-extract U (rar univ-family-Prop-b) → b-extract U (rar Prop-b)))
                 → ( b-extract (b-extract U (rar univ-family-Prop-b) → b-extract U (rar Prop-b)) z1)
@@ -386,7 +386,7 @@ arrow predicate.
                 ( rar-fmap univ-family-Prop Prop (\ (x : univ-family-Prop) → first x))
                 ( \ (fm0 :♭ b-extract U (rar univ-family-Prop-b) → b-extract U (rar Prop-b))
                 → \ (e1 : mod ♭ fm0 =_{♭ (b-extract U (rar univ-family-Prop-b) → b-extract U (rar Prop-b))} rar-fmap univ-family-Prop Prop (\ (x : univ-family-Prop) → first x))
-                → flat-convoy
+                → b-elim
                     ( A → b-extract U (rar univ-family-Prop-b))
                     ( \ (z2 : ♭ (A → b-extract U (rar univ-family-Prop-b)))
                     → fm0 (b-extract (A → b-extract U (rar univ-family-Prop-b)) z2 a)
@@ -411,7 +411,7 @@ arrow predicate.
                 ( let mod ♭ sec := untranspose-ar Prop U (mod ♭ pred) in mod ♭ (\ (x : A) → sec (h x)))
                 ( \ (F : ♭ (A → b-extract U (rar Prop-b))) → b-extract (A → b-extract U (rar Prop-b)) F a)
                 ( full-eq))
-              ( flat-convoy
+              ( b-elim
                   ( U → b-extract U (rar Prop-b))
                   ( \ (z : ♭ (U → b-extract U (rar Prop-b)))
                   → b-extract (A → b-extract U (rar Prop-b)) (let mod ♭ sec := z in mod ♭ (\ (x : A) → sec (h x))) a
@@ -449,7 +449,7 @@ that `amazing-predicate` is a proposition.
       ( amazing-untranspose pred A h
         ( b-extract ((g : 𝕀 → A) → first (pred (\ b → h (g b)))) (amazing-transpose pred A h f)))
     in
-    crisp-induction-flat
+    b-path-commute-fwd
       ( ( a : A) → amazing-predicate pred (h a))
       ( a-untranspose-transpose) f
       ( mod ♭ (eq-htpy funext A (\ a → amazing-predicate pred (h a))
@@ -475,7 +475,7 @@ that `amazing-predicate` is a proposition.
       ( amazing-transpose pred A h
         ( b-extract ((a : A) → amazing-predicate pred (h a)) (amazing-untranspose pred A h f)))
     in
-    crisp-induction-flat
+    b-path-commute-fwd
       ( ( g : 𝕀 → A) → first (pred (\ b → h (g b))))
       ( a-transpose-untranspose) f
       ( mod ♭ (eq-htpy funext (𝕀 → A) (\ g → first (pred (\ b → h (g b))))
@@ -505,7 +505,7 @@ that `amazing-predicate` is a proposition.
     , (
       ( inv
         , \ (x : ♭ ((a : A) → amazing-predicate pred (h a)))
-          → flat-convoy
+          → b-elim
               ( ( a : A) → amazing-predicate pred (h a))
               ( \ (z : ♭ ((a : A) → amazing-predicate pred (h a))) → inv (fwd z) = z)
               ( x)
@@ -513,7 +513,7 @@ that `amazing-predicate` is a proposition.
 
       , ( inv
         , \ (y : ♭ ((g : 𝕀 → A) → first (pred (\ b → h (g b)))))
-          → flat-convoy
+          → b-elim
               ( ( g : 𝕀 → A) → first (pred (\ b → h (g b))))
               ( \ (z : ♭ ((g : 𝕀 → A) → first (pred (\ b → h (g b))))) → fwd (inv z) = z)
               ( y)

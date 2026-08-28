@@ -1,4 +1,4 @@
-# 9. Propositions
+# 10. Propositions
 
 This is a literate `rzk` file:
 
@@ -7,7 +7,8 @@ This is a literate `rzk` file:
 ```
 
 Some of the definitions in this file rely on function extensionality and weak
-function extensionality:
+function extensionality. Crisp propositions use `hott/04-modalities.rzk.md`
+(`b-elim`, `b-path-commute-fwd`).
 
 ```rzk
 #assume funext : FunExt
@@ -649,11 +650,28 @@ propositions.
   ( \ x y → is-prop-is-contr-itself (x = y))
 ```
 
+## Crisp propositions
+
+```rzk
+#def is-prop-flat
+  ( A :♭ U)
+  ( p : ♭ (is-prop A))
+  : is-prop (♭ A)
+  :=
+    is-prop-all-elements-equal (♭ A)
+      (\ x y →
+        b-elim A (\ z → z =_{♭ A} y) x
+          (\ (a :_b A) → \ _ →
+            b-elim A (\ z → mod ♭ a =_{♭ A} z) y
+              (\ (b :_b A) → \ _ →
+                let mod ♭ p0 := p in
+                b-path-commute-fwd A a b
+                  ( mod ♭ (all-elements-equal-is-prop A p0 a b)))))
+```
+
 ## Contractibility of pointed propositions
 
 ```rzk
-#assume ua : UA
-
 #def univ-family-Prop-is-contr uses (funext weakfunext ua)
   : is-contr (univ-family-Prop)
   :=
@@ -766,4 +784,19 @@ The subtype projection embedding reflects identifications.
   ( is-prop-fiberwise-prop A' B' is-prop-B')
   ( \ b a' → G a' (b (g a'))
   , \ b' a → F a (b' (f a)))
+```
+
+## Flat aliases
+
+These live here rather than in `04-modalities` because they depend on `Prop`
+and `univ-family-Prop`.
+
+```rzk
+#def Prop-b
+  : ( ♭ U)
+  := mod ♭ Prop
+
+#def univ-family-Prop-b
+  : ( ♭ U)
+  := mod ♭ univ-family-Prop
 ```

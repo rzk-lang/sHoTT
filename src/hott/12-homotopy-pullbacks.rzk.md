@@ -1,4 +1,4 @@
-# 11. Homotopy cartesian squares
+# 12. Homotopy cartesian squares
 
 This is a literate `rzk` file:
 

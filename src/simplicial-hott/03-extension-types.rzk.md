@@ -1240,6 +1240,64 @@ We now assume extension extensionality and derive a few consequences.
 #assume extext : ExtExt
 ```
 
+Application of `naiveextext-extext` commutes with evaluation at a point of the
+cube.
+
+```rzk
+#def ap-ext-eq-htpy-at uses (extext)
+  ( I : CUBE)
+  ( ψ : I → TOPE)
+  ( ϕ : ψ → TOPE)
+  ( A : ψ → U)
+  ( a : (t : ϕ) → A t)
+  ( t0 : ψ)
+  ( f g : (t : ψ) → A t [ϕ t ↦ a t])
+  ( h : (t : ψ) → f t =_{A t} g t [ϕ t ↦ refl])
+  : ap
+      ( (t : ψ) → A t [ϕ t ↦ a t])
+      ( A t0)
+      f g
+      ( \ φ → φ t0)
+      ( naiveextext-extext extext I ψ ϕ A a f g h)
+    = h t0
+  :=
+    let s
+      : ( (t : ψ) → f t =_{A t} g t [ϕ t ↦ refl]) → (f = g)
+      := naiveextext-extext extext I ψ ϕ A a f g
+    in
+    let η
+      : ext-htpy-eq I ψ ϕ A a f g (s h) = h
+      := second (second (extext I ψ ϕ A a f g)) h
+    in
+    let ap=htpy
+      : ap ((t : ψ) → A t [ϕ t ↦ a t]) (A t0) f g (\ φ → φ t0) (s h)
+        = ext-htpy-eq I ψ ϕ A a f g (s h) t0
+      :=
+        ind-path
+          ( (t : ψ) → A t [ϕ t ↦ a t])
+          f
+          ( \ g' p' →
+              ap ((t : ψ) → A t [ϕ t ↦ a t]) (A t0) f g' (\ φ → φ t0) p'
+            = ext-htpy-eq I ψ ϕ A a f g' p' t0)
+          ( refl)
+          g
+          ( s h)
+    in
+      concat
+        ( f t0 =_{A t0} g t0)
+        ( ap ((t : ψ) → A t [ϕ t ↦ a t]) (A t0) f g (\ φ → φ t0) (s h))
+        ( ext-htpy-eq I ψ ϕ A a f g (s h) t0)
+        ( h t0)
+        ap=htpy
+        ( ap
+            ( (t : ψ) → f t =_{A t} g t [ϕ t ↦ refl])
+            ( f t0 =_{A t0} g t0)
+            ( ext-htpy-eq I ψ ϕ A a f g (s h))
+            h
+            ( \ k → k t0)
+            η)
+```
+
 ### Pointwise homotopy extension types
 
 Using `ExtExt` we can write the homotopy in the homotopy extension type
@@ -1823,4 +1881,110 @@ equivalent to extending the fiber.
           ( \ _ → B t a)))
       ( equiv-based-paths-family (A t) (B t) (τ t)))
     ( \ t → (a t , refl)))
+```
+
+## Extension types and shapes domain
+
+Functions on a subshape are equivalent to functions on the corresponding `shape` type.
+
+```rzk
+#def equiv-ext-shape-fun-fwd
+  ( I : CUBE)
+  ( ϕ : I → TOPE)
+  ( A : I → U)
+  : ( ( x : I | ϕ x) → A x)
+  → ( ( t : shape (x : I | ϕ x)) → A (unform t))
+  := \ f t → f (unform t)
+
+#def equiv-ext-shape-fun-bwd
+  ( I : CUBE)
+  ( ϕ : I → TOPE)
+  ( A : I → U)
+  : ( ( t : shape (x : I | ϕ x)) → A (unform t))
+  → ( ( x : I | ϕ x) → A x)
+  := \ g x → g (form x)
+
+#def equiv-ext-shape-fun
+  ( I : CUBE)
+  ( ϕ : I → TOPE)
+  ( A : I → U)
+  : Equiv
+      ( ( x : I | ϕ x) → A x)
+      ( ( t : shape (x : I | ϕ x)) → A (unform t))
+  :=
+    equiv-has-inverse
+      ( ( x : I | ϕ x) → A x)
+      ( ( t : shape (x : I | ϕ x)) → A (unform t))
+      ( equiv-ext-shape-fun-fwd I ϕ A)
+      ( equiv-ext-shape-fun-bwd I ϕ A)
+      ( \ _ → refl)
+      ( \ _ → refl)
+```
+
+## Extension types opposition
+
+```rzk
+#def op-ext-flip-fwd
+  ( ψ :_op (𝕀 → TOPE))
+  ( ϕ :_op ((t : 𝕀 | ψ t) → TOPE))
+  ( A :_op (t : 𝕀 | ψ t) → U)
+  ( x :_op (t : ϕ) → A t)
+  ( h :_op ((t : 𝕀 | ψ t) → A t [ ϕ t ↦ x t ]))
+  : ( t : 𝕀 |
+      let mod _op ft := flip_op t in
+      _op (ψ ft)) →
+    let mod _op ft := flip_op t in
+    (_op (A ft)) [ uninv_op (mod _op (ϕ ft)) ↦ mod _op (x ft) ]
+  := \ t →
+    let mod _op s := flip_op t in
+    mod _op (h s)
+
+#def op-ext-flip-bwd
+  ( ψ :_op (𝕀 → TOPE))
+  ( ϕ :_op ((t : 𝕀 | ψ t) → TOPE))
+  ( A :_op (t : 𝕀 | ψ t) → U)
+  ( x :_op (t : ϕ) → A t)
+  ( k
+    : ( t : 𝕀 |
+        let mod _op ft := flip_op t in
+        _op (ψ ft)) →
+        let mod _op ft := flip_op t in
+        (_op (A ft)) [ uninv_op (mod _op (ϕ ft)) ↦ mod _op (x ft) ])
+  : _op ((t : 𝕀 | ψ t) → A t [ ϕ t ↦ x t ])
+  :=
+    mod _op (\ t →
+      let ᵒᵖ mod ᵒᵖ b := k (unflip_op (mod _op t)) in
+        b)
+
+#def op-ext-flip-2-fwd
+  ( ψ :_op (2 → TOPE))
+  ( ϕ :_op ((t : 2 | ψ t) → TOPE))
+  ( A :_op (t : 2 | ψ t) → U)
+  ( x :_op (t : ϕ) → A t)
+  ( h :_op ((t : 2 | ψ t) → A t [ ϕ t ↦ x t ]))
+  : ( t : 2 |
+      let mod _op ft := flip_op t in
+      _op (ψ ft)) →
+    let mod _op ft := flip_op t in
+    (_op (A ft)) [ uninv_op (mod _op (ϕ ft)) ↦ mod _op (x ft) ]
+  := \ t →
+    let mod _op s := flip_op t in
+    mod _op (h s)
+
+#def op-ext-flip-2-bwd
+  ( ψ :_op (2 → TOPE))
+  ( ϕ :_op ((t : 2 | ψ t) → TOPE))
+  ( A :_op (t : 2 | ψ t) → U)
+  ( x :_op (t : ϕ) → A t)
+  ( k
+    : ( t : 2 |
+        let mod _op ft := flip_op t in
+        _op (ψ ft)) →
+        let mod _op ft := flip_op t in
+        (_op (A ft)) [ uninv_op (mod _op (ϕ ft)) ↦ mod _op (x ft) ])
+  : _op ((t : 2 | ψ t) → A t [ ϕ t ↦ x t ])
+  :=
+    mod _op (\ t →
+      let ᵒᵖ mod ᵒᵖ b := k (unflip_op (mod _op t)) in
+        b)
 ```

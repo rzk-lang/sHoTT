@@ -18,7 +18,7 @@ extensionality and weak function extensionality:
 
 - `hott/*` - We require various prerequisites from homotopy type theory, for
   instance function extensionality.
-- `hott/10-trivial-fibrations.rzk.md` — We use
+- `hott/11-trivial-fibrations.rzk.md` — We use
   `#!rzk is-equiv-projection-contractible-fibers` in the "Discrete types are
   Rezk" section.
 - `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and

@@ -1,4 +1,4 @@
-# 8. Families of maps
+# 9. Families of maps
 
 This is a literate `rzk` file:
 
@@ -293,6 +293,89 @@ thus an equivalence) on total spaces.
     , is-equiv-total-is-equiv-fiberwise3 A B C D D'
         ( \ a b c → first (familyeq a b c))
         ( \ a b c → second (familyeq a b c)))
+```
+
+Total equivalences for dependent sums indexed by crisp variables.
+
+```rzk
+#def total-b-equiv-family
+  ( A :♭ U)
+  ( P Q : ♭ A → U)
+  ( e : (a :_b A) → Equiv (P (mod ♭ a)) (Q (mod ♭ a)))
+  : Equiv (Σ (x : ♭ A) , P x) (Σ (x : ♭ A) , Q x)
+  :=
+    total-equiv-family-of-equiv
+      ( ♭ A)
+      ( P)
+      ( Q)
+      ( \ x →
+          b-elim A
+            ( \ x' → Equiv (P x') (Q x'))
+            x
+            ( \ (a :_b A) → \ _ → e a))
+
+#def total-b-equiv-family2
+  ( A :♭ U)
+  ( B :♭ A → U)
+  ( C C' : (a :_b A) → (b :_b B a) → U)
+  ( e : (a :_b A) → (b :_b B a) → Equiv (C a b) (C' a b))
+  : Equiv
+      ( Σ (a : ♭ A)
+      , ( let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in C a0 b0)))
+      ( Σ (a : ♭ A)
+      , ( let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in C' a0 b0)))
+  :=
+    total-b-equiv-family A
+      ( \ a →
+          let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in C a0 b0))
+      ( \ a →
+          let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in C' a0 b0))
+      ( \ (a0 :_b A) →
+          total-b-equiv-family (B a0)
+            ( \ b → let mod ♭ b0 := b in C a0 b0)
+            ( \ b → let mod ♭ b0 := b in C' a0 b0)
+            ( \ (b0 :_b B a0) → e a0 b0))
+
+#def total-b-equiv-family3
+  ( A :♭ U)
+  ( B :♭ A → U)
+  ( C :♭ (a : A) → B a → U)
+  ( D D' : (a :_b A) → (b :_b B a) → (c :_b C a b) → U)
+  ( e : (a :_b A) → (b :_b B a) → (c :_b C a b) → Equiv (D a b c) (D' a b c))
+  : Equiv
+      ( Σ (a : ♭ A)
+      , ( let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in
+              Σ (c : ♭ (C a0 b0))
+              , ( let mod ♭ c0 := c in D a0 b0 c0))))
+      ( Σ (a : ♭ A)
+      , ( let mod ♭ a0 := a in
+          Σ (b : ♭ (B a0))
+          , ( let mod ♭ b0 := b in
+              Σ (c : ♭ (C a0 b0))
+              , ( let mod ♭ c0 := c in D' a0 b0 c0))))
+  :=
+    total-b-equiv-family2 A B
+      ( \ (a0 :_b A) → \ (b0 :_b B a0) →
+          Σ (c : ♭ (C a0 b0))
+          , ( let mod ♭ c0 := c in D a0 b0 c0))
+      ( \ (a0 :_b A) → \ (b0 :_b B a0) →
+          Σ (c : ♭ (C a0 b0))
+          , ( let mod ♭ c0 := c in D' a0 b0 c0))
+      ( \ (a0 :_b A) → \ (b0 :_b B a0) →
+          total-b-equiv-family (C a0 b0)
+            ( \ c → let mod ♭ c0 := c in D a0 b0 c0)
+            ( \ c → let mod ♭ c0 := c in D' a0 b0 c0)
+            ( \ (c0 :_b C a0 b0) → e a0 b0 c0))
 ```
 
 For the converse, we make use of our calculation on fibers. The first
@@ -912,7 +995,7 @@ a fixed f to the total `#!rzk FunExt` axiom.
     funext-weirdfunext (weirdfunext-weakfunext weakfunext)
 ```
 
-The proof of `weakfunext-funext` from `06-contractible.rzk` works with a version
+The proof of `weakfunext-funext` from `07-contractible.rzk` works with a version
 of function extensionality only requiring the map in the converse direction. We
 can then prove a cycle of implications between `#!rzk FunExt`,
 `#!rzk NaiveFunExt` and `#!rzk WeakFunExt`.

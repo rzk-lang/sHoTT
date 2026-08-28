@@ -621,9 +621,9 @@ Left/right adjoints preserve co/limits.
   ( adj : is-transposing-adj A B f u)
   : colimit J B (comp J A B f g)
   :=
-    colimit-is-colimit3 J B is-segal-B (comp J A B f g)
+    colimit-colimit3 J B is-segal-B (comp J A B f g)
       ( left-adjoint-preserves-colimit3 A B J g f u adj
-        ( colimit3-is-colimit J A is-segal-A g colim-g))
+        ( colimit3-colimit J A is-segal-A g colim-g))
 
 #def right-adjoint-preserves-limit uses (funext extext)
   ( A B J : U)
@@ -636,7 +636,7 @@ Left/right adjoints preserve co/limits.
   ( adj : is-transposing-adj A B f u)
   : limit J A (comp J B A u g)
   :=
-    limit-is-limit3 J A is-segal-A (comp J B A u g)
+    limit-limit3 J A is-segal-A (comp J B A u g)
       ( right-adjoint-preserves-limit3 A B J g f u adj
-        ( limit3-is-limit J B is-segal-B g lim-g))
+        ( limit3-limit J B is-segal-B g lim-g))
 ```

@@ -607,7 +607,7 @@ The universal property of limits and colimits.
         ( equiv-transpose-cone A B J g f u adj y))
 ```
 
-Left/right adjoints preserve co/limits.
+Left/right adjoints preserve co-/limits.
 
 ```rzk title="Bar22, Theorem 3.8, 3.9"
 #def left-adjoint-preserves-colimit uses (funext extext)

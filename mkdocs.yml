@@ -17,7 +17,7 @@ nav:
       - Equivalences: hott/03-equivalences.rzk.md
       - Half Adjoint Equivalences: hott/04-half-adjoint-equivalences.rzk.md
       - Sigma types: hott/05-sigma.rzk.md
-      - Product types: hott/06-product.rzk.md
+      - Product types: hott/06-products.rzk.md
       - Contractible: hott/07-contractible.rzk.md
       - Fibers: hott/08-fibers.rzk.md
       - Families of maps: hott/09-families-of-maps.rzk.md

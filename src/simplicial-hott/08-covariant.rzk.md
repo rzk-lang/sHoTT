@@ -2236,7 +2236,6 @@ equivalence. This follows from the fact that the total types (summed over
       ( contravariant-transport A x y f C is-contravariant-C v = u)
       ( contravariant-uniqueness-curried A x y f C is-contravariant-C v u)
   :=
-
     is-equiv-fiberwise-is-equiv-total
       ( C x)
       ( \ u' → dhom A x y f C u' v)

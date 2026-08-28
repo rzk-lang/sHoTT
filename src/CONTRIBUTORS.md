@@ -12,6 +12,7 @@ Formalizations were contributed by the following people (listed alphabetically):
 - [Aras Ergus](https://www.aergus.net/),
 - [Matthias Hutzler](https://github.com/MatthiasHu),
 - [Nikolai Kudasov](https://fizruk.github.io/),
+- [Benno Lossin](https://benno-lossin.de).
 - [Kenji Maillard](https://github.com/kyoDralliam),
 - [David Martínez Carpena](https://dvmcarpena.com/),
 - [Stiéphen Pradal](https://stiephenpradal.github.io/),
@@ -19,9 +20,8 @@ Formalizations were contributed by the following people (listed alphabetically):
 - [Emily Riehl](https://emilyriehl.github.io/),
 - [Judah Towery](https://github.com/jjtowery),
 - [Florrie Verity](https://github.com/floverity),
-- [Tashi Walde](https://www.math.cit.tum.de/en/algebra/personen/walde/),
-- [Jonathan Weinberger](https://sites.google.com/view/jonathanweinberger), and
-- [Benno Lossin](https://benno-lossin.de).
+- [Tashi Walde](https://www.math.cit.tum.de/en/algebra/personen/walde/), and
+- [Jonathan Weinberger](https://sites.google.com/view/jonathanweinberger).
 
 You may see actual contributed commits in the
 [Contributors page on GitHub](https://github.com/rzk-lang/sHoTT/graphs/contributors).

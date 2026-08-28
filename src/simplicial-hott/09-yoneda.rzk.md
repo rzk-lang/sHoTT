@@ -1663,8 +1663,8 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                   ( C)
                   ( is-contravariant-C))
                 ( second (first has-final-tot-A))
-                x)
-              v)
+                ( x))
+              ( v))
             ( equiv-comp
               ( hom
                 ( Σ ( z : A) , C z)

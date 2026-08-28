@@ -69,8 +69,8 @@ it gives rise to an adjunction:
     ( is-dependent-initial-section-s x y Y))
 ```
 
-Now we note that this adjunction is a LARI adjunction since it sends `#!rzk
-id-hom (total-type A B) (a, s a)` to `#!rzk id-hom A a`.
+Now we note that this adjunction is a LARI adjunction since it sends
+`#!rzk id-hom (total-type A B) (a, s a)` to `#!rzk id-hom A a`.
 
 ```rzk
 #def is-transposing-LARI-is-dhom-initial-section

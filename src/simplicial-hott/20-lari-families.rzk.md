@@ -20,9 +20,10 @@ In this section, we formalize the notion of LARI families covered by
 There are some small differences between this formalization and Buchholtz's and
 Weinberger's definition that help make it more concise.
 
-Buchholtz and Weinberger's definition is the following: given $P: B \to
-\mathcal{U}$, it is a LARI family if and only if the dashed map (which is the
-Leibniz-cotensor map) forms a LARI adjunction.
+Buchholtz and Weinberger's definition is the following: given
+$P: B \to
+\mathcal{U}$, it is a LARI family if and only if the dashed map (which
+is the Leibniz-cotensor map) forms a LARI adjunction.
 
 <?xml version='1.0' encoding='UTF-8'?>
 <svg class="typst-doc" viewBox="0 0 240.9448818897638 113.38582677165354" width="240.9448818897638pt" height="113.38582677165354pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml">
@@ -842,8 +843,8 @@ Lastly, to show that the composition of two LARI families is again a LARI
 family, we need to work quite a bit, despite the mathematical insight being
 quite straight-forward.
 
-We begin the proof with a lemma that shows that we can swap sigma and `#!rzk
-LARI-family-codomain` in a specific way.
+We begin the proof with a lemma that shows that we can swap sigma and
+`#!rzk LARI-family-codomain` in a specific way.
 
 ```rzk
 #def equiv-LARI-family-codomain-sigma-swap

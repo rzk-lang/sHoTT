@@ -109,8 +109,8 @@ a given starting point in the fiber.
 
 ### Cocartesian family
 
-A family is cocartesian if it is isoinner and any arrow in the has a
-cocartesian lift, given a point in the fiber over the domain.
+A family is cocartesian if it is isoinner and any arrow in the has a cocartesian
+lift, given a point in the fiber over the domain.
 
 ```rzk title="BW23, Definition 5.2.1"
 #def has-cocartesian-lifts
@@ -650,16 +650,17 @@ With those defined, we can give a visual overview of what the proof is doing:
     </defs>
 </svg>
 
-The left side expresses the data of `#!rzk is-cocartesian-arrow B (f 0₂) (f 1₂)
-f P e (F 1₂) (\ t → F t)` and the right shows that of `#!rzk
-is-dependent-initial temp-96cf-G temp-96cf-Q (f , e) F`. The blue area
+The left side expresses the data of
+`#!rzk is-cocartesian-arrow B (f 0₂) (f 1₂) f P e (F 1₂) (\ t → F t)` and the
+right shows that of
+`#!rzk is-dependent-initial temp-96cf-G temp-96cf-Q (f , e) F`. The blue area
 corresponds to the type that is required to be contractible while the black
 parts correspond to the inputs of the function types.
 
 What we're about to show now, is that the triangle is "effectively" equivalent
 to the square. It's not truly equivalent, since the inputs are different and
-they thus don't live over the same base. However, that's what the `#!rzk
-equiv-family-of-props` lemma takes care of: with different bases we need
+they thus don't live over the same base. However, that's what the
+`#!rzk equiv-family-of-props` lemma takes care of: with different bases we need
 translation functions $\alpha_1: A \to A'$ and $\alpha_2: A' \to A$ that allow
 transforming the triangle to the square and vice versa.
 
@@ -963,9 +964,9 @@ lemma, which yields the desired equivalence.
 #end is-cocartesian-arrow-equiv-is-dependent-initial
 ```
 
-Using this equivalence, we can now show the equivalence between `#!rzk
-is-naive-cocartesian-family` and `#!rzk is-cocartesian-family`. Justifying our
-previous work of LARI families.
+Using this equivalence, we can now show the equivalence between
+`#!rzk is-naive-cocartesian-family` and `#!rzk is-cocartesian-family`.
+Justifying our previous work of LARI families.
 
 ```rzk
 #def is-cocartesian-family-equiv-has-cocartesian-lifts-is-inner-family

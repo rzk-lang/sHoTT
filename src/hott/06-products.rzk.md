@@ -142,9 +142,9 @@ called `#!rzk projection-total-type`. If the diagram commutes, the function $s$
 is called a section, since $\pi_B \circ s = \text{id}_A$. However, since we know
 more information about the structure of the total type $\Sigma B$, specifically
 that it's a sigma type over $B$; we can form the type $\Pi_{a : A} B(a)$ of
-strict sections which we called `#!rzk section A B` above. These are *strict*,
-since for all $s : \Pi_{a : A} B(a)$ we have that $\text{refl} : \pi_B \circ s =
-\text{id}_A$.
+strict sections which we called `#!rzk section A B` above. These are _strict_,
+since for all $s : \Pi_{a : A} B(a)$ we have that
+$\text{refl} : \pi_B \circ s = \text{id}_A$.
 
 ## Composing type families
 

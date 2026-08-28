@@ -34,7 +34,8 @@ This is a literate `rzk` file:
 
 ## Definition of orthogonal families
 
-We use the defining property given in BW Corollary 3.1.2 for orthogonal families:
+We use the defining property given in BW Corollary 3.1.2 for orthogonal
+families:
 
 ```rzk
 #def is-right-orthogonal-family
@@ -172,8 +173,8 @@ equivalence needs to be spelled out.
 ## Leibniz cotensor map
 
 Buchholtz and Weinberger use the definition of the Leibniz-cotensor map to
-define orthogonal families. We also show that this is a definition equivalent
-to our initial definition. Again the proofs are just simple repackaging of data.
+define orthogonal families. We also show that this is a definition equivalent to
+our initial definition. Again the proofs are just simple repackaging of data.
 
 ```rzk
 #def leibniz-cotensor-codomain

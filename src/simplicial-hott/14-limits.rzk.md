@@ -430,7 +430,7 @@ Co-/limits are unique up to isomorphism.
 The universal property of limits and colimits.
 
 ```rzk title="Bar22, Proposition 3.7"
-#def colimit3-is-colimit uses (funext)
+#def colimit3-colimit uses (funext)
   ( J B : U)
   ( is-segal-B : is-segal B)
   ( g : J → B)

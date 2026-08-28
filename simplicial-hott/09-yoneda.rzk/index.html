@@ -2560,6 +2560,12 @@ family is covariant or not.</p>
 </span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
 </span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>  : <span class="kt">U</span>
 </span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>  := <span class="kt">Σ</span> <span class="p">(</span>a <span class="p">:</span> A) , <span class="p">(</span>x <span class="p">:</span> A) → (Equiv (hom A a x) (C x))
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contravariant-representable-family" id="define:is-contravariant-representable-family" style="visibility: visible; position: relative; color: inherit">is-contravariant-representable-family</a></span>
+</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-49-9"><a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-49-10"><a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a>  : <span class="kt">U</span>
+</span><span id="__span-49-11"><a id="__codelineno-49-11" name="__codelineno-49-11" href="#__codelineno-49-11"></a>  := <span class="kt">Σ</span> <span class="p">(</span>a <span class="p">:</span> A) , <span class="p">(</span>x <span class="p">:</span> A) → (Equiv (hom A x a) (C x))
 </span></code></pre></div>
 <p>The definition makes it slightly awkward to access the actual equivalence, so we
 give a helper function.</p>
@@ -2569,6 +2575,13 @@ give a helper function.</p>
 </span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>  <span class="p">( </span>is-rep-C <span class="p">:</span> is-representable-family A C)
 </span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>  : <span class="p">( </span>x <span class="p">:</span> A) → (hom A (<span class="s">first</span> is-rep-C) x) → (C x)
 </span><span id="__span-50-6"><a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>  := <span class="p">\ </span>x → <span class="s">first</span>((<span class="s">second</span> (is-rep-C)) x)
+</span><span id="__span-50-7"><a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>
+</span><span id="__span-50-8"><a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-for-is-contravariant-representable-family" id="define:equiv-for-is-contravariant-representable-family" style="visibility: visible; position: relative; color: inherit">equiv-for-is-contravariant-representable-family</a></span>
+</span><span id="__span-50-9"><a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-50-10"><a id="__codelineno-50-10" name="__codelineno-50-10" href="#__codelineno-50-10"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-50-11"><a id="__codelineno-50-11" name="__codelineno-50-11" href="#__codelineno-50-11"></a>  <span class="p">( </span>is-rep-C <span class="p">:</span> is-contravariant-representable-family A C)
+</span><span id="__span-50-12"><a id="__codelineno-50-12" name="__codelineno-50-12" href="#__codelineno-50-12"></a>  : <span class="p">( </span>x <span class="p">:</span> A) → (hom A x (<span class="s">first</span> is-rep-C) → C x)
+</span><span id="__span-50-13"><a id="__codelineno-50-13" name="__codelineno-50-13" href="#__codelineno-50-13"></a>  := <span class="p">\ </span>x → <span class="s">first</span>((<span class="s">second</span> (is-rep-C)) x)
 </span></code></pre></div>
 <p>RS Proposition 9.10 gives an if and only if condition for a covariant family
 <code class="language-rzk highlight">C : A → <span class="kt">U</span></code> to be representable. The condition is that the type
@@ -2580,6 +2593,13 @@ condition a name.</p>
 </span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>  : <span class="kt">U</span>
 </span><span id="__span-51-5"><a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>  := <span class="kt">Σ</span> ((a , u) : <span class="kt">Σ</span> <span class="p">(</span>x <span class="p">:</span> A) , (C x))
 </span><span id="__span-51-6"><a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>      , is-initial <span class="p">(</span>Σ (x <span class="p">:</span> A) , (C x)) (a , u)
+</span><span id="__span-51-7"><a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>
+</span><span id="__span-51-8"><a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-final-tot" id="define:has-final-tot" style="visibility: visible; position: relative; color: inherit">has-final-tot</a></span>
+</span><span id="__span-51-9"><a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-51-10"><a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-51-11"><a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a>  : <span class="kt">U</span>
+</span><span id="__span-51-12"><a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a>  := <span class="kt">Σ</span> ((a , u) : <span class="kt">Σ</span> <span class="p">(</span>x <span class="p">:</span> A) , C x)
+</span><span id="__span-51-13"><a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a>      , is-final <span class="p">(</span>Σ (x <span class="p">:</span> A) , C x) (a , u)
 </span></code></pre></div>
 <p>As a representable family is fiberwise equivalent to a <code class="language-rzk highlight"><span class="kt">Σ</span> <span class="p">(</span>x <span class="p">:</span> A) , C x</code>,
 the total space of the family is equivalent to a coslice, and coslices have an
@@ -2607,6 +2627,30 @@ initial object by <code class="language-rzk highlight">is-initial-id-hom-is-sega
 </span><span id="__span-52-21"><a id="__codelineno-52-21" name="__codelineno-52-21" href="#__codelineno-52-21"></a>          ( <span class="s">second</span> is-rep-C))
 </span><span id="__span-52-22"><a id="__codelineno-52-22" name="__codelineno-52-22" href="#__codelineno-52-22"></a>        ( ( <span class="s">first</span> is-rep-C , id-hom A (<span class="s">first</span> is-rep-C)))
 </span><span id="__span-52-23"><a id="__codelineno-52-23" name="__codelineno-52-23" href="#__codelineno-52-23"></a>        ( is-initial-id-hom-is-segal A is-segal-A (<span class="s">first</span> is-rep-C)))
+</span><span id="__span-52-24"><a id="__codelineno-52-24" name="__codelineno-52-24" href="#__codelineno-52-24"></a>
+</span><span id="__span-52-25"><a id="__codelineno-52-25" name="__codelineno-52-25" href="#__codelineno-52-25"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:has-final-tot-is-contravariant-representable-family" id="define:has-final-tot-is-contravariant-representable-family" style="visibility: visible; position: relative; color: inherit">has-final-tot-is-contravariant-representable-family</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-52-26"><a id="__codelineno-52-26" name="__codelineno-52-26" href="#__codelineno-52-26"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-52-27"><a id="__codelineno-52-27" name="__codelineno-52-27" href="#__codelineno-52-27"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
+</span><span id="__span-52-28"><a id="__codelineno-52-28" name="__codelineno-52-28" href="#__codelineno-52-28"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-52-29"><a id="__codelineno-52-29" name="__codelineno-52-29" href="#__codelineno-52-29"></a>  <span class="p">( </span>is-rep-C <span class="p">:</span> is-contravariant-representable-family A C)
+</span><span id="__span-52-30"><a id="__codelineno-52-30" name="__codelineno-52-30" href="#__codelineno-52-30"></a>  : has-final-tot A C
+</span><span id="__span-52-31"><a id="__codelineno-52-31" name="__codelineno-52-31" href="#__codelineno-52-31"></a>  :=
+</span><span id="__span-52-32"><a id="__codelineno-52-32" name="__codelineno-52-32" href="#__codelineno-52-32"></a>    ( ( <span class="s">first</span> is-rep-C
+</span><span id="__span-52-33"><a id="__codelineno-52-33" name="__codelineno-52-33" href="#__codelineno-52-33"></a>      , contra-evid
+</span><span id="__span-52-34"><a id="__codelineno-52-34" name="__codelineno-52-34" href="#__codelineno-52-34"></a>          ( A)
+</span><span id="__span-52-35"><a id="__codelineno-52-35" name="__codelineno-52-35" href="#__codelineno-52-35"></a>          ( <span class="s">first</span> is-rep-C)
+</span><span id="__span-52-36"><a id="__codelineno-52-36" name="__codelineno-52-36" href="#__codelineno-52-36"></a>          ( C)
+</span><span id="__span-52-37"><a id="__codelineno-52-37" name="__codelineno-52-37" href="#__codelineno-52-37"></a>          ( equiv-for-is-contravariant-representable-family A C is-rep-C))
+</span><span id="__span-52-38"><a id="__codelineno-52-38" name="__codelineno-52-38" href="#__codelineno-52-38"></a>    , is-final-equiv-is-final
+</span><span id="__span-52-39"><a id="__codelineno-52-39" name="__codelineno-52-39" href="#__codelineno-52-39"></a>        ( slice A (<span class="s">first</span> is-rep-C))
+</span><span id="__span-52-40"><a id="__codelineno-52-40" name="__codelineno-52-40" href="#__codelineno-52-40"></a>        <span class="p">( </span>Σ ( x <span class="p">:</span> A) , C x)
+</span><span id="__span-52-41"><a id="__codelineno-52-41" name="__codelineno-52-41" href="#__codelineno-52-41"></a>        ( total-equiv-family-of-equiv
+</span><span id="__span-52-42"><a id="__codelineno-52-42" name="__codelineno-52-42" href="#__codelineno-52-42"></a>          ( A)
+</span><span id="__span-52-43"><a id="__codelineno-52-43" name="__codelineno-52-43" href="#__codelineno-52-43"></a>          ( <span class="p">\ </span>x → hom A x (<span class="s">first</span> is-rep-C))
+</span><span id="__span-52-44"><a id="__codelineno-52-44" name="__codelineno-52-44" href="#__codelineno-52-44"></a>          ( C)
+</span><span id="__span-52-45"><a id="__codelineno-52-45" name="__codelineno-52-45" href="#__codelineno-52-45"></a>          ( <span class="s">second</span> is-rep-C))
+</span><span id="__span-52-46"><a id="__codelineno-52-46" name="__codelineno-52-46" href="#__codelineno-52-46"></a>        ( ( <span class="s">first</span> is-rep-C , id-hom A (<span class="s">first</span> is-rep-C)))
+</span><span id="__span-52-47"><a id="__codelineno-52-47" name="__codelineno-52-47" href="#__codelineno-52-47"></a>        ( is-final-id-hom-is-segal A is-segal-A (<span class="s">first</span> is-rep-C)))
 </span></code></pre></div>
 <p>The other direction is a bit longer. We follow the proof of RS17 9.10: given
 <code class="language-rzk highlight">(a, u) : <span class="kt">Σ</span> <span class="p">(</span>x <span class="p">:</span> A) , C x</code> an initial object of <code class="language-rzk highlight"><span class="kt">Σ</span> <span class="p">(</span>x <span class="p">:</span> A) , C x</code>,
@@ -2738,6 +2782,135 @@ equivalence using <code class="language-rzk highlight">is-equiv-is-contr-map</co
 </span><span id="__span-53-120"><a id="__codelineno-53-120" name="__codelineno-53-120" href="#__codelineno-53-120"></a>                      ( <span class="s">second</span> (<span class="s">first</span> has-initial-tot-A))
 </span><span id="__span-53-121"><a id="__codelineno-53-121" name="__codelineno-53-121" href="#__codelineno-53-121"></a>                      ( v)))))
 </span><span id="__span-53-122"><a id="__codelineno-53-122" name="__codelineno-53-122" href="#__codelineno-53-122"></a>            ( <span class="s">second</span> has-initial-tot-A (b , v)))))
+</span><span id="__span-53-123"><a id="__codelineno-53-123" name="__codelineno-53-123" href="#__codelineno-53-123"></a>
+</span><span id="__span-53-124"><a id="__codelineno-53-124" name="__codelineno-53-124" href="#__codelineno-53-124"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contravariant-representable-family-has-final-tot" id="define:is-contravariant-representable-family-has-final-tot" style="visibility: visible; position: relative; color: inherit">is-contravariant-representable-family-has-final-tot</a></span>
+</span><span id="__span-53-125"><a id="__codelineno-53-125" name="__codelineno-53-125" href="#__codelineno-53-125"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-53-126"><a id="__codelineno-53-126" name="__codelineno-53-126" href="#__codelineno-53-126"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
+</span><span id="__span-53-127"><a id="__codelineno-53-127" name="__codelineno-53-127" href="#__codelineno-53-127"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-53-128"><a id="__codelineno-53-128" name="__codelineno-53-128" href="#__codelineno-53-128"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
+</span><span id="__span-53-129"><a id="__codelineno-53-129" name="__codelineno-53-129" href="#__codelineno-53-129"></a>  <span class="p">( </span>has-final-tot-A <span class="p">:</span> has-final-tot A C)
+</span><span id="__span-53-130"><a id="__codelineno-53-130" name="__codelineno-53-130" href="#__codelineno-53-130"></a>  : ( is-contravariant-representable-family A C)
+</span><span id="__span-53-131"><a id="__codelineno-53-131" name="__codelineno-53-131" href="#__codelineno-53-131"></a>  :=
+</span><span id="__span-53-132"><a id="__codelineno-53-132" name="__codelineno-53-132" href="#__codelineno-53-132"></a>    ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A)
+</span><span id="__span-53-133"><a id="__codelineno-53-133" name="__codelineno-53-133" href="#__codelineno-53-133"></a>    , <span class="p">\ </span>x →
+</span><span id="__span-53-134"><a id="__codelineno-53-134" name="__codelineno-53-134" href="#__codelineno-53-134"></a>      ( ( contra-yon
+</span><span id="__span-53-135"><a id="__codelineno-53-135" name="__codelineno-53-135" href="#__codelineno-53-135"></a>          ( A)
+</span><span id="__span-53-136"><a id="__codelineno-53-136" name="__codelineno-53-136" href="#__codelineno-53-136"></a>          ( is-segal-A)
+</span><span id="__span-53-137"><a id="__codelineno-53-137" name="__codelineno-53-137" href="#__codelineno-53-137"></a>          ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-138"><a id="__codelineno-53-138" name="__codelineno-53-138" href="#__codelineno-53-138"></a>          ( C)
+</span><span id="__span-53-139"><a id="__codelineno-53-139" name="__codelineno-53-139" href="#__codelineno-53-139"></a>          ( is-contravariant-C))
+</span><span id="__span-53-140"><a id="__codelineno-53-140" name="__codelineno-53-140" href="#__codelineno-53-140"></a>        ( <span class="s">second</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-141"><a id="__codelineno-53-141" name="__codelineno-53-141" href="#__codelineno-53-141"></a>        ( x)
+</span><span id="__span-53-142"><a id="__codelineno-53-142" name="__codelineno-53-142" href="#__codelineno-53-142"></a>      , is-equiv-is-contr-map
+</span><span id="__span-53-143"><a id="__codelineno-53-143" name="__codelineno-53-143" href="#__codelineno-53-143"></a>        ( hom A x (<span class="s">first</span> (<span class="s">first</span> has-final-tot-A)))
+</span><span id="__span-53-144"><a id="__codelineno-53-144" name="__codelineno-53-144" href="#__codelineno-53-144"></a>        ( C x)
+</span><span id="__span-53-145"><a id="__codelineno-53-145" name="__codelineno-53-145" href="#__codelineno-53-145"></a>        ( ( contra-yon
+</span><span id="__span-53-146"><a id="__codelineno-53-146" name="__codelineno-53-146" href="#__codelineno-53-146"></a>            ( A)
+</span><span id="__span-53-147"><a id="__codelineno-53-147" name="__codelineno-53-147" href="#__codelineno-53-147"></a>            ( is-segal-A)
+</span><span id="__span-53-148"><a id="__codelineno-53-148" name="__codelineno-53-148" href="#__codelineno-53-148"></a>            ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-149"><a id="__codelineno-53-149" name="__codelineno-53-149" href="#__codelineno-53-149"></a>            ( C)
+</span><span id="__span-53-150"><a id="__codelineno-53-150" name="__codelineno-53-150" href="#__codelineno-53-150"></a>            ( is-contravariant-C))
+</span><span id="__span-53-151"><a id="__codelineno-53-151" name="__codelineno-53-151" href="#__codelineno-53-151"></a>          ( <span class="s">second</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-152"><a id="__codelineno-53-152" name="__codelineno-53-152" href="#__codelineno-53-152"></a>          ( x))
+</span><span id="__span-53-153"><a id="__codelineno-53-153" name="__codelineno-53-153" href="#__codelineno-53-153"></a>        <span class="p">( </span>\ v →
+</span><span id="__span-53-154"><a id="__codelineno-53-154" name="__codelineno-53-154" href="#__codelineno-53-154"></a>          is-contr-equiv-is-contr
+</span><span id="__span-53-155"><a id="__codelineno-53-155" name="__codelineno-53-155" href="#__codelineno-53-155"></a>            ( hom
+</span><span id="__span-53-156"><a id="__codelineno-53-156" name="__codelineno-53-156" href="#__codelineno-53-156"></a>              ( Σ ( z <span class="p">:</span> A) , C z)
+</span><span id="__span-53-157"><a id="__codelineno-53-157" name="__codelineno-53-157" href="#__codelineno-53-157"></a>              ( x , v)
+</span><span id="__span-53-158"><a id="__codelineno-53-158" name="__codelineno-53-158" href="#__codelineno-53-158"></a>              ( <span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-159"><a id="__codelineno-53-159" name="__codelineno-53-159" href="#__codelineno-53-159"></a>            ( fib
+</span><span id="__span-53-160"><a id="__codelineno-53-160" name="__codelineno-53-160" href="#__codelineno-53-160"></a>              ( hom A x (<span class="s">first</span> (<span class="s">first</span> has-final-tot-A)))
+</span><span id="__span-53-161"><a id="__codelineno-53-161" name="__codelineno-53-161" href="#__codelineno-53-161"></a>              ( C x)
+</span><span id="__span-53-162"><a id="__codelineno-53-162" name="__codelineno-53-162" href="#__codelineno-53-162"></a>              ( ( contra-yon
+</span><span id="__span-53-163"><a id="__codelineno-53-163" name="__codelineno-53-163" href="#__codelineno-53-163"></a>                  ( A)
+</span><span id="__span-53-164"><a id="__codelineno-53-164" name="__codelineno-53-164" href="#__codelineno-53-164"></a>                  ( is-segal-A)
+</span><span id="__span-53-165"><a id="__codelineno-53-165" name="__codelineno-53-165" href="#__codelineno-53-165"></a>                  ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-166"><a id="__codelineno-53-166" name="__codelineno-53-166" href="#__codelineno-53-166"></a>                  ( C)
+</span><span id="__span-53-167"><a id="__codelineno-53-167" name="__codelineno-53-167" href="#__codelineno-53-167"></a>                  ( is-contravariant-C))
+</span><span id="__span-53-168"><a id="__codelineno-53-168" name="__codelineno-53-168" href="#__codelineno-53-168"></a>                ( <span class="s">second</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-169"><a id="__codelineno-53-169" name="__codelineno-53-169" href="#__codelineno-53-169"></a>                ( x))
+</span><span id="__span-53-170"><a id="__codelineno-53-170" name="__codelineno-53-170" href="#__codelineno-53-170"></a>              ( v))
+</span><span id="__span-53-171"><a id="__codelineno-53-171" name="__codelineno-53-171" href="#__codelineno-53-171"></a>            <span class="p">( </span>equiv-comp
+</span><span id="__span-53-172"><a id="__codelineno-53-172" name="__codelineno-53-172" href="#__codelineno-53-172"></a>              ( hom
+</span><span id="__span-53-173"><a id="__codelineno-53-173" name="__codelineno-53-173" href="#__codelineno-53-173"></a>                ( Σ ( z <span class="p">:</span> A) , C z)
+</span><span id="__span-53-174"><a id="__codelineno-53-174" name="__codelineno-53-174" href="#__codelineno-53-174"></a>                ( x , v)
+</span><span id="__span-53-175"><a id="__codelineno-53-175" name="__codelineno-53-175" href="#__codelineno-53-175"></a>                ( <span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-176"><a id="__codelineno-53-176" name="__codelineno-53-176" href="#__codelineno-53-176"></a>              <span class="p">( </span>Σ ( h <span class="p">:</span> hom A x (<span class="s">first</span> (<span class="s">first</span> has-final-tot-A)))
+</span><span id="__span-53-177"><a id="__codelineno-53-177" name="__codelineno-53-177" href="#__codelineno-53-177"></a>                , dhom
+</span><span id="__span-53-178"><a id="__codelineno-53-178" name="__codelineno-53-178" href="#__codelineno-53-178"></a>                    ( A)
+</span><span id="__span-53-179"><a id="__codelineno-53-179" name="__codelineno-53-179" href="#__codelineno-53-179"></a>                    ( x)
+</span><span id="__span-53-180"><a id="__codelineno-53-180" name="__codelineno-53-180" href="#__codelineno-53-180"></a>                    ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-181"><a id="__codelineno-53-181" name="__codelineno-53-181" href="#__codelineno-53-181"></a>                    ( h)
+</span><span id="__span-53-182"><a id="__codelineno-53-182" name="__codelineno-53-182" href="#__codelineno-53-182"></a>                    ( C)
+</span><span id="__span-53-183"><a id="__codelineno-53-183" name="__codelineno-53-183" href="#__codelineno-53-183"></a>                    ( v)
+</span><span id="__span-53-184"><a id="__codelineno-53-184" name="__codelineno-53-184" href="#__codelineno-53-184"></a>                    ( <span class="s">second</span> (<span class="s">first</span> has-final-tot-A)))
+</span><span id="__span-53-185"><a id="__codelineno-53-185" name="__codelineno-53-185" href="#__codelineno-53-185"></a>              ( fib
+</span><span id="__span-53-186"><a id="__codelineno-53-186" name="__codelineno-53-186" href="#__codelineno-53-186"></a>                ( hom A x (<span class="s">first</span> (<span class="s">first</span> has-final-tot-A)))
+</span><span id="__span-53-187"><a id="__codelineno-53-187" name="__codelineno-53-187" href="#__codelineno-53-187"></a>                ( C x)
+</span><span id="__span-53-188"><a id="__codelineno-53-188" name="__codelineno-53-188" href="#__codelineno-53-188"></a>                ( ( contra-yon
+</span><span id="__span-53-189"><a id="__codelineno-53-189" name="__codelineno-53-189" href="#__codelineno-53-189"></a>                    ( A)
+</span><span id="__span-53-190"><a id="__codelineno-53-190" name="__codelineno-53-190" href="#__codelineno-53-190"></a>                    ( is-segal-A)
+</span><span id="__span-53-191"><a id="__codelineno-53-191" name="__codelineno-53-191" href="#__codelineno-53-191"></a>                    ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-192"><a id="__codelineno-53-192" name="__codelineno-53-192" href="#__codelineno-53-192"></a>                    ( C)
+</span><span id="__span-53-193"><a id="__codelineno-53-193" name="__codelineno-53-193" href="#__codelineno-53-193"></a>                    ( is-contravariant-C))
+</span><span id="__span-53-194"><a id="__codelineno-53-194" name="__codelineno-53-194" href="#__codelineno-53-194"></a>                  ( <span class="s">second</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-195"><a id="__codelineno-53-195" name="__codelineno-53-195" href="#__codelineno-53-195"></a>                  ( x))
+</span><span id="__span-53-196"><a id="__codelineno-53-196" name="__codelineno-53-196" href="#__codelineno-53-196"></a>                ( v))
+</span><span id="__span-53-197"><a id="__codelineno-53-197" name="__codelineno-53-197" href="#__codelineno-53-197"></a>              ( axiom-choice
+</span><span id="__span-53-198"><a id="__codelineno-53-198" name="__codelineno-53-198" href="#__codelineno-53-198"></a>                ( <span class="kt">2</span>)
+</span><span id="__span-53-199"><a id="__codelineno-53-199" name="__codelineno-53-199" href="#__codelineno-53-199"></a>                ( Δ¹)
+</span><span id="__span-53-200"><a id="__codelineno-53-200" name="__codelineno-53-200" href="#__codelineno-53-200"></a>                ( ∂Δ¹)
+</span><span id="__span-53-201"><a id="__codelineno-53-201" name="__codelineno-53-201" href="#__codelineno-53-201"></a>                ( <span class="p">\ </span>_ → A)
+</span><span id="__span-53-202"><a id="__codelineno-53-202" name="__codelineno-53-202" href="#__codelineno-53-202"></a>                ( <span class="p">\ </span>_ z → C z)
+</span><span id="__span-53-203"><a id="__codelineno-53-203" name="__codelineno-53-203" href="#__codelineno-53-203"></a>                ( <span class="p">\ </span>t →
+</span><span id="__span-53-204"><a id="__codelineno-53-204" name="__codelineno-53-204" href="#__codelineno-53-204"></a>                  <span class="s">recOR</span>
+</span><span id="__span-53-205"><a id="__codelineno-53-205" name="__codelineno-53-205" href="#__codelineno-53-205"></a>                    ( t <span class="sx">≡</span> <span class="m">0₂</span> ↦ x
+</span><span id="__span-53-206"><a id="__codelineno-53-206" name="__codelineno-53-206" href="#__codelineno-53-206"></a>                    , t <span class="sx">≡</span> <span class="m">1₂</span> ↦ <span class="s">first</span> (<span class="s">first</span> has-final-tot-A)))
+</span><span id="__span-53-207"><a id="__codelineno-53-207" name="__codelineno-53-207" href="#__codelineno-53-207"></a>                ( <span class="p">\ </span>t →
+</span><span id="__span-53-208"><a id="__codelineno-53-208" name="__codelineno-53-208" href="#__codelineno-53-208"></a>                  <span class="s">recOR</span>
+</span><span id="__span-53-209"><a id="__codelineno-53-209" name="__codelineno-53-209" href="#__codelineno-53-209"></a>                    ( t <span class="sx">≡</span> <span class="m">0₂</span> ↦ v
+</span><span id="__span-53-210"><a id="__codelineno-53-210" name="__codelineno-53-210" href="#__codelineno-53-210"></a>                    , t <span class="sx">≡</span> <span class="m">1₂</span> ↦ <span class="s">second</span> (<span class="s">first</span> has-final-tot-A))))
+</span><span id="__span-53-211"><a id="__codelineno-53-211" name="__codelineno-53-211" href="#__codelineno-53-211"></a>              ( total-equiv-family-of-equiv
+</span><span id="__span-53-212"><a id="__codelineno-53-212" name="__codelineno-53-212" href="#__codelineno-53-212"></a>                ( hom A x (<span class="s">first</span> (<span class="s">first</span> has-final-tot-A)))
+</span><span id="__span-53-213"><a id="__codelineno-53-213" name="__codelineno-53-213" href="#__codelineno-53-213"></a>                ( <span class="p">\ </span>h →
+</span><span id="__span-53-214"><a id="__codelineno-53-214" name="__codelineno-53-214" href="#__codelineno-53-214"></a>                  dhom
+</span><span id="__span-53-215"><a id="__codelineno-53-215" name="__codelineno-53-215" href="#__codelineno-53-215"></a>                    ( A)
+</span><span id="__span-53-216"><a id="__codelineno-53-216" name="__codelineno-53-216" href="#__codelineno-53-216"></a>                    ( x)
+</span><span id="__span-53-217"><a id="__codelineno-53-217" name="__codelineno-53-217" href="#__codelineno-53-217"></a>                    ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-218"><a id="__codelineno-53-218" name="__codelineno-53-218" href="#__codelineno-53-218"></a>                    ( h)
+</span><span id="__span-53-219"><a id="__codelineno-53-219" name="__codelineno-53-219" href="#__codelineno-53-219"></a>                    ( C)
+</span><span id="__span-53-220"><a id="__codelineno-53-220" name="__codelineno-53-220" href="#__codelineno-53-220"></a>                    ( v)
+</span><span id="__span-53-221"><a id="__codelineno-53-221" name="__codelineno-53-221" href="#__codelineno-53-221"></a>                    ( <span class="s">second</span> (<span class="s">first</span> has-final-tot-A)))
+</span><span id="__span-53-222"><a id="__codelineno-53-222" name="__codelineno-53-222" href="#__codelineno-53-222"></a>                ( <span class="p">\ </span>h →
+</span><span id="__span-53-223"><a id="__codelineno-53-223" name="__codelineno-53-223" href="#__codelineno-53-223"></a>                  contravariant-transport
+</span><span id="__span-53-224"><a id="__codelineno-53-224" name="__codelineno-53-224" href="#__codelineno-53-224"></a>                    ( A)
+</span><span id="__span-53-225"><a id="__codelineno-53-225" name="__codelineno-53-225" href="#__codelineno-53-225"></a>                    ( x)
+</span><span id="__span-53-226"><a id="__codelineno-53-226" name="__codelineno-53-226" href="#__codelineno-53-226"></a>                    ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-227"><a id="__codelineno-53-227" name="__codelineno-53-227" href="#__codelineno-53-227"></a>                    ( h)
+</span><span id="__span-53-228"><a id="__codelineno-53-228" name="__codelineno-53-228" href="#__codelineno-53-228"></a>                    ( C)
+</span><span id="__span-53-229"><a id="__codelineno-53-229" name="__codelineno-53-229" href="#__codelineno-53-229"></a>                    ( is-contravariant-C)
+</span><span id="__span-53-230"><a id="__codelineno-53-230" name="__codelineno-53-230" href="#__codelineno-53-230"></a>                    ( <span class="s">second</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-231"><a id="__codelineno-53-231" name="__codelineno-53-231" href="#__codelineno-53-231"></a>                  = v)
+</span><span id="__span-53-232"><a id="__codelineno-53-232" name="__codelineno-53-232" href="#__codelineno-53-232"></a>                ( <span class="p">\ </span>h →
+</span><span id="__span-53-233"><a id="__codelineno-53-233" name="__codelineno-53-233" href="#__codelineno-53-233"></a>                  ( contravariant-uniqueness-curried
+</span><span id="__span-53-234"><a id="__codelineno-53-234" name="__codelineno-53-234" href="#__codelineno-53-234"></a>                      ( A)
+</span><span id="__span-53-235"><a id="__codelineno-53-235" name="__codelineno-53-235" href="#__codelineno-53-235"></a>                      ( x)
+</span><span id="__span-53-236"><a id="__codelineno-53-236" name="__codelineno-53-236" href="#__codelineno-53-236"></a>                      ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-237"><a id="__codelineno-53-237" name="__codelineno-53-237" href="#__codelineno-53-237"></a>                      ( h)
+</span><span id="__span-53-238"><a id="__codelineno-53-238" name="__codelineno-53-238" href="#__codelineno-53-238"></a>                      ( C)
+</span><span id="__span-53-239"><a id="__codelineno-53-239" name="__codelineno-53-239" href="#__codelineno-53-239"></a>                      ( is-contravariant-C)
+</span><span id="__span-53-240"><a id="__codelineno-53-240" name="__codelineno-53-240" href="#__codelineno-53-240"></a>                      ( <span class="s">second</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-241"><a id="__codelineno-53-241" name="__codelineno-53-241" href="#__codelineno-53-241"></a>                      ( v)
+</span><span id="__span-53-242"><a id="__codelineno-53-242" name="__codelineno-53-242" href="#__codelineno-53-242"></a>                  , is-equiv-contravariant-uniqueness-curried
+</span><span id="__span-53-243"><a id="__codelineno-53-243" name="__codelineno-53-243" href="#__codelineno-53-243"></a>                      ( A)
+</span><span id="__span-53-244"><a id="__codelineno-53-244" name="__codelineno-53-244" href="#__codelineno-53-244"></a>                      ( x)
+</span><span id="__span-53-245"><a id="__codelineno-53-245" name="__codelineno-53-245" href="#__codelineno-53-245"></a>                      ( <span class="s">first</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-246"><a id="__codelineno-53-246" name="__codelineno-53-246" href="#__codelineno-53-246"></a>                      ( h)
+</span><span id="__span-53-247"><a id="__codelineno-53-247" name="__codelineno-53-247" href="#__codelineno-53-247"></a>                      ( C)
+</span><span id="__span-53-248"><a id="__codelineno-53-248" name="__codelineno-53-248" href="#__codelineno-53-248"></a>                      ( is-contravariant-C)
+</span><span id="__span-53-249"><a id="__codelineno-53-249" name="__codelineno-53-249" href="#__codelineno-53-249"></a>                      ( <span class="s">second</span> (<span class="s">first</span> has-final-tot-A))
+</span><span id="__span-53-250"><a id="__codelineno-53-250" name="__codelineno-53-250" href="#__codelineno-53-250"></a>                      ( v)))))
+</span><span id="__span-53-251"><a id="__codelineno-53-251" name="__codelineno-53-251" href="#__codelineno-53-251"></a>            ( <span class="s">second</span> has-final-tot-A (x , v)))))
 </span></code></pre></div>
 <div class="language-rzk highlight"><span class="filename">RS17, Proposition 9.10</span><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-representable-iff-has-initial-tot" id="define:is-representable-iff-has-initial-tot" style="visibility: visible; position: relative; color: inherit">is-representable-iff-has-initial-tot</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)

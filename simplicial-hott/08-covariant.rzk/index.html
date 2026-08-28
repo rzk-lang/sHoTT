@@ -3528,375 +3528,441 @@ transported along an arrow f : hom A x y to give a term in C x.</p>
 </span><span id="__span-58-31"><a id="__codelineno-58-31" name="__codelineno-58-31" href="#__codelineno-58-31"></a>      ( dhom-to A x y f C v)
 </span><span id="__span-58-32"><a id="__codelineno-58-32" name="__codelineno-58-32" href="#__codelineno-58-32"></a>      ( is-contravariant-C x y f v)
 </span><span id="__span-58-33"><a id="__codelineno-58-33" name="__codelineno-58-33" href="#__codelineno-58-33"></a>      ( lift))
+</span><span id="__span-58-34"><a id="__codelineno-58-34" name="__codelineno-58-34" href="#__codelineno-58-34"></a>
+</span><span id="__span-58-35"><a id="__codelineno-58-35" name="__codelineno-58-35" href="#__codelineno-58-35"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:contravariant-uniqueness-curried" id="define:contravariant-uniqueness-curried" style="visibility: visible; position: relative; color: inherit">contravariant-uniqueness-curried</a></span>
+</span><span id="__span-58-36"><a id="__codelineno-58-36" name="__codelineno-58-36" href="#__codelineno-58-36"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-58-37"><a id="__codelineno-58-37" name="__codelineno-58-37" href="#__codelineno-58-37"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
+</span><span id="__span-58-38"><a id="__codelineno-58-38" name="__codelineno-58-38" href="#__codelineno-58-38"></a>  <span class="p">( </span>f <span class="p">:</span> hom A x y)
+</span><span id="__span-58-39"><a id="__codelineno-58-39" name="__codelineno-58-39" href="#__codelineno-58-39"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-58-40"><a id="__codelineno-58-40" name="__codelineno-58-40" href="#__codelineno-58-40"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
+</span><span id="__span-58-41"><a id="__codelineno-58-41" name="__codelineno-58-41" href="#__codelineno-58-41"></a>  <span class="p">( </span>v <span class="p">:</span> C y)
+</span><span id="__span-58-42"><a id="__codelineno-58-42" name="__codelineno-58-42" href="#__codelineno-58-42"></a>  : <span class="p">( </span>u <span class="p">:</span> C x)
+</span><span id="__span-58-43"><a id="__codelineno-58-43" name="__codelineno-58-43" href="#__codelineno-58-43"></a>  → ( dhom A x y f C u v)
+</span><span id="__span-58-44"><a id="__codelineno-58-44" name="__codelineno-58-44" href="#__codelineno-58-44"></a>  → ( contravariant-transport A x y f C is-contravariant-C v) = u
+</span><span id="__span-58-45"><a id="__codelineno-58-45" name="__codelineno-58-45" href="#__codelineno-58-45"></a>  :=
+</span><span id="__span-58-46"><a id="__codelineno-58-46" name="__codelineno-58-46" href="#__codelineno-58-46"></a>    <span class="p">\ </span>u g → contravariant-uniqueness A x y f C is-contravariant-C v (u , g)
+</span></code></pre></div>
+<p>We show that for each <code>v : C y</code>, the map <code>contravariant-uniqueness</code> is an
+equivalence. This follows from the fact that the total types (summed over
+<code>u : C x</code>) of both sides are contractible.</p>
+<div class="language-rzk highlight"><span class="filename">RS17, Lemma 8.15, dual</span><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-total-map-contravariant-uniqueness-curried" id="define:is-equiv-total-map-contravariant-uniqueness-curried" style="visibility: visible; position: relative; color: inherit">is-equiv-total-map-contravariant-uniqueness-curried</a></span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a>  <span class="p">( </span>f <span class="p">:</span> hom A x y)
+</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
+</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a>  <span class="p">( </span>v <span class="p">:</span> C y)
+</span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a>  : is-equiv
+</span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a>      <span class="p">( </span>Σ ( u <span class="p">:</span> C x) , dhom A x y f C u v)
+</span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a>      <span class="p">( </span>Σ ( u <span class="p">:</span> C x)
+</span><span id="__span-59-11"><a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a>        , contravariant-transport A x y f C is-contravariant-C v = u)
+</span><span id="__span-59-12"><a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a>      ( total-map (C x)
+</span><span id="__span-59-13"><a id="__codelineno-59-13" name="__codelineno-59-13" href="#__codelineno-59-13"></a>        ( <span class="p">\ </span>u → dhom A x y f C u v)
+</span><span id="__span-59-14"><a id="__codelineno-59-14" name="__codelineno-59-14" href="#__codelineno-59-14"></a>        ( <span class="p">\ </span>u → contravariant-transport A x y f C is-contravariant-C v = u)
+</span><span id="__span-59-15"><a id="__codelineno-59-15" name="__codelineno-59-15" href="#__codelineno-59-15"></a>        ( contravariant-uniqueness-curried A x y f C is-contravariant-C v))
+</span><span id="__span-59-16"><a id="__codelineno-59-16" name="__codelineno-59-16" href="#__codelineno-59-16"></a>  :=
+</span><span id="__span-59-17"><a id="__codelineno-59-17" name="__codelineno-59-17" href="#__codelineno-59-17"></a>    is-equiv-are-contr
+</span><span id="__span-59-18"><a id="__codelineno-59-18" name="__codelineno-59-18" href="#__codelineno-59-18"></a>      <span class="p">( </span>Σ ( u <span class="p">:</span> C x) , dhom A x y f C u v)
+</span><span id="__span-59-19"><a id="__codelineno-59-19" name="__codelineno-59-19" href="#__codelineno-59-19"></a>      <span class="p">( </span>Σ ( u <span class="p">:</span> C x)
+</span><span id="__span-59-20"><a id="__codelineno-59-20" name="__codelineno-59-20" href="#__codelineno-59-20"></a>        , contravariant-transport A x y f C is-contravariant-C v = u)
+</span><span id="__span-59-21"><a id="__codelineno-59-21" name="__codelineno-59-21" href="#__codelineno-59-21"></a>      ( is-contravariant-C x y f v)
+</span><span id="__span-59-22"><a id="__codelineno-59-22" name="__codelineno-59-22" href="#__codelineno-59-22"></a>      ( is-contr-based-paths (C x)
+</span><span id="__span-59-23"><a id="__codelineno-59-23" name="__codelineno-59-23" href="#__codelineno-59-23"></a>        ( contravariant-transport A x y f C is-contravariant-C v))
+</span><span id="__span-59-24"><a id="__codelineno-59-24" name="__codelineno-59-24" href="#__codelineno-59-24"></a>      ( total-map (C x)
+</span><span id="__span-59-25"><a id="__codelineno-59-25" name="__codelineno-59-25" href="#__codelineno-59-25"></a>        ( <span class="p">\ </span>u → dhom A x y f C u v)
+</span><span id="__span-59-26"><a id="__codelineno-59-26" name="__codelineno-59-26" href="#__codelineno-59-26"></a>        ( <span class="p">\ </span>u → contravariant-transport A x y f C is-contravariant-C v = u)
+</span><span id="__span-59-27"><a id="__codelineno-59-27" name="__codelineno-59-27" href="#__codelineno-59-27"></a>        ( contravariant-uniqueness-curried A x y f C is-contravariant-C v))
+</span><span id="__span-59-28"><a id="__codelineno-59-28" name="__codelineno-59-28" href="#__codelineno-59-28"></a>
+</span><span id="__span-59-29"><a id="__codelineno-59-29" name="__codelineno-59-29" href="#__codelineno-59-29"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-contravariant-uniqueness-curried" id="define:is-equiv-contravariant-uniqueness-curried" style="visibility: visible; position: relative; color: inherit">is-equiv-contravariant-uniqueness-curried</a></span>
+</span><span id="__span-59-30"><a id="__codelineno-59-30" name="__codelineno-59-30" href="#__codelineno-59-30"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-59-31"><a id="__codelineno-59-31" name="__codelineno-59-31" href="#__codelineno-59-31"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
+</span><span id="__span-59-32"><a id="__codelineno-59-32" name="__codelineno-59-32" href="#__codelineno-59-32"></a>  <span class="p">( </span>f <span class="p">:</span> hom A x y)
+</span><span id="__span-59-33"><a id="__codelineno-59-33" name="__codelineno-59-33" href="#__codelineno-59-33"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-59-34"><a id="__codelineno-59-34" name="__codelineno-59-34" href="#__codelineno-59-34"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
+</span><span id="__span-59-35"><a id="__codelineno-59-35" name="__codelineno-59-35" href="#__codelineno-59-35"></a>  <span class="p">( </span>v <span class="p">:</span> C y)
+</span><span id="__span-59-36"><a id="__codelineno-59-36" name="__codelineno-59-36" href="#__codelineno-59-36"></a>  <span class="p">( </span>u <span class="p">:</span> C x)
+</span><span id="__span-59-37"><a id="__codelineno-59-37" name="__codelineno-59-37" href="#__codelineno-59-37"></a>  : is-equiv
+</span><span id="__span-59-38"><a id="__codelineno-59-38" name="__codelineno-59-38" href="#__codelineno-59-38"></a>      ( dhom A x y f C u v)
+</span><span id="__span-59-39"><a id="__codelineno-59-39" name="__codelineno-59-39" href="#__codelineno-59-39"></a>      ( contravariant-transport A x y f C is-contravariant-C v = u)
+</span><span id="__span-59-40"><a id="__codelineno-59-40" name="__codelineno-59-40" href="#__codelineno-59-40"></a>      ( contravariant-uniqueness-curried A x y f C is-contravariant-C v u)
+</span><span id="__span-59-41"><a id="__codelineno-59-41" name="__codelineno-59-41" href="#__codelineno-59-41"></a>  :=
+</span><span id="__span-59-42"><a id="__codelineno-59-42" name="__codelineno-59-42" href="#__codelineno-59-42"></a>    is-equiv-fiberwise-is-equiv-total
+</span><span id="__span-59-43"><a id="__codelineno-59-43" name="__codelineno-59-43" href="#__codelineno-59-43"></a>      ( C x)
+</span><span id="__span-59-44"><a id="__codelineno-59-44" name="__codelineno-59-44" href="#__codelineno-59-44"></a>      ( <span class="p">\ </span>u&#39; → dhom A x y f C u&#39; v)
+</span><span id="__span-59-45"><a id="__codelineno-59-45" name="__codelineno-59-45" href="#__codelineno-59-45"></a>      ( <span class="p">\ </span>u&#39; → contravariant-transport A x y f C is-contravariant-C v = u&#39;)
+</span><span id="__span-59-46"><a id="__codelineno-59-46" name="__codelineno-59-46" href="#__codelineno-59-46"></a>      ( contravariant-uniqueness-curried A x y f C is-contravariant-C v)
+</span><span id="__span-59-47"><a id="__codelineno-59-47" name="__codelineno-59-47" href="#__codelineno-59-47"></a>      ( is-equiv-total-map-contravariant-uniqueness-curried
+</span><span id="__span-59-48"><a id="__codelineno-59-48" name="__codelineno-59-48" href="#__codelineno-59-48"></a>        A x y f C is-contravariant-C v)
+</span><span id="__span-59-49"><a id="__codelineno-59-49" name="__codelineno-59-49" href="#__codelineno-59-49"></a>      u
 </span></code></pre></div>
 <h2 id="contravariant-functoriality">Contravariant functoriality<a class="headerlink" href="#contravariant-functoriality" title="Permanent link">&para;</a></h2>
 <p>The contravariant transport operation defines a comtravariantly functorial
 action of arrows in the base on terms in the fibers. In particular, there is an
 identity transport law.</p>
-<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.16, Part 2, dual, Contravariant families preserve identities</span><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:id-arr-contravariant-transport" id="define:id-arr-contravariant-transport" style="visibility: visible; position: relative; color: inherit">id-arr-contravariant-transport</a></span>
-</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>  <span class="p">( </span>x <span class="p">:</span> A)
-</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
-</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
-</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a>  <span class="p">( </span>u <span class="p">:</span> C x)
-</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a>  : ( contravariant-transport A x x (id-hom A x) C is-contravariant-C u) = u
-</span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a>  :=
-</span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a>    contravariant-uniqueness A x x (id-hom A x) C is-contravariant-C u
-</span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a>      ( u , id-dhom A x C u)
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.16, Part 2, dual, Contravariant families preserve identities</span><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:id-arr-contravariant-transport" id="define:id-arr-contravariant-transport" style="visibility: visible; position: relative; color: inherit">id-arr-contravariant-transport</a></span>
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a>  <span class="p">( </span>x <span class="p">:</span> A)
+</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
+</span><span id="__span-60-6"><a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a>  <span class="p">( </span>u <span class="p">:</span> C x)
+</span><span id="__span-60-7"><a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a>  : ( contravariant-transport A x x (id-hom A x) C is-contravariant-C u) = u
+</span><span id="__span-60-8"><a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a>  :=
+</span><span id="__span-60-9"><a id="__codelineno-60-9" name="__codelineno-60-9" href="#__codelineno-60-9"></a>    contravariant-uniqueness A x x (id-hom A x) C is-contravariant-C u
+</span><span id="__span-60-10"><a id="__codelineno-60-10" name="__codelineno-60-10" href="#__codelineno-60-10"></a>      ( u , id-dhom A x C u)
 </span></code></pre></div>
 <h2 id="contravariant-natural-transformations">Contravariant natural transformations<a class="headerlink" href="#contravariant-natural-transformations" title="Permanent link">&para;</a></h2>
 <p>A fiberwise map between contrvariant families is automatically "natural"
 commuting with the contravariant lifts.</p>
-<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.17, dual, Contravariant naturality</span><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:contravariant-fiberwise-transformation-application" id="define:contravariant-fiberwise-transformation-application" style="visibility: visible; position: relative; color: inherit">contravariant-fiberwise-transformation-application</a></span>
-</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
-</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a>  <span class="p">( </span>f <span class="p">:</span> hom A x y)
-</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>  <span class="p">( </span>C D <span class="p">:</span> A → <span class="kt">U</span>)
-</span><span id="__span-60-6"><a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
-</span><span id="__span-60-7"><a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a>  <span class="p">( </span>ϕ <span class="p">:</span> <span class="p">(</span>z <span class="p">:</span> A) → C z → D z)
-</span><span id="__span-60-8"><a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a>  <span class="p">( </span>v <span class="p">:</span> C y)
-</span><span id="__span-60-9"><a id="__codelineno-60-9" name="__codelineno-60-9" href="#__codelineno-60-9"></a>  : dhom-to A x y f D (ϕ y v)
-</span><span id="__span-60-10"><a id="__codelineno-60-10" name="__codelineno-60-10" href="#__codelineno-60-10"></a>  :=
-</span><span id="__span-60-11"><a id="__codelineno-60-11" name="__codelineno-60-11" href="#__codelineno-60-11"></a>    ( ϕ x (contravariant-transport A x y f C is-contravariant-C v)
-</span><span id="__span-60-12"><a id="__codelineno-60-12" name="__codelineno-60-12" href="#__codelineno-60-12"></a>    , <span class="p">\ </span>t → ϕ (f t) (contravariant-lift A x y f C is-contravariant-C v t))
-</span><span id="__span-60-13"><a id="__codelineno-60-13" name="__codelineno-60-13" href="#__codelineno-60-13"></a>
-</span><span id="__span-60-14"><a id="__codelineno-60-14" name="__codelineno-60-14" href="#__codelineno-60-14"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:naturality-contravariant-fiberwise-transformation" id="define:naturality-contravariant-fiberwise-transformation" style="visibility: visible; position: relative; color: inherit">naturality-contravariant-fiberwise-transformation</a></span>
-</span><span id="__span-60-15"><a id="__codelineno-60-15" name="__codelineno-60-15" href="#__codelineno-60-15"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-60-16"><a id="__codelineno-60-16" name="__codelineno-60-16" href="#__codelineno-60-16"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
-</span><span id="__span-60-17"><a id="__codelineno-60-17" name="__codelineno-60-17" href="#__codelineno-60-17"></a>  <span class="p">( </span>f <span class="p">:</span> hom A x y)
-</span><span id="__span-60-18"><a id="__codelineno-60-18" name="__codelineno-60-18" href="#__codelineno-60-18"></a>  <span class="p">( </span>C D <span class="p">:</span> A → <span class="kt">U</span>)
-</span><span id="__span-60-19"><a id="__codelineno-60-19" name="__codelineno-60-19" href="#__codelineno-60-19"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
-</span><span id="__span-60-20"><a id="__codelineno-60-20" name="__codelineno-60-20" href="#__codelineno-60-20"></a>  <span class="p">( </span>is-contravariant-D <span class="p">:</span> is-contravariant A D)
-</span><span id="__span-60-21"><a id="__codelineno-60-21" name="__codelineno-60-21" href="#__codelineno-60-21"></a>  <span class="p">( </span>ϕ <span class="p">:</span> <span class="p">(</span>z <span class="p">:</span> A) → C z → D z)
-</span><span id="__span-60-22"><a id="__codelineno-60-22" name="__codelineno-60-22" href="#__codelineno-60-22"></a>  <span class="p">( </span>v <span class="p">:</span> C y)
-</span><span id="__span-60-23"><a id="__codelineno-60-23" name="__codelineno-60-23" href="#__codelineno-60-23"></a>  : ( contravariant-transport A x y f D is-contravariant-D (ϕ y v))
-</span><span id="__span-60-24"><a id="__codelineno-60-24" name="__codelineno-60-24" href="#__codelineno-60-24"></a>  = ( ϕ x (contravariant-transport A x y f C is-contravariant-C v))
-</span><span id="__span-60-25"><a id="__codelineno-60-25" name="__codelineno-60-25" href="#__codelineno-60-25"></a>  :=
-</span><span id="__span-60-26"><a id="__codelineno-60-26" name="__codelineno-60-26" href="#__codelineno-60-26"></a>    contravariant-uniqueness A x y f D is-contravariant-D (ϕ y v)
-</span><span id="__span-60-27"><a id="__codelineno-60-27" name="__codelineno-60-27" href="#__codelineno-60-27"></a>    ( contravariant-fiberwise-transformation-application
-</span><span id="__span-60-28"><a id="__codelineno-60-28" name="__codelineno-60-28" href="#__codelineno-60-28"></a>        A x y f C D is-contravariant-C ϕ v)
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.17, dual, Contravariant naturality</span><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:contravariant-fiberwise-transformation-application" id="define:contravariant-fiberwise-transformation-application" style="visibility: visible; position: relative; color: inherit">contravariant-fiberwise-transformation-application</a></span>
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
+</span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>  <span class="p">( </span>f <span class="p">:</span> hom A x y)
+</span><span id="__span-61-5"><a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>  <span class="p">( </span>C D <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-61-6"><a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
+</span><span id="__span-61-7"><a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a>  <span class="p">( </span>ϕ <span class="p">:</span> <span class="p">(</span>z <span class="p">:</span> A) → C z → D z)
+</span><span id="__span-61-8"><a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>  <span class="p">( </span>v <span class="p">:</span> C y)
+</span><span id="__span-61-9"><a id="__codelineno-61-9" name="__codelineno-61-9" href="#__codelineno-61-9"></a>  : dhom-to A x y f D (ϕ y v)
+</span><span id="__span-61-10"><a id="__codelineno-61-10" name="__codelineno-61-10" href="#__codelineno-61-10"></a>  :=
+</span><span id="__span-61-11"><a id="__codelineno-61-11" name="__codelineno-61-11" href="#__codelineno-61-11"></a>    ( ϕ x (contravariant-transport A x y f C is-contravariant-C v)
+</span><span id="__span-61-12"><a id="__codelineno-61-12" name="__codelineno-61-12" href="#__codelineno-61-12"></a>    , <span class="p">\ </span>t → ϕ (f t) (contravariant-lift A x y f C is-contravariant-C v t))
+</span><span id="__span-61-13"><a id="__codelineno-61-13" name="__codelineno-61-13" href="#__codelineno-61-13"></a>
+</span><span id="__span-61-14"><a id="__codelineno-61-14" name="__codelineno-61-14" href="#__codelineno-61-14"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:naturality-contravariant-fiberwise-transformation" id="define:naturality-contravariant-fiberwise-transformation" style="visibility: visible; position: relative; color: inherit">naturality-contravariant-fiberwise-transformation</a></span>
+</span><span id="__span-61-15"><a id="__codelineno-61-15" name="__codelineno-61-15" href="#__codelineno-61-15"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-61-16"><a id="__codelineno-61-16" name="__codelineno-61-16" href="#__codelineno-61-16"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
+</span><span id="__span-61-17"><a id="__codelineno-61-17" name="__codelineno-61-17" href="#__codelineno-61-17"></a>  <span class="p">( </span>f <span class="p">:</span> hom A x y)
+</span><span id="__span-61-18"><a id="__codelineno-61-18" name="__codelineno-61-18" href="#__codelineno-61-18"></a>  <span class="p">( </span>C D <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-61-19"><a id="__codelineno-61-19" name="__codelineno-61-19" href="#__codelineno-61-19"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
+</span><span id="__span-61-20"><a id="__codelineno-61-20" name="__codelineno-61-20" href="#__codelineno-61-20"></a>  <span class="p">( </span>is-contravariant-D <span class="p">:</span> is-contravariant A D)
+</span><span id="__span-61-21"><a id="__codelineno-61-21" name="__codelineno-61-21" href="#__codelineno-61-21"></a>  <span class="p">( </span>ϕ <span class="p">:</span> <span class="p">(</span>z <span class="p">:</span> A) → C z → D z)
+</span><span id="__span-61-22"><a id="__codelineno-61-22" name="__codelineno-61-22" href="#__codelineno-61-22"></a>  <span class="p">( </span>v <span class="p">:</span> C y)
+</span><span id="__span-61-23"><a id="__codelineno-61-23" name="__codelineno-61-23" href="#__codelineno-61-23"></a>  : ( contravariant-transport A x y f D is-contravariant-D (ϕ y v))
+</span><span id="__span-61-24"><a id="__codelineno-61-24" name="__codelineno-61-24" href="#__codelineno-61-24"></a>  = ( ϕ x (contravariant-transport A x y f C is-contravariant-C v))
+</span><span id="__span-61-25"><a id="__codelineno-61-25" name="__codelineno-61-25" href="#__codelineno-61-25"></a>  :=
+</span><span id="__span-61-26"><a id="__codelineno-61-26" name="__codelineno-61-26" href="#__codelineno-61-26"></a>    contravariant-uniqueness A x y f D is-contravariant-D (ϕ y v)
+</span><span id="__span-61-27"><a id="__codelineno-61-27" name="__codelineno-61-27" href="#__codelineno-61-27"></a>    ( contravariant-fiberwise-transformation-application
+</span><span id="__span-61-28"><a id="__codelineno-61-28" name="__codelineno-61-28" href="#__codelineno-61-28"></a>        A x y f C D is-contravariant-C ϕ v)
 </span></code></pre></div>
 <h2 id="two-sided-discrete-fibrations">Two sided discrete fibrations<a class="headerlink" href="#two-sided-discrete-fibrations" title="Permanent link">&para;</a></h2>
-<div class="language-rzk highlight"><span class="filename">RS17, Definition 8.28</span><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-two-sided-discrete" id="define:is-two-sided-discrete" style="visibility: visible; position: relative; color: inherit">is-two-sided-discrete</a></span>
-</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → B → <span class="kt">U</span>)
-</span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>  : <span class="kt">U</span>
-</span><span id="__span-61-5"><a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>  :=
-</span><span id="__span-61-6"><a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>    product
-</span><span id="__span-61-7"><a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a>      <span class="p">( </span>( a <span class="p">:</span> A) → is-covariant B (<span class="p">\ </span>b → C a b))
-</span><span id="__span-61-8"><a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>      <span class="p">( </span>( b <span class="p">:</span> B) → is-contravariant A (<span class="p">\ </span>a → C a b))
-</span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.29</span><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-two-sided-discrete-hom-is-segal" id="define:is-two-sided-discrete-hom-is-segal" style="visibility: visible; position: relative; color: inherit">is-two-sided-discrete-hom-is-segal</a></span>
-</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
-</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a>  : is-two-sided-discrete A A (hom A)
+<div class="language-rzk highlight"><span class="filename">RS17, Definition 8.28</span><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-two-sided-discrete" id="define:is-two-sided-discrete" style="visibility: visible; position: relative; color: inherit">is-two-sided-discrete</a></span>
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → B → <span class="kt">U</span>)
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a>  : <span class="kt">U</span>
 </span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a>  :=
-</span><span id="__span-62-6"><a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a>    ( is-covariant-representable-is-segal A is-segal-A
-</span><span id="__span-62-7"><a id="__codelineno-62-7" name="__codelineno-62-7" href="#__codelineno-62-7"></a>    , is-contravariant-representable-is-segal A is-segal-A)
+</span><span id="__span-62-6"><a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a>    product
+</span><span id="__span-62-7"><a id="__codelineno-62-7" name="__codelineno-62-7" href="#__codelineno-62-7"></a>      <span class="p">( </span>( a <span class="p">:</span> A) → is-covariant B (<span class="p">\ </span>b → C a b))
+</span><span id="__span-62-8"><a id="__codelineno-62-8" name="__codelineno-62-8" href="#__codelineno-62-8"></a>      <span class="p">( </span>( b <span class="p">:</span> B) → is-contravariant A (<span class="p">\ </span>a → C a b))
+</span></code></pre></div>
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.29</span><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-two-sided-discrete-hom-is-segal" id="define:is-two-sided-discrete-hom-is-segal" style="visibility: visible; position: relative; color: inherit">is-two-sided-discrete-hom-is-segal</a></span>
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>  : is-two-sided-discrete A A (hom A)
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>  :=
+</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>    ( is-covariant-representable-is-segal A is-segal-A
+</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a>    , is-contravariant-representable-is-segal A is-segal-A)
 </span></code></pre></div>
 <h2 id="closure-properties-of-covariance">Closure properties of covariance<a class="headerlink" href="#closure-properties-of-covariance" title="Permanent link">&para;</a></h2>
-<div class="language-rzk highlight"><span class="filename">RS17, Theorem 8.30</span><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-covariant-is-locally-covariant" id="define:is-covariant-is-locally-covariant" style="visibility: visible; position: relative; color: inherit">is-covariant-is-locally-covariant</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakfunext<span class="p">)</span>
-</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → B → <span class="kt">U</span>)
-</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>  <span class="p">( </span>is-locally-covariant <span class="p">:</span> <span class="p">(</span>b <span class="p">:</span> B) → is-covariant A (<span class="p">\ </span>a → C a b))
-</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>  : is-covariant A <span class="p">(</span>\ a → ((b <span class="p">:</span> B) → (C a b)))
-</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>  :=
-</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a>    is-covariant-has-unique-fixed-domain-lifts
-</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a>      ( A)
-</span><span id="__span-63-9"><a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a>      <span class="p">( </span>\ a → (b <span class="p">:</span> B) → (C a b))
-</span><span id="__span-63-10"><a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a>      <span class="p">( </span>\ x y f g →
-</span><span id="__span-63-11"><a id="__codelineno-63-11" name="__codelineno-63-11" href="#__codelineno-63-11"></a>        is-contr-equiv-is-contr&#39;
-</span><span id="__span-63-12"><a id="__codelineno-63-12" name="__codelineno-63-12" href="#__codelineno-63-12"></a>          ( ( t <span class="p">:</span> Δ¹) → <span class="p">(</span>(b <span class="p">:</span> B) → C (f t) b) [  t <span class="sx">≡</span> <span class="m">0₂</span> ↦ g ])
-</span><span id="__span-63-13"><a id="__codelineno-63-13" name="__codelineno-63-13" href="#__codelineno-63-13"></a>          <span class="p">( </span>( b <span class="p">:</span> B) → <span class="p">(</span>t <span class="p">:</span> Δ¹) → C (f t) b [ t <span class="sx">≡</span> <span class="m">0₂</span> ↦ g b])
-</span><span id="__span-63-14"><a id="__codelineno-63-14" name="__codelineno-63-14" href="#__codelineno-63-14"></a>          ( flip-ext-fun <span class="kt">2</span> Δ¹ (<span class="p">\ </span>t → t <span class="sx">≡</span> <span class="m">0₂</span>) B (<span class="p">\ </span>t → C (f t)) (<span class="p">\ </span>t → g))
-</span><span id="__span-63-15"><a id="__codelineno-63-15" name="__codelineno-63-15" href="#__codelineno-63-15"></a>          <span class="p">( </span>weakfunext B
-</span><span id="__span-63-16"><a id="__codelineno-63-16" name="__codelineno-63-16" href="#__codelineno-63-16"></a>            ( \ b → ((t <span class="p">:</span> Δ¹) → C (f t) b [ t <span class="sx">≡</span> <span class="m">0₂</span> ↦ g b]))
-</span><span id="__span-63-17"><a id="__codelineno-63-17" name="__codelineno-63-17" href="#__codelineno-63-17"></a>            ( <span class="p">\ </span>b →
-</span><span id="__span-63-18"><a id="__codelineno-63-18" name="__codelineno-63-18" href="#__codelineno-63-18"></a>              ( has-unique-fixed-domain-lifts-is-covariant
-</span><span id="__span-63-19"><a id="__codelineno-63-19" name="__codelineno-63-19" href="#__codelineno-63-19"></a>                ( A)
-</span><span id="__span-63-20"><a id="__codelineno-63-20" name="__codelineno-63-20" href="#__codelineno-63-20"></a>                ( <span class="p">\ </span>a → (C a b))
-</span><span id="__span-63-21"><a id="__codelineno-63-21" name="__codelineno-63-21" href="#__codelineno-63-21"></a>                ( is-locally-covariant b))
-</span><span id="__span-63-22"><a id="__codelineno-63-22" name="__codelineno-63-22" href="#__codelineno-63-22"></a>             x y f (g b))))
+<div class="language-rzk highlight"><span class="filename">RS17, Theorem 8.30</span><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-covariant-is-locally-covariant" id="define:is-covariant-is-locally-covariant" style="visibility: visible; position: relative; color: inherit">is-covariant-is-locally-covariant</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>weakfunext<span class="p">)</span>
+</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → B → <span class="kt">U</span>)
+</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a>  <span class="p">( </span>is-locally-covariant <span class="p">:</span> <span class="p">(</span>b <span class="p">:</span> B) → is-covariant A (<span class="p">\ </span>a → C a b))
+</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>  : is-covariant A <span class="p">(</span>\ a → ((b <span class="p">:</span> B) → (C a b)))
+</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a>  :=
+</span><span id="__span-64-7"><a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a>    is-covariant-has-unique-fixed-domain-lifts
+</span><span id="__span-64-8"><a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a>      ( A)
+</span><span id="__span-64-9"><a id="__codelineno-64-9" name="__codelineno-64-9" href="#__codelineno-64-9"></a>      <span class="p">( </span>\ a → (b <span class="p">:</span> B) → (C a b))
+</span><span id="__span-64-10"><a id="__codelineno-64-10" name="__codelineno-64-10" href="#__codelineno-64-10"></a>      <span class="p">( </span>\ x y f g →
+</span><span id="__span-64-11"><a id="__codelineno-64-11" name="__codelineno-64-11" href="#__codelineno-64-11"></a>        is-contr-equiv-is-contr&#39;
+</span><span id="__span-64-12"><a id="__codelineno-64-12" name="__codelineno-64-12" href="#__codelineno-64-12"></a>          ( ( t <span class="p">:</span> Δ¹) → <span class="p">(</span>(b <span class="p">:</span> B) → C (f t) b) [  t <span class="sx">≡</span> <span class="m">0₂</span> ↦ g ])
+</span><span id="__span-64-13"><a id="__codelineno-64-13" name="__codelineno-64-13" href="#__codelineno-64-13"></a>          <span class="p">( </span>( b <span class="p">:</span> B) → <span class="p">(</span>t <span class="p">:</span> Δ¹) → C (f t) b [ t <span class="sx">≡</span> <span class="m">0₂</span> ↦ g b])
+</span><span id="__span-64-14"><a id="__codelineno-64-14" name="__codelineno-64-14" href="#__codelineno-64-14"></a>          ( flip-ext-fun <span class="kt">2</span> Δ¹ (<span class="p">\ </span>t → t <span class="sx">≡</span> <span class="m">0₂</span>) B (<span class="p">\ </span>t → C (f t)) (<span class="p">\ </span>t → g))
+</span><span id="__span-64-15"><a id="__codelineno-64-15" name="__codelineno-64-15" href="#__codelineno-64-15"></a>          <span class="p">( </span>weakfunext B
+</span><span id="__span-64-16"><a id="__codelineno-64-16" name="__codelineno-64-16" href="#__codelineno-64-16"></a>            ( \ b → ((t <span class="p">:</span> Δ¹) → C (f t) b [ t <span class="sx">≡</span> <span class="m">0₂</span> ↦ g b]))
+</span><span id="__span-64-17"><a id="__codelineno-64-17" name="__codelineno-64-17" href="#__codelineno-64-17"></a>            ( <span class="p">\ </span>b →
+</span><span id="__span-64-18"><a id="__codelineno-64-18" name="__codelineno-64-18" href="#__codelineno-64-18"></a>              ( has-unique-fixed-domain-lifts-is-covariant
+</span><span id="__span-64-19"><a id="__codelineno-64-19" name="__codelineno-64-19" href="#__codelineno-64-19"></a>                ( A)
+</span><span id="__span-64-20"><a id="__codelineno-64-20" name="__codelineno-64-20" href="#__codelineno-64-20"></a>                ( <span class="p">\ </span>a → (C a b))
+</span><span id="__span-64-21"><a id="__codelineno-64-21" name="__codelineno-64-21" href="#__codelineno-64-21"></a>                ( is-locally-covariant b))
+</span><span id="__span-64-22"><a id="__codelineno-64-22" name="__codelineno-64-22" href="#__codelineno-64-22"></a>             x y f (g b))))
 </span></code></pre></div>
 <h2 id="discrete-fibers">Discrete fibers<a class="headerlink" href="#discrete-fibers" title="Permanent link">&para;</a></h2>
 <p>The fibers of a covariant fibration are discrete types. Note the original
 statement asserted that the base type must be Segal, but this hypothesis is
 unnecessary.</p>
-<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.18</span><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-discrete-is-covariant" id="define:is-discrete-is-covariant" style="visibility: visible; position: relative; color: inherit">is-discrete-is-covariant</a></span>
-</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
-</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a>  <span class="p">( </span>is-cov-C <span class="p">:</span> is-covariant A C)
-</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>  <span class="p">( </span>x <span class="p">:</span> A)
-</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a>  : is-discrete (C x)
-</span><span id="__span-64-7"><a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a>  :=
-</span><span id="__span-64-8"><a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a>    ( <span class="p">\ </span>u v →
-</span><span id="__span-64-9"><a id="__codelineno-64-9" name="__codelineno-64-9" href="#__codelineno-64-9"></a>    is-equiv-fiberwise-is-equiv-total
-</span><span id="__span-64-10"><a id="__codelineno-64-10" name="__codelineno-64-10" href="#__codelineno-64-10"></a>      ( C x)
-</span><span id="__span-64-11"><a id="__codelineno-64-11" name="__codelineno-64-11" href="#__codelineno-64-11"></a>      ( <span class="p">\ </span>v&#39; → (u = v&#39;))
-</span><span id="__span-64-12"><a id="__codelineno-64-12" name="__codelineno-64-12" href="#__codelineno-64-12"></a>      ( hom (C x) u)
-</span><span id="__span-64-13"><a id="__codelineno-64-13" name="__codelineno-64-13" href="#__codelineno-64-13"></a>      ( hom-eq (C x) u)
-</span><span id="__span-64-14"><a id="__codelineno-64-14" name="__codelineno-64-14" href="#__codelineno-64-14"></a>      <span class="p">( </span>is-equiv-are-contr
-</span><span id="__span-64-15"><a id="__codelineno-64-15" name="__codelineno-64-15" href="#__codelineno-64-15"></a>        ( Σ ( y <span class="p">:</span> (C x)) , u = y)
-</span><span id="__span-64-16"><a id="__codelineno-64-16" name="__codelineno-64-16" href="#__codelineno-64-16"></a>        <span class="p">( </span>Σ ( y <span class="p">:</span> (C x)) , hom (C x) u y)
-</span><span id="__span-64-17"><a id="__codelineno-64-17" name="__codelineno-64-17" href="#__codelineno-64-17"></a>        ( is-contr-based-paths (C x) u)
-</span><span id="__span-64-18"><a id="__codelineno-64-18" name="__codelineno-64-18" href="#__codelineno-64-18"></a>        ( is-cov-C x x (id-hom A x) u)
-</span><span id="__span-64-19"><a id="__codelineno-64-19" name="__codelineno-64-19" href="#__codelineno-64-19"></a>        ( total-map
-</span><span id="__span-64-20"><a id="__codelineno-64-20" name="__codelineno-64-20" href="#__codelineno-64-20"></a>          ( C x)
-</span><span id="__span-64-21"><a id="__codelineno-64-21" name="__codelineno-64-21" href="#__codelineno-64-21"></a>          ( <span class="p">\ </span>v&#39; → u = v&#39;)
-</span><span id="__span-64-22"><a id="__codelineno-64-22" name="__codelineno-64-22" href="#__codelineno-64-22"></a>          ( hom (C x) u)
-</span><span id="__span-64-23"><a id="__codelineno-64-23" name="__codelineno-64-23" href="#__codelineno-64-23"></a>          ( hom-eq (C x) u)))
-</span><span id="__span-64-24"><a id="__codelineno-64-24" name="__codelineno-64-24" href="#__codelineno-64-24"></a>      ( v))
+<div class="language-rzk highlight"><span class="filename">RS17, Proposition 8.18</span><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-discrete-is-covariant" id="define:is-discrete-is-covariant" style="visibility: visible; position: relative; color: inherit">is-discrete-is-covariant</a></span>
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>  <span class="p">( </span>is-cov-C <span class="p">:</span> is-covariant A C)
+</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>  <span class="p">( </span>x <span class="p">:</span> A)
+</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>  : is-discrete (C x)
+</span><span id="__span-65-7"><a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a>  :=
+</span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a>    ( <span class="p">\ </span>u v →
+</span><span id="__span-65-9"><a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a>    is-equiv-fiberwise-is-equiv-total
+</span><span id="__span-65-10"><a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a>      ( C x)
+</span><span id="__span-65-11"><a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a>      ( <span class="p">\ </span>v&#39; → (u = v&#39;))
+</span><span id="__span-65-12"><a id="__codelineno-65-12" name="__codelineno-65-12" href="#__codelineno-65-12"></a>      ( hom (C x) u)
+</span><span id="__span-65-13"><a id="__codelineno-65-13" name="__codelineno-65-13" href="#__codelineno-65-13"></a>      ( hom-eq (C x) u)
+</span><span id="__span-65-14"><a id="__codelineno-65-14" name="__codelineno-65-14" href="#__codelineno-65-14"></a>      <span class="p">( </span>is-equiv-are-contr
+</span><span id="__span-65-15"><a id="__codelineno-65-15" name="__codelineno-65-15" href="#__codelineno-65-15"></a>        ( Σ ( y <span class="p">:</span> (C x)) , u = y)
+</span><span id="__span-65-16"><a id="__codelineno-65-16" name="__codelineno-65-16" href="#__codelineno-65-16"></a>        <span class="p">( </span>Σ ( y <span class="p">:</span> (C x)) , hom (C x) u y)
+</span><span id="__span-65-17"><a id="__codelineno-65-17" name="__codelineno-65-17" href="#__codelineno-65-17"></a>        ( is-contr-based-paths (C x) u)
+</span><span id="__span-65-18"><a id="__codelineno-65-18" name="__codelineno-65-18" href="#__codelineno-65-18"></a>        ( is-cov-C x x (id-hom A x) u)
+</span><span id="__span-65-19"><a id="__codelineno-65-19" name="__codelineno-65-19" href="#__codelineno-65-19"></a>        ( total-map
+</span><span id="__span-65-20"><a id="__codelineno-65-20" name="__codelineno-65-20" href="#__codelineno-65-20"></a>          ( C x)
+</span><span id="__span-65-21"><a id="__codelineno-65-21" name="__codelineno-65-21" href="#__codelineno-65-21"></a>          ( <span class="p">\ </span>v&#39; → u = v&#39;)
+</span><span id="__span-65-22"><a id="__codelineno-65-22" name="__codelineno-65-22" href="#__codelineno-65-22"></a>          ( hom (C x) u)
+</span><span id="__span-65-23"><a id="__codelineno-65-23" name="__codelineno-65-23" href="#__codelineno-65-23"></a>          ( hom-eq (C x) u)))
+</span><span id="__span-65-24"><a id="__codelineno-65-24" name="__codelineno-65-24" href="#__codelineno-65-24"></a>      ( v))
 </span></code></pre></div>
 <p>In a Segal type, covariant hom families are covariant, hence representable homs
 are discrete.</p>
-<div class="language-rzk highlight"><span class="filename">RS17, Corollary 8.19</span><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-discrete-hom-is-segal" id="define:is-discrete-hom-is-segal" style="visibility: visible; position: relative; color: inherit">is-discrete-hom-is-segal</a></span>
-</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
-</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
-</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>  : is-discrete (hom A x y)
-</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>  :=
-</span><span id="__span-65-7"><a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a>    is-discrete-is-covariant
-</span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a>      ( A)
-</span><span id="__span-65-9"><a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a>      ( hom A x)
-</span><span id="__span-65-10"><a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a>      ( is-covariant-representable-is-segal A is-segal-A x)
-</span><span id="__span-65-11"><a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a>      ( y)
+<div class="language-rzk highlight"><span class="filename">RS17, Corollary 8.19</span><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-discrete-hom-is-segal" id="define:is-discrete-hom-is-segal" style="visibility: visible; position: relative; color: inherit">is-discrete-hom-is-segal</a></span>
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>  <span class="p">( </span>is-segal-A <span class="p">:</span> is-segal A)
+</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
+</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a>  : is-discrete (hom A x y)
+</span><span id="__span-66-6"><a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a>  :=
+</span><span id="__span-66-7"><a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a>    is-discrete-is-covariant
+</span><span id="__span-66-8"><a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a>      ( A)
+</span><span id="__span-66-9"><a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a>      ( hom A x)
+</span><span id="__span-66-10"><a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a>      ( is-covariant-representable-is-segal A is-segal-A x)
+</span><span id="__span-66-11"><a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a>      ( y)
 </span></code></pre></div>
 <p>In particular, the identity types of discrete types are also discrete. First, we
 show that equivalences preserve discreteness, which is a special case of
 preservation of local types by equivalences.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-preserve-discreteness" id="define:equiv-preserve-discreteness" style="visibility: visible; position: relative; color: inherit">equiv-preserve-discreteness</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
-</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>  <span class="p">( </span>A≅B <span class="p">:</span> Equiv A B)
-</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>  <span class="p">( </span>is-discrete-B <span class="p">:</span> is-discrete B)
-</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a>  : is-discrete A
-</span><span id="__span-66-6"><a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a>  :=
-</span><span id="__span-66-7"><a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a>  is-discrete-is-Δ¹-local A
-</span><span id="__span-66-8"><a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a>    ( is-Δ¹-local-is-left-local A
-</span><span id="__span-66-9"><a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a>      ( is-local-type-equiv-is-local-type extext <span class="kt">2</span> Δ¹ (<span class="p">\ </span>t → t <span class="sx">≡</span> <span class="m">0₂</span>) A B A≅B
-</span><span id="__span-66-10"><a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a>        ( is-left-local-is-Δ¹-local B
-</span><span id="__span-66-11"><a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a>          ( is-Δ¹-local-is-discrete B is-discrete-B))))
-</span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">RS17, Corollary 8.20</span><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-discrete-id-path-is-discrete" id="define:is-discrete-id-path-is-discrete" style="visibility: visible; position: relative; color: inherit">is-discrete-id-path-is-discrete</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
-</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>  <span class="p">( </span>is-discrete-A <span class="p">:</span> is-discrete A)
-</span><span id="__span-67-4"><a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
-</span><span id="__span-67-5"><a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a>  : is-discrete (x = y)
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-preserve-discreteness" id="define:equiv-preserve-discreteness" style="visibility: visible; position: relative; color: inherit">equiv-preserve-discreteness</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>  <span class="p">( </span>A≅B <span class="p">:</span> Equiv A B)
+</span><span id="__span-67-4"><a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a>  <span class="p">( </span>is-discrete-B <span class="p">:</span> is-discrete B)
+</span><span id="__span-67-5"><a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a>  : is-discrete A
 </span><span id="__span-67-6"><a id="__codelineno-67-6" name="__codelineno-67-6" href="#__codelineno-67-6"></a>  :=
-</span><span id="__span-67-7"><a id="__codelineno-67-7" name="__codelineno-67-7" href="#__codelineno-67-7"></a>  equiv-preserve-discreteness (x = y) (hom A x y)
-</span><span id="__span-67-8"><a id="__codelineno-67-8" name="__codelineno-67-8" href="#__codelineno-67-8"></a>  ( hom-eq A x y , is-discrete-A x y)
-</span><span id="__span-67-9"><a id="__codelineno-67-9" name="__codelineno-67-9" href="#__codelineno-67-9"></a>  ( is-discrete-hom-is-segal A
-</span><span id="__span-67-10"><a id="__codelineno-67-10" name="__codelineno-67-10" href="#__codelineno-67-10"></a>    ( is-segal-is-discrete extext A is-discrete-A)
-</span><span id="__span-67-11"><a id="__codelineno-67-11" name="__codelineno-67-11" href="#__codelineno-67-11"></a>    ( x) (y))
+</span><span id="__span-67-7"><a id="__codelineno-67-7" name="__codelineno-67-7" href="#__codelineno-67-7"></a>  is-discrete-is-Δ¹-local A
+</span><span id="__span-67-8"><a id="__codelineno-67-8" name="__codelineno-67-8" href="#__codelineno-67-8"></a>    ( is-Δ¹-local-is-left-local A
+</span><span id="__span-67-9"><a id="__codelineno-67-9" name="__codelineno-67-9" href="#__codelineno-67-9"></a>      ( is-local-type-equiv-is-local-type extext <span class="kt">2</span> Δ¹ (<span class="p">\ </span>t → t <span class="sx">≡</span> <span class="m">0₂</span>) A B A≅B
+</span><span id="__span-67-10"><a id="__codelineno-67-10" name="__codelineno-67-10" href="#__codelineno-67-10"></a>        ( is-left-local-is-Δ¹-local B
+</span><span id="__span-67-11"><a id="__codelineno-67-11" name="__codelineno-67-11" href="#__codelineno-67-11"></a>          ( is-Δ¹-local-is-discrete B is-discrete-B))))
+</span></code></pre></div>
+<div class="language-rzk highlight"><span class="filename">RS17, Corollary 8.20</span><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-discrete-id-path-is-discrete" id="define:is-discrete-id-path-is-discrete" style="visibility: visible; position: relative; color: inherit">is-discrete-id-path-is-discrete</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-68-3"><a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a>  <span class="p">( </span>is-discrete-A <span class="p">:</span> is-discrete A)
+</span><span id="__span-68-4"><a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a>  <span class="p">( </span>x y <span class="p">:</span> A)
+</span><span id="__span-68-5"><a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a>  : is-discrete (x = y)
+</span><span id="__span-68-6"><a id="__codelineno-68-6" name="__codelineno-68-6" href="#__codelineno-68-6"></a>  :=
+</span><span id="__span-68-7"><a id="__codelineno-68-7" name="__codelineno-68-7" href="#__codelineno-68-7"></a>  equiv-preserve-discreteness (x = y) (hom A x y)
+</span><span id="__span-68-8"><a id="__codelineno-68-8" name="__codelineno-68-8" href="#__codelineno-68-8"></a>  ( hom-eq A x y , is-discrete-A x y)
+</span><span id="__span-68-9"><a id="__codelineno-68-9" name="__codelineno-68-9" href="#__codelineno-68-9"></a>  ( is-discrete-hom-is-segal A
+</span><span id="__span-68-10"><a id="__codelineno-68-10" name="__codelineno-68-10" href="#__codelineno-68-10"></a>    ( is-segal-is-discrete extext A is-discrete-A)
+</span><span id="__span-68-11"><a id="__codelineno-68-11" name="__codelineno-68-11" href="#__codelineno-68-11"></a>    ( x) (y))
 </span></code></pre></div>
 <h2 id="naive-right-fibrations">Naive right fibrations<a class="headerlink" href="#naive-right-fibrations" title="Permanent link">&para;</a></h2>
 <p>For any functor <code>p : Ĉ → A</code>, we can make a naive definition of what it means to
 be a right fibration.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration" id="define:is-naive-right-fibration" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration</a></span>
-</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>  <span class="p">( </span>A Ĉ <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-68-3"><a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a>  <span class="p">( </span>p <span class="p">:</span> Ĉ → A)
-</span><span id="__span-68-4"><a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a>  : <span class="kt">U</span>
-</span><span id="__span-68-5"><a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a>  :=
-</span><span id="__span-68-6"><a id="__codelineno-68-6" name="__codelineno-68-6" href="#__codelineno-68-6"></a>    is-homotopy-cartesian
-</span><span id="__span-68-7"><a id="__codelineno-68-7" name="__codelineno-68-7" href="#__codelineno-68-7"></a>      Ĉ (slice Ĉ)
-</span><span id="__span-68-8"><a id="__codelineno-68-8" name="__codelineno-68-8" href="#__codelineno-68-8"></a>      A (slice A)
-</span><span id="__span-68-9"><a id="__codelineno-68-9" name="__codelineno-68-9" href="#__codelineno-68-9"></a>      p (slice-fun Ĉ A p)
-</span></code></pre></div>
-<p>As a sanity check we unpack the definition of <code>is-naive-right-fibration</code>.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-unpacked" id="define:is-naive-right-fibration-unpacked" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-unpacked</a></span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration" id="define:is-naive-right-fibration" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration</a></span>
 </span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>  <span class="p">( </span>A Ĉ <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-69-3"><a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>  <span class="p">( </span>p <span class="p">:</span> Ĉ → A)
-</span><span id="__span-69-4"><a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a>  : is-naive-right-fibration A Ĉ p
-</span><span id="__span-69-5"><a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>    = <span class="p">( </span>( c <span class="p">:</span> Ĉ) → is-equiv (slice Ĉ c) (slice A (p c)) (slice-fun Ĉ A p c))
-</span><span id="__span-69-6"><a id="__codelineno-69-6" name="__codelineno-69-6" href="#__codelineno-69-6"></a>  := <span class="s">refl</span>
+</span><span id="__span-69-4"><a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a>  : <span class="kt">U</span>
+</span><span id="__span-69-5"><a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>  :=
+</span><span id="__span-69-6"><a id="__codelineno-69-6" name="__codelineno-69-6" href="#__codelineno-69-6"></a>    is-homotopy-cartesian
+</span><span id="__span-69-7"><a id="__codelineno-69-7" name="__codelineno-69-7" href="#__codelineno-69-7"></a>      Ĉ (slice Ĉ)
+</span><span id="__span-69-8"><a id="__codelineno-69-8" name="__codelineno-69-8" href="#__codelineno-69-8"></a>      A (slice A)
+</span><span id="__span-69-9"><a id="__codelineno-69-9" name="__codelineno-69-9" href="#__codelineno-69-9"></a>      p (slice-fun Ĉ A p)
+</span></code></pre></div>
+<p>As a sanity check we unpack the definition of <code>is-naive-right-fibration</code>.</p>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-unpacked" id="define:is-naive-right-fibration-unpacked" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-unpacked</a></span>
+</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>  <span class="p">( </span>A Ĉ <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a>  <span class="p">( </span>p <span class="p">:</span> Ĉ → A)
+</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a>  : is-naive-right-fibration A Ĉ p
+</span><span id="__span-70-5"><a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>    = <span class="p">( </span>( c <span class="p">:</span> Ĉ) → is-equiv (slice Ĉ c) (slice A (p c)) (slice-fun Ĉ A p c))
+</span><span id="__span-70-6"><a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a>  := <span class="s">refl</span>
 </span></code></pre></div>
 <h3 id="naive-right-fibrations-are-right-fibrations">Naive right fibrations are right fibrations<a class="headerlink" href="#naive-right-fibrations-are-right-fibrations" title="Permanent link">&para;</a></h3>
 <p>Recall that a map <code>α : A' → A</code> is called a right fibration if it is right
 orthogonal to the shape inclusion <code>{1} ⊂ Δ¹</code>.</p>
 <p>This notion agrees with that of a naive right fibration.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="nd">#section</span><span class="n"> is-right-fibration-is-naive-right-fibration</span>
-</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>
-</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a><span class="kr">#variables</span><span class="p"> </span>A&#39; A : <span class="kt">U</span>
-</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a><span class="kr">#variable</span><span class="p"> </span>α : A&#39; → A
-</span><span id="__span-70-5"><a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>
-</span><span id="__span-70-6"><a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-fibration-is-naive-right-fibration" id="define:is-right-fibration-is-naive-right-fibration" style="visibility: visible; position: relative; color: inherit">is-right-fibration-is-naive-right-fibration</a></span>
-</span><span id="__span-70-7"><a id="__codelineno-70-7" name="__codelineno-70-7" href="#__codelineno-70-7"></a>  <span class="p">( </span>is-nrf <span class="p">:</span> is-naive-right-fibration A A&#39; α)
-</span><span id="__span-70-8"><a id="__codelineno-70-8" name="__codelineno-70-8" href="#__codelineno-70-8"></a>  : is-right-fibration A&#39; A α
-</span><span id="__span-70-9"><a id="__codelineno-70-9" name="__codelineno-70-9" href="#__codelineno-70-9"></a>  :=
-</span><span id="__span-70-10"><a id="__codelineno-70-10" name="__codelineno-70-10" href="#__codelineno-70-10"></a>    <span class="p">\ </span>a&#39; →
-</span><span id="__span-70-11"><a id="__codelineno-70-11" name="__codelineno-70-11" href="#__codelineno-70-11"></a>      is-equiv-equiv-is-equiv
-</span><span id="__span-70-12"><a id="__codelineno-70-12" name="__codelineno-70-12" href="#__codelineno-70-12"></a>        ( slice&#39; A&#39; (a&#39; <span class="m">1₂</span>)) (slice&#39; A (α (a&#39; <span class="m">1₂</span>)))
-</span><span id="__span-70-13"><a id="__codelineno-70-13" name="__codelineno-70-13" href="#__codelineno-70-13"></a>        ( <span class="p">\ </span>σ&#39; t → α (σ&#39; t))
-</span><span id="__span-70-14"><a id="__codelineno-70-14" name="__codelineno-70-14" href="#__codelineno-70-14"></a>        ( slice A&#39; (a&#39; <span class="m">1₂</span>)) (slice A (α (a&#39; <span class="m">1₂</span>)))
-</span><span id="__span-70-15"><a id="__codelineno-70-15" name="__codelineno-70-15" href="#__codelineno-70-15"></a>        ( slice-fun A&#39; A α (a&#39; <span class="m">1₂</span>))
-</span><span id="__span-70-16"><a id="__codelineno-70-16" name="__codelineno-70-16" href="#__codelineno-70-16"></a>        ( ( slice-slice&#39; A&#39; (a&#39; <span class="m">1₂</span>) , slice-slice&#39; A (α (a&#39; <span class="m">1₂</span>)))
-</span><span id="__span-70-17"><a id="__codelineno-70-17" name="__codelineno-70-17" href="#__codelineno-70-17"></a>        , <span class="p">\ </span>_ → <span class="s">refl</span>)
-</span><span id="__span-70-18"><a id="__codelineno-70-18" name="__codelineno-70-18" href="#__codelineno-70-18"></a>        ( is-equiv-slice-slice&#39; A&#39; (a&#39; <span class="m">1₂</span>))
-</span><span id="__span-70-19"><a id="__codelineno-70-19" name="__codelineno-70-19" href="#__codelineno-70-19"></a>        ( is-equiv-slice-slice&#39; A (α (a&#39; <span class="m">1₂</span>)))
-</span><span id="__span-70-20"><a id="__codelineno-70-20" name="__codelineno-70-20" href="#__codelineno-70-20"></a>        ( is-nrf (a&#39; <span class="m">1₂</span>))
-</span><span id="__span-70-21"><a id="__codelineno-70-21" name="__codelineno-70-21" href="#__codelineno-70-21"></a>
-</span><span id="__span-70-22"><a id="__codelineno-70-22" name="__codelineno-70-22" href="#__codelineno-70-22"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-is-right-fibration" id="define:is-naive-right-fibration-is-right-fibration" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-is-right-fibration</a></span>
-</span><span id="__span-70-23"><a id="__codelineno-70-23" name="__codelineno-70-23" href="#__codelineno-70-23"></a>  <span class="p">( </span>is-rf <span class="p">:</span> is-right-fibration A&#39; A α)
-</span><span id="__span-70-24"><a id="__codelineno-70-24" name="__codelineno-70-24" href="#__codelineno-70-24"></a>  : is-naive-right-fibration A A&#39; α
-</span><span id="__span-70-25"><a id="__codelineno-70-25" name="__codelineno-70-25" href="#__codelineno-70-25"></a>  :=
-</span><span id="__span-70-26"><a id="__codelineno-70-26" name="__codelineno-70-26" href="#__codelineno-70-26"></a>    <span class="p">\ </span>a&#39; →
-</span><span id="__span-70-27"><a id="__codelineno-70-27" name="__codelineno-70-27" href="#__codelineno-70-27"></a>      is-equiv-equiv-is-equiv&#39;
-</span><span id="__span-70-28"><a id="__codelineno-70-28" name="__codelineno-70-28" href="#__codelineno-70-28"></a>        ( slice&#39; A&#39; a&#39;) (slice&#39; A (α a&#39;))
-</span><span id="__span-70-29"><a id="__codelineno-70-29" name="__codelineno-70-29" href="#__codelineno-70-29"></a>        ( <span class="p">\ </span>σ&#39; t → α (σ&#39; t))
-</span><span id="__span-70-30"><a id="__codelineno-70-30" name="__codelineno-70-30" href="#__codelineno-70-30"></a>        ( slice A&#39; a&#39;) (slice A (α a&#39;))
-</span><span id="__span-70-31"><a id="__codelineno-70-31" name="__codelineno-70-31" href="#__codelineno-70-31"></a>        ( slice-fun A&#39; A α a&#39;)
-</span><span id="__span-70-32"><a id="__codelineno-70-32" name="__codelineno-70-32" href="#__codelineno-70-32"></a>        ( ( slice-slice&#39; A&#39; a&#39; , slice-slice&#39; A (α a&#39;))
-</span><span id="__span-70-33"><a id="__codelineno-70-33" name="__codelineno-70-33" href="#__codelineno-70-33"></a>        , <span class="p">\ </span>_ → <span class="s">refl</span>)
-</span><span id="__span-70-34"><a id="__codelineno-70-34" name="__codelineno-70-34" href="#__codelineno-70-34"></a>        ( is-equiv-slice-slice&#39; A&#39; a&#39;)
-</span><span id="__span-70-35"><a id="__codelineno-70-35" name="__codelineno-70-35" href="#__codelineno-70-35"></a>        ( is-equiv-slice-slice&#39; A (α a&#39;))
-</span><span id="__span-70-36"><a id="__codelineno-70-36" name="__codelineno-70-36" href="#__codelineno-70-36"></a>        ( is-rf (<span class="p">\ </span>t → a&#39;))
-</span><span id="__span-70-37"><a id="__codelineno-70-37" name="__codelineno-70-37" href="#__codelineno-70-37"></a>
-</span><span id="__span-70-38"><a id="__codelineno-70-38" name="__codelineno-70-38" href="#__codelineno-70-38"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-iff-is-right-fibration" id="define:is-naive-right-fibration-iff-is-right-fibration" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-iff-is-right-fibration</a></span>
-</span><span id="__span-70-39"><a id="__codelineno-70-39" name="__codelineno-70-39" href="#__codelineno-70-39"></a>  : iff
-</span><span id="__span-70-40"><a id="__codelineno-70-40" name="__codelineno-70-40" href="#__codelineno-70-40"></a>      ( is-naive-right-fibration A A&#39; α)
-</span><span id="__span-70-41"><a id="__codelineno-70-41" name="__codelineno-70-41" href="#__codelineno-70-41"></a>      ( is-right-fibration A&#39; A α)
-</span><span id="__span-70-42"><a id="__codelineno-70-42" name="__codelineno-70-42" href="#__codelineno-70-42"></a>  :=
-</span><span id="__span-70-43"><a id="__codelineno-70-43" name="__codelineno-70-43" href="#__codelineno-70-43"></a>    ( is-right-fibration-is-naive-right-fibration
-</span><span id="__span-70-44"><a id="__codelineno-70-44" name="__codelineno-70-44" href="#__codelineno-70-44"></a>    , is-naive-right-fibration-is-right-fibration)
-</span><span id="__span-70-45"><a id="__codelineno-70-45" name="__codelineno-70-45" href="#__codelineno-70-45"></a>
-</span><span id="__span-70-46"><a id="__codelineno-70-46" name="__codelineno-70-46" href="#__codelineno-70-46"></a><span class="nd">#end</span><span class="n"> is-right-fibration-is-naive-right-fibration</span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a><span class="nd">#section</span><span class="n"> is-right-fibration-is-naive-right-fibration</span>
+</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>
+</span><span id="__span-71-3"><a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a><span class="kr">#variables</span><span class="p"> </span>A&#39; A : <span class="kt">U</span>
+</span><span id="__span-71-4"><a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a><span class="kr">#variable</span><span class="p"> </span>α : A&#39; → A
+</span><span id="__span-71-5"><a id="__codelineno-71-5" name="__codelineno-71-5" href="#__codelineno-71-5"></a>
+</span><span id="__span-71-6"><a id="__codelineno-71-6" name="__codelineno-71-6" href="#__codelineno-71-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-right-fibration-is-naive-right-fibration" id="define:is-right-fibration-is-naive-right-fibration" style="visibility: visible; position: relative; color: inherit">is-right-fibration-is-naive-right-fibration</a></span>
+</span><span id="__span-71-7"><a id="__codelineno-71-7" name="__codelineno-71-7" href="#__codelineno-71-7"></a>  <span class="p">( </span>is-nrf <span class="p">:</span> is-naive-right-fibration A A&#39; α)
+</span><span id="__span-71-8"><a id="__codelineno-71-8" name="__codelineno-71-8" href="#__codelineno-71-8"></a>  : is-right-fibration A&#39; A α
+</span><span id="__span-71-9"><a id="__codelineno-71-9" name="__codelineno-71-9" href="#__codelineno-71-9"></a>  :=
+</span><span id="__span-71-10"><a id="__codelineno-71-10" name="__codelineno-71-10" href="#__codelineno-71-10"></a>    <span class="p">\ </span>a&#39; →
+</span><span id="__span-71-11"><a id="__codelineno-71-11" name="__codelineno-71-11" href="#__codelineno-71-11"></a>      is-equiv-equiv-is-equiv
+</span><span id="__span-71-12"><a id="__codelineno-71-12" name="__codelineno-71-12" href="#__codelineno-71-12"></a>        ( slice&#39; A&#39; (a&#39; <span class="m">1₂</span>)) (slice&#39; A (α (a&#39; <span class="m">1₂</span>)))
+</span><span id="__span-71-13"><a id="__codelineno-71-13" name="__codelineno-71-13" href="#__codelineno-71-13"></a>        ( <span class="p">\ </span>σ&#39; t → α (σ&#39; t))
+</span><span id="__span-71-14"><a id="__codelineno-71-14" name="__codelineno-71-14" href="#__codelineno-71-14"></a>        ( slice A&#39; (a&#39; <span class="m">1₂</span>)) (slice A (α (a&#39; <span class="m">1₂</span>)))
+</span><span id="__span-71-15"><a id="__codelineno-71-15" name="__codelineno-71-15" href="#__codelineno-71-15"></a>        ( slice-fun A&#39; A α (a&#39; <span class="m">1₂</span>))
+</span><span id="__span-71-16"><a id="__codelineno-71-16" name="__codelineno-71-16" href="#__codelineno-71-16"></a>        ( ( slice-slice&#39; A&#39; (a&#39; <span class="m">1₂</span>) , slice-slice&#39; A (α (a&#39; <span class="m">1₂</span>)))
+</span><span id="__span-71-17"><a id="__codelineno-71-17" name="__codelineno-71-17" href="#__codelineno-71-17"></a>        , <span class="p">\ </span>_ → <span class="s">refl</span>)
+</span><span id="__span-71-18"><a id="__codelineno-71-18" name="__codelineno-71-18" href="#__codelineno-71-18"></a>        ( is-equiv-slice-slice&#39; A&#39; (a&#39; <span class="m">1₂</span>))
+</span><span id="__span-71-19"><a id="__codelineno-71-19" name="__codelineno-71-19" href="#__codelineno-71-19"></a>        ( is-equiv-slice-slice&#39; A (α (a&#39; <span class="m">1₂</span>)))
+</span><span id="__span-71-20"><a id="__codelineno-71-20" name="__codelineno-71-20" href="#__codelineno-71-20"></a>        ( is-nrf (a&#39; <span class="m">1₂</span>))
+</span><span id="__span-71-21"><a id="__codelineno-71-21" name="__codelineno-71-21" href="#__codelineno-71-21"></a>
+</span><span id="__span-71-22"><a id="__codelineno-71-22" name="__codelineno-71-22" href="#__codelineno-71-22"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-is-right-fibration" id="define:is-naive-right-fibration-is-right-fibration" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-is-right-fibration</a></span>
+</span><span id="__span-71-23"><a id="__codelineno-71-23" name="__codelineno-71-23" href="#__codelineno-71-23"></a>  <span class="p">( </span>is-rf <span class="p">:</span> is-right-fibration A&#39; A α)
+</span><span id="__span-71-24"><a id="__codelineno-71-24" name="__codelineno-71-24" href="#__codelineno-71-24"></a>  : is-naive-right-fibration A A&#39; α
+</span><span id="__span-71-25"><a id="__codelineno-71-25" name="__codelineno-71-25" href="#__codelineno-71-25"></a>  :=
+</span><span id="__span-71-26"><a id="__codelineno-71-26" name="__codelineno-71-26" href="#__codelineno-71-26"></a>    <span class="p">\ </span>a&#39; →
+</span><span id="__span-71-27"><a id="__codelineno-71-27" name="__codelineno-71-27" href="#__codelineno-71-27"></a>      is-equiv-equiv-is-equiv&#39;
+</span><span id="__span-71-28"><a id="__codelineno-71-28" name="__codelineno-71-28" href="#__codelineno-71-28"></a>        ( slice&#39; A&#39; a&#39;) (slice&#39; A (α a&#39;))
+</span><span id="__span-71-29"><a id="__codelineno-71-29" name="__codelineno-71-29" href="#__codelineno-71-29"></a>        ( <span class="p">\ </span>σ&#39; t → α (σ&#39; t))
+</span><span id="__span-71-30"><a id="__codelineno-71-30" name="__codelineno-71-30" href="#__codelineno-71-30"></a>        ( slice A&#39; a&#39;) (slice A (α a&#39;))
+</span><span id="__span-71-31"><a id="__codelineno-71-31" name="__codelineno-71-31" href="#__codelineno-71-31"></a>        ( slice-fun A&#39; A α a&#39;)
+</span><span id="__span-71-32"><a id="__codelineno-71-32" name="__codelineno-71-32" href="#__codelineno-71-32"></a>        ( ( slice-slice&#39; A&#39; a&#39; , slice-slice&#39; A (α a&#39;))
+</span><span id="__span-71-33"><a id="__codelineno-71-33" name="__codelineno-71-33" href="#__codelineno-71-33"></a>        , <span class="p">\ </span>_ → <span class="s">refl</span>)
+</span><span id="__span-71-34"><a id="__codelineno-71-34" name="__codelineno-71-34" href="#__codelineno-71-34"></a>        ( is-equiv-slice-slice&#39; A&#39; a&#39;)
+</span><span id="__span-71-35"><a id="__codelineno-71-35" name="__codelineno-71-35" href="#__codelineno-71-35"></a>        ( is-equiv-slice-slice&#39; A (α a&#39;))
+</span><span id="__span-71-36"><a id="__codelineno-71-36" name="__codelineno-71-36" href="#__codelineno-71-36"></a>        ( is-rf (<span class="p">\ </span>t → a&#39;))
+</span><span id="__span-71-37"><a id="__codelineno-71-37" name="__codelineno-71-37" href="#__codelineno-71-37"></a>
+</span><span id="__span-71-38"><a id="__codelineno-71-38" name="__codelineno-71-38" href="#__codelineno-71-38"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-iff-is-right-fibration" id="define:is-naive-right-fibration-iff-is-right-fibration" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-iff-is-right-fibration</a></span>
+</span><span id="__span-71-39"><a id="__codelineno-71-39" name="__codelineno-71-39" href="#__codelineno-71-39"></a>  : iff
+</span><span id="__span-71-40"><a id="__codelineno-71-40" name="__codelineno-71-40" href="#__codelineno-71-40"></a>      ( is-naive-right-fibration A A&#39; α)
+</span><span id="__span-71-41"><a id="__codelineno-71-41" name="__codelineno-71-41" href="#__codelineno-71-41"></a>      ( is-right-fibration A&#39; A α)
+</span><span id="__span-71-42"><a id="__codelineno-71-42" name="__codelineno-71-42" href="#__codelineno-71-42"></a>  :=
+</span><span id="__span-71-43"><a id="__codelineno-71-43" name="__codelineno-71-43" href="#__codelineno-71-43"></a>    ( is-right-fibration-is-naive-right-fibration
+</span><span id="__span-71-44"><a id="__codelineno-71-44" name="__codelineno-71-44" href="#__codelineno-71-44"></a>    , is-naive-right-fibration-is-right-fibration)
+</span><span id="__span-71-45"><a id="__codelineno-71-45" name="__codelineno-71-45" href="#__codelineno-71-45"></a>
+</span><span id="__span-71-46"><a id="__codelineno-71-46" name="__codelineno-71-46" href="#__codelineno-71-46"></a><span class="nd">#end</span><span class="n"> is-right-fibration-is-naive-right-fibration</span>
 </span></code></pre></div>
 <h3 id="naive-right-fibrations-vs-contravariant-families">Naive right fibrations vs. contravariant families<a class="headerlink" href="#naive-right-fibrations-vs-contravariant-families" title="Permanent link">&para;</a></h3>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a><span class="nd">#section</span><span class="n"> is-naive-right-fibration-is-contravariant-proof</span>
-</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a><span class="kr">#variable</span><span class="p"> </span>A : <span class="kt">U</span>
-</span><span id="__span-71-3"><a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a><span class="kr">#variable</span><span class="p"> </span>a : A
-</span><span id="__span-71-4"><a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a><span class="kr">#variable</span><span class="p"> </span>C : A → <span class="kt">U</span>
-</span><span id="__span-71-5"><a id="__codelineno-71-5" name="__codelineno-71-5" href="#__codelineno-71-5"></a><span class="kr">#variable</span><span class="p"> </span>c : C a
-</span><span id="__span-71-6"><a id="__codelineno-71-6" name="__codelineno-71-6" href="#__codelineno-71-6"></a>
-</span><span id="__span-71-7"><a id="__codelineno-71-7" name="__codelineno-71-7" href="#__codelineno-71-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-slice-fun" id="define:temp-K9m2-slice-fun" style="visibility: visible; position: relative; color: inherit">temp-K9m2-slice-fun</a></span>
-</span><span id="__span-71-8"><a id="__codelineno-71-8" name="__codelineno-71-8" href="#__codelineno-71-8"></a>  : slice (total-type A C) (a , c) → slice A a
-</span><span id="__span-71-9"><a id="__codelineno-71-9" name="__codelineno-71-9" href="#__codelineno-71-9"></a>  := slice-fun (total-type A C) A (\ (x , _) → x) (a , c)
-</span><span id="__span-71-10"><a id="__codelineno-71-10" name="__codelineno-71-10" href="#__codelineno-71-10"></a>
-</span><span id="__span-71-11"><a id="__codelineno-71-11" name="__codelineno-71-11" href="#__codelineno-71-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-fib" id="define:temp-K9m2-fib" style="visibility: visible; position: relative; color: inherit">temp-K9m2-fib</a></span>
-</span><span id="__span-71-12"><a id="__codelineno-71-12" name="__codelineno-71-12" href="#__codelineno-71-12"></a>  <span class="p">( </span>a&#39; <span class="p">:</span> A)
-</span><span id="__span-71-13"><a id="__codelineno-71-13" name="__codelineno-71-13" href="#__codelineno-71-13"></a>  <span class="p">( </span>f <span class="p">:</span> hom A a&#39; a)
-</span><span id="__span-71-14"><a id="__codelineno-71-14" name="__codelineno-71-14" href="#__codelineno-71-14"></a>  : <span class="kt">U</span>
-</span><span id="__span-71-15"><a id="__codelineno-71-15" name="__codelineno-71-15" href="#__codelineno-71-15"></a>  :=
-</span><span id="__span-71-16"><a id="__codelineno-71-16" name="__codelineno-71-16" href="#__codelineno-71-16"></a>    fib (slice (total-type A C) (a , c))
-</span><span id="__span-71-17"><a id="__codelineno-71-17" name="__codelineno-71-17" href="#__codelineno-71-17"></a>        ( slice A a)
-</span><span id="__span-71-18"><a id="__codelineno-71-18" name="__codelineno-71-18" href="#__codelineno-71-18"></a>        ( temp-K9m2-slice-fun)
-</span><span id="__span-71-19"><a id="__codelineno-71-19" name="__codelineno-71-19" href="#__codelineno-71-19"></a>        ( a&#39; , f)
-</span><span id="__span-71-20"><a id="__codelineno-71-20" name="__codelineno-71-20" href="#__codelineno-71-20"></a>
-</span><span id="__span-71-21"><a id="__codelineno-71-21" name="__codelineno-71-21" href="#__codelineno-71-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-forward" id="define:temp-K9m2-forward" style="visibility: visible; position: relative; color: inherit">temp-K9m2-forward</a></span>
-</span><span id="__span-71-22"><a id="__codelineno-71-22" name="__codelineno-71-22" href="#__codelineno-71-22"></a>  <span class="p">( </span>a&#39; <span class="p">:</span> A)
-</span><span id="__span-71-23"><a id="__codelineno-71-23" name="__codelineno-71-23" href="#__codelineno-71-23"></a>  <span class="p">( </span>f <span class="p">:</span> hom A a&#39; a)
-</span><span id="__span-71-24"><a id="__codelineno-71-24" name="__codelineno-71-24" href="#__codelineno-71-24"></a>  : dhom-to A a&#39; a f C c → temp-K9m2-fib a&#39; f
-</span><span id="__span-71-25"><a id="__codelineno-71-25" name="__codelineno-71-25" href="#__codelineno-71-25"></a>  :=
-</span><span id="__span-71-26"><a id="__codelineno-71-26" name="__codelineno-71-26" href="#__codelineno-71-26"></a>    \ (c&#39; , f̂) → (((a&#39; , c&#39;) , <span class="p">\ </span>t → (f t , f̂ t)) , <span class="s">refl</span>)
-</span><span id="__span-71-27"><a id="__codelineno-71-27" name="__codelineno-71-27" href="#__codelineno-71-27"></a>
-</span><span id="__span-71-28"><a id="__codelineno-71-28" name="__codelineno-71-28" href="#__codelineno-71-28"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-has-section&#39;-forward" id="define:temp-K9m2-has-section&#39;-forward" style="visibility: visible; position: relative; color: inherit">temp-K9m2-has-section&#39;-forward</a></span>
-</span><span id="__span-71-29"><a id="__codelineno-71-29" name="__codelineno-71-29" href="#__codelineno-71-29"></a>  ( ( a&#39; , f) : slice A a)
-</span><span id="__span-71-30"><a id="__codelineno-71-30" name="__codelineno-71-30" href="#__codelineno-71-30"></a>  <span class="p">( </span>u <span class="p">:</span> temp-K9m2-fib a&#39; f)
-</span><span id="__span-71-31"><a id="__codelineno-71-31" name="__codelineno-71-31" href="#__codelineno-71-31"></a>  : <span class="kt">U</span>
-</span><span id="__span-71-32"><a id="__codelineno-71-32" name="__codelineno-71-32" href="#__codelineno-71-32"></a>  := <span class="kt">Σ</span> <span class="p">(</span>v <span class="p">:</span> dhom-to A a&#39; a f C c) , (temp-K9m2-forward a&#39; f v = u)
-</span><span id="__span-71-33"><a id="__codelineno-71-33" name="__codelineno-71-33" href="#__codelineno-71-33"></a>
-</span><span id="__span-71-34"><a id="__codelineno-71-34" name="__codelineno-71-34" href="#__codelineno-71-34"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-forward-section&#39;" id="define:temp-K9m2-forward-section&#39;" style="visibility: visible; position: relative; color: inherit">temp-K9m2-forward-section&#39;</a></span>
-</span><span id="__span-71-35"><a id="__codelineno-71-35" name="__codelineno-71-35" href="#__codelineno-71-35"></a>  : ( ( a&#39; , f) : slice A a)
-</span><span id="__span-71-36"><a id="__codelineno-71-36" name="__codelineno-71-36" href="#__codelineno-71-36"></a>  → <span class="p">( </span>u <span class="p">:</span> temp-K9m2-fib a&#39; f)
-</span><span id="__span-71-37"><a id="__codelineno-71-37" name="__codelineno-71-37" href="#__codelineno-71-37"></a>  → temp-K9m2-has-section&#39;-forward (a&#39; , f) u
-</span><span id="__span-71-38"><a id="__codelineno-71-38" name="__codelineno-71-38" href="#__codelineno-71-38"></a>  :=
-</span><span id="__span-71-39"><a id="__codelineno-71-39" name="__codelineno-71-39" href="#__codelineno-71-39"></a>    ind-fib
-</span><span id="__span-71-40"><a id="__codelineno-71-40" name="__codelineno-71-40" href="#__codelineno-71-40"></a>      ( slice (total-type A C) (a , c))
-</span><span id="__span-71-41"><a id="__codelineno-71-41" name="__codelineno-71-41" href="#__codelineno-71-41"></a>      ( slice A a)
-</span><span id="__span-71-42"><a id="__codelineno-71-42" name="__codelineno-71-42" href="#__codelineno-71-42"></a>      ( temp-K9m2-slice-fun)
-</span><span id="__span-71-43"><a id="__codelineno-71-43" name="__codelineno-71-43" href="#__codelineno-71-43"></a>      ( temp-K9m2-has-section&#39;-forward)
-</span><span id="__span-71-44"><a id="__codelineno-71-44" name="__codelineno-71-44" href="#__codelineno-71-44"></a>      ( \ ((a&#39; , c&#39;) , ĝ) → ((c&#39; , <span class="p">\ </span>t → <span class="s">second</span> (ĝ t)) , <span class="s">refl</span>))
-</span><span id="__span-71-45"><a id="__codelineno-71-45" name="__codelineno-71-45" href="#__codelineno-71-45"></a>
-</span><span id="__span-71-46"><a id="__codelineno-71-46" name="__codelineno-71-46" href="#__codelineno-71-46"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-has-inverse-forward" id="define:temp-K9m2-has-inverse-forward" style="visibility: visible; position: relative; color: inherit">temp-K9m2-has-inverse-forward</a></span>
-</span><span id="__span-71-47"><a id="__codelineno-71-47" name="__codelineno-71-47" href="#__codelineno-71-47"></a>  <span class="p">( </span>a&#39; <span class="p">:</span> A)
-</span><span id="__span-71-48"><a id="__codelineno-71-48" name="__codelineno-71-48" href="#__codelineno-71-48"></a>  <span class="p">( </span>f <span class="p">:</span> hom A a&#39; a)
-</span><span id="__span-71-49"><a id="__codelineno-71-49" name="__codelineno-71-49" href="#__codelineno-71-49"></a>  : has-inverse
-</span><span id="__span-71-50"><a id="__codelineno-71-50" name="__codelineno-71-50" href="#__codelineno-71-50"></a>      ( dhom-to A a&#39; a f C c)
-</span><span id="__span-71-51"><a id="__codelineno-71-51" name="__codelineno-71-51" href="#__codelineno-71-51"></a>      ( temp-K9m2-fib a&#39; f)
-</span><span id="__span-71-52"><a id="__codelineno-71-52" name="__codelineno-71-52" href="#__codelineno-71-52"></a>      ( temp-K9m2-forward a&#39; f)
-</span><span id="__span-71-53"><a id="__codelineno-71-53" name="__codelineno-71-53" href="#__codelineno-71-53"></a>  :=
-</span><span id="__span-71-54"><a id="__codelineno-71-54" name="__codelineno-71-54" href="#__codelineno-71-54"></a>    ( <span class="p">\ </span>u → <span class="s">first</span> (temp-K9m2-forward-section&#39; (a&#39; , f) u)
-</span><span id="__span-71-55"><a id="__codelineno-71-55" name="__codelineno-71-55" href="#__codelineno-71-55"></a>  , ( <span class="p">\ </span>_ → <span class="s">refl</span>
-</span><span id="__span-71-56"><a id="__codelineno-71-56" name="__codelineno-71-56" href="#__codelineno-71-56"></a>    , <span class="p">\ </span>u → <span class="s">second</span> (temp-K9m2-forward-section&#39; (a&#39; , f) u)
-</span><span id="__span-71-57"><a id="__codelineno-71-57" name="__codelineno-71-57" href="#__codelineno-71-57"></a>    ))
-</span><span id="__span-71-58"><a id="__codelineno-71-58" name="__codelineno-71-58" href="#__codelineno-71-58"></a>
-</span><span id="__span-71-59"><a id="__codelineno-71-59" name="__codelineno-71-59" href="#__codelineno-71-59"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-the-equivalence" id="define:temp-K9m2-the-equivalence" style="visibility: visible; position: relative; color: inherit">temp-K9m2-the-equivalence</a></span>
-</span><span id="__span-71-60"><a id="__codelineno-71-60" name="__codelineno-71-60" href="#__codelineno-71-60"></a>  <span class="p">( </span>a&#39; <span class="p">:</span> A)
-</span><span id="__span-71-61"><a id="__codelineno-71-61" name="__codelineno-71-61" href="#__codelineno-71-61"></a>  <span class="p">( </span>f <span class="p">:</span> hom A a&#39; a)
-</span><span id="__span-71-62"><a id="__codelineno-71-62" name="__codelineno-71-62" href="#__codelineno-71-62"></a>  : Equiv
-</span><span id="__span-71-63"><a id="__codelineno-71-63" name="__codelineno-71-63" href="#__codelineno-71-63"></a>      ( dhom-to A a&#39; a f C c)
-</span><span id="__span-71-64"><a id="__codelineno-71-64" name="__codelineno-71-64" href="#__codelineno-71-64"></a>      ( temp-K9m2-fib a&#39; f)
-</span><span id="__span-71-65"><a id="__codelineno-71-65" name="__codelineno-71-65" href="#__codelineno-71-65"></a>  :=
-</span><span id="__span-71-66"><a id="__codelineno-71-66" name="__codelineno-71-66" href="#__codelineno-71-66"></a>    ( ( temp-K9m2-forward a&#39; f)
-</span><span id="__span-71-67"><a id="__codelineno-71-67" name="__codelineno-71-67" href="#__codelineno-71-67"></a>    , is-equiv-has-inverse
-</span><span id="__span-71-68"><a id="__codelineno-71-68" name="__codelineno-71-68" href="#__codelineno-71-68"></a>        ( dhom-to A a&#39; a f C c)
-</span><span id="__span-71-69"><a id="__codelineno-71-69" name="__codelineno-71-69" href="#__codelineno-71-69"></a>        ( temp-K9m2-fib a&#39; f)
-</span><span id="__span-71-70"><a id="__codelineno-71-70" name="__codelineno-71-70" href="#__codelineno-71-70"></a>        ( temp-K9m2-forward a&#39; f)
-</span><span id="__span-71-71"><a id="__codelineno-71-71" name="__codelineno-71-71" href="#__codelineno-71-71"></a>        ( temp-K9m2-has-inverse-forward a&#39; f)
-</span><span id="__span-71-72"><a id="__codelineno-71-72" name="__codelineno-71-72" href="#__codelineno-71-72"></a>    )
-</span><span id="__span-71-73"><a id="__codelineno-71-73" name="__codelineno-71-73" href="#__codelineno-71-73"></a>
-</span><span id="__span-71-74"><a id="__codelineno-71-74" name="__codelineno-71-74" href="#__codelineno-71-74"></a><span class="nd">#end</span><span class="n"> is-naive-right-fibration-is-contravariant-proof</span>
-</span></code></pre></div>
-<div class="language-rzk highlight"><span class="filename">RS17, Theorem 8.5</span><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-is-contravariant" id="define:is-naive-right-fibration-is-contravariant" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-is-contravariant</a></span>
-</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-72-3"><a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
-</span><span id="__span-72-4"><a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
-</span><span id="__span-72-5"><a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a>  : is-naive-right-fibration A (total-type A C) (\ (a , _) → a)
-</span><span id="__span-72-6"><a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a>  :=
-</span><span id="__span-72-7"><a id="__codelineno-72-7" name="__codelineno-72-7" href="#__codelineno-72-7"></a>    \ (a , c) →
-</span><span id="__span-72-8"><a id="__codelineno-72-8" name="__codelineno-72-8" href="#__codelineno-72-8"></a>      is-equiv-is-contr-map
-</span><span id="__span-72-9"><a id="__codelineno-72-9" name="__codelineno-72-9" href="#__codelineno-72-9"></a>        ( slice (total-type A C) (a , c))
-</span><span id="__span-72-10"><a id="__codelineno-72-10" name="__codelineno-72-10" href="#__codelineno-72-10"></a>        ( slice A a)
-</span><span id="__span-72-11"><a id="__codelineno-72-11" name="__codelineno-72-11" href="#__codelineno-72-11"></a>        ( temp-K9m2-slice-fun A a C c)
-</span><span id="__span-72-12"><a id="__codelineno-72-12" name="__codelineno-72-12" href="#__codelineno-72-12"></a>        ( \ (a&#39; , f) →
-</span><span id="__span-72-13"><a id="__codelineno-72-13" name="__codelineno-72-13" href="#__codelineno-72-13"></a>          is-contr-equiv-is-contr
-</span><span id="__span-72-14"><a id="__codelineno-72-14" name="__codelineno-72-14" href="#__codelineno-72-14"></a>            ( dhom-to A a&#39; a f C c)
-</span><span id="__span-72-15"><a id="__codelineno-72-15" name="__codelineno-72-15" href="#__codelineno-72-15"></a>            ( temp-K9m2-fib A a C c a&#39; f)
-</span><span id="__span-72-16"><a id="__codelineno-72-16" name="__codelineno-72-16" href="#__codelineno-72-16"></a>            ( temp-K9m2-the-equivalence A a C c a&#39; f)
-</span><span id="__span-72-17"><a id="__codelineno-72-17" name="__codelineno-72-17" href="#__codelineno-72-17"></a>            ( is-contravariant-C a&#39; a f c)
-</span><span id="__span-72-18"><a id="__codelineno-72-18" name="__codelineno-72-18" href="#__codelineno-72-18"></a>        )
-</span><span id="__span-72-19"><a id="__codelineno-72-19" name="__codelineno-72-19" href="#__codelineno-72-19"></a>
-</span><span id="__span-72-20"><a id="__codelineno-72-20" name="__codelineno-72-20" href="#__codelineno-72-20"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contravariant-is-naive-right-fibration" id="define:is-contravariant-is-naive-right-fibration" style="visibility: visible; position: relative; color: inherit">is-contravariant-is-naive-right-fibration</a></span>
-</span><span id="__span-72-21"><a id="__codelineno-72-21" name="__codelineno-72-21" href="#__codelineno-72-21"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-72-22"><a id="__codelineno-72-22" name="__codelineno-72-22" href="#__codelineno-72-22"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
-</span><span id="__span-72-23"><a id="__codelineno-72-23" name="__codelineno-72-23" href="#__codelineno-72-23"></a>  <span class="p">( </span>inrf-ΣC <span class="p">:</span> is-naive-right-fibration A (total-type A C) (\ (a , _) → a))
-</span><span id="__span-72-24"><a id="__codelineno-72-24" name="__codelineno-72-24" href="#__codelineno-72-24"></a>  : is-contravariant A C
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="nd">#section</span><span class="n"> is-naive-right-fibration-is-contravariant-proof</span>
+</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a><span class="kr">#variable</span><span class="p"> </span>A : <span class="kt">U</span>
+</span><span id="__span-72-3"><a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a><span class="kr">#variable</span><span class="p"> </span>a : A
+</span><span id="__span-72-4"><a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a><span class="kr">#variable</span><span class="p"> </span>C : A → <span class="kt">U</span>
+</span><span id="__span-72-5"><a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a><span class="kr">#variable</span><span class="p"> </span>c : C a
+</span><span id="__span-72-6"><a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a>
+</span><span id="__span-72-7"><a id="__codelineno-72-7" name="__codelineno-72-7" href="#__codelineno-72-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-slice-fun" id="define:temp-K9m2-slice-fun" style="visibility: visible; position: relative; color: inherit">temp-K9m2-slice-fun</a></span>
+</span><span id="__span-72-8"><a id="__codelineno-72-8" name="__codelineno-72-8" href="#__codelineno-72-8"></a>  : slice (total-type A C) (a , c) → slice A a
+</span><span id="__span-72-9"><a id="__codelineno-72-9" name="__codelineno-72-9" href="#__codelineno-72-9"></a>  := slice-fun (total-type A C) A (\ (x , _) → x) (a , c)
+</span><span id="__span-72-10"><a id="__codelineno-72-10" name="__codelineno-72-10" href="#__codelineno-72-10"></a>
+</span><span id="__span-72-11"><a id="__codelineno-72-11" name="__codelineno-72-11" href="#__codelineno-72-11"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-fib" id="define:temp-K9m2-fib" style="visibility: visible; position: relative; color: inherit">temp-K9m2-fib</a></span>
+</span><span id="__span-72-12"><a id="__codelineno-72-12" name="__codelineno-72-12" href="#__codelineno-72-12"></a>  <span class="p">( </span>a&#39; <span class="p">:</span> A)
+</span><span id="__span-72-13"><a id="__codelineno-72-13" name="__codelineno-72-13" href="#__codelineno-72-13"></a>  <span class="p">( </span>f <span class="p">:</span> hom A a&#39; a)
+</span><span id="__span-72-14"><a id="__codelineno-72-14" name="__codelineno-72-14" href="#__codelineno-72-14"></a>  : <span class="kt">U</span>
+</span><span id="__span-72-15"><a id="__codelineno-72-15" name="__codelineno-72-15" href="#__codelineno-72-15"></a>  :=
+</span><span id="__span-72-16"><a id="__codelineno-72-16" name="__codelineno-72-16" href="#__codelineno-72-16"></a>    fib (slice (total-type A C) (a , c))
+</span><span id="__span-72-17"><a id="__codelineno-72-17" name="__codelineno-72-17" href="#__codelineno-72-17"></a>        ( slice A a)
+</span><span id="__span-72-18"><a id="__codelineno-72-18" name="__codelineno-72-18" href="#__codelineno-72-18"></a>        ( temp-K9m2-slice-fun)
+</span><span id="__span-72-19"><a id="__codelineno-72-19" name="__codelineno-72-19" href="#__codelineno-72-19"></a>        ( a&#39; , f)
+</span><span id="__span-72-20"><a id="__codelineno-72-20" name="__codelineno-72-20" href="#__codelineno-72-20"></a>
+</span><span id="__span-72-21"><a id="__codelineno-72-21" name="__codelineno-72-21" href="#__codelineno-72-21"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-forward" id="define:temp-K9m2-forward" style="visibility: visible; position: relative; color: inherit">temp-K9m2-forward</a></span>
+</span><span id="__span-72-22"><a id="__codelineno-72-22" name="__codelineno-72-22" href="#__codelineno-72-22"></a>  <span class="p">( </span>a&#39; <span class="p">:</span> A)
+</span><span id="__span-72-23"><a id="__codelineno-72-23" name="__codelineno-72-23" href="#__codelineno-72-23"></a>  <span class="p">( </span>f <span class="p">:</span> hom A a&#39; a)
+</span><span id="__span-72-24"><a id="__codelineno-72-24" name="__codelineno-72-24" href="#__codelineno-72-24"></a>  : dhom-to A a&#39; a f C c → temp-K9m2-fib a&#39; f
 </span><span id="__span-72-25"><a id="__codelineno-72-25" name="__codelineno-72-25" href="#__codelineno-72-25"></a>  :=
-</span><span id="__span-72-26"><a id="__codelineno-72-26" name="__codelineno-72-26" href="#__codelineno-72-26"></a>    <span class="p">\ </span>a&#39; a f c →
-</span><span id="__span-72-27"><a id="__codelineno-72-27" name="__codelineno-72-27" href="#__codelineno-72-27"></a>      is-contr-equiv-is-contr&#39;
-</span><span id="__span-72-28"><a id="__codelineno-72-28" name="__codelineno-72-28" href="#__codelineno-72-28"></a>        ( dhom-to A a&#39; a f C c)
-</span><span id="__span-72-29"><a id="__codelineno-72-29" name="__codelineno-72-29" href="#__codelineno-72-29"></a>        ( temp-K9m2-fib A a C c a&#39; f)
-</span><span id="__span-72-30"><a id="__codelineno-72-30" name="__codelineno-72-30" href="#__codelineno-72-30"></a>        ( temp-K9m2-the-equivalence A a C c a&#39; f)
-</span><span id="__span-72-31"><a id="__codelineno-72-31" name="__codelineno-72-31" href="#__codelineno-72-31"></a>        ( is-contr-map-is-equiv
-</span><span id="__span-72-32"><a id="__codelineno-72-32" name="__codelineno-72-32" href="#__codelineno-72-32"></a>          ( slice (total-type A C) (a , c))
-</span><span id="__span-72-33"><a id="__codelineno-72-33" name="__codelineno-72-33" href="#__codelineno-72-33"></a>          ( slice A a)
-</span><span id="__span-72-34"><a id="__codelineno-72-34" name="__codelineno-72-34" href="#__codelineno-72-34"></a>          ( temp-K9m2-slice-fun A a C c)
-</span><span id="__span-72-35"><a id="__codelineno-72-35" name="__codelineno-72-35" href="#__codelineno-72-35"></a>          ( inrf-ΣC (a , c))
-</span><span id="__span-72-36"><a id="__codelineno-72-36" name="__codelineno-72-36" href="#__codelineno-72-36"></a>          ( a&#39; , f)
-</span><span id="__span-72-37"><a id="__codelineno-72-37" name="__codelineno-72-37" href="#__codelineno-72-37"></a>        )
-</span><span id="__span-72-38"><a id="__codelineno-72-38" name="__codelineno-72-38" href="#__codelineno-72-38"></a>
-</span><span id="__span-72-39"><a id="__codelineno-72-39" name="__codelineno-72-39" href="#__codelineno-72-39"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-iff-is-contravariant" id="define:is-naive-right-fibration-iff-is-contravariant" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-iff-is-contravariant</a></span>
-</span><span id="__span-72-40"><a id="__codelineno-72-40" name="__codelineno-72-40" href="#__codelineno-72-40"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
-</span><span id="__span-72-41"><a id="__codelineno-72-41" name="__codelineno-72-41" href="#__codelineno-72-41"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
-</span><span id="__span-72-42"><a id="__codelineno-72-42" name="__codelineno-72-42" href="#__codelineno-72-42"></a>  :
-</span><span id="__span-72-43"><a id="__codelineno-72-43" name="__codelineno-72-43" href="#__codelineno-72-43"></a>    iff
-</span><span id="__span-72-44"><a id="__codelineno-72-44" name="__codelineno-72-44" href="#__codelineno-72-44"></a>      ( is-contravariant A C)
-</span><span id="__span-72-45"><a id="__codelineno-72-45" name="__codelineno-72-45" href="#__codelineno-72-45"></a>      ( is-naive-right-fibration A (total-type A C) (\ (a , _) → a))
-</span><span id="__span-72-46"><a id="__codelineno-72-46" name="__codelineno-72-46" href="#__codelineno-72-46"></a>  :=
-</span><span id="__span-72-47"><a id="__codelineno-72-47" name="__codelineno-72-47" href="#__codelineno-72-47"></a>    ( is-naive-right-fibration-is-contravariant A C
-</span><span id="__span-72-48"><a id="__codelineno-72-48" name="__codelineno-72-48" href="#__codelineno-72-48"></a>    , is-contravariant-is-naive-right-fibration A C)
+</span><span id="__span-72-26"><a id="__codelineno-72-26" name="__codelineno-72-26" href="#__codelineno-72-26"></a>    \ (c&#39; , f̂) → (((a&#39; , c&#39;) , <span class="p">\ </span>t → (f t , f̂ t)) , <span class="s">refl</span>)
+</span><span id="__span-72-27"><a id="__codelineno-72-27" name="__codelineno-72-27" href="#__codelineno-72-27"></a>
+</span><span id="__span-72-28"><a id="__codelineno-72-28" name="__codelineno-72-28" href="#__codelineno-72-28"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-has-section&#39;-forward" id="define:temp-K9m2-has-section&#39;-forward" style="visibility: visible; position: relative; color: inherit">temp-K9m2-has-section&#39;-forward</a></span>
+</span><span id="__span-72-29"><a id="__codelineno-72-29" name="__codelineno-72-29" href="#__codelineno-72-29"></a>  ( ( a&#39; , f) : slice A a)
+</span><span id="__span-72-30"><a id="__codelineno-72-30" name="__codelineno-72-30" href="#__codelineno-72-30"></a>  <span class="p">( </span>u <span class="p">:</span> temp-K9m2-fib a&#39; f)
+</span><span id="__span-72-31"><a id="__codelineno-72-31" name="__codelineno-72-31" href="#__codelineno-72-31"></a>  : <span class="kt">U</span>
+</span><span id="__span-72-32"><a id="__codelineno-72-32" name="__codelineno-72-32" href="#__codelineno-72-32"></a>  := <span class="kt">Σ</span> <span class="p">(</span>v <span class="p">:</span> dhom-to A a&#39; a f C c) , (temp-K9m2-forward a&#39; f v = u)
+</span><span id="__span-72-33"><a id="__codelineno-72-33" name="__codelineno-72-33" href="#__codelineno-72-33"></a>
+</span><span id="__span-72-34"><a id="__codelineno-72-34" name="__codelineno-72-34" href="#__codelineno-72-34"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-forward-section&#39;" id="define:temp-K9m2-forward-section&#39;" style="visibility: visible; position: relative; color: inherit">temp-K9m2-forward-section&#39;</a></span>
+</span><span id="__span-72-35"><a id="__codelineno-72-35" name="__codelineno-72-35" href="#__codelineno-72-35"></a>  : ( ( a&#39; , f) : slice A a)
+</span><span id="__span-72-36"><a id="__codelineno-72-36" name="__codelineno-72-36" href="#__codelineno-72-36"></a>  → <span class="p">( </span>u <span class="p">:</span> temp-K9m2-fib a&#39; f)
+</span><span id="__span-72-37"><a id="__codelineno-72-37" name="__codelineno-72-37" href="#__codelineno-72-37"></a>  → temp-K9m2-has-section&#39;-forward (a&#39; , f) u
+</span><span id="__span-72-38"><a id="__codelineno-72-38" name="__codelineno-72-38" href="#__codelineno-72-38"></a>  :=
+</span><span id="__span-72-39"><a id="__codelineno-72-39" name="__codelineno-72-39" href="#__codelineno-72-39"></a>    ind-fib
+</span><span id="__span-72-40"><a id="__codelineno-72-40" name="__codelineno-72-40" href="#__codelineno-72-40"></a>      ( slice (total-type A C) (a , c))
+</span><span id="__span-72-41"><a id="__codelineno-72-41" name="__codelineno-72-41" href="#__codelineno-72-41"></a>      ( slice A a)
+</span><span id="__span-72-42"><a id="__codelineno-72-42" name="__codelineno-72-42" href="#__codelineno-72-42"></a>      ( temp-K9m2-slice-fun)
+</span><span id="__span-72-43"><a id="__codelineno-72-43" name="__codelineno-72-43" href="#__codelineno-72-43"></a>      ( temp-K9m2-has-section&#39;-forward)
+</span><span id="__span-72-44"><a id="__codelineno-72-44" name="__codelineno-72-44" href="#__codelineno-72-44"></a>      ( \ ((a&#39; , c&#39;) , ĝ) → ((c&#39; , <span class="p">\ </span>t → <span class="s">second</span> (ĝ t)) , <span class="s">refl</span>))
+</span><span id="__span-72-45"><a id="__codelineno-72-45" name="__codelineno-72-45" href="#__codelineno-72-45"></a>
+</span><span id="__span-72-46"><a id="__codelineno-72-46" name="__codelineno-72-46" href="#__codelineno-72-46"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-has-inverse-forward" id="define:temp-K9m2-has-inverse-forward" style="visibility: visible; position: relative; color: inherit">temp-K9m2-has-inverse-forward</a></span>
+</span><span id="__span-72-47"><a id="__codelineno-72-47" name="__codelineno-72-47" href="#__codelineno-72-47"></a>  <span class="p">( </span>a&#39; <span class="p">:</span> A)
+</span><span id="__span-72-48"><a id="__codelineno-72-48" name="__codelineno-72-48" href="#__codelineno-72-48"></a>  <span class="p">( </span>f <span class="p">:</span> hom A a&#39; a)
+</span><span id="__span-72-49"><a id="__codelineno-72-49" name="__codelineno-72-49" href="#__codelineno-72-49"></a>  : has-inverse
+</span><span id="__span-72-50"><a id="__codelineno-72-50" name="__codelineno-72-50" href="#__codelineno-72-50"></a>      ( dhom-to A a&#39; a f C c)
+</span><span id="__span-72-51"><a id="__codelineno-72-51" name="__codelineno-72-51" href="#__codelineno-72-51"></a>      ( temp-K9m2-fib a&#39; f)
+</span><span id="__span-72-52"><a id="__codelineno-72-52" name="__codelineno-72-52" href="#__codelineno-72-52"></a>      ( temp-K9m2-forward a&#39; f)
+</span><span id="__span-72-53"><a id="__codelineno-72-53" name="__codelineno-72-53" href="#__codelineno-72-53"></a>  :=
+</span><span id="__span-72-54"><a id="__codelineno-72-54" name="__codelineno-72-54" href="#__codelineno-72-54"></a>    ( <span class="p">\ </span>u → <span class="s">first</span> (temp-K9m2-forward-section&#39; (a&#39; , f) u)
+</span><span id="__span-72-55"><a id="__codelineno-72-55" name="__codelineno-72-55" href="#__codelineno-72-55"></a>  , ( <span class="p">\ </span>_ → <span class="s">refl</span>
+</span><span id="__span-72-56"><a id="__codelineno-72-56" name="__codelineno-72-56" href="#__codelineno-72-56"></a>    , <span class="p">\ </span>u → <span class="s">second</span> (temp-K9m2-forward-section&#39; (a&#39; , f) u)
+</span><span id="__span-72-57"><a id="__codelineno-72-57" name="__codelineno-72-57" href="#__codelineno-72-57"></a>    ))
+</span><span id="__span-72-58"><a id="__codelineno-72-58" name="__codelineno-72-58" href="#__codelineno-72-58"></a>
+</span><span id="__span-72-59"><a id="__codelineno-72-59" name="__codelineno-72-59" href="#__codelineno-72-59"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:temp-K9m2-the-equivalence" id="define:temp-K9m2-the-equivalence" style="visibility: visible; position: relative; color: inherit">temp-K9m2-the-equivalence</a></span>
+</span><span id="__span-72-60"><a id="__codelineno-72-60" name="__codelineno-72-60" href="#__codelineno-72-60"></a>  <span class="p">( </span>a&#39; <span class="p">:</span> A)
+</span><span id="__span-72-61"><a id="__codelineno-72-61" name="__codelineno-72-61" href="#__codelineno-72-61"></a>  <span class="p">( </span>f <span class="p">:</span> hom A a&#39; a)
+</span><span id="__span-72-62"><a id="__codelineno-72-62" name="__codelineno-72-62" href="#__codelineno-72-62"></a>  : Equiv
+</span><span id="__span-72-63"><a id="__codelineno-72-63" name="__codelineno-72-63" href="#__codelineno-72-63"></a>      ( dhom-to A a&#39; a f C c)
+</span><span id="__span-72-64"><a id="__codelineno-72-64" name="__codelineno-72-64" href="#__codelineno-72-64"></a>      ( temp-K9m2-fib a&#39; f)
+</span><span id="__span-72-65"><a id="__codelineno-72-65" name="__codelineno-72-65" href="#__codelineno-72-65"></a>  :=
+</span><span id="__span-72-66"><a id="__codelineno-72-66" name="__codelineno-72-66" href="#__codelineno-72-66"></a>    ( ( temp-K9m2-forward a&#39; f)
+</span><span id="__span-72-67"><a id="__codelineno-72-67" name="__codelineno-72-67" href="#__codelineno-72-67"></a>    , is-equiv-has-inverse
+</span><span id="__span-72-68"><a id="__codelineno-72-68" name="__codelineno-72-68" href="#__codelineno-72-68"></a>        ( dhom-to A a&#39; a f C c)
+</span><span id="__span-72-69"><a id="__codelineno-72-69" name="__codelineno-72-69" href="#__codelineno-72-69"></a>        ( temp-K9m2-fib a&#39; f)
+</span><span id="__span-72-70"><a id="__codelineno-72-70" name="__codelineno-72-70" href="#__codelineno-72-70"></a>        ( temp-K9m2-forward a&#39; f)
+</span><span id="__span-72-71"><a id="__codelineno-72-71" name="__codelineno-72-71" href="#__codelineno-72-71"></a>        ( temp-K9m2-has-inverse-forward a&#39; f)
+</span><span id="__span-72-72"><a id="__codelineno-72-72" name="__codelineno-72-72" href="#__codelineno-72-72"></a>    )
+</span><span id="__span-72-73"><a id="__codelineno-72-73" name="__codelineno-72-73" href="#__codelineno-72-73"></a>
+</span><span id="__span-72-74"><a id="__codelineno-72-74" name="__codelineno-72-74" href="#__codelineno-72-74"></a><span class="nd">#end</span><span class="n"> is-naive-right-fibration-is-contravariant-proof</span>
 </span></code></pre></div>
-<h2 id="total-type-of-a-contravariant-family-over-a-segal-type">Total type of a contravariant family over a Segal type<a class="headerlink" href="#total-type-of-a-contravariant-family-over-a-segal-type" title="Permanent link">&para;</a></h2>
-<div class="language-rzk highlight"><span class="filename">RS17, Theorem 8.8</span><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-total-type-contravariant-family-is-segal-base" id="define:is-segal-total-type-contravariant-family-is-segal-base" style="visibility: visible; position: relative; color: inherit">is-segal-total-type-contravariant-family-is-segal-base</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+<div class="language-rzk highlight"><span class="filename">RS17, Theorem 8.5</span><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-is-contravariant" id="define:is-naive-right-fibration-is-contravariant" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-is-contravariant</a></span>
 </span><span id="__span-73-2"><a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-73-3"><a id="__codelineno-73-3" name="__codelineno-73-3" href="#__codelineno-73-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
 </span><span id="__span-73-4"><a id="__codelineno-73-4" name="__codelineno-73-4" href="#__codelineno-73-4"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
-</span><span id="__span-73-5"><a id="__codelineno-73-5" name="__codelineno-73-5" href="#__codelineno-73-5"></a>  : is-segal A → is-segal (total-type A C)
+</span><span id="__span-73-5"><a id="__codelineno-73-5" name="__codelineno-73-5" href="#__codelineno-73-5"></a>  : is-naive-right-fibration A (total-type A C) (\ (a , _) → a)
 </span><span id="__span-73-6"><a id="__codelineno-73-6" name="__codelineno-73-6" href="#__codelineno-73-6"></a>  :=
-</span><span id="__span-73-7"><a id="__codelineno-73-7" name="__codelineno-73-7" href="#__codelineno-73-7"></a>    is-segal-domain-right-fibration-is-segal-codomain extext
-</span><span id="__span-73-8"><a id="__codelineno-73-8" name="__codelineno-73-8" href="#__codelineno-73-8"></a>      ( total-type A C) A (\ (a , _) → a)
-</span><span id="__span-73-9"><a id="__codelineno-73-9" name="__codelineno-73-9" href="#__codelineno-73-9"></a>        ( is-right-fibration-is-naive-right-fibration
-</span><span id="__span-73-10"><a id="__codelineno-73-10" name="__codelineno-73-10" href="#__codelineno-73-10"></a>            ( total-type A C) A (\ (a , _) → a)
-</span><span id="__span-73-11"><a id="__codelineno-73-11" name="__codelineno-73-11" href="#__codelineno-73-11"></a>            ( is-naive-right-fibration-is-contravariant A C is-contravariant-C))
+</span><span id="__span-73-7"><a id="__codelineno-73-7" name="__codelineno-73-7" href="#__codelineno-73-7"></a>    \ (a , c) →
+</span><span id="__span-73-8"><a id="__codelineno-73-8" name="__codelineno-73-8" href="#__codelineno-73-8"></a>      is-equiv-is-contr-map
+</span><span id="__span-73-9"><a id="__codelineno-73-9" name="__codelineno-73-9" href="#__codelineno-73-9"></a>        ( slice (total-type A C) (a , c))
+</span><span id="__span-73-10"><a id="__codelineno-73-10" name="__codelineno-73-10" href="#__codelineno-73-10"></a>        ( slice A a)
+</span><span id="__span-73-11"><a id="__codelineno-73-11" name="__codelineno-73-11" href="#__codelineno-73-11"></a>        ( temp-K9m2-slice-fun A a C c)
+</span><span id="__span-73-12"><a id="__codelineno-73-12" name="__codelineno-73-12" href="#__codelineno-73-12"></a>        ( \ (a&#39; , f) →
+</span><span id="__span-73-13"><a id="__codelineno-73-13" name="__codelineno-73-13" href="#__codelineno-73-13"></a>          is-contr-equiv-is-contr
+</span><span id="__span-73-14"><a id="__codelineno-73-14" name="__codelineno-73-14" href="#__codelineno-73-14"></a>            ( dhom-to A a&#39; a f C c)
+</span><span id="__span-73-15"><a id="__codelineno-73-15" name="__codelineno-73-15" href="#__codelineno-73-15"></a>            ( temp-K9m2-fib A a C c a&#39; f)
+</span><span id="__span-73-16"><a id="__codelineno-73-16" name="__codelineno-73-16" href="#__codelineno-73-16"></a>            ( temp-K9m2-the-equivalence A a C c a&#39; f)
+</span><span id="__span-73-17"><a id="__codelineno-73-17" name="__codelineno-73-17" href="#__codelineno-73-17"></a>            ( is-contravariant-C a&#39; a f c)
+</span><span id="__span-73-18"><a id="__codelineno-73-18" name="__codelineno-73-18" href="#__codelineno-73-18"></a>        )
+</span><span id="__span-73-19"><a id="__codelineno-73-19" name="__codelineno-73-19" href="#__codelineno-73-19"></a>
+</span><span id="__span-73-20"><a id="__codelineno-73-20" name="__codelineno-73-20" href="#__codelineno-73-20"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-contravariant-is-naive-right-fibration" id="define:is-contravariant-is-naive-right-fibration" style="visibility: visible; position: relative; color: inherit">is-contravariant-is-naive-right-fibration</a></span>
+</span><span id="__span-73-21"><a id="__codelineno-73-21" name="__codelineno-73-21" href="#__codelineno-73-21"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-73-22"><a id="__codelineno-73-22" name="__codelineno-73-22" href="#__codelineno-73-22"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-73-23"><a id="__codelineno-73-23" name="__codelineno-73-23" href="#__codelineno-73-23"></a>  <span class="p">( </span>inrf-ΣC <span class="p">:</span> is-naive-right-fibration A (total-type A C) (\ (a , _) → a))
+</span><span id="__span-73-24"><a id="__codelineno-73-24" name="__codelineno-73-24" href="#__codelineno-73-24"></a>  : is-contravariant A C
+</span><span id="__span-73-25"><a id="__codelineno-73-25" name="__codelineno-73-25" href="#__codelineno-73-25"></a>  :=
+</span><span id="__span-73-26"><a id="__codelineno-73-26" name="__codelineno-73-26" href="#__codelineno-73-26"></a>    <span class="p">\ </span>a&#39; a f c →
+</span><span id="__span-73-27"><a id="__codelineno-73-27" name="__codelineno-73-27" href="#__codelineno-73-27"></a>      is-contr-equiv-is-contr&#39;
+</span><span id="__span-73-28"><a id="__codelineno-73-28" name="__codelineno-73-28" href="#__codelineno-73-28"></a>        ( dhom-to A a&#39; a f C c)
+</span><span id="__span-73-29"><a id="__codelineno-73-29" name="__codelineno-73-29" href="#__codelineno-73-29"></a>        ( temp-K9m2-fib A a C c a&#39; f)
+</span><span id="__span-73-30"><a id="__codelineno-73-30" name="__codelineno-73-30" href="#__codelineno-73-30"></a>        ( temp-K9m2-the-equivalence A a C c a&#39; f)
+</span><span id="__span-73-31"><a id="__codelineno-73-31" name="__codelineno-73-31" href="#__codelineno-73-31"></a>        ( is-contr-map-is-equiv
+</span><span id="__span-73-32"><a id="__codelineno-73-32" name="__codelineno-73-32" href="#__codelineno-73-32"></a>          ( slice (total-type A C) (a , c))
+</span><span id="__span-73-33"><a id="__codelineno-73-33" name="__codelineno-73-33" href="#__codelineno-73-33"></a>          ( slice A a)
+</span><span id="__span-73-34"><a id="__codelineno-73-34" name="__codelineno-73-34" href="#__codelineno-73-34"></a>          ( temp-K9m2-slice-fun A a C c)
+</span><span id="__span-73-35"><a id="__codelineno-73-35" name="__codelineno-73-35" href="#__codelineno-73-35"></a>          ( inrf-ΣC (a , c))
+</span><span id="__span-73-36"><a id="__codelineno-73-36" name="__codelineno-73-36" href="#__codelineno-73-36"></a>          ( a&#39; , f)
+</span><span id="__span-73-37"><a id="__codelineno-73-37" name="__codelineno-73-37" href="#__codelineno-73-37"></a>        )
+</span><span id="__span-73-38"><a id="__codelineno-73-38" name="__codelineno-73-38" href="#__codelineno-73-38"></a>
+</span><span id="__span-73-39"><a id="__codelineno-73-39" name="__codelineno-73-39" href="#__codelineno-73-39"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-naive-right-fibration-iff-is-contravariant" id="define:is-naive-right-fibration-iff-is-contravariant" style="visibility: visible; position: relative; color: inherit">is-naive-right-fibration-iff-is-contravariant</a></span>
+</span><span id="__span-73-40"><a id="__codelineno-73-40" name="__codelineno-73-40" href="#__codelineno-73-40"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-73-41"><a id="__codelineno-73-41" name="__codelineno-73-41" href="#__codelineno-73-41"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-73-42"><a id="__codelineno-73-42" name="__codelineno-73-42" href="#__codelineno-73-42"></a>  :
+</span><span id="__span-73-43"><a id="__codelineno-73-43" name="__codelineno-73-43" href="#__codelineno-73-43"></a>    iff
+</span><span id="__span-73-44"><a id="__codelineno-73-44" name="__codelineno-73-44" href="#__codelineno-73-44"></a>      ( is-contravariant A C)
+</span><span id="__span-73-45"><a id="__codelineno-73-45" name="__codelineno-73-45" href="#__codelineno-73-45"></a>      ( is-naive-right-fibration A (total-type A C) (\ (a , _) → a))
+</span><span id="__span-73-46"><a id="__codelineno-73-46" name="__codelineno-73-46" href="#__codelineno-73-46"></a>  :=
+</span><span id="__span-73-47"><a id="__codelineno-73-47" name="__codelineno-73-47" href="#__codelineno-73-47"></a>    ( is-naive-right-fibration-is-contravariant A C
+</span><span id="__span-73-48"><a id="__codelineno-73-48" name="__codelineno-73-48" href="#__codelineno-73-48"></a>    , is-contravariant-is-naive-right-fibration A C)
+</span></code></pre></div>
+<h2 id="total-type-of-a-contravariant-family-over-a-segal-type">Total type of a contravariant family over a Segal type<a class="headerlink" href="#total-type-of-a-contravariant-family-over-a-segal-type" title="Permanent link">&para;</a></h2>
+<div class="language-rzk highlight"><span class="filename">RS17, Theorem 8.8</span><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-segal-total-type-contravariant-family-is-segal-base" id="define:is-segal-total-type-contravariant-family-is-segal-base" style="visibility: visible; position: relative; color: inherit">is-segal-total-type-contravariant-family-is-segal-base</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-74-2"><a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a>  <span class="p">( </span>A <span class="p">:</span> <span class="kt">U</span>)
+</span><span id="__span-74-3"><a id="__codelineno-74-3" name="__codelineno-74-3" href="#__codelineno-74-3"></a>  <span class="p">( </span>C <span class="p">:</span> A → <span class="kt">U</span>)
+</span><span id="__span-74-4"><a id="__codelineno-74-4" name="__codelineno-74-4" href="#__codelineno-74-4"></a>  <span class="p">( </span>is-contravariant-C <span class="p">:</span> is-contravariant A C)
+</span><span id="__span-74-5"><a id="__codelineno-74-5" name="__codelineno-74-5" href="#__codelineno-74-5"></a>  : is-segal A → is-segal (total-type A C)
+</span><span id="__span-74-6"><a id="__codelineno-74-6" name="__codelineno-74-6" href="#__codelineno-74-6"></a>  :=
+</span><span id="__span-74-7"><a id="__codelineno-74-7" name="__codelineno-74-7" href="#__codelineno-74-7"></a>    is-segal-domain-right-fibration-is-segal-codomain extext
+</span><span id="__span-74-8"><a id="__codelineno-74-8" name="__codelineno-74-8" href="#__codelineno-74-8"></a>      ( total-type A C) A (\ (a , _) → a)
+</span><span id="__span-74-9"><a id="__codelineno-74-9" name="__codelineno-74-9" href="#__codelineno-74-9"></a>        ( is-right-fibration-is-naive-right-fibration
+</span><span id="__span-74-10"><a id="__codelineno-74-10" name="__codelineno-74-10" href="#__codelineno-74-10"></a>            ( total-type A C) A (\ (a , _) → a)
+</span><span id="__span-74-11"><a id="__codelineno-74-11" name="__codelineno-74-11" href="#__codelineno-74-11"></a>            ( is-naive-right-fibration-is-contravariant A C is-contravariant-C))
 </span></code></pre></div>
 
 

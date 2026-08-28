@@ -458,7 +458,7 @@ The universal property of limits and colimits.
       ( family-cocone J B g)
       colim3-g
 
-#def limit3-is-limit uses (funext)
+#def limit3-limit uses (funext)
   ( J B : U)
   ( is-segal-B : is-segal B)
   ( g : J → B)

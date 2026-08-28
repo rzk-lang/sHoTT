@@ -472,7 +472,7 @@ The universal property of limits and colimits.
       ( is-contravariant-family-cone-is-segal J B is-segal-B g)
       lim-g
 
-#def limit-is-limit3 uses (extext)
+#def limit-limit3 uses (extext)
   ( J B : U)
   ( is-segal-B : is-segal B)
   ( g : J → B)

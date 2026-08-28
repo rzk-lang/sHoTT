@@ -1689,8 +1689,8 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
                     ( C)
                     ( is-contravariant-C))
                   ( second (first has-final-tot-A))
-                  x)
-                v)
+                  ( x))
+                ( v))
               ( axiom-choice
                 ( 2)
                 ( Δ¹)

@@ -1646,7 +1646,7 @@ equivalence using `#!rzk is-equiv-is-contr-map`.
             ( C)
             ( is-contravariant-C))
           ( second (first has-final-tot-A))
-          x)
+          ( x))
         ( \ v →
           is-contr-equiv-is-contr
             ( hom

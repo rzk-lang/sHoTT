@@ -385,7 +385,7 @@ The type of (co)cones of a function with codomain a Segal type is a Segal type.
     ( is-segal-B)
 ```
 
-Co/limits are unique up to isomorphism.
+Co-/limits are unique up to isomorphism.
 
 ```rzk title="BM, Corollary 1 (i)"
 #def iso-colimit-is-segal uses (extext funext)

@@ -4,6 +4,10 @@ This is a literate `rzk` file:
 
 ```rzk
 #lang rzk-1
+
+#assume funext : FunExt
+#assume weakfunext : WeakFunExt
+#assume extext : ExtExt
 ```
 
 ## Prerequisites
@@ -27,32 +31,32 @@ This is a literate `rzk` file:
 
 ```rzk
 
-#def S
+#def S uses (funext weakfunext)
   : U
-  := Σ (A : U) , is-a-cov A
+  := Σ (A : U) , (is-a-cov funext weakfunext) A
 
-#def S-b
+#def S-b uses (funext weakfunext)
   : ( ♭ U)
   := mod ♭ S
 
-#def s-is-covariant-arrow-II
+#def s-is-covariant-arrow-II uses (funext weakfunext)
   ( f : 𝕀 → S)
-  : is-covariant-arrow-II (\ (t : 𝕀 | TOP) → first (f (unform t)))
+  : is-covariant-arrow-II (\ (t : 𝕀 | TOP) → first (f t))
   :=
     b-extract
-      ( ( f : 𝕀 → S) → is-covariant-arrow-II (\ (t : 𝕀 | TOP) → first (f (unform t))))
-      ( amazing-transpose
-        ( is-covariant-arrow-II-Prop)
+      ( ( f : 𝕀 → S) → is-covariant-arrow-II (\ (t : 𝕀 | TOP) → first (f t)))
+      ( amazing-transpose funext weakfunext
+        ( is-covariant-arrow-II-Prop funext weakfunext)
         ( S)
         ( ( \ s → first s))
         ( ( \ s → second s)))
     f
 
-#def mor2fun (f : 𝕀 → S)
+#def mor2fun uses (funext weakfunext) (f : 𝕀 → S)
   : Σ ( A : S) , (Σ (B : S) , (first A) → (first B))
   :=
   ( f 0₂ , (f 1₂ , covariant-transport-line-II
-      ( \ (t : 𝕀 | TOP) → first (f (unform t)))
+      ( \ (t : 𝕀 | TOP) → first (f t))
       ( s-is-covariant-arrow-II f)
       (\ k → form k)))
 ```
@@ -61,28 +65,28 @@ This is a literate `rzk` file:
 
 ```rzk
 
-#def dirglue-is-acov (A B : S) (f : (first A) → (first B)) (i : 𝕀)
-  : is-a-cov (
+#def dirglue-is-acov uses (funext weakfunext extext) (A B : S) (f : (first A) → (first B)) (i : 𝕀)
+  : (is-a-cov funext weakfunext) (
     Σ ( b : (first B))
   , ( ( t : 1 | i ≡ 0₂) → fib (first A) (first B) f b)
   )
   :=
-    is-a-cov-sigma-closed
+    is-a-cov-sigma-closed funext weakfunext
       ( first B)
       ( \ b → (t : 1 | i ≡ 0₂) → fib (first A) (first B) f b)
       ( second B)
       ( \ b →
           let mod ᵒᵖ flip_i := flipᵒᵖ i in
-            is-a-cov-ext
+            is-a-cov-ext funext weakfunext extext
               ( mod ᵒᵖ (flip_i ≡ 1₂))
-              ( mod ᵒᵖ (is-a-cov-i===0 flip_i))
+              ( mod ᵒᵖ (is-a-cov-i===0 funext weakfunext extext flip_i))
               ( fib (first A) (first B) f b)
-              ( is-a-cov-fib
+              ( is-a-cov-fib funext weakfunext
                   ( first A) ( first B)
                   ( second A) ( second B)
                   ( f) ( b)))
 
-#def dirglue (A B : S) (f : (first A) → (first B))
+#def dirglue uses (funext weakfunext extext) (A B : S) (f : (first A) → (first B))
   : 𝕀 → S
   :=
     \ i →
@@ -101,7 +105,7 @@ First part of equivalence mor2fun (dirglue f) is f.
     , ( ( ( \ x _ → x , \ _ → refl)
         , ( \ x _ → x , \ _ → refl))))
 
-#def is-contr-extent-1 (X : U)
+#def is-contr-extent-1 uses (extext) (X : U)
   : is-contr ((t : 1 | 1₂ ≡ 0₂) → X)
   :=
     ( ( \ t → recBOT)
@@ -111,7 +115,7 @@ First part of equivalence mor2fun (dirglue f) is f.
           ( \ t → recBOT) f
           ( \ t → recBOT))
 
-#def dirglue-equiv-0 (A B : S) (f : (first A) → (first B))
+#def dirglue-equiv-0 uses (funext weakfunext extext) (A B : S) (f : (first A) → (first B))
   : Equiv (first (dirglue A B f 0₂)) (first A)
   := equiv-comp
        ( first (dirglue A B f 0₂))
@@ -125,53 +129,53 @@ First part of equivalence mor2fun (dirglue f) is f.
        ( ( \ (_ , (a , _)) → a)
        , is-equiv-domain-sum-of-fibers (first A) (first B) f)
 
-#def dirglue-0=A-EqΣ (A B : S) (f : (first A) → (first B))
-  : Eq-Σ U is-a-cov (dirglue A B f 0₂) A
+#def dirglue-0=A-EqΣ uses (funext weakfunext extext) (A B : S) (f : (first A) → (first B))
+  : Eq-Σ U (is-a-cov funext weakfunext) (dirglue A B f 0₂) A
   := (first (ua (first (dirglue A B f 0₂)) (first A)) (dirglue-equiv-0 A B f)
      , first
-         ( is-prop-is-a-cov (first A)
-           ( transport U is-a-cov
+         ( is-prop-is-a-cov funext weakfunext (first A)
+           ( transport U (is-a-cov funext weakfunext)
                ( first (dirglue A B f 0₂)) (first A)
                ( first (ua (first (dirglue A B f 0₂)) (first A)) (dirglue-equiv-0 A B f))
                ( second (dirglue A B f 0₂)))
            ( second A)))
 
-#def dirglue_0=A (A B : S) (f : (first A) → (first B))
+#def dirglue_0=A uses (funext weakfunext extext) (A B : S) (f : (first A) → (first B))
   : dirglue A B f 0₂ = A
-  := eq-pair U is-a-cov (dirglue A B f 0₂) A (dirglue-0=A-EqΣ A B f)
+  := eq-pair U (is-a-cov funext weakfunext) (dirglue A B f 0₂) A (dirglue-0=A-EqΣ A B f)
 
-#def dirglue-equiv-1 (A B : S) (f : (first A) → (first B))
+#def dirglue-equiv-1 uses (funext weakfunext extext) (A B : S) (f : (first A) → (first B))
   : Equiv (first (dirglue A B f 1₂)) (first B)
   := equiv-total-type-is-contr-fiber
        ( first B)
        ( \ b → (t : 1 | 1₂ ≡ 0₂) → fib (first A) (first B) f b)
        ( \ b → is-contr-extent-1 (fib (first A) (first B) f b))
 
-#def dirglue-1=B-EqΣ (A B : S) (f : (first A) → (first B))
-  : Eq-Σ U is-a-cov (dirglue A B f 1₂) B
+#def dirglue-1=B-EqΣ uses (funext weakfunext extext) (A B : S) (f : (first A) → (first B))
+  : Eq-Σ U (is-a-cov funext weakfunext) (dirglue A B f 1₂) B
   := (first (ua (first (dirglue A B f 1₂)) (first B)) (dirglue-equiv-1 A B f)
      , first
-         ( is-prop-is-a-cov (first B)
-           ( transport U is-a-cov
+         ( is-prop-is-a-cov funext weakfunext (first B)
+           ( transport U (is-a-cov funext weakfunext)
                ( first (dirglue A B f 1₂)) (first B)
                ( first (ua (first (dirglue A B f 1₂)) (first B)) (dirglue-equiv-1 A B f))
                ( second (dirglue A B f 1₂)))
            ( second B)))
 
-#def dirglue_1=B (A B : S) (f : (first A) → (first B))
+#def dirglue_1=B uses (funext weakfunext extext) (A B : S) (f : (first A) → (first B))
   : dirglue A B f 1₂ = B
-  := eq-pair U is-a-cov (dirglue A B f 1₂) B (dirglue-1=B-EqΣ A B f)
+  := eq-pair U (is-a-cov funext weakfunext) (dirglue A B f 1₂) B (dirglue-1=B-EqΣ A B f)
 
-#def coe-dirglue-is-f-pointwise
+#def coe-dirglue-is-f-pointwise uses (funext weakfunext extext)
   ( A B : S) (f : (first A) → (first B))
   ( a : first A)
   : transport S (\ s → first s) (dirglue A B f 1₂) B (dirglue_1=B A B f)
-      ( covariant-transport-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f (unform t))) (s-is-covariant-arrow-II (dirglue A B f)) (\ k → form k)
+      ( covariant-transport-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f t)) (s-is-covariant-arrow-II (dirglue A B f)) (\ k → form k)
           ( transport-rev S (\ s → first s) (dirglue A B f 0₂) A (dirglue_0=A A B f) a))
     = f a
   :=
     let coe-dirglue : first (dirglue A B f 0₂) → first (dirglue A B f 1₂)
-      := covariant-transport-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f (unform t))) (s-is-covariant-arrow-II (dirglue A B f)) (\ k → form k) in
+      := covariant-transport-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f t)) (s-is-covariant-arrow-II (dirglue A B f)) (\ k → form k) in
     let a-in-dirglue-0 : first (dirglue A B f 0₂)
       := transport-rev S (\ s → first s) (dirglue A B f 0₂) A (dirglue_0=A A B f) a in
     let base-is-f-a : first a-in-dirglue-0 = f a
@@ -197,7 +201,7 @@ First part of equivalence mor2fun (dirglue f) is f.
                            ( transport U (\ Z → Z) (first (dirglue A B f 0₂)) (first A)
                                ( first (dirglue-0=A-EqΣ A B f)) a-in-dirglue-0)
                            ( first (dirglue-equiv-0 A B f) a-in-dirglue-0)
-                           ( transport-first-eq-pair is-a-cov (dirglue A B f 0₂) A (dirglue-0=A-EqΣ A B f) a-in-dirglue-0)
+                           ( transport-first-eq-pair (is-a-cov funext weakfunext) (dirglue A B f 0₂) A (dirglue-0=A-EqΣ A B f) a-in-dirglue-0)
                            ( transport-ua (first (dirglue A B f 0₂)) (first A) (dirglue-equiv-0 A B f) a-in-dirglue-0)))
                    -- transport (dirglue_0=A) a-in-dirglue-0 = a
                    ( transport-transport-rev S (\ s → first s)
@@ -217,26 +221,26 @@ First part of equivalence mor2fun (dirglue f) is f.
               ( transport U (\ Z → Z) (first (dirglue A B f 1₂)) (first B)
                   ( first (dirglue-1=B-EqΣ A B f)) (coe-dirglue a-in-dirglue-0))
               ( first (coe-dirglue a-in-dirglue-0))
-              ( transport-first-eq-pair is-a-cov (dirglue A B f 1₂) B (dirglue-1=B-EqΣ A B f) (coe-dirglue a-in-dirglue-0))
+              ( transport-first-eq-pair (is-a-cov funext weakfunext) (dirglue A B f 1₂) B (dirglue-1=B-EqΣ A B f) (coe-dirglue a-in-dirglue-0))
               ( transport-ua (first (dirglue A B f 1₂)) (first B) (dirglue-equiv-1 A B f) (coe-dirglue a-in-dirglue-0)))
           -- first (coe-dirglue a-in-dirglue-0) = first a-in-dirglue-0
           ( ap (first (dirglue A B f 1₂)) (first B) (coe-dirglue a-in-dirglue-0) (first a-in-dirglue-0 , second a-in-dirglue-0)
               ( \ z → first z)
-              ( amazing-covariant-uniqueness-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f (unform t))) (s-is-covariant-arrow-II (dirglue A B f))
+              ( amazing-covariant-uniqueness-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f t)) (s-is-covariant-arrow-II (dirglue A B f))
                   ( a-in-dirglue-0) (first a-in-dirglue-0 , second a-in-dirglue-0) (\ (t : 𝕀) → (first a-in-dirglue-0 , second a-in-dirglue-0)))))
       ( base-is-f-a)
 
-#def coe-dirglue-is-f
+#def coe-dirglue-is-f uses (funext weakfunext extext)
   ( A B : S) (f : (first A) → (first B))
   : product-transport S S (\ X Y → (first X) → (first Y))
       ( dirglue A B f 0₂) A
       ( dirglue A B f 1₂) B
       ( dirglue_0=A A B f) (dirglue_1=B A B f)
-      ( covariant-transport-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f (unform t))) (s-is-covariant-arrow-II (dirglue A B f)) (\ k → form k))
+      ( covariant-transport-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f t)) (s-is-covariant-arrow-II (dirglue A B f)) (\ k → form k))
     = f
   :=
     let coe-dirglue : first (dirglue A B f 0₂) → first (dirglue A B f 1₂)
-      := covariant-transport-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f (unform t))) (s-is-covariant-arrow-II (dirglue A B f)) (\ k → form k) in
+      := covariant-transport-line-II (\ (t : 𝕀 | TOP) → first (dirglue A B f t)) (s-is-covariant-arrow-II (dirglue A B f)) (\ k → form k) in
     let coe-dirglue-transported : (first A) → (first B)
       := \ (a : first A) →
          transport S (\ s → first s) (dirglue A B f 1₂) B (dirglue_1=B A B f)
@@ -256,7 +260,7 @@ First part of equivalence mor2fun (dirglue f) is f.
           coe-dirglue-transported f (coe-dirglue-is-f-pointwise A B f))
 
 
-#def mor2fun-dirglue=f (A B : S) (f : (first A) → (first B))
+#def mor2fun-dirglue=f uses (funext weakfunext extext) (A B : S) (f : (first A) → (first B))
   : mor2fun (dirglue A B f) = (A , (B , f))
   :=
     eq-triple S S (\ X Y → (first X) → (first Y))
@@ -264,10 +268,7 @@ First part of equivalence mor2fun (dirglue f) is f.
       ( A , (B , f))
       ( dirglue_0=A A B f , (dirglue_1=B A B f , (coe-dirglue-is-f A B f)))
 
--- data at the zero corner: base map c : I^m → Γ′ plus fiber of F0.
--- Γ′ is now the U-level product of the I^n n shape-type and the interval
--- shape-type (the cube layer must not depend on term-level types).
-#def orthogonality-pullback-fiber
+#def orthogonality-pullback-fiber uses (funext weakfunext)
   ( n m : nat)
   ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : U
@@ -275,8 +276,7 @@ First part of equivalence mor2fun (dirglue f) is f.
     Σ ( c : I^n m → product (I^n n) (shape (_ : 𝕀 | TOP)))
     , first (F0 (c (zero-vec-I^n m)))
 
--- (I^m → F̃) ≃ orthogonality-pullback-fiber , for any m and F0
-#def orthogonality-pullback-fwd
+#def orthogonality-pullback-fwd uses (funext weakfunext)
   ( n m : nat)
   ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : ( I^n m
@@ -288,7 +288,7 @@ First part of equivalence mor2fun (dirglue f) is f.
       ( \ t → first (f t)
       , second (f (zero-vec-I^n m)))
 
-#def orthogonality-pullback
+#def orthogonality-pullback uses (funext weakfunext)
   ( n m : nat)
   ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : Equiv
@@ -300,8 +300,7 @@ First part of equivalence mor2fun (dirglue f) is f.
     ( orthogonality-pullback-fwd n m F0
     , ?orthogonality-pullback)
 
--- same fiber after splitting c ↦ (v , theta) by choice
-#def orthogonality-pullback-split
+#def orthogonality-pullback-split uses (funext weakfunext)
   ( n m : nat)
   ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : U
@@ -313,7 +312,7 @@ First part of equivalence mor2fun (dirglue f) is f.
             ( v (zero-vec-I^n m)
             , theta (zero-vec-I^n m)))
 
-#def equiv-orthogonality-pullback-split
+#def equiv-orthogonality-pullback-split uses (funext weakfunext)
   ( n m : nat)
   ( F0 : product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : Equiv (orthogonality-pullback-fiber n m F0) (orthogonality-pullback-split n m F0)
@@ -333,7 +332,7 @@ First part of equivalence mor2fun (dirglue f) is f.
       ( \ _ → refl)
       ( \ _ → refl)
 
-#def orthogonality-pullback-flat-commute
+#def orthogonality-pullback-flat-commute uses (funext weakfunext)
   ( n m :♭ nat)
   ( F0 :♭ product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : Equiv
@@ -357,8 +356,7 @@ First part of equivalence mor2fun (dirglue f) is f.
                 ( v (zero-vec-I^n m)
                 , theta (zero-vec-I^n m))))
 
--- ♭(I^m → F̃) ≃ ♭(orthogonality-pullback-split)
-#def equiv-orthogonality-to-flat
+#def equiv-orthogonality-to-flat uses (funext weakfunext)
   ( n m :♭ nat)
   ( F0 :♭ product (I^n n) (shape (_ : 𝕀 | TOP)) → S)
   : Equiv
@@ -386,7 +384,7 @@ First part of equivalence mor2fun (dirglue f) is f.
           ( orthogonality-pullback n m F0)
           ( curry-F))
 
-#def split-lemma (f g : 𝕀 → S) (a : (i : 𝕀) → first (f i) → first (g i))
+#def split-lemma uses (funext weakfunext extext) (f g : 𝕀 → S) (a : (i : 𝕀) → first (f i) → first (g i))
   : ( is-equiv (first (f 0₂)) (first (g 0₂)) (a 0₂)) → (is-equiv (first (f 1₂)) (first (g 1₂)) (a 1₂))
     → ( ( i : 𝕀) → (is-equiv (first (f i)) (first (g i)) (a i)))
   :=
@@ -468,8 +466,8 @@ First part of equivalence mor2fun (dirglue f) is f.
             ( b-equiv (I^n n → X) X-cube
                 ( equiv-comp (I^n n → X) X-uncurried X-cube
                     ( equiv-choice3 (I^n n) (\ _ → 𝕀 → S) (\ _ _ → 𝕀 → S)
-                        ( \ F G → (i : 𝕀) → first (F i) → first (G i))
-                        ( \ F G alpha → product
+                        ( \ _ F G → (i : 𝕀) → first (F i) → first (G i))
+                        ( \ _ F G alpha → product
                             ( is-equiv (first (F 0₂)) (first (G 0₂)) (alpha 0₂))
                             ( is-equiv (first (F 1₂)) (first (G 1₂)) (alpha 1₂))))
                     ( curry-X)))
@@ -498,8 +496,8 @@ First part of equivalence mor2fun (dirglue f) is f.
             ( b-equiv (I^n n → Y) Y-cube
                 ( equiv-comp (I^n n → Y) Y-uncurried Y-cube
                     ( equiv-choice3 (I^n n) (\ _ → 𝕀 → S) (\ _ _ → 𝕀 → S)
-                        ( \ F G → (i : 𝕀) → first (F i) → first (G i))
-                        ( \ F G alpha → (theta : 𝕀) → is-equiv (first (F theta)) (first (G theta)) (alpha theta)))
+                        ( \ _ F G → (i : 𝕀) → first (F i) → first (G i))
+                        ( \ _ F G alpha → (theta : 𝕀) → is-equiv (first (F theta)) (first (G theta)) (alpha theta)))
                     ( curry-Y)))
             ( b-sigma3-commute-equiv (Gamma' → S) (\ _ → Gamma' → S) Hom-in-S E-Y) in
         let Y-to-X-split : Equiv Y-split X-split :=
@@ -699,7 +697,7 @@ First part of equivalence mor2fun (dirglue f) is f.
         ( second (second Y-to-X-is-equiv) (f , (g , (a , (e0 , e1)))))
         ( second (second (second (first (second Y-to-X-is-equiv) (f , (g , (a , (e0 , e1))))))))
 
-#def dirglue-mor2fun=f
+#def dirglue-mor2fun=f uses (funext weakfunext extext)
   ( F : 𝕀 → S)
   : F = dirglue (F 0₂) (F 1₂) (second (second (mor2fun F)))
   :=
@@ -708,7 +706,7 @@ First part of equivalence mor2fun (dirglue f) is f.
     let a : (j : 𝕀) → first (F j) → first (G j)
       := \ i x →
          ( covariant-transport-line-II
-            ( \ (t : 𝕀 | TOP) → first (F (sup i (unform t))))
+            ( \ (t : 𝕀 | TOP) → first (F (sup i t)))
             ( s-is-covariant-arrow-II (\ j → F (sup i j)))
             ( \ k → form k)
             x
@@ -745,12 +743,12 @@ First part of equivalence mor2fun (dirglue f) is f.
       ( \ _ → S) (\ _ → recBOT)
       ( F) (G)
       ( \ i →
-        eq-pair U is-a-cov (F i) (G i)
+        eq-pair U (is-a-cov funext weakfunext) (F i) (G i)
           ( first (ua (first (F i)) (first (G i)))
               ( a i , split-lemma F G a equiv-0 equiv-1 i)
           , first
-              ( is-prop-is-a-cov (first (G i))
-                ( transport U is-a-cov (first (F i)) (first (G i))
+              ( is-prop-is-a-cov funext weakfunext (first (G i))
+                ( transport U (is-a-cov funext weakfunext) (first (F i)) (first (G i))
                     ( first (ua (first (F i)) (first (G i))) (a i , split-lemma F G a equiv-0 equiv-1 i))
                     ( second (F i)))
                 ( second (G i)))))
@@ -762,7 +760,7 @@ Directed univalence
 ```rzk
 
 
-#def dua
+#def dua uses (funext weakfunext extext)
   : Equiv (Σ (A : S) , (Σ (B : S) , (first A → first B))) ((i : 𝕀) → S)
   := (\ t → dirglue (first t) (first (second t)) (second (second t))
    , ( ( mor2fun , \ t → mor2fun-dirglue=f (first t) (first (second t)) (second (second t)))

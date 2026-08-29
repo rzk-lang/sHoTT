@@ -20,7 +20,7 @@ extensionality and weak function extensionality:
   instance function extensionality.
 - `hott/11-trivial-fibrations.rzk.md` — We use
   `#!rzk is-equiv-projection-contractible-fibers` in the "Discrete types are
-  Rezk" section.
+Rezk" section.
 - `02-simplicial-type-theory.rzk.md` — We rely on definitions of simplices and
   their subshapes.
 - `03-extension-types.rzk.md` — We use extension extensionality.

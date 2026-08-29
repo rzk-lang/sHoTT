@@ -2,6 +2,10 @@
 
 ```rzk
 #lang rzk-1
+
+#assume funext : FunExt
+#assume weakfunext : WeakFunExt
+#assume extext : ExtExt
 ```
 
 ## Ordinary covariance over 𝕀
@@ -663,6 +667,7 @@
                                 ( H-sec1=p))
                             ( ptwise 0₂)
                             ( ap-ext-eq-htpy-at
+                                extext
                                 𝕀
                                 ( \ _ → TOP)
                                 ( \ _ → BOT)
@@ -683,7 +688,7 @@
                         ( r 1₂)
                       = q
                     :=
-                      transport-section-eq-at-cancel
+                      transport-section-eq-at-cancel-cube
                         𝕀
                         E
                         0₂

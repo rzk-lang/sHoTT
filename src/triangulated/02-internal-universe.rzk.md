@@ -73,7 +73,7 @@ via the right adjoint `rar`.
       ( ( untranspose-ar Prop (b-extract U (rar univ-family-Prop-b))) (mod ♭ (\ h → Unit-Prop)))
 
 
-#def ufp-proj_1-i-eq-const-Unit-tr uses (funext weakfunext ua)
+#def ufp-proj_1-i-eq-const-Unit-tr
   :
     univ-family-proj-1_i
   = b-extract
@@ -93,9 +93,9 @@ via the right adjoint `rar`.
         ( univ-family-Prop → Prop)
         ( \ x → first x)
         ( \ x → Unit-Prop)
-        ( mod ♭ (ufp-first-eq-const-Unit funext weakfunext ua)))
+        ( mod ♭ (ufp-first-eq-const-Unit funext weakfunext)))
 
-#def pred-tr-eq-ufp-const-Unit
+#def pred-tr-eq-ufp-const-Unit uses (funext weakfunext)
   ( pred :♭ (𝕀 → U) → Prop)
   ( A :♭ U)
   ( h :♭ A → U)
@@ -175,7 +175,7 @@ via the right adjoint `rar`.
           ( A → b-extract U (rar Prop-b)) (b-extract U (rar Prop-b))
           ( \ (g : A → b-extract U (rar Prop-b)) → g a) V))
 
-#def pred-tr-eq-A-const-Unit
+#def pred-tr-eq-A-const-Unit uses (funext weakfunext)
   ( pred :♭ (𝕀 → U) → Prop)
   ( A :♭ U)
   ( h :♭ A → U)
@@ -254,7 +254,7 @@ arrow predicate.
                             ( b-extract-eq (A → b-extract U (rar Prop-b))
                                 ( mod ♭ g) (untranspose-ar Prop A (mod ♭ (\ (_ : 𝕀 → A) → Unit-Prop))) e0)))))
 
-#def amazing-transpose
+#def amazing-transpose uses (funext weakfunext)
   ( pred :♭ (𝕀 → U) → Prop)
   ( A :♭ U)
   ( h :♭ A → U)
@@ -438,7 +438,7 @@ that `amazing-predicate` is a proposition.
   ( X : U)
   : is-prop (amazing-predicate pred X)
 
-#def amazing-transpose-untranspose-section
+#def amazing-transpose-untranspose-section uses (funext weakfunext)
   ( pred :♭ (𝕀 → U) → Prop)
   ( A :♭ U)
   ( h :♭ A → U)
@@ -464,7 +464,7 @@ that `amazing-predicate` is a proposition.
                 ( a-untranspose-transpose a)
                 ( f a)))))
 
-#def amazing-transpose-untranspose-retraction
+#def amazing-transpose-untranspose-retraction uses (funext weakfunext)
   ( pred :♭ (𝕀 → U) → Prop)
   ( A :♭ U)
   ( h :♭ A → U)
@@ -490,7 +490,7 @@ that `amazing-predicate` is a proposition.
               ( a-transpose-untranspose g)
               ( f g)))))
 
-#def amazing-transpose-untranspose-equiv
+#def amazing-transpose-untranspose-equiv uses (funext weakfunext)
   ( pred :♭ (𝕀 → U) → Prop)
   ( A :♭ U)
   ( h :♭ A → U)

@@ -6,6 +6,10 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
 
 ```rzk
 #lang rzk-1
+
+#assume funext : FunExt
+#assume weakfunext : WeakFunExt
+#assume extext : ExtExt
 ```
 
 ## Prerequisites
@@ -38,7 +42,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
 #def is-prop-is-covariant-arrow-II uses (weakfunext funext)
   ( A : (t : 𝕀 | TOP) → U)
   : is-prop (is-covariant-arrow-II A)
-  := is-prop-is-covariant-II (shape (_ : 𝕀 | TOP)) (\ (s : shape (_ : 𝕀 | TOP)) → A (unform s))
+  := is-prop-is-covariant-II funext weakfunext (shape (_ : 𝕀 | TOP)) (\ (s : shape (_ : 𝕀 | TOP)) → A (unform s))
 
 #def is-covariant-arrow-II-Prop uses (weakfunext funext) (A : (t : 𝕀 | TOP) → U)
   : Prop
@@ -57,17 +61,17 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
 
 ```rzk
 
-#def is-a-cov (X : U)
+#def is-a-cov uses (funext weakfunext) (X : U)
   : U
   := amazing-predicate is-covariant-arrow-II-Prop X
 
-#def is-discrete-is-a-cov uses (extext)
+#def is-discrete-is-a-cov uses (funext weakfunext extext)
   ( A : U)
   ( is-a-cov-A : is-a-cov A)
   : is-discrete A
   := ?is-discrete-is-a-cov
 
-#def is-prop-is-a-cov (A : U)
+#def is-prop-is-a-cov uses (funext weakfunext) (A : U)
   : is-prop (is-a-cov A)
   := ?is-prop-is-a-cov
 
@@ -76,27 +80,27 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
 ## Amazing covariance machinery
 
 ```rzk
-#def is-a-cov-transpose
+#def is-a-cov-transpose uses (funext weakfunext)
   ( A :♭ U)
   ( h :♭ A → U)
   ( f :♭ (a : A) → is-a-cov (h a))
   : ( ♭ ( ( g : 𝕀 → A) → is-covariant-arrow-II (\ b → h (g b))))
-  := amazing-transpose (is-covariant-arrow-II-Prop) (A) (h) (f)
+  := amazing-transpose funext weakfunext (is-covariant-arrow-II-Prop) (A) (h) (f)
 
-#def is-a-cov-untranspose
+#def is-a-cov-untranspose uses (funext weakfunext)
   ( A :♭ U)
   ( h :♭ A → U)
   ( f :♭ (g : 𝕀 → A) → is-covariant-arrow-II (\ b → h (g b)))
   : ( ♭ ( ( a : A) → is-a-cov (h a)))
   := amazing-untranspose (is-covariant-arrow-II-Prop) (A) (h) (f)
 
-#def is-a-cov-transposition-equiv
+#def is-a-cov-transposition-equiv uses (funext weakfunext)
   ( A :♭ U)
   ( h :♭ A → U)
   : Equiv
     ( ♭ ( ( a : A) → is-a-cov (h a)))
     ( ♭ ( ( g : 𝕀 → A) → is-covariant-arrow-II (\ b → h (g b))))
-  := amazing-transpose-untranspose-equiv (is-covariant-arrow-II-Prop) (A) (h)
+  := amazing-transpose-untranspose-equiv funext weakfunext (is-covariant-arrow-II-Prop) (A) (h)
 
 #def amazing-covariant-uniqueness-line-II
   ( A : (t : 𝕀 | TOP) → U)
@@ -115,14 +119,14 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
       ( a0)
       ( a1 , h)
 
-#def amazing-covariant-transport-line-II
+#def amazing-covariant-transport-line-II uses (funext weakfunext)
   ( A : 𝕀 → U)
   ( is-a-cov-A : (i : 𝕀) → is-a-cov (A i))
   ( l : 𝕀 → shape (_ : 𝕀 | TOP))
   : A (unform (l 0₂)) → A (unform (l 1₂))
   :=
     covariant-transport-line-II
-      ( \ (t : 𝕀 | TOP) → A (unform t))
+      ( \ (t : 𝕀 | TOP) → A t)
       ( b-extract
           ( ( g' : 𝕀 → Σ (X : U) , is-a-cov X)
               → is-covariant-arrow-II (\ b → first (g' b)))
@@ -130,81 +134,68 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
               ( Σ ( X : U) , is-a-cov X)
               ( \ (X , _) → X)
               ( \ (_ , cX) → cX))
-          ( \ k → (A (unform (l k)) , is-a-cov-A (unform (l k)))))
+          ( \ k → (A k , is-a-cov-A k)))
       ( l)
 
-#def amazing-covariant-transport-line-const-II
+#def amazing-covariant-transport-line-const-II uses (funext weakfunext)
   ( A : 𝕀 → U)
   ( is-a-cov-A : (i : 𝕀) → is-a-cov (A i))
   ( j : 𝕀)
   ( x : A j)
   : amazing-covariant-transport-line-II A is-a-cov-A (\ k → form j) x = x
   :=
-    let l : 𝕀 → shape (_ : 𝕀 | TOP)
-      := \ k → form j
-    in
-      amazing-covariant-uniqueness-line-II
-        ( \ k → A (unform (l k)))
-        ( b-extract
-            ( ( g' : 𝕀 → Σ (X : U) , is-a-cov X)
-                → is-covariant-arrow-II (\ b → first (g' b)))
-            ( is-a-cov-transpose
-                ( Σ ( X : U) , is-a-cov X)
-                ( \ (X , _) → X)
-                ( \ (_ , cX) → cX))
-            ( \ k → (A (unform (l k)) , is-a-cov-A (unform (l k)))))
-        x
-        x
-        ( \ _ → x)
+    covariant-transport-line-const-II
+      ( \ (t : 𝕀 | TOP) → A t)
+      ( b-extract
+          ( ( g' : 𝕀 → Σ (X : U) , is-a-cov X)
+              → is-covariant-arrow-II (\ b → first (g' b)))
+          ( is-a-cov-transpose
+              ( Σ ( X : U) , is-a-cov X)
+              ( \ (X , _) → X)
+              ( \ (_ , cX) → cX))
+          ( \ k → (A k , is-a-cov-A k)))
+      ( form j)
+      ( x)
 
-#def amazing-covariant-transport-line-const-at-0-II
+#def amazing-covariant-transport-line-const-at-0-II uses (funext weakfunext)
   ( A : 𝕀 → U)
   ( is-a-cov-A : (i : 𝕀) → is-a-cov (A i))
   ( x : A 0₂)
   : amazing-covariant-transport-line-II A is-a-cov-A (\ k → form (inf 0₂ k)) x = x
   :=
-    let l : 𝕀 → shape (_ : 𝕀 | TOP)
-      := \ k → form (inf 0₂ k)
-    in
-      amazing-covariant-uniqueness-line-II
-        ( \ k → A (unform (l k)))
-        ( b-extract
-            ( ( g' : 𝕀 → Σ (X : U) , is-a-cov X)
-                → is-covariant-arrow-II (\ b → first (g' b)))
-            ( is-a-cov-transpose
-                ( Σ ( X : U) , is-a-cov X)
-                ( \ (X , _) → X)
-                ( \ (_ , cX) → cX))
-            ( \ k → (A (unform (l k)) , is-a-cov-A (unform (l k)))))
-        x
-        x
-        ( \ _ → x)
+    covariant-transport-line-const-at-0-II
+      ( \ (t : 𝕀 | TOP) → A t)
+      ( b-extract
+          ( ( g' : 𝕀 → Σ (X : U) , is-a-cov X)
+              → is-covariant-arrow-II (\ b → first (g' b)))
+          ( is-a-cov-transpose
+              ( Σ ( X : U) , is-a-cov X)
+              ( \ (X , _) → X)
+              ( \ (_ , cX) → cX))
+          ( \ k → (A k , is-a-cov-A k)))
+      ( x)
 
-#def amazing-covariant-transport-line-const-0-sup-II
+#def amazing-covariant-transport-line-const-0-sup-II uses (funext weakfunext)
   ( A : 𝕀 → U)
   ( is-a-cov-A : (i : 𝕀) → is-a-cov (A i))
   ( j : 𝕀)
   ( x : A 0₂)
   : amazing-covariant-transport-line-II A is-a-cov-A (\ k → form (inf 0₂ (sup j k))) x = x
   :=
-    let l : 𝕀 → shape (_ : 𝕀 | TOP)
-      := \ k → form (inf 0₂ (sup j k))
-    in
-      amazing-covariant-uniqueness-line-II
-        ( \ k → A (unform (l k)))
-        ( b-extract
-            ( ( g' : 𝕀 → Σ (X : U) , is-a-cov X)
-                → is-covariant-arrow-II (\ b → first (g' b)))
-            ( is-a-cov-transpose
-                ( Σ ( X : U) , is-a-cov X)
-                ( \ (X , _) → X)
-                ( \ (_ , cX) → cX))
-            ( \ k → (A (unform (l k)) , is-a-cov-A (unform (l k)))))
-        x
-        x
-        ( \ _ → x)
+    covariant-transport-line-const-0-sup-II
+      ( \ (t : 𝕀 | TOP) → A t)
+      ( b-extract
+          ( ( g' : 𝕀 → Σ (X : U) , is-a-cov X)
+              → is-covariant-arrow-II (\ b → first (g' b)))
+          ( is-a-cov-transpose
+              ( Σ ( X : U) , is-a-cov X)
+              ( \ (X , _) → X)
+              ( \ (_ , cX) → cX))
+          ( \ k → (A k , is-a-cov-A k)))
+      ( j)
+      ( x)
 
-#def amazing-covariant-transport-line-const-1-sup-II
+#def amazing-covariant-transport-line-const-1-sup-II uses (funext weakfunext)
   ( A : 𝕀 → U)
   ( is-a-cov-A : (i : 𝕀) → is-a-cov (A i))
   ( i : 𝕀)
@@ -212,7 +203,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
   : amazing-covariant-transport-line-II A is-a-cov-A (\ k → form (inf i (sup 1₂ k))) x = x
   := amazing-covariant-transport-line-const-II A is-a-cov-A i x
 
-#def amazing-covariant-transport-line-const-0-sup-1-II
+#def amazing-covariant-transport-line-const-0-sup-1-II uses (funext weakfunext)
   ( A : 𝕀 → U)
   ( is-a-cov-A : (i : 𝕀) → is-a-cov (A i))
   ( x : A 0₂)
@@ -220,7 +211,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
     = amazing-covariant-transport-line-const-1-sup-II A is-a-cov-A 0₂ x
   := refl
 
-#def amazing-covariant-transport-line-inv-II
+#def amazing-covariant-transport-line-inv-II uses (funext weakfunext)
   ( packed : ᵒᵖ (𝕀 → Σ (X : U) , is-a-cov X))
   ( l : 𝕀 → shape (_ : 𝕀 | TOP))
   : ( let mod ᵒᵖ p := packed in
@@ -254,7 +245,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
 ```rzk
 
 
-#def is-a-cov-const-cov (A : U) (is-a-cov-A : is-a-cov A)
+#def is-a-cov-const-cov uses (funext weakfunext) (A : U) (is-a-cov-A : is-a-cov A)
   : is-covariant-arrow-II (\ (_ : 𝕀 | TOP) → A)
   :=
     b-extract
@@ -266,7 +257,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
           ( \ (_ , cA') → cA'))
       ( \ _ → (A , is-a-cov-A))
 
-#def is-a-cov-sigma-closed
+#def is-a-cov-sigma-closed uses (funext weakfunext)
   ( A : U) (B : A → U)
   ( is-a-cov-A : is-a-cov A)
   ( is-a-cov-B : (a : A) → is-a-cov (B a))
@@ -308,7 +299,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
                   ( \ c → (g c , s c)))))
       ( A , (is-a-cov-A , (B , is-a-cov-B)))
 
-#def is-a-cov-id-closed (A : U) (is-a-cov-A : is-a-cov A) (x y : A)
+#def is-a-cov-id-closed uses (funext weakfunext) (A : U) (is-a-cov-A : is-a-cov A) (x y : A)
   : is-a-cov (x = y)
   :=
     b-extract
@@ -332,7 +323,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
               ( \ c → second (second (second (g c))))))
       ( A , (is-a-cov-A , (x , y)))
 
-#def is-a-cov-fib (A B : U) (is-a-cov-A : is-a-cov A) (is-a-cov-B : is-a-cov B) (f : A → B) (b : B)
+#def is-a-cov-fib uses (funext weakfunext) (A B : U) (is-a-cov-A : is-a-cov A) (is-a-cov-B : is-a-cov B) (f : A → B) (b : B)
   : is-a-cov (fib A B f b)
   :=
     is-a-cov-sigma-closed
@@ -341,7 +332,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
       is-a-cov-A
       ( \ a → is-a-cov-id-closed B is-a-cov-B (f a) b)
 
-#def is-a-cov-i===0 (i : 𝕀)
+#def is-a-cov-i===0 uses (funext weakfunext extext) (i : 𝕀)
   : is-a-cov (shape (_ : 1 | i ≡ 1₂))
   :=
     b-extract
@@ -387,7 +378,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
                       is-contr-is-inhabited-is-prop
                         ( Σ ( a1' : shape-at-1 (f 1₂))
                         , dhom-II (shape (_ : 𝕀 | TOP)) (form 0₂) (form 1₂) (\ t → form t) (\ s → shape-at-1 (f (unform s))) a0 a1')
-                        ( is-prop-Σ-dhom-II-form-line-shape-at-1 f a0)
+                        ( is-prop-Σ-dhom-II-form-line-shape-at-1 extext f a0)
                         ( a1 , h))))
       ( i)
 ```
@@ -396,7 +387,7 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
 
 ```rzk
 
-#def is-a-cov-ext uses (funext extext)
+#def is-a-cov-ext uses (funext weakfunext extext)
   ( phi : ᵒᵖ TOPE)
   ( shape-is-a-cov :
       let mod ᵒᵖ phi_op := phi in
@@ -495,6 +486,8 @@ This is a literate `rzk` file: `is-covariant-arrow-II`, amazing covariance
                   g
             in
               is-covariant-ext
+                funext
+                extext
                 ( phi-i)
                 ( is-cov-C)
                 ( D)

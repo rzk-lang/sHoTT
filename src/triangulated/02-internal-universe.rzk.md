@@ -4,6 +4,9 @@ This is a literate `rzk` file:
 
 ```rzk
 #lang rzk-1
+
+#assume funext : FunExt
+#assume weakfunext : WeakFunExt
 ```
 
 We formalize the internal universe construction following
@@ -70,7 +73,7 @@ via the right adjoint `rar`.
       ( ( untranspose-ar Prop (b-extract U (rar univ-family-Prop-b))) (mod ♭ (\ h → Unit-Prop)))
 
 
-#def ufp-proj_1-i-eq-const-Unit-tr
+#def ufp-proj_1-i-eq-const-Unit-tr uses (funext weakfunext ua)
   :
     univ-family-proj-1_i
   = b-extract

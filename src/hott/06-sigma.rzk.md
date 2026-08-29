@@ -281,29 +281,6 @@ Transport along the first projection of a dependent pair type.
       ( b')
       ( q)
 
-#def product-transport-fun
-  ( W : U) (el : W → U)
-  ( X X' Y Y' : W)
-  ( p : X = X') (q : Y = Y')
-  ( g : el X → el Y)
-  : product-transport W W (\ S T → el S → el T) X X' Y Y' p q g
-    = ( \ (x' : el X') →
-        transport W el Y Y' q (g (transport-rev W el X X' p x')))
-  :=
-    ind-path W Y
-      ( \ Y'' q' →
-        product-transport W W (\ S T → el S → el T) X X' Y Y'' p q' g
-        = ( \ (x' : el X') →
-            transport W el Y Y'' q' (g (transport-rev W el X X' p x'))))
-      ( ind-path W X
-          ( \ X'' p' →
-            product-transport W W (\ S T → el S → el T) X X'' Y Y p' refl g
-            = ( \ (x' : el X'') →
-                transport W el Y Y refl (g (transport-rev W el X X'' p' x'))))
-          ( refl)
-          ( X') p)
-      ( Y') q
-
 #def Eq-Σ-over-product
   ( s t : Σ (a : A) , (Σ (b : B) , C a b))
   : U
@@ -466,6 +443,29 @@ Here we've decomposed `#!rzk s`, `#!rzk t` and `#!rzk e` for induction purposes:
       , ( eq-triple s t , triple-eq-eq-triple s t)))
 
 #end paths-in-sigma-over-product
+
+#def product-transport-fun
+  ( W : U) (el : W → U)
+  ( X X' Y Y' : W)
+  ( p : X = X') (q : Y = Y')
+  ( g : el X → el Y)
+  : product-transport W W (\ S T → el S → el T) X X' Y Y' p q g
+    = ( \ (x' : el X') →
+        transport W el Y Y' q (g (transport-rev W el X X' p x')))
+  :=
+    ind-path W Y
+      ( \ Y'' q' →
+        product-transport W W (\ S T → el S → el T) X X' Y Y'' p q' g
+        = ( \ (x' : el X') →
+            transport W el Y Y'' q' (g (transport-rev W el X X' p x'))))
+      ( ind-path W X
+          ( \ X'' p' →
+            product-transport W W (\ S T → el S → el T) X X'' Y Y p' refl g
+            = ( \ (x' : el X'') →
+                transport W el Y Y refl (g (transport-rev W el X X'' p' x'))))
+          ( refl)
+          ( X') p)
+      ( Y') q
 ```
 
 ## Symmetry of products

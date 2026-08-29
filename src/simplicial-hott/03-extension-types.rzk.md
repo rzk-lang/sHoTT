@@ -1252,18 +1252,18 @@ cube.
   ( a : (t : ϕ) → A t)
   ( t0 : ψ)
   ( f g : (t : ψ) → A t [ϕ t ↦ a t])
-  ( h : (t : ψ) → f t =_{A t} g t [ϕ t ↦ refl])
+  ( h : (t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])
   : ap
       ( (t : ψ) → A t [ϕ t ↦ a t])
       ( A t0)
       f g
       ( \ φ → φ t0)
-      ( naiveextext-extext extext I ψ ϕ A a f g h)
+      ( first (second (extext I ψ ϕ A a f g)) h)
     = h t0
   :=
     let s
-      : ( (t : ψ) → f t =_{A t} g t [ϕ t ↦ refl]) → (f = g)
-      := naiveextext-extext extext I ψ ϕ A a f g
+      : ( (t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl]) → (f = g)
+      := first (second (extext I ψ ϕ A a f g))
     in
     let η
       : ext-htpy-eq I ψ ϕ A a f g (s h) = h
@@ -1290,7 +1290,7 @@ cube.
         ( h t0)
         ap=htpy
         ( ap
-            ( (t : ψ) → f t =_{A t} g t [ϕ t ↦ refl])
+            ( (t : ψ) → (f t =_{A t} g t) [ϕ t ↦ refl])
             ( f t0 =_{A t0} g t0)
             ( ext-htpy-eq I ψ ϕ A a f g (s h))
             h

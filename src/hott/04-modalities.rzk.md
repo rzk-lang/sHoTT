@@ -732,21 +732,20 @@ Lifting equivalences through the flat (`♭`) modality.
       ( \ _ → refl)
 
 #def op-fun-commute-op-fwd
-  ( A :ᵒᵖ U)
-  ( B :ᵒᵖ A → U)
-  ( f : ᵒᵖ ((x : ᵒᵖ A) → B x))
-  : (a : A) → (let mod ᵒᵖ x := mod ᵒᵖ a in ᵒᵖ (B x))
+  ( A : U)
+  ( B :ᵒᵖ U)
+  ( f : ᵒᵖ ((ᵒᵖ A) → B))
+  ( a : A)
+  : ᵒᵖ B
   :=
-    \ a →
-      let mod ᵒᵖ f0 := f in
-      let mod ᵒᵖ x := mod ᵒᵖ a in
-        mod ᵒᵖ (f0 x)
+    let mod ᵒᵖ f0 := f in
+      mod ᵒᵖ (f0 (mod ᵒᵖ a))
 
 #def op-fun-commute-op-bwd
-  ( A :ᵒᵖ U)
-  ( B :ᵒᵖ A → U)
-  ( g : (a : A) → (let mod ᵒᵖ x := mod ᵒᵖ a in ᵒᵖ (B x)))
-  : ᵒᵖ ((x : ᵒᵖ A) → B x)
+  ( A : U)
+  ( B :ᵒᵖ U)
+  ( g : A → ᵒᵖ B)
+  : ᵒᵖ ((ᵒᵖ A) → B)
   :=
     mod ᵒᵖ (\ (x : ᵒᵖ A) →
       let mod ᵒᵖ a := x in
@@ -754,22 +753,20 @@ Lifting equivalences through the flat (`♭`) modality.
         b)
 
 #def op-fun-commute-op-equiv
-  ( A :ᵒᵖ U)
-  ( B :ᵒᵖ A → U)
-  : Equiv
-      ( ᵒᵖ ((x : ᵒᵖ A) → B x))
-      ( (a : A) → (let mod ᵒᵖ x := mod ᵒᵖ a in ᵒᵖ (B x)))
+  ( A : U)
+  ( B :ᵒᵖ U)
+  : Equiv (ᵒᵖ ((ᵒᵖ A) → B)) (A → ᵒᵖ B)
   :=
     equiv-has-inverse
-      ( ᵒᵖ ((x : ᵒᵖ A) → B x))
-      ( (a : A) → (let mod ᵒᵖ x := mod ᵒᵖ a in ᵒᵖ (B x)))
+      ( ᵒᵖ ((ᵒᵖ A) → B))
+      ( A → ᵒᵖ B)
       ( op-fun-commute-op-fwd A B)
       ( op-fun-commute-op-bwd A B)
       ( \ _ → refl)
       ( \ _ → refl)
 
 #def op-ext-commute-fwd
-  ( C : ᵒᵖ ((i : 𝕀) → U))
+  ( C :ᵒᵖ ((i : 𝕀) → U))
   ( f : ᵒᵖ ((i : 𝕀) → C i))
   : (i : 𝕀) → (let mod ᵒᵖ j := flipᵒᵖ i in ᵒᵖ (C j))
   :=
@@ -779,7 +776,7 @@ Lifting equivalences through the flat (`♭`) modality.
         mod ᵒᵖ (f0 j)
 
 #def op-ext-commute-bwd
-  ( C : ᵒᵖ ((i : 𝕀) → U))
+  ( C :ᵒᵖ ((i : 𝕀) → U))
   ( k : (i : 𝕀) → (let mod ᵒᵖ j := flipᵒᵖ i in ᵒᵖ (C j)))
   : ᵒᵖ ((i : 𝕀) → C i)
   :=
@@ -788,7 +785,7 @@ Lifting equivalences through the flat (`♭`) modality.
         b)
 
 #def op-ext-commute-equiv
-  ( C : ᵒᵖ ((i : 𝕀) → U))
+  ( C :ᵒᵖ ((i : 𝕀) → U))
   : Equiv
       ( ᵒᵖ ((i : 𝕀) → C i))
       ( (i : 𝕀) → (let mod ᵒᵖ j := flipᵒᵖ i in ᵒᵖ (C j)))
@@ -877,8 +874,8 @@ Lifting equivalences through the flat (`♭`) modality.
       mod ♯ (a , b)
 
 #def sharp-sigma-commute-equiv
-  ( A : ♯ U)
-  ( B : ♯ A → U)
+  ( A :♯ U)
+  ( B :♯ A → U)
   : Equiv
       ( ♯ (Σ (a : A) , B a))
       ( Σ (a : ♯ A) , (let mod ♯ a := a in ♯ (B a)))
@@ -892,8 +889,8 @@ Lifting equivalences through the flat (`♭`) modality.
       ( \ _ → refl)
 
 #def sharp-sigma2-commute-fwd
-  ( A B : ♯ U)
-  ( C : ♯ A → B → U)
+  ( A B :♯ U)
+  ( C :♯ A → B → U)
   ( w : ♯ (Σ (a : A) , Σ (b : B) , C a b))
   : Σ ( a : ♯ A)
     , ( let mod ♯ a0 := a in
@@ -904,8 +901,8 @@ Lifting equivalences through the flat (`♭`) modality.
       ( mod ♯ a , (mod ♯ b , mod ♯ c))
 
 #def sharp-sigma2-commute-bwd
-  ( A B : ♯ U)
-  ( C : ♯ A → B → U)
+  ( A B :♯ U)
+  ( C :♯ A → B → U)
   ( w : Σ ( a : ♯ A)
         , ( let mod ♯ a0 := a in
             Σ (b : ♯ B)
@@ -919,8 +916,8 @@ Lifting equivalences through the flat (`♭`) modality.
       mod ♯ (a , (b , c))
 
 #def sharp-sigma2-commute-equiv
-  ( A B : ♯ U)
-  ( C : ♯ A → B → U)
+  ( A B :♯ U)
+  ( C :♯ A → B → U)
   : Equiv
       ( ♯ (Σ (a : A) , Σ (b : B) , C a b))
       ( Σ ( a : ♯ A)
@@ -940,10 +937,10 @@ Lifting equivalences through the flat (`♭`) modality.
       ( \ _ → refl)
 
 #def sharp-sigma3-commute-fwd
-  ( A : ♯ U)
-  ( B : ♯ A → U)
-  ( C : ♯ ((a : A) → B a → U))
-  ( D : ♯ ((a : A) → (b : B a) → C a b → U))
+  ( A :♯ U)
+  ( B :♯ A → U)
+  ( C :♯ ((a : A) → B a → U))
+  ( D :♯ ((a : A) → (b : B a) → C a b → U))
   ( w : ♯ (Σ (a : A) , Σ (b : B a) , Σ (c : C a b) , D a b c))
   : Σ ( a : ♯ A)
     , ( let mod ♯ a0 := a in
@@ -956,10 +953,10 @@ Lifting equivalences through the flat (`♭`) modality.
       ( mod ♯ a , (mod ♯ b , (mod ♯ c , mod ♯ d)))
 
 #def sharp-sigma3-commute-bwd
-  ( A : ♯ U)
-  ( B : ♯ A → U)
-  ( C : ♯ ((a : A) → B a → U))
-  ( D : ♯ ((a : A) → (b : B a) → C a b → U))
+  ( A :♯ U)
+  ( B :♯ A → U)
+  ( C :♯ ((a : A) → B a → U))
+  ( D :♯ ((a : A) → (b : B a) → C a b → U))
   ( w : Σ ( a : ♯ A)
         , ( let mod ♯ a0 := a in
             Σ (b : ♯ (B a0))
@@ -976,10 +973,10 @@ Lifting equivalences through the flat (`♭`) modality.
       mod ♯ (a , (b , (c , d)))
 
 #def sharp-sigma3-commute-equiv
-  ( A : ♯ U)
-  ( B : ♯ A → U)
-  ( C : ♯ ((a : A) → B a → U))
-  ( D : ♯ ((a : A) → (b : B a) → C a b → U))
+  ( A :♯ U)
+  ( B :♯ A → U)
+  ( C :♯ ((a : A) → B a → U))
+  ( D :♯ ((a : A) → (b : B a) → C a b → U))
   : Equiv
       ( ♯ (Σ (a : A) , Σ (b : B a) , Σ (c : C a b) , D a b c))
       ( Σ ( a : ♯ A)

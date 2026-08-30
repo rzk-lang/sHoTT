@@ -106,26 +106,26 @@ This is a literate `rzk` file:
     ( e0)
     ( e1)
 
+-- The realization ⌈♭𝕀⌉ as an inductive type with a modal cube field. This
+-- replaces the shape type former `shape (_ : (_b 𝕀) | TOP)`: a point goes
+-- into the constructor, and elimination is by `match`, which binds the point
+-- with its modality (there is no `unform`; the realization is write-only).
+#data ⌈♭𝕀⌉ := pt-♭𝕀 (i :♭ 𝕀)
+
 #def equiv-shape-I-bool
-  : Equiv (shape (_ : (_b 𝕀) | TOP)) Bool
+  : Equiv ⌈♭𝕀⌉ Bool
   :=
     equiv-has-inverse
-      ( shape (_ : (_b 𝕀) | TOP))
+      ( ⌈♭𝕀⌉)
       Bool
-      ( \ p → let mod _b i := unform p in discrete-interval-elim i (\ _ → Bool) false true)
-      ( \ b → match b (false ⇒ form (mod _b 0ᵢ) | true ⇒ form (mod _b 1ᵢ)))
+      ( \ p → match p (pt-♭𝕀 i ⇒ discrete-interval-elim i (\ _ → Bool) false true))
+      ( \ b → match b (false ⇒ pt-♭𝕀 0ᵢ | true ⇒ pt-♭𝕀 1ᵢ))
       ( \ p →
-          let mod _b i := unform p
-            into
-              ( \ (z : (_b 𝕀)) →
-                  match (let mod _b j := z in discrete-interval-elim j (\ _ → Bool) false true)
-                    ( false ⇒ form (mod _b 0ᵢ)
-                    | true ⇒ form (mod _b 1ᵢ))
-                  =_{shape (_ : (_b 𝕀) | TOP)} form z)
-          in
-            recOR(
-              ( i ≡ 0ᵢ) ↦ refl
-            , ( i ≡ 1ᵢ) ↦ refl))
+          match p
+            ( pt-♭𝕀 i ⇒
+                recOR(
+                  ( i ≡ 0ᵢ) ↦ refl
+                , ( i ≡ 1ᵢ) ↦ refl)))
       ( \ b → match b (false ⇒ refl | true ⇒ refl))
 ```
 

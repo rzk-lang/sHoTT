@@ -1,4 +1,4 @@
-name: Typecheck with Rzk (modal-let-rework branch)
+name: Typecheck with Rzk (data-shape-fields branch)
 
 # Controls when the workflow will run
 on:
@@ -17,9 +17,10 @@ on:
   workflow_dispatch:
 
 env:
-  # rzk source: PR rzk-lang/rzk#334
+  # rzk source: the data-shape-fields branch (modal-let rework + the layer
+  # discipline), pinned by commit
   RZK_REPO: rzk-lang/rzk
-  RZK_REF: lishy2-modal-let-rework
+  RZK_REF: 4f9823b33e5f9cc6b5864c7f5461b0a8a5e358c5
 
 jobs:
   check:

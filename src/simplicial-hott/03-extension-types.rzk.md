@@ -1885,45 +1885,59 @@ equivalent to extending the fiber.
 
 ## Extension types and shapes domain
 
-Functions on a subshape are equivalent to functions on the corresponding `shape` type.
+Functions on a subshape are equivalent to functions on the corresponding realization. A family over the realization is reindexed along the constructor `point` (the realization is write-only, so there is no `unform` to reindex along); the forward map is the induction principle, and the backward round trip is strict β, while the forward round trip is match-η, which is propositional and needs `funext`.
 
 ```rzk
 #def equiv-ext-shape-fun-fwd
   ( I : CUBE)
   ( ϕ : I → TOPE)
-  ( A : I → U)
-  : ( ( x : I | ϕ x) → A x)
-  → ( ( t : shape (x : I | ϕ x)) → A (unform t))
-  := \ f t → f (unform t)
+  ( B : Shape I ϕ → U)
+  : ( ( x : I | ϕ x) → B (point I ϕ x))
+  → ( ( t : Shape I ϕ) → B t)
+  := \ f t → match t ( point x ⇒ f x)
 
 #def equiv-ext-shape-fun-bwd
   ( I : CUBE)
   ( ϕ : I → TOPE)
-  ( A : I → U)
-  : ( ( t : shape (x : I | ϕ x)) → A (unform t))
-  → ( ( x : I | ϕ x) → A x)
-  := \ g x → g (form x)
+  ( B : Shape I ϕ → U)
+  : ( ( t : Shape I ϕ) → B t)
+  → ( ( x : I | ϕ x) → B (point I ϕ x))
+  := \ g x → g (point I ϕ x)
 
 #def equiv-ext-shape-fun
+  ( funext : FunExt)
   ( I : CUBE)
   ( ϕ : I → TOPE)
-  ( A : I → U)
+  ( B : Shape I ϕ → U)
   : Equiv
-      ( ( x : I | ϕ x) → A x)
-      ( ( t : shape (x : I | ϕ x)) → A (unform t))
+      ( ( x : I | ϕ x) → B (point I ϕ x))
+      ( ( t : Shape I ϕ) → B t)
   :=
     equiv-has-inverse
-      ( ( x : I | ϕ x) → A x)
-      ( ( t : shape (x : I | ϕ x)) → A (unform t))
-      ( equiv-ext-shape-fun-fwd I ϕ A)
-      ( equiv-ext-shape-fun-bwd I ϕ A)
-      ( \ _ → refl)
-      ( \ _ → refl)
+      ( ( x : I | ϕ x) → B (point I ϕ x))
+      ( ( t : Shape I ϕ) → B t)
+      ( equiv-ext-shape-fun-fwd I ϕ B)
+      ( equiv-ext-shape-fun-bwd I ϕ B)
+      ( \ f → refl)
+      ( \ g →
+          eq-htpy funext
+            ( Shape I ϕ)
+            ( B)
+            ( equiv-ext-shape-fun-fwd I ϕ B (equiv-ext-shape-fun-bwd I ϕ B g))
+            ( g)
+            ( \ t → match t ( point x ⇒ refl)))
 ```
 
 ## Extension types opposition
 
-```rzk
+<!--
+TODO(diruniv-repin): the four `op-ext-flip` definitions are red at the
+upstream diruniv head too (CI run 33274021499, same error: the restricted
+context `uninv_op (mod _op (ϕ ft))` does not entail `ψ ft ∧ ϕ ft`). They
+need op-crossing entailment in the tope solver, or a restatement. The
+hom-flip lemmas of 05-segal-types that consumed them are postulates for
+now.
+
 #def op-ext-flip-fwd
   ( ψ :_op (𝕀 → TOPE))
   ( ϕ :_op ((t : 𝕀 | ψ t) → TOPE))
@@ -1987,4 +2001,4 @@ Functions on a subshape are equivalent to functions on the corresponding `shape`
     mod _op (\ t →
       let ᵒᵖ mod ᵒᵖ b := k (unflip_op (mod _op t)) in
         b)
-```
+-->

@@ -90,7 +90,7 @@ definitions coincide. Define cone as a family.
   : hom (A → B) (constant A B x) (constant A B y)
   := \ t a → (constant A (hom B x y) k) a t
 
-#def cone-precomposition
+#def cone-precomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -113,7 +113,7 @@ definitions coincide. Define cone as a family.
 Another definition of limit.
 
 ```rzk
-#def limit2
+#def is-equiv-cone-precomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -124,7 +124,7 @@ Another definition of limit.
       → is-equiv
         ( family-cone A B f x)
         ( family-cone A B f b)
-        ( cone-precomposition A B is-segal-B f b x k)
+        ( cone-precomp-is-segal A B is-segal-B f b x k)
 ```
 
 We give a second definition of colimits, we eventually want to prove both
@@ -136,7 +136,7 @@ definitions coincide. Define cocone as a family.
   : ( A → B) → (B) → U
   := \ f → \ b → (hom (A → B) f (constant A B b))
 
-#def cocone-postcomposition
+#def cocone-postcomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -159,7 +159,7 @@ definitions coincide. Define cocone as a family.
 Another definition of colimit.
 
 ```rzk
-#def colimit2
+#def is-equiv-cocone-postcomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -170,20 +170,20 @@ Another definition of colimit.
     → is-equiv
       ( family-cocone A B f x)
       ( family-cocone A B f b)
-      ( cocone-postcomposition A B is-segal-B f x b k)
+      ( cocone-postcomp-is-segal A B is-segal-B f x b k)
 ```
 
 The following alternative definition does not require a Segalness condition.
 When `#!rzk is-segal B` then definitions 1 and 3 coincide.
 
 ```rzk
-#def limit3
+#def representing-element-family-cone
   ( A B : U)
   ( f : A → B)
   : U
   := Σ (b : B) , (x : B) → Equiv (hom B x b) (family-cone A B f x)
 
-#def colimit3
+#def representing-element-family-cocone
   ( A B : U)
   ( f : A → B)
   : U

@@ -159,7 +159,7 @@ definitions coincide. Define cocone as a family.
 Another definition of colimit.
 
 ```rzk
-#def is-equiv-cocone-postcomp-Segal
+#def is-equiv-cocone-postcomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)

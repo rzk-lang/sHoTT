@@ -113,7 +113,7 @@ definitions coincide. Define cone as a family.
 Another definition of limit.
 
 ```rzk
-#def is-equiv-cone-precomp-Segal
+#def is-equiv-cone-precomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)

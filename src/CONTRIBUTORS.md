@@ -12,6 +12,7 @@ Formalizations were contributed by the following people (listed alphabetically):
 - [Aras Ergus](https://www.aergus.net/),
 - [Matthias Hutzler](https://github.com/MatthiasHu),
 - [Nikolai Kudasov](https://fizruk.github.io/),
+- [Stefano Luneia](https://github.com/sluneia),
 - [Kenji Maillard](https://github.com/kyoDralliam),
 - [David Martínez Carpena](https://dvmcarpena.com/),
 - [Stiéphen Pradal](https://stiephenpradal.github.io/),

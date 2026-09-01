@@ -45,26 +45,6 @@ This is a literate `rzk` file:
 ## Propositions are (-1)-truncated types
 
 ```rzk
-#def is-neg-one-trunc-is-prop
-  ( A : U)
-  : is-prop A → is-trunc (succ-𝕋 neg-two-𝕋) A
-  :=
-  \ is-prop-A → is-prop-A
-
-#def is-prop-is-neg-one-trunc
-  ( A : U)
-  : is-trunc (succ-𝕋 neg-two-𝕋) A → is-prop A
-  :=
-  \ H → H
-
-#def iff-is-prop-is-neg-one-trunc
-  ( A : U)
-  : iff
-  ( is-prop A)
-  ( is-trunc (succ-𝕋 neg-two-𝕋) A)
-  :=
-  ( is-neg-one-trunc-is-prop A , is-prop-is-neg-one-trunc A)
-
 #def eq-is-prop-is-neg-one-trunc
   ( A : U)
   : is-prop A = is-trunc (succ-𝕋 neg-two-𝕋) A

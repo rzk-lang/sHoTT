@@ -111,24 +111,6 @@ As a corollary we show that that f:A→B is an embedding and B is (k+1)-trunctat
 ```
 
 ```rzk
-#def is-contr-Π-is-contr-fiber uses (funext)
-  ( A : U)
-  ( B : A → U)
-  : ( ( x : A) → is-contr (B x))
-  → is-contr ((x : A) → B x)
-  :=
-  \ h →
-    ( ( \ x → first (h x))
-    , ( \ g →
-        eq-htpy funext
-          A
-          B
-          ( \ x → first (h x))
-          g
-          ( \ x → second (h x) (g x))))
-```
-
-```rzk
 #def is-Π-trunc-is-trunc-fiber uses (funext)
   ( k : 𝕋)
   : ( A : U)

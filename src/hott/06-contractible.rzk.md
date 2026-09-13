@@ -407,7 +407,9 @@ Function extensionality implies weak function extensionality.
 
 ## Singleton induction
 
-A type is contractible if and only if it has singleton induction.
+A type is contractible if and only if it has singleton induction at some point.
+We keep this point explicit. The induction rule applies to every family over the
+type.
 
 ```rzk
 #def ev-pt
@@ -432,8 +434,9 @@ A type is contractible if and only if it has singleton induction.
 
 #def has-singleton-induction
   ( A : U)
+  ( a : A)
   : U
-  := Σ (a : A) , (B : A → U) → (has-singleton-induction-pointed A a B)
+  := has-singleton-induction-pointed-structure A a
 
 #def ind-sing
   ( A : U)
@@ -463,32 +466,31 @@ A type is contractible if and only if it has singleton induction.
 #def contr-implies-singleton-induction-ind
   ( A : U)
   ( is-contr-A : is-contr A)
-  : ( has-singleton-induction A)
+  : has-singleton-induction A (center-contraction A is-contr-A)
   :=
-    ( ( center-contraction A is-contr-A)
-    , \ B →
-        ( ( \ b x →
-                ( transport A B
-                  ( center-contraction A is-contr-A) x
-                  ( realign-homotopy-contraction A is-contr-A x) b))
-        , ( \ b →
-                ( ap
-                  ( ( center-contraction A is-contr-A)
-                  = ( center-contraction A is-contr-A))
-                  ( B (center-contraction A is-contr-A))
-                  ( realign-homotopy-contraction A is-contr-A
-                    ( center-contraction A is-contr-A))
-                  refl_{(center-contraction A is-contr-A)}
-                  ( \ p →
-                    ( transport-loop A B (center-contraction A is-contr-A) b p))
-                  ( path-realign-homotopy-contraction A is-contr-A)))))
+  \ B →
+  ( ( \ b x →
+      transport A B
+      ( center-contraction A is-contr-A) x
+      ( realign-homotopy-contraction A is-contr-A x) b)
+  , ( \ b →
+      ap
+      ( ( center-contraction A is-contr-A)
+      = ( center-contraction A is-contr-A))
+      ( B (center-contraction A is-contr-A))
+      ( realign-homotopy-contraction A is-contr-A
+        ( center-contraction A is-contr-A))
+      refl_{(center-contraction A is-contr-A)}
+      ( \ p →
+        transport-loop A B (center-contraction A is-contr-A) b p)
+      ( path-realign-homotopy-contraction A is-contr-A)))
 
 #def contr-implies-singleton-induction-pointed
   ( A : U)
   ( is-contr-A : is-contr A)
   ( B : A → U)
   : has-singleton-induction-pointed A (center-contraction A is-contr-A) B
-  := (second (contr-implies-singleton-induction-ind A is-contr-A)) B
+  := contr-implies-singleton-induction-ind A is-contr-A B
 
 #def singleton-induction-ind-implies-contr
   ( A : U)

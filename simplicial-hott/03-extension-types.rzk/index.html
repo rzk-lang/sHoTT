@@ -2367,10 +2367,9 @@ extensionality.</p>
 <p>For convenience we also provide the composite implication from extension
 extensionality to weak extension extensionality:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:weakextext-extext" id="define:weakextext-extext" style="visibility: visible; position: relative; color: inherit">weakextext-extext</a></span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>  : ExtExt → WeakExtExt
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>  :=
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>    comp ExtExt NaiveExtExt WeakExtExt
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>    ( weakextext-naiveextext) (naiveextext-extext)
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>  <span class="p">( </span>extext <span class="p">:</span> ExtExt)
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>  : WeakExtExt
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>  := weakextext-naiveextext (naiveextext-extext extext)
 </span></code></pre></div>
 <h3 id="weak-extension-extensionality-implies-extension-extensionality">Weak extension extensionality implies extension extensionality<a class="headerlink" href="#weak-extension-extensionality-implies-extension-extensionality" title="Permanent link">&para;</a></h3>
 <p>Weak extension extensionality implies extension extensionality; this is the
@@ -2503,16 +2502,14 @@ extension extensionality that we get by extracting the fiberwise equivalence.</p
 </span></code></pre></div>
 <p>For convenience we also provide the other composite implications:</p>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:extext-naiveexteext" id="define:extext-naiveexteext" style="visibility: visible; position: relative; color: inherit">extext-naiveexteext</a></span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>  : NaiveExtExt → ExtExt
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>  :=
-</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>    comp NaiveExtExt WeakExtExt ExtExt
-</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>    ( extext-weakextext) (weakextext-naiveextext)
-</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>
-</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:naiveextext-weakextext" id="define:naiveextext-weakextext" style="visibility: visible; position: relative; color: inherit">naiveextext-weakextext</a></span>
-</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>  : WeakExtExt → NaiveExtExt
-</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>  :=
-</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>    comp WeakExtExt ExtExt NaiveExtExt
-</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>    ( naiveextext-extext) (extext-weakextext)
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>  <span class="p">( </span>naiveextext <span class="p">:</span> NaiveExtExt)
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>  : ExtExt
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>  := extext-weakextext (weakextext-naiveextext naiveextext)
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:naiveextext-weakextext" id="define:naiveextext-weakextext" style="visibility: visible; position: relative; color: inherit">naiveextext-weakextext</a></span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>  <span class="p">( </span>weakextext <span class="p">:</span> WeakExtExt)
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>  : NaiveExtExt
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>  := naiveextext-extext (extext-weakextext weakextext)
 </span></code></pre></div>
 <h2 id="homotopy-extension-property">Homotopy extension property<a class="headerlink" href="#homotopy-extension-property" title="Permanent link">&para;</a></h2>
 <p>The homotopy extension property has the following signature. We state this

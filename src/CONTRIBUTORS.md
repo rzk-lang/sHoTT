@@ -18,6 +18,7 @@ Formalizations were contributed by the following people (listed alphabetically):
 - [Stiéphen Pradal](https://stiephenpradal.github.io/),
 - [Nima Rasekh](https://guests.mpim-bonn.mpg.de/rasekh/),
 - [Emily Riehl](https://emilyriehl.github.io/),
+- [Rob Schellingerhout](https://github.com/robsorb),
 - [Judah Towery](https://github.com/jjtowery),
 - [Florrie Verity](https://github.com/floverity),
 - [Tashi Walde](https://www.math.cit.tum.de/en/algebra/personen/walde/), and

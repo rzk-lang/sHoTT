@@ -1238,3 +1238,69 @@ Finally, we conclude:
       ( y)
       ( p)
 ```
+
+## Equalities with hom-eq of a concatenated path
+
+```rzk
+
+#def equiv-eq-hom-eq-zig-zag-concat
+  ( A : U)
+  ( x y z : A)
+  ( p : x = y)
+  ( q : z = y)
+  ( f : hom A x z)
+  : Equiv
+    ( f = hom-eq A x z (zig-zag-concat A x y z p q))
+    ( extension-type
+      2
+      Δ¹
+      ∂Δ¹
+      ( \ t → (f t) =_{A} y)
+      ( \ t → recOR (t ≡ 0₂ ↦ p , t ≡ 1₂ ↦ q)))
+  :=
+  ind-path-end
+    A
+    y
+    ( \ z q →
+      ( x : A) → (p : x = y) → (f : hom A x z)
+      → Equiv
+        ( f = hom-eq A x z (zig-zag-concat A x y z p q))
+        ( extension-type
+          2
+          Δ¹
+          ∂Δ¹
+          ( \ t → (f t) =_{A} y)
+          ( \ t → recOR (t ≡ 0₂ ↦ p , t ≡ 1₂ ↦ q))))
+    ( \ x p f →
+      ind-path-end
+        A
+        y
+        ( \ x p →
+          ( f : hom A x y)
+          → Equiv
+            ( f = hom-eq A x y (zig-zag-concat A x y y p refl))
+            ( extension-type
+              2
+              Δ¹
+              ∂Δ¹
+              ( \ t → (f t) =_{A} y)
+              ( \ t → recOR (t ≡ 0₂ ↦ p , t ≡ 1₂ ↦ refl))))
+        ( \ f →
+          equiv-ExtExt extext
+            2
+            Δ¹
+            ∂Δ¹
+            ( \ _ → A)
+            ( \ _ → y)
+            f
+            ( id-hom A y))
+        x
+        p
+        f)
+    z
+    q
+    x
+    p
+    f
+
+```

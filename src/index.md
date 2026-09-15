@@ -14,10 +14,12 @@ results from the following papers:
   [^2]
 - "[Limits and colimits of synthetic ∞-categories](https://arxiv.org/abs/2202.12386)"
   [^3]
+- "[Higher algebra in simplicial homotopy type theory](https://studenttheses.uu.nl/items/6b387401-50f1-4463-836a-9ee8c138fec6)"
+  [^4]
 
 This formalization project follows the philosophy laid out in the article
 "[Could ∞-category theory be taught to undergraduates?](https://www.ams.org/journals/notices/202305/noti2692/noti2692.html)"
-[^4].
+[^5].
 
 The formalizations are implemented using
 [`rzk`](https://github.com/rzk-lang/rzk), an experimental proof assistant for a
@@ -61,6 +63,11 @@ rzk typecheck src/hott/* src/simplicial-hott/*
     1-33, 2022. <https://arxiv.org/abs/2202.12386>
 
 [^4]:
+    Rob Schellingerhout. Higher algebra in simplicial homotopy type theory.
+    Master’s thesis, Utrecht University, 66-83, 2026.
+    <https://studenttheses.uu.nl/items/6b387401-50f1-4463-836a-9ee8c138fec6>
+
+[^5]:
     Emily Riehl. Could ∞-category theory be taught to undergraduates? Notices of
     the AMS. May 2023.
     <https://www.ams.org/journals/notices/202305/noti2692/noti2692.html>

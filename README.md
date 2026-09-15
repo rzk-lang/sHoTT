@@ -65,6 +65,10 @@ submitting your pull request.
    Mathematical Structures in Computer Science, vol. 35, p. e24, 2025.
    <https://doi.org/10.1017/S0960129525100248>
 
-4. Emily Riehl. Could ∞-category theory be taught to undergraduates? Notices of
+4. Rob Schellingerhout. Higher algebra in simplicial homotopy type theory.
+   Master’s thesis, Utrecht University, 2026.
+   <https://studenttheses.uu.nl/items/6b387401-50f1-4463-836a-9ee8c138fec6>
+
+5. Emily Riehl. Could ∞-category theory be taught to undergraduates? Notices of
    the AMS. May 2023.
    <https://www.ams.org/journals/notices/202305/noti2692/noti2692.html>

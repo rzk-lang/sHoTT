@@ -181,6 +181,33 @@ invertible, meaning `#!rzk f` has a two-sided composition inverse
     , has-inverse-arrow-is-iso-arrow A is-segal-A x y f)
 ```
 
+## Reversing isomorphisms
+
+```rzk
+
+#def rev-iso uses (extext)
+  ( C : U)
+  ( is-segal-C : is-segal C)
+  ( x y : C)
+  : Iso C is-segal-C x y → Iso C is-segal-C y x
+  := \ e →
+    ( first
+      ( has-inverse-arrow-is-iso-arrow C is-segal-C x y (first e) (second e))
+    , is-iso-arrow-has-inverse-arrow C is-segal-C y x
+      ( first
+        ( has-inverse-arrow-is-iso-arrow C is-segal-C x y (first e) (second e)))
+      ( first e
+      , ( second (second
+          ( has-inverse-arrow-is-iso-arrow C is-segal-C x y
+            ( first e)
+            ( second e)))
+        , first (second
+          ( has-inverse-arrow-is-iso-arrow C is-segal-C x y
+            ( first e)
+            ( second e))))))
+
+```
+
 ## Being an isomorphism is a proposition
 
 The predicate `#!rzk is-iso-arrow` is a proposition.

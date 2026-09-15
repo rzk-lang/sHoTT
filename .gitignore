@@ -212,6 +212,9 @@ sympy-plots-for-*.tex/
 *.pytxcode
 pythontex-files-*/
 
+# python venv
+.venv
+
 # tcolorbox
 *.listing
 

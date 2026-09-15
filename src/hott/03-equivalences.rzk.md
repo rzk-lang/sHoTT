@@ -86,6 +86,34 @@ We define equivalences to be bi-invertible maps.
 #end equivalence-data
 ```
 
+## The retraction of an equivalence is also a section
+
+```rzk
+
+#def is-section-retraction-is-equiv
+  ( A B : U)
+  ( f : A → B)
+  ( is-equiv-f : is-equiv A B f)
+  : homotopy B B (comp B A B f (retraction-is-equiv A B f is-equiv-f)) (identity B)
+  :=
+  \ b →
+    concat
+      B
+      ( f (retraction-is-equiv A B f is-equiv-f b))
+      ( f (section-is-equiv A B f is-equiv-f b))
+      b
+      ( ap A B
+        ( retraction-is-equiv A B f is-equiv-f b)
+        ( section-is-equiv A B f is-equiv-f b)
+        f
+        ( rev A
+          ( section-is-equiv A B f is-equiv-f b)
+          ( retraction-is-equiv A B f is-equiv-f b)
+          ( homotopy-section-retraction-is-equiv A B f is-equiv-f b)))
+      ( second (second is-equiv-f) b)
+
+```
+
 ## Invertible maps
 
 The following type of more coherent equivalences is not a proposition.
@@ -952,6 +980,97 @@ dependent function types.
         ( \ x ax → first (famequiv x) (ax))
         ( \ x → second (famequiv x))))
 ```
+
+### Homotopy induction
+
+```rzk
+
+#def compute-htpy-eq-eq-htpy
+  ( A : U)
+  ( B : A → U)
+  ( f : (a : A) → B a)
+  ( g : (a : A) → B a)
+  ( H : (a : A) → f a = g a)
+  : htpy-eq A B f g (eq-htpy A B f g H) = H
+  :=
+  is-section-retraction-is-equiv
+    ( f = g) ((a : A) → f a = g a) (htpy-eq A B f g)
+    ( funext A B f g)
+    H
+
+#def ind-htpy uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( f : (a : A) → B a)
+  ( C : (g : (a : A) → B a) → ((a : A) → f a = g a) → U)
+  ( c : C f (\ a → refl))
+  ( g : (a : A) → B a)
+  ( H : (a : A) → f a = g a)
+  : C g H
+  := transport
+    ( ( a : A) → f a = g a)
+    ( \ H → C g H)
+    ( htpy-eq A B f g (eq-htpy A B f g H))
+    ( H)
+    ( compute-htpy-eq-eq-htpy A B f g H)
+    ( ind-path
+      ( ( a : A) → B a)
+      ( f)
+      ( \ g → \ p → C g (htpy-eq A B f g p))
+      ( c)
+      ( g)
+      ( eq-htpy A B f g H))
+
+#def ind-htpy-end uses (funext)
+  ( A : U)
+  ( B : A → U)
+  ( g : (a : A) → B a)
+  ( C : (f : (a : A) → B a) → ((a : A) → f a = g a) → U)
+  ( c : C g (\ a → refl))
+  ( f : (a : A) → B a)
+  ( H : (a : A) → f a = g a)
+  : C f H
+  := transport
+    ( ( a : A) → f a = g a)
+    ( \ H → C f H)
+    ( htpy-eq A B f g (eq-htpy A B f g H))
+    ( H)
+    ( compute-htpy-eq-eq-htpy A B f g H)
+    ( ind-path-end
+      ( ( a : A) → B a)
+      ( g)
+      ( \ f → \ p → C f (htpy-eq A B f g p))
+      ( c)
+      ( f)
+      ( eq-htpy A B f g H))
+
+```
+
+```rzk
+
+#def eq-zig-zag-homotopy-id-refl uses (funext)
+  ( X : U)
+  ( f : X → X)
+  ( H : homotopy X X f (identity X))
+  ( x : X)
+  : zig-zag-concat X (f (f x)) (f x) (f (f x)) (ap X X (f x) x f (H x)) (H (f x))
+    = refl
+  :=
+  ind-htpy-end
+    X
+    ( \ _ → X)
+    ( identity X)
+    ( \ f H →
+      zig-zag-concat X (f (f x)) (f x) (f (f x))
+        ( ap X X (f x) x f (H x))
+        ( H (f x))
+        = refl)
+    ( refl)
+    ( f)
+    ( H)
+
+```
+
 
 ## Embeddings
 

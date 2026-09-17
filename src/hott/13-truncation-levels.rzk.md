@@ -154,3 +154,181 @@ As a corollary, non-dependent function types with `k`-truncated codomain are
     ( \ _ → B)
     ( \ _ → is-trunc-B)
 ```
+
+### Σ-types of k-truncated types are k-truncated
+
+```rzk
+#def is-contr-Σ-fiberwise-is-contr-Σ
+  ( A : U)
+  ( B : A → U)
+  ( is-contr-A : is-contr A)
+  ( is-contr-fam : (x : A) → is-contr (B x))
+  : is-contr (Σ (x : A) , B x)
+  :=
+  is-contr-equiv-is-contr'
+    ( Σ ( x : A) , B x)
+    ( B (first is-contr-A))
+    ( equiv-center-fiber-total-type-is-contr-base A is-contr-A B)
+    ( is-contr-fam (first is-contr-A))
+
+
+#def is-contr-Σ-fiberwise-is-contr-Σ'
+  ( A : U)
+  : ( B : A → U)
+  → ( is-contr A)
+  → ( ( x : A) → (is-contr (B x)))
+  → ( is-contr (Σ (x : A) , B x))
+  := \ B is-contr-A is-contr-fam →
+      ( ( first is-contr-A , first (is-contr-fam (first is-contr-A)))
+    , \ t → eq-pair
+      ( A)
+      ( B)
+      ( ( first is-contr-A , first (is-contr-fam (first is-contr-A))))
+      ( t)
+      ( ( second is-contr-A (first t)
+      , concat
+        ( B (first t))
+        ( transport A B
+          ( first is-contr-A) (first t)
+          ( second is-contr-A (first t))
+          ( first (is-contr-fam (first is-contr-A))))
+        ( first (is-contr-fam (first t)))
+        ( second t)
+        ( rev
+          ( B (first t))
+          ( first (is-contr-fam (first t)))
+          ( transport A B
+            ( first is-contr-A) (first t)
+            ( second is-contr-A (first t))
+            ( first (is-contr-fam (first is-contr-A))))
+          ( second (is-contr-fam (first t))
+            ( transport A B
+              ( first is-contr-A) (first t)
+              ( second is-contr-A (first t))
+              ( first (is-contr-fam (first is-contr-A))))))
+        ( second (is-contr-fam (first t)) (second t)))))
+```
+```rzk
+#def is-trunc-Σ-fiberwise-is-trunc-Σ
+  ( k : 𝕋)
+  : ( A : U)
+  → ( B : A → U)
+  → ( is-trunc k A)
+  → ( ( x : A) → (is-trunc k (B x)))
+  → ( is-trunc k (Σ (x : A) , B x))
+  :=
+  match k
+    ( neg-two-𝕋 ⇒
+      \ A B is-contr-A is-contr-fam →
+        is-contr-Σ-fiberwise-is-contr-Σ A B is-contr-A is-contr-fam
+    | succ-𝕋 k' ih ⇒
+      \ A B is-trunc-A is-trunc-fam s t →
+        is-trunc-equiv-is-trunc
+          ( k')
+          ( s = t)
+          ( Eq-Σ A B s t)
+          ( extensionality-Σ A B s t)
+          ( ih
+            ( first s = first t)
+            ( \ p → transport A B (first s) (first t) p (second s) = second t)
+            ( is-trunc-A (first s) (first t))
+            ( \ p →
+                is-trunc-fam
+                ( first t)
+                ( transport A B (first s) (first t) p (second s))
+                ( second t))))
+```
+### k-truncated types are closed under retracts
+
+```rzk
+#def is-contr-retract-is-retract-of-contr
+  ( A B : U)
+  : ( is-retract-of A B)
+  → ( is-contr B)
+  → ( is-contr A)
+  := \ is-retract-of-B is-contr-B →
+  ( first (second is-retract-of-B) (first is-contr-B)
+  , \ (x : A) → concat
+      ( A)
+      ( first (second is-retract-of-B) (first is-contr-B))
+      ( comp A B A (first (second is-retract-of-B)) (first is-retract-of-B) x)
+      ( x)
+      ( ap
+        ( B)
+        ( A)
+        ( first is-contr-B)
+        ( first is-retract-of-B x)
+        ( first (second is-retract-of-B))
+        ( second is-contr-B (first is-retract-of-B x)))
+      ( second (second is-retract-of-B) x))
+
+#def is-retract-of-path-types-is-retract-of
+  ( A B : U)
+  ( ( s , (r , η)) : is-retract-of A B)
+  ( x y : A)
+  : is-retract-of (x = y) (s x = s y)
+  :=
+    ( ap A B x y s
+    , ( \ q →
+          triple-concat A x (r (s x)) (r (s y)) y
+            ( rev A (r (s x)) x (η x))
+            ( ap B A (s x) (s y) r q)
+            ( η y)
+      , \ p →
+          ind-path
+            ( A)
+            ( x)
+            ( \ y' p' →
+                triple-concat A x (r (s x)) (r (s y')) y'
+                  ( rev A (r (s x)) x (η x))
+                  ( ap B A (s x) (s y') r (ap A B x y' s p'))
+                  ( η y')
+                = p')
+            ( rev-refl-id-triple-concat A (r (s x)) x (η x))
+            ( y)
+            ( p)))
+
+#def is-trunc-retract-is-retract-of-trunc
+  ( k : 𝕋)
+  : ( A B : U)
+  → ( is-retract-of A B)
+  → ( is-trunc k B)
+  → ( is-trunc k A)
+  :=
+  match k
+    ( neg-two-𝕋 ⇒
+      \ A B H is-contr-B →
+       is-contr-retract-is-retract-of-contr A B H is-contr-B
+    | succ-𝕋 _ ih ⇒
+       \ A B H is-trunc-B x y →
+         ih
+        ( x = y)
+        ( first H x = first H y)
+        ( is-retract-of-path-types-is-retract-of A B H x y)
+        ( is-trunc-B (first H x) (first H y)))
+```
+
+### Being a k-truncated type is a property
+
+```rzk
+#assume weakfunext : WeakFunExt
+```
+
+```rzk
+#def is-prop-is-trunc uses (weakfunext funext)
+  ( k : 𝕋)
+  : ( A : U)
+  → is-prop (is-trunc k A)
+  :=
+  match k
+    ( neg-two-𝕋 ⇒
+      \ A → is-prop-is-contr-itself weakfunext A
+    | succ-𝕋 k' ih ⇒
+      \ A →
+      is-prop-fiberwise-prop2
+        ( funext)
+        ( A)
+        ( \ _ → A)
+        ( \ x y → is-trunc k' (x = y))
+        ( \ x y → ih (x = y)))
+```

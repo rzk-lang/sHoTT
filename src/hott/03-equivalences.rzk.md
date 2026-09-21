@@ -1141,9 +1141,9 @@ dependent function types.
 
 For `#!rzk f : A → B` and any type `#!rzk X`, precomposition
 `#!rzk precomp A B X f : (B → X) → (A → X)` sends `#!rzk g` to `#!rzk g ∘ f`.
-When `#!rzk f` is an equivalence, so is `#!rzk precomp A B X f`: the section
-of `#!rzk f` becomes a retraction of `#!rzk precomp A B X f`, and the
-retraction of `#!rzk f` becomes a section of `#!rzk precomp A B X f`.
+When `#!rzk f` is an equivalence, so is `#!rzk precomp A B X f`: the section of
+`#!rzk f` becomes a retraction of `#!rzk precomp A B X f`, and the retraction of
+`#!rzk f` becomes a section of `#!rzk precomp A B X f`.
 
 ```rzk
 #def precomp
@@ -1152,38 +1152,42 @@ retraction of `#!rzk f` becomes a section of `#!rzk precomp A B X f`.
   : ( B → X) → (A → X)
   := \ g → comp A B X g f
 
-#def is-equiv-precomp-has-retraction uses (funext)
+#def has-retraction-precomp-is-equiv uses (funext)
   ( A B X : U)
   ( f : A → B)
-  ( ( ( r , η) , ( s , ε)) : is-equiv A B f)
+  ( ( ( r , η) , (s , ε)) : is-equiv A B f)
   : has-retraction (B → X) (A → X) (precomp A B X f)
   :=
     ( precomp B A X s
     , \ g →
-        eq-htpy B (\ _ → X)
-          ( comp (B → X) (A → X) (B → X) (precomp B A X s) (precomp A B X f) g)
-          ( g)
-          ( \ b → ap B X (f (s b)) b g (ε b)))
+        eq-htpy
+        ( B)
+        ( \ _ → X)
+        ( comp (B → X) (A → X) (B → X) (precomp B A X s) (precomp A B X f) g)
+        ( g)
+        ( \ b → ap B X (f (s b)) b g (ε b)))
 
-#def is-equiv-precomp-has-section uses (funext)
+#def has-section-precomp-is-equiv uses (funext)
   ( A B X : U)
   ( f : A → B)
-  ( ( ( r , η) , ( s , ε)) : is-equiv A B f)
+  ( ( ( r , η) , (s , ε)) : is-equiv A B f)
   : has-section (B → X) (A → X) (precomp A B X f)
   :=
     ( precomp B A X r
     , \ h →
-        eq-htpy A (\ _ → X)
-          ( comp (A → X) (B → X) (A → X) (precomp A B X f) (precomp B A X r) h)
-          ( h)
-          ( \ a → ap A X (r (f a)) a h (η a)))
+        eq-htpy
+        ( A)
+        ( \ _ → X)
+        ( comp (A → X) (B → X) (A → X) (precomp A B X f) (precomp B A X r) h)
+        ( h)
+        ( \ a → ap A X (r (f a)) a h (η a)))
 
-#def is-equiv-precompose-equiv uses (funext)
+#def is-equiv-precomp-is-equiv uses (funext)
   ( A B X : U)
   ( f : A → B)
   ( is-equiv-f : is-equiv A B f)
   : is-equiv (B → X) (A → X) (precomp A B X f)
   :=
-    ( is-equiv-precomp-has-retraction A B X f is-equiv-f
-    , is-equiv-precomp-has-section A B X f is-equiv-f)
+    ( has-retraction-precomp-is-equiv A B X f is-equiv-f
+    , has-section-precomp-is-equiv A B X f is-equiv-f)
 ```

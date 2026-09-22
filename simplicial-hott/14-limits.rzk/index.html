@@ -1205,7 +1205,7 @@ definitions coincide. Define cone as a family.</p>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>  : hom (A → B) (constant A B x) (constant A B y)
 </span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>  := <span class="p">\ </span>t a → (constant A (hom B x y) k) a t
 </span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cone-precomposition" id="define:cone-precomposition" style="visibility: visible; position: relative; color: inherit">cone-precomposition</a></span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cone-precomp-is-segal" id="define:cone-precomp-is-segal" style="visibility: visible; position: relative; color: inherit">cone-precomp-is-segal</a></span>
 </span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
 </span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
@@ -1225,7 +1225,7 @@ definitions coincide. Define cone as a family.</p>
 </span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>    ( α)
 </span></code></pre></div>
 <p>Another definition of limit.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit2" id="define:limit2" style="visibility: visible; position: relative; color: inherit">limit2</a></span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-cone-precomp-is-segal" id="define:is-equiv-cone-precomp-is-segal" style="visibility: visible; position: relative; color: inherit">is-equiv-cone-precomp-is-segal</a></span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
@@ -1236,7 +1236,7 @@ definitions coincide. Define cone as a family.</p>
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>      → is-equiv
 </span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        ( family-cone A B f x)
 </span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>        ( family-cone A B f b)
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>        ( cone-precomposition A B is-segal-B f b x k)
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>        ( cone-precomp-is-segal A B is-segal-B f b x k)
 </span></code></pre></div>
 <p>We give a second definition of colimits, we eventually want to prove both
 definitions coincide. Define cocone as a family.</p>
@@ -1245,7 +1245,7 @@ definitions coincide. Define cocone as a family.</p>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  : ( A → B) → (B) → <span class="kt">U</span>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  := <span class="p">\ </span>f → <span class="p">\ </span>b → (hom (A → B) f (constant A B b))
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cocone-postcomposition" id="define:cocone-postcomposition" style="visibility: visible; position: relative; color: inherit">cocone-postcomposition</a></span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:cocone-postcomp-is-segal" id="define:cocone-postcomp-is-segal" style="visibility: visible; position: relative; color: inherit">cocone-postcomp-is-segal</a></span>
 </span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
 </span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
@@ -1265,7 +1265,7 @@ definitions coincide. Define cocone as a family.</p>
 </span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>    ( constant-nat-trans A B x b k)
 </span></code></pre></div>
 <p>Another definition of colimit.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:colimit2" id="define:colimit2" style="visibility: visible; position: relative; color: inherit">colimit2</a></span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:is-equiv-cocone-postcomp-is-segal" id="define:is-equiv-cocone-postcomp-is-segal" style="visibility: visible; position: relative; color: inherit">is-equiv-cocone-postcomp-is-segal</a></span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
@@ -1276,17 +1276,17 @@ definitions coincide. Define cocone as a family.</p>
 </span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    → is-equiv
 </span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>      ( family-cocone A B f x)
 </span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>      ( family-cocone A B f b)
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>      ( cocone-postcomposition A B is-segal-B f x b k)
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>      ( cocone-postcomp-is-segal A B is-segal-B f x b k)
 </span></code></pre></div>
 <p>The following alternative definition does not require a Segalness condition.
 When <code class="language-rzk highlight">is-segal B</code> then definitions 1 and 3 coincide.</p>
-<div class="language-rzk highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit3" id="define:limit3" style="visibility: visible; position: relative; color: inherit">limit3</a></span>
+<div class="language-rzk highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:representing-element-family-cone" id="define:representing-element-family-cone" style="visibility: visible; position: relative; color: inherit">representing-element-family-cone</a></span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>  : <span class="kt">U</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>  := <span class="kt">Σ</span> <span class="p">(</span>b <span class="p">:</span> B) , <span class="p">(</span>x <span class="p">:</span> B) → Equiv (hom B x b) (family-cone A B f x)
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:colimit3" id="define:colimit3" style="visibility: visible; position: relative; color: inherit">colimit3</a></span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:representing-element-family-cocone" id="define:representing-element-family-cocone" style="visibility: visible; position: relative; color: inherit">representing-element-family-cocone</a></span>
 </span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>  <span class="p">( </span>A B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>  : <span class="kt">U</span>
@@ -1513,12 +1513,12 @@ When <code class="language-rzk highlight">is-segal B</code> then definitions 1 a
 </span><span id="__span-15-37"><a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a>    ( <span class="s">second</span> y)
 </span></code></pre></div>
 <p>The universal property of limits and colimits.</p>
-<div class="language-rzk highlight"><span class="filename">Bar22, Proposition 3.7</span><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:colimit3-colimit" id="define:colimit3-colimit" style="visibility: visible; position: relative; color: inherit">colimit3-colimit</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+<div class="language-rzk highlight"><span class="filename">Bar22, Proposition 3.7</span><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:representing-element-family-cocone-colimit" id="define:representing-element-family-cocone-colimit" style="visibility: visible; position: relative; color: inherit">representing-element-family-cocone-colimit</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>  <span class="p">( </span>J B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
 </span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>  <span class="p">( </span>g <span class="p">:</span> J → B)
 </span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>  <span class="p">( </span>colim-g <span class="p">:</span> colimit J B g)
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>  : colimit3 J B g
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>  : representing-element-family-cocone J B g
 </span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>  :=
 </span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>    is-representable-family-has-initial-tot
 </span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>      B
@@ -1527,11 +1527,11 @@ When <code class="language-rzk highlight">is-segal B</code> then definitions 1 a
 </span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>      ( is-covariant-family-cone-is-segal J B is-segal-B g)
 </span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>      colim-g
 </span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>
-</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:colimit-colimit3" id="define:colimit-colimit3" style="visibility: visible; position: relative; color: inherit">colimit-colimit3</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:colimit-representing-element-family-cocone" id="define:colimit-representing-element-family-cocone" style="visibility: visible; position: relative; color: inherit">colimit-representing-element-family-cocone</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>  <span class="p">( </span>J B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
 </span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>  <span class="p">( </span>g <span class="p">:</span> J → B)
-</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>  <span class="p">( </span>colim3-g <span class="p">:</span> colimit3 J B g)
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>  <span class="p">( </span>rep-elt-fam-cocone-g <span class="p">:</span> representing-element-family-cocone J B g)
 </span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>  : colimit J B g
 </span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>  :=
 </span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>    has-initial-tot-is-representable-family
@@ -1539,14 +1539,14 @@ When <code class="language-rzk highlight">is-segal B</code> then definitions 1 a
 </span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>      B
 </span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>      is-segal-B
 </span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>      ( family-cocone J B g)
-</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>      colim3-g
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>      rep-elt-fam-cocone-g
 </span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a>
-</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit3-limit" id="define:limit3-limit" style="visibility: visible; position: relative; color: inherit">limit3-limit</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:representing-element-family-cone-limit" id="define:representing-element-family-cone-limit" style="visibility: visible; position: relative; color: inherit">representing-element-family-cone-limit</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
 </span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>  <span class="p">( </span>J B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
 </span><span id="__span-16-32"><a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a>  <span class="p">( </span>g <span class="p">:</span> J → B)
 </span><span id="__span-16-33"><a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a>  <span class="p">( </span>lim-g <span class="p">:</span> limit J B g)
-</span><span id="__span-16-34"><a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a>  : limit3 J B g
+</span><span id="__span-16-34"><a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a>  : representing-element-family-cone J B g
 </span><span id="__span-16-35"><a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a>  :=
 </span><span id="__span-16-36"><a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a>    is-contravariant-representable-family-has-final-tot
 </span><span id="__span-16-37"><a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a>      B
@@ -1555,11 +1555,11 @@ When <code class="language-rzk highlight">is-segal B</code> then definitions 1 a
 </span><span id="__span-16-40"><a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a>      ( is-contravariant-family-cone-is-segal J B is-segal-B g)
 </span><span id="__span-16-41"><a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a>      lim-g
 </span><span id="__span-16-42"><a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a>
-</span><span id="__span-16-43"><a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit-limit3" id="define:limit-limit3" style="visibility: visible; position: relative; color: inherit">limit-limit3</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
+</span><span id="__span-16-43"><a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:limit-representing-element-family-cone" id="define:limit-representing-element-family-cone" style="visibility: visible; position: relative; color: inherit">limit-representing-element-family-cone</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>extext<span class="p">)</span>
 </span><span id="__span-16-44"><a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a>  <span class="p">( </span>J B <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-16-45"><a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a>  <span class="p">( </span>is-segal-B <span class="p">:</span> is-segal B)
 </span><span id="__span-16-46"><a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a>  <span class="p">( </span>g <span class="p">:</span> J → B)
-</span><span id="__span-16-47"><a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a>  <span class="p">( </span>lim3-g <span class="p">:</span> limit3 J B g)
+</span><span id="__span-16-47"><a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a>  <span class="p">( </span>rep-elt-fam-cone-g <span class="p">:</span> representing-element-family-cone J B g)
 </span><span id="__span-16-48"><a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a>  : limit J B g
 </span><span id="__span-16-49"><a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a>  :=
 </span><span id="__span-16-50"><a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a>    has-final-tot-is-contravariant-representable-family
@@ -1567,7 +1567,7 @@ When <code class="language-rzk highlight">is-segal B</code> then definitions 1 a
 </span><span id="__span-16-52"><a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a>      B
 </span><span id="__span-16-53"><a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a>      is-segal-B
 </span><span id="__span-16-54"><a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a>      ( family-cone J B g)
-</span><span id="__span-16-55"><a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a>      lim3-g
+</span><span id="__span-16-55"><a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a>      rep-elt-fam-cone-g
 </span></code></pre></div>
 <div class="language-rzk highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:equiv-transpose-cocone" id="define:equiv-transpose-cocone" style="visibility: visible; position: relative; color: inherit">equiv-transpose-cocone</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
 </span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>  <span class="p">( </span>A B J <span class="p">:</span> <span class="kt">U</span>)
@@ -1641,14 +1641,14 @@ When <code class="language-rzk highlight">is-segal B</code> then definitions 1 a
 </span><span id="__span-17-70"><a id="__codelineno-17-70" name="__codelineno-17-70" href="#__codelineno-17-70"></a>          ( constant J A y)
 </span><span id="__span-17-71"><a id="__codelineno-17-71" name="__codelineno-17-71" href="#__codelineno-17-71"></a>          ( comp J B A u g)))
 </span><span id="__span-17-72"><a id="__codelineno-17-72" name="__codelineno-17-72" href="#__codelineno-17-72"></a>
-</span><span id="__span-17-73"><a id="__codelineno-17-73" name="__codelineno-17-73" href="#__codelineno-17-73"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:left-adjoint-preserves-colimit3" id="define:left-adjoint-preserves-colimit3" style="visibility: visible; position: relative; color: inherit">left-adjoint-preserves-colimit3</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-17-73"><a id="__codelineno-17-73" name="__codelineno-17-73" href="#__codelineno-17-73"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:left-adjoint-preserves-representing-element-family-cocone" id="define:left-adjoint-preserves-representing-element-family-cocone" style="visibility: visible; position: relative; color: inherit">left-adjoint-preserves-representing-element-family-cocone</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
 </span><span id="__span-17-74"><a id="__codelineno-17-74" name="__codelineno-17-74" href="#__codelineno-17-74"></a>  <span class="p">( </span>A B J <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-17-75"><a id="__codelineno-17-75" name="__codelineno-17-75" href="#__codelineno-17-75"></a>  <span class="p">( </span>g <span class="p">:</span> J → A)
 </span><span id="__span-17-76"><a id="__codelineno-17-76" name="__codelineno-17-76" href="#__codelineno-17-76"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
 </span><span id="__span-17-77"><a id="__codelineno-17-77" name="__codelineno-17-77" href="#__codelineno-17-77"></a>  <span class="p">( </span>u <span class="p">:</span> B → A)
 </span><span id="__span-17-78"><a id="__codelineno-17-78" name="__codelineno-17-78" href="#__codelineno-17-78"></a>  <span class="p">( </span>adj <span class="p">:</span> is-transposing-adj A B f u)
-</span><span id="__span-17-79"><a id="__codelineno-17-79" name="__codelineno-17-79" href="#__codelineno-17-79"></a>  ( ( a , is-represented-cocone-g) : colimit3 J A g)
-</span><span id="__span-17-80"><a id="__codelineno-17-80" name="__codelineno-17-80" href="#__codelineno-17-80"></a>  : colimit3 J B (comp J A B f g)
+</span><span id="__span-17-79"><a id="__codelineno-17-79" name="__codelineno-17-79" href="#__codelineno-17-79"></a>  ( ( a , is-represented-cocone-g) : representing-element-family-cocone J A g)
+</span><span id="__span-17-80"><a id="__codelineno-17-80" name="__codelineno-17-80" href="#__codelineno-17-80"></a>  : representing-element-family-cocone J B (comp J A B f g)
 </span><span id="__span-17-81"><a id="__codelineno-17-81" name="__codelineno-17-81" href="#__codelineno-17-81"></a>  :=
 </span><span id="__span-17-82"><a id="__codelineno-17-82" name="__codelineno-17-82" href="#__codelineno-17-82"></a>    ( f a
 </span><span id="__span-17-83"><a id="__codelineno-17-83" name="__codelineno-17-83" href="#__codelineno-17-83"></a>    , <span class="p">\ </span>z →
@@ -1664,14 +1664,14 @@ When <code class="language-rzk highlight">is-segal B</code> then definitions 1 a
 </span><span id="__span-17-93"><a id="__codelineno-17-93" name="__codelineno-17-93" href="#__codelineno-17-93"></a>          ( family-cocone J A g (u z))
 </span><span id="__span-17-94"><a id="__codelineno-17-94" name="__codelineno-17-94" href="#__codelineno-17-94"></a>          ( equiv-transpose-cocone A B J g f u adj z)))
 </span><span id="__span-17-95"><a id="__codelineno-17-95" name="__codelineno-17-95" href="#__codelineno-17-95"></a>
-</span><span id="__span-17-96"><a id="__codelineno-17-96" name="__codelineno-17-96" href="#__codelineno-17-96"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:right-adjoint-preserves-limit3" id="define:right-adjoint-preserves-limit3" style="visibility: visible; position: relative; color: inherit">right-adjoint-preserves-limit3</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
+</span><span id="__span-17-96"><a id="__codelineno-17-96" name="__codelineno-17-96" href="#__codelineno-17-96"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:right-adjoint-preserves-representing-element-family-cone" id="define:right-adjoint-preserves-representing-element-family-cone" style="visibility: visible; position: relative; color: inherit">right-adjoint-preserves-representing-element-family-cone</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext<span class="p">)</span>
 </span><span id="__span-17-97"><a id="__codelineno-17-97" name="__codelineno-17-97" href="#__codelineno-17-97"></a>  <span class="p">( </span>A B J <span class="p">:</span> <span class="kt">U</span>)
 </span><span id="__span-17-98"><a id="__codelineno-17-98" name="__codelineno-17-98" href="#__codelineno-17-98"></a>  <span class="p">( </span>g <span class="p">:</span> J → B)
 </span><span id="__span-17-99"><a id="__codelineno-17-99" name="__codelineno-17-99" href="#__codelineno-17-99"></a>  <span class="p">( </span>f <span class="p">:</span> A → B)
 </span><span id="__span-17-100"><a id="__codelineno-17-100" name="__codelineno-17-100" href="#__codelineno-17-100"></a>  <span class="p">( </span>u <span class="p">:</span> B → A)
 </span><span id="__span-17-101"><a id="__codelineno-17-101" name="__codelineno-17-101" href="#__codelineno-17-101"></a>  <span class="p">( </span>adj <span class="p">:</span> is-transposing-adj A B f u)
-</span><span id="__span-17-102"><a id="__codelineno-17-102" name="__codelineno-17-102" href="#__codelineno-17-102"></a>  ( ( b , is-represented-cone-g) : limit3 J B g)
-</span><span id="__span-17-103"><a id="__codelineno-17-103" name="__codelineno-17-103" href="#__codelineno-17-103"></a>  : limit3 J A (comp J B A u g)
+</span><span id="__span-17-102"><a id="__codelineno-17-102" name="__codelineno-17-102" href="#__codelineno-17-102"></a>  ( ( b , is-represented-cone-g) : representing-element-family-cone J B g)
+</span><span id="__span-17-103"><a id="__codelineno-17-103" name="__codelineno-17-103" href="#__codelineno-17-103"></a>  : representing-element-family-cone J A (comp J B A u g)
 </span><span id="__span-17-104"><a id="__codelineno-17-104" name="__codelineno-17-104" href="#__codelineno-17-104"></a>  :=
 </span><span id="__span-17-105"><a id="__codelineno-17-105" name="__codelineno-17-105" href="#__codelineno-17-105"></a>    ( u b
 </span><span id="__span-17-106"><a id="__codelineno-17-106" name="__codelineno-17-106" href="#__codelineno-17-106"></a>    , <span class="p">\ </span>y →
@@ -1699,9 +1699,9 @@ When <code class="language-rzk highlight">is-segal B</code> then definitions 1 a
 </span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>  <span class="p">( </span>adj <span class="p">:</span> is-transposing-adj A B f u)
 </span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>  : colimit J B (comp J A B f g)
 </span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>  :=
-</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>    colimit-colimit3 J B is-segal-B (comp J A B f g)
-</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>      ( left-adjoint-preserves-colimit3 A B J g f u adj
-</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>        ( colimit3-colimit J A is-segal-A g colim-g))
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>  colimit-representing-element-family-cocone J B is-segal-B (comp J A B f g)
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>  ( left-adjoint-preserves-representing-element-family-cocone A B J g f u adj
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>    ( representing-element-family-cocone-colimit J A is-segal-A g colim-g))
 </span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>
 </span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="kr">#def</span><span class="p"> </span><span class="nf"><a href="#define:right-adjoint-preserves-limit" id="define:right-adjoint-preserves-limit" style="visibility: visible; position: relative; color: inherit">right-adjoint-preserves-limit</a></span><span class="p"> </span><span class="k">uses</span><span class="p"> (</span>funext extext<span class="p">)</span>
 </span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>  <span class="p">( </span>A B J <span class="p">:</span> <span class="kt">U</span>)
@@ -1714,9 +1714,9 @@ When <code class="language-rzk highlight">is-segal B</code> then definitions 1 a
 </span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>  <span class="p">( </span>adj <span class="p">:</span> is-transposing-adj A B f u)
 </span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a>  : limit J A (comp J B A u g)
 </span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>  :=
-</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a>    limit-limit3 J A is-segal-A (comp J B A u g)
-</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a>      ( right-adjoint-preserves-limit3 A B J g f u adj
-</span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a>        ( limit3-limit J B is-segal-B g lim-g))
+</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a>    limit-representing-element-family-cone J A is-segal-A (comp J B A u g)
+</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a>      ( right-adjoint-preserves-representing-element-family-cone A B J g f u adj
+</span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a>        ( representing-element-family-cone-limit J B is-segal-B g lim-g))
 </span></code></pre></div>
 
 

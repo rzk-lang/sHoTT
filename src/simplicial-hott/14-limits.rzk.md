@@ -90,7 +90,7 @@ definitions coincide. Define cone as a family.
   : hom (A → B) (constant A B x) (constant A B y)
   := \ t a → (constant A (hom B x y) k) a t
 
-#def cone-precomposition
+#def cone-precomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -113,7 +113,7 @@ definitions coincide. Define cone as a family.
 Another definition of limit.
 
 ```rzk
-#def limit2
+#def is-equiv-cone-precomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -124,7 +124,7 @@ Another definition of limit.
       → is-equiv
         ( family-cone A B f x)
         ( family-cone A B f b)
-        ( cone-precomposition A B is-segal-B f b x k)
+        ( cone-precomp-is-segal A B is-segal-B f b x k)
 ```
 
 We give a second definition of colimits, we eventually want to prove both
@@ -136,7 +136,7 @@ definitions coincide. Define cocone as a family.
   : ( A → B) → (B) → U
   := \ f → \ b → (hom (A → B) f (constant A B b))
 
-#def cocone-postcomposition
+#def cocone-postcomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -159,7 +159,7 @@ definitions coincide. Define cocone as a family.
 Another definition of colimit.
 
 ```rzk
-#def colimit2
+#def is-equiv-cocone-postcomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -170,20 +170,20 @@ Another definition of colimit.
     → is-equiv
       ( family-cocone A B f x)
       ( family-cocone A B f b)
-      ( cocone-postcomposition A B is-segal-B f x b k)
+      ( cocone-postcomp-is-segal A B is-segal-B f x b k)
 ```
 
 The following alternative definition does not require a Segalness condition.
 When `#!rzk is-segal B` then definitions 1 and 3 coincide.
 
 ```rzk
-#def limit3
+#def representing-element-family-cone
   ( A B : U)
   ( f : A → B)
   : U
   := Σ (b : B) , (x : B) → Equiv (hom B x b) (family-cone A B f x)
 
-#def colimit3
+#def representing-element-family-cocone
   ( A B : U)
   ( f : A → B)
   : U
@@ -430,12 +430,12 @@ Co-/limits are unique up to isomorphism.
 The universal property of limits and colimits.
 
 ```rzk title="Bar22, Proposition 3.7"
-#def colimit3-colimit uses (funext)
+#def representing-element-family-cocone-colimit uses (funext)
   ( J B : U)
   ( is-segal-B : is-segal B)
   ( g : J → B)
   ( colim-g : colimit J B g)
-  : colimit3 J B g
+  : representing-element-family-cocone J B g
   :=
     is-representable-family-has-initial-tot
       B
@@ -444,11 +444,11 @@ The universal property of limits and colimits.
       ( is-covariant-family-cone-is-segal J B is-segal-B g)
       colim-g
 
-#def colimit-colimit3 uses (extext)
+#def colimit-representing-element-family-cocone uses (extext)
   ( J B : U)
   ( is-segal-B : is-segal B)
   ( g : J → B)
-  ( colim3-g : colimit3 J B g)
+  ( rep-elt-fam-cocone-g : representing-element-family-cocone J B g)
   : colimit J B g
   :=
     has-initial-tot-is-representable-family
@@ -456,14 +456,14 @@ The universal property of limits and colimits.
       B
       is-segal-B
       ( family-cocone J B g)
-      colim3-g
+      rep-elt-fam-cocone-g
 
-#def limit3-limit uses (funext)
+#def representing-element-family-cone-limit uses (funext)
   ( J B : U)
   ( is-segal-B : is-segal B)
   ( g : J → B)
   ( lim-g : limit J B g)
-  : limit3 J B g
+  : representing-element-family-cone J B g
   :=
     is-contravariant-representable-family-has-final-tot
       B
@@ -472,11 +472,11 @@ The universal property of limits and colimits.
       ( is-contravariant-family-cone-is-segal J B is-segal-B g)
       lim-g
 
-#def limit-limit3 uses (extext)
+#def limit-representing-element-family-cone uses (extext)
   ( J B : U)
   ( is-segal-B : is-segal B)
   ( g : J → B)
-  ( lim3-g : limit3 J B g)
+  ( rep-elt-fam-cone-g : representing-element-family-cone J B g)
   : limit J B g
   :=
     has-final-tot-is-contravariant-representable-family
@@ -484,7 +484,7 @@ The universal property of limits and colimits.
       B
       is-segal-B
       ( family-cone J B g)
-      lim3-g
+      rep-elt-fam-cone-g
 ```
 
 ```rzk
@@ -560,14 +560,14 @@ The universal property of limits and colimits.
           ( constant J A y)
           ( comp J B A u g)))
 
-#def left-adjoint-preserves-colimit3 uses (funext)
+#def left-adjoint-preserves-representing-element-family-cocone uses (funext)
   ( A B J : U)
   ( g : J → A)
   ( f : A → B)
   ( u : B → A)
   ( adj : is-transposing-adj A B f u)
-  ( ( a , is-represented-cocone-g) : colimit3 J A g)
-  : colimit3 J B (comp J A B f g)
+  ( ( a , is-represented-cocone-g) : representing-element-family-cocone J A g)
+  : representing-element-family-cocone J B (comp J A B f g)
   :=
     ( f a
     , \ z →
@@ -583,14 +583,14 @@ The universal property of limits and colimits.
           ( family-cocone J A g (u z))
           ( equiv-transpose-cocone A B J g f u adj z)))
 
-#def right-adjoint-preserves-limit3 uses (funext)
+#def right-adjoint-preserves-representing-element-family-cone uses (funext)
   ( A B J : U)
   ( g : J → B)
   ( f : A → B)
   ( u : B → A)
   ( adj : is-transposing-adj A B f u)
-  ( ( b , is-represented-cone-g) : limit3 J B g)
-  : limit3 J A (comp J B A u g)
+  ( ( b , is-represented-cone-g) : representing-element-family-cone J B g)
+  : representing-element-family-cone J A (comp J B A u g)
   :=
     ( u b
     , \ y →
@@ -621,9 +621,9 @@ Left/right adjoints preserve co-/limits.
   ( adj : is-transposing-adj A B f u)
   : colimit J B (comp J A B f g)
   :=
-    colimit-colimit3 J B is-segal-B (comp J A B f g)
-      ( left-adjoint-preserves-colimit3 A B J g f u adj
-        ( colimit3-colimit J A is-segal-A g colim-g))
+  colimit-representing-element-family-cocone J B is-segal-B (comp J A B f g)
+  ( left-adjoint-preserves-representing-element-family-cocone A B J g f u adj
+    ( representing-element-family-cocone-colimit J A is-segal-A g colim-g))
 
 #def right-adjoint-preserves-limit uses (funext extext)
   ( A B J : U)
@@ -636,7 +636,7 @@ Left/right adjoints preserve co-/limits.
   ( adj : is-transposing-adj A B f u)
   : limit J A (comp J B A u g)
   :=
-    limit-limit3 J A is-segal-A (comp J B A u g)
-      ( right-adjoint-preserves-limit3 A B J g f u adj
-        ( limit3-limit J B is-segal-B g lim-g))
+    limit-representing-element-family-cone J A is-segal-A (comp J B A u g)
+      ( right-adjoint-preserves-representing-element-family-cone A B J g f u adj
+        ( representing-element-family-cone-limit J B is-segal-B g lim-g))
 ```

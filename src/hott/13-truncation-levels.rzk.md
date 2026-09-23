@@ -158,7 +158,7 @@ As a corollary, non-dependent function types with `k`-truncated codomain are
 ### Σ-types of k-truncated types are k-truncated
 
 ```rzk
-#def is-contr-Σ-fiberwise-is-contr-Σ
+#def is-contr-total-type-fiberwise-is-contr-is-contr-base
   ( A : U)
   ( B : A → U)
   ( is-contr-A : is-contr A)
@@ -170,46 +170,10 @@ As a corollary, non-dependent function types with `k`-truncated codomain are
     ( B (first is-contr-A))
     ( equiv-center-fiber-total-type-is-contr-base A is-contr-A B)
     ( is-contr-fam (first is-contr-A))
-
-
-#def is-contr-Σ-fiberwise-is-contr-Σ'
-  ( A : U)
-  : ( B : A → U)
-  → ( is-contr A)
-  → ( ( x : A) → (is-contr (B x)))
-  → ( is-contr (Σ (x : A) , B x))
-  := \ B is-contr-A is-contr-fam →
-      ( ( first is-contr-A , first (is-contr-fam (first is-contr-A)))
-    , \ t → eq-pair
-      ( A)
-      ( B)
-      ( ( first is-contr-A , first (is-contr-fam (first is-contr-A))))
-      ( t)
-      ( ( second is-contr-A (first t)
-      , concat
-        ( B (first t))
-        ( transport A B
-          ( first is-contr-A) (first t)
-          ( second is-contr-A (first t))
-          ( first (is-contr-fam (first is-contr-A))))
-        ( first (is-contr-fam (first t)))
-        ( second t)
-        ( rev
-          ( B (first t))
-          ( first (is-contr-fam (first t)))
-          ( transport A B
-            ( first is-contr-A) (first t)
-            ( second is-contr-A (first t))
-            ( first (is-contr-fam (first is-contr-A))))
-          ( second (is-contr-fam (first t))
-            ( transport A B
-              ( first is-contr-A) (first t)
-              ( second is-contr-A (first t))
-              ( first (is-contr-fam (first is-contr-A))))))
-        ( second (is-contr-fam (first t)) (second t)))))
 ```
+
 ```rzk
-#def is-trunc-Σ-fiberwise-is-trunc-Σ
+#def is-trunc-total-type-fiberwise-is-trunc-is-trunc-base
   ( k : 𝕋)
   : ( A : U)
   → ( B : A → U)
@@ -220,7 +184,8 @@ As a corollary, non-dependent function types with `k`-truncated codomain are
   match k
     ( neg-two-𝕋 ⇒
       \ A B is-contr-A is-contr-fam →
-        is-contr-Σ-fiberwise-is-contr-Σ A B is-contr-A is-contr-fam
+        is-contr-total-type-fiberwise-is-contr-is-contr-base
+        A B is-contr-A is-contr-fam
     | succ-𝕋 k' ih ⇒
       \ A B is-trunc-A is-trunc-fam s t →
         is-trunc-equiv-is-trunc
@@ -315,7 +280,8 @@ As a corollary, non-dependent function types with `k`-truncated codomain are
 ```
 
 ```rzk
-#def is-prop-is-trunc uses (weakfunext funext)
+#def is-property-is-trunc
+  uses (weakfunext funext)
   ( k : 𝕋)
   : ( A : U)
   → is-prop (is-trunc k A)

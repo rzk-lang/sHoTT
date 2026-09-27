@@ -811,10 +811,9 @@ extensionality to weak extension extensionality:
 
 ```rzk
 #def weakextext-extext
-  : ExtExt → WeakExtExt
-  :=
-    comp ExtExt NaiveExtExt WeakExtExt
-    ( weakextext-naiveextext) (naiveextext-extext)
+  ( extext : ExtExt)
+  : WeakExtExt
+  := weakextext-naiveextext (naiveextext-extext extext)
 ```
 
 ### Weak extension extensionality implies extension extensionality
@@ -966,16 +965,14 @@ For convenience we also provide the other composite implications:
 
 ```rzk
 #def extext-naiveexteext
-  : NaiveExtExt → ExtExt
-  :=
-    comp NaiveExtExt WeakExtExt ExtExt
-    ( extext-weakextext) (weakextext-naiveextext)
+  ( naiveextext : NaiveExtExt)
+  : ExtExt
+  := extext-weakextext (weakextext-naiveextext naiveextext)
 
 #def naiveextext-weakextext
-  : WeakExtExt → NaiveExtExt
-  :=
-    comp WeakExtExt ExtExt NaiveExtExt
-    ( naiveextext-extext) (extext-weakextext)
+  ( weakextext : WeakExtExt)
+  : NaiveExtExt
+  := naiveextext-extext (extext-weakextext weakextext)
 ```
 
 ## Homotopy extension property

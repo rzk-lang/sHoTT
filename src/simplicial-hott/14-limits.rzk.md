@@ -90,7 +90,7 @@ definitions coincide. Define cone as a family.
   : hom (A → B) (constant A B x) (constant A B y)
   := \ t a → (constant A (hom B x y) k) a t
 
-#def cone-precomposition
+#def cone-precomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -113,7 +113,7 @@ definitions coincide. Define cone as a family.
 Another definition of limit.
 
 ```rzk
-#def limit2
+#def is-equiv-cone-precomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -124,7 +124,7 @@ Another definition of limit.
       → is-equiv
         ( family-cone A B f x)
         ( family-cone A B f b)
-        ( cone-precomposition A B is-segal-B f b x k)
+        ( cone-precomp-is-segal A B is-segal-B f b x k)
 ```
 
 We give a second definition of colimits, we eventually want to prove both
@@ -136,7 +136,7 @@ definitions coincide. Define cocone as a family.
   : ( A → B) → (B) → U
   := \ f → \ b → (hom (A → B) f (constant A B b))
 
-#def cocone-postcomposition
+#def cocone-postcomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -159,7 +159,7 @@ definitions coincide. Define cocone as a family.
 Another definition of colimit.
 
 ```rzk
-#def colimit2
+#def is-equiv-cocone-postcomp-is-segal
   ( A B : U)
   ( is-segal-B : is-segal B)
   ( f : A → B)
@@ -170,24 +170,24 @@ Another definition of colimit.
     → is-equiv
       ( family-cocone A B f x)
       ( family-cocone A B f b)
-      ( cocone-postcomposition A B is-segal-B f x b k)
+      ( cocone-postcomp-is-segal A B is-segal-B f x b k)
 ```
 
 The following alternative definition does not require a Segalness condition.
 When `#!rzk is-segal B` then definitions 1 and 3 coincide.
 
 ```rzk
-#def limit3
+#def representing-element-family-cone
   ( A B : U)
   ( f : A → B)
   : U
-  := Σ (b : B) , (x : B) → Equiv (hom B b x) (family-cone A B f x)
+  := Σ (b : B) , (x : B) → Equiv (hom B x b) (family-cone A B f x)
 
-#def colimit3
+#def representing-element-family-cocone
   ( A B : U)
   ( f : A → B)
   : U
-  := Σ (b : B) , (x : B) → Equiv (hom B x b) (family-cocone A B f x)
+  := Σ (b : B) , (x : B) → Equiv (hom B b x) (family-cocone A B f x)
 ```
 
 ## Uniqueness of initial and final objects.
@@ -385,7 +385,7 @@ The type of (co)cones of a function with codomain a Segal type is a Segal type.
     ( is-segal-B)
 ```
 
-Colimits are unique up to isomorphism.
+Co-/limits are unique up to isomorphism.
 
 ```rzk title="BM, Corollary 1 (i)"
 #def iso-colimit-is-segal uses (extext funext)
@@ -406,9 +406,7 @@ Colimits are unique up to isomorphism.
     ( first y)
     ( second x)
     ( second y)
-```
 
-```rzk
 #def iso-limit-is-segal uses (extext funext)
   ( A B : U)
   ( is-segal-B : is-segal B)
@@ -427,4 +425,218 @@ Colimits are unique up to isomorphism.
     ( first y)
     ( second x)
     ( second y)
+```
+
+The universal property of limits and colimits.
+
+```rzk title="Bar22, Proposition 3.7"
+#def representing-element-family-cocone-colimit uses (funext)
+  ( J B : U)
+  ( is-segal-B : is-segal B)
+  ( g : J → B)
+  ( colim-g : colimit J B g)
+  : representing-element-family-cocone J B g
+  :=
+    is-representable-family-has-initial-tot
+      B
+      is-segal-B
+      ( family-cocone J B g)
+      ( is-covariant-family-cone-is-segal J B is-segal-B g)
+      colim-g
+
+#def colimit-representing-element-family-cocone uses (extext)
+  ( J B : U)
+  ( is-segal-B : is-segal B)
+  ( g : J → B)
+  ( rep-elt-fam-cocone-g : representing-element-family-cocone J B g)
+  : colimit J B g
+  :=
+    has-initial-tot-is-representable-family
+      extext
+      B
+      is-segal-B
+      ( family-cocone J B g)
+      rep-elt-fam-cocone-g
+
+#def representing-element-family-cone-limit uses (funext)
+  ( J B : U)
+  ( is-segal-B : is-segal B)
+  ( g : J → B)
+  ( lim-g : limit J B g)
+  : representing-element-family-cone J B g
+  :=
+    is-contravariant-representable-family-has-final-tot
+      B
+      is-segal-B
+      ( family-cone J B g)
+      ( is-contravariant-family-cone-is-segal J B is-segal-B g)
+      lim-g
+
+#def limit-representing-element-family-cone uses (extext)
+  ( J B : U)
+  ( is-segal-B : is-segal B)
+  ( g : J → B)
+  ( rep-elt-fam-cone-g : representing-element-family-cone J B g)
+  : limit J B g
+  :=
+    has-final-tot-is-contravariant-representable-family
+      extext
+      B
+      is-segal-B
+      ( family-cone J B g)
+      rep-elt-fam-cone-g
+```
+
+```rzk
+#def equiv-transpose-cocone uses (funext)
+  ( A B J : U)
+  ( g : J → A)
+  ( f : A → B)
+  ( u : B → A)
+  ( adj : is-transposing-adj A B f u)
+  ( z : B)
+  : Equiv
+      ( family-cocone J B (comp J A B f g) z)
+      ( family-cocone J A g (u z))
+  :=
+    equiv-triple-comp
+      ( family-cocone J B (comp J A B f g) z)
+      ( ( j : J) → hom B (f (g j)) z)
+      ( ( j : J) → hom A (g j) (u z))
+      ( family-cocone J A g (u z))
+      ( equiv-components-nat-trans
+        J
+        ( \ _ → B)
+        ( comp J A B f g)
+        ( constant J B z))
+      ( equiv-function-equiv-family
+        funext
+        J
+        ( \ j → hom B (f (g j)) z)
+        ( \ j → hom A (g j) (u z))
+        ( \ j → adj (g j) z))
+      ( inv-equiv
+        ( family-cocone J A g (u z))
+        ( ( j : J) → hom A (g j) (u z))
+        ( equiv-components-nat-trans
+          J
+          ( \ _ → A)
+          g
+          ( constant J A (u z))))
+
+#def equiv-transpose-cone uses (funext)
+  ( A B J : U)
+  ( g : J → B)
+  ( f : A → B)
+  ( u : B → A)
+  ( adj : is-transposing-adj A B f u)
+  ( y : A)
+  : Equiv
+      ( family-cone J B g (f y))
+      ( family-cone J A (comp J B A u g) y)
+  :=
+    equiv-triple-comp
+      ( family-cone J B g (f y))
+      ( ( j : J) → hom B (f y) (g j))
+      ( ( j : J) → hom A y (u (g j)))
+      ( family-cone J A (comp J B A u g) y)
+      ( equiv-components-nat-trans
+        J
+        ( \ _ → B)
+        ( constant J B (f y))
+        g)
+      ( equiv-function-equiv-family
+        funext
+        J
+        ( \ j → hom B (f y) (g j))
+        ( \ j → hom A y (u (g j)))
+        ( \ j → adj y (g j)))
+      ( inv-equiv
+        ( family-cone J A (comp J B A u g) y)
+        ( ( j : J) → hom A y (u (g j)))
+        ( equiv-components-nat-trans
+          J
+          ( \ _ → A)
+          ( constant J A y)
+          ( comp J B A u g)))
+
+#def left-adjoint-preserves-representing-element-family-cocone uses (funext)
+  ( A B J : U)
+  ( g : J → A)
+  ( f : A → B)
+  ( u : B → A)
+  ( adj : is-transposing-adj A B f u)
+  ( ( a , is-represented-cocone-g) : representing-element-family-cocone J A g)
+  : representing-element-family-cocone J B (comp J A B f g)
+  :=
+    ( f a
+    , \ z →
+      equiv-triple-comp
+        ( hom B (f a) z)
+        ( hom A a (u z))
+        ( family-cocone J A g (u z))
+        ( family-cocone J B (comp J A B f g) z)
+        ( adj a z)
+        ( is-represented-cocone-g (u z))
+        ( inv-equiv
+          ( family-cocone J B (comp J A B f g) z)
+          ( family-cocone J A g (u z))
+          ( equiv-transpose-cocone A B J g f u adj z)))
+
+#def right-adjoint-preserves-representing-element-family-cone uses (funext)
+  ( A B J : U)
+  ( g : J → B)
+  ( f : A → B)
+  ( u : B → A)
+  ( adj : is-transposing-adj A B f u)
+  ( ( b , is-represented-cone-g) : representing-element-family-cone J B g)
+  : representing-element-family-cone J A (comp J B A u g)
+  :=
+    ( u b
+    , \ y →
+      equiv-triple-comp
+        ( hom A y (u b))
+        ( hom B (f y) b)
+        ( family-cone J B g (f y))
+        ( family-cone J A (comp J B A u g) y)
+        ( inv-equiv
+          ( hom B (f y) b)
+          ( hom A y (u b))
+          ( adj y b))
+        ( is-represented-cone-g (f y))
+        ( equiv-transpose-cone A B J g f u adj y))
+```
+
+Left/right adjoints preserve co-/limits.
+
+```rzk title="Bar22, Theorem 3.8, 3.9"
+#def left-adjoint-preserves-colimit uses (funext extext)
+  ( A B J : U)
+  ( is-segal-A : is-segal A)
+  ( is-segal-B : is-segal B)
+  ( g : J → A)
+  ( f : A → B)
+  ( u : B → A)
+  ( colim-g : colimit J A g)
+  ( adj : is-transposing-adj A B f u)
+  : colimit J B (comp J A B f g)
+  :=
+  colimit-representing-element-family-cocone J B is-segal-B (comp J A B f g)
+  ( left-adjoint-preserves-representing-element-family-cocone A B J g f u adj
+    ( representing-element-family-cocone-colimit J A is-segal-A g colim-g))
+
+#def right-adjoint-preserves-limit uses (funext extext)
+  ( A B J : U)
+  ( is-segal-A : is-segal A)
+  ( is-segal-B : is-segal B)
+  ( g : J → B)
+  ( f : A → B)
+  ( u : B → A)
+  ( lim-g : limit J B g)
+  ( adj : is-transposing-adj A B f u)
+  : limit J A (comp J B A u g)
+  :=
+    limit-representing-element-family-cone J A is-segal-A (comp J B A u g)
+      ( right-adjoint-preserves-representing-element-family-cone A B J g f u adj
+        ( representing-element-family-cone-limit J B is-segal-B g lim-g))
 ```

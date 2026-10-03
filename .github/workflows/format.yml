@@ -19,6 +19,7 @@ jobs:
         uses: creyD/prettier_action@v4.3
         with:
           dry: true
+          prettier_version: 3.9.8
           prettier_options: --write **/*.{md,json,yaml,yml}
 
       - name: Rzk formatter

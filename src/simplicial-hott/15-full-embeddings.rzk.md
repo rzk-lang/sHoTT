@@ -45,10 +45,10 @@ This is a literate `rzk` file:
   ( x : A 0₂)
   ( y : A 1₂)
   ( f g : (t : Δ¹) → A t [t ≡ 0₂ ↦ x , t ≡ 1₂ ↦ y])
-  : ( t : Δ¹) → (f t = g t) [t ≡ 0₂ ↦ refl , t ≡ 1₂ ↦ refl]
+  : ( t : Δ¹) → (f t =_{A t} g t) [t ≡ 0₂ ↦ refl , t ≡ 1₂ ↦ refl]
   :=
   dhom-fabricate-is-locally-contr-extext
-  ( \ t → f t = g t)
+  ( \ t → f t =_{A t} g t)
   ( \ t → is-prop-is-contr (A t) (is-contr-A t) (f t) (g t))
   ( refl)
   ( refl)

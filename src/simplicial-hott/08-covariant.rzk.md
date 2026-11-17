@@ -584,7 +584,7 @@ arrows. We first apply the result that the total type is Segal as follows.
     , ( ( \ k → (\ t → k (t , t) , \ (t , s) → k (t , s))
         , \ (hh , H) → refl)
       , ( \ k → (\ t → k (t , t) , \ (t , s) → k (t , s))
-        , \ (hh , H) → refl)))
+        , \ k → refl)))
 ```
 
 We now prove contractibility of a type that will be used to define dependent

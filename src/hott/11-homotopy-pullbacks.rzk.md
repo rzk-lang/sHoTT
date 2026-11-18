@@ -698,6 +698,7 @@ product of all fibers.
   := second (second (second abpcq)) -- evaluates to q
 
 #def is-id-relative-fiber-relative-product
+  uses (A B β C γ)
   ( bce : relative-product)
   : relative-fiber-product (fiber-relative-product bce) = bce
   := refl

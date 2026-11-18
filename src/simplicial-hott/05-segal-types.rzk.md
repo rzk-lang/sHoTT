@@ -118,6 +118,7 @@ Slices and coslices can also be defined directly as extension types:
       ( refl , refl)
 
 #def is-id-coslice'-coslice-coslice'
+  uses (A a)
   ( f : coslice')
   : ( coslice'-coslice (coslice-coslice' f) = f)
   :=
@@ -164,6 +165,7 @@ Slices and coslices can also be defined directly as extension types:
       ( refl , refl)
 
 #def is-id-slice'-slice-slice'
+  uses (A a)
   ( f : slice')
   : ( slice'-slice (slice-slice' f) = f)
   :=
@@ -1589,6 +1591,7 @@ Interchange law
 
 ```rzk title="RS17, Proposition 5.15"
 #def homotopy-interchange-law
+  uses (is-segal-A)
   ( f1 f2 f3 : hom A x y)
   ( h1 h2 h3 : hom A y z)
   ( p : f1 = f2)
